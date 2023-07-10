@@ -1237,8 +1237,8 @@ document.write(`
 <span class="c1"># ToDo: update docstrings and typehints according to ivy\layers</span>
 
 
-<div class="viewcode-block" id="_ArrayWithLayers"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers">[docs]</a><span class="k">class</span> <span class="nc">_ArrayWithLayers</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
-<div class="viewcode-block" id="_ArrayWithLayers.linear"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.linear">[docs]</a>    <span class="k">def</span> <span class="nf">linear</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers">[docs]</a><span class="k">class</span> <span class="nc">_ArrayWithLayers</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="_ArrayWithLayers.linear"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.linear">[docs]</a>    <span class="k">def</span> <span class="nf">linear</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">weight</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="o">/</span><span class="p">,</span>
@@ -1292,7 +1292,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.dropout"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.dropout">[docs]</a>    <span class="k">def</span> <span class="nf">dropout</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.dropout"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.dropout">[docs]</a>    <span class="k">def</span> <span class="nf">dropout</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">prob</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="o">/</span><span class="p">,</span>
@@ -1374,7 +1374,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.dropout1d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.dropout1d">[docs]</a>    <span class="k">def</span> <span class="nf">dropout1d</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.dropout1d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.dropout1d">[docs]</a>    <span class="k">def</span> <span class="nf">dropout1d</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">prob</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="o">/</span><span class="p">,</span>
@@ -1422,7 +1422,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.dropout2d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.dropout2d">[docs]</a>    <span class="k">def</span> <span class="nf">dropout2d</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.dropout2d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.dropout2d">[docs]</a>    <span class="k">def</span> <span class="nf">dropout2d</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">prob</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="o">/</span><span class="p">,</span>
@@ -1470,7 +1470,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.dropout3d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.dropout3d">[docs]</a>    <span class="k">def</span> <span class="nf">dropout3d</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.dropout3d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.dropout3d">[docs]</a>    <span class="k">def</span> <span class="nf">dropout3d</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">prob</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="o">/</span><span class="p">,</span>
@@ -1511,7 +1511,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.scaled_dot_product_attention"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.scaled_dot_product_attention">[docs]</a>    <span class="k">def</span> <span class="nf">scaled_dot_product_attention</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.scaled_dot_product_attention"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.scaled_dot_product_attention">[docs]</a>    <span class="k">def</span> <span class="nf">scaled_dot_product_attention</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">k</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">v</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
@@ -1590,7 +1590,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.multi_head_attention"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.multi_head_attention">[docs]</a>    <span class="k">def</span> <span class="nf">multi_head_attention</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.multi_head_attention"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.multi_head_attention">[docs]</a>    <span class="k">def</span> <span class="nf">multi_head_attention</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1639,7 +1639,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.conv1d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.conv1d">[docs]</a>    <span class="k">def</span> <span class="nf">conv1d</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.conv1d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.conv1d">[docs]</a>    <span class="k">def</span> <span class="nf">conv1d</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">strides</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
@@ -1700,7 +1700,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.conv1d_transpose"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.conv1d_transpose">[docs]</a>    <span class="k">def</span> <span class="nf">conv1d_transpose</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.conv1d_transpose"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.conv1d_transpose">[docs]</a>    <span class="k">def</span> <span class="nf">conv1d_transpose</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">strides</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
@@ -1768,7 +1768,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.depthwise_conv2d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.depthwise_conv2d">[docs]</a>    <span class="k">def</span> <span class="nf">depthwise_conv2d</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.depthwise_conv2d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.depthwise_conv2d">[docs]</a>    <span class="k">def</span> <span class="nf">depthwise_conv2d</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">strides</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
@@ -1826,7 +1826,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.conv2d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.conv2d">[docs]</a>    <span class="k">def</span> <span class="nf">conv2d</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.conv2d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.conv2d">[docs]</a>    <span class="k">def</span> <span class="nf">conv2d</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">strides</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
@@ -1893,7 +1893,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.conv2d_transpose"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.conv2d_transpose">[docs]</a>    <span class="k">def</span> <span class="nf">conv2d_transpose</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.conv2d_transpose"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.conv2d_transpose">[docs]</a>    <span class="k">def</span> <span class="nf">conv2d_transpose</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">strides</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
@@ -1958,7 +1958,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.conv3d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.conv3d">[docs]</a>    <span class="k">def</span> <span class="nf">conv3d</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.conv3d"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.conv3d">[docs]</a>    <span class="k">def</span> <span class="nf">conv3d</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">strides</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
@@ -2018,7 +2018,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.conv3d_transpose"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.conv3d_transpose">[docs]</a>    <span class="k">def</span> <span class="nf">conv3d_transpose</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.conv3d_transpose"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.conv3d_transpose">[docs]</a>    <span class="k">def</span> <span class="nf">conv3d_transpose</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">strides</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
@@ -2084,7 +2084,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithLayers.lstm_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy._ArrayWithLayers.lstm_update">[docs]</a>    <span class="k">def</span> <span class="nf">lstm_update</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithLayers.lstm_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.layers.html#ivy.data_classes.array.layers._ArrayWithLayers.lstm_update">[docs]</a>    <span class="k">def</span> <span class="nf">lstm_update</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">init_h</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">init_c</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
