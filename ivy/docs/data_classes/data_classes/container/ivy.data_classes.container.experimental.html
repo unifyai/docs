@@ -609,6 +609,7 @@ document.write(`
 <li class="toctree-l4"><a class="reference internal" href="../../../functional/ivy/experimental/elementwise/ivy.functional.ivy.experimental.elementwise.isclose.html">isclose</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../functional/ivy/experimental/elementwise/ivy.functional.ivy.experimental.elementwise.ldexp.html">ldexp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../functional/ivy/experimental/elementwise/ivy.functional.ivy.experimental.elementwise.lerp.html">lerp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../functional/ivy/experimental/elementwise/ivy.functional.ivy.experimental.elementwise.modf.html">modf</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../functional/ivy/experimental/elementwise/ivy.functional.ivy.experimental.elementwise.nansum.html">nansum</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../functional/ivy/experimental/elementwise/ivy.functional.ivy.experimental.elementwise.nextafter.html">nextafter</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../functional/ivy/experimental/elementwise/ivy.functional.ivy.experimental.elementwise.signbit.html">signbit</a></li>
@@ -3215,6 +3216,38 @@ b: ivy.array([8.60000038, 12.5, 16.])</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.modf">
+<span class="sig-name descname"><span class="pre">modf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ivy/data_classes/container/experimental/elementwise.html#_ContainerWithElementWiseExperimental.modf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.modf" title="Permalink to this definition">#</a></dt>
+<dd><p>ivy.Container instance method variant of ivy.modf. This method simply wraps the
+function, and so the docstring for ivy.modf also applies to this method with
+minimal changes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code>) – The container whose arrays should be split into the fractional and integral parts.</p></li>
+<li><p><strong>out</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code>]) – optional output container, for writing the result to. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ret</em> – container including the fractional and integral parts of x.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>With one <code class="xref py py-class docutils literal notranslate"><span class="pre">ivy.Container</span></code> input:
+&gt;&gt;&gt; x = ivy.Container(a=ivy.array([1.2, 2.7, 3.9]), b=ivy.array([-1.5, 5.3, -10.7]))
+&gt;&gt;&gt; x.modf()
+{</p>
+<blockquote>
+<div><p>a: (ivy.array([0.2, 0.7, 0.9]), ivy.array([1.0, 2.0, 3.0])),
+b: (ivy.array([-0.5, 0.3, -0.7]), ivy.array([-1.0, 5.0, -10.0]))</p>
+</div></blockquote>
+<p>}</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.nansum">
 <span class="sig-name descname"><span class="pre">nansum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keepdims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ivy/data_classes/container/experimental/elementwise.html#_ContainerWithElementWiseExperimental.nansum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.nansum" title="Permalink to this definition">#</a></dt>
 <dd><p>ivy.Container instance method variant of ivy.nansum. This method simply wraps
@@ -4049,6 +4082,45 @@ b: {</p>
 <div><p>a: ivy.array([7.5, 8.])</p>
 </div></blockquote>
 <p>}</p>
+</div></blockquote>
+<p>}</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.static_modf">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">static_modf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_chains</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_apply</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune_unapplied</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_sequences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ivy/data_classes/container/experimental/elementwise.html#_ContainerWithElementWiseExperimental.static_modf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.static_modf" title="Permalink to this definition">#</a></dt>
+<dd><p>ivy.Container static method variant of ivy.modf. This method simply wraps the
+function, and so the docstring for ivy.modf also applies to this method with
+minimal changes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NativeArray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code>]) – The container whose arrays should be split into the fractional and integral parts.</p></li>
+<li><p><strong>key_chains</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]]) – The key-chains to apply or not apply the method to. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>to_apply</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – If True, the method will be applied to key_chains, otherwise key_chains (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>)
+will be skipped. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>prune_unapplied</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Whether to prune key_chains for which the function was not applied. (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>map_sequences</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Whether to also map method to sequences (lists, tuples). (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>out</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code>]) – optional output container, for writing the result to. (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ret</em> – container including the fractional and integral parts of x.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>With one <code class="xref py py-class docutils literal notranslate"><span class="pre">ivy.Container</span></code> input:
+&gt;&gt;&gt; x = ivy.Container(a=ivy.array([1.2, 2.7, 3.9]), b=ivy.array([-1.5, 5.3, -10.7]))
+&gt;&gt;&gt; ivy.Container.static_modf(x)
+{</p>
+<blockquote>
+<div><p>a: (ivy.array([0.2, 0.7, 0.9]), ivy.array([1.0, 2.0, 3.0])),
+b: (ivy.array([-0.5, 0.3, -0.7]), ivy.array([-1.0, 5.0, -10.0]))</p>
 </div></blockquote>
 <p>}</p>
 </dd></dl>
@@ -10819,6 +10891,7 @@ first rank(q) dimensions index quantiles for different values of q.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.isclose"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.isclose()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.ldexp"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.ldexp()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.lerp"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.lerp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.modf"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.modf()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.nansum"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.nansum()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.nextafter"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.nextafter()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.signbit"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.signbit()</span></code></a></li>
@@ -10839,6 +10912,7 @@ first rank(q) dimensions index quantiles for different values of q.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.static_isclose"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.static_isclose()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.static_ldexp"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.static_ldexp()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.static_lerp"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.static_lerp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.static_modf"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.static_modf()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.static_nansum"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.static_nansum()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.static_nextafter"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.static_nextafter()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ivy.data_classes.container.experimental.elementwise._ContainerWithElementWiseExperimental.static_signbit"><code class="docutils literal notranslate"><span class="pre">_ContainerWithElementWiseExperimental.static_signbit()</span></code></a></li>
