@@ -1092,6 +1092,23 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="../../../../docs/utils/ivy.utils.verbosity.html">Verbosity</a></li>
 </ul>
 </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../docs/ivy_tests.test_ivy.helpers.html">Testing</a><input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.assertions.html">Assertions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.available_frameworks.html">Available frameworks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.function_testing.html">Function testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.globals.html">Globals</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.hypothesis_helpers.html">Hypothesis helpers</a><input class="toctree-checkbox" id="toctree-checkbox-54" name="toctree-checkbox-54" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-54"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.hypothesis_helpers/ivy_tests.test_ivy.helpers.hypothesis_helpers.array_helpers.html">Array helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.hypothesis_helpers/ivy_tests.test_ivy.helpers.hypothesis_helpers.dtype_helpers.html">Dtype helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.hypothesis_helpers/ivy_tests.test_ivy.helpers.hypothesis_helpers.general_helpers.html">General helpers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.hypothesis_helpers/ivy_tests.test_ivy.helpers.hypothesis_helpers.number_helpers.html">Number helpers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.structs.html">Structs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.test_parameter_flags.html">Test parameter flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.testing_helpers.html">Testing helpers</a></li>
+</ul>
+</li>
 </ul>
 
     </div>
@@ -1217,8 +1234,8 @@ document.write(`
 <span class="c1"># ToDo: implement all methods here as public instance methods</span>
 
 
-<div class="viewcode-block" id="_ArrayWithGradients"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy._ArrayWithGradients">[docs]</a><span class="k">class</span> <span class="nc">_ArrayWithGradients</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
-<div class="viewcode-block" id="_ArrayWithGradients.stop_gradient"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy._ArrayWithGradients.stop_gradient">[docs]</a>    <span class="k">def</span> <span class="nf">stop_gradient</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithGradients"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy.data_classes.array.gradients._ArrayWithGradients">[docs]</a><span class="k">class</span> <span class="nc">_ArrayWithGradients</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="_ArrayWithGradients.stop_gradient"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy.data_classes.array.gradients._ArrayWithGradients.stop_gradient">[docs]</a>    <span class="k">def</span> <span class="nf">stop_gradient</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="o">/</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
@@ -1255,7 +1272,7 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">stop_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preserve_type</span><span class="o">=</span><span class="n">preserve_type</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithGradients.adam_step"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy._ArrayWithGradients.adam_step">[docs]</a>    <span class="k">def</span> <span class="nf">adam_step</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithGradients.adam_step"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy.data_classes.array.gradients._ArrayWithGradients.adam_step">[docs]</a>    <span class="k">def</span> <span class="nf">adam_step</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">mw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">vw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
@@ -1316,7 +1333,7 @@ document.write(`
             <span class="bp">self</span><span class="p">,</span> <span class="n">mw</span><span class="p">,</span> <span class="n">vw</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">beta1</span><span class="o">=</span><span class="n">beta1</span><span class="p">,</span> <span class="n">beta2</span><span class="o">=</span><span class="n">beta2</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithGradients.optimizer_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy._ArrayWithGradients.optimizer_update">[docs]</a>    <span class="k">def</span> <span class="nf">optimizer_update</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithGradients.optimizer_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy.data_classes.array.gradients._ArrayWithGradients.optimizer_update">[docs]</a>    <span class="k">def</span> <span class="nf">optimizer_update</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">effective_grad</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">lr</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
@@ -1365,7 +1382,7 @@ document.write(`
             <span class="bp">self</span><span class="p">,</span> <span class="n">effective_grad</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">stop_gradients</span><span class="o">=</span><span class="n">stop_gradients</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithGradients.gradient_descent_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy._ArrayWithGradients.gradient_descent_update">[docs]</a>    <span class="k">def</span> <span class="nf">gradient_descent_update</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithGradients.gradient_descent_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy.data_classes.array.gradients._ArrayWithGradients.gradient_descent_update">[docs]</a>    <span class="k">def</span> <span class="nf">gradient_descent_update</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">dcdw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">lr</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
@@ -1421,7 +1438,7 @@ document.write(`
             <span class="bp">self</span><span class="p">,</span> <span class="n">dcdw</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">stop_gradients</span><span class="o">=</span><span class="n">stop_gradients</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithGradients.lars_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy._ArrayWithGradients.lars_update">[docs]</a>    <span class="k">def</span> <span class="nf">lars_update</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithGradients.lars_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy.data_classes.array.gradients._ArrayWithGradients.lars_update">[docs]</a>    <span class="k">def</span> <span class="nf">lars_update</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">dcdw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">lr</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
@@ -1468,7 +1485,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithGradients.adam_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy._ArrayWithGradients.adam_update">[docs]</a>    <span class="k">def</span> <span class="nf">adam_update</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithGradients.adam_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy.data_classes.array.gradients._ArrayWithGradients.adam_update">[docs]</a>    <span class="k">def</span> <span class="nf">adam_update</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">dcdw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">lr</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
@@ -1554,7 +1571,7 @@ document.write(`
             <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ArrayWithGradients.lamb_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy._ArrayWithGradients.lamb_update">[docs]</a>    <span class="k">def</span> <span class="nf">lamb_update</span><span class="p">(</span>
+<div class="viewcode-block" id="_ArrayWithGradients.lamb_update"><a class="viewcode-back" href="../../../../docs/data_classes/data_classes/array/ivy.data_classes.array.gradients.html#ivy.data_classes.array.gradients._ArrayWithGradients.lamb_update">[docs]</a>    <span class="k">def</span> <span class="nf">lamb_update</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
         <span class="n">dcdw</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
         <span class="n">lr</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">NativeArray</span><span class="p">],</span>
