@@ -1311,6 +1311,7 @@ document.write(`
 <div class="viewcode-block" id="FunctionTestFlags"><a class="viewcode-back" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.test_parameter_flags.html#ivy_tests.test_ivy.helpers.test_parameter_flags.FunctionTestFlags">[docs]</a><span class="k">class</span> <span class="nc">FunctionTestFlags</span><span class="p">(</span><span class="n">TestFlags</span><span class="p">):</span>
 <div class="viewcode-block" id="FunctionTestFlags.__init__"><a class="viewcode-back" href="../../../../docs/helpers/ivy_tests.test_ivy.helpers.test_parameter_flags.html#ivy_tests.test_ivy.helpers.test_parameter_flags.FunctionTestFlags.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ground_truth_backend</span><span class="p">,</span>
         <span class="n">num_positional_args</span><span class="p">,</span>
         <span class="n">with_out</span><span class="p">,</span>
         <span class="n">instance_method</span><span class="p">,</span>
@@ -1320,6 +1321,7 @@ document.write(`
         <span class="n">test_gradients</span><span class="p">,</span>
         <span class="n">test_compile</span><span class="p">,</span>
     <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ground_truth_backend</span> <span class="o">=</span> <span class="n">ground_truth_backend</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_positional_args</span> <span class="o">=</span> <span class="n">num_positional_args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">with_out</span> <span class="o">=</span> <span class="n">with_out</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instance_method</span> <span class="o">=</span> <span class="n">instance_method</span>
@@ -1344,6 +1346,7 @@ document.write(`
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;ground_truth_backend=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ground_truth_backend</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;num_positional_args=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_positional_args</span><span class="si">}</span><span class="s2">. &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;with_out=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">with_out</span><span class="si">}</span><span class="s2">. &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;instance_method=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">instance_method</span><span class="si">}</span><span class="s2">. &quot;</span>
@@ -1362,6 +1365,7 @@ document.write(`
 <span class="k">def</span> <span class="nf">function_flags</span><span class="p">(</span>
     <span class="n">draw</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
+    <span class="n">ground_truth_backend</span><span class="p">,</span>
     <span class="n">num_positional_args</span><span class="p">,</span>
     <span class="n">instance_method</span><span class="p">,</span>
     <span class="n">with_out</span><span class="p">,</span>
@@ -1374,6 +1378,7 @@ document.write(`
     <span class="k">return</span> <span class="n">draw</span><span class="p">(</span>
         <span class="n">st</span><span class="o">.</span><span class="n">builds</span><span class="p">(</span>
             <span class="n">FunctionTestFlags</span><span class="p">,</span>
+            <span class="n">ground_truth_backend</span><span class="o">=</span><span class="n">ground_truth_backend</span><span class="p">,</span>
             <span class="n">num_positional_args</span><span class="o">=</span><span class="n">num_positional_args</span><span class="p">,</span>
             <span class="n">with_out</span><span class="o">=</span><span class="n">with_out</span><span class="p">,</span>
             <span class="n">instance_method</span><span class="o">=</span><span class="n">instance_method</span><span class="p">,</span>

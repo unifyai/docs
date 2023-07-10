@@ -1351,7 +1351,6 @@ document.write(`
     <span class="n">test_values</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">xs_grad_idxs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">ret_grad_idxs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">ground_truth_backend</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">on_device</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">return_flat_np_arrays</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="o">**</span><span class="n">all_as_kwargs_np</span><span class="p">,</span>
@@ -1384,8 +1383,6 @@ document.write(`
 <span class="sd">    ret_grad_idxs</span>
 <span class="sd">        Indices of the returned arrays for which to return computed gradients. If None,</span>
 <span class="sd">        gradients are returned for all returned arrays. (Default value = None)</span>
-<span class="sd">    ground_truth_backend</span>
-<span class="sd">        Ground Truth Backend to compare the result-values.</span>
 <span class="sd">    on_device</span>
 <span class="sd">        The device on which to create arrays</span>
 <span class="sd">    return_flat_np_arrays</span>
@@ -1580,8 +1577,7 @@ document.write(`
                 <span class="sa">f</span><span class="s2">&quot; returned: </span><span class="si">{</span><span class="n">out</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
     <span class="c1"># compute the return with a Ground Truth backend</span>
-
-    <span class="n">ivy</span><span class="o">.</span><span class="n">set_backend</span><span class="p">(</span><span class="n">ground_truth_backend</span><span class="p">)</span>
+    <span class="n">ivy</span><span class="o">.</span><span class="n">set_backend</span><span class="p">(</span><span class="n">test_flags</span><span class="o">.</span><span class="n">ground_truth_backend</span><span class="p">)</span>
     <span class="n">ivy</span><span class="o">.</span><span class="n">set_default_device</span><span class="p">(</span><span class="n">on_device</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">create_args_kwargs</span><span class="p">(</span>
@@ -1653,7 +1649,7 @@ document.write(`
                 <span class="n">atol_</span><span class="o">=</span><span class="n">atol_</span><span class="p">,</span>
                 <span class="n">xs_grad_idxs</span><span class="o">=</span><span class="n">xs_grad_idxs</span><span class="p">,</span>
                 <span class="n">ret_grad_idxs</span><span class="o">=</span><span class="n">ret_grad_idxs</span><span class="p">,</span>
-                <span class="n">ground_truth_backend</span><span class="o">=</span><span class="n">ground_truth_backend</span><span class="p">,</span>
+                <span class="n">ground_truth_backend</span><span class="o">=</span><span class="n">test_flags</span><span class="o">.</span><span class="n">ground_truth_backend</span><span class="p">,</span>
                 <span class="n">on_device</span><span class="o">=</span><span class="n">on_device</span><span class="p">,</span>
             <span class="p">)</span>
 
@@ -1661,9 +1657,9 @@ document.write(`
         <span class="n">ret_device</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">dev</span><span class="p">(</span><span class="n">ret_from_target</span><span class="p">)</span>
 
         <span class="k">assert</span> <span class="n">ret_device</span> <span class="o">==</span> <span class="n">ret_from_gt_device</span><span class="p">,</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;ground truth backend (</span><span class="si">{</span><span class="n">ground_truth_backend</span><span class="si">}</span><span class="s2">) returned array on device&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">ret_from_gt_device</span><span class="si">}</span><span class="s2"> but target backend (</span><span class="si">{</span><span class="n">ivy</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s2">) returned array&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot; on device </span><span class="si">{</span><span class="n">ret_device</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ground truth backend (</span><span class="si">{</span><span class="n">test_flags</span><span class="o">.</span><span class="n">ground_truth_backend</span><span class="si">}</span><span class="s2">) returned&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot; array on device </span><span class="si">{</span><span class="n">ret_from_gt_device</span><span class="si">}</span><span class="s2"> but target backend (</span><span class="si">{</span><span class="n">ivy</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot; returned array on device </span><span class="si">{</span><span class="n">ret_device</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="k">assert</span> <span class="n">ret_device</span> <span class="o">==</span> <span class="n">on_device</span><span class="p">,</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;device is set to </span><span class="si">{</span><span class="n">on_device</span><span class="si">}</span><span class="s2">, but ground truth &quot;</span>
@@ -1687,7 +1683,7 @@ document.write(`
         <span class="n">ret_np_from_gt_flat</span><span class="o">=</span><span class="n">ret_np_from_gt_flat</span><span class="p">,</span>
         <span class="n">rtol</span><span class="o">=</span><span class="n">rtol_</span><span class="p">,</span>
         <span class="n">atol</span><span class="o">=</span><span class="n">atol_</span><span class="p">,</span>
-        <span class="n">ground_truth_backend</span><span class="o">=</span><span class="n">ground_truth_backend</span><span class="p">,</span>
+        <span class="n">ground_truth_backend</span><span class="o">=</span><span class="n">test_flags</span><span class="o">.</span><span class="n">ground_truth_backend</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
