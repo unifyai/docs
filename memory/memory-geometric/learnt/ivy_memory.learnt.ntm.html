@@ -33,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
@@ -107,9 +108,9 @@
   <div class="navbar-header-items__start">
     
       <div class="navbar-item">
-  
+   
 
-<a class="navbar-brand logo" href="../../index.html">
+<a class="navbar-brand logo" href="https://unify.ai">
   
   
   
@@ -119,8 +120,8 @@
       
     
     
-    <img src="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/logo.png?raw=true" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/logo_dark.png?raw=true" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/ivy_logo_new.svg?raw=true" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="https://github.com/unifyai/unifyai.github.io/blob/master/img/externally_linked/ivy_logo_new_dark.svg?raw=true" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
 </a></div>
@@ -132,7 +133,15 @@
     
     <div class="me-auto navbar-header-items__center">
       
-        <div class="navbar-item"><div></div></div>
+        <div class="navbar-item"><nav role="navigation" class="nav-menu">
+    <div class="menu-holder">
+        <div class="menu-link-holder">
+            <a href="https://github.com/unifyai/ivy" target="_blank" class="nav-link-header w-nav-link">Github</a>
+            <a href="https://unify.ai/docs/ivy/" target="_blank" class="nav-link-header w-nav-link">Docs</a>
+            <a href="https://discord.com/invite/sXyFF8tDtm" target="_blank" class="nav-link-header w-nav-link">Discord</a>
+        </div>
+    </div>
+</nav></div>
       
     </div>
     
@@ -177,34 +186,6 @@ document.write(`
 `);
 </script></div>
       
-        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
-        <li class="nav-item">
-          
-          
-          
-          
-          
-          
-          
-          
-          <a href="https://github.com/unifyai/ivy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
-        </li>
-        <li class="nav-item">
-          
-          
-          
-          
-          
-          
-          
-          
-          <a href="https://twitter.com/letsunifyai" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter"></i></span>
-            <label class="sr-only">Twitter</label></a>
-        </li>
-</ul></div>
-      
     </div>
     
   </div>
@@ -242,7 +223,15 @@ document.write(`
     
       <div class="sidebar-header-items__center">
         
-          <div class="navbar-item"><div></div></div>
+          <div class="navbar-item"><nav role="navigation" class="nav-menu">
+    <div class="menu-holder">
+        <div class="menu-link-holder">
+            <a href="https://github.com/unifyai/ivy" target="_blank" class="nav-link-header w-nav-link">Github</a>
+            <a href="https://unify.ai/docs/ivy/" target="_blank" class="nav-link-header w-nav-link">Docs</a>
+            <a href="https://discord.com/invite/sXyFF8tDtm" target="_blank" class="nav-link-header w-nav-link">Discord</a>
+        </div>
+    </div>
+</nav></div>
         
       </div>
     
@@ -275,34 +264,6 @@ document.write(`
   </button>
 `);
 </script></div>
-        
-          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
-        <li class="nav-item">
-          
-          
-          
-          
-          
-          
-          
-          
-          <a href="https://github.com/unifyai/ivy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
-        </li>
-        <li class="nav-item">
-          
-          
-          
-          
-          
-          
-          
-          
-          <a href="https://twitter.com/letsunifyai" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter"></i></span>
-            <label class="sr-only">Twitter</label></a>
-        </li>
-</ul></div>
         
       </div>
     
@@ -442,31 +403,37 @@ document.write(`
 <p>Implementation of Neural Turing Machine</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ivy_memory.learnt.ntm.NTM">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ivy_memory.learnt.ntm.</span></span><span class="sig-name descname"><span class="pre">NTM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_output_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_vector_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addressing_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'content_and_location'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequential_writing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_discount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.96</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_erase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_memory/learnt/ntm.html#NTM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTM" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ivy_memory.learnt.ntm.</span></span><span class="sig-name descname"><span class="pre">NTM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_output_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_vector_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addressing_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'content_and_location'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequential_writing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_discount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.96</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_erase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/unifyai/memory/blob/master/ivy_memory/learnt/ntm.py#L363-L455"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTM" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ivy_memory.learnt.ntm.NTM.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_output_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_vector_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addressing_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'content_and_location'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequential_writing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_discount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.96</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_erase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_memory/learnt/ntm.html#NTM.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTM.__init__" title="Permalink to this definition">#</a></dt>
-<dd><p>Initialze Ivy layer, which is a stateful object consisting of trainable variables.</p>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_output_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_vector_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addressing_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'content_and_location'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequential_writing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_discount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.96</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_erase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/unifyai/memory/blob/master/ivy_memory/learnt/ntm.py#L364-L439"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTM.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>Initialize Ivy layer, which is a stateful object consisting of trainable
+variables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dev_str</strong> (<em>str</em><em>, </em><em>optional</em>) – device on which to create the module’s variables ‘cuda:0’, ‘cuda:1’, ‘cpu’ etc.</p></li>
-<li><p><strong>v</strong> (<em>ivy container</em><em>, </em><em>optional</em>) – Ivy container of trainable variables. Created internally by default.</p></li>
-<li><p><strong>build_mode</strong> (<em>str</em><em>, </em><em>optional</em>) – How the Module is built, either on initialization (now), explicitly by the user by calling
-build(), or the first time the __call__ method is run. Default is on initialization.</p></li>
-<li><p><strong>compile_on_next_step</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to compile the network on the next forward pass. Default is False.</p></li>
-<li><p><strong>store_vars</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to store the variables created. Default is True.</p></li>
-<li><p><strong>stateful</strong> (<em>seq</em><em> of </em><em>any</em><em>, </em><em>optional</em>) – The constant id stateful items to track as part of the forward pass.
-Used when graph compiling, default is None.</p></li>
-<li><p><strong>arg_stateful_idxs</strong> (<em>seq</em><em> of </em><em>any</em><em>, </em><em>optional</em>) – The nested argument indices of stateful items to track as part of the forward pass.
-Used when graph compiling, default is None.</p></li>
-<li><p><strong>kwarg_stateful_idxs</strong> (<em>seq</em><em> of </em><em>any</em><em>, </em><em>optional</em>) – The nested keyword argument indices of stateful items to track as part of the
-forward pass. Used when graph compiling, default is None.</p></li>
-<li><p><strong>fallback_to_non_compiled</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to fall back to non-compiled forward call in the case that an error is
-raised during the compiled forward pass. Default is True.</p></li>
-<li><p><strong>with_partial_v</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to allow partial specification of variables. Default is False.</p></li>
-<li><p><strong>dev_strs</strong> (<em>sequence</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – devices on which to distribute the module’s variables ‘cuda:0’, ‘cuda:1’, ‘cpu’ etc.</p></li>
+<li><p><strong>device</strong> – device on which to create the module’s variables ‘cuda:0’, ‘cuda:1’, ‘cpu’
+etc. (Default value = None)</p></li>
+<li><p><strong>v</strong> – Ivy container of trainable variables. Created internally by default.</p></li>
+<li><p><strong>build_mode</strong> – How the Module is built, either on initialization (now),
+explicitly by the user by calling build(), or the first
+time the __call__ method is run. Default is on initialization.</p></li>
+<li><p><strong>compile_on_next_step</strong> – Whether to compile the network on the next forward pass.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>store_vars</strong> – Whether or not to store the variables created. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>stateful</strong> – The constant id stateful items to track as part of the forward pass.
+Used when graph compiling, default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>arg_stateful_idxs</strong> – The nested argument indices of stateful items to track as part of
+the forward pass.
+Used when graph compiling, default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>kwarg_stateful_idxs</strong> – The nested keyword argument indices of stateful items to track as part of
+the forward pass. Used when graph compiling, default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>fallback_to_non_compiled</strong> – Whether to fall back to non-compiled forward call in the case that an error
+is raised during the compiled forward pass. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>with_partial_v</strong> – Whether to allow partial specification of variables. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>devices</strong> – devices on which to distribute the module’s variables
+‘cuda:0’, ‘cuda:1’, ‘cpu’ etc. (Default value = None)</p></li>
 </ul>
 </dd>
 </dl>
@@ -476,31 +443,37 @@ raised during the compiled forward pass. Default is True.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ivy_memory.learnt.ntm.NTMCell">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ivy_memory.learnt.ntm.</span></span><span class="sig-name descname"><span class="pre">NTMCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_input_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_output_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_parameter_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_vector_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addressing_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'content_and_location'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequential_writing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_discount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.96</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_erase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_memory/learnt/ntm.html#NTMCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTMCell" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ivy_memory.learnt.ntm.</span></span><span class="sig-name descname"><span class="pre">NTMCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_input_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_output_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_parameter_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_vector_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addressing_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'content_and_location'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequential_writing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_discount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.96</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_erase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/unifyai/memory/blob/master/ivy_memory/learnt/ntm.py#L22-L360"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTMCell" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ivy_memory.learnt.ntm.NTMCell.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_input_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_output_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_parameter_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_vector_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addressing_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'content_and_location'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequential_writing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_discount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.96</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_erase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_memory/learnt/ntm.html#NTMCell.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTMCell.__init__" title="Permalink to this definition">#</a></dt>
-<dd><p>Initialze Ivy layer, which is a stateful object consisting of trainable variables.</p>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_input_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_output_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_parameter_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_vector_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_head_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addressing_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'content_and_location'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequential_writing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retroactive_discount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.96</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_erase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/unifyai/memory/blob/master/ivy_memory/learnt/ntm.py#L23-L89"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTMCell.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>Initialize Ivy layer, which is a stateful object consisting of trainable
+variables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dev_str</strong> (<em>str</em><em>, </em><em>optional</em>) – device on which to create the module’s variables ‘cuda:0’, ‘cuda:1’, ‘cpu’ etc.</p></li>
-<li><p><strong>v</strong> (<em>ivy container</em><em>, </em><em>optional</em>) – Ivy container of trainable variables. Created internally by default.</p></li>
-<li><p><strong>build_mode</strong> (<em>str</em><em>, </em><em>optional</em>) – How the Module is built, either on initialization (now), explicitly by the user by calling
-build(), or the first time the __call__ method is run. Default is on initialization.</p></li>
-<li><p><strong>compile_on_next_step</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to compile the network on the next forward pass. Default is False.</p></li>
-<li><p><strong>store_vars</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to store the variables created. Default is True.</p></li>
-<li><p><strong>stateful</strong> (<em>seq</em><em> of </em><em>any</em><em>, </em><em>optional</em>) – The constant id stateful items to track as part of the forward pass.
-Used when graph compiling, default is None.</p></li>
-<li><p><strong>arg_stateful_idxs</strong> (<em>seq</em><em> of </em><em>any</em><em>, </em><em>optional</em>) – The nested argument indices of stateful items to track as part of the forward pass.
-Used when graph compiling, default is None.</p></li>
-<li><p><strong>kwarg_stateful_idxs</strong> (<em>seq</em><em> of </em><em>any</em><em>, </em><em>optional</em>) – The nested keyword argument indices of stateful items to track as part of the
-forward pass. Used when graph compiling, default is None.</p></li>
-<li><p><strong>fallback_to_non_compiled</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to fall back to non-compiled forward call in the case that an error is
-raised during the compiled forward pass. Default is True.</p></li>
-<li><p><strong>with_partial_v</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to allow partial specification of variables. Default is False.</p></li>
-<li><p><strong>dev_strs</strong> (<em>sequence</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – devices on which to distribute the module’s variables ‘cuda:0’, ‘cuda:1’, ‘cpu’ etc.</p></li>
+<li><p><strong>device</strong> – device on which to create the module’s variables ‘cuda:0’, ‘cuda:1’, ‘cpu’
+etc. (Default value = None)</p></li>
+<li><p><strong>v</strong> – Ivy container of trainable variables. Created internally by default.</p></li>
+<li><p><strong>build_mode</strong> – How the Module is built, either on initialization (now),
+explicitly by the user by calling build(), or the first
+time the __call__ method is run. Default is on initialization.</p></li>
+<li><p><strong>compile_on_next_step</strong> – Whether to compile the network on the next forward pass.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>store_vars</strong> – Whether or not to store the variables created. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>stateful</strong> – The constant id stateful items to track as part of the forward pass.
+Used when graph compiling, default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>arg_stateful_idxs</strong> – The nested argument indices of stateful items to track as part of
+the forward pass.
+Used when graph compiling, default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>kwarg_stateful_idxs</strong> – The nested keyword argument indices of stateful items to track as part of
+the forward pass. Used when graph compiling, default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>fallback_to_non_compiled</strong> – Whether to fall back to non-compiled forward call in the case that an error
+is raised during the compiled forward pass. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>with_partial_v</strong> – Whether to allow partial specification of variables. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>devices</strong> – devices on which to distribute the module’s variables
+‘cuda:0’, ‘cuda:1’, ‘cpu’ etc. (Default value = None)</p></li>
 </ul>
 </dd>
 </dl>
@@ -508,14 +481,14 @@ raised during the compiled forward pass. Default is True.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ivy_memory.learnt.ntm.NTMCell.get_start_state">
-<span class="sig-name descname"><span class="pre">get_start_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype_str</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_memory/learnt/ntm.html#NTMCell.get_start_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTMCell.get_start_state" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_start_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype_str</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/unifyai/memory/blob/master/ivy_memory/learnt/ntm.py#L188-L211"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTMCell.get_start_state" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ivy_memory.learnt.ntm.NTMControllerState">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ivy_memory.learnt.ntm.</span></span><span class="sig-name descname"><span class="pre">NTMControllerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controller_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_vector_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage_indicator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ivy_memory.learnt.ntm.NTMControllerState" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ivy_memory.learnt.ntm.</span></span><span class="sig-name descname"><span class="pre">NTMControllerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controller_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_vector_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage_indicator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/unifyai/memory/blob/master/ivy_memory/learnt/ntm.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_memory.learnt.ntm.NTMControllerState" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="ivy_memory.learnt.ntm.NTMControllerState.M">
