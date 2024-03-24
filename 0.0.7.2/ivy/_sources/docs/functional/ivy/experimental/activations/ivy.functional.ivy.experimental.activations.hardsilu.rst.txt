@@ -1,0 +1,8 @@
+hardsilu
+========
+
+.. autofunction:: ivy.hardsilu
+
+.. autoskippablemethod:: ivy.Array.hardsilu
+
+.. autoskippablemethod:: ivy.Container.hardsilu
