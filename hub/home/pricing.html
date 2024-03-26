@@ -295,11 +295,11 @@ document.write(`
   <section id="pricing-and-credits">
 <h1>Pricing and Credits<a class="headerlink" href="#pricing-and-credits" title="Link to this heading">#</a></h1>
 <p>Credits are consumed when using the API. Each credit corresponds to 1 USD and there are <strong>no charges on top of provider costs</strong>; as a result, consumed credits directly reflect the cost of a request.</p>
-<p>We’re currently integrating a payment system to purchase additional credits. Meanwhile, we’re granting each user an equivalent of up to $5 in free credits per week.</p>
+<p>We’re currently integrating a payment system to purchase additional credits. Meanwhile, we’re granting each user the equivalent to $50 in free credits when creating an account.</p>
 <p>You will soon be able to check this out properly in a dashboard. In the meantime, you can query the <a class="reference external" href="https://unify.ai/docs/hub/reference/endpoints.html#get-credits">Get Credits Endpoint</a> of the API to get your current credit balance.</p>
 <section id="top-up-code">
 <h2>Top-up Code<a class="headerlink" href="#top-up-code" title="Link to this heading">#</a></h2>
-<p>You may have received a code to increase your number of free weekly credits, if that’s the case, you can
+<p>You may have received a code to increase your number credits, if that’s the case, you can
 activate it doing a request to this endpoint:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="s1">&#39;https://api.unify.ai/v0/promo?code=&lt;CODE&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
