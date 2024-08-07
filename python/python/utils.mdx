@@ -1,0 +1,323 @@
+---
+title: 'utils'
+---
+
+<a id="utils.list_models"></a>
+
+#### list\_models
+
+```python
+def list_models(provider: Optional[str] = None) -> List[str]
+```
+
+Get a list of available models, either in total or for a specific provider.
+
+**Arguments**:
+
+- `provider` _str_ - If specified, returns the list of models supporting this provider.
+  
+
+**Returns**:
+
+- `List[str]` - A list of available model names if successful, otherwise an empty list.
+
+**Raises**:
+
+- `BadRequestError` - If there was an HTTP error.
+- `ValueError` - If there was an error parsing the JSON response.
+
+<a id="utils.list_providers"></a>
+
+#### list\_providers
+
+```python
+def list_providers(model: Optional[str] = None) -> List[str]
+```
+
+Get a list of available providers, either in total or for a specific model.
+
+**Arguments**:
+
+- `model` _str_ - If specified, returns the list of providers supporting this model.
+  
+
+**Returns**:
+
+- `List[str]` - A list of provider names associated with the model if successful,
+  otherwise an empty list.
+
+**Raises**:
+
+- `BadRequestError` - If there was an HTTP error.
+- `ValueError` - If there was an error parsing the JSON response.
+
+<a id="utils.list_endpoints"></a>
+
+#### list\_endpoints
+
+```python
+def list_endpoints(model: Optional[str] = None,
+                   provider: Optional[str] = None) -> List[str]
+```
+
+Get a list of available endpoint, either in total or for a specific model or provider.
+
+**Arguments**:
+
+- `model` _str_ - If specified, returns the list of endpoint supporting this model.
+- `provider` _str_ - If specified, returns the list of endpoint supporting this provider.
+  
+
+**Returns**:
+
+- `List[str]` - A list of endpoint names if successful, otherwise an empty list.
+
+**Raises**:
+
+- `BadRequestError` - If there was an HTTP error.
+- `ValueError` - If there was an error parsing the JSON response.
+
+<a id="utils.upload_dataset_from_file"></a>
+
+#### upload\_dataset\_from\_file
+
+```python
+def upload_dataset_from_file(name: str,
+                             path: str,
+                             api_key: Optional[str] = None) -> str
+```
+
+Uploads a local file as a dataset to the platform.
+
+**Arguments**:
+
+- `name` _str_ - Name given to the uploaded dataset.
+- `path` _str_ - Path to the file to be uploaded.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+- `str` - Info msg with the response from the HTTP endpoint.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.upload_dataset_from_dictionary"></a>
+
+#### upload\_dataset\_from\_dictionary
+
+```python
+def upload_dataset_from_dictionary(name: str,
+                                   content: List[Dict[str, str]],
+                                   api_key: Optional[str] = None) -> str
+```
+
+Uploads a list of dictionaries as a dataset to the platform.
+Each dictionary in the list must contain a `prompt` key.
+
+**Arguments**:
+
+- `name` _str_ - Name given to the uploaded dataset.
+  content List[Dict[str, str]]: Path to the file to be uploaded.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+- `str` - Info msg with the response from the HTTP endpoint.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.delete_dataset"></a>
+
+#### delete\_dataset
+
+```python
+def delete_dataset(name: str, api_key: Optional[str] = None) -> str
+```
+
+Deletes a dataset from the platform.
+
+**Arguments**:
+
+- `name` _str_ - Name given to the uploaded dataset.
+- `path` _str_ - Path to the file to be uploaded.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+- `str` - Info msg with the response from the HTTP endpoint.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.download_dataset"></a>
+
+#### download\_dataset
+
+```python
+def download_dataset(name: str,
+                     path: Optional[str] = None,
+                     api_key: Optional[str] = None) -> Optional[str]
+```
+
+Downloads a dataset from the platform.
+
+**Arguments**:
+
+- `name` _str_ - Name of the dataset to download.
+- `path` _str_ - If specified, path to save the dataset.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+- `str` - If path is not specified, returns the dataset content, if
+  specified, returns None.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.list_datasets"></a>
+
+#### list\_datasets
+
+```python
+def list_datasets(api_key: Optional[str] = None) -> List[str]
+```
+
+Fetches a list of all uploaded datasets.
+
+**Arguments**:
+
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+- `List[str]` - List with the names of the uploaded datasets.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.evaluate"></a>
+
+#### evaluate
+
+```python
+def evaluate(dataset: str,
+             endpoints: List[str],
+             api_key: Optional[str] = None) -> str
+```
+
+Evaluates a list of endpoint on a given dataset.
+
+**Arguments**:
+
+- `name` _str_ - Name of the dataset to be uploaded.
+  endpoint List[str]: List of endpoint.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+- `str` - Info msg with the response from the HTTP endpoint.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.delete_evaluation"></a>
+
+#### delete\_evaluation
+
+```python
+def delete_evaluation(name: str,
+                      endpoint: str,
+                      api_key: Optional[str] = None) -> str
+```
+
+Deletes an evaluation from the platform.
+
+**Arguments**:
+
+- `name` _str_ - Name of the dataset in the evaluation.
+- `endpoint` _str_ - Name of the endpoint whose evaluation will be removed.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+- `str` - Info msg with the response from the HTTP endpoint.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.list_evaluations"></a>
+
+#### list\_evaluations
+
+```python
+def list_evaluations(dataset: Optional[str] = None,
+                     api_key: Optional[str] = None) -> List[str]
+```
+
+Fetches a list of all evaluations.
+
+**Arguments**:
+
+- `dataset` _str_ - Name of the dataset to fetch evaluation from.
+  If not specified, all evaluations will be returned.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  List[Dict[str, List[str]]]: List with the names of the uploaded datasets.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.get_credits"></a>
+
+#### get\_credits
+
+```python
+def get_credits(api_key: Optional[str] = None) -> float
+```
+
+Returns the credits remaining in the user account, in USD.
+
+**Arguments**:
+
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+- `float` - The credits remaining in USD.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="__init__"></a>
