@@ -128,13 +128,6 @@
         "api-reference/routing/delete_router",
         "api-reference/routing/get_deployed_routers"
       ]
-    },
-    {
-      "group": "benchmarks",
-      "pages": [
-        "api-reference/benchmarks/get_latest_benchmark",
-        "api-reference/benchmarks/filter_benchmark"
-      ]
     }
   ],
   "footerSocials": {
