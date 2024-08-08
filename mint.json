@@ -45,7 +45,10 @@
     {
       "group": "Universal API",
       "pages": [
-        "universal_api/unify_api"
+        "universal_api/overview",
+        "universal_api/querying_the_api",
+        "universal_api/billing",
+        "universal_api/advanced_features"
       ]
     },
     {

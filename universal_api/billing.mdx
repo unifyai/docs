@@ -1,0 +1,34 @@
+---
+title: 'Billing'
+---
+
+You only have to manage the balance and billing details for your Unify account, 
+and we handle the spending with each provider behind the scenes.
+
+You can see your balance, top-up your balance, and set automatic refill on the 
+[billing page](https://console.unify.ai/billing).
+
+You can also get your current credit balance with a HTTP request:
+
+```shell
+curl -X 'GET' \
+    'https://api.unify.ai/v0/get_credits' \
+    -H 'accept: application/json' \
+    -H 'Authorization: Bearer YOUR_API_KEY'
+```
+
+which will return something like:
+
+```json
+{
+    "id": "your_user_id",
+    "credits": 232.32
+}
+```
+
+This is also supported in our Python client:
+
+```python
+import unify
+credits = unify.utils.get_credits()
+```
