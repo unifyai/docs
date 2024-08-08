@@ -54,7 +54,9 @@
     {
       "group": "Benchmarking",
       "pages": [
-        "benchmarking/benchmarks"
+        "benchmarking/overview",
+        "benchmarking/preparing_your_dataset",
+        "benchmarking/benchmarking_your_dataset"
       ]
     },
     {
