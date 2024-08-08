@@ -62,7 +62,9 @@
     {
       "group": "Routing",
       "pages": [
-        "routing/router"
+        "routing/overview",
+        "routing/foundation_router",
+        "routing/fine_tuned_custom_router"
       ]
     },
     {

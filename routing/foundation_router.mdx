@@ -1,0 +1,28 @@
+---
+title: 'Foundation Router'
+---
+
+We have trained a general-purpose router on a wide variety of prompts. 
+To query the foundation router, select a green star on the graph on the 
+[chat interface](https://unify.ai/chat) and copy the router string.
+
+For example `router@q:1|c:4.65e-03|t:2.08e-05|i:2.07e-03`
+
+The parameters stand for the relative weighing of: quality, cost, time-to-first-token, 
+and inter-token latency. They are completely customizable, but it’s most meaningful to 
+select a configuration directly from the graph.
+
+
+### Filtering endpoints
+
+You can restrict the model and providers that are routed between, by specifying them in 
+the router string as follows: 
+
+`router@models:model1,model2,model3|providers:provider1,provider2`
+
+
+### Maximising throughput
+
+When using the router, if provider specific rate-limits are hit then the router moves on 
+to the next best model. This means that you can get much higher throughput than is 
+available from a single provider.
