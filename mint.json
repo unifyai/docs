@@ -43,11 +43,21 @@
       ]
     },
     {
-      "group": "Concepts",
+      "group": "Universal API",
       "pages": [
-        "concepts/unify_api",
-        "concepts/benchmarks",
-        "concepts/router"
+        "universal_api/unify_api",
+      ]
+    },
+    {
+      "group": "Benchmarking",
+      "pages": [
+        "benchmarking/benchmarks"
+      ]
+    },
+    {
+      "group": "Routing",
+      "pages": [
+        "routing/router"
       ]
     },
     {
