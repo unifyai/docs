@@ -1,22 +1,6 @@
 ---
-title: 'Universal API'
+title: 'Querying the API'
 ---
-
-There’s an ever expanding ocean of models and providers, with new LLMs coming out all the 
-time 🌊
-Each provider requires a unique API key, unique payment processing system, and unique 
-format for querying the API.
-When testing out different models and providers, it can quickly become very cumbersome to 
-manage all of these nuances 🫠
-
-Our Universal API provides:
-
-- A single, common interface for all models and providers 🟢
-- One account, with one balance and one API key 🔑
-
-To get your universal API key, simply [sign up](https://console.unify.ai)!
-
-## Querying the API
 
 You can interact with the API via:
 
@@ -208,61 +192,3 @@ const stream = await openai.chat.completions.create({
 
 Again, remember that the `model` field needs to contain a string of the form 
 `model@provider`.
-
-## Billing
-
-You only have to manage the balance and billing details for your Unify account, 
-and we handle the spending with each provider behind the scenes.
-
-You can see your balance, top-up your balance, and set automatic refill on the 
-[billing page](https://console.unify.ai/billing).
-
-You can also get your current credit balance with a HTTP request:
-
-```shell
-curl -X 'GET' \
-    'https://api.unify.ai/v0/get_credits' \
-    -H 'accept: application/json' \
-    -H 'Authorization: Bearer YOUR_API_KEY'
-```
-
-which will return something like:
-
-```json
-{
-    "id": "your_user_id",
-    "credits": 232.32
-}
-```
-
-This is also supported in our Python client:
-
-```python
-import unify
-credits = unify.utils.get_credits()
-```
-
-## Advanced features
-
-### Custom Endpoints
-
-If you have a custom model which is deployed as an endpoint on (for example a fine-tuned
-model with OpenAI or Together AI) you can 
-[add your own custom endpoint](https://console.unify.ai/endpoints).
-
-To create a custom endpoint, you need the Endpoint URL and the relevant API key. You can 
-query a custom endpoint using the model string `<endpoint-name>@custom`
-
-### LLM Fallbacks
-
-Sometimes individual providers have outages, which can disrupt live workflows in production. 
-
-To combat this, set a list of fallback models, so if one provider is down or fails for some 
-reason, the request will go to the next model on the list, and so on, until either the 
-request succeeds, or the end of the list is reached.
-
-To specify the list of fallback models, use `->` between individual model tags, so the 
-model string becomes `model_a@provider_a->model_b@provider_b`.
-
-There is no limit on the number of models that can be specified. The `model` field in the 
-response contains the model and provider that the request actually went to.
