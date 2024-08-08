@@ -37,9 +37,11 @@
   ],
   "navigation": [
     {
-      "group": "Home",
+      "group": "Basics",
       "pages": [
-        "home"
+        "basics/welcome",
+        "basics/quickstart",
+        "basics/billing"
       ]
     },
     {
@@ -47,7 +49,6 @@
       "pages": [
         "universal_api/overview",
         "universal_api/querying_the_api",
-        "universal_api/billing",
         "universal_api/advanced_features"
       ]
     },
