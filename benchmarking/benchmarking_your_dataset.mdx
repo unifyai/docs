@@ -1,0 +1,17 @@
+---
+title: 'Benchmarking Your Dataset'
+---
+
+In [your dashboard](https://console.unify.ai/dashboard), clicking `Select benchmark` and 
+then :code:`Benchmark your prompts` opens the interface to upload a dataset.
+
+When the benchmark finishes, you'll receive an email, and the graph will be displayed in 
+your [dashboard](https://console.unify.ai/dashboard).
+
+The x-axis can be set to represent `cost`, `time-to-first-token`, or `inter-token latency`, 
+and on either a linear or log scale.
+
+### How does it work?
+
+Currently, we use gpt4o-as-a-judge (cf. https://arxiv.org/abs/2306.05685), to evaluate the 
+quality of each model’s responses.
