@@ -51,14 +51,6 @@
       ]
     },
     {
-      "group": "Console",
-      "pages": [
-        "console/connecting_stack",
-        "console/running_benchmarks",
-        "console/building_router"
-      ]
-    },
-    {
       "group": "On-Prem",
       "pages": [
         "on_prem/on_prem_access",
