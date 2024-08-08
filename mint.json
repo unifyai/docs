@@ -37,6 +37,10 @@
   ],
   "navigation": [
     {
+      "group": "Home",
+      "pages": ["home"]
+    },
+    {
       "group": "Concepts",
       "pages": [
         "concepts/unify_api",
