@@ -3,7 +3,8 @@
   "name": "Unify Documentation",
   "logo": {
     "dark": "/images/unify_logo_only.png",
-    "light": "/images/unify_logo_only.png"
+    "light": "/images/unify_logo_only.png",
+    "href": "https://unify.ai"
   },
   "favicon": "/images/unify_logo_only.png",
   "colors": {
