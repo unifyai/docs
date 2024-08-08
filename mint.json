@@ -1,5 +1,4 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
   "name": "Unify Documentation",
   "logo": {
     "dark": "/images/unify_logo_only.png",
@@ -18,12 +17,12 @@
   },
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "name": "Contact",
+      "url": "https://unify.ai/contact"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
+    "name": "Console",
     "url": "https://console.unify.ai"
   },
   "tabs": [
@@ -141,8 +140,10 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "discord": "https://discord.com/invite/sXyFF8tDtm",
+    "x": "https://twitter.com/letsunifyai",
+    "youtube": "https://youtube.com/@unifyai",
+    "linkedin": "https://www.linkedin.com/company/unifyai",
+    "github": "https://github.com/unifyai"
   }
 }
