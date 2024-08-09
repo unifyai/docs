@@ -9,7 +9,8 @@ title: 'utils'
 ### list\_models
 
 ```python
-def list_models(provider: Optional[str] = None) -> List[str]
+def list_models(provider: Optional[str] = None,
+                api_key: Optional[str] = None) -> List[str]
 ```
 
 Get a list of available models, either in total or for a specific provider.
@@ -17,6 +18,8 @@ Get a list of available models, either in total or for a specific provider.
 **Arguments**:
 
 - `provider` _str_ - If specified, returns the list of models supporting this provider.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
   
 
 **Returns**:
@@ -35,7 +38,8 @@ Get a list of available models, either in total or for a specific provider.
 ### list\_providers
 
 ```python
-def list_providers(model: Optional[str] = None) -> List[str]
+def list_providers(model: Optional[str] = None,
+                   api_key: Optional[str] = None) -> List[str]
 ```
 
 Get a list of available providers, either in total or for a specific model.
@@ -43,6 +47,8 @@ Get a list of available providers, either in total or for a specific model.
 **Arguments**:
 
 - `model` _str_ - If specified, returns the list of providers supporting this model.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
   
 
 **Returns**:
@@ -63,7 +69,8 @@ Get a list of available providers, either in total or for a specific model.
 
 ```python
 def list_endpoints(model: Optional[str] = None,
-                   provider: Optional[str] = None) -> List[str]
+                   provider: Optional[str] = None,
+                   api_key: Optional[str] = None) -> List[str]
 ```
 
 Get a list of available endpoint, either in total or for a specific model or provider.
@@ -72,6 +79,8 @@ Get a list of available endpoint, either in total or for a specific model or pro
 
 - `model` _str_ - If specified, returns the list of endpoint supporting this model.
 - `provider` _str_ - If specified, returns the list of endpoint supporting this provider.
+- `api_key` _str_ - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
   
 
 **Returns**:
