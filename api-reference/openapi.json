@@ -1,1 +1,2688 @@
-{"openapi": "3.1.0", "info": {"title": "UnifyAI HTTP API Reference", "version": "0.1.0"}, "paths": {"/v0/get_credits": {"get": {"tags": ["User"], "summary": "Get Credits", "description": "Returns the number of available credits.", "operationId": "get_credits_v0_get_credits_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditsResponse"}, "example": {"id": "<USER_ID>", "credits": 10}}}}}, "security": [{"HTTPBearer": []}]}}, "/v0/promo": {"post": {"tags": ["User"], "summary": "Credits Code", "description": "Activates a promotional code.", "operationId": "credits_code_v0_promo_post", "security": [{"HTTPBearer": []}], "parameters": [{"name": "code", "in": "query", "required": true, "schema": {"type": "string", "description": "Promo code to be activated.", "title": "Code"}, "description": "Promo code to be activated."}, {"name": "user", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "ID of the user that receives the credits,defaults to the user making the request.", "title": "User"}, "description": "ID of the user that receives the credits,defaults to the user making the request."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Credits Code V0 Promo Post"}, "example": {"info": "Code {code} activated succesfully!"}}}}, "400": {"description": "Already activated code", "content": {"application/json": {"example": {"detail": "This code has already been activated."}}}}, "404": {"description": "Code Not Found", "content": {"application/json": {"example": {"detail": "Invalid code."}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/models": {"get": {"tags": ["Model and Endpoints"], "summary": "Get Models", "description": "Lists available models. If a provider is specified, returns the models that the provider supports.", "operationId": "get_models_v0_models_get", "security": [{"HTTPBearer": []}], "parameters": [{"name": "provider", "in": "query", "required": false, "schema": {"type": "string", "description": "Provider to get available models from.", "title": "Provider"}, "description": "Provider to get available models from."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "array", "items": {"type": "string"}, "title": "Response Get Models V0 Models Get"}, "example": ["model_a", "model_b", "..."]}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/inference": {"post": {"tags": ["Querying LLMs"], "summary": "Post Inference", "description": "DEPRECATION WARNING: This endpoint is deprecated and will be removed. Instead,\nuse the /chat/completions endpoint for LLM inference.", "operationId": "post_inference_v0_inference_post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/InferenceRequest"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}, "deprecated": true, "security": [{"HTTPBearer": []}]}}, "/v0/chat/completions": {"post": {"tags": ["Querying LLMs"], "summary": "Get Completions", "description": "OpenAI compatible /chat/completions endpoint for LLM inference.", "operationId": "get_completions_v0_chat_completions_post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/ChatCompletionRequest"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ChatCompletionResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}, "security": [{"HTTPBearer": []}]}}, "/v0/metrics": {"get": {"tags": ["Querying LLMs"], "summary": "Get Query Metrics", "description": "Returns aggregated telemetry data from previous queries to the `/chat/completions`\nendpoint.", "operationId": "get_query_metrics_v0_metrics_get", "security": [{"HTTPBearer": []}], "parameters": [{"name": "start_time", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.", "title": "Start Time"}, "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`."}, {"name": "end_time", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.", "title": "End Time"}, "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`."}, {"name": "models", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "Models to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `gpt-3.5-turbo,gpt-4o`", "title": "Models"}, "description": "Models to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `gpt-3.5-turbo,gpt-4o`"}, {"name": "providers", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "Providers to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `openai,together-ai`", "title": "Providers"}, "description": "Providers to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `openai,together-ai`"}, {"name": "interval", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "Number of seconds in the aggregation interval.", "default": 300, "title": "Interval"}, "description": "Number of seconds in the aggregation interval."}, {"name": "secondary_user_id", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "Secondary user id. The secondary user id will match any string previously sent in the `user` attribute of `/chat/completions`.", "title": "Secondary User Id"}, "description": "Secondary user id. The secondary user id will match any string previously sent in the `user` attribute of `/chat/completions`."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "title": "Response Get Query Metrics V0 Metrics Get"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/custom_endpoint": {"get": {"tags": ["Custom Endpoints and API keys"], "summary": "Get Custom Endpoints", "description": "Returns a list of the available custom endpoints.", "operationId": "get_custom_endpoints_v0_custom_endpoint_get", "security": [{"HTTPBearer": []}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "array", "items": {"$ref": "#/components/schemas/CustomEndpointModelResponse"}, "title": "Response Get Custom Endpoints V0 Custom Endpoint Get"}}}}}}, "put": {"tags": ["Custom Endpoints and API keys"], "summary": "Create Custom Endpoint", "description": "Creates a custom endpoint. This endpoint must support the OpenAI `/chat/completions`\nformat. To query your custom endpoint, replace your endpoint string with `<name>@custom`\nwhen querying the unified API.", "operationId": "create_custom_endpoint_v0_custom_endpoint_put", "security": [{"HTTPBearer": []}], "parameters": [{"name": "name", "in": "query", "required": true, "schema": {"type": "string", "description": "Alias for the custom endpoint. This will be the name used to call the endpoint.", "title": "Name"}, "description": "Alias for the custom endpoint. This will be the name used to call the endpoint."}, {"name": "url", "in": "query", "required": true, "schema": {"type": "string", "description": "Base URL of the endpoint being called. Must support the OpenAI format.", "title": "Url"}, "description": "Base URL of the endpoint being called. Must support the OpenAI format."}, {"name": "key_name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the API key that will be passed as part of the query.", "title": "Key Name"}, "description": "Name of the API key that will be passed as part of the query."}, {"name": "mdl_name", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.", "title": "Mdl Name"}, "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}, "example": {"info": "Custom endpoint created succesfully!"}}}}, "404": {"description": "Custom API Key Not Found", "content": {"application/json": {"example": {"detail": "Custom API Key not found."}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/custom_api_key": {"get": {"tags": ["Custom Endpoints and API keys"], "summary": "Get Custom Api Keys", "description": "Returns a list of the available custom API keys.", "operationId": "get_custom_api_keys_v0_custom_api_key_get", "security": [{"HTTPBearer": []}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "array", "items": {"$ref": "#/components/schemas/CustomApiKeyModelResponse"}, "title": "Response Get Custom Api Keys V0 Custom Api Key Get"}}}}}}, "put": {"tags": ["Custom Endpoints and API keys"], "summary": "Create Custom Api Key", "description": "Stores a custom API key from a LLM provider in your account. This can be used in two ways:\n1. As part of a custom endpoint. If you define a custom endpoint, you can reference a custom API\nkey. This will be sent to the endpoint as part of the request.\n2. To use your own API keys in standard providers. If any of your custom API keys matches a provider\nname and you pass `use_custom_keys=True` to the `/chat/completions` endpoint, this API key will\nbe used, charging your account directly instead of consuming Unify credits.", "operationId": "create_custom_api_key_v0_custom_api_key_put", "security": [{"HTTPBearer": []}], "parameters": [{"name": "key", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the API key.", "title": "Key"}, "description": "Name of the API key."}, {"name": "value", "in": "query", "required": true, "schema": {"type": "string", "description": "Value of the API key.", "title": "Value"}, "description": "Value of the API key."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}, "example": {"info": "API key created succesfully!"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/custom_endpoint/benchmark": {"post": {"tags": ["Custom Endpoints and API keys"], "summary": "Upload Custom Benchmark", "operationId": "upload_custom_benchmark_v0_custom_endpoint_benchmark_post", "security": [{"HTTPBearer": []}], "parameters": [{"name": "endpoint_name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the custom endpoint to submit a benchmark for.", "title": "Endpoint Name"}, "description": "Name of the custom endpoint to submit a benchmark for."}, {"name": "metric_name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the metric to submit. Allowed metrics are: \"input-cost\", \"output-cost\", \"tokens-per-second\", \"time-to-first-token\", \"inter-token-latency\", \"end-2-end-latency\", \"cold-start\".", "title": "Metric Name"}, "description": "Name of the metric to submit. Allowed metrics are: \"input-cost\", \"output-cost\", \"tokens-per-second\", \"time-to-first-token\", \"inter-token-latency\", \"end-2-end-latency\", \"cold-start\"."}, {"name": "value", "in": "query", "required": true, "schema": {"type": "number", "description": "Value of the metric to submit.", "title": "Value"}, "description": "Value of the metric to submit."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}, "example": {"info": "Custom endpoint benchmark uploaded succesfully!"}}}}, "400": {"description": "Benchmark not valid", "content": {"application/json": {"example": {"detail": "Invalid data submitted"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/custom_endpoint/get_benchmark": {"get": {"tags": ["Custom Endpoints and API keys"], "summary": "Get Custom Benchmarks", "operationId": "get_custom_benchmarks_v0_custom_endpoint_get_benchmark_get", "security": [{"HTTPBearer": []}], "parameters": [{"name": "endpoint_name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the custom endpoint to get a benchmark for.", "title": "Endpoint Name"}, "description": "Name of the custom endpoint to get a benchmark for."}, {"name": "metric_name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the metric to get the benchmark of.", "title": "Metric Name"}, "description": "Name of the metric to get the benchmark of."}, {"name": "start_time", "in": "query", "required": false, "schema": {"type": "string", "description": "Start time of window to get benchmarks between. Format YYYY-MM-DD", "default": "2024-01-01", "title": "Start Time"}, "description": "Start time of window to get benchmarks between. Format YYYY-MM-DD"}, {"name": "end_time", "in": "query", "required": false, "schema": {"type": "string", "description": "End time of window to get benchmarks between. Format YYYY-MM-DD", "default": "2024-12-12", "title": "End Time"}, "description": "End time of window to get benchmarks between. Format YYYY-MM-DD"}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/dataset": {"post": {"tags": ["Dataset"], "summary": "Upload Dataset", "description": "Uploads a custom dataset to the platform.\n\nThe uploaded file must be a JSONL file with **at least** a `prompt` key:\n\n```\n{\"prompt\": \"This is the first prompt\"}\n{\"prompt\": \"This is the second prompt\"}\n{\"prompt\": \"This is the third prompt\"}\n```\n\nAdditionally, you can include a `ref_answer` key, which will be accounted\nduring the evaluations.\n\n```\n{\"prompt\": \"This is the first prompt\", \"ref_answer\": \"First reference answer\"}\n{\"prompt\": \"This is the second prompt\", \"ref_answer\": \"Second reference answer\"}\n{\"prompt\": \"This is the third prompt\", \"ref_answer\": \"Third reference answer\"}\n```", "operationId": "upload_dataset_v0_dataset_post", "security": [{"HTTPBearer": []}], "requestBody": {"required": true, "content": {"application/x-www-form-urlencoded": {"schema": {"$ref": "#/components/schemas/Body_upload_dataset_v0_dataset_post"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Upload Dataset V0 Dataset Post"}, "example": {"info": "Dataset uploaded sucessfully!"}}}}, "400": {"description": "Dataset already exists", "content": {"application/json": {"example": {"detail": "A dataset with this name already exists. Please, choose a different one."}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "delete": {"tags": ["Dataset"], "summary": "Delete Dataset", "description": "Deletes a previously updated dataset and any relevant artifacts from the platform.", "operationId": "delete_dataset_v0_dataset_delete", "security": [{"HTTPBearer": []}], "parameters": [{"name": "name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the dataset.", "title": "Name"}, "description": "Name of the dataset."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Delete Dataset V0 Dataset Delete"}, "example": {"info": "Dataset deleted succesfully!"}}}}, "400": {"description": "Invalid dataset name", "content": {"application/json": {"example": {"detail": "Invalid name for a dataset. Please, choose a different one."}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "get": {"tags": ["Dataset"], "summary": "Download Dataset", "description": "Downloads a specific dataset from the platform.", "operationId": "download_dataset_v0_dataset_get", "security": [{"HTTPBearer": []}], "parameters": [{"name": "name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the dataset.", "title": "Name"}, "description": "Name of the dataset."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "array", "items": {"type": "object", "additionalProperties": {"type": "string"}}, "title": "Response Download Dataset V0 Dataset Get"}, "example": [{"prompt": "This is the first prompt"}, {"prompt": "This is the second prompt"}, "..."]}}}, "400": {"description": "Invalid dataset name", "content": {"application/json": {"example": {"detail": "Invalid name for a dataset. Please, choose a different one."}}}}, "404": {"description": "Dataset Not Found", "content": {"application/json": {"example": {"detail": "This dataset does not exist."}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/dataset/list": {"get": {"tags": ["Dataset"], "summary": "List Datasets", "description": "Lists all the custom datasets uploaded by the user to the platform.", "operationId": "list_datasets_v0_dataset_list_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"items": {"type": "string"}, "type": "array", "title": "Response List Datasets V0 Dataset List Get"}, "example": ["dataset_1", "dataset_2", "..."]}}}}, "security": [{"HTTPBearer": []}]}}, "/v0/dataset/rename": {"put": {"tags": ["Dataset"], "summary": "Rename Dataset", "description": "Renames a previously updated dataset.", "operationId": "rename_dataset_v0_dataset_rename_put", "security": [{"HTTPBearer": []}], "parameters": [{"name": "name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the dataset.", "title": "Name"}, "description": "Name of the dataset."}, {"name": "new_name", "in": "query", "required": true, "schema": {"type": "string", "description": "New name of the dataset.", "title": "New Name"}, "description": "New name of the dataset."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Rename Dataset V0 Dataset Rename Put"}, "example": {"info": "Dataset name updated sucessfully!"}}}}, "400": {"description": "Dataset already exists", "content": {"application/json": {"example": {"detail": "A dataset with this name already exists. Please, choose a different one."}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/evaluation": {"post": {"tags": ["Dataset Evaluation"], "summary": "Evaluate Dataset", "description": "Evaluates the quality of the responses from a given LLM endpoint in a custom dataset.", "operationId": "evaluate_dataset_v0_evaluation_post", "security": [{"HTTPBearer": []}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Body_evaluate_dataset_v0_evaluation_post"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Evaluate Dataset V0 Evaluation Post"}, "example": {"info": "Dataset evaluation started! You will receive an email soon!"}}}}, "400": {"description": "Invalid Endpoints", "content": {"application/json": {"example": {"detail": "Invalid input. Couldn't find endpoints [model_1@endpoint_1, model_2@endpoint_2]."}}}}, "404": {"description": "Dataset Not Found", "content": {"application/json": {"example": {"detail": "This dataset does not exist!"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "delete": {"tags": ["Dataset Evaluation"], "summary": "Delete Dataset Evaluation", "description": "Deletes a specific dataset evaluation quality score\nand the corresponding artifacts.", "operationId": "delete_dataset_evaluation_v0_evaluation_delete", "security": [{"HTTPBearer": []}], "parameters": [{"name": "dataset", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the dataset to delete an evaluation from.", "title": "Dataset"}, "description": "Name of the dataset to delete an evaluation from."}, {"name": "endpoint", "in": "query", "required": true, "schema": {"type": "string", "description": "Endpoint whose evaluation will be deleted.", "title": "Endpoint"}, "description": "Endpoint whose evaluation will be deleted."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Delete Dataset Evaluation V0 Evaluation Delete"}, "example": {"info": "Dataset evaluation deleted!"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/evaluation/list": {"get": {"tags": ["Dataset Evaluation"], "summary": "Get Dataset Evaluations", "description": "Fetches a list of the endpoints that have been evaluated on a given dataset.", "operationId": "get_dataset_evaluations_v0_evaluation_list_get", "security": [{"HTTPBearer": []}], "parameters": [{"name": "dataset", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "Name of the dataset to fetch evaluation from. If not specified, all evaluations will be returned.", "title": "Dataset"}, "description": "Name of the dataset to fetch evaluation from. If not specified, all evaluations will be returned."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}, "title": "Response Get Dataset Evaluations V0 Evaluation List Get"}, "example": [{"dataset_1": ["model_1@provider_1", "model_2@provider_2", "..."]}, {"dataset_2": ["..."]}, {"...": ["..."]}]}}}, "404": {"description": "Dataset Not Found", "content": {"application/json": {"example": {"detail": "This dataset does not exist!"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/evaluation/results": {"get": {"tags": ["Dataset Evaluation"], "summary": "Get Dataset Evaluation Results", "description": "Fetches the results of a given dataset evaluation.", "operationId": "get_dataset_evaluation_results_v0_evaluation_results_get", "security": [{"HTTPBearer": []}], "parameters": [{"name": "dataset", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "Name of the dataset to fetch evaluation from.", "title": "Dataset"}, "description": "Name of the dataset to fetch evaluation from."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "title": "Response Get Dataset Evaluation Results V0 Evaluation Results Get"}, "example": [{"judge": {"model_1@provider_1": "score_1", "model_2@provider_2": "score_2"}, "input_tokens": "num_tokens_in_dataset", "output_tokens": {"model_1@provider_1": "num_tokens_in_endpoint_responses"}}]}}}, "404": {"description": "Dataset Not Found", "content": {"application/json": {"example": {"detail": "This dataset does not exist!"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/router/train": {"post": {"tags": ["Routing"], "summary": "Train Router", "description": "Trains a router based on a dataset and a set of endpoints. To use a\ncustom-trained router, you will need to deploy the resulting artifacts to\na live endpoint. To do this, use the `/router/deploy` POST endpoint.", "operationId": "train_router_v0_router_train_post", "security": [{"HTTPBearer": []}], "parameters": [{"name": "name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the router.", "title": "Name"}, "description": "Name of the router."}, {"name": "dataset", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints.", "title": "Dataset"}, "description": "Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints."}, {"name": "endpoints", "in": "query", "required": true, "schema": {"type": "array", "items": {"type": "string"}, "description": "List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format.", "title": "Endpoints"}, "description": "List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Train Router V0 Router Train Post"}, "example": {"info": "Router training started! You will receive an email soon!"}}}}, "400": {"description": "Router Training Already Exist", "content": {"application/json": {"example": {"detail": "A router with this name has already been trained. Please, choose a different one."}}}}, "404": {"description": "Dataset Not Found", "content": {"application/json": {"example": {"detail": "This dataset does not exist."}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "delete": {"tags": ["Routing"], "summary": "Delete Router Train", "description": "Deletes the training files of a specific router.", "operationId": "delete_router_train_v0_router_train_delete", "security": [{"HTTPBearer": []}], "parameters": [{"name": "name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the router to delete.", "title": "Name"}, "description": "Name of the router to delete."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Delete Router Train V0 Router Train Delete"}, "example": {"info": "Trained router deleted!"}}}}, "400": {"description": "Router Training Does Not Exist", "content": {"application/json": {"example": {"detail": "This router training doesn't exist. Please, choose a different one or trigger the training first."}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/router/train/list": {"get": {"tags": ["Routing"], "summary": "Get Trained Routers", "description": "Fetches a list of the trained routers and relevant metadata. These routers are training\nartifacts and therefore don't imply an active, deployed router. To fetch a list of\ndeployed routers, you can use the /router/deploy/list GET endpoint.", "operationId": "get_trained_routers_v0_router_train_list_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"additionalProperties": {"additionalProperties": {"anyOf": [{"type": "string"}, {"items": {"type": "string"}, "type": "array"}]}, "type": "object"}, "type": "object", "title": "Response Get Trained Routers V0 Router Train List Get"}, "example": {"router_1": {"dataset": "dataset_1", "endpoints": ["model@provider", "..."]}, "...": ["..."]}}}}}, "security": [{"HTTPBearer": []}]}}, "/v0/router/deploy": {"post": {"tags": ["Routing"], "summary": "Deploy Router", "description": "Deploys a trained router to a live endpoint.\n\nTo use this router, replace the model in the endpoint string with the\nrouter name. E.g. you can use `router-abc` by calling the\n`router-abc@q:1` endpoint.", "operationId": "deploy_router_v0_router_deploy_post", "security": [{"HTTPBearer": []}], "parameters": [{"name": "name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the router to deploy.", "title": "Name"}, "description": "Name of the router to deploy."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Deploy Router V0 Router Deploy Post"}, "example": {"info": "Router deployment started! You will receive an email soon!"}}}}, "400": {"description": "Router Training Does Not Exist", "content": {"application/json": {"example": {"detail": "This router training doesn't exist. Please, choose a different one or trigger the training first."}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "delete": {"tags": ["Routing"], "summary": "Delete Router", "description": "Deactivates and deletes a previously deployed router.", "operationId": "delete_router_v0_router_deploy_delete", "security": [{"HTTPBearer": []}], "parameters": [{"name": "name", "in": "query", "required": true, "schema": {"type": "string", "description": "Name of the router to un-deploy.", "title": "Name"}, "description": "Name of the router to un-deploy."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "string"}, "title": "Response Delete Router V0 Router Deploy Delete"}, "example": {"info": "Router deletion started! You will receive an email soon!"}}}}, "400": {"description": "Router Not Deployed", "content": {"application/json": {"example": {"detail": "This router is not deployed!"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/router/deploy/list": {"get": {"tags": ["Routing"], "summary": "Get Deployed Routers", "description": "Fetches a list of the deployed routers and relevant metadata. These routers only\ninclude deployed routers. To fetch a list of all trained routers,\nyou can use the /router/train/list GET endpoint.\n\nTo use any of these routers, replace the model in the endpoint string with the\nrouter name. E.g. you can use `router-abc` with the endpoint `router-abc@q:1`.", "operationId": "get_deployed_routers_v0_router_deploy_list_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"additionalProperties": {"additionalProperties": {"anyOf": [{"type": "string"}, {"items": {"type": "string"}, "type": "array"}]}, "type": "object"}, "type": "object", "title": "Response Get Deployed Routers V0 Router Deploy List Get"}, "example": {"router_1": {"dataset": "dataset_1", "endpoints": ["model@provider", "..."]}, "...": ["..."]}}}}}, "security": [{"HTTPBearer": []}]}}, "/v0/endpoints": {"get": {"tags": ["Model and Endpoints"], "summary": "Get Endpoints", "description": "Lists available endpoints in `model@provider` format. If `model` or `provider` are specified,\nonly the matching endpoints will be listed.", "operationId": "get_endpoints_v0_endpoints_get", "security": [{"HTTPBearer": []}], "parameters": [{"name": "model", "in": "query", "required": false, "schema": {"type": "string", "description": "Model to get available endpoints from.", "title": "Model"}, "description": "Model to get available endpoints from."}, {"name": "provider", "in": "query", "required": false, "schema": {"type": "string", "description": "Provider to get available endpoints from.", "title": "Provider"}, "description": "Provider to get available endpoints from."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "array", "items": {"type": "string"}, "title": "Response Get Endpoints V0 Endpoints Get"}, "example": ["model_a@provider_1", "model_a@provider_2", "..."]}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/providers": {"get": {"tags": ["Model and Endpoints"], "summary": "Get Providers", "description": "Lists available providers. If a model is specified, returns the providers that support that model.", "operationId": "get_providers_v0_providers_get", "security": [{"HTTPBearer": []}], "parameters": [{"name": "model", "in": "query", "required": false, "schema": {"type": "string", "description": "Model to get available providers from.", "title": "Model"}, "description": "Model to get available providers from."}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "array", "items": {"type": "string"}, "title": "Response Get Providers V0 Providers Get"}, "example": ["provider_1", "provider_2", "..."]}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/benchmarks": {"get": {"tags": ["benchmarks"], "summary": "Get Latest Benchmark", "operationId": "get_latest_benchmark_v0_benchmarks_get", "security": [{"HTTPBearer": []}], "parameters": [{"name": "model", "in": "query", "required": true, "schema": {"type": "string", "description": "Model name", "title": "Model"}, "description": "Model name"}, {"name": "provider", "in": "query", "required": true, "schema": {"type": "string", "description": "Provider name", "title": "Provider"}, "description": "Provider name"}, {"name": "regime", "in": "query", "required": false, "schema": {"type": "string", "default": "concurrent-1", "title": "Regime"}}, {"name": "region", "in": "query", "required": false, "schema": {"type": "string", "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\".", "default": "Belgium", "title": "Region"}, "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\"."}, {"name": "seq_len", "in": "query", "required": false, "schema": {"type": "string", "default": "short", "title": "Seq Len"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/v0/benchmarks/filter": {"post": {"tags": ["benchmarks"], "summary": "Filter Benchmark", "operationId": "filter_benchmark_v0_benchmarks_filter_post", "security": [{"HTTPBearer": []}], "parameters": [{"name": "model", "in": "query", "required": true, "schema": {"type": "string", "title": "Model"}}, {"name": "provider", "in": "query", "required": true, "schema": {"type": "string", "title": "Provider"}}, {"name": "start_time", "in": "query", "required": true, "schema": {"type": "string", "title": "Start Time"}}, {"name": "end_time", "in": "query", "required": true, "schema": {"type": "string", "title": "End Time"}}, {"name": "regime", "in": "query", "required": false, "schema": {"type": "string", "default": "concurrent-1", "title": "Regime"}}, {"name": "region", "in": "query", "required": false, "schema": {"type": "string", "default": "Belgium", "title": "Region"}}, {"name": "seq_len", "in": "query", "required": false, "schema": {"type": "string", "default": "short", "title": "Seq Len"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}}, "components": {"schemas": {"Body_evaluate_dataset_v0_evaluation_post": {"properties": {"dataset": {"type": "string", "title": "Dataset", "description": "Name of the uploaded dataset to evaluate."}, "endpoint": {"type": "string", "title": "Endpoint", "description": "Endpoint to evaluate. Endpoints must be specified using the `model@provider` format."}, "judge_models": {"items": {"type": "string"}, "type": "array", "title": "Judge Models", "description": "List of the LLMs to use as a judge", "default": ["gpt-4o@openai"]}, "system_prompt": {"type": "string", "title": "System Prompt", "description": "Optionally change the system prompt", "default": ""}, "class_cfg": {"items": {"type": "object"}, "type": "array", "title": "Class Cfg", "description": "A description of the classes for judging.", "default": []}}, "type": "object", "required": ["dataset", "endpoint"], "title": "Body_evaluate_dataset_v0_evaluation_post"}, "Body_upload_dataset_v0_dataset_post": {"properties": {"file": {"type": "string", "format": "binary", "title": "File"}, "name": {"type": "string", "title": "Name"}}, "type": "object", "required": ["file", "name"], "title": "Body_upload_dataset_v0_dataset_post"}, "ChatCompletionRequest": {"properties": {"model": {"type": "string", "title": "Model"}, "messages": {"items": {"type": "object"}, "type": "array", "title": "Messages"}, "temperature": {"type": "number", "title": "Temperature", "default": 0.9}, "stream": {"type": "boolean", "title": "Stream", "default": false}, "max_tokens": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Max Tokens"}, "frequency_penalty": {"anyOf": [{"type": "number"}, {"type": "null"}], "title": "Frequency Penalty"}, "logit_bias": {"anyOf": [{"additionalProperties": {"type": "number"}, "type": "object"}, {"type": "null"}], "title": "Logit Bias"}, "logprobs": {"anyOf": [{"type": "boolean"}, {"type": "null"}], "title": "Logprobs"}, "top_logprobs": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Top Logprobs"}, "n": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "N"}, "presence_penalty": {"anyOf": [{"type": "number"}, {"type": "null"}], "title": "Presence Penalty"}, "response_format": {"anyOf": [{"additionalProperties": {"type": "string"}, "type": "object"}, {"type": "null"}], "title": "Response Format"}, "seed": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Seed"}, "stop": {"anyOf": [{"type": "string"}, {"items": {"type": "string"}, "type": "array"}, {"type": "null"}], "title": "Stop"}, "top_p": {"anyOf": [{"type": "number"}, {"type": "null"}], "title": "Top P"}, "tools": {"anyOf": [{"items": {}, "type": "array"}, {"type": "null"}], "title": "Tools"}, "tool_choice": {"anyOf": [{}, {"type": "null"}], "title": "Tool Choice"}, "user": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "User"}, "signature": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Signature"}, "use_custom_keys": {"anyOf": [{"type": "boolean"}, {"type": "null"}], "title": "Use Custom Keys", "default": false}}, "type": "object", "required": ["model", "messages"], "title": "ChatCompletionRequest", "description": "Request model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    messages (List[Dict[str]]): List of messages for completion.\n    temperature (float): The temperature parameter for generating completions.\n    stream (bool): Whether to stream the response."}, "ChatCompletionResponse": {"properties": {"model": {"type": "string", "title": "Model"}, "created": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Created"}, "id": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Id"}, "object": {"type": "string", "title": "Object", "default": "chat.completion"}, "usage": {"type": "object", "title": "Usage"}, "choices": {"items": {"type": "object"}, "type": "array", "title": "Choices"}}, "type": "object", "required": ["model", "usage", "choices"], "title": "ChatCompletionResponse", "description": "Response model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    created (int): Timestamp indicating when the response was created.\n    id (str): Identifier for the completion response.\n    object (str): The type of object, defaults to \"chat.completion\".\n    usage (dict): Usage statistics or additional information.\n    choices (List[Dict]): List of completion choices."}, "CreditsResponse": {"properties": {"id": {"type": "string", "title": "Id"}, "credits": {"type": "number", "title": "Credits"}}, "type": "object", "required": ["id", "credits"], "title": "CreditsResponse", "description": "Response model for credits models.\n\nAttributes:\n    id (str): The id of the users.\n    credits (float): The credits of the users."}, "CustomApiKeyModelResponse": {"properties": {"key": {"type": "string", "title": "Key"}, "value": {"type": "string", "title": "Value"}}, "type": "object", "required": ["key", "value"], "title": "CustomApiKeyModelResponse"}, "CustomEndpointModelResponse": {"properties": {"name": {"type": "string", "title": "Name"}, "mdl_name": {"type": "string", "title": "Mdl Name"}, "url": {"type": "string", "title": "Url"}, "key": {"type": "string", "title": "Key"}}, "type": "object", "required": ["name", "mdl_name", "url", "key"], "title": "CustomEndpointModelResponse"}, "HTTPValidationError": {"properties": {"detail": {"items": {"$ref": "#/components/schemas/ValidationError"}, "type": "array", "title": "Detail"}}, "type": "object", "title": "HTTPValidationError"}, "InferenceRequest": {"properties": {"model": {"type": "string", "title": "Model"}, "provider": {"type": "string", "title": "Provider"}, "arguments": {"type": "object", "title": "Arguments"}, "signature": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Signature"}}, "type": "object", "required": ["model", "provider", "arguments"], "title": "InferenceRequest", "description": "Request model for any model in the hub.\nAttributes:\n    model (str): The model identifier.\n    provider (str): The provider identifier.\n    arguments (Dict[str, Any]]): Model-specific arguments."}, "ValidationError": {"properties": {"loc": {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}]}, "type": "array", "title": "Location"}, "msg": {"type": "string", "title": "Message"}, "type": {"type": "string", "title": "Error Type"}}, "type": "object", "required": ["loc", "msg", "type"], "title": "ValidationError"}}, "securitySchemes": {"HTTPBearer": {"type": "http", "scheme": "bearer"}}}}
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "UnifyAI HTTP API Reference",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/v0/get_credits": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Credits",
+                "description": "Returns the number of available credits.",
+                "operationId": "get_credits_v0_get_credits_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreditsResponse"
+                                },
+                                "example": {
+                                    "id": "<USER_ID>",
+                                    "credits": 10
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/promo": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Credits Code",
+                "description": "Activates a promotional code.",
+                "operationId": "credits_code_v0_promo_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Promo code to be activated.",
+                            "title": "Code"
+                        },
+                        "description": "Promo code to be activated."
+                    },
+                    {
+                        "name": "user",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "ID of the user that receives the credits,defaults to the user making the request.",
+                            "title": "User"
+                        },
+                        "description": "ID of the user that receives the credits,defaults to the user making the request."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Credits Code V0 Promo Post"
+                                },
+                                "example": {
+                                    "info": "Code {code} activated succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Already activated code",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This code has already been activated."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Code Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid code."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/models": {
+            "get": {
+                "tags": [
+                    "Model and Endpoints"
+                ],
+                "summary": "Get Models",
+                "description": "Lists available models. If a provider is specified, returns the models that the provider supports.",
+                "operationId": "get_models_v0_models_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Provider to get available models from.",
+                            "title": "Provider"
+                        },
+                        "description": "Provider to get available models from."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Get Models V0 Models Get"
+                                },
+                                "example": [
+                                    "model_a",
+                                    "model_b",
+                                    "..."
+                                ]
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/inference": {
+            "post": {
+                "tags": [
+                    "Querying LLMs"
+                ],
+                "summary": "Post Inference",
+                "description": "DEPRECATION WARNING: This endpoint is deprecated and will be removed. Instead,\nuse the /chat/completions endpoint for LLM inference.",
+                "operationId": "post_inference_v0_inference_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InferenceRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": true,
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/chat/completions": {
+            "post": {
+                "tags": [
+                    "Querying LLMs"
+                ],
+                "summary": "Get Completions",
+                "description": "OpenAI compatible /chat/completions endpoint for LLM inference.",
+                "operationId": "get_completions_v0_chat_completions_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChatCompletionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatCompletionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/metrics": {
+            "get": {
+                "tags": [
+                    "Querying LLMs"
+                ],
+                "summary": "Get Query Metrics",
+                "description": "Returns aggregated telemetry data from previous queries to the `/chat/completions`\nendpoint.",
+                "operationId": "get_query_metrics_v0_metrics_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "start_time",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
+                            "title": "Start Time"
+                        },
+                        "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`."
+                    },
+                    {
+                        "name": "end_time",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
+                            "title": "End Time"
+                        },
+                        "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`."
+                    },
+                    {
+                        "name": "models",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Models to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `gpt-3.5-turbo,gpt-4o`",
+                            "title": "Models"
+                        },
+                        "description": "Models to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `gpt-3.5-turbo,gpt-4o`"
+                    },
+                    {
+                        "name": "providers",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Providers to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `openai,together-ai`",
+                            "title": "Providers"
+                        },
+                        "description": "Providers to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `openai,together-ai`"
+                    },
+                    {
+                        "name": "interval",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Number of seconds in the aggregation interval.",
+                            "default": 300,
+                            "title": "Interval"
+                        },
+                        "description": "Number of seconds in the aggregation interval."
+                    },
+                    {
+                        "name": "secondary_user_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Secondary user id. The secondary user id will match any string previously sent in the `user` attribute of `/chat/completions`.",
+                            "title": "Secondary User Id"
+                        },
+                        "description": "Secondary user id. The secondary user id will match any string previously sent in the `user` attribute of `/chat/completions`."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Get Query Metrics V0 Metrics Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/custom_endpoint": {
+            "get": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Get Custom Endpoints",
+                "description": "Returns a list of the available custom endpoints.",
+                "operationId": "get_custom_endpoints_v0_custom_endpoint_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomEndpointModelResponse"
+                                    },
+                                    "title": "Response Get Custom Endpoints V0 Custom Endpoint Get"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Create Custom Endpoint",
+                "description": "Creates a custom endpoint. This endpoint must support the OpenAI `/chat/completions`\nformat. To query your custom endpoint, replace your endpoint string with `<name>@custom`\nwhen querying the unified API.",
+                "operationId": "create_custom_endpoint_v0_custom_endpoint_put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Alias for the custom endpoint. This will be the name used to call the endpoint.",
+                            "title": "Name"
+                        },
+                        "description": "Alias for the custom endpoint. This will be the name used to call the endpoint."
+                    },
+                    {
+                        "name": "url",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Base URL of the endpoint being called. Must support the OpenAI format.",
+                            "title": "Url"
+                        },
+                        "description": "Base URL of the endpoint being called. Must support the OpenAI format."
+                    },
+                    {
+                        "name": "key_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the API key that will be passed as part of the query.",
+                            "title": "Key Name"
+                        },
+                        "description": "Name of the API key that will be passed as part of the query."
+                    },
+                    {
+                        "name": "mdl_name",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.",
+                            "title": "Mdl Name"
+                        },
+                        "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Custom endpoint created succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Custom API Key Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Custom API Key not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/custom_api_key": {
+            "get": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Get Custom Api Keys",
+                "description": "Returns a list of the available custom API keys.",
+                "operationId": "get_custom_api_keys_v0_custom_api_key_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomApiKeyModelResponse"
+                                    },
+                                    "title": "Response Get Custom Api Keys V0 Custom Api Key Get"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Create Custom Api Key",
+                "description": "Stores a custom API key from a LLM provider in your account. This can be used in two ways:\n1. As part of a custom endpoint. If you define a custom endpoint, you can reference a custom API\nkey. This will be sent to the endpoint as part of the request.\n2. To use your own API keys in standard providers. If any of your custom API keys matches a provider\nname and you pass `use_custom_keys=True` to the `/chat/completions` endpoint, this API key will\nbe used, charging your account directly instead of consuming Unify credits.",
+                "operationId": "create_custom_api_key_v0_custom_api_key_put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the API key.",
+                            "title": "Key"
+                        },
+                        "description": "Name of the API key."
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Value of the API key.",
+                            "title": "Value"
+                        },
+                        "description": "Value of the API key."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "API key created succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/custom_endpoint/benchmark": {
+            "post": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Upload Custom Benchmark",
+                "operationId": "upload_custom_benchmark_v0_custom_endpoint_benchmark_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "endpoint_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the custom endpoint to submit a benchmark for.",
+                            "title": "Endpoint Name"
+                        },
+                        "description": "Name of the custom endpoint to submit a benchmark for."
+                    },
+                    {
+                        "name": "metric_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the metric to submit. Allowed metrics are: \"input-cost\", \"output-cost\", \"tokens-per-second\", \"time-to-first-token\", \"inter-token-latency\", \"end-2-end-latency\", \"cold-start\".",
+                            "title": "Metric Name"
+                        },
+                        "description": "Name of the metric to submit. Allowed metrics are: \"input-cost\", \"output-cost\", \"tokens-per-second\", \"time-to-first-token\", \"inter-token-latency\", \"end-2-end-latency\", \"cold-start\"."
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "description": "Value of the metric to submit.",
+                            "title": "Value"
+                        },
+                        "description": "Value of the metric to submit."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Custom endpoint benchmark uploaded succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Benchmark not valid",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid data submitted"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/custom_endpoint/get_benchmark": {
+            "get": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Get Custom Benchmarks",
+                "operationId": "get_custom_benchmarks_v0_custom_endpoint_get_benchmark_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "endpoint_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the custom endpoint to get a benchmark for.",
+                            "title": "Endpoint Name"
+                        },
+                        "description": "Name of the custom endpoint to get a benchmark for."
+                    },
+                    {
+                        "name": "metric_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the metric to get the benchmark of.",
+                            "title": "Metric Name"
+                        },
+                        "description": "Name of the metric to get the benchmark of."
+                    },
+                    {
+                        "name": "start_time",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Start time of window to get benchmarks between. Format YYYY-MM-DD",
+                            "default": "2024-01-01",
+                            "title": "Start Time"
+                        },
+                        "description": "Start time of window to get benchmarks between. Format YYYY-MM-DD"
+                    },
+                    {
+                        "name": "end_time",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "End time of window to get benchmarks between. Format YYYY-MM-DD",
+                            "default": "2024-12-12",
+                            "title": "End Time"
+                        },
+                        "description": "End time of window to get benchmarks between. Format YYYY-MM-DD"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/dataset": {
+            "post": {
+                "tags": [
+                    "Dataset"
+                ],
+                "summary": "Upload Dataset",
+                "description": "Uploads a custom dataset to the platform.\n\nThe uploaded file must be a JSONL file with **at least** a `prompt` key:\n\n```\n{\"prompt\": \"This is the first prompt\"}\n{\"prompt\": \"This is the second prompt\"}\n{\"prompt\": \"This is the third prompt\"}\n```\n\nAdditionally, you can include a `ref_answer` key, which will be accounted\nduring the evaluations.\n\n```\n{\"prompt\": \"This is the first prompt\", \"ref_answer\": \"First reference answer\"}\n{\"prompt\": \"This is the second prompt\", \"ref_answer\": \"Second reference answer\"}\n{\"prompt\": \"This is the third prompt\", \"ref_answer\": \"Third reference answer\"}\n```",
+                "operationId": "upload_dataset_v0_dataset_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_dataset_v0_dataset_post"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Upload Dataset V0 Dataset Post"
+                                },
+                                "example": {
+                                    "info": "Dataset uploaded sucessfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Dataset already exists",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "A dataset with this name already exists. Please, choose a different one."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Dataset"
+                ],
+                "summary": "Delete Dataset",
+                "description": "Deletes a previously updated dataset and any relevant artifacts from the platform.",
+                "operationId": "delete_dataset_v0_dataset_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the dataset."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Delete Dataset V0 Dataset Delete"
+                                },
+                                "example": {
+                                    "info": "Dataset deleted succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid dataset name",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid name for a dataset. Please, choose a different one."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Dataset"
+                ],
+                "summary": "Download Dataset",
+                "description": "Downloads a specific dataset from the platform.",
+                "operationId": "download_dataset_v0_dataset_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the dataset."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "additionalProperties": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "title": "Response Download Dataset V0 Dataset Get"
+                                },
+                                "example": [
+                                    {
+                                        "prompt": "This is the first prompt"
+                                    },
+                                    {
+                                        "prompt": "This is the second prompt"
+                                    },
+                                    "..."
+                                ]
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid dataset name",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid name for a dataset. Please, choose a different one."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This dataset does not exist."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/dataset/list": {
+            "get": {
+                "tags": [
+                    "Dataset"
+                ],
+                "summary": "List Datasets",
+                "description": "Lists all the custom datasets uploaded by the user to the platform.",
+                "operationId": "list_datasets_v0_dataset_list_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Datasets V0 Dataset List Get"
+                                },
+                                "example": [
+                                    "dataset_1",
+                                    "dataset_2",
+                                    "..."
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/dataset/rename": {
+            "put": {
+                "tags": [
+                    "Dataset"
+                ],
+                "summary": "Rename Dataset",
+                "description": "Renames a previously updated dataset.",
+                "operationId": "rename_dataset_v0_dataset_rename_put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the dataset."
+                    },
+                    {
+                        "name": "new_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "New name of the dataset.",
+                            "title": "New Name"
+                        },
+                        "description": "New name of the dataset."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Rename Dataset V0 Dataset Rename Put"
+                                },
+                                "example": {
+                                    "info": "Dataset name updated sucessfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Dataset already exists",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "A dataset with this name already exists. Please, choose a different one."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/evaluation": {
+            "post": {
+                "tags": [
+                    "Dataset Evaluation"
+                ],
+                "summary": "Evaluate Dataset",
+                "description": "Evaluates the quality of the responses from a given LLM endpoint in a custom dataset.",
+                "operationId": "evaluate_dataset_v0_evaluation_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_evaluate_dataset_v0_evaluation_post"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Evaluate Dataset V0 Evaluation Post"
+                                },
+                                "example": {
+                                    "info": "Dataset evaluation started! You will receive an email soon!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Endpoints",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid input. Couldn't find endpoints [model_1@endpoint_1, model_2@endpoint_2]."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This dataset does not exist!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Dataset Evaluation"
+                ],
+                "summary": "Delete Dataset Evaluation",
+                "description": "Deletes a specific dataset evaluation quality score\nand the corresponding artifacts.",
+                "operationId": "delete_dataset_evaluation_v0_evaluation_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "dataset",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset to delete an evaluation from.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset to delete an evaluation from."
+                    },
+                    {
+                        "name": "endpoint",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Endpoint whose evaluation will be deleted.",
+                            "title": "Endpoint"
+                        },
+                        "description": "Endpoint whose evaluation will be deleted."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Delete Dataset Evaluation V0 Evaluation Delete"
+                                },
+                                "example": {
+                                    "info": "Dataset evaluation deleted!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/evaluation/list": {
+            "get": {
+                "tags": [
+                    "Dataset Evaluation"
+                ],
+                "summary": "Get Dataset Evaluations",
+                "description": "Fetches a list of the endpoints that have been evaluated on a given dataset.",
+                "operationId": "get_dataset_evaluations_v0_evaluation_list_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "dataset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Name of the dataset to fetch evaluation from. If not specified, all evaluations will be returned.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset to fetch evaluation from. If not specified, all evaluations will be returned."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "title": "Response Get Dataset Evaluations V0 Evaluation List Get"
+                                },
+                                "example": [
+                                    {
+                                        "dataset_1": [
+                                            "model_1@provider_1",
+                                            "model_2@provider_2",
+                                            "..."
+                                        ]
+                                    },
+                                    {
+                                        "dataset_2": [
+                                            "..."
+                                        ]
+                                    },
+                                    {
+                                        "...": [
+                                            "..."
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This dataset does not exist!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/evaluation/results": {
+            "get": {
+                "tags": [
+                    "Dataset Evaluation"
+                ],
+                "summary": "Get Dataset Evaluation Results",
+                "description": "Fetches the results of a given dataset evaluation.",
+                "operationId": "get_dataset_evaluation_results_v0_evaluation_results_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "dataset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Name of the dataset to fetch evaluation from.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset to fetch evaluation from."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Get Dataset Evaluation Results V0 Evaluation Results Get"
+                                },
+                                "example": [
+                                    {
+                                        "judge": {
+                                            "model_1@provider_1": "score_1",
+                                            "model_2@provider_2": "score_2"
+                                        },
+                                        "input_tokens": "num_tokens_in_dataset",
+                                        "output_tokens": {
+                                            "model_1@provider_1": "num_tokens_in_endpoint_responses"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This dataset does not exist!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/router/train": {
+            "post": {
+                "tags": [
+                    "Routing"
+                ],
+                "summary": "Train Router",
+                "description": "Trains a router based on a dataset and a set of endpoints. To use a\ncustom-trained router, you will need to deploy the resulting artifacts to\na live endpoint. To do this, use the `/router/deploy` POST endpoint.",
+                "operationId": "train_router_v0_router_train_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the router.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the router."
+                    },
+                    {
+                        "name": "dataset",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints."
+                    },
+                    {
+                        "name": "endpoints",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format.",
+                            "title": "Endpoints"
+                        },
+                        "description": "List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Train Router V0 Router Train Post"
+                                },
+                                "example": {
+                                    "info": "Router training started! You will receive an email soon!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Router Training Already Exist",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "A router with this name has already been trained. Please, choose a different one."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This dataset does not exist."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Routing"
+                ],
+                "summary": "Delete Router Train",
+                "description": "Deletes the training files of a specific router.",
+                "operationId": "delete_router_train_v0_router_train_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the router to delete.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the router to delete."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Delete Router Train V0 Router Train Delete"
+                                },
+                                "example": {
+                                    "info": "Trained router deleted!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Router Training Does Not Exist",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This router training doesn't exist. Please, choose a different one or trigger the training first."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/router/train/list": {
+            "get": {
+                "tags": [
+                    "Routing"
+                ],
+                "summary": "Get Trained Routers",
+                "description": "Fetches a list of the trained routers and relevant metadata. These routers are training\nartifacts and therefore don't imply an active, deployed router. To fetch a list of\ndeployed routers, you can use the /router/deploy/list GET endpoint.",
+                "operationId": "get_trained_routers_v0_router_train_list_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "additionalProperties": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
+                                                }
+                                            ]
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "object",
+                                    "title": "Response Get Trained Routers V0 Router Train List Get"
+                                },
+                                "example": {
+                                    "router_1": {
+                                        "dataset": "dataset_1",
+                                        "endpoints": [
+                                            "model@provider",
+                                            "..."
+                                        ]
+                                    },
+                                    "...": [
+                                        "..."
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/router/deploy": {
+            "post": {
+                "tags": [
+                    "Routing"
+                ],
+                "summary": "Deploy Router",
+                "description": "Deploys a trained router to a live endpoint.\n\nTo use this router, replace the model in the endpoint string with the\nrouter name. E.g. you can use `router-abc` by calling the\n`router-abc@q:1` endpoint.",
+                "operationId": "deploy_router_v0_router_deploy_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the router to deploy.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the router to deploy."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Deploy Router V0 Router Deploy Post"
+                                },
+                                "example": {
+                                    "info": "Router deployment started! You will receive an email soon!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Router Training Does Not Exist",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This router training doesn't exist. Please, choose a different one or trigger the training first."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Routing"
+                ],
+                "summary": "Delete Router",
+                "description": "Deactivates and deletes a previously deployed router.",
+                "operationId": "delete_router_v0_router_deploy_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the router to un-deploy.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the router to un-deploy."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Delete Router V0 Router Deploy Delete"
+                                },
+                                "example": {
+                                    "info": "Router deletion started! You will receive an email soon!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Router Not Deployed",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This router is not deployed!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/router/deploy/list": {
+            "get": {
+                "tags": [
+                    "Routing"
+                ],
+                "summary": "Get Deployed Routers",
+                "description": "Fetches a list of the deployed routers and relevant metadata. These routers only\ninclude deployed routers. To fetch a list of all trained routers,\nyou can use the /router/train/list GET endpoint.\n\nTo use any of these routers, replace the model in the endpoint string with the\nrouter name. E.g. you can use `router-abc` with the endpoint `router-abc@q:1`.",
+                "operationId": "get_deployed_routers_v0_router_deploy_list_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "additionalProperties": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
+                                                }
+                                            ]
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "object",
+                                    "title": "Response Get Deployed Routers V0 Router Deploy List Get"
+                                },
+                                "example": {
+                                    "router_1": {
+                                        "dataset": "dataset_1",
+                                        "endpoints": [
+                                            "model@provider",
+                                            "..."
+                                        ]
+                                    },
+                                    "...": [
+                                        "..."
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/endpoints": {
+            "get": {
+                "tags": [
+                    "Model and Endpoints"
+                ],
+                "summary": "Get Endpoints",
+                "description": "Lists available endpoints in `model@provider` format. If `model` or `provider` are specified,\nonly the matching endpoints will be listed.",
+                "operationId": "get_endpoints_v0_endpoints_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "model",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Model to get available endpoints from.",
+                            "title": "Model"
+                        },
+                        "description": "Model to get available endpoints from."
+                    },
+                    {
+                        "name": "provider",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Provider to get available endpoints from.",
+                            "title": "Provider"
+                        },
+                        "description": "Provider to get available endpoints from."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Get Endpoints V0 Endpoints Get"
+                                },
+                                "example": [
+                                    "model_a@provider_1",
+                                    "model_a@provider_2",
+                                    "..."
+                                ]
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/providers": {
+            "get": {
+                "tags": [
+                    "Model and Endpoints"
+                ],
+                "summary": "Get Providers",
+                "description": "Lists available providers. If a model is specified, returns the providers that support that model.",
+                "operationId": "get_providers_v0_providers_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "model",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Model to get available providers from.",
+                            "title": "Model"
+                        },
+                        "description": "Model to get available providers from."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Get Providers V0 Providers Get"
+                                },
+                                "example": [
+                                    "provider_1",
+                                    "provider_2",
+                                    "..."
+                                ]
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/benchmarks": {
+            "get": {
+                "tags": [
+                    "benchmarks"
+                ],
+                "summary": "Get Latest Benchmark",
+                "operationId": "get_latest_benchmark_v0_benchmarks_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "model",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Model name",
+                            "title": "Model"
+                        },
+                        "description": "Model name"
+                    },
+                    {
+                        "name": "provider",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Provider name",
+                            "title": "Provider"
+                        },
+                        "description": "Provider name"
+                    },
+                    {
+                        "name": "regime",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "concurrent-1",
+                            "title": "Regime"
+                        }
+                    },
+                    {
+                        "name": "region",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\".",
+                            "default": "Belgium",
+                            "title": "Region"
+                        },
+                        "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\"."
+                    },
+                    {
+                        "name": "seq_len",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "short",
+                            "title": "Seq Len"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/benchmarks/filter": {
+            "post": {
+                "tags": [
+                    "benchmarks"
+                ],
+                "summary": "Filter Benchmark",
+                "operationId": "filter_benchmark_v0_benchmarks_filter_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "model",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Model"
+                        }
+                    },
+                    {
+                        "name": "provider",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Provider"
+                        }
+                    },
+                    {
+                        "name": "start_time",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Start Time"
+                        }
+                    },
+                    {
+                        "name": "end_time",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "End Time"
+                        }
+                    },
+                    {
+                        "name": "regime",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "concurrent-1",
+                            "title": "Regime"
+                        }
+                    },
+                    {
+                        "name": "region",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "Belgium",
+                            "title": "Region"
+                        }
+                    },
+                    {
+                        "name": "seq_len",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "short",
+                            "title": "Seq Len"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Body_evaluate_dataset_v0_evaluation_post": {
+                "properties": {
+                    "dataset": {
+                        "type": "string",
+                        "title": "Dataset",
+                        "description": "Name of the uploaded dataset to evaluate."
+                    },
+                    "endpoint": {
+                        "type": "string",
+                        "title": "Endpoint",
+                        "description": "Endpoint to evaluate. Endpoints must be specified using the `model@provider` format."
+                    },
+                    "judge_models": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Judge Models",
+                        "description": "List of the LLMs to use as a judge",
+                        "default": [
+                            "gpt-4o@openai"
+                        ]
+                    },
+                    "system_prompt": {
+                        "type": "string",
+                        "title": "System Prompt",
+                        "description": "Optionally change the system prompt",
+                        "default": ""
+                    },
+                    "class_cfg": {
+                        "items": {
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Class Cfg",
+                        "description": "A description of the classes for judging.",
+                        "default": []
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "dataset",
+                    "endpoint"
+                ],
+                "title": "Body_evaluate_dataset_v0_evaluation_post"
+            },
+            "Body_upload_dataset_v0_dataset_post": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file",
+                    "name"
+                ],
+                "title": "Body_upload_dataset_v0_dataset_post"
+            },
+            "ChatCompletionRequest": {
+                "properties": {
+                    "model": {
+                        "type": "string",
+                        "title": "Model"
+                    },
+                    "messages": {
+                        "items": {
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Messages"
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "title": "Temperature",
+                        "default": 0.9
+                    },
+                    "stream": {
+                        "type": "boolean",
+                        "title": "Stream",
+                        "default": false
+                    },
+                    "max_tokens": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Tokens"
+                    },
+                    "frequency_penalty": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Frequency Penalty"
+                    },
+                    "logit_bias": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "type": "number"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Logit Bias"
+                    },
+                    "logprobs": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Logprobs"
+                    },
+                    "top_logprobs": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Top Logprobs"
+                    },
+                    "n": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "N"
+                    },
+                    "presence_penalty": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Presence Penalty"
+                    },
+                    "response_format": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Response Format"
+                    },
+                    "seed": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Seed"
+                    },
+                    "stop": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Stop"
+                    },
+                    "top_p": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Top P"
+                    },
+                    "tools": {
+                        "anyOf": [
+                            {
+                                "items": {},
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tools"
+                    },
+                    "tool_choice": {
+                        "anyOf": [
+                            {},
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tool Choice"
+                    },
+                    "user": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User"
+                    },
+                    "signature": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Signature"
+                    },
+                    "use_custom_keys": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Use Custom Keys",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "model",
+                    "messages"
+                ],
+                "title": "ChatCompletionRequest",
+                "description": "Request model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    messages (List[Dict[str]]): List of messages for completion.\n    temperature (float): The temperature parameter for generating completions.\n    stream (bool): Whether to stream the response."
+            },
+            "ChatCompletionResponse": {
+                "properties": {
+                    "model": {
+                        "type": "string",
+                        "title": "Model"
+                    },
+                    "created": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Created"
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id"
+                    },
+                    "object": {
+                        "type": "string",
+                        "title": "Object",
+                        "default": "chat.completion"
+                    },
+                    "usage": {
+                        "type": "object",
+                        "title": "Usage"
+                    },
+                    "choices": {
+                        "items": {
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Choices"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "model",
+                    "usage",
+                    "choices"
+                ],
+                "title": "ChatCompletionResponse",
+                "description": "Response model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    created (int): Timestamp indicating when the response was created.\n    id (str): Identifier for the completion response.\n    object (str): The type of object, defaults to \"chat.completion\".\n    usage (dict): Usage statistics or additional information.\n    choices (List[Dict]): List of completion choices."
+            },
+            "CreditsResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "credits": {
+                        "type": "number",
+                        "title": "Credits"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "credits"
+                ],
+                "title": "CreditsResponse",
+                "description": "Response model for credits models.\n\nAttributes:\n    id (str): The id of the users.\n    credits (float): The credits of the users."
+            },
+            "CustomApiKeyModelResponse": {
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "title": "Key"
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "key",
+                    "value"
+                ],
+                "title": "CustomApiKeyModelResponse"
+            },
+            "CustomEndpointModelResponse": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "mdl_name": {
+                        "type": "string",
+                        "title": "Mdl Name"
+                    },
+                    "url": {
+                        "type": "string",
+                        "title": "Url"
+                    },
+                    "key": {
+                        "type": "string",
+                        "title": "Key"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "mdl_name",
+                    "url",
+                    "key"
+                ],
+                "title": "CustomEndpointModelResponse"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "InferenceRequest": {
+                "properties": {
+                    "model": {
+                        "type": "string",
+                        "title": "Model"
+                    },
+                    "provider": {
+                        "type": "string",
+                        "title": "Provider"
+                    },
+                    "arguments": {
+                        "type": "object",
+                        "title": "Arguments"
+                    },
+                    "signature": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Signature"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "model",
+                    "provider",
+                    "arguments"
+                ],
+                "title": "InferenceRequest",
+                "description": "Request model for any model in the hub.\nAttributes:\n    model (str): The model identifier.\n    provider (str): The provider identifier.\n    arguments (Dict[str, Any]]): Model-specific arguments."
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        },
+        "securitySchemes": {
+            "HTTPBearer": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
