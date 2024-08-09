@@ -2,13 +2,17 @@
 title: 'Billing'
 ---
 
-You only have to manage the balance and billing details for your Unify account, 
+Once you've signed up, you'll need to add your card details on the [billing page](https://console.unify.ai/billing).
+
+Simply press `GO TO PORTAL`, then `Add payment method`, and then your **$10 free credits** will then be unlocked 💸
+
+Going forward, you then only have to manage the balance for your Unify account,
 and we handle the spending with each provider behind the scenes.
 
-You can see your balance, top-up your balance, and set automatic refill on the 
+You can see your balance, top-up your balance, and set automatic refills on the
 [billing page](https://console.unify.ai/billing).
 
-You can also get your current credit balance with a HTTP request:
+You can also get your current credit balance with the following HTTP request:
 
 ```shell
 curl -X 'GET' \
@@ -32,3 +36,5 @@ This is also supported in our Python client:
 import unify
 credits = unify.utils.get_credits()
 ```
+
+That's it, you're now ready to dive in and learn more about the platform 🤿
