@@ -14,7 +14,9 @@ Base Abstract class for interacting with the Unify chat completions endpoint.
 
 <a id="clients.Client.__init__"></a>
 
-#### \_\_init\_\_
+---
+
+### \_\_init\_\_
 
 ```python
 def __init__(endpoint: Optional[str] = None,
@@ -47,7 +49,9 @@ Initialize the Unify client.
 
 <a id="clients.Client.model"></a>
 
-#### model
+---
+
+### model
 
 ```python
 @property
@@ -62,7 +66,9 @@ Get the model name.
 
 <a id="clients.Client.set_model"></a>
 
-#### set\_model
+---
+
+### set\_model
 
 ```python
 def set_model(value: str) -> None
@@ -76,7 +82,9 @@ Set the model name.
 
 <a id="clients.Client.provider"></a>
 
-#### provider
+---
+
+### provider
 
 ```python
 @property
@@ -91,7 +99,9 @@ Get the provider name.
 
 <a id="clients.Client.set_provider"></a>
 
-#### set\_provider
+---
+
+### set\_provider
 
 ```python
 def set_provider(value: str) -> None
@@ -105,7 +115,9 @@ Set the provider name.
 
 <a id="clients.Client.endpoint"></a>
 
-#### endpoint
+---
+
+### endpoint
 
 ```python
 @property
@@ -120,7 +132,9 @@ Get the endpoint name.
 
 <a id="clients.Client.set_endpoint"></a>
 
-#### set\_endpoint
+---
+
+### set\_endpoint
 
 ```python
 def set_endpoint(value: str) -> None
@@ -134,7 +148,9 @@ Set the endpoint name.
 
 <a id="clients.Client.get_credit_balance"></a>
 
-#### get\_credit\_balance
+---
+
+### get\_credit\_balance
 
 ```python
 def get_credit_balance() -> float
@@ -164,7 +180,9 @@ Class for interacting with the Unify chat completions endpoint in a synchronous 
 
 <a id="clients.Unify.generate"></a>
 
-#### generate
+---
+
+### generate
 
 ```python
 def generate(user_prompt: Optional[str] = None,
@@ -237,7 +255,9 @@ Class for interacting with the Unify chat completions endpoint in a synchronous 
 
 <a id="clients.AsyncUnify.generate"></a>
 
-#### generate
+---
+
+### generate
 
 ```python
 async def generate(user_prompt: Optional[str] = None,
