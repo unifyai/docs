@@ -2721,6 +2721,7 @@
                         "default": false
                     }
                 },
+                "additionalProperties": true,
                 "type": "object",
                 "required": [
                     "model",
