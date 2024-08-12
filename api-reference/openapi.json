@@ -560,6 +560,55 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Delete Custom Endpoint",
+                "description": "Deletes a custom endpoint in your account.",
+                "operationId": "delete_custom_endpoint_v0_custom_endpoint_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the custom endpoint to delete.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the custom endpoint to delete."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Custom endpoint deleted succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/v0/custom_api_key": {
@@ -636,6 +685,209 @@
                                 "schema": {},
                                 "example": {
                                     "info": "API key created succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Delete Custom Api Key",
+                "description": "Deletes a custom API key in your account.",
+                "operationId": "delete_custom_api_key_v0_custom_api_key_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the custom API key to delete.",
+                            "title": "Key"
+                        },
+                        "description": "Name of the custom API key to delete."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "API key deleted succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Custom API key Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "API key not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/custom_endpoint/rename": {
+            "post": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Rename Custom Endpoint",
+                "description": "Renames a custom endpoint in your account.",
+                "operationId": "rename_custom_endpoint_v0_custom_endpoint_rename_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the custom endpoint to be updated.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the custom endpoint to be updated."
+                    },
+                    {
+                        "name": "new_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "New name for the custom endpoint.",
+                            "title": "New Name"
+                        },
+                        "description": "New name for the custom endpoint."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Custom endpoint renamed succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Custom endpoint Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Custom endpoint not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/custom_api_key/rename": {
+            "post": {
+                "tags": [
+                    "Custom Endpoints and API keys"
+                ],
+                "summary": "Rename Custom Api Key",
+                "description": "Renames a custom API key from a LLM provider in your account.",
+                "operationId": "rename_custom_api_key_v0_custom_api_key_rename_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the custom API key to be updated.",
+                            "title": "Key"
+                        },
+                        "description": "Name of the custom API key to be updated."
+                    },
+                    {
+                        "name": "new_key",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "New name for the custom API key.",
+                            "title": "New Key"
+                        },
+                        "description": "New name for the custom API key."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "API key renamed succesfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Custom API key Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "API key not found."
                                 }
                             }
                         }
@@ -1067,13 +1319,13 @@
             }
         },
         "/v0/dataset/rename": {
-            "put": {
+            "post": {
                 "tags": [
                     "Dataset"
                 ],
                 "summary": "Rename Dataset",
                 "description": "Renames a previously updated dataset.",
-                "operationId": "rename_dataset_v0_dataset_rename_put",
+                "operationId": "rename_dataset_v0_dataset_rename_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1086,10 +1338,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the dataset.",
+                            "description": "Name of the dataset to be updated.",
                             "title": "Name"
                         },
-                        "description": "Name of the dataset."
+                        "description": "Name of the dataset to be updated."
                     },
                     {
                         "name": "new_name",
@@ -1097,10 +1349,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "New name of the dataset.",
+                            "description": "New name for the dataset.",
                             "title": "New Name"
                         },
-                        "description": "New name of the dataset."
+                        "description": "New name for the dataset."
                     }
                 ],
                 "responses": {
@@ -1113,7 +1365,7 @@
                                     "additionalProperties": {
                                         "type": "string"
                                     },
-                                    "title": "Response Rename Dataset V0 Dataset Rename Put"
+                                    "title": "Response Rename Dataset V0 Dataset Rename Post"
                                 },
                                 "example": {
                                     "info": "Dataset name updated sucessfully!"
