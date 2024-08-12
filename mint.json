@@ -25,6 +25,9 @@
         "name": "Console",
         "url": "https://console.unify.ai"
     },
+    "api": {
+        "baseUrl": "https://api.unify.ai"
+    },
     "tabs": [
         {
             "name": "REST API Reference",
