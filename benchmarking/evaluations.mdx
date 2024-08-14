@@ -1,0 +1,72 @@
+---
+title: 'Evaluations'
+---
+
+Once our [evaluators]() are defined, we can then actually *use* these evaluators to
+evaluate the performance of different endpoints on different prompt datasets.
+
+### Trigger Evaluations
+
+To trigger an LLM evaluation using a pre-configured [LLM evaluator](), you simply need
+to specify the endpoint, the dataset, and the pre-configured evaluator you would like to
+use, as follows:
+
+CODE
+
+You will receive en email once the evaluation is finished.
+We will explain how to visualize the results of your evaluations in the next section.
+
+### Checking Evaluations
+
+You can check the status of an evaluation using the endpoint X, as follows:
+
+CODE
+
+If the evaluation is still running, the status code returned will be `this`.
+
+You can get the aggregated scores across the dataset as follows:
+
+CODE
+
+You can also get more granular results, with per-prompt scores, as follows:
+
+CODE
+
+If the dataset has been updated since the evaluation was run, then the status `this`
+will be shown when making the query (see [Partial Evaluations]() below).
+
+### Custom Evaluators
+
+If you do not need an LLM as a judge for your evaluation,
+then you can perform the evaluation on the client side.
+
+For example, [as before](), let's assume our LLM is generating Python code,
+and we want to verify that the output is valid Python code.
+
+We use the same custom Python Evaluator class we previously defined:
+
+CODE
+
+We can then trigger the custom eval on the client side as follows.
+
+CODE
+
+Similarly, we can use our keyword checker evaluator:
+
+CODE
+
+Triggering this on some geography prompts:
+
+CODE
+
+The code will run locally, and once the evaluation has been performed for all prompts
+in the dataset, the results will be uploaded via the X endpoint, using the Y argument.
+
+### Partial Evaluations
+
+As mentioned [here](), datasets can be appended to at any point in time, which can make
+previously run evaluations "out of date" with respect to the full dataset
+(including the most recent prompts).
+
+As explained above, when querying the X endpoint with an out-of-sync dataset,
+the results will be returned, but the status will show as `this`.

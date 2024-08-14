@@ -1,0 +1,104 @@
+---
+title: 'Evaluators'
+---
+
+An evaluator is basically any function which takes in a prompt,
+and any other corresponding fields which may be provided as part of a prompt dataset,
+and returns a score between `0` and `1`. That's it!
+
+Given the huge difficulty in evaluating LLM outputs at scale,
+a very common pattern is to use LLMs themselves as a judge.
+
+In the sections below, we explain how LLMs-as-a-judge can be flexibly configured for
+different use cases.
+
+In the next section, we'll explain how these *evaluators* can be used in *evaluations*
+of datasets.
+
+### LLM as a Judge
+
+Evaluators are configured using the `X` endpoint, as follows:
+
+CODE
+
+As per our [example](), let's assume we first want to choose an evaluator for
+computer science. Which model should we select for this judge,
+which will be judging the outputs of all LLMs we test out on this subject?
+
+Accordingly to the [Scale AI X Leaderboard](), Y is the best model for coding.
+Therefore, this is probably a good choice for our computer science judge.
+
+What about English Literature? Apprently X is the best at Y, and so this is probably a
+good choice for our English Literature, where creativity is important.
+
+The judges can be configured as follows:
+
+CODE
+
+### LLM Jury
+
+Cohere showed that LLM evals are generally less biased and more accurate when several
+different models from different models are average pooled (a jury rather than a judge).
+
+For our example, we might choose to use the models X, Y and Z for computer science,
+and A, B and C for English Literature, again as per the [Scale AI X Leaderboard]().
+
+The juries can be configured as follows:
+
+CODE
+
+### Custom System Prompt
+
+The default system prompt is as follows:
+
+SYSTEM PROMPT
+
+This is a very generic system prompt, which is designed to cast a very wide net and
+produce *okay* results across any task.
+
+However, it is certainly not optimized for computer science,
+nor is it optimized for english literature.
+
+We can create unique system prompts for these two subjects as follows,
+based on some simple best practices for these domain areas:
+
+CODE
+
+### Custom Classes
+
+Going further, we can also change the classification targets. This enables us to be much
+more granular with the judging, and even measure several different properties for the
+same subject.
+
+For example, for english literature we might want to assess the creativity **and**
+also assess the clarity. We could create two different evaluators accordingly:
+
+CODE
+
+For computer science, we might want to assess the clarity of the code comments **and**
+the simplicity of the code.
+
+CODE
+
+### Custom Evaluators
+
+There are many cases where you might not want to use an LLM to evaluate the output of
+your LLM. For example, if you're generating code, you might want to test that the code
+compiles (which certainly does not require an LLM to test). Similarly, you might want to
+simply check that the output does or does not contain certain keywords, or you might
+want to verify that the output follows are certain json format.
+
+You can use the Python class `Evaluator` to create client-side logic for performing
+evaluations. Let's assume our LLM will be generating Python code, we can create a custom
+evaluator to check if the output is valid Python code like so:
+
+CODE
+
+Similarly, we can create a custom evaluator to check that the output does and does not
+contain certain keywords as follows:
+
+CODE
+
+These custom evaluations are then all be handled on the client side.
+There is no need to pre-configure these custom evaluators in the platform,
+given that they do not run on the server.

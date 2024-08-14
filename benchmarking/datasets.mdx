@@ -1,0 +1,155 @@
+---
+title: 'Datasets'
+---
+
+Prompt datasets are useful for:
+
+- evaluating LLMs on prompts which are representative of the final task
+
+- training a router on such data, to improve the overall LLM performance
+
+We will refer to our representative example of building an AI educational assistant.
+
+### Creating Datasets
+
+Before we start any benchmarking, we need a prompt dataset to benchmark on!
+
+There are three main ways to extract a prompt dataset for your task,
+as explained below.
+
+#### Using Public Data
+
+The best starting point is to try and find an existing public dataset which aligns well
+with your specific task. In this case, we can take all past exam questions and all
+practice questions from the textbooks for each subject.
+
+This gives us a great starting point,
+but for some subjects we don't have very much data, such as X with only Y prompts.
+
+#### Synthetic Data Generation
+
+In order to expand the prompt data that we've already extracted,
+we can use LLMs to generate more questions.
+
+In this case, we use Claude Opus 3.5 and we provide all extracted questions in the
+system prompt, and we also provide the full subject syllabus, and inform the LLM that
+the questions must related to the syllabus, and the LLM must explain the exact point in
+the syllabus that the questions is referring to.
+
+By running this,
+we are able to increase the prompt dataset size by X% for most subjects.
+
+We can then add this to the local `.jsonl` file as follows:
+
+CODE
+
+#### Production Data
+
+Finally, if our application is actually being run in production, then we can capture
+real data from real users, and augment our prompt datasets accordingly.
+This data is especially important, as it represents the *true distribution* observed
+*in the wild* for the task, which will inevitably deviate from our best guess
+before deployment.
+
+It's easy to extract any prompt queries previously made to the API,
+via the [X]() endpoint, as explained [here]().
+For example, the last 100 prompts for subject `Y` can be extracted as follows:
+
+CODE
+
+We can then add this to the local `.jsonl` file as follows:
+
+CODE
+
+### Uploading Datasets
+
+As shown above, the representation for prompt datasets is `.jsonl`,
+which is a effectively a list of json structures (or in Python, a list of dicts).
+
+Lets upload our `english_language.jsonl` dataset.
+
+We can do this via the REST API as follows:
+
+CODE
+
+Or we can create a `Dataset` instance in Python,
+and then call `.upload("english_language")` as follows:
+
+CODE
+
+### Deleting Datasets
+
+We can delete the dataset just as easily as we created it.
+
+First, using the REST API:
+
+CODE
+
+Or via Python:
+
+CODE
+
+### Renaming Datasets
+
+Lets imagine we accidentally named our dataset `"english"` when uploading it,
+which would cause confusion as students need to learn both subjects `english literature`
+and `english language`.
+
+We can easily rename the dataset without deleting and re-uploading,
+via the following REST API command:
+
+CODE
+
+Or via Python:
+
+CODE
+
+### Appending to Datasets
+
+As explained above, we might want to add to an existing dataset, either because we have
+[generated some synthetic examples](), or perhaps because we have some relevant
+[production traffic]().
+
+In the examples above, we simply appended to these datasets locally,
+before then uploading the full `.jsonl` file. However,
+we can also make incremental updates to datasets which have previously been uploaded.
+
+We simply use the X command as follows:
+
+CODE
+
+Or via Python:
+
+CODE
+
+### Dataset Chunks
+
+Whenever a dataset is appended to, this is stored as a new dataset "chunk".
+This is relevant as it is effectively how dataset version control works.
+
+Datasets can be used as inputs to other triggered jobs in the platform
+(such as [performing an evaluation]() or [training a router]()),
+and appending to a *dependent* dataset will make those completed jobs "out of sync"
+with the *full* dataset, as per the latest append operation.
+
+The chunks enable the correspondence across other jobs to be easily tracked.
+Previous jobs will show as being "partially" completed if the dataset has changed
+since the last job, and the chunk id will express *how partial* the job is with respect
+to the full dataset.
+
+The chunk structure of any dataset, and the timestamp of each chunk upload,
+can be observed as follows:
+
+CODE
+
+### Dataset Fields
+
+All of the examples above only included a `prompt` key in the data,
+but any arbitrary structure can be used.
+
+For example, you might want to include a reference answer alongside each prompt,
+or perhaps include a document which a downstream RAG pipeline must have use of, if the
+dataset is an evaluation dataset.
+
+There is no limit to the extra fields that can be added, and their entries,
+provided all of the data is expressed as strings.
