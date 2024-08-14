@@ -2617,7 +2617,7 @@
                             }
                         ],
                         "title": "Client Side Scores",
-                        "description": "Optionally upload client-side scores."
+                        "description": "Optionally upload client-side scores. The format needs to be a file in JSONL format, in the same order as the `dataset`. The keys need to be `prompt` and `score`, where `score` should be a float between 0 and 1. The eval with corresponding `eval_name` needs to have `client_side=True`."
                     }
                 },
                 "type": "object",
