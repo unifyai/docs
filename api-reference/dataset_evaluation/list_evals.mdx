@@ -1,4 +1,40 @@
 ---
 title: 'List Evals'
-openapi: 'GET /v0/evals/list_configs'
+api: 'GET /v0/evals/list_configs'
 ---
+Returns the names of the eval configurations you have created.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/evals/list_configs' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/evals/list_configs"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+</ResponseExample>

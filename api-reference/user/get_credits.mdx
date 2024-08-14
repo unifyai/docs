@@ -1,4 +1,43 @@
 ---
 title: 'Get Credits'
-openapi: 'GET /v0/get_credits'
+api: 'GET /v0/get_credits'
 ---
+Returns the number of available credits.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/get_credits' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/get_credits"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "<USER_ID>",
+    "credits": 10
+}
+```
+
+</ResponseExample>

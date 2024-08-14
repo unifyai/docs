@@ -1,4 +1,76 @@
 ---
 title: 'Get Latest Benchmark'
-openapi: 'GET /v0/benchmarks'
+api: 'GET /v0/benchmarks'
 ---
+
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="model" type="string" required="true">
+Model name
+</ParamField>
+
+<ParamField query="provider" type="string" required="true">
+Provider name
+</ParamField>
+
+<ParamField query="regime" type="string"  default={"concurrent-1"}>
+None
+</ParamField>
+
+<ParamField query="region" type="string"  default={"Belgium"}>
+Region where the benchmark is run. Options are: "Belgium", "Hong Kong", "Iowa".
+</ParamField>
+
+<ParamField query="seq_len" type="string"  default={"short"}>
+Length of the sequence used for benchmarking, can be short or long
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/benchmarks?model=gpt-4o-mini&provider=openai&regime=concurrent-1&region=Belgium&seq_len=short' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/benchmarks?model=gpt-4o-mini&provider=openai&regime=concurrent-1&region=Belgium&seq_len=short"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

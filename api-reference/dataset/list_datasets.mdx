@@ -1,4 +1,44 @@
 ---
 title: 'List Datasets'
-openapi: 'GET /v0/dataset/list'
+api: 'GET /v0/dataset/list'
 ---
+Lists all the custom datasets uploaded by the user to the platform.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/dataset/list' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/dataset/list"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+[
+    "dataset_1",
+    "dataset_2",
+    "..."
+]
+```
+
+</ResponseExample>

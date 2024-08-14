@@ -1,4 +1,72 @@
 ---
 title: 'Deploy Router'
-openapi: 'POST /v0/router/deploy'
+api: 'POST /v0/router/deploy'
 ---
+Deploys a trained router to a live endpoint.
+
+To use this router, replace the model in the endpoint string with the
+router name. E.g. you can use `router-abc` by calling the
+`router-abc@q:1` endpoint.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="name" type="string" required="true">
+Name of the router to deploy.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/router/deploy?name=router1' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/router/deploy?name=router1"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Router deployment started! You will receive an email soon!"
+}
+```
+
+```json 400
+{
+    "detail": "This router training doesn't exist. Please, choose a different one or trigger the training first."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

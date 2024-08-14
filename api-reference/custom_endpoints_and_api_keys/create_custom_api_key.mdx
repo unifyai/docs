@@ -1,4 +1,71 @@
 ---
 title: 'Create Custom Api Key'
-openapi: 'PUT /v0/custom_api_key'
+api: 'PUT /v0/custom_api_key'
 ---
+Stores a custom API key from a LLM provider in your account. This can be used in two ways:
+1. As part of a custom endpoint. If you define a custom endpoint, you can reference a custom API
+key. This will be sent to the endpoint as part of the request.
+2. To use your own API keys in standard providers. If any of your custom API keys matches a provider
+name and you pass `use_custom_keys=True` to the `/chat/completions` endpoint, this API key will
+be used, charging your account directly instead of consuming Unify credits.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="key" type="string" required="true">
+Name of the API key.
+</ParamField>
+
+<ParamField query="value" type="string" required="true">
+Value of the API key.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PUT \
+  --url 'https://api.unify.ai/v0/custom_api_key?key=key1&value=value1' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/custom_api_key?key=key1&value=value1"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("PUT", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "API key created succesfully!"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

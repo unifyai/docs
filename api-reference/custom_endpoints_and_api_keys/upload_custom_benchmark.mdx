@@ -1,4 +1,76 @@
 ---
 title: 'Upload Custom Benchmark'
-openapi: 'POST /v0/custom_endpoint/benchmark'
+api: 'POST /v0/custom_endpoint/benchmark'
 ---
+
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="endpoint_name" type="string" required="true">
+Name of the custom endpoint to submit a benchmark for.
+</ParamField>
+
+<ParamField query="metric_name" type="string" required="true">
+Name of the metric to submit. Allowed metrics are: "input-cost", "output-cost", "tokens-per-second", "time-to-first-token", "inter-token-latency", "end-2-end-latency", "cold-start".
+</ParamField>
+
+<ParamField query="value" type="number" required="true">
+Value of the metric to submit.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/custom_endpoint/benchmark?endpoint_name=endpoint1&metric_name=tokens-per-second&value=10' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/custom_endpoint/benchmark?endpoint_name=endpoint1&metric_name=tokens-per-second&value=10"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Custom endpoint benchmark uploaded succesfully!"
+}
+```
+
+```json 400
+{
+    "detail": "Invalid data submitted"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
