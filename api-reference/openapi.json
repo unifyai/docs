@@ -2546,6 +2546,60 @@
                     }
                 }
             }
+        },
+        "/v0/prompt_history": {
+            "get": {
+                "tags": [
+                    "benchmarks"
+                ],
+                "summary": "Get Prompt History",
+                "operationId": "get_prompt_history_v0_prompt_history_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Provide a tag to filter by prompts that are marked with this tag.",
+                            "title": "Tag"
+                        },
+                        "description": "Provide a tag to filter by prompts that are marked with this tag."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
