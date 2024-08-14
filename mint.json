@@ -26,7 +26,8 @@
         "url": "https://console.unify.ai"
     },
     "api": {
-        "baseUrl": "https://api.unify.ai"
+        "baseUrl": "https://api.unify.ai",
+        "playground": {"mode": "simple"}
     },
     "tabs": [
         {
