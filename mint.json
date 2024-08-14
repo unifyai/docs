@@ -162,7 +162,8 @@
             "group": "benchmarks",
             "pages": [
                 "api-reference/benchmarks/get_latest_benchmark",
-                "api-reference/benchmarks/filter_benchmark"
+                "api-reference/benchmarks/filter_benchmark",
+                "api-reference/benchmarks/get_prompt_history"
             ]
         }
     ],
