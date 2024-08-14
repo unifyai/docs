@@ -1,4 +1,56 @@
 ---
 title: 'Get Deployed Routers'
-openapi: 'GET /v0/router/deploy/list'
+api: 'GET /v0/router/deploy/list'
 ---
+Fetches a list of the deployed routers and relevant metadata. These routers only
+include deployed routers. To fetch a list of all trained routers,
+you can use the /router/train/list GET endpoint.
+
+To use any of these routers, replace the model in the endpoint string with the
+router name. E.g. you can use `router-abc` with the endpoint `router-abc@q:1`.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/router/deploy/list' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/router/deploy/list"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "router_1": {
+        "dataset": "dataset_1",
+        "endpoints": [
+            "model@provider",
+            "..."
+        ]
+    },
+    "...": [
+        "..."
+    ]
+}
+```
+
+</ResponseExample>
