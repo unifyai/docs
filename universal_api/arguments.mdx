@@ -1,0 +1,116 @@
+---
+title: 'Arguments'
+---
+
+With so many LLMs and providers constantly coming onto the scene, each of these is
+increasingly striving to provide unique value to end users, and this means that there
+are often diverging features offered behind the API.
+
+For example, some models support RAG directly in the API,
+others support function calling, tool use, image processing, audio,
+structured output (such as json mode),
+and many other increasingly complex modes of operation.
+
+We *could* adopt a design for our universal API where we only support the lowest common
+denominator across all of the APIs. However, this would necessarily leave out many of
+the most exciting bleeding edge features, limiting the utility of
+our API for more forward-thinking applications.
+
+Similarly, we *could* try to create a universal interface to the full superset of features
+across all providers, ensuring that the input-output behaviour is consistent regardless
+of the backend provider selected. This would require a huge amount of ongoing
+maintenance to keep pace with the fast-chaging API specs, and the wrong choice of
+abstraction for the unification effort could break compatibility across APIs.
+
+We have instead opted for a compromise with our API, where we support both *unified*
+arguments and *passthrough* arguments, as explained below.
+
+### Unified Arguments
+
+The *unified* arguments are all of those explicitly listed in our
+[chat completions endpoint](https://docs.unify.ai/api-reference/querying_llms/get_completions).
+At the time of writing, this is:
+
+- model
+- messages
+- temperature
+- stream
+- max_tokens
+- frequency_penalty
+- logit_bias
+- logprobs
+- top_logprobs
+- n
+- presence_penalty
+- response_format
+- seed
+- stop
+- top_p
+- tools
+- tool_choice
+- user
+- signature
+- use_custom_keys
+
+Most of these are taken directly from the
+[OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create),
+with the exceptions being: `signature` and `use_custom_keys`, to specify
+{something}  # ToDo
+and whether to use custom keys or the unified keys with the provider, respectively.
+
+These *unified* arguments are also all mirrored in the
+[generate](https://docs.unify.ai/python/clients#generate) function of the
+[Unify](https://docs.unify.ai/python/clients#unify) client in the Python SDK.
+
+These arguments are all handled consistently regardless of the backend provider selected.
+This makes it very easy for users to simply switch out the backend model and provider,
+without needing to change anything else in the code.
+
+For example, we can run this query based on the OpenAI arguments
+`arg_a` # ToDo
+and
+`arg_b`, # ToDo
+despite
+`provider` # ToDo
+not
+supporting
+`a` # ToDo
+or
+`b`. # ToDo
+
+CODE # ToDo
+
+The same is true via the Python SDK:
+
+CODE # ToDo
+
+### Passthrough Arguments
+
+The *passthrough* arguments are not handled by Unify at all, they are *passed through*
+directly to the backend provider, without any modification.
+
+This is what happens for **any extra arguments** passed to the `--data` argument of the
+`curl` request.
+
+For example, anthropic supports the extra header `` for Y.
+We can make use of this provider-specific header by simply selecting the correct provider in the model argument,
+and then passing the argument in the --data field as follows:
+
+CODE
+
+As indicated by the name, we do not handle these extra arguments in any way, and if you
+do not make correct use of the argument, or you pass an invalid argument for a provider,
+then we simply return the provider-specific error message to you,
+with no other intervention.
+
+Similarly, these arguments can also be used via the Python SDK as follows:
+
+CODE
+
+#### Multi-Modal Queries
+
+The *passthrough* approach means that Unify also supports multi-modal inputs,
+and indeed supports anything which any of the providers support.
+Below are a few examples of multi-modal queries, making use of passthrough arguments:
+
+EXAMPLES
