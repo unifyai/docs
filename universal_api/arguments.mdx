@@ -51,12 +51,14 @@ At the time of writing, this is:
 - user
 - signature
 - use_custom_keys
+- tags
 
 Most of these are taken directly from the
 [OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create),
-with the exceptions being: `signature` and `use_custom_keys`, with the former specifying
-how the API was called (Unify Python Client, NodeJS client, Console etc.) and the latter
-specifying whether to use custom keys or the unified keys with the provider.
+with the exceptions being:
+- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.) #TODO: should we even expose this
+- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
+- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
 
 These *unified* arguments are also all mirrored in the
 [generate](https://docs.unify.ai/python/clients#generate) function of the
@@ -86,6 +88,42 @@ The same is true via the Python SDK:
 
 CODE # ToDo
 
+
+### Tool use example
+
+OpenAI and Anthropic have different interfaces for tool use.
+Since we adhere to the OpenAI standard, we accept tools as specified by the OpenAI standard, and convert the format so that they work with Anthropic models.
+
+#TODO: make these work in the python SDK (as tool-use doesn't return "chat" messages)
+
+This is the default function calling example from OpenAI, working with an Anthropic model:
+
+```
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_current_weather",
+            "description": "Get the current weather in a given location",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "The city and state, e.g. San Francisco, CA",
+                    },
+                    "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+                },
+            },
+        },
+    }
+]
+
+client = unify.Unify("claude-3.5-sonnet@aws-bedrock")
+client.generate("What is the current temperature of New York, San Francisco and Chicago?", tools=tools, tool_choice="auto")
+```
+
+
 ### Passthrough Arguments
 
 The *passthrough* arguments are not handled by Unify at all, they are *passed through*
@@ -111,10 +149,13 @@ Similarly, these arguments can also be used via the Python SDK as follows:
 CODE
 
 
-### TODO: Another example
 
-For example, Anthropic exposes the `top_k` argument, which isn't provided by OpenAI.
-If you include this argument, we will send it straight to the model.
+
+#### Anthropic-only example
+
+Anthropic exposes the `top_k` argument, which isn't provided by OpenAI.
+If you include this argument, it will be sent straight to the model.
+If you send this argument to a provider that does not support `top_k`, you may get an error.
 
 ```
 curl --request POST \
