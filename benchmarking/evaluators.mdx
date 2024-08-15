@@ -17,52 +17,87 @@ of datasets.
 
 ### LLM as a Judge
 
-Evaluators are configured using the `X` endpoint, as follows:
+Evaluators are configured using the `/create_eval` endpoint, as follows:
 
-CODE
+```
+url = "https://api.unify.ai/v0/evals/create"
+headers = {"Authorization": f"Bearer {KEY}"}
+params = {"eval_name": "my_first_eval"}
+response = requests.post(url, json=params, headers=headers)
+```
 
 As per our [example](), let's assume we first want to choose an evaluator for
 computer science. Which model should we select for this judge,
 which will be judging the outputs of all LLMs we test out on this subject?
 
-Accordingly to the [Scale AI X Leaderboard](), Y is the best model for coding.
+Accordingly to the [Scale AI X Leaderboard](), `Claude 3.5 Sonnet` is the best model for coding.
 Therefore, this is probably a good choice for our computer science judge.
 
 What about English Literature? Apprently X is the best at Y, and so this is probably a
 good choice for our English Literature, where creativity is important.
 
-The judges can be configured as follows:
+The judges can be configured via the `judge_models` parameter as follows:
 
-CODE
+```
+url = "https://api.unify.ai/v0/evals/create"
+headers = {"Authorization": f"Bearer {KEY}"}
+params = {"eval_name": "computer_science_judge", "judge_models": "claude-3.5-sonnet@aws-bedrock"}
+response = requests.post(url, json=params, headers=headers)
+```
 
 ### LLM Jury
 
-Cohere showed that LLM evals are generally less biased and more accurate when several
+[Cohere showed that](https://arxiv.org/abs/2404.18796) LLM evals are generally less biased and more accurate when several
 different models from different models are average pooled (a jury rather than a judge).
 
-For our example, we might choose to use the models X, Y and Z for computer science,
+For our example, we might choose to use the models `Claude 3.5 Sonnet`, and `GPT-4o` for computer science,
 and A, B and C for English Literature, again as per the [Scale AI X Leaderboard]().
 
 The juries can be configured as follows:
 
-CODE
+```
+url = "https://api.unify.ai/v0/evals/create"
+headers = {"Authorization": f"Bearer {KEY}"}
+params = {"eval_name": "computer_science_jury", "judge_models": ["claude-3.5-sonnet@aws-bedrock", "gpt-4o@openai"]}
+response = requests.post(url, json=params, headers=headers)
+```
 
 ### Custom System Prompt
 
 The default system prompt is as follows:
 
-SYSTEM PROMPT
+```
+Please act as an impartial judge and evaluate the quality of the response provided by an assistant to the user question displayed below.
+Your job is to evaluate how good the assistant's answer is.
+Your evaluation should consider correctness and helpfulness. Identify any mistakes.
+Be as objective as possible.
+```
 
 This is a very generic system prompt, which is designed to cast a very wide net and
 produce *okay* results across any task.
 
-However, it is certainly not optimized for computer science,
-nor is it optimized for english literature.
+However, it is certainly not optimized for Computer Science,
+nor is it optimized for English literature.
 
 We can create unique system prompts for these two subjects as follows,
 based on some simple best practices for these domain areas:
 
-CODE
+
+Computer Science system prompt: 
+```
+Please evaluate the quality of the student's code provided in response to the examination question below.
+Your job is to evaluate how good the student's answer is.
+Your evaluation should consider:
+    - Code Correctness
+    - Code Efficiency
+    - Code Structure
+    - General Readability and Style
+Are there any edge cases that the code would break for? Is the code laid out neatly, and easy to reason about?
+Be as objective as possible.
+```
+
+#TODO: English Literature system prompt.
+
 
 ### Custom Classes
 
