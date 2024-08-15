@@ -8,10 +8,19 @@ evaluate the performance of different endpoints on different prompt datasets.
 ### Trigger Evaluations
 
 To trigger an LLM evaluation using a pre-configured [LLM evaluator](), you simply need
-to specify the endpoint, the dataset, and the pre-configured evaluator you would like to
+to specify the LLM endpoint, the dataset, and the pre-configured evaluator you would like to
 use, as follows:
 
-CODE
+```
+url = "https://api.unify.ai/v0/evals/trigger"
+headers = {"Authorization": f"Bearer {UNIFY_API_KEY}"}
+params = {
+    "dataset": "computer_science_homework_1",
+    "endpoint": "llama-3-70b-chat@aws-bedrock",
+    "eval_name": "computer_science_judge",
+}
+response = requests.post(url, params=params, headers=headers)
+```
 
 You will receive en email once the evaluation is finished.
 We will explain how to visualize the results of your evaluations in the next section.
@@ -20,18 +29,23 @@ We will explain how to visualize the results of your evaluations in the next sec
 
 You can check the status of an evaluation using the endpoint X, as follows:
 
-CODE
-
-If the evaluation is still running, the status code returned will be `this`.
+#TODO (in api): If the evaluation is still running, the status code returned will be `this`.
 
 You can get the aggregated scores across the dataset as follows:
 
-CODE
+```
+url = "https://api.unify.ai/v0/evals/get_scores"
+headers = {"Authorization": f"Bearer {UNIFY_API_KEY}"}
+params = {
+    "dataset": "computer_science_homework_1",
+    "eval_name": "computer_science_judge",
+}
+response = requests.get(url, params=params, headers=headers)
+```
 
-You can also get more granular results, with per-prompt scores, as follows:
+You can also get more granular results, with per-prompt scores by passing `per_prompt=True`.
 
-CODE
-
+# TODO in api:
 If the dataset has been updated since the evaluation was run, then the status `this`
 will be shown when making the query (see [Partial Evaluations]() below).
 

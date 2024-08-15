@@ -41,7 +41,7 @@ The judges can be configured via the `judge_models` parameter as follows:
 ```
 url = "https://api.unify.ai/v0/evals/create"
 headers = {"Authorization": f"Bearer {KEY}"}
-params = {"eval_name": "computer_science_judge", "judge_models": "claude-3.5-sonnet@aws-bedrock"}
+params = {"eval_name": "computer_science_demo", "judge_models": "claude-3.5-sonnet@aws-bedrock"}
 response = requests.post(url, json=params, headers=headers)
 ```
 
@@ -58,7 +58,10 @@ The juries can be configured as follows:
 ```
 url = "https://api.unify.ai/v0/evals/create"
 headers = {"Authorization": f"Bearer {KEY}"}
-params = {"eval_name": "computer_science_jury", "judge_models": ["claude-3.5-sonnet@aws-bedrock", "gpt-4o@openai"]}
+params = {
+    "eval_name": "computer_science_jury",
+    "judge_models": ["claude-3.5-sonnet@aws-bedrock", "gpt-4o@openai"],
+}
 response = requests.post(url, json=params, headers=headers)
 ```
 
@@ -82,9 +85,8 @@ nor is it optimized for English literature.
 We can create unique system prompts for these two subjects as follows,
 based on some simple best practices for these domain areas:
 
-
-Computer Science system prompt: 
 ```
+computer_science_system_prompt = """
 Please evaluate the quality of the student's code provided in response to the examination question below.
 Your job is to evaluate how good the student's answer is.
 Your evaluation should consider:
@@ -94,6 +96,16 @@ Your evaluation should consider:
     - General Readability and Style
 Are there any edge cases that the code would break for? Is the code laid out neatly, and easy to reason about?
 Be as objective as possible.
+"""
+
+url = "https://api.unify.ai/v0/evals/create"
+headers = {"Authorization": f"Bearer {$UNIFY_API_KEY}"}
+params = {
+    "eval_name": "computer_science_judge",
+    "judge_models": "claude-3.5-sonnet@aws-bedrock",
+    "system_prompt": computer_science_system_prompt,
+}
+response = requests.post(url, json=params, headers=headers)
 ```
 
 #TODO: English Literature system prompt.
