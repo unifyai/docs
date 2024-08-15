@@ -182,3 +182,38 @@ response = client.generate(
 
 print(response)
 ```
+
+
+Image from a file with Anthropic
+
+```
+import unify
+import base64
+import httpx
+
+image_url = "https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg"
+image_media_type = "image/jpeg"
+image_data = base64.b64encode(httpx.get(image_url).content).decode("utf-8")
+
+client = unify.Unify("claude-3-sonnet@anthropic")
+response = client.generate(
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What’s in this image?"},
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": image_media_type,
+                        "data": image_data,
+                    },
+                },
+            ],
+        }
+    ],
+    max_tokens=300,
+)
+print(response)
+```
