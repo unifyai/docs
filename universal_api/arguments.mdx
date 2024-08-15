@@ -54,13 +54,15 @@ At the time of writing, this is:
 
 Most of these are taken directly from the
 [OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create),
-with the exceptions being: `signature` and `use_custom_keys`, to specify
-{something}  # ToDo
-and whether to use custom keys or the unified keys with the provider, respectively.
+with the exceptions being: `signature` and `use_custom_keys`, with the former specifying
+how the API was called (Unify Python Client, NodeJS client, Console etc.) and the latter
+specifying whether to use custom keys or the unified keys with the provider.
 
 These *unified* arguments are also all mirrored in the
 [generate](https://docs.unify.ai/python/clients#generate) function of the
-[Unify](https://docs.unify.ai/python/clients#unify) client in the Python SDK.
+[Unify](https://docs.unify.ai/python/clients#unify) client and
+[AsyncUnify](https://docs.unify.ai/python/clients#asyncunify) client
+in the Python SDK.
 
 These arguments are all handled consistently regardless of the backend provider selected.
 This makes it very easy for users to simply switch out the backend model and provider,
@@ -93,8 +95,9 @@ This is what happens for **any extra arguments** passed to the `--data` argument
 `curl` request.
 
 For example, anthropic supports the extra header `` for Y.
-We can make use of this provider-specific header by simply selecting the correct provider in the model argument,
-and then passing the argument in the --data field as follows:
+We can make use of this provider-specific header by simply selecting the correct
+provider in the model argument, and then passing the argument in the --data field as
+follows:
 
 CODE
 
