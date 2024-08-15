@@ -27,36 +27,30 @@ arguments and *passthrough* arguments, as explained below.
 
 ### Unified Arguments
 
-The *unified* arguments are all of those explicitly listed in our
-[chat completions endpoint](https://docs.unify.ai/api-reference/querying_llms/get_completions).
-At the time of writing, this is:
+The *unified* arguments:
 
 - model
 - messages
 - temperature
 - stream
 - max_tokens
-- frequency_penalty
-- logit_bias
-- logprobs
-- top_logprobs
-- n
-- presence_penalty
+- top_p
 - response_format
 - seed
-- stop
-- top_p
 - tools
 - tool_choice
 - user
-- signature
+- stop
+
+- signature #TODO: should we even expose this? it's not something a user should use
+
 - use_custom_keys
 - tags
 
 Most of these are taken directly from the
 [OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create),
 with the exceptions being:
-- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.) #TODO: should we even expose this
+- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
 - `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
 - `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
 
