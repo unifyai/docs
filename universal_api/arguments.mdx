@@ -110,6 +110,39 @@ Similarly, these arguments can also be used via the Python SDK as follows:
 
 CODE
 
+
+### TODO: Another example
+
+For example, Anthropic exposes the `top_k` argument, which isn't provided by OpenAI.
+If you include this argument, we will send it straight to the model.
+
+```
+curl --request POST \
+  --url 'https://api.unify.ai/v0/chat/completions' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "claude-3.5-sonnet@anthropic",
+    "messages": [
+        {
+            "content": "Tell me a joke",
+            "role": "user"
+        }
+    ],
+    "top_k": 5,
+    "max_tokens": 1024,
+}'
+```
+
+#TODO: Actually make this work in the python package.
+
+This can be done in the Unify Python SDK as follows:
+
+```
+client = unify.Unify("claude-3-haiku@anthropic")
+client.generate("hello world!", top_k=5)
+```
+
 #### Multi-Modal Queries
 
 The *passthrough* approach means that Unify also supports multi-modal inputs,
@@ -117,3 +150,35 @@ and indeed supports anything which any of the providers support.
 Below are a few examples of multi-modal queries, making use of passthrough arguments:
 
 EXAMPLES
+
+Image from a URL with OpenAI
+
+For example, let's use `gpt-4o` to work out what's in this picture:
+<img
+  src="/images/nature.png"
+  alt="Nature image"
+/>
+
+```
+import unify
+client = unify.Unify("gpt-4o@openai")
+response = client.generate(
+  messages=[
+    {
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "What’s in this image?"},
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+          },
+        },
+      ],
+    }
+  ],
+  max_tokens=300,
+)
+
+print(response)
+```
