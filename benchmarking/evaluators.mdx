@@ -111,7 +111,25 @@ response = requests.post(url, json=params, headers=headers)
 #TODO: English Literature system prompt.
 
 
+### Custom judging classes
+
+If you want to be really prescriptive about the criteria that responses are marked on, you can express this through the `class_config` parameter.
+
+For example
+
+```
+class_config = [
+    {"label": "Excellent", "score": 1.0, "description": "Correct code which is easy to read"},
+    {"label": "Good", "score": 0.75, "description": "Correct code but structured badly"},
+    {"label": "Good", "score": 0.5, "description": "Correct code but not using the most efficient method"},
+    {"label": "Bad", "score": 0.0, "description": "Incorrect code that does not solve the problem"}
+]
+```
+
+
 ### Custom Classes
+
+#TODO: this isn't implemented
 
 Going further, we can also change the classification targets. This enables us to be much
 more granular with the judging, and even measure several different properties for the
