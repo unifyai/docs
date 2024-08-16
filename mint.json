@@ -55,23 +55,33 @@
             "pages": [
                 "universal_api/overview",
                 "universal_api/making_queries",
-                "universal_api/advanced_features"
+                "universal_api/arguments",
+                "universal_api/logging",
+                "universal_api/fine_tuned_models",
+                "universal_api/local_models",
+                "universal_api/comparisons"
             ]
         },
         {
             "group": "Benchmarking",
             "pages": [
                 "benchmarking/overview",
-                "benchmarking/preparing_your_dataset",
-                "benchmarking/benchmarking_your_dataset"
+                "benchmarking/datasets",
+                "benchmarking/evaluators",
+                "benchmarking/evaluations",
+                "benchmarking/benchmarks",
+                "benchmarking/visualization"
             ]
         },
         {
             "group": "Routing",
             "pages": [
                 "routing/overview",
-                "routing/foundation_router",
-                "routing/fine_tuned_custom_router"
+                "routing/fallbacks",
+                "routing/meta_providers",
+                "routing/train_your_own_router",
+                "routing/configure_your_router",
+                "routing/deploy_your_router"
             ]
         },
         {
@@ -141,13 +151,10 @@
         {
             "group": "Dataset Evaluation",
             "pages": [
-                "api-reference/dataset_evaluation/create_eval",
-                "api-reference/dataset_evaluation/list_evals",
-                "api-reference/dataset_evaluation/return_eval_config",
-                "api-reference/dataset_evaluation/rename_eval",
-                "api-reference/dataset_evaluation/delete_eval",
-                "api-reference/dataset_evaluation/trigger_eval",
-                "api-reference/dataset_evaluation/get_eval_scores"
+                "api-reference/dataset_evaluation/evaluate_dataset",
+                "api-reference/dataset_evaluation/delete_dataset_evaluation",
+                "api-reference/dataset_evaluation/get_dataset_evaluations",
+                "api-reference/dataset_evaluation/get_dataset_evaluation_results"
             ]
         },
         {

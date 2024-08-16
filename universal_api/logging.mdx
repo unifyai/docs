@@ -1,0 +1,45 @@
+---
+title: 'Logging'
+---
+
+LLM queries can be given any number of custom tags, via the `tags` argument.
+
+Referring to our [example](#show-don't-tell), it would make sense to tag queries based
+on both the *subject* and the *student*.
+
+For example, we can make queries as follows,
+such that the queries are all sensibly categorized:
+
+```python
+import requests
+url = "https://api.unify.ai/v0/chat/completions"
+headers = {
+    "Authorization": "Bearer UNIFY_API_KEY",
+}
+payload = {
+    "model": "llama-3-8b-chat@together-ai",
+    "messages": [{"role": "user", "content": "Can you prove Pythagoras' Theorem?"}]
+    "tags": ["maths", "student_4514"]
+}
+response = requests.post(url, json=payload, headers=headers)
+```
+
+Every query made via the API can then be retrieved at a later stage, using the
+[`/prompt_history`](https://docs.unify.ai/api-reference/benchmarks/get_prompt_history) endpoint, as follows:
+
+```python
+import requests
+url = "https://api.unify.ai/v0/prompt_history"
+headers = {
+    "Authorization": f"Bearer {KEY}"
+}
+params={"tags":"maths"}
+response = requests.get(url, params=params, headers=headers)
+```
+
+If you want to simply retrieve **all** queries made you can leave the `tags` argument
+empty, or if you want to retrieve all queries for a student you can omit the subject tag,
+and vice versa.
+
+The `/prompt_history`  endpoint can be useful for creating prompt *datasets* from production traffic,
+as explained in the [Production Data]() section.
