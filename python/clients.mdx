@@ -208,6 +208,8 @@ def generate(user_prompt: Optional[str] = None,
              use_custom_keys: bool = False,
              tags: Optional[List[str]] = None,
              message_content_only: bool = True,
+             extra_headers: Optional[Headers] = None,
+             extra_query: Optional[Query] = None,
              **kwargs) -> Union[Generator[str, None, None], str]
 ```
 
@@ -301,8 +303,14 @@ Generate content using the Unify API.
   Otherwise, the full response chat_completion is returned.
   Defaults to True.
   
-- `kwargs` - Additional keyword "passthrough" arguments which are provider-specific, and are not part of the
-  OpenAI standard. They will be handled by the provider-specific API without any other handling in between.
+- `extra_headers` - Additional "passthrough" headers for the request which are provider-specific, and are not
+  part of the OpenAI standard. They are handled by the provider-specific API.
+  
+- `extra_query` - Additional "passthrough" query parameters for the request which are provider-specific, and are
+  not part of the OpenAI standard. They are handled by the provider-specific API.
+  
+- `kwargs` - Additional "passthrough" JSON properties for the body of the request, which are provider-specific,
+  and are not part of the OpenAI standard. They will be handled by the provider-specific API.
   
 
 **Returns**:
@@ -357,6 +365,8 @@ async def generate(
         use_custom_keys: bool = False,
         tags: Optional[List[str]] = None,
         message_content_only: bool = True,
+        extra_headers: Optional[Headers] = None,
+        extra_query: Optional[Query] = None,
         **kwargs) -> Union[AsyncGenerator[str, None], str]
 ```
 
@@ -451,8 +461,14 @@ Generate content asynchronously using the Unify API.
   Otherwise, the full response chat_completion is returned.
   Defaults to True.
   
-- `kwargs` - Additional keyword "passthrough" arguments which are provider-specific, and are not part of the
-  OpenAI standard. They will be handled by the provider-specific API without any other handling in between.
+- `extra_headers` - Additional "passthrough" headers for the request which are provider-specific, and are not
+  part of the OpenAI standard. They are handled by the provider-specific API.
+  
+- `extra_query` - Additional "passthrough" query parameters for the request which are provider-specific, and are
+  not part of the OpenAI standard. They are handled by the provider-specific API.
+  
+- `kwargs` - Additional "passthrough" JSON properties for the body of the request, which are provider-specific,
+  and are not part of the OpenAI standard. They will be handled by the provider-specific API.
   
 
 **Returns**:
