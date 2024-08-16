@@ -55,12 +55,24 @@ These *unified* arguments are also all mirrored in the
 [AsyncUnify](https://docs.unify.ai/python/clients#asyncunify) client
 in the Python SDK.
 
+### Platform Arguments
+
+The following arguments are not related to the
+[OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create),
+and are instead related to the Unify platform:
+
+- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
+- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
+- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
+
+We therefore refer to them as the *platform* arguments, to distinguish them from those in the OpenAI Standard.
+
 ### Partially Unified Arguments
 
-Other arguments in the [OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create) are supported by
-*some* models and providers, but *not all* of them. These arguments are referred to as *partially* unified, given that
-they are unified to the OpenAI standard for the subset of models and providers which support these features (or support
-features which are sufficiently similar to be unified into the standard).
+Most arguments in the [OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create) are only supported
+by *some* models and providers, but *not all* of them. These arguments are referred to as *partially* unified, given
+that they are unified to the OpenAI standard for the subset of models and providers which support these features (or
+support features which are sufficiently similar to be unified into the standard).
 
 These *partially unified* arguments are as follows:
 
@@ -114,45 +126,11 @@ If you believe one of these arguments *could* be supported by a certain model or
 supported, then feel free to let us know [on discord](https://discord.com/invite/sXyFF8tDtm)
 and we'll get it added as soon as possible! ⚡
 
-### Platform Arguments
-
-The following arguments are not related to the
-[OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create),
-and are instead related to the Unify platform:
-
-- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
-- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
-- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
-
-We therefore refer to them as the *platform* arguments, to distinguish them from those in the OpenAI Standard.
-
-### Passthrough Arguments
-
-
-
-For example, we can run this query based on the OpenAI arguments
-`arg_a` # ToDo
-and
-`arg_b`, # ToDo
-despite
-`provider` # ToDo
-not
-supporting
-`a` # ToDo
-or
-`b`. # ToDo
-
-CODE # ToDo
-
-The same is true via the Python SDK:
-
-CODE # ToDo
-
-
-### Tool use example
+#### Tool use example
 
 OpenAI and Anthropic have different interfaces for tool use.
-Since we adhere to the OpenAI standard, we accept tools as specified by the OpenAI standard, and convert the format so that they work with Anthropic models.
+Since we adhere to the OpenAI standard, we accept tools as specified by the OpenAI standard, and convert the format so
+that they work with Anthropic models.
 
 #TODO: make these work in the python SDK (as tool-use doesn't return "chat" messages)
 
@@ -183,33 +161,13 @@ client = unify.Unify("claude-3.5-sonnet@aws-bedrock")
 client.generate("What is the current temperature of New York, San Francisco and Chicago?", tools=tools, tool_choice="auto")
 ```
 
-
 ### Passthrough Arguments
 
 The *passthrough* arguments are not handled by Unify at all, they are *passed through*
 directly to the backend provider, without any modification.
 
 This is what happens for **any extra arguments** passed to the `--data` argument of the
-`curl` request.
-
-For example, anthropic supports the extra header `` for Y.
-We can make use of this provider-specific header by simply selecting the correct
-provider in the model argument, and then passing the argument in the --data field as
-follows:
-
-CODE
-
-As indicated by the name, we do not handle these extra arguments in any way, and if you
-do not make correct use of the argument, or you pass an invalid argument for a provider,
-then we simply return the provider-specific error message to you,
-with no other intervention.
-
-Similarly, these arguments can also be used via the Python SDK as follows:
-
-CODE
-
-
-
+`curl` request, and also for any extra headers passed.
 
 #### Anthropic-only example
 
