@@ -22,13 +22,32 @@ of the backend provider selected. This would require a huge amount of ongoing
 maintenance to keep pace with the fast-changing API specs, and the wrong choice of
 abstraction for the unification effort could break compatibility across APIs.
 
-We have instead opted for a compromise with our API, where we support *unified*
-arguments, *partially unified* arguments, *passthrough* arguments, and *platform* arguments,
-as explained below.
+We have instead opted for a compromise with our API, where we support:
 
-### Unified Arguments
+- [Platform Arguments](#platform-arguments): specific to the Unify platform
+- [Unified Arguments](#unified-arguments): from the OpenAI Standard, unifed across **all** endpoints
+- [Partially Unified Arguments](#partially-unified-arguments): from the OpenAI Standard, unifed across **some** endpoints
+- [Passthrough Arguments](#passthrough-arguments): any extra model-specific or provider-specific arguments,
+passed straight through to the backend http request
 
-The *unified* arguments are as follows:
+## Platform Arguments
+
+The following arguments of the chat completions
+[endpoint](http://localhost:3000/api-reference/querying_llms/get_completions)
+are solely related to the *Unify platform*:
+
+- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
+- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
+- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
+
+We therefore refer to them as the *platform* arguments,
+to distinguish them from those in the OpenAI Standard (see below).
+
+## Unified Arguments
+
+The *unified* arguments of the chat completions
+[endpoint](http://localhost:3000/api-reference/querying_llms/get_completions)
+are as follows:
 
 - `model` - The model@provider pair (the endpoint) to use in the backend.
 - `messages` - A list of messages comprising the conversation so far.
@@ -43,7 +62,7 @@ tokens and generated tokens is limited by the model's context length.
 These are all taken directly from the
 [OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create).
 The only argument which deviates from OpenAI is `model`, which in the case of OpenAI of course is only OpenAI models,
-whereas our API supports all major models and providers.
+whereas our API supports all major models and providers in the format `model@provider`.
 
 These arguments are all **fully supported by all models and providers in Unify**.
 This means you can switch models and providers totally freely when making use of the *unified arguments*,
@@ -55,19 +74,7 @@ These *unified* arguments are also all mirrored in the
 [AsyncUnify](https://docs.unify.ai/python/clients#asyncunify) client
 in the Python SDK.
 
-### Platform Arguments
-
-The following arguments are not related to the
-[OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create),
-and are instead related to the Unify platform:
-
-- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
-- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
-- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
-
-We therefore refer to them as the *platform* arguments, to distinguish them from those in the OpenAI Standard.
-
-### Partially Unified Arguments
+## Partially Unified Arguments
 
 Most arguments in the [OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create) are only supported
 by *some* models and providers, but *not all* of them. These arguments are referred to as *partially* unified, given
@@ -126,7 +133,7 @@ If you believe one of these arguments *could* be supported by a certain model or
 supported, then feel free to let us know [on discord](https://discord.com/invite/sXyFF8tDtm)
 and we'll get it added as soon as possible! ⚡
 
-#### Tool use example
+### Tool Use Example
 
 OpenAI and Anthropic have different interfaces for tool use.
 Since we adhere to the OpenAI standard, we accept tools as specified by the OpenAI standard, and convert the format so
@@ -134,7 +141,7 @@ that they work with Anthropic models.
 
 This is the default function calling example from OpenAI, working with an Anthropic model:
 
-```
+```python
 tools = [
     {
         "type": "function",
@@ -159,21 +166,47 @@ client = unify.Unify("claude-3.5-sonnet@aws-bedrock")
 client.generate("What is the current temperature of New York, San Francisco and Chicago?", tools=tools, tool_choice="auto", message_content_only=False)
 ```
 
-### Passthrough Arguments
+## Passthrough Arguments
 
 The *passthrough* arguments are not handled by Unify at all, they are *passed through*
 directly to the backend provider, without any modification.
 
-This is what happens for **any extra arguments** passed to the `--data` argument of the
-`curl` request, and also for any extra headers passed.
+There are three types of passthrough arguments:
 
-#### Anthropic-only example
+1) extra headers, which are passed to the `curl` request like so:
+    ```shell
+    curl --request POST \
+    --url https://api.unify.ai/v0/chat/completions \
+    --header "<header_name>: <value>"
+    ...
+    ```
+
+2) extra query parameters, which are passed to the `curl` request like so:
+    ```shell
+    curl --request POST \
+    --url https://api.unify.ai/v0/chat/completions?<parameter>=<value> \
+    ...
+    ```
+
+3) extra json properties, which are passed to the `curl` request like so:
+    ```shell
+    curl --request POST \
+    --url https://api.unify.ai/v0/chat/completions \
+    --data '{
+    "<key>": "<value>"
+    ...
+    ```
+
+In the Python client, these extra arguments are handled by the `extra_headers` argument, `extra_query` argument,
+and direct `**kwargs` of the [generate function](https://docs.unify.ai/python/clients#generate), respectively.
+
+### Anthropic-Only Example
 
 Anthropic exposes the `top_k` argument, which isn't provided by OpenAI.
 If you include this argument, it will be sent straight to the model.
-If you send this argument to a provider that does not support `top_k`, you may get an error.
+If you send this argument to a provider that does not support `top_k`, you will get an error.
 
-```
+```shell
 curl --request POST \
   --url 'https://api.unify.ai/v0/chat/completions' \
   --header 'Authorization: Bearer <UNIFY_KEY>' \
@@ -191,30 +224,57 @@ curl --request POST \
 }'
 ```
 
-This can be done in the Unify Python SDK as follows:
+This can also be done in the Unify Python SDK, as follows:
 
-```
+```python
 client = unify.Unify("claude-3-haiku@anthropic")
 client.generate("hello world!", top_k=5)
 ```
 
-#### Multi-Modal Queries
+The same is true for headers. For example, beta features are sometimes released,
+which can be accessed via specific headers, as explained in
+[this tweet](https://x.com/alexalbert__/status/1812921642143900036) from Anthropic.
+
+These headers can be queried directly from the Unify API like so:
+
+```shell
+curl --request POST \
+  --url 'https://api.unify.ai/v0/chat/completions' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: application/json' \
+  --header 'anthropic-beta: max-tokens-3-5-sonnet-2024-07-15'
+  --data '{
+    "model": "claude-3.5-sonnet@anthropic",
+    "messages": [
+        {
+            "content": "Tell me a joke",
+            "role": "user"
+        }
+    ]
+}'
+```
+
+Again, this can also be done in the Unify Python SDK as follows:
+
+```python
+client = unify.Unify("claude-3-haiku@anthropic")
+client.generate("hello world!", extra_headers={"anthropic-beta": "max-tokens-3-5-sonnet-2024-07-15"})
+```
+
+{/* ToDo: add an example for a query parameter, again with both curl + python examples */}
+
+### Multi-Modal Queries
 
 The *passthrough* approach means that Unify also supports multi-modal inputs,
-and indeed supports anything which any of the providers support.
+and indeed supports anything which *any* of the providers support via their chat completions API.
 Below are a few examples of multi-modal queries, making use of passthrough arguments:
 
-EXAMPLES
-
-Image from a URL with OpenAI
-
 For example, let's use `gpt-4o` to work out what's in this picture:
-<img
-  src="/images/nature.png"
-  alt="Nature image"
-/>
+<p align="left">
+    <img width={384} src="/images/nature.png" alt="Nature Image" />
+</p>
 
-```
+```python
 import unify
 client = unify.Unify("gpt-4o@openai")
 response = client.generate(
@@ -238,10 +298,22 @@ response = client.generate(
 print(response)
 ```
 
-
-Image from a file with Anthropic
+We get something like the following:
 
 ```
+The image depicts a serene landscape featuring a wooden pathway that extends into the distance, cutting through a lush green field.
+The field is filled with tall grasses and a variety of low-lying shrubs and bushes.
+In the background, there are scattered trees, and the sky above is a clear blue with some wispy clouds.
+The scene exudes a calm, peaceful, and natural atmosphere.
+```
+
+Let's do the same with `claude-3-sonnet`, with a different image this time:
+
+<p align="left">
+    <img width={384} src="/images/ant.jpg" alt="Ant Image" />
+</p>
+
+```python
 import unify
 import base64
 import httpx
@@ -271,4 +343,14 @@ response = client.generate(
     max_tokens=300,
 )
 print(response)
+```
+
+We get something like the following:
+
+```
+The image shows a close-up view of an ant. The ant appears to be a large black carpenter ant species.
+The ant is standing on a light-colored surface, with its mandibles open and antennae extended.
+The image captures intricate details of the ant's body segments and legs.
+The background has a reddish-brown hue, creating a striking contrast against the dark coloration of the ant.
+This macro photography shot highlights the remarkable structure and form of this small insect in great detail.
 ```

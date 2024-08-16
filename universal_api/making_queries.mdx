@@ -9,7 +9,7 @@ You can interact with the API via:
 - The [OpenAI Python Package](#openai-python-package)
 - The [OpenAI NodeJS Package](#openai-nodejs-package)
 
-### HTTP Requests
+## HTTP Requests
 
 Run the following command in a terminal (replacing `$UNIFY_KEY` with your own).
 
@@ -129,7 +129,7 @@ In the request you can specify other common parameters, like `temperature`, `str
 You can specify all of the parameters that OpenAI supports, but they may not be compatible
 with every model or provider.
 
-### Unify Python Package
+## Unify Python Package
 
 First, download our [Python package](https://github.com/unifyai/unify) with 
 `pip install unifyai`. You can then quickly get started like so:
@@ -147,7 +147,7 @@ You can list the models, providers and endpoints using the functions
 `unify.utils.list_models()`, `unify.utils.list_providers()` and 
 `unify.utils.list_endpoints()`
 
-### OpenAI Python Package
+## OpenAI Python Package
 
 The Unify API is designed to be compatible with the OpenAI standard, so if you 
 have existing code that uses the OpenAI Python package, it's straightforward to try 
@@ -172,7 +172,7 @@ for chunk in stream:
 
 Remember that the `model` field needs to contain a string of the form `model@provider`.
 
-### OpenAI NodeJS Package
+## OpenAI NodeJS Package
 
 Likewise, if you have existing code that uses the OpenAI NodeJS package, it's again very 
 straightforward to try out our API.
