@@ -1,0 +1,18 @@
+---
+title: 'Fallbacks'
+---
+
+Sometimes individual providers have outages,
+which can disrupt live workflows in production.
+
+To combat this, you can set a list of fallback models,
+so if one provider is down or fails for some reason,
+the request will go to the next model on the list, and so on, until either the
+request succeeds, or the end of the list is reached.
+
+To specify the list of fallback models, use `->` between individual model tags, so the
+model string becomes `model_a@provider_a->model_b@provider_b`.
+
+There is no limit on the number of models that can be specified.
+The `model` field in the response contains the model and provider that the request
+actually went to.

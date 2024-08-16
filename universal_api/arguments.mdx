@@ -1,0 +1,356 @@
+---
+title: 'Arguments'
+---
+
+With so many LLMs and providers constantly coming onto the scene, each of these is
+increasingly striving to provide unique value to end users, and this means that there
+are often diverging features offered behind the API.
+
+For example, some models support RAG directly in the API,
+others support function calling, tool use, image processing, audio,
+structured output (such as json mode),
+and many other increasingly complex modes of operation.
+
+We *could* adopt a design for our universal API where we only support the lowest common
+denominator across all of the APIs. However, this would necessarily leave out many of
+the most exciting bleeding edge features, limiting the utility of
+our API for more forward-thinking applications.
+
+Similarly, we *could* try to create a universal interface to the full superset of features
+across *all* providers, ensuring that the input-output behaviour is consistent regardless
+of the backend provider selected. This would require a huge amount of ongoing
+maintenance to keep pace with the fast-changing API specs, and the wrong choice of
+abstraction for the unification effort could break compatibility across APIs.
+
+We have instead opted for a compromise with our API, where we support:
+
+- [Platform Arguments](#platform-arguments): specific to the Unify platform
+- [Unified Arguments](#unified-arguments): from the OpenAI Standard, unifed across **all** endpoints
+- [Partially Unified Arguments](#partially-unified-arguments): from the OpenAI Standard, unifed across **some** endpoints
+- [Passthrough Arguments](#passthrough-arguments): any extra model-specific or provider-specific arguments,
+passed straight through to the backend http request
+
+## Platform Arguments
+
+The following arguments of the chat completions
+[endpoint](http://localhost:3000/api-reference/querying_llms/get_completions)
+are solely related to the *Unify platform*:
+
+- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
+- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
+- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
+
+We therefore refer to them as the *platform* arguments,
+to distinguish them from those in the OpenAI Standard (see below).
+
+## Unified Arguments
+
+The *unified* arguments of the chat completions
+[endpoint](http://localhost:3000/api-reference/querying_llms/get_completions)
+are as follows:
+
+- `model` - The model@provider pair (the endpoint) to use in the backend.
+- `messages` - A list of messages comprising the conversation so far.
+- `temperature` - What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more
+random, while lower values like 0.2 will make it more focused and deterministic.
+- `stream` - If set, partial message deltas will be sent. Tokens will be sent as data-only server-sent events as they
+become available, with the stream terminated by a `data: [DONE]` message.
+- `max_tokens` - The maximum number of tokens that can be generated in the chat completion. The total length of input
+tokens and generated tokens is limited by the model's context length.
+- `stop` - Up to 4 sequences where the API will stop generating further tokens.
+
+These are all taken directly from the
+[OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create).
+The only argument which deviates from OpenAI is `model`, which in the case of OpenAI of course is only OpenAI models,
+whereas our API supports all major models and providers in the format `model@provider`.
+
+These arguments are all **fully supported by all models and providers in Unify**.
+This means you can switch models and providers totally freely when making use of the *unified arguments*,
+without changing the code in any way.
+
+These *unified* arguments are also all mirrored in the
+[generate](https://docs.unify.ai/python/clients#generate) function of the
+[Unify](https://docs.unify.ai/python/clients#unify) client and
+[AsyncUnify](https://docs.unify.ai/python/clients#asyncunify) client
+in the Python SDK.
+
+## Partially Unified Arguments
+
+Most arguments in the [OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create) are only supported
+by *some* models and providers, but *not all* of them. These arguments are referred to as *partially* unified, given
+that they are unified to the OpenAI standard for the subset of models and providers which support these features (or
+support features which are sufficiently similar to be unified into the standard).
+
+These *partially unified* arguments are as follows:
+
+- `frequency_penalty` - Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing
+frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
+- `logit_bias` - Modify the likelihood of specified tokens appearing in the completion.
+Accepts a JSON object that maps tokens (specified by their token ID in the tokenizer) to an associated bias value from
+-100 to 100. Mathematically, the bias is added to the logits generated by the model prior to sampling. The exact effect
+will vary per model, but values between -1 and 1 should decrease or increase likelihood of selection; values like -100
+or 100 should result in a ban or exclusive selection of the relevant token.
+- `logprobs` - Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities
+of each output token returned in the `content` of `message`.
+- `top_logprobs` - An integer between 0 and 20 specifying the number of most likely tokens to return at each token
+position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used.
+- `n` - How many chat completion choices to generate for each input message. Note that you will be charged based on the
+number of generated tokens across all of the choices. Keep `n` as `1` to minimize costs.
+- `presence_penalty` - Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in
+the text so far, increasing the model's likelihood to talk about new topics.
+- `response_format` - An object specifying the format that the model must output.
+Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will
+match your supplied JSON schema. Learn more in the Structured Outputs guide.
+Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the message the model generates is valid JSON.
+- `seed` - This feature is in Beta. If specified, our system will make a best effort to sample deterministically, such
+that repeated requests with the same `seed` and parameters should return the same result. Determinism is not guaranteed,
+and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.
+- `stream_options` - Options for streaming response. Only set this when you set `stream: true`.
+- `top_p` - An alternative to sampling with temperature, called nucleus sampling, where the model considers the results
+of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are
+considered. Generally recommended to alter this *or* temperature, but not both.
+- `tools` - A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a
+list of functions the model may generate JSON inputs for. A max of 128 functions are supported.
+- `tool_choice` - Controls which (if any) tool is called by the model. `none` means the model will not call any tool and
+instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools.
+`required` means the model must call one or more tools. Specifying a particular tool via
+`{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
+`none` is the default when no tools are present. `auto` is the default if tools are present.
+- `parallel_tool_calls` - Whether to enable parallel function calling during tool use.
+
+Most of these *partially unified* arguments are provider-specific, but others are model specific.
+
+You can see which models and providers support these partially unified arguments in this [live dashboard](),
+which is determined directly based on the latest unit tests.
+
+Despite only being supported by some models and providers, these arguments are *also* explicitly mirrored in the
+[generate](https://docs.unify.ai/python/clients#generate) function of the
+[Unify](https://docs.unify.ai/python/clients#unify) client and
+[AsyncUnify](https://docs.unify.ai/python/clients#asyncunify) client
+in the Python SDK.
+
+If you believe one of these arguments *could* be supported by a certain model or provider, but is not currently
+supported, then feel free to let us know [on discord](https://discord.com/invite/sXyFF8tDtm)
+and we'll get it added as soon as possible! ⚡
+
+### Tool Use Example
+
+OpenAI and Anthropic have different interfaces for tool use.
+Since we adhere to the OpenAI standard, we accept tools as specified by the OpenAI standard, and convert the format so
+that they work with Anthropic models.
+
+This is the default function calling example from OpenAI, working with an Anthropic model:
+
+```python
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_current_weather",
+            "description": "Get the current weather in a given location",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "The city and state, e.g. San Francisco, CA",
+                    },
+                    "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+                },
+            },
+        },
+    }
+]
+
+client = unify.Unify("claude-3.5-sonnet@aws-bedrock")
+client.generate("What is the current temperature of New York, San Francisco and Chicago?", tools=tools, tool_choice="auto", message_content_only=False)
+```
+
+## Passthrough Arguments
+
+The *passthrough* arguments are not handled by Unify at all, they are *passed through*
+directly to the backend provider, without any modification.
+
+There are three types of passthrough arguments:
+
+1) extra headers, which are passed to the `curl` request like so:
+    ```shell
+    curl --request POST \
+    --url https://api.unify.ai/v0/chat/completions \
+    --header "<header_name>: <value>"
+    ...
+    ```
+
+2) extra query parameters, which are passed to the `curl` request like so:
+    ```shell
+    curl --request POST \
+    --url https://api.unify.ai/v0/chat/completions?<parameter>=<value> \
+    ...
+    ```
+
+3) extra json properties, which are passed to the `curl` request like so:
+    ```shell
+    curl --request POST \
+    --url https://api.unify.ai/v0/chat/completions \
+    --data '{
+    "<key>": "<value>"
+    ...
+    ```
+
+In the Python client, these extra arguments are handled by the `extra_headers` argument, `extra_query` argument,
+and direct `**kwargs` of the [generate function](https://docs.unify.ai/python/clients#generate), respectively.
+
+### Anthropic-Only Example
+
+Anthropic exposes the `top_k` argument, which isn't provided by OpenAI.
+If you include this argument, it will be sent straight to the model.
+If you send this argument to a provider that does not support `top_k`, you will get an error.
+
+```shell
+curl --request POST \
+  --url 'https://api.unify.ai/v0/chat/completions' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "claude-3.5-sonnet@anthropic",
+    "messages": [
+        {
+            "content": "Tell me a joke",
+            "role": "user"
+        }
+    ],
+    "top_k": 5,
+    "max_tokens": 1024,
+}'
+```
+
+This can also be done in the Unify Python SDK, as follows:
+
+```python
+client = unify.Unify("claude-3-haiku@anthropic")
+client.generate("hello world!", top_k=5)
+```
+
+The same is true for headers. For example, beta features are sometimes released,
+which can be accessed via specific headers, as explained in
+[this tweet](https://x.com/alexalbert__/status/1812921642143900036) from Anthropic.
+
+These headers can be queried directly from the Unify API like so:
+
+```shell
+curl --request POST \
+  --url 'https://api.unify.ai/v0/chat/completions' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: application/json' \
+  --header 'anthropic-beta: max-tokens-3-5-sonnet-2024-07-15'
+  --data '{
+    "model": "claude-3.5-sonnet@anthropic",
+    "messages": [
+        {
+            "content": "Tell me a joke",
+            "role": "user"
+        }
+    ]
+}'
+```
+
+Again, this can also be done in the Unify Python SDK as follows:
+
+```python
+client = unify.Unify("claude-3-haiku@anthropic")
+client.generate("hello world!", extra_headers={"anthropic-beta": "max-tokens-3-5-sonnet-2024-07-15"})
+```
+
+{/* ToDo: add an example for a query parameter, again with both curl + python examples */}
+
+### Multi-Modal Queries
+
+The *passthrough* approach means that Unify also supports multi-modal inputs,
+and indeed supports anything which *any* of the providers support via their chat completions API.
+Below are a few examples of multi-modal queries, making use of passthrough arguments:
+
+For example, let's use `gpt-4o` to work out what's in this picture:
+<p align="left">
+    <img width={384} src="/images/nature.png" alt="Nature Image" />
+</p>
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai")
+response = client.generate(
+  messages=[
+    {
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "What’s in this image?"},
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+          },
+        },
+      ],
+    }
+  ],
+  max_tokens=300,
+)
+
+print(response)
+```
+
+We get something like the following:
+
+```
+The image depicts a serene landscape featuring a wooden pathway that extends into the distance, cutting through a lush green field.
+The field is filled with tall grasses and a variety of low-lying shrubs and bushes.
+In the background, there are scattered trees, and the sky above is a clear blue with some wispy clouds.
+The scene exudes a calm, peaceful, and natural atmosphere.
+```
+
+Let's do the same with `claude-3-sonnet`, with a different image this time:
+
+<p align="left">
+    <img width={384} src="/images/ant.jpg" alt="Ant Image" />
+</p>
+
+```python
+import unify
+import base64
+import httpx
+
+image_url = "https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg"
+image_media_type = "image/jpeg"
+image_data = base64.b64encode(httpx.get(image_url).content).decode("utf-8")
+
+client = unify.Unify("claude-3-sonnet@anthropic")
+response = client.generate(
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What’s in this image?"},
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": image_media_type,
+                        "data": image_data,
+                    },
+                },
+            ],
+        }
+    ],
+    max_tokens=300,
+)
+print(response)
+```
+
+We get something like the following:
+
+```
+The image shows a close-up view of an ant. The ant appears to be a large black carpenter ant species.
+The ant is standing on a light-colored surface, with its mandibles open and antennae extended.
+The image captures intricate details of the ant's body segments and legs.
+The background has a reddish-brown hue, creating a striking contrast against the dark coloration of the ant.
+This macro photography shot highlights the remarkable structure and form of this small insect in great detail.
+```
