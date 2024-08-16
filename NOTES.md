@@ -14,7 +14,7 @@ Just a few notes while making changes to the docs,
 
 7. Some of the formatting is fairly sensitive so I’d suggest going through their [docs](https://mintlify.com/docs/page) to understand how stuff is formatted. For e.g. having multi-line strings like [this](https://github.com/unifyai/orchestra/blob/67a1069df79d657d6ba57f3bdbb5a94a4cbc9bdc/orchestra/web/api/dataset_evaluation/schema.py#L15) wouldn’t work but it would need to be written like [this](https://github.com/unifyai/orchestra/blob/02df65571d4816e33749f3f5a1897b1c2a66830a/orchestra/web/api/dataset_evaluation/schema.py#L19) (with the triple back-tick)
 
-8. Also any descriptions of the form <model>, <model>@<provider>, etc. get treated as html elements in an mdx file so ideally it should be \<model\>, \<model\>@\<provider\>, etc.
+8. Also any descriptions of the form `<model>`, `<model>@<provider>`, etc. get treated as html elements in an mdx file so ideally it should be `\<model\>`, `\<model\>\<provider\>`, etc.
 
 9. There are a few endpoints on the docs where either the description of the parameters or the description of the responses with different error codes might be missing, adding those to the above mentioned places should get them working.
 
