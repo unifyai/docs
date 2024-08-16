@@ -49,6 +49,12 @@ These arguments are all **fully supported by all models and providers in Unify**
 This means you can switch models and providers totally freely when making use of the *unified arguments*,
 without changing the code in any way.
 
+These *unified* arguments are also all mirrored in the
+[generate](https://docs.unify.ai/python/clients#generate) function of the
+[Unify](https://docs.unify.ai/python/clients#unify) client and
+[AsyncUnify](https://docs.unify.ai/python/clients#asyncunify) client
+in the Python SDK.
+
 ### Partially Unified Arguments
 
 Other arguments in the [OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create) are supported by
@@ -98,30 +104,31 @@ Most of these *partially unified* arguments are provider-specific, but others ar
 You can see which models and providers support these partially unified arguments in this [live dashboard](),
 which is determined directly based on the latest unit tests.
 
-If you believe one of these arguments *could* be supported by a certain model or provider, but is not currently
-supported, then feel free to let us know [on discord](https://discord.com/invite/sXyFF8tDtm)
-and we'll get it added as soon as possible!
-
-### Passthrough Arguments
-
-### Platform Arguments
-
-
-
-with the exceptions being:
-- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
-- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
-- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
-
-These *unified* arguments are also all mirrored in the
+Despite only being supported by some models and providers, these arguments are *also* explicitly mirrored in the
 [generate](https://docs.unify.ai/python/clients#generate) function of the
 [Unify](https://docs.unify.ai/python/clients#unify) client and
 [AsyncUnify](https://docs.unify.ai/python/clients#asyncunify) client
 in the Python SDK.
 
-These arguments are all handled consistently regardless of the backend provider selected.
-This makes it very easy for users to simply switch out the backend model and provider,
-without needing to change anything else in the code.
+If you believe one of these arguments *could* be supported by a certain model or provider, but is not currently
+supported, then feel free to let us know [on discord](https://discord.com/invite/sXyFF8tDtm)
+and we'll get it added as soon as possible! ⚡
+
+### Platform Arguments
+
+The following arguments are not related to the
+[OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/create),
+and are instead related to the Unify platform:
+
+- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
+- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
+- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
+
+We therefore refer to them as the *platform* arguments, to distinguish them from those in the OpenAI Standard.
+
+### Passthrough Arguments
+
+
 
 For example, we can run this query based on the OpenAI arguments
 `arg_a` # ToDo
