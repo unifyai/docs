@@ -93,13 +93,16 @@ instead generates a message. `auto` means the model can pick between generating 
 `none` is the default when no tools are present. `auto` is the default if tools are present.
 - `parallel_tool_calls` - Whether to enable parallel function calling during tool use.
 
-A full breakdown of the models and providers which support these X arguments is as follows:
+Most of these *partially unified* arguments are provider-specific, but others are model specific.
 
-X
+You can see which models and providers support these partially unified arguments in this [live dashboard](),
+which is determined directly based on the latest unit tests.
+
+If you believe one of these arguments *could* be supported by a certain model or provider, but is not currently
+supported, then feel free to let us know [on discord](https://discord.com/invite/sXyFF8tDtm)
+and we'll get it added as soon as possible!
 
 ### Passthrough Arguments
-
-
 
 ### Platform Arguments
 
