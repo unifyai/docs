@@ -70,7 +70,14 @@ Lets upload our `english_language.jsonl` dataset.
 
 We can do this via the REST API as follows:
 
-CODE
+```
+import requests
+url = "https://api.unify.ai/v0/dataset"
+headers = {"Authorization": "Bearer $UNIFY_API_KEY",}
+data = {"name": "english_language"}
+files = {"file": open('/path/to/english_language.jsonl' ,'rb')}
+response = requests.post(url, data=data, files=files, headers=headers)
+```
 
 Or we can create a `Dataset` instance in Python,
 and then call `.upload("english_language")` as follows:
@@ -83,11 +90,32 @@ We can delete the dataset just as easily as we created it.
 
 First, using the REST API:
 
-CODE
+```
+import requests
+url = "https://api.unify.ai/v0/dataset"
+headers = {"Authorization": "Bearer $UNIFY_API_KEY"}
+data = {"name": "english_language"}
+response = requests.delete(url, params=data, headers=headers)
+```
 
 Or via Python:
 
 CODE
+
+### Listing Datasets
+
+We can retrieve a list of our uploaded datasets using the `/dataset/list` endpoint.
+
+```
+import requests
+url = "https://api.unify.ai/v0/dataset/list"
+headers = {"Authorization": "Bearer $UNIFY_API_KEY"}
+response = requests.get(url, headers=headers)
+print(response.text)
+```
+
+
+
 
 ### Renaming Datasets
 
@@ -98,7 +126,13 @@ and `english language`.
 We can easily rename the dataset without deleting and re-uploading,
 via the following REST API command:
 
-CODE
+```
+import requests
+url = "https://api.unify.ai/v0/dataset/rename"
+headers = {"Authorization": "Bearer $UNIFY_API_KEY"}
+data = {"name": "english", "new_name": "english_literature"}
+response = requests.post(url, params=data, headers=headers)
+``
 
 Or via Python:
 
