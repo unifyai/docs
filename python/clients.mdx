@@ -189,9 +189,9 @@ def generate(user_prompt: Optional[str] = None,
              system_prompt: Optional[str] = None,
              messages: Optional[List[Dict[str, str]]] = None,
              max_tokens: Optional[int] = 1024,
-             temperature: Optional[float] = 1.0,
              stop: Optional[List[str]] = None,
              stream: bool = False,
+             temperature: Optional[float] = 1.0,
              message_content_only: bool = True,
              **kwargs) -> Union[Generator[str, None, None], str]
 ```
@@ -212,16 +212,16 @@ Generate content using the Unify API.
 - `max_tokens` _Optional[int]_ - The max number of output tokens.
   Defaults to the provider's default max_tokens when the value is None.
   
-- `temperature` _Optional[float]_ - What sampling temperature to use, between 0 and 2.
-  Higher values like 0.8 will make the output more random,
-  while lower values like 0.2 will make it more focused and deterministic.
-  Defaults to the provider's default max_tokens when the value is None.
-  
 - `stop` _Optional[List[str]]_ - Up to 4 sequences where the API will stop generating further tokens.
   
 - `stream` _bool_ - If True, generates content as a stream.
   If False, generates content as a single response.
   Defaults to False.
+  
+- `temperature` _Optional[float]_ - What sampling temperature to use, between 0 and 2.
+  Higher values like 0.8 will make the output more random,
+  while lower values like 0.2 will make it more focused and deterministic.
+  Defaults to the provider's default max_tokens when the value is None.
   
 - `message_content_only` _bool_ - If True, only return the message content
   chat_completion.choices[0].message.content.strip(" ") from the OpenAI return.
@@ -264,9 +264,9 @@ async def generate(user_prompt: Optional[str] = None,
                    system_prompt: Optional[str] = None,
                    messages: Optional[List[Dict[str, str]]] = None,
                    max_tokens: Optional[int] = None,
-                   temperature: Optional[float] = 1.0,
                    stop: Optional[List[str]] = None,
                    stream: bool = False,
+                   temperature: Optional[float] = 1.0,
                    message_content_only: bool = True,
                    **kwargs) -> Union[AsyncGenerator[str, None], str]
 ```
@@ -287,16 +287,16 @@ Generate content asynchronously using the Unify API.
 - `max_tokens` _Optional[int]_ - The max number of output tokens, defaults
   to the provider's default max_tokens when the value is None.
   
-- `temperature` _Optional[float]_ - What sampling temperature to use, between 0 and 2.
-  Higher values like 0.8 will make the output more random,
-  while lower values like 0.2 will make it more focused and deterministic.
-  Defaults to the provider's default max_tokens when the value is None.
-  
 - `stop` _Optional[List[str]]_ - Up to 4 sequences where the API will stop generating further tokens.
   
 - `stream` _bool_ - If True, generates content as a stream.
   If False, generates content as a single response.
   Defaults to False.
+  
+- `temperature` _Optional[float]_ - What sampling temperature to use, between 0 and 2.
+  Higher values like 0.8 will make the output more random,
+  while lower values like 0.2 will make it more focused and deterministic.
+  Defaults to the provider's default max_tokens when the value is None.
   
 - `message_content_only` _bool_ - If True, only return the message content
   chat_completion.choices[0].message.content.strip(" ") from the OpenAI return.
