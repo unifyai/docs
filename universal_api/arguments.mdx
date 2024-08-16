@@ -132,8 +132,6 @@ OpenAI and Anthropic have different interfaces for tool use.
 Since we adhere to the OpenAI standard, we accept tools as specified by the OpenAI standard, and convert the format so
 that they work with Anthropic models.
 
-#TODO: make these work in the python SDK (as tool-use doesn't return "chat" messages)
-
 This is the default function calling example from OpenAI, working with an Anthropic model:
 
 ```
@@ -158,7 +156,7 @@ tools = [
 ]
 
 client = unify.Unify("claude-3.5-sonnet@aws-bedrock")
-client.generate("What is the current temperature of New York, San Francisco and Chicago?", tools=tools, tool_choice="auto")
+client.generate("What is the current temperature of New York, San Francisco and Chicago?", tools=tools, tool_choice="auto", message_content_only=False)
 ```
 
 ### Passthrough Arguments
