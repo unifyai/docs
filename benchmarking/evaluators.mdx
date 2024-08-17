@@ -15,7 +15,7 @@ different use cases.
 In the next section, we'll explain how these *evaluators* can be used in *evaluations*
 of datasets.
 
-### LLM as a Judge
+## LLM as a Judge
 
 Evaluators are configured using the `/create_eval` endpoint, as follows:
 
@@ -45,7 +45,7 @@ params = {"eval_name": "computer_science_demo", "judge_models": "claude-3.5-sonn
 response = requests.post(url, json=params, headers=headers)
 ```
 
-### LLM Jury
+## LLM Jury
 
 [Cohere showed that](https://arxiv.org/abs/2404.18796) LLM evals are generally less biased and more accurate when several
 different models from different models are average pooled (a jury rather than a judge).
@@ -65,7 +65,7 @@ params = {
 response = requests.post(url, json=params, headers=headers)
 ```
 
-### Custom System Prompt
+## Custom System Prompt
 
 The default system prompt is as follows:
 
@@ -108,10 +108,10 @@ params = {
 response = requests.post(url, json=params, headers=headers)
 ```
 
-#TODO: English Literature system prompt.
+{/* TODO: English Literature system prompt. */}
 
 
-### Custom judging classes
+## Custom judging classes
 
 If you want to be really prescriptive about the criteria that responses are marked on, you can express this through the `class_config` parameter.
 
@@ -127,9 +127,9 @@ class_config = [
 ```
 
 
-### Custom Classes
+## Custom Classes
 
-#TODO: this isn't implemented
+{/* ToDo: this isn't implemented */}
 
 Going further, we can also change the classification targets. This enables us to be much
 more granular with the judging, and even measure several different properties for the
@@ -145,7 +145,7 @@ the simplicity of the code.
 
 CODE
 
-### Custom Evaluators
+## Custom Evaluators
 
 There are many cases where you might not want to use an LLM to evaluate the output of
 your LLM. For example, if you're generating code, you might want to test that the code
