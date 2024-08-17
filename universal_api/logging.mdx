@@ -24,7 +24,7 @@ curl --request POST \
     ]
     "tags": [
         "maths",
-        "student_4514"
+        "john_smith"
     ]
 }'
 ```
@@ -34,27 +34,29 @@ In Python, this would look like:
 ```python
 import unify
 client = unify.Unify("llama-3-8b-chat@together-ai")
-client.generate("Can you prove the Pythagoras Theorem?", tags=["maths", "student_4514"])
+client.generate("Can you prove the Pythagoras Theorem?", tags=["maths", "john_smith"])
 ```
 
 Every query made via the API can then be retrieved at a later stage, using the
 [`/prompt_history`](https://docs.unify.ai/api-reference/benchmarks/get_prompt_history) endpoint, as follows:
 
-```python
-import requests
-url = "https://api.unify.ai/v0/prompt_history"
-headers = {
-    "Authorization": f"Bearer {KEY}"
-}
-params={"tags":"maths"}
-response = requests.get(url, params=params, headers=headers)
+```shell
+curl --request GET \
+  --url 'https://api.unify.ai/v0/prompt_history?tags=maths,john_smith' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
 ```
 
 Again, in Python this would look like:
 
 ```python
 import unify
+prompts = unify.utils.get_prompt_history("maths", "john_smith")
+for prompt in prompts:
+    print(prompt)
 ```
+
+We could also query only `"maths"` and return the maths prompts for *all students*,
+or we could query only `"john_smith"` and return the prompts across *all subjects* for this student.
 
 If you want to simply retrieve **all** queries made you can leave the `tags` argument empty,
 or if you want to retrieve all queries for a student you can omit the subject tag, and vice versa.
