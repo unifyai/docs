@@ -54,7 +54,6 @@ def generate(user_prompt: Optional[str] = None,
              presence_penalty: Optional[float] = None,
              response_format: Optional[ResponseFormat] = None,
              seed: Optional[int] = None,
-             stream_options=None,
              top_p: Optional[float] = None,
              tools: Optional[Iterable[ChatCompletionToolParam]] = None,
              tool_choice: Optional[ChatCompletionToolChoiceOptionParam] = None,
@@ -123,8 +122,6 @@ Generate content using the Unify API.
   repeated requests with the same seed and parameters should return the same result. Determinism is not
   guaranteed, and you should refer to the system_fingerprint response parameter to monitor changes in the
   backend.
-  
-- `stream_options` - Options for streaming response. Only set this when you set stream: true.
   
 - `top_p` - An alternative to sampling with temperature, called nucleus sampling, where the
   model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
