@@ -97,7 +97,7 @@
                 "python/chat",
                 "python/clients",
                 "python/exceptions",
-                "python/multi\\_llm",
+                "python/multi_llm",
                 "python/utils"
             ]
         },
