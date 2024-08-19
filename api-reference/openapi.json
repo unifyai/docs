@@ -1810,16 +1810,34 @@
                         "example": "eval1"
                     },
                     {
+                        "name": "endpoint",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Name of endpoint to fetch eval from. If not set returns evals for all endpoints",
+                            "title": "Endpoint"
+                        },
+                        "description": "Name of endpoint to fetch eval from. If not set returns evals for all endpoints"
+                    },
+                    {
                         "name": "per_prompt",
                         "in": "query",
                         "required": false,
                         "schema": {
                             "type": "boolean",
-                            "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`.",
+                            "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an eval name and endpoint to be set.",
                             "default": false,
                             "title": "Per Prompt"
                         },
-                        "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`.",
+                        "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an eval name and endpoint to be set.",
                         "example": false
                     }
                 ],
