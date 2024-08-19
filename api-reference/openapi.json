@@ -1848,6 +1848,79 @@
                 }
             }
         },
+        "/v0/evals/status": {
+            "get": {
+                "tags": [
+                    "Dataset Evaluation"
+                ],
+                "summary": "Eval Status",
+                "description": "Fetches the eval status on a given dataset. Returns object of the form:\n{\n    \"responses\": {\n        \"last_updated\": \"2024-08-19 13:58:20.866092\",\n        \"num_failed\": 0,\n        \"num_processed\": 3,\n        \"num_remaining\": 0,\n    },\n    \"judgements\": {\n        \"judge_model_a\": {\n            \"last_updated\": \"2024-08-19 13:58:20.866092\",\n            \"num_failed\": 0,\n            \"num_processed\": 3,\n            \"num_remaining\": 0,\n        }\n    },\n}",
+                "operationId": "eval_status_v0_evals_status_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "dataset",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset to get evaluation status of.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset to get evaluation status of.",
+                        "example": "dataset1"
+                    },
+                    {
+                        "name": "endpoint",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Endpoint to get evaluation status of",
+                            "title": "Endpoint"
+                        },
+                        "description": "Endpoint to get evaluation status of",
+                        "example": "llama-3-8b-chat@aws-bedrock"
+                    },
+                    {
+                        "name": "eval_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the eval to get evaluation status of.",
+                            "title": "Eval Name"
+                        },
+                        "description": "Name of the eval to get evaluation status of.",
+                        "example": "eval1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/router/train": {
             "post": {
                 "tags": [
