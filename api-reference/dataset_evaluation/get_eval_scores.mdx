@@ -20,22 +20,26 @@ Name of the dataset to fetch evaluation from.
 Name of the eval to fetch evaluation from. If `None`, returns all available evaluations for the dataset.
 </ParamField>
 
+<ParamField query="endpoint" type="string | null" >
+Name of endpoint to fetch eval from. If not set returns evals for all endpoints
+</ParamField>
+
 <ParamField query="per_prompt" type="boolean" >
-If `True`, returns the scores on a per-prompt level. By default set to `False`.
+If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an eval name and endpoint to be set.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/evals/get_scores?dataset=dataset1&eval_name=eval1&per_prompt=False' \
+  --url 'https://api.unify.ai/v0/evals/get_scores?dataset=dataset1&eval_name=eval1&endpoint=None&per_prompt=False' \
   --header 'Authorization: Bearer <UNIFY_KEY>'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/evals/get_scores?dataset=dataset1&eval_name=eval1&per_prompt=False"
+url = "https://api.unify.ai/v0/evals/get_scores?dataset=dataset1&eval_name=eval1&endpoint=None&per_prompt=False"
 
 headers = {"Authorization": "Bearer <token>"}
 
