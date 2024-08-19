@@ -161,7 +161,8 @@
                         "api-reference/dataset_evaluation/rename_eval",
                         "api-reference/dataset_evaluation/delete_eval",
                         "api-reference/dataset_evaluation/trigger_eval",
-                        "api-reference/dataset_evaluation/get_eval_scores"
+                        "api-reference/dataset_evaluation/get_eval_scores",
+                        "api-reference/dataset_evaluation/eval_status"
                     ]
                 },
                 {
