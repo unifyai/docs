@@ -14,15 +14,30 @@ Just a few notes while making changes to the docs,
 
 7. The `/chat/completions` endpoint arguments have been grouped into 3 categories as explained [here](https://docs.unify.ai/universal_api/arguments). This grouping is applied to the API reference page using a mapping like [this](https://github.com/unifyai/orchestra/blob/3c45c269b2776608dba10219b6c9f7b1d0fa91de/docs/body.py#L3). In order to add more sections or edit existing sections, you'd basically need to add the argument above which the header should be added along with the link to that section.
 
-8. Some of the formatting is fairly sensitive so I’d suggest going through their [docs](https://mintlify.com/docs/page) to understand how stuff is formatted. For e.g. having multi-line strings like [this](https://github.com/unifyai/orchestra/blob/67a1069df79d657d6ba57f3bdbb5a94a4cbc9bdc/orchestra/web/api/dataset_evaluation/schema.py#L15) wouldn’t work but it would need to be written like [this](https://github.com/unifyai/orchestra/blob/02df65571d4816e33749f3f5a1897b1c2a66830a/orchestra/web/api/dataset_evaluation/schema.py#L19) (with the triple back-tick)
+8. The headers for the sections under the API reference page are picked from the tags specified [here](https://github.com/unifyai/orchestra/blob/1c9fa75a8431d8d82634dc5365e40a5019a52a36/orchestra/web/api/router.py). The title of the pages themselves are picked from the openapi spec's `summary`.
 
-9. Also any descriptions of the form `<model>`, `<model>@<provider>`, etc. get treated as html elements in an mdx file so ideally it should be `\<model\>`, `\<model\>\<provider\>`, etc.
+9. Some of the formatting is fairly sensitive so I’d suggest going through their [docs](https://mintlify.com/docs/page) to understand how stuff is formatted. For e.g. having multi-line strings like [this](https://github.com/unifyai/orchestra/blob/67a1069df79d657d6ba57f3bdbb5a94a4cbc9bdc/orchestra/web/api/dataset_evaluation/schema.py#L15) wouldn’t work but it would need to be written like [this](https://github.com/unifyai/orchestra/blob/02df65571d4816e33749f3f5a1897b1c2a66830a/orchestra/web/api/dataset_evaluation/schema.py#L19) (with the triple back-tick)
 
-10. There's also formatting issues like [this](https://github.com/unifyai/unify/commit/b5a52fabc9e77f12a2952dac35531ed86904d48a) where `{ "type": "json_object" }` without the back-ticks wouldn't work.
+10. Also any descriptions of the form `<model>`, `<model>@<provider>`, etc. get treated as html elements in an mdx file so ideally it should be `\<model\>`, `\<model\>\<provider\>`, etc.
 
-11. There are a few endpoints on the docs where either the description of the parameters or the description of the responses with different error codes might be missing, adding those to the above mentioned places should get them working.
+11. There's also formatting issues like [this](https://github.com/unifyai/unify/commit/b5a52fabc9e77f12a2952dac35531ed86904d48a) where `{ "type": "json_object" }` without the back-ticks wouldn't work.
 
-12. Finally, given that we’re doing the markdown writing ourselves rather than relying on mintlify, this has lead to some brittleness with the doc building code, so I’d highly recommend setting up the docs locally, which would require
+12. There are a few endpoints on the docs where either the description of the parameters or the description of the responses with different error codes might be missing, adding those to the above mentioned places should get them working.
+
+13. Finally, given that we’re doing the markdown writing ourselves rather than relying on mintlify, this has lead to some brittleness with the doc building code, so I’d highly recommend setting up the docs locally, which would require
     1. cloning the `unify-docs` repo, followed by `npm i -g mintlify` (also prolly installing `npm` and `node` if not done already), then go inside the `unify-docs` folder and do `npm i` followed by `mintlify dev`. This should run the docs on a local server where you can test how your changes
     2. Copy over the `mint.json` from the latest version of `unify-docs` inside the `unify` folder
     3. in order to build the docs, you’d need to go inside the orchestra folder and do `python docs/main.py` which should build the mdx files, you’d then need to move the `api-reference` folder and replace the `unify-docs/api-reference` folder with that one instead, and also replace the updated `mint.json` in the `unify-doc`s folder. This should give you a preview of how your changes impacted the docs
+
+    OR
+
+    1. Go through the README.md and set things up with `docker`
+
+14. As far as the python client docs go, you would need to
+    1. Clone the `unify` repo
+    2. Install `pydoc-markdown`
+    3. Create a folder named `output`
+    4. run the command `pydoc-markdown | tee output/result.txt`
+    5. Then you should move the `generate_docs.py` script inside the `output` folder
+    6. Run `python output/generate_docs.py`
+    7. Once the script is complete, you can copy the `.mdx` files inside the `output` folder inside the `python` folder of the `unify-docs` repo.
