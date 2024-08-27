@@ -30,11 +30,11 @@ If set, describes the list of classifications that the LLM judge uses to score e
 
 </ParamField>
 
-<ParamField body="judge_models" type="string | array" >
+<ParamField body="judge_models" type="string | array"  default={"claude-3.5-sonnet@aws-bedrock"}>
 Specifies the LLM(s) to be used as the judge. This can be a string containining a single model name or a list of model names.
 </ParamField>
 
-<ParamField body="client_side" type="boolean" >
+<ParamField body="client_side" type="boolean"  default={false}>
 Indicates whether evaluations are performed on the client-side. If `True`, the LLM judge is bypassed, and results are uploaded via the `trigger` endpoint.
 </ParamField>
 
