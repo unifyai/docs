@@ -22,9 +22,11 @@ Just a few notes while making changes to the docs,
 
 11. There's also formatting issues like [this](https://github.com/unifyai/unify/commit/b5a52fabc9e77f12a2952dac35531ed86904d48a) where `{ "type": "json_object" }` without the back-ticks wouldn't work.
 
-12. There are a few endpoints on the docs where either the description of the parameters or the description of the responses with different error codes might be missing, adding those to the above mentioned places should get them working.
+12. Same applies to code blocks like [this](https://github.com/unifyai/orchestra/blob/0b04c01cae317f2eb7e569e84a3a66f96b21f742/orchestra/web/api/dataset_evaluation/views.py#L746-L761) which should also be enclosed with triple quotes like [this](https://github.com/unifyai/orchestra/commit/99d63db6b2839feab2de456066c311f317c0c5c8) to avoid parsing errors.
 
-13. Finally, given that we’re doing the markdown writing ourselves rather than relying on mintlify, this has lead to some brittleness with the doc building code, so I’d highly recommend setting up the docs locally, which would require
+13. There are a few endpoints on the docs where either the description of the parameters or the description of the responses with different error codes might be missing, adding those to the above mentioned places should get them working.
+
+14. Finally, given that we’re doing the markdown writing ourselves rather than relying on mintlify, this has lead to some brittleness with the doc building code, so I’d highly recommend setting up the docs locally, which would require
     1. cloning the `unify-docs` repo, followed by `npm i -g mintlify` (also prolly installing `npm` and `node` if not done already), then go inside the `unify-docs` folder and do `npm i` followed by `mintlify dev`. This should run the docs on a local server where you can test how your changes
     2. Copy over the `mint.json` from the latest version of `unify-docs` inside the `unify` folder
     3. in order to build the docs, you’d need to go inside the orchestra folder and do `python docs/main.py` which should build the mdx files, you’d then need to move the `api-reference` folder and replace the `unify-docs/api-reference` folder with that one instead, and also replace the updated `mint.json` in the `unify-doc`s folder. This should give you a preview of how your changes impacted the docs
@@ -33,7 +35,7 @@ Just a few notes while making changes to the docs,
 
     1. Go through the README.md and set things up with `docker`
 
-14. As far as the python client docs go, you would need to
+15. As far as the python client docs go, you would need to
     1. Clone the `unify` repo
     2. Install `pydoc-markdown`
     3. Create a folder named `output`
