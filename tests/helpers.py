@@ -121,7 +121,7 @@ def group_and_order_results(results: Dict[str, Dict[str, Union[True, str]]])\
 
 
 def save_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]], fpath: str) -> None:
-    json_str = json.dumps(results)
+    json_str = json.dumps(results, indent=4)
     with open(fpath, "w") as file:
         file.write(json_str)
 
