@@ -84,7 +84,14 @@ curl --request POST \
 Or we can create a `Dataset` instance in Python,
 and then call `.upload("english_language")` as follows:
 
-CODE
+{/* ToDo: the Dataset instance isn't implemented */}
+
+```python
+client.dataset.upload(
+    path="english_language.jsonl",
+    name="english_language"
+)
+```
 
 ## Deleting Datasets
 
@@ -132,7 +139,7 @@ via the following REST API command:
 ```shell
 curl --request POST \
   --url 'https://api.unify.ai/v0/dataset/rename?name=english&new_name=english_literature' \
-  --header 'Authorization: Bearer $UNIFY_KEY'
+  --header 'Authorization: Bearer <UNIFY_KEY>'
 ```
 
 Or via Python:
