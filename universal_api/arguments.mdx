@@ -209,7 +209,7 @@ If you send this argument to a provider that does not support `top_k`, you will 
 ```shell
 curl --request POST \
   --url 'https://api.unify.ai/v0/chat/completions' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Authorization: Bearer $UNIFY_KEY' \
   --header 'Content-Type: application/json' \
   --data '{
     "model": "claude-3.5-sonnet@anthropic",
@@ -240,7 +240,7 @@ These headers can be queried directly from the Unify API like so:
 ```shell
 curl --request POST \
   --url 'https://api.unify.ai/v0/chat/completions' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Authorization: Bearer $UNIFY_KEY' \
   --header 'Content-Type: application/json' \
   --header 'anthropic-beta: max-tokens-3-5-sonnet-2024-07-15'
   --data '{

@@ -56,21 +56,28 @@ returned list, like so:
 
 ```shell
 curl -X 'GET' \
-  'https://api.unify.ai/v0/models?provider=<some_provider>' \
+  'https://api.unify.ai/v0/models?provider=openai' \
   -H 'Authorization: Bearer $UNIFY_KEY' \
   -H 'accept: application/json'
 ```
 
 ```shell
 curl -X 'GET' \
-  'https://api.unify.ai/v0/providers?model=<some_model>' \
+  'https://api.unify.ai/v0/providers?model=llama-3-8b-chat' \
   -H 'Authorization: Bearer $UNIFY_KEY' \
   -H 'accept: application/json'
 ```
 
 ```shell
 curl -X 'GET' \
-  'https://api.unify.ai/v0/endpoints?<model or provider>=<some_model or some_provider>' \
+  'https://api.unify.ai/v0/endpoints?provider=openai' \
+  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H 'accept: application/json'
+```
+
+```shell
+curl -X 'GET' \
+  'https://api.unify.ai/v0/endpoints?model=llama-3-8b-chat' \
   -H 'Authorization: Bearer $UNIFY_KEY' \
   -H 'accept: application/json'
 ```
@@ -82,7 +89,7 @@ import requests
 
 url = "https://api.unify.ai/v0/chat/completions"
 headers = {
-    "Authorization": "Bearer UNIFY_API_KEY",
+    "Authorization": "Bearer UNIFY_KEY",
 }
 payload = {
     "model": "llama-3-8b-chat@together-ai",
@@ -158,11 +165,11 @@ from openai import OpenAI
 
 client = OpenAI(
     base_url="https://api.unify.ai/v0/",
-    api_key="YOUR_UNIFY_KEY"
+    api_key="UNIFY_KEY"
 )
 
 stream = client.chat.completions.create(
-    model="mistral-7b-instruct-v0.3@fireworks-ai",
+    model="llama-3.1-405b-chat@fireworks-ai",
     messages=[{"role": "user", "content": "Say hi."}],
     stream=True,
 )
@@ -180,11 +187,11 @@ straightforward to try out our API.
 ```javascript
 const openai = new OpenAI({
   baseUrl: "https://api.unify.ai/v0/",
-  apiKey: "YOUR_UNIFY_KEY"
+  apiKey: "UNIFY_KEY"
 });
 
 const stream = await openai.chat.completions.create({
-  model: "mistral-7b-instruct-v0.3@fireworks-ai",
+  model: "llama-3.1-405b-chat@fireworks-ai",
   messages: [{"role": "user", "content": "Say hi."}],
   stream: true
 });

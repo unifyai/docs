@@ -57,8 +57,6 @@
                 "universal_api/making_queries",
                 "universal_api/arguments",
                 "universal_api/logging",
-                "universal_api/fine_tuned_models",
-                "universal_api/local_models",
                 "universal_api/comparisons"
             ]
         },
