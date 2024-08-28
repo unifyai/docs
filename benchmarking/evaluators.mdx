@@ -17,13 +17,10 @@ of datasets.
 
 ## LLM as a Judge
 
-Evaluators are configured using the `/create_eval` endpoint, as follows:
+Evaluators are configured using the `evaluator` endpoint, as follows:
 
-```
-url = "https://api.unify.ai/v0/evals/create"
-headers = {"Authorization": f"Bearer {KEY}"}
-params = {"eval_name": "my_first_eval"}
-response = requests.post(url, json=params, headers=headers)
+```python
+client.evaluator(name="my_first_eval")
 ```
 
 As per our [example](), let's assume we first want to choose an evaluator for
@@ -38,11 +35,11 @@ good choice for our English Literature, where creativity is important.
 
 The judges can be configured via the `judge_models` parameter as follows:
 
-```
-url = "https://api.unify.ai/v0/evals/create"
-headers = {"Authorization": f"Bearer {KEY}"}
-params = {"eval_name": "computer_science_demo", "judge_models": "claude-3.5-sonnet@aws-bedrock"}
-response = requests.post(url, json=params, headers=headers)
+```python
+client.evaluator(
+    name="coding_demo",
+    judge_models=["claude-3.5-sonnet@aws-bedrock"]
+)
 ```
 
 ## LLM Jury
@@ -55,19 +52,16 @@ and A, B and C for English Literature, again as per the [Scale AI X Leaderboard]
 
 The juries can be configured as follows:
 
-```
-url = "https://api.unify.ai/v0/evals/create"
-headers = {"Authorization": f"Bearer {KEY}"}
-params = {
-    "eval_name": "computer_science_jury",
-    "judge_models": ["claude-3.5-sonnet@aws-bedrock", "gpt-4o@openai"],
-}
-response = requests.post(url, json=params, headers=headers)
+```python
+client.evaluator(
+    name="computer_science_jury",
+    judge_models=["claude-3.5-sonnet@aws-bedrock", "gpt-4o@openai"]
+)
 ```
 
 ## Custom System Prompt
 
-The default system prompt is as follows:
+The default judge system prompt is as follows:
 
 ```
 Please act as an impartial judge and evaluate the quality of the response provided by an assistant to the user question displayed below.
@@ -85,7 +79,7 @@ nor is it optimized for English literature.
 We can create unique system prompts for these two subjects as follows,
 based on some simple best practices for these domain areas:
 
-```
+```python
 computer_science_system_prompt = """
 Please evaluate the quality of the student's code provided in response to the examination question below.
 Your job is to evaluate how good the student's answer is.
@@ -98,14 +92,11 @@ Are there any edge cases that the code would break for? Is the code laid out nea
 Be as objective as possible.
 """
 
-url = "https://api.unify.ai/v0/evals/create"
-headers = {"Authorization": f"Bearer {$UNIFY_API_KEY}"}
-params = {
-    "eval_name": "computer_science_judge",
-    "judge_models": "claude-3.5-sonnet@aws-bedrock",
-    "system_prompt": computer_science_system_prompt,
-}
-response = requests.post(url, json=params, headers=headers)
+client.evaluator(
+    name="computer_science_judge",
+    system_prompt=computer_science_system_prompt,
+    judge_models="claude-3.5-sonnet@aws-bedrock",
+)
 ```
 
 {/* TODO: English Literature system prompt. */}
@@ -117,13 +108,19 @@ If you want to be really prescriptive about the criteria that responses are mark
 
 For example
 
-```
+```python
 class_config = [
     {"label": "Excellent", "score": 1.0, "description": "Correct code which is easy to read"},
     {"label": "Good", "score": 0.75, "description": "Correct code but structured badly"},
     {"label": "Good", "score": 0.5, "description": "Correct code but not using the most efficient method"},
     {"label": "Bad", "score": 0.0, "description": "Incorrect code that does not solve the problem"}
 ]
+
+client.evaluator(
+    name="comp_sci_custom_class",
+    judge_models="claude-3.5-sonnet@aws-bedrock",
+    class_config=class_config
+)
 ```
 
 
