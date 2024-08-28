@@ -1,6 +1,8 @@
 import os
+import io
 import json
-from typing import List, Dict, Tuple, Union
+from contextlib import redirect_stdout
+from typing import List, Dict, Tuple, Union, Any
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -30,12 +32,32 @@ def _test_examples(examples: List[str], executable: callable) -> Dict[str, Union
     return results
 
 
+def _capture_exec_output(code_str: str) -> Any:
+    with io.StringIO() as buf, redirect_stdout(buf):
+        exec(code_str)
+        output = buf.getvalue()
+    return output
+
+
+def _check_rest_api_failures(ret: str) -> None:
+    ret_dict = json.loads(ret)
+    if "detail" in ret_dict:
+        assert "Invalid API key" not in ret_dict["detail"], "Invalid API key"
+
+
 def _test_python_examples(examples: List[str]) -> Dict[str, Union[True, str]]:
-    return _test_examples(examples, exec)
+    def _test_python_fn(str_in: str) -> None:
+        ret = _capture_exec_output(str_in)
+        if "import requests" in str_in:
+            _check_rest_api_failures(ret)
+    return _test_examples(examples, _test_python_fn)
 
 
 def _test_shell_examples(examples: List[str]) -> Dict[str, Union[True, str]]:
-    return _test_examples(examples, os.system)
+    def _test_shell_fn(str_in: str) -> None:
+        ret = os.popen(str_in).read()
+        _check_rest_api_failures(ret)
+    return _test_examples(examples, _test_shell_fn)
 
 
 def get_mdx_filepaths() -> List[str]:
@@ -66,7 +88,7 @@ def run_test(filepath: str) -> Tuple[Dict, Dict]:
     return python_results, shell_results
 
 
-def group_order_and_prune_results(results: Dict[str, Dict[str, Union[True, str]]])\
+def group_and_order_results(results: Dict[str, Dict[str, Union[True, str]]])\
         -> Dict[str, Dict[str, Dict[str, Union[True, str]]]]:
     with open(os.path.join(this_dir, "../mint.json")) as file:
         mint_contents = file.read()
@@ -100,5 +122,6 @@ def print_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]], ve
                     print(" " * 12 + str(i) + ": " + result_str)
                     if verbose:
                         print(" " * 12 + codeblock.replace("\n", "\n" + " "*12))
-                        print(" " * 12 + (result_str if result is True else result))
+                        if result is not True:
+                            print(" " * 12 + result)
                         print("")
