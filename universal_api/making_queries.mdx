@@ -162,7 +162,7 @@ client = OpenAI(
 )
 
 stream = client.chat.completions.create(
-    model="mistral-7b-instruct-v0.3@fireworks-ai",
+    model="llama-3.1-405b-chat@fireworks-ai",
     messages=[{"role": "user", "content": "Say hi."}],
     stream=True,
 )
@@ -184,7 +184,7 @@ const openai = new OpenAI({
 });
 
 const stream = await openai.chat.completions.create({
-  model: "mistral-7b-instruct-v0.3@fireworks-ai",
+  model: "llama-3.1-405b-chat@fireworks-ai",
   messages: [{"role": "user", "content": "Say hi."}],
   stream: true
 });
