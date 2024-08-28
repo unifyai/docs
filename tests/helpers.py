@@ -20,11 +20,18 @@ def _extract_shell_examples(file_str: str) -> List[str]:
     return _extract_examples(file_str, "shell")
 
 
+def _replace_api_key_placeholders(example: str) -> str:
+    example = example.replace("$UNIFY_KEY", os.environ.get("UNIFY_KEY"))
+    example = example.replace("UNIFY_KEY", os.environ.get("UNIFY_KEY"))
+    return example
+
+
 def _test_examples(examples: List[str], executable: callable) -> Dict[str, Union[True, str]]:
     results = dict()
     for example in examples:
+        example_w_key = _replace_api_key_placeholders(example)
         try:
-            executable(example)
+            executable(example_w_key)
             val = True
         except Exception as e:
             val = str(e)
