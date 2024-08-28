@@ -26,21 +26,6 @@ def _replace_api_key_placeholders(example: str) -> str:
     return example
 
 
-def _test_examples(examples: List[str], executable: callable) -> Tuple[Dict[str, Union[True, str]], bool]:
-    all_passed = True
-    results = dict()
-    for example in examples:
-        example_w_key = _replace_api_key_placeholders(example)
-        try:
-            executable(example_w_key)
-            val = True
-        except Exception as e:
-            val = str(e)
-            all_passed = False
-        results[example] = val
-    return results, all_passed
-
-
 def _capture_exec_output(code_str: str) -> Any:
     with io.StringIO() as buf, redirect_stdout(buf):
         exec(code_str)
@@ -59,14 +44,36 @@ def _test_python_examples(examples: List[str]) -> Tuple[Dict[str, Union[True, st
         ret = _capture_exec_output(str_in)
         if "import requests" in str_in:
             _check_rest_api_failures(ret)
-    return _test_examples(examples, _test_python_fn)
+    all_passed = True
+    results = dict()
+    for example in examples:
+        example_w_key = "import unify\n" + _replace_api_key_placeholders(example)
+        try:
+            _test_python_fn(example_w_key)
+            val = True
+        except Exception as e:
+            val = str(e)
+            all_passed = False
+        results[example] = val
+    return results, all_passed
 
 
 def _test_shell_examples(examples: List[str]) -> Tuple[Dict[str, Union[True, str]], bool]:
     def _test_shell_fn(str_in: str) -> None:
         ret = os.popen(str_in).read()
         _check_rest_api_failures(ret)
-    return _test_examples(examples, _test_shell_fn)
+    all_passed = True
+    results = dict()
+    for example in examples:
+        example_w_key = _replace_api_key_placeholders(example)
+        try:
+            _test_shell_fn(example_w_key)
+            val = True
+        except Exception as e:
+            val = str(e)
+            all_passed = False
+        results[example] = val
+    return results, all_passed
 
 
 def get_mdx_filepaths() -> List[str]:
