@@ -121,7 +121,8 @@ def save_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]], fpa
 
 def print_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]],
                   failed_only: bool = True,
-                  verbose: bool = True) -> None:
+                  verbose: bool = True,
+                  print_exception: bool = False) -> None:
     for section_name, section_results in results.items():
         print(section_name)
         for page_name, page_results in section_results.items():
@@ -136,6 +137,6 @@ def print_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]],
                     print(" " * 12 + str(i) + ": " + result_str)
                     if verbose:
                         print(" " * 12 + codeblock.replace("\n", "\n" + " "*12))
-                        if result is not True:
+                        if result is not True and print_exception:
                             print(" " * 12 + result)
                         print("")
