@@ -47,6 +47,9 @@ def _test_python_examples(examples: List[str]) -> Tuple[Dict[str, Union[True, st
     all_passed = True
     results = dict()
     for example in examples:
+        if "<" in example and ">" in example:
+            # there is a placeholder, not runnable
+            continue
         example_w_key = "import unify\n" + _replace_api_key_placeholders(example)
         try:
             _test_python_fn(example_w_key)
@@ -65,6 +68,9 @@ def _test_shell_examples(examples: List[str]) -> Tuple[Dict[str, Union[True, str
     all_passed = True
     results = dict()
     for example in examples:
+        if "<" in example and ">" in example:
+            # there is a placeholder, not runnable
+            continue
         example_w_key = _replace_api_key_placeholders(example)
         try:
             _test_shell_fn(example_w_key)
