@@ -26,7 +26,8 @@ def _replace_api_key_placeholders(example: str) -> str:
     return example
 
 
-def _test_examples(examples: List[str], executable: callable) -> Dict[str, Union[True, str]]:
+def _test_examples(examples: List[str], executable: callable) -> Tuple[Dict[str, Union[True, str]], bool]:
+    all_passed = True
     results = dict()
     for example in examples:
         example_w_key = _replace_api_key_placeholders(example)
@@ -35,8 +36,9 @@ def _test_examples(examples: List[str], executable: callable) -> Dict[str, Union
             val = True
         except Exception as e:
             val = str(e)
+            all_passed = False
         results[example] = val
-    return results
+    return results, all_passed
 
 
 def _capture_exec_output(code_str: str) -> Any:
@@ -52,7 +54,7 @@ def _check_rest_api_failures(ret: str) -> None:
         assert "Invalid API key" not in ret_dict["detail"], "Invalid API key"
 
 
-def _test_python_examples(examples: List[str]) -> Dict[str, Union[True, str]]:
+def _test_python_examples(examples: List[str]) -> Tuple[Dict[str, Union[True, str]], bool]:
     def _test_python_fn(str_in: str) -> None:
         ret = _capture_exec_output(str_in)
         if "import requests" in str_in:
@@ -60,7 +62,7 @@ def _test_python_examples(examples: List[str]) -> Dict[str, Union[True, str]]:
     return _test_examples(examples, _test_python_fn)
 
 
-def _test_shell_examples(examples: List[str]) -> Dict[str, Union[True, str]]:
+def _test_shell_examples(examples: List[str]) -> Tuple[Dict[str, Union[True, str]], bool]:
     def _test_shell_fn(str_in: str) -> None:
         ret = os.popen(str_in).read()
         _check_rest_api_failures(ret)
@@ -78,7 +80,7 @@ def get_mdx_filepaths() -> List[str]:
     return mdx_filepaths
 
 
-def run_test(filepath: str) -> Tuple[Dict, Dict]:
+def run_test(filepath: str) -> Tuple[Dict, Dict, bool]:
 
     # extract contents
     with open(filepath) as f:
@@ -86,13 +88,13 @@ def run_test(filepath: str) -> Tuple[Dict, Dict]:
 
     # test Python examples
     python_examples = _extract_python_examples(content)
-    python_results = _test_python_examples(python_examples)
+    python_results, all_python_passed = _test_python_examples(python_examples)
 
     # test Shell examples
     shell_examples = _extract_shell_examples(content)
-    shell_results = _test_shell_examples(shell_examples)
+    shell_results, all_shell_passed = _test_shell_examples(shell_examples)
 
-    return python_results, shell_results
+    return python_results, shell_results, all_python_passed and all_shell_passed
 
 
 def group_and_order_results(results: Dict[str, Dict[str, Union[True, str]]])\
