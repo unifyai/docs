@@ -5,3 +5,4 @@ results.json
 *.pyc
 __pycache__/
 *.swp
+.pytest_cache/
