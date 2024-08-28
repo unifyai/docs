@@ -11,15 +11,12 @@ To trigger an LLM evaluation using a pre-configured [LLM evaluator](), you simpl
 to specify the LLM endpoint, the dataset, and the pre-configured evaluator you would like to
 use, as follows:
 
-```
-url = "https://api.unify.ai/v0/evals/trigger"
-headers = {"Authorization": f"Bearer {UNIFY_API_KEY}"}
-params = {
-    "dataset": "computer_science_homework_1",
-    "endpoint": "llama-3-70b-chat@aws-bedrock",
-    "eval_name": "computer_science_judge",
-}
-response = requests.post(url, params=params, headers=headers)
+```python
+client.evaluation(
+    evaluator="computer_science_judge",
+    dataset="computer_science_challenges",
+    endpoint="llama-3-70b-chat@aws-bedrock",
+)
 ```
 
 You will receive en email once the evaluation is finished.
@@ -29,21 +26,35 @@ We will explain how to visualize the results of your evaluations in the next sec
 
 You can check the status of an evaluation using the endpoint X, as follows:
 
-{/* TODO (in api): If the evaluation is still running, the status code returned will be this. */}
+```python
+status = client.evaluation_status(
+    evaluator="computer_science_judge",
+    dataset="computer_science_challenges",
+    endpoint="llama-3-70b-chat@aws-bedrock",
+)
+print(status)
+```
 
 You can get the aggregated scores across the dataset as follows:
 
-```
-url = "https://api.unify.ai/v0/evals/get_scores"
-headers = {"Authorization": f"Bearer {UNIFY_API_KEY}"}
-params = {
-    "dataset": "computer_science_homework_1",
-    "eval_name": "computer_science_judge",
-}
-response = requests.get(url, params=params, headers=headers)
+```python
+scores = client.evaluation_scores(
+    evaluator="computer_science_judge",
+    dataset="computer_science_challenges",
+)
+print(scores)
 ```
 
 You can also get more granular results, with per-prompt scores by passing `per_prompt=True`.
+
+```python
+per_prompt_scores = client.evaluation_scores(
+    evaluator="computer_science_judge",
+    dataset="computer_science_challenges",
+    per_prompt="True",
+)
+print(per_prompt_scores)
+```
 
 {/* ToDo in API */}
 If the dataset has been updated since the evaluation was run, then the status `this`
@@ -78,16 +89,26 @@ in the dataset, the results will be uploaded via the X endpoint, using the Y arg
 
 ### Client side scores
 
-If you want to submit evaluations that you obtained locally, you can via the `/evals/trigger` endpoint, by passing
+If you want to submit evaluations that you obtained locally, you can via the `/evaluator` endpoint, by passing
 `client_side_scores` as the file.
 
 The file should be in JSONL format, with entries having `prompt` and `score` keys:
+
 ```
 {"prompt": "Write Hello World in C", "score": 1.0}
 {"prompt": "Write a travelling salesman algorithm in Rust", "score": 0.2}
 ```
 The prompts must be the same prompts as the ones from the `dataset`.
+The evaluator must be created with `client_side=True`.
 
+```python
+client.evaluation(
+    evaluator="computer_science_judge",
+    dataset="computer_science_challenges",
+    endpoint="llama-3-70b-chat@aws-bedrock",
+    client_side_scores="/path/to/scores.jsonl"
+)
+```
 
 ## Partial Evaluations
 
