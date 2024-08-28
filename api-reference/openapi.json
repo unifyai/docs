@@ -59,7 +59,8 @@
                             "description": "Promo code to be activated.",
                             "title": "Code"
                         },
-                        "description": "Promo code to be activated."
+                        "description": "Promo code to be activated.",
+                        "example": "sample_code"
                     },
                     {
                         "name": "user",
@@ -77,7 +78,8 @@
                             "description": "ID of the user that receives the credits,defaults to the user making the request.",
                             "title": "User"
                         },
-                        "description": "ID of the user that receives the credits,defaults to the user making the request."
+                        "description": "ID of the user that receives the credits,defaults to the user making the request.",
+                        "example": "sample_user_id"
                     }
                 ],
                 "responses": {
@@ -154,7 +156,8 @@
                             "description": "Provider to get available models from.",
                             "title": "Provider"
                         },
-                        "description": "Provider to get available models from."
+                        "description": "Provider to get available models from.",
+                        "example": "openai"
                     }
                 ],
                 "responses": {
@@ -313,7 +316,8 @@
                             "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
                             "title": "Start Time"
                         },
-                        "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`."
+                        "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
+                        "example": "2024-07-12 04:20:32"
                     },
                     {
                         "name": "end_time",
@@ -331,7 +335,8 @@
                             "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
                             "title": "End Time"
                         },
-                        "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`."
+                        "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
+                        "example": "2024-08-12 04:20:32"
                     },
                     {
                         "name": "models",
@@ -349,7 +354,8 @@
                             "description": "Models to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `gpt-3.5-turbo,gpt-4o`",
                             "title": "Models"
                         },
-                        "description": "Models to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `gpt-3.5-turbo,gpt-4o`"
+                        "description": "Models to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `gpt-3.5-turbo,gpt-4o`",
+                        "example": "gpt-4o,llama-3.1-405b-chat,claude-3.5-sonnet"
                     },
                     {
                         "name": "providers",
@@ -367,7 +373,8 @@
                             "description": "Providers to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `openai,together-ai`",
                             "title": "Providers"
                         },
-                        "description": "Providers to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `openai,together-ai`"
+                        "description": "Providers to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `openai,together-ai`",
+                        "example": "openai,anthropic,fireworks-ai"
                     },
                     {
                         "name": "interval",
@@ -386,7 +393,8 @@
                             "default": 300,
                             "title": "Interval"
                         },
-                        "description": "Number of seconds in the aggregation interval."
+                        "description": "Number of seconds in the aggregation interval.",
+                        "example": 300
                     },
                     {
                         "name": "secondary_user_id",
@@ -404,7 +412,8 @@
                             "description": "Secondary user id. The secondary user id will match any string previously sent in the `user` attribute of `/chat/completions`.",
                             "title": "Secondary User Id"
                         },
-                        "description": "Secondary user id. The secondary user id will match any string previously sent in the `user` attribute of `/chat/completions`."
+                        "description": "Secondary user id. The secondary user id will match any string previously sent in the `user` attribute of `/chat/completions`.",
+                        "example": "sample_user_id"
                     }
                 ],
                 "responses": {
@@ -484,7 +493,8 @@
                             "description": "Alias for the custom endpoint. This will be the name used to call the endpoint.",
                             "title": "Name"
                         },
-                        "description": "Alias for the custom endpoint. This will be the name used to call the endpoint."
+                        "description": "Alias for the custom endpoint. This will be the name used to call the endpoint.",
+                        "example": "endpoint1"
                     },
                     {
                         "name": "url",
@@ -495,7 +505,8 @@
                             "description": "Base URL of the endpoint being called. Must support the OpenAI format.",
                             "title": "Url"
                         },
-                        "description": "Base URL of the endpoint being called. Must support the OpenAI format."
+                        "description": "Base URL of the endpoint being called. Must support the OpenAI format.",
+                        "example": "https://api.url1.com"
                     },
                     {
                         "name": "key_name",
@@ -506,7 +517,8 @@
                             "description": "Name of the API key that will be passed as part of the query.",
                             "title": "Key Name"
                         },
-                        "description": "Name of the API key that will be passed as part of the query."
+                        "description": "Name of the API key that will be passed as part of the query.",
+                        "example": "key1"
                     },
                     {
                         "name": "mdl_name",
@@ -524,7 +536,8 @@
                             "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.",
                             "title": "Mdl Name"
                         },
-                        "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias."
+                        "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.",
+                        "example": "llama-3.1-8b-finetuned"
                     }
                 ],
                 "responses": {
@@ -583,7 +596,8 @@
                             "description": "Name of the custom endpoint to delete.",
                             "title": "Name"
                         },
-                        "description": "Name of the custom endpoint to delete."
+                        "description": "Name of the custom endpoint to delete.",
+                        "example": "endpoint1"
                     }
                 ],
                 "responses": {
@@ -663,7 +677,8 @@
                             "description": "Name of the API key.",
                             "title": "Key"
                         },
-                        "description": "Name of the API key."
+                        "description": "Name of the API key.",
+                        "example": "key1"
                     },
                     {
                         "name": "value",
@@ -674,7 +689,8 @@
                             "description": "Value of the API key.",
                             "title": "Value"
                         },
-                        "description": "Value of the API key."
+                        "description": "Value of the API key.",
+                        "example": "value1"
                     }
                 ],
                 "responses": {
@@ -723,7 +739,8 @@
                             "description": "Name of the custom API key to delete.",
                             "title": "Key"
                         },
-                        "description": "Name of the custom API key to delete."
+                        "description": "Name of the custom API key to delete.",
+                        "example": "key1"
                     }
                 ],
                 "responses": {
@@ -784,7 +801,8 @@
                             "description": "Name of the custom endpoint to be updated.",
                             "title": "Name"
                         },
-                        "description": "Name of the custom endpoint to be updated."
+                        "description": "Name of the custom endpoint to be updated.",
+                        "example": "name1"
                     },
                     {
                         "name": "new_name",
@@ -795,7 +813,8 @@
                             "description": "New name for the custom endpoint.",
                             "title": "New Name"
                         },
-                        "description": "New name for the custom endpoint."
+                        "description": "New name for the custom endpoint.",
+                        "example": "name2"
                     }
                 ],
                 "responses": {
@@ -856,7 +875,8 @@
                             "description": "Name of the custom API key to be updated.",
                             "title": "Key"
                         },
-                        "description": "Name of the custom API key to be updated."
+                        "description": "Name of the custom API key to be updated.",
+                        "example": "key1"
                     },
                     {
                         "name": "new_key",
@@ -867,7 +887,8 @@
                             "description": "New name for the custom API key.",
                             "title": "New Key"
                         },
-                        "description": "New name for the custom API key."
+                        "description": "New name for the custom API key.",
+                        "example": "key2"
                     }
                 ],
                 "responses": {
@@ -927,7 +948,8 @@
                             "description": "Name of the custom endpoint to submit a benchmark for.",
                             "title": "Endpoint Name"
                         },
-                        "description": "Name of the custom endpoint to submit a benchmark for."
+                        "description": "Name of the custom endpoint to submit a benchmark for.",
+                        "example": "endpoint1"
                     },
                     {
                         "name": "metric_name",
@@ -938,7 +960,8 @@
                             "description": "Name of the metric to submit. Allowed metrics are: \"input-cost\", \"output-cost\", \"tokens-per-second\", \"time-to-first-token\", \"inter-token-latency\", \"end-2-end-latency\", \"cold-start\".",
                             "title": "Metric Name"
                         },
-                        "description": "Name of the metric to submit. Allowed metrics are: \"input-cost\", \"output-cost\", \"tokens-per-second\", \"time-to-first-token\", \"inter-token-latency\", \"end-2-end-latency\", \"cold-start\"."
+                        "description": "Name of the metric to submit. Allowed metrics are: \"input-cost\", \"output-cost\", \"tokens-per-second\", \"time-to-first-token\", \"inter-token-latency\", \"end-2-end-latency\", \"cold-start\".",
+                        "example": "tokens-per-second"
                     },
                     {
                         "name": "value",
@@ -949,7 +972,8 @@
                             "description": "Value of the metric to submit.",
                             "title": "Value"
                         },
-                        "description": "Value of the metric to submit."
+                        "description": "Value of the metric to submit.",
+                        "example": 10
                     }
                 ],
                 "responses": {
@@ -1009,7 +1033,8 @@
                             "description": "Name of the custom endpoint to get a benchmark for.",
                             "title": "Endpoint Name"
                         },
-                        "description": "Name of the custom endpoint to get a benchmark for."
+                        "description": "Name of the custom endpoint to get a benchmark for.",
+                        "example": "endpoint1"
                     },
                     {
                         "name": "metric_name",
@@ -1020,7 +1045,8 @@
                             "description": "Name of the metric to get the benchmark of.",
                             "title": "Metric Name"
                         },
-                        "description": "Name of the metric to get the benchmark of."
+                        "description": "Name of the metric to get the benchmark of.",
+                        "example": "tokens-per-second"
                     },
                     {
                         "name": "start_time",
@@ -1032,7 +1058,8 @@
                             "default": "2024-01-01",
                             "title": "Start Time"
                         },
-                        "description": "Start time of window to get benchmarks between. Format YYYY-MM-DD"
+                        "description": "Start time of window to get benchmarks between. Format YYYY-MM-DD",
+                        "example": "2024-01-01"
                     },
                     {
                         "name": "end_time",
@@ -1044,7 +1071,8 @@
                             "default": "2024-12-12",
                             "title": "End Time"
                         },
-                        "description": "End time of window to get benchmarks between. Format YYYY-MM-DD"
+                        "description": "End time of window to get benchmarks between. Format YYYY-MM-DD",
+                        "example": "2024-12-12"
                     }
                 ],
                 "responses": {
@@ -1154,7 +1182,8 @@
                             "description": "Name of the dataset.",
                             "title": "Name"
                         },
-                        "description": "Name of the dataset."
+                        "description": "Name of the dataset.",
+                        "example": "dataset1"
                     }
                 ],
                 "responses": {
@@ -1219,7 +1248,8 @@
                             "description": "Name of the dataset.",
                             "title": "Name"
                         },
-                        "description": "Name of the dataset."
+                        "description": "Name of the dataset.",
+                        "example": "dataset1"
                     }
                 ],
                 "responses": {
@@ -1227,16 +1257,7 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "additionalProperties": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "title": "Response Download Dataset V0 Dataset Get"
-                                },
+                                "schema": {},
                                 "example": [
                                     {
                                         "prompt": "This is the first prompt"
@@ -1341,7 +1362,8 @@
                             "description": "Name of the dataset to be updated.",
                             "title": "Name"
                         },
-                        "description": "Name of the dataset to be updated."
+                        "description": "Name of the dataset to be updated.",
+                        "example": "dataset1"
                     },
                     {
                         "name": "new_name",
@@ -1352,7 +1374,8 @@
                             "description": "New name for the dataset.",
                             "title": "New Name"
                         },
-                        "description": "New name for the dataset."
+                        "description": "New name for the dataset.",
+                        "example": "dataset2"
                     }
                 ],
                 "responses": {
@@ -1402,7 +1425,7 @@
                     "Dataset Evaluation"
                 ],
                 "summary": "Create Eval",
-                "description": "Create an eval.",
+                "description": "Create a re-useable, named eval configuration. This can be used to trigger an evaluation via the `/evals/trigger` endpoint.",
                 "operationId": "create_eval_v0_evals_create_post",
                 "requestBody": {
                     "content": {
@@ -1489,7 +1512,8 @@
                             "description": "Name of the eval to return the configuration of",
                             "title": "Eval Name"
                         },
-                        "description": "Name of the eval to return the configuration of"
+                        "description": "Name of the eval to return the configuration of",
+                        "example": "eval1"
                     }
                 ],
                 "responses": {
@@ -1537,7 +1561,8 @@
                             "description": "Name of the existing eval to rename",
                             "title": "Eval Name"
                         },
-                        "description": "Name of the existing eval to rename"
+                        "description": "Name of the existing eval to rename",
+                        "example": "eval1"
                     },
                     {
                         "name": "new_eval_name",
@@ -1548,7 +1573,8 @@
                             "description": "New name for the eval",
                             "title": "New Eval Name"
                         },
-                        "description": "New name for the eval"
+                        "description": "New name for the eval",
+                        "example": "eval2"
                     }
                 ],
                 "responses": {
@@ -1596,7 +1622,8 @@
                             "description": "Name of the eval to delete",
                             "title": "Eval Name"
                         },
-                        "description": "Name of the eval to delete"
+                        "description": "Name of the eval to delete",
+                        "example": "eval1"
                     }
                 ],
                 "responses": {
@@ -1627,7 +1654,7 @@
                     "Dataset Evaluation"
                 ],
                 "summary": "Trigger Eval",
-                "description": "Uses the named `eval` to begin an evaluation of quality scores for the selected LLM `endpoint`, on the given `dataset`.\nOnce the evaluation has finished, you can access the scores using the `evals/get_scores` endpoint.",
+                "description": "Uses the named `eval` to begin an evaluation of quality scores for the selected LLM `endpoint`, on the given `dataset`.\nYou can upload custom scores (and bypass the LLM judge) by uploading a file via the `client_side_scores` argument.\nOnce the evaluation has finished, you can access the scores using the `evals/get_scores` endpoint.",
                 "operationId": "trigger_eval_v0_evals_trigger_post",
                 "security": [
                     {
@@ -1635,6 +1662,18 @@
                     }
                 ],
                 "parameters": [
+                    {
+                        "name": "eval_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the eval to use.",
+                            "title": "Eval Name"
+                        },
+                        "description": "Name of the eval to use.",
+                        "example": "eval1"
+                    },
                     {
                         "name": "dataset",
                         "in": "query",
@@ -1644,7 +1683,8 @@
                             "description": "Name of the uploaded dataset to evaluate.",
                             "title": "Dataset"
                         },
-                        "description": "Name of the uploaded dataset to evaluate."
+                        "description": "Name of the uploaded dataset to evaluate.",
+                        "example": "dataset1"
                     },
                     {
                         "name": "endpoint",
@@ -1655,18 +1695,8 @@
                             "description": "Name of the endpoint to evaluate. Endpoints must be specified using the `model@provider` format.",
                             "title": "Endpoint"
                         },
-                        "description": "Name of the endpoint to evaluate. Endpoints must be specified using the `model@provider` format."
-                    },
-                    {
-                        "name": "eval_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the eval to use.",
-                            "title": "Eval Name"
-                        },
-                        "description": "Name of the eval to use."
+                        "description": "Name of the endpoint to evaluate. Endpoints must be specified using the `model@provider` format.",
+                        "example": "gpt-4o-mini@openai"
                     }
                 ],
                 "requestBody": {
@@ -1757,7 +1787,8 @@
                             "description": "Name of the dataset to fetch evaluation from.",
                             "title": "Dataset"
                         },
-                        "description": "Name of the dataset to fetch evaluation from."
+                        "description": "Name of the dataset to fetch evaluation from.",
+                        "example": "dataset1"
                     },
                     {
                         "name": "eval_name",
@@ -1775,7 +1806,26 @@
                             "description": "Name of the eval to fetch evaluation from. If `None`, returns all available evaluations for the dataset.",
                             "title": "Eval Name"
                         },
-                        "description": "Name of the eval to fetch evaluation from. If `None`, returns all available evaluations for the dataset."
+                        "description": "Name of the eval to fetch evaluation from. If `None`, returns all available evaluations for the dataset.",
+                        "example": "eval1"
+                    },
+                    {
+                        "name": "endpoint",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Name of endpoint to fetch eval from. If not set returns evals for all endpoints",
+                            "title": "Endpoint"
+                        },
+                        "description": "Name of endpoint to fetch eval from. If not set returns evals for all endpoints"
                     },
                     {
                         "name": "per_prompt",
@@ -1783,11 +1833,12 @@
                         "required": false,
                         "schema": {
                             "type": "boolean",
-                            "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`.",
+                            "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an eval name and endpoint to be set.",
                             "default": false,
                             "title": "Per Prompt"
                         },
-                        "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`."
+                        "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an eval name and endpoint to be set.",
+                        "example": false
                     }
                 ],
                 "responses": {
@@ -1799,6 +1850,79 @@
                                     "type": "object",
                                     "title": "Response Get Eval Scores V0 Evals Get Scores Get"
                                 }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/evals/status": {
+            "get": {
+                "tags": [
+                    "Dataset Evaluation"
+                ],
+                "summary": "Eval Status",
+                "description": "Fetches the eval status on a given dataset. Returns object of the form:\n\n```\n{\n    \"responses\": {\n        \"last_updated\": \"2024-08-19 13:58:20.866092\",\n        \"num_failed\": 0,\n        \"num_processed\": 3,\n        \"num_remaining\": 0,\n    },\n    \"judgements\": {\n        \"judge_model_a\": {\n            \"last_updated\": \"2024-08-19 13:58:20.866092\",\n            \"num_failed\": 0,\n            \"num_processed\": 3,\n            \"num_remaining\": 0,\n        }\n    },\n}\n```",
+                "operationId": "eval_status_v0_evals_status_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "dataset",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset to get evaluation status of.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset to get evaluation status of.",
+                        "example": "dataset1"
+                    },
+                    {
+                        "name": "endpoint",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Endpoint to get evaluation status of",
+                            "title": "Endpoint"
+                        },
+                        "description": "Endpoint to get evaluation status of",
+                        "example": "llama-3-8b-chat@aws-bedrock"
+                    },
+                    {
+                        "name": "eval_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the eval to get evaluation status of.",
+                            "title": "Eval Name"
+                        },
+                        "description": "Name of the eval to get evaluation status of.",
+                        "example": "eval1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
                             }
                         }
                     },
@@ -1838,7 +1962,8 @@
                             "description": "Name of the router.",
                             "title": "Name"
                         },
-                        "description": "Name of the router."
+                        "description": "Name of the router.",
+                        "example": "router1"
                     },
                     {
                         "name": "dataset",
@@ -1849,7 +1974,8 @@
                             "description": "Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints.",
                             "title": "Dataset"
                         },
-                        "description": "Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints."
+                        "description": "Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints.",
+                        "example": "dataset1"
                     },
                     {
                         "name": "endpoints",
@@ -1863,7 +1989,12 @@
                             "description": "List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format.",
                             "title": "Endpoints"
                         },
-                        "description": "List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format."
+                        "description": "List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format.",
+                        "example": [
+                            "gpt-4o-mini@openai",
+                            "claude-3.5-sonnet@anthropic",
+                            "llama-3.1-405b-chat@fireworks-ai"
+                        ]
                     }
                 ],
                 "responses": {
@@ -1938,7 +2069,8 @@
                             "description": "Name of the router to delete.",
                             "title": "Name"
                         },
-                        "description": "Name of the router to delete."
+                        "description": "Name of the router to delete.",
+                        "example": "router1"
                     }
                 ],
                 "responses": {
@@ -2061,7 +2193,8 @@
                             "description": "Name of the router to deploy.",
                             "title": "Name"
                         },
-                        "description": "Name of the router to deploy."
+                        "description": "Name of the router to deploy.",
+                        "example": "router1"
                     }
                 ],
                 "responses": {
@@ -2126,7 +2259,8 @@
                             "description": "Name of the router to un-deploy.",
                             "title": "Name"
                         },
-                        "description": "Name of the router to un-deploy."
+                        "description": "Name of the router to un-deploy.",
+                        "example": "router1"
                     }
                 ],
                 "responses": {
@@ -2249,7 +2383,8 @@
                             "description": "Model to get available endpoints from.",
                             "title": "Model"
                         },
-                        "description": "Model to get available endpoints from."
+                        "description": "Model to get available endpoints from.",
+                        "example": "llama-3.1-405b-chat"
                     },
                     {
                         "name": "provider",
@@ -2260,7 +2395,8 @@
                             "description": "Provider to get available endpoints from.",
                             "title": "Provider"
                         },
-                        "description": "Provider to get available endpoints from."
+                        "description": "Provider to get available endpoints from.",
+                        "example": "openai"
                     }
                 ],
                 "responses": {
@@ -2319,7 +2455,8 @@
                             "description": "Model to get available providers from.",
                             "title": "Model"
                         },
-                        "description": "Model to get available providers from."
+                        "description": "Model to get available providers from.",
+                        "example": "llama-3.1-405b-chat"
                     }
                 ],
                 "responses": {
@@ -2377,7 +2514,8 @@
                             "description": "Model name",
                             "title": "Model"
                         },
-                        "description": "Model name"
+                        "description": "Model name",
+                        "example": "gpt-4o-mini"
                     },
                     {
                         "name": "provider",
@@ -2388,7 +2526,8 @@
                             "description": "Provider name",
                             "title": "Provider"
                         },
-                        "description": "Provider name"
+                        "description": "Provider name",
+                        "example": "openai"
                     },
                     {
                         "name": "regime",
@@ -2398,7 +2537,8 @@
                             "type": "string",
                             "default": "concurrent-1",
                             "title": "Regime"
-                        }
+                        },
+                        "example": "concurrent-1"
                     },
                     {
                         "name": "region",
@@ -2410,7 +2550,8 @@
                             "default": "Belgium",
                             "title": "Region"
                         },
-                        "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\"."
+                        "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\".",
+                        "example": "Belgium"
                     },
                     {
                         "name": "seq_len",
@@ -2418,9 +2559,12 @@
                         "required": false,
                         "schema": {
                             "type": "string",
+                            "description": "Length of the sequence used for benchmarking, can be short or long",
                             "default": "short",
                             "title": "Seq Len"
-                        }
+                        },
+                        "description": "Length of the sequence used for benchmarking, can be short or long",
+                        "example": "short"
                     }
                 ],
                 "responses": {
@@ -2464,8 +2608,11 @@
                         "required": true,
                         "schema": {
                             "type": "string",
+                            "description": "Model name",
                             "title": "Model"
-                        }
+                        },
+                        "description": "Model name",
+                        "example": "gpt-4o-mini"
                     },
                     {
                         "name": "provider",
@@ -2473,8 +2620,11 @@
                         "required": true,
                         "schema": {
                             "type": "string",
+                            "description": "Provider name",
                             "title": "Provider"
-                        }
+                        },
+                        "description": "Provider name",
+                        "example": "openai"
                     },
                     {
                         "name": "start_time",
@@ -2482,8 +2632,11 @@
                         "required": true,
                         "schema": {
                             "type": "string",
+                            "description": "Window start time",
                             "title": "Start Time"
-                        }
+                        },
+                        "description": "Window start time",
+                        "example": "2024-07-12T04:20:32.808410"
                     },
                     {
                         "name": "end_time",
@@ -2491,8 +2644,11 @@
                         "required": true,
                         "schema": {
                             "type": "string",
+                            "description": "Window end time",
                             "title": "End Time"
-                        }
+                        },
+                        "description": "Window end time",
+                        "example": "2024-08-12T04:20:32.808410"
                     },
                     {
                         "name": "regime",
@@ -2502,7 +2658,8 @@
                             "type": "string",
                             "default": "concurrent-1",
                             "title": "Regime"
-                        }
+                        },
+                        "example": "concurrent-1"
                     },
                     {
                         "name": "region",
@@ -2510,9 +2667,12 @@
                         "required": false,
                         "schema": {
                             "type": "string",
+                            "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\".",
                             "default": "Belgium",
                             "title": "Region"
-                        }
+                        },
+                        "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\".",
+                        "example": "Belgium"
                     },
                     {
                         "name": "seq_len",
@@ -2520,9 +2680,66 @@
                         "required": false,
                         "schema": {
                             "type": "string",
+                            "description": "Length of the sequence used for benchmarking. Options are: \"short\", \"long\".",
                             "default": "short",
                             "title": "Seq Len"
+                        },
+                        "description": "Length of the sequence used for benchmarking. Options are: \"short\", \"long\".",
+                        "example": "short"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
                         }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/prompt_history": {
+            "get": {
+                "tags": [
+                    "benchmarks"
+                ],
+                "summary": "Get Prompt History",
+                "operationId": "get_prompt_history_v0_prompt_history_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Provide a tag to filter by prompts that are marked with this tag.",
+                            "title": "Tag"
+                        },
+                        "description": "Provide a tag to filter by prompts that are marked with this tag."
                     }
                 ],
                 "responses": {
@@ -2563,7 +2780,8 @@
                             }
                         ],
                         "title": "Client Side Scores",
-                        "description": "Optionally upload client-side scores."
+                        "description": "An optional file upload for client-side scores. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `prompt` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `eval_name` must have `client_side=True`.",
+                        "example": "client_scores.jsonl"
                     }
                 },
                 "type": "object",
@@ -2574,11 +2792,13 @@
                     "file": {
                         "type": "string",
                         "format": "binary",
-                        "title": "File"
+                        "title": "File",
+                        "example": "dataset.jsonl"
                     },
                     "name": {
                         "type": "string",
-                        "title": "Name"
+                        "title": "Name",
+                        "example": "dataset1"
                     }
                 },
                 "type": "object",
@@ -2592,24 +2812,33 @@
                 "properties": {
                     "model": {
                         "type": "string",
-                        "title": "Model"
+                        "title": "Model",
+                        "example": "gpt-4o-mini@openai"
                     },
                     "messages": {
                         "items": {
                             "type": "object"
                         },
                         "type": "array",
-                        "title": "Messages"
+                        "title": "Messages",
+                        "example": [
+                            {
+                                "content": "Tell me a joke",
+                                "role": "user"
+                            }
+                        ]
                     },
                     "temperature": {
                         "type": "number",
                         "title": "Temperature",
-                        "default": 0.9
+                        "default": 0.9,
+                        "example": 0.9
                     },
                     "stream": {
                         "type": "boolean",
                         "title": "Stream",
-                        "default": false
+                        "default": false,
+                        "example": false
                     },
                     "max_tokens": {
                         "anyOf": [
@@ -2620,7 +2849,8 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Max Tokens"
+                        "title": "Max Tokens",
+                        "example": 1024
                     },
                     "frequency_penalty": {
                         "anyOf": [
@@ -2932,7 +3162,9 @@
                 "properties": {
                     "eval_name": {
                         "type": "string",
-                        "title": "Eval Name"
+                        "title": "Eval Name",
+                        "description": "A unique, user-defined name used when referencing and triggering the eval.",
+                        "example": "eval1"
                     },
                     "system_prompt": {
                         "anyOf": [
@@ -2943,18 +3175,21 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "System Prompt"
+                        "title": "System Prompt",
+                        "description": "An optional custom system prompt to provide specific instructions to the judge on how to score the answers."
                     },
                     "class_config": {
                         "anyOf": [
                             {
-                                "type": "object"
+                                "items": {},
+                                "type": "array"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Class Config"
+                        "title": "Class Config",
+                        "description": "If set, describes the list of classifications that the LLM judge uses to score each prompt. For example:\n```\n[{\"label\": \"Excellent\", \"score\": 1.0, \"description\": \"A perfect answer with no factual mistakes\"},\n{\"label\": \"Good\", \"score\": 0.5, \"description\": \"An average answer\"},\n{\"label\": \"Bad\", \"score\": 0.0, \"description\": \"An incorrect answer, containing a significant factual mistake\"}]\n```\n"
                     },
                     "judge_models": {
                         "anyOf": [
@@ -2966,17 +3201,17 @@
                                     "type": "string"
                                 },
                                 "type": "array"
-                            },
-                            {
-                                "type": "null"
                             }
                         ],
                         "title": "Judge Models",
-                        "default": "claude-3.5-sonnet@aws-bedrock"
+                        "description": "Specifies the LLM(s) to be used as the judge. This can be a string containining a single model name or a list of model names.",
+                        "default": "claude-3.5-sonnet@aws-bedrock",
+                        "example": "claude-3.5-sonnet@aws-bedrock"
                     },
                     "client_side": {
                         "type": "boolean",
                         "title": "Client Side",
+                        "description": "Indicates whether evaluations are performed on the client-side. If `True`, the LLM judge is bypassed, and results are uploaded via the `trigger` endpoint.",
                         "default": false
                     }
                 },

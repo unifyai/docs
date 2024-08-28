@@ -29,20 +29,16 @@ Initializes the ChatBot object.
 
 **Arguments**:
 
-- `endpoint` _str, optional_ - Endpoint name in OpenAI API format:
+- `endpoint` - Endpoint name in OpenAI API format:
   \<uploaded_by\>/\<model_name\>@\<provider_name\>
   Defaults to None.
   
-- `model` _str, optional_ - Name of the model. If None,
-  endpoint must be provided.
+- `model` - Name of the model. If None, endpoint must be provided.
   
-- `provider` _str, optional_ - Name of the provider. If None,
-  endpoint must be provided.
+- `provider` - Name of the provider. If None, endpoint must be provided.
   
-- `api_key` _str, optional_ - API key for accessing the Unify API.
-  If None, it attempts to retrieve the API key from the
-  environment variable UNIFY_KEY.
-  Defaults to None.
+- `api_key` - API key for accessing the Unify API. If None, it attempts to retrieve the API key from the
+  environment variable UNIFY_KEY. Defaults to None.
   
 
 **Raises**:
@@ -64,7 +60,7 @@ Get the client object.
 
 **Returns**:
 
-- `str` - The model name.
+  The client.
 
 <a id="chat.ChatBot.set_client"></a>
 
@@ -76,7 +72,7 @@ Get the client object.
 def set_client(value: Unify) -> None
 ```
 
-Set the model name.  
+Set the client.  
 
 **Arguments**:
 
@@ -97,7 +93,7 @@ Get the model name.
 
 **Returns**:
 
-- `str` - The model name.
+  The model name.
 
 <a id="chat.ChatBot.set_model"></a>
 
@@ -113,7 +109,7 @@ Set the model name.
 
 **Arguments**:
 
-- `value` _str_ - The model name.
+- `value` - The model name.
 
 <a id="chat.ChatBot.provider"></a>
 
@@ -130,7 +126,7 @@ Get the provider name.
 
 **Returns**:
 
-- `str` - The provider name.
+  The provider name.
 
 <a id="chat.ChatBot.set_provider"></a>
 
@@ -146,7 +142,7 @@ Set the provider name.
 
 **Arguments**:
 
-- `value` _str_ - The provider name.
+- `value` - The provider name.
 
 <a id="chat.ChatBot.endpoint"></a>
 
@@ -163,7 +159,7 @@ Get the endpoint name.
 
 **Returns**:
 
-- `str` - The endpoint name.
+  The endpoint name.
 
 <a id="chat.ChatBot.set_endpoint"></a>
 
@@ -175,11 +171,11 @@ Get the endpoint name.
 def set_endpoint(value: str) -> None
 ```
 
-Set the model name.  
+Set the endpoint name.  
 
 **Arguments**:
 
-- `value` _str_ - The endpoint name.
+- `value` - The endpoint name.
 
 <a id="chat.ChatBot.clear_chat_history"></a>
 
@@ -207,8 +203,7 @@ Starts the chat interaction loop.
 
 **Arguments**:
 
-- `show_credits` _bool, optional_ - Whether to show credit consumption.
-  Defaults to False.
-- `show_provider` _bool, optional_ - Whether to show the provider used.
-  Defaults to False.
+- `show_credits` - Whether to show credit consumption. Defaults to False.
+- `show_provider` - Whether to show the provider used. Defaults to False.
 
+<a id="multi_llm"></a>

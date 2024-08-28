@@ -1,4 +1,97 @@
 ---
 title: 'Upload Dataset'
-openapi: 'POST /v0/dataset'
+api: 'POST /v0/dataset'
 ---
+Uploads a custom dataset to the platform.
+
+The uploaded file must be a JSONL file with **at least** a `prompt` key:
+
+```
+{"prompt": "This is the first prompt"}
+{"prompt": "This is the second prompt"}
+{"prompt": "This is the third prompt"}
+```
+
+Additionally, you can include a `ref_answer` key, which will be accounted
+during the evaluations.
+
+```
+{"prompt": "This is the first prompt", "ref_answer": "First reference answer"}
+{"prompt": "This is the second prompt", "ref_answer": "Second reference answer"}
+{"prompt": "This is the third prompt", "ref_answer": "Third reference answer"}
+```
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="file" type="binary" required="true">
+
+</ParamField>
+
+<ParamField body="name" type="string" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/dataset' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: multipart/form-data' \
+  --form 'file=@dataset.jsonl'\
+  --form 'name=dataset1'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/dataset"
+
+headers = {"Authorization": "Bearer <token>"}
+
+data = {"name": "dataset1"}
+
+file_path = "dataset.jsonl"
+with open(file_path, "rb") as file:
+   files = {"file": file}
+   response = requests.request("POST", url, files=files, data=data, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Dataset uploaded sucessfully!"
+}
+```
+
+```json 400
+{
+    "detail": "A dataset with this name already exists. Please, choose a different one."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

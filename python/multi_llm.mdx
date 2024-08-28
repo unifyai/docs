@@ -1,18 +1,37 @@
 ---
-title: 'clients'
+title: 'multi_llm'
 ---
 
-<a id="clients.Client"></a>
+<a id="multi_llm.MultiLLMClient"></a>
 
-## Client
+## MultiLLMClient
 
 ```python
-class Client(ABC)
+class MultiLLMClient(ABC)
 ```
 
-Base Abstract class for interacting with the Unify chat completions endpoint.
+<a id="multi_llm.MultiLLMClient.get_credit_balance"></a>
 
-<a id="clients.Client.generate"></a>
+---
+
+### get\_credit\_balance
+
+```python
+def get_credit_balance() -> Union[float, None]
+```
+
+Get the remaining credits left on your account.
+
+**Returns**:
+
+  The remaining credits on the account if successful, otherwise None.
+
+**Raises**:
+
+- `BadRequestError` - If there was an HTTP error.
+- `ValueError` - If there was an error parsing the JSON response.
+
+<a id="multi_llm.MultiLLMClient.generate"></a>
 
 ---
 
@@ -26,7 +45,6 @@ def generate(user_prompt: Optional[str] = None,
              *,
              max_tokens: Optional[int] = 1024,
              stop: Union[Optional[str], List[str]] = None,
-             stream: Optional[bool] = False,
              temperature: Optional[float] = 1.0,
              frequency_penalty: Optional[float] = None,
              logit_bias: Optional[Dict[str, int]] = None,
@@ -36,7 +54,6 @@ def generate(user_prompt: Optional[str] = None,
              presence_penalty: Optional[float] = None,
              response_format: Optional[ResponseFormat] = None,
              seed: Optional[int] = None,
-             stream_options: Optional[ChatCompletionStreamOptionsParam] = None,
              top_p: Optional[float] = None,
              tools: Optional[Iterable[ChatCompletionToolParam]] = None,
              tool_choice: Optional[ChatCompletionToolChoiceOptionParam] = None,
@@ -46,7 +63,7 @@ def generate(user_prompt: Optional[str] = None,
              message_content_only: bool = True,
              extra_headers: Optional[Headers] = None,
              extra_query: Optional[Query] = None,
-             **kwargs)
+             **kwargs) -> Union[Generator[str, None, None], str]
 ```
 
 Generate content using the Unify API.
@@ -65,9 +82,6 @@ Generate content using the Unify API.
   Defaults to the provider's default max_tokens when the value is None.
   
 - `stop` - Up to 4 sequences where the API will stop generating further tokens.
-  
-- `stream` - If True, generates content as a stream. If False, generates content as a single response.
-  Defaults to False.
   
 - `temperature` - What sampling temperature to use, between 0 and 2.
   Higher values like 0.8 will make the output more random,
@@ -109,8 +123,6 @@ Generate content using the Unify API.
   guaranteed, and you should refer to the system_fingerprint response parameter to monitor changes in the
   backend.
   
-- `stream_options` - Options for streaming response. Only set this when you set stream: true.
-  
 - `top_p` - An alternative to sampling with temperature, called nucleus sampling, where the
   model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
   comprising the top 10% probability mass are considered. Generally recommended to alter this or temperature,
@@ -151,187 +163,10 @@ Generate content using the Unify API.
 
 **Returns**:
 
-  If stream is True, returns a generator yielding chunks of content.
-  If stream is False, returns a single string response.
+  A dictionary of responses from each of the LLM clients.
   
 
 **Raises**:
 
 - `UnifyError` - If an error occurs during content generation.
 
-<a id="clients.Client.__init__"></a>
-
----
-
-### \_\_init\_\_
-
-```python
-def __init__(endpoint: Optional[str] = None,
-             model: Optional[str] = None,
-             provider: Optional[str] = None,
-             api_key: Optional[str] = None) -> None
-```
-
-Initialize the Unify client.
-
-**Arguments**:
-
-- `endpoint` - Endpoint name in OpenAI API format:
-  \<model_name\>@\<provider_name\>
-  Defaults to None.
-  
-- `model` - Name of the model.
-  
-- `provider` - Name of the provider.
-  
-- `api_key` - API key for accessing the Unify API.
-  If None, it attempts to retrieve the API key from the
-  environment variable UNIFY_KEY.
-  Defaults to None.
-  
-
-**Raises**:
-
-- `UnifyError` - If the API key is missing.
-
-<a id="clients.Client.model"></a>
-
----
-
-### model
-
-```python
-@property
-def model() -> str
-```
-
-Get the model name.  
-
-**Returns**:
-
-  The model name.
-
-<a id="clients.Client.set_model"></a>
-
----
-
-### set\_model
-
-```python
-def set_model(value: str) -> None
-```
-
-Set the model name.  
-
-**Arguments**:
-
-- `value` - The model name.
-
-<a id="clients.Client.provider"></a>
-
----
-
-### provider
-
-```python
-@property
-def provider() -> Optional[str]
-```
-
-Get the provider name.  
-
-**Returns**:
-
-  The provider name.
-
-<a id="clients.Client.set_provider"></a>
-
----
-
-### set\_provider
-
-```python
-def set_provider(value: str) -> None
-```
-
-Set the provider name.  
-
-**Arguments**:
-
-- `value` - The provider name.
-
-<a id="clients.Client.endpoint"></a>
-
----
-
-### endpoint
-
-```python
-@property
-def endpoint() -> str
-```
-
-Get the endpoint name.  
-
-**Returns**:
-
-  The endpoint name.
-
-<a id="clients.Client.set_endpoint"></a>
-
----
-
-### set\_endpoint
-
-```python
-def set_endpoint(value: str) -> None
-```
-
-Set the endpoint name.  
-
-**Arguments**:
-
-- `value` - The endpoint name.
-
-<a id="clients.Client.get_credit_balance"></a>
-
----
-
-### get\_credit\_balance
-
-```python
-def get_credit_balance() -> Union[float, None]
-```
-
-Get the remaining credits left on your account.
-
-**Returns**:
-
-  The remaining credits on the account if successful, otherwise None.
-
-**Raises**:
-
-- `BadRequestError` - If there was an HTTP error.
-- `ValueError` - If there was an error parsing the JSON response.
-
-<a id="clients.Unify"></a>
-
-## Unify
-
-```python
-class Unify(Client)
-```
-
-Class for interacting with the Unify chat completions endpoint in a synchronous manner.
-
-<a id="clients.AsyncUnify"></a>
-
-## AsyncUnify
-
-```python
-class AsyncUnify(Client)
-```
-
-Class for interacting with the Unify chat completions endpoint in a synchronous manner.
-
-<a id="chat"></a>

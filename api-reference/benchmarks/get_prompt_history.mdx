@@ -1,8 +1,8 @@
 ---
-title: 'Delete Router'
-api: 'DELETE /v0/router/deploy'
+title: 'Get Prompt History'
+api: 'GET /v0/prompt_history'
 ---
-Deactivates and deletes a previously deployed router.
+
 
 #### Authorizations
 
@@ -12,26 +12,26 @@ Deactivates and deletes a previously deployed router.
 
 #### Query Parameters
 
-<ParamField query="name" type="string" required="true">
-Name of the router to un-deploy.
+<ParamField query="tag" type="string | null" >
+Provide a tag to filter by prompts that are marked with this tag.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request DELETE \
-  --url 'https://api.unify.ai/v0/router/deploy?name=router1' \
+curl --request GET \
+  --url 'https://api.unify.ai/v0/prompt_history' \
   --header 'Authorization: Bearer <UNIFY_KEY>'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/router/deploy?name=router1"
+url = "https://api.unify.ai/v0/prompt_history"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("DELETE", url, headers=headers)
+response = requests.request("GET", url, headers=headers)
 
 print(response.text)
 ```
@@ -40,15 +40,7 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{
-    "info": "Router deletion started! You will receive an email soon!"
-}
-```
-
-```json 400
-{
-    "detail": "This router is not deployed!"
-}
+{}
 ```
 
 ```json 422

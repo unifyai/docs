@@ -1,4 +1,89 @@
 ---
 title: 'Create Eval'
-openapi: 'POST /v0/evals/create'
+api: 'POST /v0/evals/create'
 ---
+Create a re-useable, named eval configuration. This can be used to trigger an evaluation via the `/evals/trigger` endpoint.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="eval_name" type="string" required="true">
+A unique, user-defined name used when referencing and triggering the eval.
+</ParamField>
+
+<ParamField body="system_prompt" type="string | null" >
+An optional custom system prompt to provide specific instructions to the judge on how to score the answers.
+</ParamField>
+
+<ParamField body="class_config" type="array | null" >
+If set, describes the list of classifications that the LLM judge uses to score each prompt. For example:
+```
+[{"label": "Excellent", "score": 1.0, "description": "A perfect answer with no factual mistakes"},
+{"label": "Good", "score": 0.5, "description": "An average answer"},
+{"label": "Bad", "score": 0.0, "description": "An incorrect answer, containing a significant factual mistake"}]
+```
+
+</ParamField>
+
+<ParamField body="judge_models" type="string | array"  default={"claude-3.5-sonnet@aws-bedrock"}>
+Specifies the LLM(s) to be used as the judge. This can be a string containining a single model name or a list of model names.
+</ParamField>
+
+<ParamField body="client_side" type="boolean"  default={false}>
+Indicates whether evaluations are performed on the client-side. If `True`, the LLM judge is bypassed, and results are uploaded via the `trigger` endpoint.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/evals/create' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "eval_name": "eval1",
+    "judge_models": "claude-3.5-sonnet@aws-bedrock"
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/evals/create"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"eval_name": "eval1", "judge_models": "claude-3.5-sonnet@aws-bedrock"}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

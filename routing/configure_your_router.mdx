@@ -1,5 +1,5 @@
 ---
-title: 'Fine-tuned Custom Router'
+title: 'Configure Your Router'
 ---
 
 We’ve found that the best results for LLM routing come when you train on similar prompts 
@@ -9,14 +9,14 @@ to those that are going to be used in production. To train a custom router, you 
 - Train a router, and visualise the results
 - Query your trained router
 
-### Preparing a dataset
+## Preparing a dataset
 
 The format for the dataset is the same as the one used in 
 [benchmarking](https://unify.ai/docs/api/benchmarks.html), i.e. a JSONL file with entries 
 of the form `{"prompt": xxx, "ref_answer": yyy}`. Reference answers are optional, but 
 improve accuracy of the final system.
 
-### Training a router (beta)
+## Training a router (beta)
 
 In your [dashboard](https://console.unify.ai/dashboard), click `Select Benchmark` and then
 `Train a router`, to upload your dataset.

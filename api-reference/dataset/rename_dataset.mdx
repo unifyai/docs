@@ -1,4 +1,72 @@
 ---
 title: 'Rename Dataset'
-openapi: 'POST /v0/dataset/rename'
+api: 'POST /v0/dataset/rename'
 ---
+Renames a previously updated dataset.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="name" type="string" required="true">
+Name of the dataset to be updated.
+</ParamField>
+
+<ParamField query="new_name" type="string" required="true">
+New name for the dataset.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/dataset/rename?name=dataset1&new_name=dataset2' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/dataset/rename?name=dataset1&new_name=dataset2"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Dataset name updated sucessfully!"
+}
+```
+
+```json 400
+{
+    "detail": "A dataset with this name already exists. Please, choose a different one."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
