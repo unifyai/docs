@@ -1,0 +1,24 @@
+name: Testing Code Examples
+
+on: push
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    environment: unify-docs-testing
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.9"
+
+    - name: Install Dependencies
+      uses: knowsuchagency/poetry-install@v1
+      env:
+        POETRY_VIRTUALENVS_CREATE: false
+
+    - name: Run Tests
+      run: poetry run pytest -vv --cov="unify-docs" -n 4 .
+      env:
+        UNIFY_KEY: ${{ secrets.AUTH_ACCOUNT_API_KEY }}
