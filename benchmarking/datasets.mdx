@@ -52,10 +52,12 @@ This data is especially important, as it represents the *true distribution* obse
 before deployment.
 
 It's easy to extract any prompt queries previously made to the API,
-via the [X]() endpoint, as explained [here]().
-For example, the last 100 prompts for subject `Y` can be extracted as follows:
+via the [`prompt_history`](benchmarks/get_prompt_history) endpoint, as explained [here]().
+For example, the last 100 prompts with the tag `physics` can be extracted as follows:
 
-CODE
+```python
+phyiscs_prompts = client.prompt_history(tag="phyiscs", limit=100)
+```
 
 We can then add this to the local `.jsonl` file as follows:
 
@@ -64,25 +66,32 @@ CODE
 ## Uploading Datasets
 
 As shown above, the representation for prompt datasets is `.jsonl`,
-which is a effectively a list of json structures (or in Python, a list of dicts).
+which is a file format where each line is a json object (or in Python, a list of dicts).
 
 Lets upload our `english_language.jsonl` dataset.
 
 We can do this via the REST API as follows:
 
-```
-import requests
-url = "https://api.unify.ai/v0/dataset"
-headers = {"Authorization": "Bearer $UNIFY_API_KEY",}
-data = {"name": "english_language"}
-files = {"file": open('/path/to/english_language.jsonl' ,'rb')}
-response = requests.post(url, data=data, files=files, headers=headers)
+```shell
+curl --request POST \
+  --url 'https://api.unify.ai/v0/dataset' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: multipart/form-data' \
+  --form 'file=@english_language.jsonl'\
+  --form 'name=english_language'
 ```
 
 Or we can create a `Dataset` instance in Python,
 and then call `.upload("english_language")` as follows:
 
-CODE
+{/* ToDo: the Dataset instance isn't implemented */}
+
+```python
+client.dataset.upload(
+    path="english_language.jsonl",
+    name="english_language"
+)
+```
 
 ## Deleting Datasets
 
@@ -90,31 +99,32 @@ We can delete the dataset just as easily as we created it.
 
 First, using the REST API:
 
-```
-import requests
-url = "https://api.unify.ai/v0/dataset"
-headers = {"Authorization": "Bearer $UNIFY_API_KEY"}
-data = {"name": "english_language"}
-response = requests.delete(url, params=data, headers=headers)
+```shell
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/dataset?name=english_language' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
 ```
 
 Or via Python:
 
-CODE
+```python
+client.datasets.delete(name="english_language")
+```
 
 ## Listing Datasets
 
 We can retrieve a list of our uploaded datasets using the `/dataset/list` endpoint.
 
-```
-import requests
-url = "https://api.unify.ai/v0/dataset/list"
-headers = {"Authorization": "Bearer $UNIFY_API_KEY"}
-response = requests.get(url, headers=headers)
-print(response.text)
+```shell
+curl --request GET \
+  --url 'https://api.unify.ai/v0/dataset/list' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
 ```
 
-
+```python
+datasets = client.datasets.list()
+print(datasets)
+```
 
 
 ## Renaming Datasets
@@ -126,23 +136,23 @@ and `english language`.
 We can easily rename the dataset without deleting and re-uploading,
 via the following REST API command:
 
-```
-import requests
-url = "https://api.unify.ai/v0/dataset/rename"
-headers = {"Authorization": "Bearer $UNIFY_API_KEY"}
-data = {"name": "english", "new_name": "english_literature"}
-response = requests.post(url, params=data, headers=headers)
+```shell
+curl --request POST \
+  --url 'https://api.unify.ai/v0/dataset/rename?name=english&new_name=english_literature' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
 ```
 
 Or via Python:
 
-CODE
+```python
+client.datasets.rename(name="english", new_name="english_literature")
+```
 
 ## Appending to Datasets
 
 As explained above, we might want to add to an existing dataset, either because we have
 [generated some synthetic examples](), or perhaps because we have some relevant
-[production traffic]().
+[production traffic](datasets#production-data).
 
 In the examples above, we simply appended to these datasets locally,
 before then uploading the full `.jsonl` file. However,
