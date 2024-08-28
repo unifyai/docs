@@ -1,0 +1,46 @@
+{
+    "Universal API": {
+        "universal_api/making_queries": {
+            "shell": {
+                "\ncurl -X 'GET' \\\n  'https://api.unify.ai/v0/endpoints?<model or provider>=<some_model or some_provider>' \\\n  -H 'Authorization: Bearer $UNIFY_KEY' \\\n  -H 'accept: application/json'\n": "Expecting value: line 1 column 1 (char 0)"
+            }
+        },
+        "universal_api/arguments": {
+            "python": {
+                "\nclient = unify.Unify(\"claude-3-haiku@anthropic\")\nclient.generate(\"hello world!\", top_k=5)\n": "Completions.create() got an unexpected keyword argument 'top_k'"
+            },
+            "shell": {
+                "\n    curl --request POST \\\n    --url https://api.unify.ai/v0/chat/completions \\\n    --header \"<header_name>: <value>\"\n    ...\n    ": "Expecting value: line 1 column 1 (char 0)",
+                "\n    curl --request POST \\\n    --url https://api.unify.ai/v0/chat/completions?<parameter>=<value> \\\n    ...\n    ": "Expecting value: line 1 column 1 (char 0)",
+                "\n    curl --request POST \\\n    --url https://api.unify.ai/v0/chat/completions \\\n    --data '{\n    \"<key>\": \"<value>\"\n    ...\n    ": "Expecting value: line 1 column 1 (char 0)",
+                "\ncurl --request POST \\\n  --url 'https://api.unify.ai/v0/chat/completions' \\\n  --header 'Authorization: Bearer <UNIFY_KEY>' \\\n  --header 'Content-Type: application/json' \\\n  --header 'anthropic-beta: max-tokens-3-5-sonnet-2024-07-15'\n  --data '{\n    \"model\": \"claude-3.5-sonnet@anthropic\",\n    \"messages\": [\n        {\n            \"content\": \"Tell me a joke\",\n            \"role\": \"user\"\n        }\n    ]\n}'\n": "Invalid API key"
+            }
+        },
+        "universal_api/logging": {
+            "python": {
+                "\nimport unify\nclient = unify.Unify(\"llama-3-8b-chat@together-ai\")\nclient.generate(\"Can you prove the Pythagoras Theorem?\", tags=[\"maths\", \"john_smith\"])\n": "Completions.create() got an unexpected keyword argument 'tags'",
+                "\nimport unify\nfrom openai import OpenAI\nclient = OpenAI()\nclient.chat.completions.create = unify.log(client.chat.completions.create)\nres = client.chat.completions.create(model=\"gpt-4o\", messages=[{\"role\": \"user\", \"content\": \"Say hi.\"}])\n": "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable",
+                "\nimport unify\nimport ollama\nollama.chat = unify.log(ollama.chat)\nres = ollama.chat(model=\"llama3.1\", messages=[{\"role\": \"user\", \"content\": \"Say hi.\"}])\n": "No module named 'ollama'",
+                "\nimport unify\nimport ollama\nollama.chat = unify.log(ollama.chat, tags=[\"tagA\", \"tagB\"])\nres = ollama.chat(model=\"llama3.1\", messages=[{\"role\": \"user\", \"content\": \"Say hi.\"}])\n": "No module named 'ollama'",
+                "\nimport unify\nimport ollama\nollama.chat = unify.log(ollama.chat)\nres = ollama.chat(model=\"llama3.1\", messages=[{\"role\": \"user\", \"content\": \"Say hi.\"}], tags=[\"tagA\", \"tagB\"])\n": "No module named 'ollama'",
+                "\nimport unify\nimport ollama\nollama.chat = unify.log(ollama.chat, tags=[\"tagA\"])\nres = ollama.chat(model=\"llama3.1\", messages=[{\"role\": \"user\", \"content\": \"Say hi.\"}], tags=[\"tagB\", \"tagC\"])\n": "No module named 'ollama'",
+                "\nimport unify\nprompts = unify.utils.get_prompts(tags=[\"maths\", \"john_smith\"])\nfor prompt in prompts:\n    print(prompt)\n": "module 'unify.utils' has no attribute 'get_prompts'",
+                "\nimport time\nimport unify\nstart_time = # one week ago\nprompts = unify.utils.get_prompts(tags=[\"maths\", \"john_smith\"], start_time=start_time)\nfor prompt in prompts:\n    print(prompt)\n": "invalid syntax (<string>, line 5)"
+            }
+        },
+        "universal_api/comparisons": {
+            "python": {
+                "\nimport unify\nendpoints = (\"llama-3-8b-chat@together-ai\", \"gpt-4o@openai\", \"claude-3.5-sonnet@anthropic\")\nclient = unify.MultiLLM(endpoints=endpoints)\nresponses = client.generate(\"Hello, how it is going?\")\nfor endpoint, response in responses.items():\n    print(\"endpoint: {}\".format(endpoint))\n    print(\"response: {}\\n\".format(response))\n": "module 'unify' has no attribute 'MultiLLM'",
+                "\nimport unify\nimport asyncio\n\nendpoints = (\"llama-3-8b-chat@together-ai\", \"gpt-4o@openai\", \"claude-3.5-sonnet@anthropic\")\nclient = unify.MultiLLMAsync(endpoints=endpoints)\n\nasync def get_responses():\n    return await client.generate(\"Hello, how it is going?\")\n\nresponses = asyncio.run(get_responses())\nfor endpoint, response in responses.items():\n    print(\"endpoint: {}\".format(endpoint))\n    print(\"response: {}\\n\".format(response))\n": "module 'unify' has no attribute 'MultiLLMAsync'"
+            }
+        }
+    },
+    "On-Prem": {
+        "on_prem/sso": {
+            "python": {
+                "\n    import requests\n    messages = [{\"role\": \"user\", \"content\": \"What's the weather like in San Francisco, Tokyo, and Paris?\"}]\n\n    res = requests.post(\"http://localhost:8000/chat/completions\", json={\n        \"model\": \"claude-3-haiku@anthropic\",\n        \"messages\": messages,\n    },).json()\n    ": "unexpected indent (<string>, line 3)",
+                "\n    from unify import Unify\n    api = Unify(\"claude-3-haiku@anthropic\", api_key=<RANDOM_KEY_WONT_BE_USED>)\n    api.client.base_url = \u201chttp://localhost:8000\u201d\n    api.generate(\"What is the meaning of life?\")\n    ": "unexpected indent (<string>, line 3)"
+            }
+        }
+    }
+}
