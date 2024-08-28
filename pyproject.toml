@@ -10,6 +10,7 @@ repository = "https://github.com/unifyai/unify-docs"
 python = "^3.9"
 requests = "^2.31.0"
 openai = "^1.41.0"
+unifyai = "^0.9.2"
 
 [tool.poetry.dev-dependencies]
 flake8 = "~4.0.1"
