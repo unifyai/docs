@@ -18,4 +18,4 @@ def test_all():
             results[mdx_filepath_short] = {"python": python_results, "shell": shell_results}
         results = group_and_order_results(results)
         save_results(results, results_fpath)
-    print_results(results, True)
+    print_results(results)

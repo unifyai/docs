@@ -117,7 +117,9 @@ def save_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]], fpa
         file.write(json_str)
 
 
-def print_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]], verbose: bool = False) -> None:
+def print_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]],
+                  failed_only: bool = True,
+                  verbose: bool = True) -> None:
     for section_name, section_results in results.items():
         print(section_name)
         for page_name, page_results in section_results.items():
@@ -125,7 +127,10 @@ def print_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]], ve
             for language_name, language_results in page_results.items():
                 print(" "*8 + language_name)
                 for i, (codeblock, result) in enumerate(language_results.items()):
-                    result_str = "passed" if result is True else "failed"
+                    passed = result is True
+                    if passed and failed_only:
+                        continue
+                    result_str = "passed" if passed else "failed"
                     print(" " * 12 + str(i) + ": " + result_str)
                     if verbose:
                         print(" " * 12 + codeblock.replace("\n", "\n" + " "*12))
