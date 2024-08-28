@@ -120,6 +120,18 @@ def group_and_order_results(results: Dict[str, Dict[str, Union[True, str]]])\
     return results_out
 
 
+def prune_successes_from_results(results: Dict) -> Dict:
+    keys_to_delete = list()
+    for key, value in results.items():
+        if isinstance(value, dict):
+            prune_successes_from_results(value)
+        if value in (True, {}):
+            keys_to_delete.append(key)
+    for key in keys_to_delete:
+        del results[key]
+    return results
+
+
 def save_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]], fpath: str) -> None:
     json_str = json.dumps(results, indent=4)
     with open(fpath, "w") as file:
