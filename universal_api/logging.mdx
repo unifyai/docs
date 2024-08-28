@@ -2,12 +2,17 @@
 title: 'Logging'
 ---
 
+## Tagging Prompts
+
 LLM queries can be given any number of custom tags, via the `tags` argument.
 
 Referring to our [example](https://docs.unify.ai/basics/welcome#show-dont-tell),
 it would make sense to tag queries based on both the *subject* and the *student*.
 
-For example, we can make queries as follows, such that the queries are all sensibly categorized (tagged):
+### Unify Client
+
+If the LLM queries are being made via the Unify client, then we could make queries as follows,
+such that the queries are all sensibly categorized (tagged):
 
 ```shell
 curl --request POST \
@@ -37,12 +42,92 @@ client = unify.Unify("llama-3-8b-chat@together-ai")
 client.generate("Can you prove the Pythagoras Theorem?", tags=["maths", "john_smith"])
 ```
 
-Every query made via the API can then be retrieved at a later stage, using the
-[`/prompt_history`](https://docs.unify.ai/api-reference/benchmarks/get_prompt_history) endpoint, as follows:
+### Other Clients (Coming Soon!)
+
+If you are *not* deploying your LLM via the Unify Python client, you can *still* manually log your prompts to the Unify
+platform via the CURL request as follows:
+
+```shell
+curl --request POST \
+  --url 'https://api.unify.ai/v0/prompts' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "llama-3-8b-chat",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Can you prove the Pythagoras Theorem?"
+        }
+    ]
+    "tags": [
+        "maths",
+        "john_smith"
+    ]
+}'
+```
+
+In Python, this is more convenient via the `unify.log` decorator, as follows for the OpenAI client:
+
+```python
+import unify
+from openai import OpenAI
+client = OpenAI()
+client.chat.completions.create = unify.log(client.chat.completions.create)
+res = client.chat.completions.create(model="gpt-4o", messages=[{"role": "user", "content": "Say hi."}])
+```
+
+The same can be done for any other provider.
+
+```python
+import unify
+import ollama
+ollama.chat = unify.log(ollama.chat)
+res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}])
+```
+
+The function `unify.log` by default will assume `tags` to be empty.
+The log arguments can either be specified when `unify.log` is called as a decorator, or the arguments can be
+intercepted from the wrapped inner function call.
+
+Arguments passed to the inner wrapped function override arguments passed directly to `unify.log`,
+except for the `tags` argument which will be extended with the additional tags.
+
+For example, the following will tag the prompts as `tagA` and `tagB`.
+
+```python
+import unify
+import ollama
+ollama.chat = unify.log(ollama.chat, tags=["tagA", "tagB"])
+res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}])
+```
+
+The following will also tag the prompts as `tagA` and `tagB`.
+
+```python
+import unify
+import ollama
+ollama.chat = unify.log(ollama.chat)
+res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}], tags=["tagA", "tagB"])
+```
+
+However, the following will tag the prompts with `tagA`, `tagB` and `tagC`.
+
+```python
+import unify
+import ollama
+ollama.chat = unify.log(ollama.chat, tags=["tagA"])
+res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}], tags=["tagB", "tagC"])
+```
+
+## Retrieving Prompts
+
+Every query made via the API *or* manually logged can then be retrieved at a later stage, using the `GET` request with
+the [`/prompts`](https://docs.unify.ai/api-reference/logging/get_prompts) endpoint, as follows:
 
 ```shell
 curl --request GET \
-  --url 'https://api.unify.ai/v0/prompt_history?tags=maths,john_smith' \
+  --url 'https://api.unify.ai/v0/prompts?tags=maths,john_smith' \
   --header 'Authorization: Bearer <UNIFY_KEY>'
 ```
 
@@ -50,7 +135,7 @@ Again, in Python this would look like:
 
 ```python
 import unify
-prompts = unify.utils.get_prompt_history("maths", "john_smith")
+prompts = unify.utils.get_prompts(tags=["maths", "john_smith"])
 for prompt in prompts:
     print(prompt)
 ```
@@ -61,5 +146,17 @@ or we could query only `"john_smith"` and return the prompts across *all subject
 If you want to simply retrieve **all** queries made you can leave the `tags` argument empty,
 or if you want to retrieve all queries for a student you can omit the subject tag, and vice versa.
 
-The `/prompt_history`  endpoint can be useful for creating prompt *datasets* from production traffic,
+If there is a lot of production traffic, you can also limit the retrieval to a specific time window,
+using the argument `start_time` (and optionally also `end_time`), like so:
+
+```python
+import time
+import unify
+start_time = # one week ago
+prompts = unify.utils.get_prompts(tags=["maths", "john_smith"], start_time=start_time)
+for prompt in prompts:
+    print(prompt)
+```
+
+Extracting historic prompts in this manner can also be useful for creating prompt *datasets* from production traffic,
 as explained in the [Production Data](https://docs.unify.ai/benchmarking/datasets#production-data) section.

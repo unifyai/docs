@@ -82,7 +82,7 @@ import requests
 
 url = "https://api.unify.ai/v0/chat/completions"
 headers = {
-    "Authorization": "Bearer UNIFY_API_KEY",
+    "Authorization": "Bearer UNIFY_KEY",
 }
 payload = {
     "model": "llama-3-8b-chat@together-ai",
@@ -158,7 +158,7 @@ from openai import OpenAI
 
 client = OpenAI(
     base_url="https://api.unify.ai/v0/",
-    api_key="YOUR_UNIFY_KEY"
+    api_key="UNIFY_KEY"
 )
 
 stream = client.chat.completions.create(
@@ -180,7 +180,7 @@ straightforward to try out our API.
 ```javascript
 const openai = new OpenAI({
   baseUrl: "https://api.unify.ai/v0/",
-  apiKey: "YOUR_UNIFY_KEY"
+  apiKey: "UNIFY_KEY"
 });
 
 const stream = await openai.chat.completions.create({
