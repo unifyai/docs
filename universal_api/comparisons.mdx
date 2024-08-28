@@ -7,10 +7,37 @@ and see which LLMs seem to respond best to the kinds of questions you'd like to 
 
 Trying out LLMs one after the other can be tedious. We've therefore made it very easy to
 compare LLM outputs to the same question side-by-side, both via our browser-based
-[chat interface](), and the [X]() class in our Python SDK.
+[chat interface](https://console.unify.ai/dashboard),
+and the [MultiLLM](https://docs.unify.ai/python/multi_llm#multillm) and
+[MultiLLMAsync](https://docs.unify.ai/python/multi_llm#multillmasync) classes in our Python SDK.
 
-Check out [this video]() for a run-through of the chat interface.
+An interactive session with several LLM can be spun up in Python very quickly, as follows:
 
-An equivalent experience can be spun up in Python very quickly, as follows:
+```python
+import unify
+endpoints = ("llama-3-8b-chat@together-ai", "gpt-4o@openai", "claude-3.5-sonnet@anthropic")
+client = unify.MultiLLM(endpoints=endpoints)
+responses = client.generate("Hello, how it is going?")
+for endpoint, response in responses.items():
+    print("endpoint: {}".format(endpoint))
+    print("response: {}\n".format(response))
+```
 
-CODE
+If you want each LLM to be queried asynchronously (recommended, especially when querying many endpoints)
+then you can run the command as follows:
+
+```python
+import unify
+import asyncio
+
+endpoints = ("llama-3-8b-chat@together-ai", "gpt-4o@openai", "claude-3.5-sonnet@anthropic")
+client = unify.MultiLLMAsync(endpoints=endpoints)
+
+async def get_responses():
+    return await client.generate("Hello, how it is going?")
+
+responses = asyncio.run(get_responses())
+for endpoint, response in responses.items():
+    print("endpoint: {}".format(endpoint))
+    print("response: {}\n".format(response))
+```

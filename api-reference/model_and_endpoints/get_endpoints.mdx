@@ -1,4 +1,69 @@
 ---
 title: 'Get Endpoints'
-openapi: 'GET /v0/endpoints'
+api: 'GET /v0/endpoints'
 ---
+Lists available endpoints in `model@provider` format. If `model` or `provider` are specified,
+only the matching endpoints will be listed.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="model" type="string" >
+Model to get available endpoints from.
+</ParamField>
+
+<ParamField query="provider" type="string" >
+Provider to get available endpoints from.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/endpoints?provider=openai' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/endpoints?provider=openai"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+[
+    "model_a@provider_1",
+    "model_a@provider_2",
+    "..."
+]
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

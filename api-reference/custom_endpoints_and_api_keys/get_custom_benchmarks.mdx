@@ -1,4 +1,72 @@
 ---
 title: 'Get Custom Benchmarks'
-openapi: 'GET /v0/custom_endpoint/get_benchmark'
+api: 'GET /v0/custom_endpoint/get_benchmark'
 ---
+
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="endpoint_name" type="string" required="true">
+Name of the custom endpoint to get a benchmark for.
+</ParamField>
+
+<ParamField query="metric_name" type="string" required="true">
+Name of the metric to get the benchmark of.
+</ParamField>
+
+<ParamField query="start_time" type="string"  default={"2024-01-01"}>
+Start time of window to get benchmarks between. Format YYYY-MM-DD
+</ParamField>
+
+<ParamField query="end_time" type="string"  default={"2024-12-12"}>
+End time of window to get benchmarks between. Format YYYY-MM-DD
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/custom_endpoint/get_benchmark?endpoint_name=endpoint1&metric_name=tokens-per-second&start_time=2024-01-01&end_time=2024-12-12' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/custom_endpoint/get_benchmark?endpoint_name=endpoint1&metric_name=tokens-per-second&start_time=2024-01-01&end_time=2024-12-12"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

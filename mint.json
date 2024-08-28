@@ -26,7 +26,10 @@
         "url": "https://console.unify.ai"
     },
     "api": {
-        "baseUrl": "https://api.unify.ai"
+        "baseUrl": "https://api.unify.ai",
+        "playground": {
+            "mode": "simple"
+        }
     },
     "tabs": [
         {
@@ -94,82 +97,93 @@
                 "python/chat",
                 "python/clients",
                 "python/exceptions",
+                "python/multi_llm",
                 "python/utils"
             ]
         },
         {
-            "group": "User",
+            "group": "API Reference",
             "pages": [
-                "api-reference/user/get_credits",
-                "api-reference/user/credits_code"
-            ]
-        },
-        {
-            "group": "Model and Endpoints",
-            "pages": [
-                "api-reference/model_and_endpoints/get_models",
-                "api-reference/model_and_endpoints/get_endpoints",
-                "api-reference/model_and_endpoints/get_providers"
-            ]
-        },
-        {
-            "group": "Querying LLMs",
-            "pages": [
-                "api-reference/querying_llms/post_inference",
-                "api-reference/querying_llms/get_completions",
-                "api-reference/querying_llms/get_query_metrics"
-            ]
-        },
-        {
-            "group": "Custom Endpoints and API keys",
-            "pages": [
-                "api-reference/custom_endpoints_and_api_keys/get_custom_endpoints",
-                "api-reference/custom_endpoints_and_api_keys/create_custom_endpoint",
-                "api-reference/custom_endpoints_and_api_keys/delete_custom_endpoint",
-                "api-reference/custom_endpoints_and_api_keys/get_custom_api_keys",
-                "api-reference/custom_endpoints_and_api_keys/create_custom_api_key",
-                "api-reference/custom_endpoints_and_api_keys/delete_custom_api_key",
-                "api-reference/custom_endpoints_and_api_keys/rename_custom_endpoint",
-                "api-reference/custom_endpoints_and_api_keys/rename_custom_api_key",
-                "api-reference/custom_endpoints_and_api_keys/upload_custom_benchmark",
-                "api-reference/custom_endpoints_and_api_keys/get_custom_benchmarks"
-            ]
-        },
-        {
-            "group": "Dataset",
-            "pages": [
-                "api-reference/dataset/upload_dataset",
-                "api-reference/dataset/delete_dataset",
-                "api-reference/dataset/download_dataset",
-                "api-reference/dataset/list_datasets",
-                "api-reference/dataset/rename_dataset"
-            ]
-        },
-        {
-            "group": "Dataset Evaluation",
-            "pages": [
-                "api-reference/dataset_evaluation/evaluate_dataset",
-                "api-reference/dataset_evaluation/delete_dataset_evaluation",
-                "api-reference/dataset_evaluation/get_dataset_evaluations",
-                "api-reference/dataset_evaluation/get_dataset_evaluation_results"
-            ]
-        },
-        {
-            "group": "Routing",
-            "pages": [
-                "api-reference/routing/train_router",
-                "api-reference/routing/delete_router_train",
-                "api-reference/routing/get_trained_routers",
-                "api-reference/routing/deploy_router",
-                "api-reference/routing/delete_router",
-                "api-reference/routing/get_deployed_routers"
-            ]
-        },
-        {
-            "group": "benchmarks",
-            "pages": [
-                "api-reference/benchmarks/get_latest_benchmark",
-                "api-reference/benchmarks/filter_benchmark"
+                {
+                    "group": "User",
+                    "pages": [
+                        "api-reference/user/get_credits",
+                        "api-reference/user/credits_code"
+                    ]
+                },
+                {
+                    "group": "Model and Endpoints",
+                    "pages": [
+                        "api-reference/model_and_endpoints/get_models",
+                        "api-reference/model_and_endpoints/get_endpoints",
+                        "api-reference/model_and_endpoints/get_providers"
+                    ]
+                },
+                {
+                    "group": "Querying LLMs",
+                    "pages": [
+                        "api-reference/querying_llms/post_inference",
+                        "api-reference/querying_llms/get_completions",
+                        "api-reference/querying_llms/get_query_metrics"
+                    ]
+                },
+                {
+                    "group": "Custom Endpoints and API keys",
+                    "pages": [
+                        "api-reference/custom_endpoints_and_api_keys/get_custom_endpoints",
+                        "api-reference/custom_endpoints_and_api_keys/create_custom_endpoint",
+                        "api-reference/custom_endpoints_and_api_keys/delete_custom_endpoint",
+                        "api-reference/custom_endpoints_and_api_keys/get_custom_api_keys",
+                        "api-reference/custom_endpoints_and_api_keys/create_custom_api_key",
+                        "api-reference/custom_endpoints_and_api_keys/delete_custom_api_key",
+                        "api-reference/custom_endpoints_and_api_keys/rename_custom_endpoint",
+                        "api-reference/custom_endpoints_and_api_keys/rename_custom_api_key",
+                        "api-reference/custom_endpoints_and_api_keys/upload_custom_benchmark",
+                        "api-reference/custom_endpoints_and_api_keys/get_custom_benchmarks"
+                    ]
+                },
+                {
+                    "group": "Dataset",
+                    "pages": [
+                        "api-reference/dataset/upload_dataset",
+                        "api-reference/dataset/delete_dataset",
+                        "api-reference/dataset/download_dataset",
+                        "api-reference/dataset/list_datasets",
+                        "api-reference/dataset/rename_dataset"
+                    ]
+                },
+                {
+                    "group": "Dataset Evaluation",
+                    "pages": [
+                        "api-reference/dataset_evaluation/create_eval",
+                        "api-reference/dataset_evaluation/list_evals",
+                        "api-reference/dataset_evaluation/return_eval_config",
+                        "api-reference/dataset_evaluation/rename_eval",
+                        "api-reference/dataset_evaluation/delete_eval",
+                        "api-reference/dataset_evaluation/trigger_eval",
+                        "api-reference/dataset_evaluation/get_eval_scores",
+                        "api-reference/dataset_evaluation/eval_status"
+                    ]
+                },
+                {
+                    "group": "Routing",
+                    "pages": [
+                        "api-reference/routing/train_router",
+                        "api-reference/routing/delete_router_train",
+                        "api-reference/routing/get_trained_routers",
+                        "api-reference/routing/deploy_router",
+                        "api-reference/routing/delete_router",
+                        "api-reference/routing/get_deployed_routers"
+                    ]
+                },
+                {
+                    "group": "benchmarks",
+                    "pages": [
+                        "api-reference/benchmarks/get_latest_benchmark",
+                        "api-reference/benchmarks/filter_benchmark",
+                        "api-reference/benchmarks/get_prompt_history"
+                    ]
+                }
             ]
         }
     ],

@@ -1,4 +1,64 @@
 ---
 title: 'Rename Eval'
-openapi: 'POST /v0/evals/rename'
+api: 'POST /v0/evals/rename'
 ---
+Renames a named eval from `eval_name` to `new_eval_name`.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="eval_name" type="string" required="true">
+Name of the existing eval to rename
+</ParamField>
+
+<ParamField query="new_eval_name" type="string" required="true">
+New name for the eval
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/evals/rename?eval_name=eval1&new_eval_name=eval2' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/evals/rename?eval_name=eval1&new_eval_name=eval2"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -10,14 +10,14 @@ Prompt datasets are useful for:
 
 We will refer to our representative example of building an AI educational assistant.
 
-### Creating Datasets
+## Creating Datasets
 
 Before we start any benchmarking, we need a prompt dataset to benchmark on!
 
 There are three main ways to extract a prompt dataset for your task,
 as explained below.
 
-#### Using Public Data
+### Using Public Data
 
 The best starting point is to try and find an existing public dataset which aligns well
 with your specific task. In this case, we can take all past exam questions and all
@@ -26,7 +26,7 @@ practice questions from the textbooks for each subject.
 This gives us a great starting point,
 but for some subjects we don't have very much data, such as X with only Y prompts.
 
-#### Synthetic Data Generation
+### Synthetic Data Generation
 
 In order to expand the prompt data that we've already extracted,
 we can use LLMs to generate more questions.
@@ -43,7 +43,7 @@ We can then add this to the local `.jsonl` file as follows:
 
 CODE
 
-#### Production Data
+### Production Data
 
 Finally, if our application is actually being run in production, then we can capture
 real data from real users, and augment our prompt datasets accordingly.
@@ -61,7 +61,7 @@ We can then add this to the local `.jsonl` file as follows:
 
 CODE
 
-### Uploading Datasets
+## Uploading Datasets
 
 As shown above, the representation for prompt datasets is `.jsonl`,
 which is a effectively a list of json structures (or in Python, a list of dicts).
@@ -84,7 +84,7 @@ and then call `.upload("english_language")` as follows:
 
 CODE
 
-### Deleting Datasets
+## Deleting Datasets
 
 We can delete the dataset just as easily as we created it.
 
@@ -102,7 +102,7 @@ Or via Python:
 
 CODE
 
-### Listing Datasets
+## Listing Datasets
 
 We can retrieve a list of our uploaded datasets using the `/dataset/list` endpoint.
 
@@ -117,9 +117,9 @@ print(response.text)
 
 
 
-### Renaming Datasets
+## Renaming Datasets
 
-Lets imagine we accidentally named our dataset `"english"` when uploading it,
+Let's imagine we accidentally named our dataset `"english"` when uploading it,
 which would cause confusion as students need to learn both subjects `english literature`
 and `english language`.
 
@@ -138,7 +138,7 @@ Or via Python:
 
 CODE
 
-### Appending to Datasets
+## Appending to Datasets
 
 As explained above, we might want to add to an existing dataset, either because we have
 [generated some synthetic examples](), or perhaps because we have some relevant
@@ -156,7 +156,7 @@ Or via Python:
 
 CODE
 
-### Dataset Chunks
+## Dataset Chunks
 
 Whenever a dataset is appended to, this is stored as a new dataset "chunk".
 This is relevant as it is effectively how dataset version control works.
@@ -176,7 +176,7 @@ can be observed as follows:
 
 CODE
 
-### Dataset Fields
+## Dataset Fields
 
 All of the examples above only included a `prompt` key in the data,
 but any arbitrary structure can be used.

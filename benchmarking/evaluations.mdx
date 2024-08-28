@@ -5,7 +5,7 @@ title: 'Evaluations'
 Once our [evaluators](evaluators) are defined, we can then actually *use* these evaluators to
 evaluate the performance of different endpoints on different prompt datasets.
 
-### Trigger Evaluations
+## Trigger Evaluations
 
 To trigger an LLM evaluation using a pre-configured [LLM evaluator](), you simply need
 to specify the LLM endpoint, the dataset, and the pre-configured evaluator you would like to
@@ -25,11 +25,11 @@ response = requests.post(url, params=params, headers=headers)
 You will receive en email once the evaluation is finished.
 We will explain how to visualize the results of your evaluations in the next section.
 
-### Checking Evaluations
+## Checking Evaluations
 
 You can check the status of an evaluation using the endpoint X, as follows:
 
-#TODO (in api): If the evaluation is still running, the status code returned will be `this`.
+{/* TODO (in api): If the evaluation is still running, the status code returned will be this. */}
 
 You can get the aggregated scores across the dataset as follows:
 
@@ -45,11 +45,11 @@ response = requests.get(url, params=params, headers=headers)
 
 You can also get more granular results, with per-prompt scores by passing `per_prompt=True`.
 
-# TODO in api:
+{/* ToDo in API */}
 If the dataset has been updated since the evaluation was run, then the status `this`
 will be shown when making the query (see [Partial Evaluations]() below).
 
-### Custom Evaluators
+## Custom Evaluators
 
 If you do not need an LLM as a judge for your evaluation,
 then you can perform the evaluation on the client side.
@@ -76,7 +76,7 @@ CODE
 The code will run locally, and once the evaluation has been performed for all prompts
 in the dataset, the results will be uploaded via the X endpoint, using the Y argument.
 
-#### Client side scores
+### Client side scores
 
 If you want to submit evaluations that you obtained locally, you can via the `/evals/trigger` endpoint, by passing
 `client_side_scores` as the file.
@@ -86,10 +86,10 @@ The file should be in JSONL format, with entries having `prompt` and `score` key
 {"prompt": "Write Hello World in C", "score": 1.0}
 {"prompt": "Write a travelling salesman algorithm in Rust", "score": 0.2}
 ```
-The prompts must be the same prompts as the ones from from the `dataset`.
+The prompts must be the same prompts as the ones from the `dataset`.
 
 
-### Partial Evaluations
+## Partial Evaluations
 
 As mentioned [here](), datasets can be appended to at any point in time, which can make
 previously run evaluations "out of date" with respect to the full dataset
