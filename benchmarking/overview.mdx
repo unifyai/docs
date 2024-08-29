@@ -2,19 +2,27 @@
 title: 'Overview'
 ---
 
+When deploying LLMs in production, the first question to ask is: why LLM should I use?
+
 When comparing LLMs, there is a constant tradeoff to make between quality, cost and 
 latency. Stronger models are (in general) slower and more expensive - and sometimes 
 overkill for the task at hand. Complicating matters further, new models are released 
-weekly, each claiming to be state-of-the-art.
+weekly, each claiming to be state-of-the-art 🏆
 
 When fine-tuned models are added to the mix, the picture is even more complicated,
 as these models typically outperform the more general foundation models in their
 specific areas of fine-tuning.
 
-Benchmarking on your prompt data lets you see how each of the different models perform
-on your own task, in a visually intuitive manner.
+Benchmarking all options on your prompt data lets you see how each of the different
+models perform on your own task, in a visually intuitive manner 📊
 
-<img
-  src="/images/benchmarks.png"
-  alt="Benchmarks Image"
-/>
+Once you've selected your model, this is only the beginning. The task is then to verify
+that the LLM application is reliable, and all evals and unit tests are
+consistently passing.
+
+Getting the system to behave reliably, with all unit tests passing, often requires
+continual iteration on the system prompt, and on the in-context examples.
+
+Our platform makes it much easier to reason about the version history of the system
+prompt and in-context examples, seeing which changes had which effect on which evals for
+which kind of prompts, guiding you towards a fully reliable final system 💪
