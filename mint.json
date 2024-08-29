@@ -91,7 +91,13 @@
         },
         {
             "group": "",
-            "pages": []
+            "pages": [
+                "python/chat",
+                "python/clients",
+                "python/exceptions",
+                "python/multi_llm",
+                "python/utils"
+            ]
         },
         {
             "group": "API Reference",
