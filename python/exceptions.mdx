@@ -1,0 +1,95 @@
+---
+title: 'exceptions'
+---
+
+<a id="exceptions.UnifyError"></a>
+
+## UnifyError
+
+```python
+class UnifyError(Exception)
+```
+
+Base class for all custom exceptions in the Unify application.
+
+<a id="exceptions.BadRequestError"></a>
+
+## BadRequestError
+
+```python
+class BadRequestError(UnifyError)
+```
+
+Exception raised for HTTP 400 Bad Request errors.
+
+<a id="exceptions.AuthenticationError"></a>
+
+## AuthenticationError
+
+```python
+class AuthenticationError(UnifyError)
+```
+
+Exception raised for HTTP 401 Unauthorized errors.
+
+<a id="exceptions.PermissionDeniedError"></a>
+
+## PermissionDeniedError
+
+```python
+class PermissionDeniedError(UnifyError)
+```
+
+Exception raised for HTTP 403 Forbidden errors.
+
+<a id="exceptions.NotFoundError"></a>
+
+## NotFoundError
+
+```python
+class NotFoundError(UnifyError)
+```
+
+Exception raised for HTTP 404 Not Found errors.
+
+<a id="exceptions.ConflictError"></a>
+
+## ConflictError
+
+```python
+class ConflictError(UnifyError)
+```
+
+Exception raised for HTTP 409 Conflict errors.
+
+<a id="exceptions.UnprocessableEntityError"></a>
+
+## UnprocessableEntityError
+
+```python
+class UnprocessableEntityError(UnifyError)
+```
+
+Exception raised for HTTP 422 Unprocessable Entity errors.
+
+<a id="exceptions.RateLimitError"></a>
+
+## RateLimitError
+
+```python
+class RateLimitError(UnifyError)
+```
+
+Exception raised for HTTP 429 Too Many Requests errors.
+
+<a id="exceptions.InternalServerError"></a>
+
+## InternalServerError
+
+```python
+class InternalServerError(UnifyError)
+```
+
+Exception raised for HTTP 500 Internal Server Error errors.
+
+<a id="utils"></a>
