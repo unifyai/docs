@@ -1,0 +1,99 @@
+---
+title: 'Trigger Evaluation'
+api: 'POST /v0/evaluation'
+---
+Uses the named `evaluator` to trigger an evaluation of quality scores for the
+selected LLM `endpoint` on the selected `dataset`. You can upload custom scores (and
+bypass the LLM judge entirely) by uploading a file via the `client_side_scores`
+argument. Once the evaluation has finished, you can access the scores using the
+`/v0/evaluation` endpoint.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="evaluator" type="string" required="true">
+Name of the evaluator to use.
+</ParamField>
+
+<ParamField query="dataset" type="string" required="true">
+Name of the uploaded dataset to evaluate.
+</ParamField>
+
+<ParamField query="endpoint" type="string" required="true">
+Name of the endpoint to evaluate. Endpoints must be specified using the `model@provider` format.
+</ParamField>
+
+#### Body
+
+<ParamField body="client_side_scores" type="binary" >
+An optional file upload for client-side scores. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `prompt` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `evaluator` must have `client_side=True`.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/evaluation?evaluator=eval1&dataset=dataset1&endpoint=gpt-4o-mini@openai' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header 'Content-Type: multipart/form-data' \
+  --form 'client_side_scores=@client_scores.jsonl'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/evaluation?evaluator=eval1&dataset=dataset1&endpoint=gpt-4o-mini@openai"
+
+headers = {"Authorization": "Bearer <token>"}
+
+data = {}
+
+file_path = "client_scores.jsonl"
+with open(file_path, "rb") as file:
+   files = {"file": file}
+   response = requests.request("POST", url, files=files, data=data, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Dataset evaluation started! You will receive an email soon!"
+}
+```
+
+```json 400
+{
+    "detail": "Invalid input. Couldn't find endpoints [model_1@endpoint_1, model_2@endpoint_2]."
+}
+```
+
+```json 404
+{
+    "detail": "This dataset does not exist!"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

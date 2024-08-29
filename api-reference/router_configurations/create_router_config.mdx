@@ -1,0 +1,65 @@
+---
+title: 'Create Router Config'
+api: 'POST /v0/router/config'
+---
+Creates a router configuration, which can be queried later using only the
+configuration name, such as `my_router_config@routers`.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="config_name" type="string" required="true">
+The name of the router configuration to create.
+</ParamField>
+
+<ParamField query="router_endpoint" type="string" required="true">
+The raw string which fully defines the router endpoint, with all constraints applied, including the router name and any extra arguments.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/router/config?config_name=cost_and_speed_optimized&router_endpoint=router1|models:llama-3.1-8b-chat,mixtral-8x22b-instruct-v0.1|providers:fireworks-ai,together-ai|q:1|c:4.65e-03|t:2.08e-05|i:2.07e-03@routers' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/router/config?config_name=cost_and_speed_optimized&router_endpoint=router1|models:llama-3.1-8b-chat,mixtral-8x22b-instruct-v0.1|providers:fireworks-ai,together-ai|q:1|c:4.65e-03|t:2.08e-05|i:2.07e-03@routers"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

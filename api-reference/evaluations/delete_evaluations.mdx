@@ -1,0 +1,71 @@
+---
+title: 'Delete Evaluations'
+api: 'DELETE /v0/evaluation'
+---
+Deletes evaluations on a given dataset, for a specific endpoint (optional) based on
+a specific evaluator (optional). If no `evaluator` is provided, then evaluations for
+all valid evaluators are deleted. Similarly, if no `endpoint` is provided, then
+evaluations for all valid endpoints are deleted.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="dataset" type="string" required="true">
+Name of the dataset to delete the evaluation for.
+</ParamField>
+
+<ParamField query="endpoint" type="string" >
+The endpoint to delete the evaluation for. If `None`, deletes the evaluations for all endpoints.
+</ParamField>
+
+<ParamField query="evaluator" type="string" >
+Name of the evaluator to delete the evaluation for. If `None`, deletes all available evaluations for the dataset and endpoint pair.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("DELETE", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

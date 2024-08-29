@@ -1,0 +1,82 @@
+---
+title: 'Append To Benchmark'
+api: 'POST /v0/benchmark'
+---
+Append speed or cost data to the standardized time-series benchmarks for a custom
+endpoint (only custom endpoints are publishable by end users).
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="endpoint_name" type="string" required="true">
+Name of the *custom* endpoint to append benchmark data for.
+</ParamField>
+
+<ParamField query="metric_name" type="string" required="true">
+Name of the metric to submit. Allowed metrics are:
+        "input-cost", "output-cost", "time-to-first-token", "inter-token-latency".
+</ParamField>
+
+<ParamField query="value" type="number" required="true">
+Value of the metric to submit.
+</ParamField>
+
+<ParamField query="measured_at" type="string" >
+The timestamp to associate with the submission. Defaults to current time if unspecified.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/benchmark?endpoint_name=my_endpoint&metric_name=tokens-per-second&value=10&measured_at=2024-08-12T04:20:32.808410' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/benchmark?endpoint_name=my_endpoint&metric_name=tokens-per-second&value=10&measured_at=2024-08-12T04:20:32.808410"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Custom endpoint benchmark uploaded successfully!"
+}
+```
+
+```json 400
+{
+    "detail": "Invalid data submitted"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

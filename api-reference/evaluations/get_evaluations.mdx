@@ -1,0 +1,75 @@
+---
+title: 'Get Evaluations'
+api: 'GET /v0/evaluation'
+---
+Fetches evaluation results on a given dataset, for a specific endpoint (optional)
+based on a specific evaluator (optional). If no `evaluator` is provided, then scores
+are returned for all valid evaluators. Similarly, if no `endpoint` is provided, then
+scores are returned for all valid endpoints.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="dataset" type="string" required="true">
+Name of the dataset to fetch evaluation from.
+</ParamField>
+
+<ParamField query="endpoint" type="string" >
+The endpoint to fetch the evaluation for. If `None`, returns evaluations for all endpoints.
+</ParamField>
+
+<ParamField query="evaluator" type="string" >
+Name of the evaluator to fetch the evaluation for. If `None`, returns all available evaluations for the dataset and endpoint pair.
+</ParamField>
+
+<ParamField query="per_prompt" type="boolean" >
+If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an eval name and endpoint to be set.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
