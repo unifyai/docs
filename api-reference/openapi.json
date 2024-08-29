@@ -3384,9 +3384,9 @@
             },
             "CustomApiKeyModelResponse": {
                 "properties": {
-                    "key": {
+                    "name": {
                         "type": "string",
-                        "title": "Key"
+                        "title": "Name"
                     },
                     "value": {
                         "type": "string",
@@ -3395,7 +3395,7 @@
                 },
                 "type": "object",
                 "required": [
-                    "key",
+                    "name",
                     "value"
                 ],
                 "title": "CustomApiKeyModelResponse"
