@@ -2,7 +2,7 @@
 title: 'Making Queries'
 ---
 
-You can interact with the API via:
+You can interact with the chat completions API via:
 
 - [HTTP Requests](#http-requests) from any programming language
 - Our own [Unify Python Package](#unify-python-package)
@@ -25,62 +25,13 @@ curl -X 'POST' \
 ```
 
 The `model` field is used to specify both the model and the provider, in the format 
-`model@provider`.
+`model@provider`. The full specification for this REST API endpoint is available
+[here](https://docs.unify.ai/api-reference/querying_llms/get_completions).
 
-You can find a list of all models, all providers and all endpoints (model + provider pairs) 
-using the following commands:
-
-```shell
-curl -X 'GET' \
-  'https://api.unify.ai/v0/models' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
-  -H 'accept: application/json'
-```
-
-```shell
-curl -X 'GET' \
-  'https://api.unify.ai/v0/providers' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
-  -H 'accept: application/json'
-```
-
-```shell
-curl -X 'GET' \
-  'https://api.unify.ai/v0/endpoints' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
-  -H 'accept: application/json'
-```
-
-You can also pass models and providers as arguments to the above functions, to limit the 
-returned list, like so:
-
-```shell
-curl -X 'GET' \
-  'https://api.unify.ai/v0/models?provider=openai' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
-  -H 'accept: application/json'
-```
-
-```shell
-curl -X 'GET' \
-  'https://api.unify.ai/v0/providers?model=llama-3-8b-chat' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
-  -H 'accept: application/json'
-```
-
-```shell
-curl -X 'GET' \
-  'https://api.unify.ai/v0/endpoints?provider=openai' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
-  -H 'accept: application/json'
-```
-
-```shell
-curl -X 'GET' \
-  'https://api.unify.ai/v0/endpoints?model=llama-3-8b-chat' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
-  -H 'accept: application/json'
-```
+See the
+[previous section](https://docs.unify.ai/universal_api/supported_endpoints)
+for an explanation on how to list all available models, providers and endpoints
+(model + provider pairs).
 
 Requests can easily be made from any language, for example using Python:
 
@@ -133,8 +84,10 @@ the total cost of the request, in US$.
 In the request you can specify other common parameters, like `temperature`, `stream` and
 `max_tokens`.
 
-You can specify all of the parameters that OpenAI supports, but they may not be compatible
-with every model or provider.
+You can specify all of the parameters that OpenAI supports, but they may not be
+compatible with every model or provider.
+As mentioned above, you can find all arguments in the chat completions
+[API reference](https://docs.unify.ai/api-reference/querying_llms/get_completions).
 
 ## Unify Python Package
 
@@ -150,7 +103,8 @@ response = client.generate("hello world!")
 If you save your API key to the environment variables `UNIFY_KEY`,
 then you don't need to specify the `api_key` argument in the example above.
 
-You can list the models, providers and endpoints using the functions 
+As explained [here](https://docs.unify.ai/universal_api/supported_endpoints),
+you can list the models, providers and endpoints using the functions
 `unify.utils.list_models()`, `unify.utils.list_providers()` and 
 `unify.utils.list_endpoints()`
 
