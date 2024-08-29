@@ -86,8 +86,8 @@
         {
             "group": "On-Prem",
             "pages": [
-                "on_prem/on_prem_access",
-                "on_prem/sso"
+                "on_prem/overview",
+                "on_prem/universal_api"
             ]
         },
         {
