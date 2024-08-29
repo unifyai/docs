@@ -1,0 +1,88 @@
+---
+title: 'Supported Endpoints'
+---
+
+Querying the supported models, providers and endpoints is very simple,
+and can be done either via [http requests](#http-requests) from any programming language
+or our own [Unify Python package](#unify-python-package)
+
+## HTTP Requests
+
+You can find a list of all models, all providers and all endpoints
+(model + provider pairs) using the following commands:
+
+```shell
+curl -X 'GET' \
+  'https://api.unify.ai/v0/models' \
+  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H 'accept: application/json'
+```
+
+```shell
+curl -X 'GET' \
+  'https://api.unify.ai/v0/providers' \
+  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H 'accept: application/json'
+```
+
+```shell
+curl -X 'GET' \
+  'https://api.unify.ai/v0/endpoints' \
+  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H 'accept: application/json'
+```
+
+You can also pass models and providers as arguments to the above functions, to limit the
+returned list, like so:
+
+```shell
+curl -X 'GET' \
+  'https://api.unify.ai/v0/models?provider=openai' \
+  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H 'accept: application/json'
+```
+
+```shell
+curl -X 'GET' \
+  'https://api.unify.ai/v0/providers?model=llama-3-8b-chat' \
+  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H 'accept: application/json'
+```
+
+```shell
+curl -X 'GET' \
+  'https://api.unify.ai/v0/endpoints?provider=openai' \
+  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H 'accept: application/json'
+```
+
+```shell
+curl -X 'GET' \
+  'https://api.unify.ai/v0/endpoints?model=llama-3-8b-chat' \
+  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H 'accept: application/json'
+```
+
+That's it, you can now easily list the models, provider and endpoints that are available
+for querying (explained in the next section).
+
+## Unify Python Package
+
+The same functions can be called directly from the Python client, as follows:
+
+```python
+import unify
+
+# return all
+unify.utils.list_models()
+unify.utils.list_providers()
+unify.utils.list_endpoints()
+
+# filtered
+unify.utils.list_models("openai")
+unify.utils.list_providers("llama-3-8b-chat")
+unify.utils.list_endpoints(provider="openai")
+unify.utils.list_endpoints(model="llama-3-8b-chat")
+```
+
+That's it! In the next section we'll see how these endpoints can actually be queried ✨

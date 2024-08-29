@@ -54,6 +54,7 @@
             "group": "Universal API",
             "pages": [
                 "universal_api/overview",
+                "universal_api/supported_endpoints",
                 "universal_api/making_queries",
                 "universal_api/arguments",
                 "universal_api/logging",
