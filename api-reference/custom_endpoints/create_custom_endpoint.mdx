@@ -1,0 +1,90 @@
+---
+title: 'Create Custom Endpoint'
+api: 'POST /v0/custom_endpoint'
+---
+Creates a custom endpoint. This endpoint must either be a fine-tuned model from one
+of the supported providers (`/v0/providers`), in which case the "provider" argument
+must be set accordingly. Otherwise, the endpoint must support the OpenAI
+`/chat/completions` format. To query your custom endpoint, replace your endpoint
+string with `<name>@custom` when querying any general custom endpoint. You can show
+all *custom* endpoints by querying `/v0/endpoints` and passing `custom` as the
+`provider` argument.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="name" type="string" required="true">
+Alias for the custom endpoint. This will be the name used to call the endpoint.
+</ParamField>
+
+<ParamField query="url" type="string" required="true">
+Base URL of the endpoint being called. Must support the OpenAI format.
+</ParamField>
+
+<ParamField query="key_name" type="string" required="true">
+Name of the API key that will be passed as part of the query.
+</ParamField>
+
+<ParamField query="model_name" type="string" >
+Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.
+</ParamField>
+
+<ParamField query="provider" type="string" >
+If the custom endpoint is for a fine-tuned model which is hosted directly via one of the supported providers, then this argument should be specified as the provider used. The unification logic will be used for this custom fine-tuned model behind the scenes, in the same manner as used for the foundation models with the same provider.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/custom_endpoint?name=endpoint1&url=https://api.url1.com&key_name=key1&model_name=llama-3.1-8b-finetuned&provider=together-ai' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/custom_endpoint?name=endpoint1&url=https://api.url1.com&key_name=key1&model_name=llama-3.1-8b-finetuned&provider=together-ai"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Custom endpoint created successfully!"
+}
+```
+
+```json 404
+{
+    "detail": "Custom API Key not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

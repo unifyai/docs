@@ -5,45 +5,14 @@
         "version": "0.1.0"
     },
     "paths": {
-        "/v0/get_credits": {
+        "/v0/providers": {
             "get": {
                 "tags": [
-                    "User"
+                    "Supported Endpoints"
                 ],
-                "summary": "Get Credits",
-                "description": "Returns the number of available credits.",
-                "operationId": "get_credits_v0_get_credits_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CreditsResponse"
-                                },
-                                "example": {
-                                    "id": "<USER_ID>",
-                                    "credits": 10
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/promo": {
-            "post": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Credits Code",
-                "description": "Activates a promotional code.",
-                "operationId": "credits_code_v0_promo_post",
+                "summary": "List Providers",
+                "description": "Lists available providers. If `model` is specified,\nreturns the providers that support that model.",
+                "operationId": "list_providers_v0_providers_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -51,35 +20,16 @@
                 ],
                 "parameters": [
                     {
-                        "name": "code",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Promo code to be activated.",
-                            "title": "Code"
-                        },
-                        "description": "Promo code to be activated.",
-                        "example": "sample_code"
-                    },
-                    {
-                        "name": "user",
+                        "name": "model",
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "ID of the user that receives the credits,defaults to the user making the request.",
-                            "title": "User"
+                            "type": "string",
+                            "description": "Model to get available providers for.",
+                            "title": "Model"
                         },
-                        "description": "ID of the user that receives the credits,defaults to the user making the request.",
-                        "example": "sample_user_id"
+                        "description": "Model to get available providers for.",
+                        "example": "llama-3.1-405b-chat"
                     }
                 ],
                 "responses": {
@@ -88,35 +38,18 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
+                                    "type": "array",
+                                    "items": {
                                         "type": "string"
                                     },
-                                    "title": "Response Credits Code V0 Promo Post"
+                                    "title": "Response List Providers V0 Providers Get"
                                 },
-                                "example": {
-                                    "info": "Code {code} activated succesfully!"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Already activated code",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "This code has already been activated."
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Code Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Invalid code."
-                                }
+                                "example": [
+                                    "openai",
+                                    "anthropic",
+                                    "together-ai",
+                                    "..."
+                                ]
                             }
                         }
                     },
@@ -136,11 +69,11 @@
         "/v0/models": {
             "get": {
                 "tags": [
-                    "Model and Endpoints"
+                    "Supported Endpoints"
                 ],
-                "summary": "Get Models",
-                "description": "Lists available models. If a provider is specified, returns the models that the provider supports.",
-                "operationId": "get_models_v0_models_get",
+                "summary": "List Models",
+                "description": "Lists available models. If `provider` is specified,\nreturns the models that the provider supports.\nYou can also show all *custom* models by passing `custom` as the provider.",
+                "operationId": "list_models_v0_models_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -170,11 +103,12 @@
                                     "items": {
                                         "type": "string"
                                     },
-                                    "title": "Response Get Models V0 Models Get"
+                                    "title": "Response List Models V0 Models Get"
                                 },
                                 "example": [
-                                    "model_a",
-                                    "model_b",
+                                    "gpt-3.5-turbo",
+                                    "gpt-4",
+                                    "claude-3-haiku",
                                     "..."
                                 ]
                             }
@@ -193,30 +127,63 @@
                 }
             }
         },
-        "/v0/inference": {
-            "post": {
+        "/v0/endpoints": {
+            "get": {
                 "tags": [
-                    "Querying LLMs"
+                    "Supported Endpoints"
                 ],
-                "summary": "Post Inference",
-                "description": "DEPRECATION WARNING: This endpoint is deprecated and will be removed. Instead,\nuse the /chat/completions endpoint for LLM inference.",
-                "operationId": "post_inference_v0_inference_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/InferenceRequest"
-                            }
-                        }
+                "summary": "List Endpoints",
+                "description": "Lists available endpoints in `model@provider` format.\nIf `model` or `provider` are specified, only the matching endpoints will be listed.\nYou can also show all *custom* endpoints by passing `custom` as the provider.",
+                "operationId": "list_endpoints_v0_endpoints_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "model",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Model to get available endpoints for.",
+                            "title": "Model"
+                        },
+                        "description": "Model to get available endpoints for.",
+                        "example": "llama-3.1-405b-chat"
                     },
-                    "required": true
-                },
+                    {
+                        "name": "provider",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Provider to get available endpoints for.",
+                            "title": "Provider"
+                        },
+                        "description": "Provider to get available endpoints for.",
+                        "example": "openai"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response List Endpoints V0 Endpoints Get"
+                                },
+                                "example": [
+                                    "claude-3-haiku@anthropic",
+                                    "llama-3-70b-chat@groq",
+                                    "mistral-large@mistral-ai",
+                                    "..."
+                                ]
                             }
                         }
                     },
@@ -230,23 +197,17 @@
                             }
                         }
                     }
-                },
-                "deprecated": true,
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
+                }
             }
         },
         "/v0/chat/completions": {
             "post": {
                 "tags": [
-                    "Querying LLMs"
+                    "LLM Queries"
                 ],
-                "summary": "Get Completions",
-                "description": "OpenAI compatible /chat/completions endpoint for LLM inference.",
-                "operationId": "get_completions_v0_chat_completions_post",
+                "summary": "Chat Completions",
+                "description": "OpenAI compatible `/chat/completions` endpoint for LLM inference.\nCheck the OpenAI\n[API reference](https://platform.openai.com/docs/api-reference/chat)\nfor the most updated documentation. The ground truth is always the latest OpenAI API\nReference. The arguments below are copied for convenience, but might not be fully\nup-to-date at all times.",
+                "operationId": "chat_completions_v0_chat_completions_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -286,13 +247,71 @@
                 ]
             }
         },
+        "/v0/prompt_history": {
+            "get": {
+                "tags": [
+                    "Logging"
+                ],
+                "summary": "Get Prompt History",
+                "description": "Get the prompt history, optionally for a given set of tags for a narrowed search.",
+                "operationId": "get_prompt_history_v0_prompt_history_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            ],
+                            "description": "Tags to filter for prompts that are marked with these tags.",
+                            "title": "Tags"
+                        },
+                        "description": "Tags to filter for prompts that are marked with these tags."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/metrics": {
             "get": {
                 "tags": [
-                    "Querying LLMs"
+                    "Logging"
                 ],
                 "summary": "Get Query Metrics",
-                "description": "Returns aggregated telemetry data from previous queries to the `/chat/completions`\nendpoint.",
+                "description": "Returns aggregated telemetry data from previous queries to the `/chat/completions`\nendpoint, specifically the p50 and p95 for generation time and tokens per second,\nand also the total prompt and completion tokens processed within the interval. The\nuser id and total request count within the interval are also returned.",
                 "operationId": "get_query_metrics_v0_metrics_get",
                 "security": [
                     {
@@ -305,14 +324,7 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
+                            "type": "string",
                             "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
                             "title": "Start Time"
                         },
@@ -324,14 +336,7 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
+                            "type": "string",
                             "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
                             "title": "End Time"
                         },
@@ -343,18 +348,11 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Models to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `gpt-3.5-turbo,gpt-4o`",
+                            "type": "string",
+                            "description": "Models to fetch metrics from. The list must be a set of comma-separated strings. i.e. `gpt-3.5-turbo,gpt-4o`",
                             "title": "Models"
                         },
-                        "description": "Models to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `gpt-3.5-turbo,gpt-4o`",
+                        "description": "Models to fetch metrics from. The list must be a set of comma-separated strings. i.e. `gpt-3.5-turbo,gpt-4o`",
                         "example": "gpt-4o,llama-3.1-405b-chat,claude-3.5-sonnet"
                     },
                     {
@@ -362,18 +360,11 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Providers to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `openai,together-ai`",
+                            "type": "string",
+                            "description": "Providers to fetch metrics from. The list must be a set of comma-separated strings. i.e. `openai,together-ai`",
                             "title": "Providers"
                         },
-                        "description": "Providers to fetch metrics from. The list must be a set of comma-sparated strings. i.e. `openai,together-ai`",
+                        "description": "Providers to fetch metrics from. The list must be a set of comma-separated strings. i.e. `openai,together-ai`",
                         "example": "openai,anthropic,fireworks-ai"
                     },
                     {
@@ -381,14 +372,7 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
+                            "type": "string",
                             "description": "Number of seconds in the aggregation interval.",
                             "default": 300,
                             "title": "Interval"
@@ -401,14 +385,7 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
+                            "type": "string",
                             "description": "Secondary user id. The secondary user id will match any string previously sent in the `user` attribute of `/chat/completions`.",
                             "title": "Secondary User Id"
                         },
@@ -442,42 +419,13 @@
             }
         },
         "/v0/custom_endpoint": {
-            "get": {
+            "post": {
                 "tags": [
-                    "Custom Endpoints and API keys"
-                ],
-                "summary": "Get Custom Endpoints",
-                "description": "Returns a list of the available custom endpoints.",
-                "operationId": "get_custom_endpoints_v0_custom_endpoint_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/CustomEndpointModelResponse"
-                                    },
-                                    "title": "Response Get Custom Endpoints V0 Custom Endpoint Get"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Custom Endpoints and API keys"
+                    "Custom Endpoints"
                 ],
                 "summary": "Create Custom Endpoint",
-                "description": "Creates a custom endpoint. This endpoint must support the OpenAI `/chat/completions`\nformat. To query your custom endpoint, replace your endpoint string with `<name>@custom`\nwhen querying the unified API.",
-                "operationId": "create_custom_endpoint_v0_custom_endpoint_put",
+                "description": "Creates a custom endpoint. This endpoint must either be a fine-tuned model from one\nof the supported providers (`/v0/providers`), in which case the \"provider\" argument\nmust be set accordingly. Otherwise, the endpoint must support the OpenAI\n`/chat/completions` format. To query your custom endpoint, replace your endpoint\nstring with `<name>@custom` when querying any general custom endpoint. You can show\nall *custom* endpoints by querying `/v0/endpoints` and passing `custom` as the\n`provider` argument.",
+                "operationId": "create_custom_endpoint_v0_custom_endpoint_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -521,23 +469,28 @@
                         "example": "key1"
                     },
                     {
-                        "name": "mdl_name",
+                        "name": "model_name",
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
+                            "type": "string",
                             "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.",
-                            "title": "Mdl Name"
+                            "title": "Model Name"
                         },
                         "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.",
                         "example": "llama-3.1-8b-finetuned"
+                    },
+                    {
+                        "name": "provider",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "If the custom endpoint is for a fine-tuned model which is hosted directly via one of the supported providers, then this argument should be specified as the provider used. The unification logic will be used for this custom fine-tuned model behind the scenes, in the same manner as used for the foundation models with the same provider.",
+                            "title": "Provider"
+                        },
+                        "description": "If the custom endpoint is for a fine-tuned model which is hosted directly via one of the supported providers, then this argument should be specified as the provider used. The unification logic will be used for this custom fine-tuned model behind the scenes, in the same manner as used for the foundation models with the same provider.",
+                        "example": "together-ai"
                     }
                 ],
                 "responses": {
@@ -547,7 +500,7 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Custom endpoint created succesfully!"
+                                    "info": "Custom endpoint created successfully!"
                                 }
                             }
                         }
@@ -576,10 +529,10 @@
             },
             "delete": {
                 "tags": [
-                    "Custom Endpoints and API keys"
+                    "Custom Endpoints"
                 ],
                 "summary": "Delete Custom Endpoint",
-                "description": "Deletes a custom endpoint in your account.",
+                "description": "Deletes a custom endpoint from your account.",
                 "operationId": "delete_custom_endpoint_v0_custom_endpoint_delete",
                 "security": [
                     {
@@ -607,160 +560,7 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Custom endpoint deleted succesfully!"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/custom_api_key": {
-            "get": {
-                "tags": [
-                    "Custom Endpoints and API keys"
-                ],
-                "summary": "Get Custom Api Keys",
-                "description": "Returns a list of the available custom API keys.",
-                "operationId": "get_custom_api_keys_v0_custom_api_key_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/CustomApiKeyModelResponse"
-                                    },
-                                    "title": "Response Get Custom Api Keys V0 Custom Api Key Get"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Custom Endpoints and API keys"
-                ],
-                "summary": "Create Custom Api Key",
-                "description": "Stores a custom API key from a LLM provider in your account. This can be used in two ways:\n1. As part of a custom endpoint. If you define a custom endpoint, you can reference a custom API\nkey. This will be sent to the endpoint as part of the request.\n2. To use your own API keys in standard providers. If any of your custom API keys matches a provider\nname and you pass `use_custom_keys=True` to the `/chat/completions` endpoint, this API key will\nbe used, charging your account directly instead of consuming Unify credits.",
-                "operationId": "create_custom_api_key_v0_custom_api_key_put",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "key",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the API key.",
-                            "title": "Key"
-                        },
-                        "description": "Name of the API key.",
-                        "example": "key1"
-                    },
-                    {
-                        "name": "value",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Value of the API key.",
-                            "title": "Value"
-                        },
-                        "description": "Value of the API key.",
-                        "example": "value1"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "API key created succesfully!"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Custom Endpoints and API keys"
-                ],
-                "summary": "Delete Custom Api Key",
-                "description": "Deletes a custom API key in your account.",
-                "operationId": "delete_custom_api_key_v0_custom_api_key_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "key",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the custom API key to delete.",
-                            "title": "Key"
-                        },
-                        "description": "Name of the custom API key to delete.",
-                        "example": "key1"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "API key deleted succesfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Custom API key Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "API key not found."
+                                    "info": "Custom endpoint deleted successfully!"
                                 }
                             }
                         }
@@ -781,7 +581,7 @@
         "/v0/custom_endpoint/rename": {
             "post": {
                 "tags": [
-                    "Custom Endpoints and API keys"
+                    "Custom Endpoints"
                 ],
                 "summary": "Rename Custom Endpoint",
                 "description": "Renames a custom endpoint in your account.",
@@ -824,7 +624,7 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Custom endpoint renamed succesfully!"
+                                    "info": "Custom endpoint renamed successfully!"
                                 }
                             }
                         }
@@ -852,14 +652,14 @@
                 }
             }
         },
-        "/v0/custom_api_key/rename": {
+        "/v0/custom_api_key": {
             "post": {
                 "tags": [
-                    "Custom Endpoints and API keys"
+                    "Custom API keys"
                 ],
-                "summary": "Rename Custom Api Key",
-                "description": "Renames a custom API key from a LLM provider in your account.",
-                "operationId": "rename_custom_api_key_v0_custom_api_key_rename_post",
+                "summary": "Create Custom Api Key",
+                "description": "Stores a custom API key from an LLM provider in your account. This can be done in\none of two ways:\n\n1. As part of a custom endpoint. If you define a custom endpoint, you can reference\na custom API key. This will be sent to the endpoint as part of the request.\n\n2. To use your own API keys with the standard providers. If any of your custom API\nkeys match a provider name and you pass `use_custom_keys=True` to the\n`/chat/completions` endpoint, then this API key will be used, using your own\naccount with the provider directly.",
+                "operationId": "create_custom_api_key_v0_custom_api_key_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -867,28 +667,28 @@
                 ],
                 "parameters": [
                     {
-                        "name": "key",
+                        "name": "name",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the custom API key to be updated.",
-                            "title": "Key"
+                            "description": "Name of the API key.",
+                            "title": "Name"
                         },
-                        "description": "Name of the custom API key to be updated.",
+                        "description": "Name of the API key.",
                         "example": "key1"
                     },
                     {
-                        "name": "new_key",
+                        "name": "value",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "New name for the custom API key.",
-                            "title": "New Key"
+                            "description": "Value of the API key.",
+                            "title": "Value"
                         },
-                        "description": "New name for the custom API key.",
-                        "example": "key2"
+                        "description": "Value of the API key.",
+                        "example": "value1"
                     }
                 ],
                 "responses": {
@@ -898,7 +698,106 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "API key renamed succesfully!"
+                                    "info": "API key created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Custom API keys"
+                ],
+                "summary": "Get Custom Api Key",
+                "description": "Returns the value of the key for the specified custom API key name.",
+                "operationId": "get_custom_api_key_v0_custom_api_key_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the API key to get the value for.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the API key to get the value for.",
+                        "example": "key1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomApiKeyModelResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Custom API keys"
+                ],
+                "summary": "Delete Custom Api Key",
+                "description": "Deletes the custom API key from your account.",
+                "operationId": "delete_custom_api_key_v0_custom_api_key_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the custom API key to delete.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the custom API key to delete.",
+                        "example": "key1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "API key deleted successfully!"
                                 }
                             }
                         }
@@ -926,13 +825,14 @@
                 }
             }
         },
-        "/v0/custom_endpoint/benchmark": {
+        "/v0/custom_api_key/rename": {
             "post": {
                 "tags": [
-                    "Custom Endpoints and API keys"
+                    "Custom API keys"
                 ],
-                "summary": "Upload Custom Benchmark",
-                "operationId": "upload_custom_benchmark_v0_custom_endpoint_benchmark_post",
+                "summary": "Rename Custom Api Key",
+                "description": "Renames the custom API key in your account.",
+                "operationId": "rename_custom_api_key_v0_custom_api_key_rename_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -940,40 +840,28 @@
                 ],
                 "parameters": [
                     {
-                        "name": "endpoint_name",
+                        "name": "name",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the custom endpoint to submit a benchmark for.",
-                            "title": "Endpoint Name"
+                            "description": "Name of the custom API key to be updated.",
+                            "title": "Name"
                         },
-                        "description": "Name of the custom endpoint to submit a benchmark for.",
-                        "example": "endpoint1"
+                        "description": "Name of the custom API key to be updated.",
+                        "example": "key1"
                     },
                     {
-                        "name": "metric_name",
+                        "name": "new_name",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the metric to submit. Allowed metrics are: \"input-cost\", \"output-cost\", \"tokens-per-second\", \"time-to-first-token\", \"inter-token-latency\", \"end-2-end-latency\", \"cold-start\".",
-                            "title": "Metric Name"
+                            "description": "New name for the custom API key.",
+                            "title": "New Name"
                         },
-                        "description": "Name of the metric to submit. Allowed metrics are: \"input-cost\", \"output-cost\", \"tokens-per-second\", \"time-to-first-token\", \"inter-token-latency\", \"end-2-end-latency\", \"cold-start\".",
-                        "example": "tokens-per-second"
-                    },
-                    {
-                        "name": "value",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "number",
-                            "description": "Value of the metric to submit.",
-                            "title": "Value"
-                        },
-                        "description": "Value of the metric to submit.",
-                        "example": 10
+                        "description": "New name for the custom API key.",
+                        "example": "key2"
                     }
                 ],
                 "responses": {
@@ -983,17 +871,17 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Custom endpoint benchmark uploaded succesfully!"
+                                    "info": "API key renamed successfully!"
                                 }
                             }
                         }
                     },
-                    "400": {
-                        "description": "Benchmark not valid",
+                    "404": {
+                        "description": "Custom API key Not Found",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Invalid data submitted"
+                                    "detail": "API key not found."
                                 }
                             }
                         }
@@ -1011,99 +899,44 @@
                 }
             }
         },
-        "/v0/custom_endpoint/get_benchmark": {
+        "/v0/custom_api_key/list": {
             "get": {
                 "tags": [
-                    "Custom Endpoints and API keys"
+                    "Custom API keys"
                 ],
-                "summary": "Get Custom Benchmarks",
-                "operationId": "get_custom_benchmarks_v0_custom_endpoint_get_benchmark_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "endpoint_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the custom endpoint to get a benchmark for.",
-                            "title": "Endpoint Name"
-                        },
-                        "description": "Name of the custom endpoint to get a benchmark for.",
-                        "example": "endpoint1"
-                    },
-                    {
-                        "name": "metric_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the metric to get the benchmark of.",
-                            "title": "Metric Name"
-                        },
-                        "description": "Name of the metric to get the benchmark of.",
-                        "example": "tokens-per-second"
-                    },
-                    {
-                        "name": "start_time",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "Start time of window to get benchmarks between. Format YYYY-MM-DD",
-                            "default": "2024-01-01",
-                            "title": "Start Time"
-                        },
-                        "description": "Start time of window to get benchmarks between. Format YYYY-MM-DD",
-                        "example": "2024-01-01"
-                    },
-                    {
-                        "name": "end_time",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "End time of window to get benchmarks between. Format YYYY-MM-DD",
-                            "default": "2024-12-12",
-                            "title": "End Time"
-                        },
-                        "description": "End time of window to get benchmarks between. Format YYYY-MM-DD",
-                        "example": "2024-12-12"
-                    }
-                ],
+                "summary": "List Custom Api Keys",
+                "description": "Returns a list of the names for all custom API keys in your account.",
+                "operationId": "list_custom_api_keys_v0_custom_api_key_list_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomApiKeyModelResponse"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Custom Api Keys V0 Custom Api Key List Get"
                                 }
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/v0/dataset": {
             "post": {
                 "tags": [
-                    "Dataset"
+                    "Datasets"
                 ],
                 "summary": "Upload Dataset",
-                "description": "Uploads a custom dataset to the platform.\n\nThe uploaded file must be a JSONL file with **at least** a `prompt` key:\n\n```\n{\"prompt\": \"This is the first prompt\"}\n{\"prompt\": \"This is the second prompt\"}\n{\"prompt\": \"This is the third prompt\"}\n```\n\nAdditionally, you can include a `ref_answer` key, which will be accounted\nduring the evaluations.\n\n```\n{\"prompt\": \"This is the first prompt\", \"ref_answer\": \"First reference answer\"}\n{\"prompt\": \"This is the second prompt\", \"ref_answer\": \"Second reference answer\"}\n{\"prompt\": \"This is the third prompt\", \"ref_answer\": \"Third reference answer\"}\n```",
+                "description": "Uploads a custom dataset to your account.\n\nThe uploaded file must be a JSONL file with **at least** a `prompt` key for\neach prompt each:\n\n```\n{\"prompt\": \"This is the first prompt\"}\n{\"prompt\": \"This is the second prompt\"}\n{\"prompt\": \"This is the third prompt\"}\n```\n\nAdditionally, you can include any extra keys as desired, depending on the use case\nfor the dataset, and how it will be used by the evaluators and/or router training.\nFor example, you could include a reference answer to each prompt as follows:\n\n```\n{\"prompt\": \"This is the first prompt\", \"ref_answer\": \"First reference answer\"}\n{\"prompt\": \"This is the second prompt\", \"ref_answer\": \"Second reference answer\"}\n{\"prompt\": \"This is the third prompt\", \"ref_answer\": \"Third reference answer\"}\n```",
                 "operationId": "upload_dataset_v0_dataset_post",
                 "security": [
                     {
@@ -1143,73 +976,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "A dataset with this name already exists. Please, choose a different one."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Dataset"
-                ],
-                "summary": "Delete Dataset",
-                "description": "Deletes a previously updated dataset and any relevant artifacts from the platform.",
-                "operationId": "delete_dataset_v0_dataset_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the dataset.",
-                            "title": "Name"
-                        },
-                        "description": "Name of the dataset.",
-                        "example": "dataset1"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Delete Dataset V0 Dataset Delete"
-                                },
-                                "example": {
-                                    "info": "Dataset deleted succesfully!"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid dataset name",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Invalid name for a dataset. Please, choose a different one."
+                                    "detail": "A dataset with this name already exists.Please, choose a different one."
                                 }
                             }
                         }
@@ -1228,10 +995,10 @@
             },
             "get": {
                 "tags": [
-                    "Dataset"
+                    "Datasets"
                 ],
                 "summary": "Download Dataset",
-                "description": "Downloads a specific dataset from the platform.",
+                "description": "Downloads a specific dataset from your account.",
                 "operationId": "download_dataset_v0_dataset_get",
                 "security": [
                     {
@@ -1301,51 +1068,81 @@
                         }
                     }
                 }
-            }
-        },
-        "/v0/dataset/list": {
-            "get": {
+            },
+            "delete": {
                 "tags": [
-                    "Dataset"
+                    "Datasets"
                 ],
-                "summary": "List Datasets",
-                "description": "Lists all the custom datasets uploaded by the user to the platform.",
-                "operationId": "list_datasets_v0_dataset_list_get",
+                "summary": "Delete Dataset",
+                "description": "Deletes a previously updated dataset and any relevant artifacts from your account.",
+                "operationId": "delete_dataset_v0_dataset_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the dataset.",
+                        "example": "dataset1"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "items": {
+                                    "type": "object",
+                                    "additionalProperties": {
                                         "type": "string"
                                     },
-                                    "type": "array",
-                                    "title": "Response List Datasets V0 Dataset List Get"
+                                    "title": "Response Delete Dataset V0 Dataset Delete"
                                 },
-                                "example": [
-                                    "dataset_1",
-                                    "dataset_2",
-                                    "..."
-                                ]
+                                "example": {
+                                    "info": "Dataset deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid dataset name",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid name for a dataset.Please, choose a different one."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
+                }
             }
         },
         "/v0/dataset/rename": {
             "post": {
                 "tags": [
-                    "Dataset"
+                    "Datasets"
                 ],
                 "summary": "Rename Dataset",
-                "description": "Renames a previously updated dataset.",
+                "description": "Renames a previously uploaded dataset.",
                 "operationId": "rename_dataset_v0_dataset_rename_post",
                 "security": [
                     {
@@ -1401,7 +1198,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "A dataset with this name already exists. Please, choose a different one."
+                                    "detail": "A dataset with this name already exists.Please, choose a different one."
                                 }
                             }
                         }
@@ -1419,23 +1216,64 @@
                 }
             }
         },
-        "/v0/evals/create": {
+        "/v0/dataset/list": {
+            "get": {
+                "tags": [
+                    "Datasets"
+                ],
+                "summary": "List Datasets",
+                "description": "Lists all the datasets stored in the user account by name.",
+                "operationId": "list_datasets_v0_dataset_list_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Datasets V0 Dataset List Get"
+                                },
+                                "example": [
+                                    "dataset_1",
+                                    "dataset_2",
+                                    "..."
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/evaluator": {
             "post": {
                 "tags": [
-                    "Dataset Evaluation"
+                    "Evaluators"
                 ],
-                "summary": "Create Eval",
-                "description": "Create a re-useable, named eval configuration. This can be used to trigger an evaluation via the `/evals/trigger` endpoint.",
-                "operationId": "create_eval_v0_evals_create_post",
+                "summary": "Create Evaluator",
+                "description": "Create a re-usable, named evaluator, and adds this to your account. This can be used\nto trigger an evaluation via `POST` requests to the `/evaluation` endpoint.",
+                "operationId": "create_evaluator_v0_evaluator_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/EvalConfig"
+                                "$ref": "#/components/schemas/EvaluatorConfig"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -1456,22 +1294,34 @@
                             }
                         }
                     }
-                },
+                }
+            },
+            "get": {
+                "tags": [
+                    "Evaluators"
+                ],
+                "summary": "Get Evaluator",
+                "description": "Returns the configuration JSON for an evaluator from your account. The configuration\ncontains the same information as the arguments passed to the `POST` function for the\nsame endpoint `/v0/evaluator`.",
+                "operationId": "get_evaluator_v0_evaluator_get",
                 "security": [
                     {
                         "HTTPBearer": []
                     }
-                ]
-            }
-        },
-        "/v0/evals/list_configs": {
-            "get": {
-                "tags": [
-                    "Dataset Evaluation"
                 ],
-                "summary": "List Evals",
-                "description": "Returns the names of the eval configurations you have created.",
-                "operationId": "list_evals_v0_evals_list_configs_get",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the evaluator to return the configuration of.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the evaluator to return the configuration of.",
+                        "example": "eval1"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -1480,23 +1330,26 @@
                                 "schema": {}
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
                     }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/evals/get_config": {
-            "get": {
+                }
+            },
+            "delete": {
                 "tags": [
-                    "Dataset Evaluation"
+                    "Evaluators"
                 ],
-                "summary": "Return Eval Config",
-                "description": "Returns the configuration JSON for a named eval.",
-                "operationId": "return_eval_config_v0_evals_get_config_get",
+                "summary": "Delete Evaluator",
+                "description": "Deletes an evaluator from your account.",
+                "operationId": "delete_evaluator_v0_evaluator_delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1504,15 +1357,15 @@
                 ],
                 "parameters": [
                     {
-                        "name": "eval_name",
+                        "name": "name",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the eval to return the configuration of",
-                            "title": "Eval Name"
+                            "description": "Name of the evaluator to delete.",
+                            "title": "Name"
                         },
-                        "description": "Name of the eval to return the configuration of",
+                        "description": "Name of the evaluator to delete.",
                         "example": "eval1"
                     }
                 ],
@@ -1538,14 +1391,14 @@
                 }
             }
         },
-        "/v0/evals/rename": {
+        "/v0/evaluator/rename": {
             "post": {
                 "tags": [
-                    "Dataset Evaluation"
+                    "Evaluators"
                 ],
-                "summary": "Rename Eval",
-                "description": "Renames a named eval from `eval_name` to `new_eval_name`.",
-                "operationId": "rename_eval_v0_evals_rename_post",
+                "summary": "Rename Evaluator",
+                "description": "Renames an evaluator from `name` to `new_name` in your account.",
+                "operationId": "rename_evaluator_v0_evaluator_rename_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1553,27 +1406,27 @@
                 ],
                 "parameters": [
                     {
-                        "name": "eval_name",
+                        "name": "name",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the existing eval to rename",
-                            "title": "Eval Name"
+                            "description": "Name of the evaluator to rename.",
+                            "title": "Name"
                         },
-                        "description": "Name of the existing eval to rename",
+                        "description": "Name of the evaluator to rename.",
                         "example": "eval1"
                     },
                     {
-                        "name": "new_eval_name",
+                        "name": "new_name",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "New name for the eval",
-                            "title": "New Eval Name"
+                            "description": "New name for the evaluator.",
+                            "title": "New Name"
                         },
-                        "description": "New name for the eval",
+                        "description": "New name for the evaluator.",
                         "example": "eval2"
                     }
                 ],
@@ -1599,33 +1452,14 @@
                 }
             }
         },
-        "/v0/evals/delete": {
-            "delete": {
+        "/v0/evaluator/list": {
+            "get": {
                 "tags": [
-                    "Dataset Evaluation"
+                    "Evaluators"
                 ],
-                "summary": "Delete Eval",
-                "description": "Deletes a named eval from your account.",
-                "operationId": "delete_eval_v0_evals_delete_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "eval_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the eval to delete",
-                            "title": "Eval Name"
-                        },
-                        "description": "Name of the eval to delete",
-                        "example": "eval1"
-                    }
-                ],
+                "summary": "List Evaluators",
+                "description": "Returns the names of all evaluators stored in your account.",
+                "operationId": "list_evaluators_v0_evaluator_list_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -1634,28 +1468,23 @@
                                 "schema": {}
                             }
                         }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
-        "/v0/evals/trigger": {
+        "/v0/evaluation": {
             "post": {
                 "tags": [
-                    "Dataset Evaluation"
+                    "Evaluations"
                 ],
-                "summary": "Trigger Eval",
-                "description": "Uses the named `eval` to begin an evaluation of quality scores for the selected LLM `endpoint`, on the given `dataset`.\nYou can upload custom scores (and bypass the LLM judge) by uploading a file via the `client_side_scores` argument.\nOnce the evaluation has finished, you can access the scores using the `evals/get_scores` endpoint.",
-                "operationId": "trigger_eval_v0_evals_trigger_post",
+                "summary": "Trigger Evaluation",
+                "description": "Uses the named `evaluator` to trigger an evaluation of quality scores for the\nselected LLM `endpoint` on the selected `dataset`. You can upload custom scores (and\nbypass the LLM judge entirely) by uploading a file via the `client_side_scores`\nargument. Once the evaluation has finished, you can access the scores using the\n`/v0/evaluation` endpoint.",
+                "operationId": "trigger_evaluation_v0_evaluation_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1663,15 +1492,15 @@
                 ],
                 "parameters": [
                     {
-                        "name": "eval_name",
+                        "name": "evaluator",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the eval to use.",
-                            "title": "Eval Name"
+                            "description": "Name of the evaluator to use.",
+                            "title": "Evaluator"
                         },
-                        "description": "Name of the eval to use.",
+                        "description": "Name of the evaluator to use.",
                         "example": "eval1"
                     },
                     {
@@ -1705,7 +1534,7 @@
                             "schema": {
                                 "allOf": [
                                     {
-                                        "$ref": "#/components/schemas/Body_trigger_eval_v0_evals_trigger_post"
+                                        "$ref": "#/components/schemas/Body_trigger_evaluation_v0_evaluation_post"
                                     }
                                 ],
                                 "title": "Body"
@@ -1723,7 +1552,7 @@
                                     "additionalProperties": {
                                         "type": "string"
                                     },
-                                    "title": "Response Trigger Eval V0 Evals Trigger Post"
+                                    "title": "Response Trigger Evaluation V0 Evaluation Post"
                                 },
                                 "example": {
                                     "info": "Dataset evaluation started! You will receive an email soon!"
@@ -1762,16 +1591,14 @@
                         }
                     }
                 }
-            }
-        },
-        "/v0/evals/get_scores": {
+            },
             "get": {
                 "tags": [
-                    "Dataset Evaluation"
+                    "Evaluations"
                 ],
-                "summary": "Get Eval Scores",
-                "description": "Fetches the results of an eval on a given dataset. If no `eval_name` is provided, returns scores for all completed evals on that dataset.",
-                "operationId": "get_eval_scores_v0_evals_get_scores_get",
+                "summary": "Get Evaluations",
+                "description": "Fetches evaluation results on a given dataset, for a specific endpoint (optional)\nbased on a specific evaluator (optional). If no `evaluator` is provided, then scores\nare returned for all valid evaluators. Similarly, if no `endpoint` is provided, then\nscores are returned for all valid endpoints.",
+                "operationId": "get_evaluations_v0_evaluation_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1791,41 +1618,28 @@
                         "example": "dataset1"
                     },
                     {
-                        "name": "eval_name",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Name of the eval to fetch evaluation from. If `None`, returns all available evaluations for the dataset.",
-                            "title": "Eval Name"
-                        },
-                        "description": "Name of the eval to fetch evaluation from. If `None`, returns all available evaluations for the dataset.",
-                        "example": "eval1"
-                    },
-                    {
                         "name": "endpoint",
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Name of endpoint to fetch eval from. If not set returns evals for all endpoints",
+                            "type": "string",
+                            "description": "The endpoint to fetch the evaluation for. If `None`, returns evaluations for all endpoints.",
                             "title": "Endpoint"
                         },
-                        "description": "Name of endpoint to fetch eval from. If not set returns evals for all endpoints"
+                        "description": "The endpoint to fetch the evaluation for. If `None`, returns evaluations for all endpoints.",
+                        "example": "gpt-4o-mini@openai"
+                    },
+                    {
+                        "name": "evaluator",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the evaluator to fetch the evaluation for. If `None`, returns all available evaluations for the dataset and endpoint pair.",
+                            "title": "Evaluator"
+                        },
+                        "description": "Name of the evaluator to fetch the evaluation for. If `None`, returns all available evaluations for the dataset and endpoint pair.",
+                        "example": "eval1"
                     },
                     {
                         "name": "per_prompt",
@@ -1848,8 +1662,79 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "title": "Response Get Eval Scores V0 Evals Get Scores Get"
+                                    "title": "Response Get Evaluations V0 Evaluation Get"
                                 }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Evaluations"
+                ],
+                "summary": "Delete Evaluations",
+                "description": "Deletes evaluations on a given dataset, for a specific endpoint (optional) based on\na specific evaluator (optional). If no `evaluator` is provided, then evaluations for\nall valid evaluators are deleted. Similarly, if no `endpoint` is provided, then\nevaluations for all valid endpoints are deleted.",
+                "operationId": "delete_evaluations_v0_evaluation_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "dataset",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset to delete the evaluation for.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset to delete the evaluation for.",
+                        "example": "dataset1"
+                    },
+                    {
+                        "name": "endpoint",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "The endpoint to delete the evaluation for. If `None`, deletes the evaluations for all endpoints.",
+                            "title": "Endpoint"
+                        },
+                        "description": "The endpoint to delete the evaluation for. If `None`, deletes the evaluations for all endpoints.",
+                        "example": "gpt-4o-mini@openai"
+                    },
+                    {
+                        "name": "evaluator",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the evaluator to delete the evaluation for. If `None`, deletes all available evaluations for the dataset and endpoint pair.",
+                            "title": "Evaluator"
+                        },
+                        "description": "Name of the evaluator to delete the evaluation for. If `None`, deletes all available evaluations for the dataset and endpoint pair.",
+                        "example": "eval1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
                             }
                         }
                     },
@@ -1866,14 +1751,14 @@
                 }
             }
         },
-        "/v0/evals/status": {
+        "/v0/evaluation/status": {
             "get": {
                 "tags": [
-                    "Dataset Evaluation"
+                    "Evaluations"
                 ],
                 "summary": "Eval Status",
-                "description": "Fetches the eval status on a given dataset. Returns object of the form:\n\n```\n{\n    \"responses\": {\n        \"last_updated\": \"2024-08-19 13:58:20.866092\",\n        \"num_failed\": 0,\n        \"num_processed\": 3,\n        \"num_remaining\": 0,\n    },\n    \"judgements\": {\n        \"judge_model_a\": {\n            \"last_updated\": \"2024-08-19 13:58:20.866092\",\n            \"num_failed\": 0,\n            \"num_processed\": 3,\n            \"num_remaining\": 0,\n        }\n    },\n}\n```",
-                "operationId": "eval_status_v0_evals_status_get",
+                "description": "Fetches the eval status on a given dataset. Returns object of the form:\n{\n    \"responses\": {\n        \"last_updated\": \"2024-08-19 13:58:20.866092\",\n        \"num_failed\": 0,\n        \"num_processed\": 3,\n        \"num_remaining\": 0,\n    },\n    \"judgements\": {\n        \"judge_model_a\": {\n            \"last_updated\": \"2024-08-19 13:58:20.866092\",\n            \"num_failed\": 0,\n            \"num_processed\": 3,\n            \"num_remaining\": 0,\n        }\n    },\n}",
+                "operationId": "eval_status_v0_evaluation_status_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1905,16 +1790,294 @@
                         "example": "llama-3-8b-chat@aws-bedrock"
                     },
                     {
-                        "name": "eval_name",
+                        "name": "evaluator",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the eval to get evaluation status of.",
-                            "title": "Eval Name"
+                            "description": "Name of the evaluator to get status of.",
+                            "title": "Evaluator"
                         },
-                        "description": "Name of the eval to get evaluation status of.",
+                        "description": "Name of the evaluator to get status of.",
                         "example": "eval1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/benchmark": {
+            "post": {
+                "tags": [
+                    "Efficiency Benchmarks"
+                ],
+                "summary": "Append To Benchmark",
+                "description": "Append speed or cost data to the standardized time-series benchmarks for a custom\nendpoint (only custom endpoints are publishable by end users).",
+                "operationId": "append_to_benchmark_v0_benchmark_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "endpoint_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the *custom* endpoint to append benchmark data for.",
+                            "title": "Endpoint Name"
+                        },
+                        "description": "Name of the *custom* endpoint to append benchmark data for.",
+                        "example": "my_endpoint"
+                    },
+                    {
+                        "name": "metric_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the metric to submit. Allowed metrics are:\n        \"input-cost\", \"output-cost\", \"time-to-first-token\", \"inter-token-latency\".",
+                            "title": "Metric Name"
+                        },
+                        "description": "Name of the metric to submit. Allowed metrics are:\n        \"input-cost\", \"output-cost\", \"time-to-first-token\", \"inter-token-latency\".",
+                        "example": "tokens-per-second"
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "description": "Value of the metric to submit.",
+                            "title": "Value"
+                        },
+                        "description": "Value of the metric to submit.",
+                        "example": 10
+                    },
+                    {
+                        "name": "measured_at",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp to associate with the submission. Defaults to current time if unspecified.",
+                            "title": "Measured At"
+                        },
+                        "description": "The timestamp to associate with the submission. Defaults to current time if unspecified.",
+                        "example": "2024-08-12T04:20:32.808410"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Custom endpoint benchmark uploaded successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Benchmark not valid",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid data submitted"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Efficiency Benchmarks"
+                ],
+                "summary": "Get Benchmark",
+                "description": "Extracts cost and speed data for the provided endpoint via our standardized\nefficiency benchmarks, in the specified region, with the specified sequence length,\nwith all benchmark values returned within the specified time window.\n\nWhen extracting data for a *custom* endpoint, then `model` is the endpoint name, and\n`provider` must be set as `\"custom\"`. The arguments `region` and `seq_len` are\nignored for custom endpoints (they are not publishable).\n\nIf neither `start_time` nor `end_time` are provided, then only the *latest*\nbenchmark data is returned. If only `start_time` is provided, then `end_time` is\nassumed to be the current time. An exception is raised if only `end_time` is\nprovided.",
+                "operationId": "get_benchmark_v0_benchmark_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "model",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the model.",
+                            "title": "Model"
+                        },
+                        "description": "Name of the model.",
+                        "example": "gpt-4o-mini"
+                    },
+                    {
+                        "name": "provider",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the provider.",
+                            "title": "Provider"
+                        },
+                        "description": "Name of the provider.",
+                        "example": "openai"
+                    },
+                    {
+                        "name": "region",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Region where the benchmark is run.\n        Options are: `\"Belgium\"`, `\"Hong Kong\"` or `\"Iowa\"`.",
+                            "default": "Belgium",
+                            "title": "Region"
+                        },
+                        "description": "Region where the benchmark is run.\n        Options are: `\"Belgium\"`, `\"Hong Kong\"` or `\"Iowa\"`.",
+                        "example": "Belgium"
+                    },
+                    {
+                        "name": "seq_len",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Length of the sequence used for benchmarking, can be short or long",
+                            "default": "short",
+                            "title": "Seq Len"
+                        },
+                        "description": "Length of the sequence used for benchmarking, can be short or long",
+                        "example": "short"
+                    },
+                    {
+                        "name": "start_time",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Window start time. Only returns the latest benchmark if unspecified",
+                            "title": "Start Time"
+                        },
+                        "description": "Window start time. Only returns the latest benchmark if unspecified",
+                        "example": "2024-07-12T04:20:32.808410"
+                    },
+                    {
+                        "name": "end_time",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Window end time. Assumed to be the current time if this is unspecified *and* start_time *is* specified. Only the latest benchmark is returned if both are unspecified.",
+                            "title": "End Time"
+                        },
+                        "description": "Window end time. Assumed to be the current time if this is unspecified *and* start_time *is* specified. Only the latest benchmark is returned if both are unspecified.",
+                        "example": "2024-08-12T04:20:32.808410"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "additionalProperties": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "type": "null"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "title": "Response Get Benchmark V0 Benchmark Get"
+                                },
+                                "example": {
+                                    "ttft": 440.2323939998496,
+                                    "itl": 8.797065147959705,
+                                    "input_cost": 0.15,
+                                    "output_cost": 0.6,
+                                    "measured_at": "2024-08-17T19:19:37.289937"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Efficiency Benchmarks"
+                ],
+                "summary": "Delete Benchmark",
+                "description": "Delete *all* benchmark time-series data for a given *custom* endpoint.\nThe time-series benchmark data for *public* endpoints are not deletable.",
+                "operationId": "delete_benchmark_v0_benchmark_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "endpoint_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the *custom* endpoint to submit a benchmark for.",
+                            "title": "Endpoint Name"
+                        },
+                        "description": "Name of the *custom* endpoint to submit a benchmark for.",
+                        "example": "my_endpoint"
                     }
                 ],
                 "responses": {
@@ -1942,10 +2105,10 @@
         "/v0/router/train": {
             "post": {
                 "tags": [
-                    "Routing"
+                    "Router Training"
                 ],
                 "summary": "Train Router",
-                "description": "Trains a router based on a dataset and a set of endpoints. To use a\ncustom-trained router, you will need to deploy the resulting artifacts to\na live endpoint. To do this, use the `/router/deploy` POST endpoint.",
+                "description": "Train a router based on a specified training dataset and a set of endpoints to route\nacross. To *use* a custom-trained router, you will need to deploy the resulting\nartifacts to a live endpoint, via the `/router/deploy` `POST` endpoint.",
                 "operationId": "train_router_v0_router_train_post",
                 "security": [
                     {
@@ -2046,14 +2209,16 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/v0/router": {
             "delete": {
                 "tags": [
-                    "Routing"
+                    "Router Training"
                 ],
-                "summary": "Delete Router Train",
-                "description": "Deletes the training files of a specific router.",
-                "operationId": "delete_router_train_v0_router_train_delete",
+                "summary": "Delete Router",
+                "description": "Deletes a specific trained router, as well as all the training files etc.",
+                "operationId": "delete_router_v0_router_delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2083,7 +2248,7 @@
                                     "additionalProperties": {
                                         "type": "string"
                                     },
-                                    "title": "Response Delete Router Train V0 Router Train Delete"
+                                    "title": "Response Delete Router V0 Router Delete"
                                 },
                                 "example": {
                                     "info": "Trained router deleted!"
@@ -2114,14 +2279,75 @@
                 }
             }
         },
-        "/v0/router/train/list": {
+        "/v0/router/rename": {
+            "post": {
+                "tags": [
+                    "Router Training"
+                ],
+                "summary": "Rename Router",
+                "description": "Renames the specified router from `name` to `new_name`.",
+                "operationId": "rename_router_v0_router_rename_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The original name of the router.",
+                            "title": "Name"
+                        },
+                        "description": "The original name of the router.",
+                        "example": "original_name"
+                    },
+                    {
+                        "name": "new_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The new name for the router.",
+                            "title": "New Name"
+                        },
+                        "description": "The new name for the router.",
+                        "example": "new_name"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/router/list": {
             "get": {
                 "tags": [
-                    "Routing"
+                    "Router Training"
                 ],
-                "summary": "Get Trained Routers",
-                "description": "Fetches a list of the trained routers and relevant metadata. These routers are training\nartifacts and therefore don't imply an active, deployed router. To fetch a list of\ndeployed routers, you can use the /router/deploy/list GET endpoint.",
-                "operationId": "get_trained_routers_v0_router_train_list_get",
+                "summary": "List Routers",
+                "description": "Lists all the trained routers and the relevant metadata.\nThese routers are training artifacts and therefore don't imply an active,\ndeployed router. To fetch a list of deployed routers, you can use the\n`/router/deploy/list` `GET` endpoint.",
+                "operationId": "list_routers_v0_router_list_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -2145,7 +2371,7 @@
                                         "type": "object"
                                     },
                                     "type": "object",
-                                    "title": "Response Get Trained Routers V0 Router Train List Get"
+                                    "title": "Response List Routers V0 Router List Get"
                                 },
                                 "example": {
                                     "router_1": {
@@ -2173,7 +2399,7 @@
         "/v0/router/deploy": {
             "post": {
                 "tags": [
-                    "Routing"
+                    "Router Deployment"
                 ],
                 "summary": "Deploy Router",
                 "description": "Deploys a trained router to a live endpoint.\n\nTo use this router, replace the model in the endpoint string with the\nrouter name. E.g. you can use `router-abc` by calling the\n`router-abc@q:1` endpoint.",
@@ -2239,11 +2465,11 @@
             },
             "delete": {
                 "tags": [
-                    "Routing"
+                    "Router Deployment"
                 ],
-                "summary": "Delete Router",
-                "description": "Deactivates and deletes a previously deployed router.",
-                "operationId": "delete_router_v0_router_deploy_delete",
+                "summary": "Undeploy Router",
+                "description": "Deactivates and deletes a previously deployed router, but keeps the training\nartifacts for this router, such that it can be redeployed if desired without needing\nto retrain.",
+                "operationId": "undeploy_router_v0_router_deploy_delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2273,7 +2499,7 @@
                                     "additionalProperties": {
                                         "type": "string"
                                     },
-                                    "title": "Response Delete Router V0 Router Deploy Delete"
+                                    "title": "Response Undeploy Router V0 Router Deploy Delete"
                                 },
                                 "example": {
                                     "info": "Router deletion started! You will receive an email soon!"
@@ -2307,11 +2533,11 @@
         "/v0/router/deploy/list": {
             "get": {
                 "tags": [
-                    "Routing"
+                    "Router Deployment"
                 ],
-                "summary": "Get Deployed Routers",
-                "description": "Fetches a list of the deployed routers and relevant metadata. These routers only\ninclude deployed routers. To fetch a list of all trained routers,\nyou can use the /router/train/list GET endpoint.\n\nTo use any of these routers, replace the model in the endpoint string with the\nrouter name. E.g. you can use `router-abc` with the endpoint `router-abc@q:1`.",
-                "operationId": "get_deployed_routers_v0_router_deploy_list_get",
+                "summary": "List Deployed Routers",
+                "description": "Fetches a list of the *deployed* routers and relevant metadata (excluding the\ntrained but undeployed routers). To fetch a list of *all* trained routers (both\ndeployed and undeployed), you can use the `/router/list` `GET` endpoint.\n\nTo use any of these routers, replace the model in the endpoint string with the\nrouter name. E.g. you can use `router-abc` with the endpoint `router-abc@q:1`.",
+                "operationId": "list_deployed_routers_v0_router_deploy_list_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -2335,7 +2561,7 @@
                                         "type": "object"
                                     },
                                     "type": "object",
-                                    "title": "Response Get Deployed Routers V0 Router Deploy List Get"
+                                    "title": "Response List Deployed Routers V0 Router Deploy List Get"
                                 },
                                 "example": {
                                     "router_1": {
@@ -2360,242 +2586,14 @@
                 ]
             }
         },
-        "/v0/endpoints": {
-            "get": {
-                "tags": [
-                    "Model and Endpoints"
-                ],
-                "summary": "Get Endpoints",
-                "description": "Lists available endpoints in `model@provider` format. If `model` or `provider` are specified,\nonly the matching endpoints will be listed.",
-                "operationId": "get_endpoints_v0_endpoints_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "model",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "Model to get available endpoints from.",
-                            "title": "Model"
-                        },
-                        "description": "Model to get available endpoints from.",
-                        "example": "llama-3.1-405b-chat"
-                    },
-                    {
-                        "name": "provider",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "Provider to get available endpoints from.",
-                            "title": "Provider"
-                        },
-                        "description": "Provider to get available endpoints from.",
-                        "example": "openai"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Get Endpoints V0 Endpoints Get"
-                                },
-                                "example": [
-                                    "model_a@provider_1",
-                                    "model_a@provider_2",
-                                    "..."
-                                ]
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/providers": {
-            "get": {
-                "tags": [
-                    "Model and Endpoints"
-                ],
-                "summary": "Get Providers",
-                "description": "Lists available providers. If a model is specified, returns the providers that support that model.",
-                "operationId": "get_providers_v0_providers_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "model",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "Model to get available providers from.",
-                            "title": "Model"
-                        },
-                        "description": "Model to get available providers from.",
-                        "example": "llama-3.1-405b-chat"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Get Providers V0 Providers Get"
-                                },
-                                "example": [
-                                    "provider_1",
-                                    "provider_2",
-                                    "..."
-                                ]
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/benchmarks": {
-            "get": {
-                "tags": [
-                    "benchmarks"
-                ],
-                "summary": "Get Latest Benchmark",
-                "operationId": "get_latest_benchmark_v0_benchmarks_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "model",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Model name",
-                            "title": "Model"
-                        },
-                        "description": "Model name",
-                        "example": "gpt-4o-mini"
-                    },
-                    {
-                        "name": "provider",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Provider name",
-                            "title": "Provider"
-                        },
-                        "description": "Provider name",
-                        "example": "openai"
-                    },
-                    {
-                        "name": "regime",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "default": "concurrent-1",
-                            "title": "Regime"
-                        },
-                        "example": "concurrent-1"
-                    },
-                    {
-                        "name": "region",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\".",
-                            "default": "Belgium",
-                            "title": "Region"
-                        },
-                        "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\".",
-                        "example": "Belgium"
-                    },
-                    {
-                        "name": "seq_len",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "Length of the sequence used for benchmarking, can be short or long",
-                            "default": "short",
-                            "title": "Seq Len"
-                        },
-                        "description": "Length of the sequence used for benchmarking, can be short or long",
-                        "example": "short"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/benchmarks/filter": {
+        "/v0/router/config": {
             "post": {
                 "tags": [
-                    "benchmarks"
+                    "Router Configurations"
                 ],
-                "summary": "Filter Benchmark",
-                "operationId": "filter_benchmark_v0_benchmarks_filter_post",
+                "summary": "Create Router Config",
+                "description": "Creates a router configuration, which can be queried later using only the\nconfiguration name, such as `my_router_config@routers`.",
+                "operationId": "create_router_config_v0_router_config_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2603,89 +2601,125 @@
                 ],
                 "parameters": [
                     {
-                        "name": "model",
+                        "name": "config_name",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Model name",
-                            "title": "Model"
+                            "description": "The name of the router configuration to create.",
+                            "title": "Config Name"
                         },
-                        "description": "Model name",
-                        "example": "gpt-4o-mini"
+                        "description": "The name of the router configuration to create.",
+                        "example": "cost_and_speed_optimized"
                     },
                     {
-                        "name": "provider",
+                        "name": "router_endpoint",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Provider name",
-                            "title": "Provider"
+                            "description": "The raw string which fully defines the router endpoint, with all constraints applied, including the router name and any extra arguments.",
+                            "title": "Router Endpoint"
                         },
-                        "description": "Provider name",
-                        "example": "openai"
+                        "description": "The raw string which fully defines the router endpoint, with all constraints applied, including the router name and any extra arguments.",
+                        "example": "router1|models:llama-3.1-8b-chat,mixtral-8x22b-instruct-v0.1|providers:fireworks-ai,together-ai|q:1|c:4.65e-03|t:2.08e-05|i:2.07e-03@routers"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Router Configurations"
+                ],
+                "summary": "Get Router Config",
+                "description": "Returns the full router endpoint string for a given router configuration name.",
+                "operationId": "get_router_config_v0_router_config_get",
+                "security": [
                     {
-                        "name": "start_time",
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "config_name",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Window start time",
-                            "title": "Start Time"
+                            "description": "The name of the router configuration to retrieve the full endpoint string for.",
+                            "title": "Config Name"
                         },
-                        "description": "Window start time",
-                        "example": "2024-07-12T04:20:32.808410"
+                        "description": "The name of the router configuration to retrieve the full endpoint string for.",
+                        "example": "cost_and_speed_optimized"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "title": "Response Get Router Config V0 Router Config Get"
+                                }
+                            }
+                        }
                     },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Router Configurations"
+                ],
+                "summary": "Delete Router Config",
+                "description": "Deletes the specified router configuration from your account.",
+                "operationId": "delete_router_config_v0_router_config_delete",
+                "security": [
                     {
-                        "name": "end_time",
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "config_name",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Window end time",
-                            "title": "End Time"
+                            "description": "The name of the router configuration to delete.",
+                            "title": "Config Name"
                         },
-                        "description": "Window end time",
-                        "example": "2024-08-12T04:20:32.808410"
-                    },
-                    {
-                        "name": "regime",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "default": "concurrent-1",
-                            "title": "Regime"
-                        },
-                        "example": "concurrent-1"
-                    },
-                    {
-                        "name": "region",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\".",
-                            "default": "Belgium",
-                            "title": "Region"
-                        },
-                        "description": "Region where the benchmark is run. Options are: \"Belgium\", \"Hong Kong\", \"Iowa\".",
-                        "example": "Belgium"
-                    },
-                    {
-                        "name": "seq_len",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "Length of the sequence used for benchmarking. Options are: \"short\", \"long\".",
-                            "default": "short",
-                            "title": "Seq Len"
-                        },
-                        "description": "Length of the sequence used for benchmarking. Options are: \"short\", \"long\".",
-                        "example": "short"
+                        "description": "The name of the router configuration to delete.",
+                        "example": "cost_and_speed_optimized"
                     }
                 ],
                 "responses": {
@@ -2710,13 +2744,14 @@
                 }
             }
         },
-        "/v0/prompt_history": {
-            "get": {
+        "/v0/router/config/rename": {
+            "post": {
                 "tags": [
-                    "benchmarks"
+                    "Router Configurations"
                 ],
-                "summary": "Get Prompt History",
-                "operationId": "get_prompt_history_v0_prompt_history_get",
+                "summary": "Rename Router Config",
+                "description": "Renames the specified router configuration in your account.",
+                "operationId": "rename_router_config_v0_router_config_rename_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2724,22 +2759,28 @@
                 ],
                 "parameters": [
                     {
-                        "name": "tag",
+                        "name": "name",
                         "in": "query",
-                        "required": false,
+                        "required": true,
                         "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Provide a tag to filter by prompts that are marked with this tag.",
-                            "title": "Tag"
+                            "type": "string",
+                            "description": "The original name of the router configuration.",
+                            "title": "Name"
                         },
-                        "description": "Provide a tag to filter by prompts that are marked with this tag."
+                        "description": "The original name of the router configuration.",
+                        "example": "original_name"
+                    },
+                    {
+                        "name": "new_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The new name for the router configuration.",
+                            "title": "New Name"
+                        },
+                        "description": "The new name for the router configuration.",
+                        "example": "new_name"
                     }
                 ],
                 "responses": {
@@ -2748,6 +2789,158 @@
                         "content": {
                             "application/json": {
                                 "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/router/config/list": {
+            "get": {
+                "tags": [
+                    "Router Configurations"
+                ],
+                "summary": "List Router Configs",
+                "description": "Lists all saved router configurations by name.",
+                "operationId": "list_router_configs_v0_router_config_list_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Router Configs V0 Router Config List Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/credits": {
+            "get": {
+                "tags": [
+                    "Credits"
+                ],
+                "summary": "Get Credits",
+                "description": "Returns the number of available credits.",
+                "operationId": "get_credits_v0_credits_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreditsResponse"
+                                },
+                                "example": {
+                                    "id": "<USER_ID>",
+                                    "credits": 10
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/promo": {
+            "post": {
+                "tags": [
+                    "Credits"
+                ],
+                "summary": "Promo Code",
+                "description": "Activates a promotional code.",
+                "operationId": "promo_code_v0_promo_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Promo code to be activated.",
+                            "title": "Code"
+                        },
+                        "description": "Promo code to be activated.",
+                        "example": "sample_code"
+                    },
+                    {
+                        "name": "user",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "ID of the user that receives the credits,defaults to the user making the request.",
+                            "title": "User"
+                        },
+                        "description": "ID of the user that receives the credits,defaults to the user making the request.",
+                        "example": "sample_user_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Promo Code V0 Promo Post"
+                                },
+                                "example": {
+                                    "info": "Code {code} activated successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Already activated code",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This code has already been activated."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Code Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid code."
+                                }
                             }
                         }
                     },
@@ -2767,25 +2960,18 @@
     },
     "components": {
         "schemas": {
-            "Body_trigger_eval_v0_evals_trigger_post": {
+            "Body_trigger_evaluation_v0_evaluation_post": {
                 "properties": {
                     "client_side_scores": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "format": "binary"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "string",
+                        "format": "binary",
                         "title": "Client Side Scores",
-                        "description": "An optional file upload for client-side scores. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `prompt` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `eval_name` must have `client_side=True`.",
+                        "description": "An optional file upload for client-side scores. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `prompt` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `evaluator` must have `client_side=True`.",
                         "example": "client_scores.jsonl"
                     }
                 },
                 "type": "object",
-                "title": "Body_trigger_eval_v0_evals_trigger_post"
+                "title": "Body_trigger_evaluation_v0_evaluation_post"
             },
             "Body_upload_dataset_v0_dataset_post": {
                 "properties": {
@@ -2793,11 +2979,13 @@
                         "type": "string",
                         "format": "binary",
                         "title": "File",
+                        "description": "The contents of the `.jsonl` file being uploaded.",
                         "example": "dataset.jsonl"
                     },
                     "name": {
                         "type": "string",
                         "title": "Name",
+                        "description": "The name to give to this dataset.",
                         "example": "dataset1"
                     }
                 },
@@ -2810,17 +2998,13 @@
             },
             "ChatCompletionRequest": {
                 "properties": {
-                    "model": {
-                        "type": "string",
-                        "title": "Model",
-                        "example": "gpt-4o-mini@openai"
-                    },
                     "messages": {
                         "items": {
                             "type": "object"
                         },
                         "type": "array",
                         "title": "Messages",
+                        "description": "A list of messages comprising the conversation so far.",
                         "example": [
                             {
                                 "content": "Tell me a joke",
@@ -2828,123 +3012,17 @@
                             }
                         ]
                     },
-                    "temperature": {
-                        "type": "number",
-                        "title": "Temperature",
-                        "default": 0.9,
-                        "example": 0.9
-                    },
-                    "stream": {
-                        "type": "boolean",
-                        "title": "Stream",
-                        "default": false,
-                        "example": false
+                    "model": {
+                        "type": "string",
+                        "title": "Model",
+                        "description": "The endpoint to use, in the format `{model}@{provider}`, based on any of the supported endpoints as per the list returned by `/v0/endpoints`",
+                        "example": "gpt-4o-mini@openai"
                     },
                     "max_tokens": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "integer",
                         "title": "Max Tokens",
+                        "description": "The maximum number of tokens that can be generated in the chat completion.\n\nThe total length of input tokens and generated tokens is limited by the model's context length.",
                         "example": 1024
-                    },
-                    "frequency_penalty": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Frequency Penalty"
-                    },
-                    "logit_bias": {
-                        "anyOf": [
-                            {
-                                "additionalProperties": {
-                                    "type": "number"
-                                },
-                                "type": "object"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Logit Bias"
-                    },
-                    "logprobs": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Logprobs"
-                    },
-                    "top_logprobs": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Top Logprobs"
-                    },
-                    "n": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "N"
-                    },
-                    "presence_penalty": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Presence Penalty"
-                    },
-                    "response_format": {
-                        "anyOf": [
-                            {
-                                "additionalProperties": {
-                                    "type": "string"
-                                },
-                                "type": "object"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Response Format"
-                    },
-                    "seed": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Seed"
                     },
                     "stop": {
                         "anyOf": [
@@ -2961,18 +3039,102 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Stop"
+                        "title": "Stop",
+                        "description": "Up to 4 sequences where the API will stop generating further tokens.",
+                        "example": [
+                            "The End.",
+                            " is the answer."
+                        ]
+                    },
+                    "stream": {
+                        "type": "boolean",
+                        "title": "Stream",
+                        "description": "If set, partial message deltas will be sent. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a `data: [DONE]` message.",
+                        "default": false,
+                        "example": false
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "title": "Temperature",
+                        "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.\n\nGenerally recommended to alter this or `top_p`, but not both.",
+                        "default": 1.0,
+                        "example": 0.9
+                    },
+                    "frequency_penalty": {
+                        "type": "number",
+                        "title": "Frequency Penalty",
+                        "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.",
+                        "example": 1.5
+                    },
+                    "logit_bias": {
+                        "additionalProperties": {
+                            "type": "number"
+                        },
+                        "type": "object",
+                        "title": "Logit Bias",
+                        "description": "Modify the likelihood of specified tokens appearing in the completion.\n\nAccepts a JSON object that maps tokens (specified by their token ID in the tokenizer) to an associated bias value from -100 to 100. Mathematically, the bias is added to the logits generated by the model prior to sampling. The exact effect will vary per model, but values between -1 and 1 should decrease or increase likelihood of selection; values like -100 or 100 should result in a ban or exclusive selection of the relevant token.",
+                        "example": {
+                            "0": 10,
+                            "1": -75,
+                            "2": 90
+                        }
+                    },
+                    "logprobs": {
+                        "type": "boolean",
+                        "title": "Logprobs",
+                        "description": "Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`.",
+                        "example": false
+                    },
+                    "top_logprobs": {
+                        "type": "integer",
+                        "title": "Top Logprobs",
+                        "description": "An integer between 0 and 20 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used.",
+                        "example": 15
+                    },
+                    "n": {
+                        "type": "integer",
+                        "title": "N",
+                        "description": "How many chat completion choices to generate for each input message. Note that you will be charged based on the number of generated tokens across all of the choices. Keep `n` as `1` to minimize costs.",
+                        "example": 15
+                    },
+                    "presence_penalty": {
+                        "type": "number",
+                        "title": "Presence Penalty",
+                        "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.",
+                        "example": -1.1
+                    },
+                    "response_format": {
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "type": "object",
+                        "title": "Response Format",
+                        "description": "An object specifying the format that the model must output.\n\nSetting to `{ \"type\": \"json_schema\", \"json_schema\": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema.\n\nSetting to `{ \"type\": \"json_object\" }` enables JSON mode, which ensures the message the model generates is valid JSON.\n\n**Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly \"stuck\" request. Also note that the message content may be partially cut off if `finish_reason=\"length\"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length.",
+                        "example": "{ \"type\": \"json_mode\"}"
+                    },
+                    "seed": {
+                        "type": "integer",
+                        "title": "Seed",
+                        "description": "If specified, the system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result. Determinism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.",
+                        "example": 11
+                    },
+                    "stream_options": {
+                        "additionalProperties": {
+                            "type": "boolean"
+                        },
+                        "type": "object",
+                        "title": "Stream Options",
+                        "description": "Options for streaming response. Only set this when you set `stream: true`.",
+                        "example": [
+                            true,
+                            "include_usage"
+                        ]
                     },
                     "top_p": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Top P"
+                        "type": "number",
+                        "title": "Top P",
+                        "description": "An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.\n\nGenerally recommended to alter this or `temperature` but not both.",
+                        "example": 0.5
                     },
                     "tools": {
                         "anyOf": [
@@ -2984,7 +3146,8 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Tools"
+                        "title": "Tools",
+                        "description": "A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported."
                     },
                     "tool_choice": {
                         "anyOf": [
@@ -2993,48 +3156,50 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Tool Choice"
+                        "title": "Tool Choice",
+                        "description": "Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message.`auto` means the model can pick between generating a message or calling one or more tools. `required` means the model must call one or more tools. Specifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.\n\n`none` is the default when no tools are present. `auto` is the default if tools are present.",
+                        "example": "{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}"
+                    },
+                    "parallel_tool_calls": {
+                        "type": "boolean",
+                        "title": "Parallel Tool Calls",
+                        "description": "Whether to enable parallel function calling during tool use.",
+                        "default": true,
+                        "example": true
                     },
                     "user": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "User"
+                        "type": "string",
+                        "title": "User",
+                        "description": "A unique identifier representing your end-user.",
+                        "example": "some_user"
                     },
                     "signature": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Signature"
+                        "type": "string",
+                        "title": "Signature",
+                        "description": "A string used to represent where the request came from, for examples, did it come via the Python package, the NodeJS package, the chat interface etc. This should *not* be set by the user.",
+                        "example": "python"
                     },
                     "use_custom_keys": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "boolean",
                         "title": "Use Custom Keys",
-                        "default": false
+                        "description": "Whether or not to use custom API keys with the specified provider, meaning that you will be using your own account with that provider in the backend.",
+                        "example": true
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
+                        "description": "Whether or not to use custom API keys with the specified provider, meaning that you will be using your own account with that provider in the backend.",
+                        "example": true
                     }
                 },
                 "additionalProperties": true,
                 "type": "object",
                 "required": [
-                    "model",
-                    "messages"
+                    "messages",
+                    "model"
                 ],
                 "title": "ChatCompletionRequest",
                 "description": "Request model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    messages (List[Dict[str]]): List of messages for completion.\n    temperature (float): The temperature parameter for generating completions.\n    stream (bool): Whether to stream the response."
@@ -3130,40 +3295,12 @@
                 ],
                 "title": "CustomApiKeyModelResponse"
             },
-            "CustomEndpointModelResponse": {
+            "EvaluatorConfig": {
                 "properties": {
                     "name": {
                         "type": "string",
-                        "title": "Name"
-                    },
-                    "mdl_name": {
-                        "type": "string",
-                        "title": "Mdl Name"
-                    },
-                    "url": {
-                        "type": "string",
-                        "title": "Url"
-                    },
-                    "key": {
-                        "type": "string",
-                        "title": "Key"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "name",
-                    "mdl_name",
-                    "url",
-                    "key"
-                ],
-                "title": "CustomEndpointModelResponse"
-            },
-            "EvalConfig": {
-                "properties": {
-                    "eval_name": {
-                        "type": "string",
-                        "title": "Eval Name",
-                        "description": "A unique, user-defined name used when referencing and triggering the eval.",
+                        "title": "Name",
+                        "description": "A unique, user-defined name used when referencing and triggering the evaluation.",
                         "example": "eval1"
                     },
                     "system_prompt": {
@@ -3189,7 +3326,7 @@
                             }
                         ],
                         "title": "Class Config",
-                        "description": "If set, describes the list of classifications that the LLM judge uses to score each prompt. For example:\n```\n[{\"label\": \"Excellent\", \"score\": 1.0, \"description\": \"A perfect answer with no factual mistakes\"},\n{\"label\": \"Good\", \"score\": 0.5, \"description\": \"An average answer\"},\n{\"label\": \"Bad\", \"score\": 0.0, \"description\": \"An incorrect answer, containing a significant factual mistake\"}]\n```\n"
+                        "description": "If set, describes the list of classifications that the LLM judge uses to\n            score each prompt. For example:\n```\n[{\"label\": \"Excellent\", \"score\": 1.0, \"description\": \"A perfect answer with no factual\nmistakes\"},\n{\"label\": \"Good\", \"score\": 0.5, \"description\": \"An average answer\"},\n{\"label\": \"Bad\", \"score\": 0.0, \"description\": \"An incorrect answer, containing a\nsignificant factual mistake\"}]\n```\n"
                     },
                     "judge_models": {
                         "anyOf": [
@@ -3204,7 +3341,7 @@
                             }
                         ],
                         "title": "Judge Models",
-                        "description": "Specifies the LLM(s) to be used as the judge. This can be a string containining a single model name or a list of model names.",
+                        "description": "Specifies the LLM(s) to be used as the judge. This can be a string containing a single model name or a list of model names.",
                         "default": "claude-3.5-sonnet@aws-bedrock",
                         "example": "claude-3.5-sonnet@aws-bedrock"
                     },
@@ -3217,9 +3354,9 @@
                 },
                 "type": "object",
                 "required": [
-                    "eval_name"
+                    "name"
                 ],
-                "title": "EvalConfig"
+                "title": "EvaluatorConfig"
             },
             "HTTPValidationError": {
                 "properties": {
@@ -3233,41 +3370,6 @@
                 },
                 "type": "object",
                 "title": "HTTPValidationError"
-            },
-            "InferenceRequest": {
-                "properties": {
-                    "model": {
-                        "type": "string",
-                        "title": "Model"
-                    },
-                    "provider": {
-                        "type": "string",
-                        "title": "Provider"
-                    },
-                    "arguments": {
-                        "type": "object",
-                        "title": "Arguments"
-                    },
-                    "signature": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Signature"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "model",
-                    "provider",
-                    "arguments"
-                ],
-                "title": "InferenceRequest",
-                "description": "Request model for any model in the hub.\nAttributes:\n    model (str): The model identifier.\n    provider (str): The provider identifier.\n    arguments (Dict[str, Any]]): Model-specific arguments."
             },
             "ValidationError": {
                 "properties": {

@@ -1,0 +1,61 @@
+---
+title: 'Delete Benchmark'
+api: 'DELETE /v0/benchmark'
+---
+Delete *all* benchmark time-series data for a given *custom* endpoint.
+The time-series benchmark data for *public* endpoints are not deletable.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="endpoint_name" type="string" required="true">
+Name of the *custom* endpoint to submit a benchmark for.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/benchmark?endpoint_name=my_endpoint' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/benchmark?endpoint_name=my_endpoint"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("DELETE", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

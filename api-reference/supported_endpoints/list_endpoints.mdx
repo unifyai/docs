@@ -1,0 +1,71 @@
+---
+title: 'List Endpoints'
+api: 'GET /v0/endpoints'
+---
+Lists available endpoints in `model@provider` format.
+If `model` or `provider` are specified, only the matching endpoints will be listed.
+You can also show all *custom* endpoints by passing `custom` as the provider.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="model" type="string" >
+Model to get available endpoints for.
+</ParamField>
+
+<ParamField query="provider" type="string" >
+Provider to get available endpoints for.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/endpoints?provider=openai' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/endpoints?provider=openai"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+[
+    "claude-3-haiku@anthropic",
+    "llama-3-70b-chat@groq",
+    "mistral-large@mistral-ai",
+    "..."
+]
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

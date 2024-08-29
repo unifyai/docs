@@ -1,0 +1,83 @@
+---
+title: 'Get Query Metrics'
+api: 'GET /v0/metrics'
+---
+Returns aggregated telemetry data from previous queries to the `/chat/completions`
+endpoint, specifically the p50 and p95 for generation time and tokens per second,
+and also the total prompt and completion tokens processed within the interval. The
+user id and total request count within the interval are also returned.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="start_time" type="string" >
+Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.
+</ParamField>
+
+<ParamField query="end_time" type="string" >
+Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.
+</ParamField>
+
+<ParamField query="models" type="string" >
+Models to fetch metrics from. The list must be a set of comma-separated strings. i.e. `gpt-3.5-turbo,gpt-4o`
+</ParamField>
+
+<ParamField query="providers" type="string" >
+Providers to fetch metrics from. The list must be a set of comma-separated strings. i.e. `openai,together-ai`
+</ParamField>
+
+<ParamField query="interval" type="string"  default={"300"}>
+Number of seconds in the aggregation interval.
+</ParamField>
+
+<ParamField query="secondary_user_id" type="string" >
+Secondary user id. The secondary user id will match any string previously sent in the `user` attribute of `/chat/completions`.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/metrics?start_time=2024-07-12%2004:20:32&end_time=2024-08-12%2004:20:32&models=gpt-4o,llama-3.1-405b-chat,claude-3.5-sonnet&providers=openai,anthropic,fireworks-ai&interval=300&secondary_user_id=sample_user_id' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/metrics?start_time=2024-07-12%2004:20:32&end_time=2024-08-12%2004:20:32&models=gpt-4o,llama-3.1-405b-chat,claude-3.5-sonnet&providers=openai,anthropic,fireworks-ai&interval=300&secondary_user_id=sample_user_id"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
