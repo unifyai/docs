@@ -43,3 +43,5 @@ Just a few notes while making changes to the docs,
     5. Then you should move the `generate_docs.py` script inside the `output` folder
     6. Run `python output/generate_docs.py`
     7. Once the script is complete, you can copy the `.mdx` files inside the `output` folder inside the `python` folder of the `unify-docs` repo.
+
+16. In case there's a submodule in the python client that docs shouldn't be built for, that submodule should be added to [this](https://github.com/unifyai/unify/blob/28384abae3863ee54ea16672f83a02be1a3673aa/generate_docs.py#L13) list.
