@@ -652,6 +652,51 @@
                 }
             }
         },
+        "/v0/custom_endpoint/list": {
+            "get": {
+                "tags": [
+                    "Custom Endpoints"
+                ],
+                "summary": "Get Custom Endpoint List",
+                "description": "Returns a list of the available custom endpoints.",
+                "operationId": "get_custom_endpoint_list_v0_custom_endpoint_list_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomEndpointModelResponse"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Custom Endpoint List V0 Custom Endpoint List Get"
+                                },
+                                "example": [
+                                    {
+                                        "name": "endpoint_1",
+                                        "mdl_name": "llama_finetune",
+                                        "url": "https://...",
+                                        "key": "custom_key_1"
+                                    },
+                                    {
+                                        "name": "endpoint_2",
+                                        "mdl_name": "mixtral_finetune",
+                                        "url": "https://...",
+                                        "key": "custom_key_2"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/custom_api_key": {
             "post": {
                 "tags": [
@@ -3399,6 +3444,34 @@
                     "value"
                 ],
                 "title": "CustomApiKeyModelResponse"
+            },
+            "CustomEndpointModelResponse": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "mdl_name": {
+                        "type": "string",
+                        "title": "Mdl Name"
+                    },
+                    "url": {
+                        "type": "string",
+                        "title": "Url"
+                    },
+                    "key": {
+                        "type": "string",
+                        "title": "Key"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "mdl_name",
+                    "url",
+                    "key"
+                ],
+                "title": "CustomEndpointModelResponse"
             },
             "EvaluatorConfig": {
                 "properties": {
