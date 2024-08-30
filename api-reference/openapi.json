@@ -1757,7 +1757,7 @@
                     "Evaluations"
                 ],
                 "summary": "Eval Status",
-                "description": "Fetches the eval status on a given dataset. Returns object of the form:\n{\n    \"responses\": {\n        \"last_updated\": \"2024-08-19 13:58:20.866092\",\n        \"num_failed\": 0,\n        \"num_processed\": 3,\n        \"num_remaining\": 0,\n    },\n    \"judgements\": {\n        \"judge_model_a\": {\n            \"last_updated\": \"2024-08-19 13:58:20.866092\",\n            \"num_failed\": 0,\n            \"num_processed\": 3,\n            \"num_remaining\": 0,\n        }\n    },\n}",
+                "description": "Fetches the eval status on a given dataset. Returns object of the form:\n\n```\n{\n    \"responses\": {\n        \"last_updated\": \"2024-08-19 13:58:20.866092\",\n        \"num_failed\": 0,\n        \"num_processed\": 3,\n        \"num_remaining\": 0,\n    },\n    \"judgements\": {\n        \"judge_model_a\": {\n            \"last_updated\": \"2024-08-19 13:58:20.866092\",\n            \"num_failed\": 0,\n            \"num_processed\": 3,\n            \"num_remaining\": 0,\n        }\n    },\n}\n```",
                 "operationId": "eval_status_v0_evaluation_status_get",
                 "security": [
                     {
