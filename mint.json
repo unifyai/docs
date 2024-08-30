@@ -134,7 +134,8 @@
                     "pages": [
                         "api-reference/custom_endpoints/create_custom_endpoint",
                         "api-reference/custom_endpoints/delete_custom_endpoint",
-                        "api-reference/custom_endpoints/rename_custom_endpoint"
+                        "api-reference/custom_endpoints/rename_custom_endpoint",
+                        "api-reference/custom_endpoints/get_custom_endpoint_list"
                     ]
                 },
                 {
