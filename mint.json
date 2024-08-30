@@ -45,17 +45,59 @@
         {
             "group": "",
             "pages": [
-                "python/chat",
-                "python/clients",
-                "python/exceptions",
-                "python/multi_llm",
-                "python/utils"
+                {
+                    "group": "Basics",
+                    "pages": [
+                        "basics/welcome",
+                        "basics/quickstart",
+                        "basics/billing"
+                    ]
+                },
+                {
+                    "group": "Universal API",
+                    "pages": [
+                        "universal_api/overview",
+                        "universal_api/supported_endpoints",
+                        "universal_api/making_queries",
+                        "universal_api/arguments",
+                        "universal_api/logging",
+                        "universal_api/comparisons"
+                    ]
+                },
+                {
+                    "group": "Benchmarking",
+                    "pages": [
+                        "benchmarking/overview",
+                        "benchmarking/datasets",
+                        "benchmarking/evaluators",
+                        "benchmarking/evaluations",
+                        "benchmarking/benchmarks",
+                        "benchmarking/visualization"
+                    ]
+                },
+                {
+                    "group": "Routing",
+                    "pages": [
+                        "routing/overview",
+                        "routing/fallbacks",
+                        "routing/meta_providers",
+                        "routing/train_your_own_router",
+                        "routing/configure_your_router",
+                        "routing/deploy_your_router"
+                    ]
+                },
+                {
+                    "group": "On-Prem",
+                    "pages": [
+                        "on_prem/overview",
+                        "on_prem/universal_api"
+                    ]
+                }
             ]
         },
         {
             "group": "",
             "pages": [
-                "python/caching",
                 "python/chat",
                 "python/clients",
                 "python/exceptions",
