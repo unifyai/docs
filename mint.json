@@ -98,7 +98,6 @@
         {
             "group": "",
             "pages": [
-                "python/_caching",
                 "python/chat",
                 "python/clients",
                 "python/exceptions",
