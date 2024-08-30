@@ -43,6 +43,9 @@
     ],
     "navigation": [
         {
+            "group": "",
+            "pages": [
+                        {
             "group": "Basics",
             "pages": [
                 "basics/welcome",
@@ -88,6 +91,8 @@
             "pages": [
                 "on_prem/overview",
                 "on_prem/universal_api"
+            ]
+        }
             ]
         },
         {
