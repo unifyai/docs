@@ -45,6 +45,7 @@
         {
             "group": "",
             "pages": [
+                "python/caching",
                 "python/chat",
                 "python/clients",
                 "python/exceptions",
