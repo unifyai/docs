@@ -6,15 +6,15 @@ Prompt datasets are useful for:
 
 - evaluating LLMs on prompts which are representative of the final task
 
-- training a router on such data, to improve the overall LLM performance
+- training a router on the prompt data, to improve the overall LLM performance
 
 We will refer to our representative example of building an AI educational assistant.
 
 ## Creating Datasets
 
-Before we start any benchmarking, we need a prompt dataset to benchmark on!
+Before we start any benchmarking, we need a dataset of prompts to benchmark on!
 
-There are three main ways to extract a prompt dataset for your task,
+There are three main ways to create a prompt dataset for your task,
 as explained below.
 
 ### Using Public Data
@@ -23,8 +23,26 @@ The best starting point is to try and find an existing public dataset which alig
 with your specific task. In this case, we can take all past exam questions and all
 practice questions from the textbooks for each subject.
 
-This gives us a great starting point,
-but for some subjects we don't have very much data, such as X with only Y prompts.
+This gives us a great starting point. For example, for the
+[Maths](https://ocr.org.uk/qualifications/gcse/mathematics-j560-from-2015/)
+syllabus we can look into the
+[assessment section](https://ocr.org.uk/qualifications/gcse/mathematics-j560-from-2015/assessment/)
+and find many sample papers and real past papers.
+
+A couple of example questions are as follows (taken from the papers),
+with their corresponding answers (taken from the mark scheme).
+
+```
+18 rice cakes weigh a total of 130g.
+There are 329 calories in 100g of rice cakes.
+How many calories are there in one rice cake?
+
+A circular table top has radius 70cm.
+(a) Calculate the area of the table top in cm^2, giving your answer as a multiple of π.
+(b) The volume of the table top is 17150πcm^3. Calculate the thickness of the table top.
+```
+
+The answers can be found from the corresponding mark scheme,
 
 ### Synthetic Data Generation
 
