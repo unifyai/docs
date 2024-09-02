@@ -99,6 +99,7 @@
             "group": "",
             "pages": [
                 "python/dataset",
+                "python/evaluation",
                 "python/evaluator",
                 "python/exceptions",
                 "python/queries",
