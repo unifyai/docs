@@ -1,0 +1,144 @@
+---
+title: 'utils.datasets'
+---
+
+<a id="utils.datasets.upload_dataset_from_file"></a>
+
+---
+
+### upload\_dataset\_from\_file
+
+```python
+def upload_dataset_from_file(name: str,
+                             path: str,
+                             api_key: Optional[str] = None) -> str
+```
+
+Uploads a local file as a dataset to the platform.
+
+**Arguments**:
+
+- `name` - Name given to the uploaded dataset.
+- `path` - Path to the file to be uploaded.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  Info msg with the response from the HTTP endpoint.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.datasets.upload_dataset_from_dictionary"></a>
+
+---
+
+### upload\_dataset\_from\_dictionary
+
+```python
+def upload_dataset_from_dictionary(name: str,
+                                   content: List[Dict[str, str]],
+                                   api_key: Optional[str] = None) -> str
+```
+
+Uploads a list of dictionaries as a dataset to the platform.
+Each dictionary in the list must contain a `prompt` key.
+
+**Arguments**:
+
+- `name` - Name given to the uploaded dataset.
+- `content` - Path to the file to be uploaded.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  Info msg with the response from the HTTP endpoint.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.datasets.download_dataset"></a>
+
+---
+
+### download\_dataset
+
+```python
+def download_dataset(name: str,
+                     path: Optional[str] = None,
+                     api_key: Optional[str] = None) -> Optional[str]
+```
+
+Downloads a dataset from the platform.
+
+**Arguments**:
+
+- `name` - Name of the dataset to download.
+- `path` - If specified, path to save the dataset.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  If path is not specified, returns the dataset content, if specified, returns None.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.datasets.delete_dataset"></a>
+
+---
+
+### delete\_dataset
+
+```python
+def delete_dataset(name: str, api_key: Optional[str] = None) -> str
+```
+
+Deletes a dataset from the platform.
+
+**Arguments**:
+
+- `name` - Name given to the uploaded dataset.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+- `str` - Info msg with the response from the HTTP endpoint.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.datasets.list_datasets"></a>
+
+---
+
+### list\_datasets
+
+```python
+def list_datasets(api_key: Optional[str] = None) -> List[str]
+```
+
+Fetches a list of all uploaded datasets.
+
+**Arguments**:
+
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  List with the names of the uploaded datasets.
+
+**Raises**:
+
+- `ValueError` - If there was an HTTP error.
+
+<a id="utils.supported_endpoints"></a>
