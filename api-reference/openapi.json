@@ -3253,9 +3253,6 @@
                     "response_format": {
                         "anyOf": [
                             {
-                                "additionalProperties": {
-                                    "type": "string"
-                                },
                                 "type": "object"
                             },
                             {
