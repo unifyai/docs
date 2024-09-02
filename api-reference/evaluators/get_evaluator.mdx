@@ -42,7 +42,13 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{}
+{
+    "class_config": "...",
+    "client_side": "false",
+    "eval_name": "evaluator",
+    "judge_models": "claude-3.5-sonnet@aws-bedrock",
+    "system_prompt": "..."
+}
 ```
 
 ```json 422

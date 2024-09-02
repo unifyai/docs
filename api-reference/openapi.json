@@ -963,7 +963,17 @@
                                     },
                                     "type": "array",
                                     "title": "Response List Custom Api Keys V0 Custom Api Key List Get"
-                                }
+                                },
+                                "example": [
+                                    {
+                                        "name": "custom_key_1",
+                                        "value": "****alue_1"
+                                    },
+                                    {
+                                        "name": "custom_key_2",
+                                        "value": "****alue_2"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1325,7 +1335,10 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "info": "Evaluator created successfully!"
+                                }
                             }
                         }
                     },
@@ -1372,7 +1385,14 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "class_config": "...",
+                                    "client_side": "false",
+                                    "eval_name": "evaluator",
+                                    "judge_models": "claude-3.5-sonnet@aws-bedrock",
+                                    "system_prompt": "..."
+                                }
                             }
                         }
                     },
@@ -1419,7 +1439,10 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "info": "Evaluator deleted successfully!"
+                                }
                             }
                         }
                     },
@@ -1480,7 +1503,10 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "info": "Evaluator renamed successfully!"
+                                }
                             }
                         }
                     },
@@ -1510,7 +1536,12 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": [
+                                    "evaluator_a",
+                                    "evaluator_b",
+                                    "evaluator_c"
+                                ]
                             }
                         }
                     }
@@ -1779,7 +1810,10 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "info": "Evaluation deleted successfully!"
+                                }
                             }
                         }
                     },
@@ -1852,7 +1886,23 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "responses": {
+                                        "last_updated": "2024-08-19 13:58:20.866092",
+                                        "num_failed": 0,
+                                        "num_processed": 3,
+                                        "num_remaining": 0
+                                    },
+                                    "judgements": {
+                                        "judge_model_a": {
+                                            "last_updated": "2024-08-19 13:58:20.866092",
+                                            "num_failed": 0,
+                                            "num_processed": 3,
+                                            "num_remaining": 0
+                                        }
+                                    }
+                                }
                             }
                         }
                     },
@@ -2130,7 +2180,10 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "info": "Benchmark deleted successfully!"
+                                }
                             }
                         }
                     },
