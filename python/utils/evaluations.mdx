@@ -9,28 +9,68 @@ title: 'evaluations'
 ### trigger\_evaluation
 
 ```python
-def trigger_evaluation(dataset: str,
-                       endpoints: List[str],
-                       api_key: Optional[str] = None) -> str
+def trigger_evaluation(evaluator: str,
+                       dataset: str,
+                       endpoint: str,
+                       client_side_scores: Optional[str] = None,
+                       api_key: Optional[str] = None) -> Dict[str, Any]
 ```
 
-Evaluates a list of endpoint on a given dataset.
+Trigger an evaluation for a specific dataset using a given evaluator and endpoint.
 
 **Arguments**:
 
-- `dataset` - Name of the dataset to be uploaded.
-- `endpoints` - List of endpoints.
-- `api_key` - If specified, unify API key to be used. Defaults to the value in the
-  `UNIFY_KEY` environment variable.
+- `evaluator` - Name of the evaluator to use.
+- `dataset` - Name of the uploaded dataset to evaluate.
+- `endpoint` - Name of the endpoint to evaluate. Must be specified using the `model@provider` format.
+- `client_side_scores` - Optional path to a JSONL file containing client-side scores.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
   
 
 **Returns**:
 
-  Info msg with the response from the HTTP endpoint.
+  A dictionary containing the response from the API.
+  
 
 **Raises**:
 
-- `ValueError` - If there was an HTTP error.
+- `requests.HTTPError` - If the API request fails.
+- `KeyError` - If the API key is not provided and not set in the environment.
+- `FileNotFoundError` - If the client_side_scores file is specified but not found.
+
+<a id="utils.evaluations.admin_trigger_eval"></a>
+
+---
+
+### admin\_trigger\_eval
+
+```python
+def admin_trigger_eval(user_id: str,
+                       name: str,
+                       dataset: str,
+                       endpoint: str,
+                       api_key: Optional[str] = None) -> Dict[str, Any]
+```
+
+Trigger an evaluation as an admin for a specific user.
+
+**Arguments**:
+
+- `user_id` - ID of the user that will own the triggered eval.
+- `name` - Name of the eval to use.
+- `dataset` - Name of the uploaded dataset to evaluate.
+- `endpoint` - Name of the endpoint to evaluate. Must be specified using the `model@provider` format.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  A dictionary containing the response from the API.
+  
+
+**Raises**:
+
+- `requests.HTTPError` - If the API request fails.
 
 <a id="utils.evaluations.get_evaluations"></a>
 
@@ -39,28 +79,27 @@ Evaluates a list of endpoint on a given dataset.
 ### get\_evaluations
 
 ```python
-def get_evaluations(dataset: Optional[str] = None,
-                    api_key: Optional[str] = None) -> List[str]
+def get_evaluations(dataset: str,
+                    endpoint: Optional[str] = None,
+                    evaluator: Optional[str] = None,
+                    per_prompt: bool = False,
+                    api_key: Optional[str] = None) -> Dict[str, Any]
 ```
 
-Fetches a list of all evaluations.
+Get evaluations for a specific dataset, optionally filtered by endpoint and evaluator.
 
 **Arguments**:
 
-- `dataset` - Name of the dataset to fetch evaluation from. If not specified, all
-  evaluations will be returned.
-  
-- `api_key` - If specified, unify API key to be used. Defaults to the value in the
-  `UNIFY_KEY` environment variable.
+- `dataset` - Name of the dataset to fetch evaluation from.
+- `endpoint` - The endpoint to fetch the evaluation for. If None, returns evaluations for all endpoints.
+- `evaluator` - Name of the evaluator to fetch the evaluation for. If None, returns all available evaluations for the dataset and endpoint pair.
+- `per_prompt` - If True, returns the scores on a per-prompt level. By default set to False. If True requires an eval name and endpoint to be set.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
   
 
 **Returns**:
 
-  List with the names of the uploaded datasets.
-
-**Raises**:
-
-- `ValueError` - If there was an HTTP error.
+  A dictionary containing the evaluation results.
 
 <a id="utils.evaluations.delete_evaluations"></a>
 
@@ -69,27 +108,57 @@ Fetches a list of all evaluations.
 ### delete\_evaluations
 
 ```python
-def delete_evaluations(name: str,
-                       endpoint: str,
-                       api_key: Optional[str] = None) -> str
+def delete_evaluations(dataset: str,
+                       endpoint: Optional[str] = None,
+                       evaluator: Optional[str] = None,
+                       api_key: Optional[str] = None) -> Dict[str, str]
 ```
 
-Deletes an evaluation from the platform.
+Delete evaluations for a specific dataset, optionally filtered by endpoint and evaluator.
 
 **Arguments**:
 
-- `name` - Name of the dataset in the evaluation.
-- `endpoint` - Name of the endpoint whose evaluation will be removed.
-- `api_key` - If specified, unify API key to be used. Defaults to the value in the
-  `UNIFY_KEY` environment variable.
+- `dataset` - Name of the dataset to delete the evaluation for.
+- `endpoint` - The endpoint to delete the evaluation for. If None, deletes the evaluations for all endpoints.
+- `evaluator` - Name of the evaluator to delete the evaluation for. If None, deletes all available evaluations for the dataset and endpoint pair.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
   
 
 **Returns**:
 
-  Info msg with the response from the HTTP endpoint.
+  A dictionary containing information about the deletion operation.
+  
 
 **Raises**:
 
-- `ValueError` - If there was an HTTP error.
+- `requests.exceptions.RequestException` - If the API request fails.
 
-<a id="utils.custom_api_keys"></a>
+<a id="utils.evaluations.get_evaluation_status"></a>
+
+---
+
+### get\_evaluation\_status
+
+```python
+def get_evaluation_status(dataset: str,
+                          endpoint: str,
+                          evaluator: str,
+                          api_key: Optional[str] = None) -> Dict[str, Any]
+```
+
+Get the evaluation status for a specific dataset, endpoint, and evaluator.
+
+**Arguments**:
+
+- `dataset` - Name of the dataset to get evaluation status of.
+- `endpoint` - Endpoint to get evaluation status of.
+- `evaluator` - Name of the evaluator to get status of.
+- `api_key` - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  A dictionary containing the evaluation status information.
+
+<a id="utils.helpers"></a>
