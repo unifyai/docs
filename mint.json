@@ -113,8 +113,12 @@
                     "group": "utils",
                     "pages": [
                         "python/utils/credits",
+                        "python/utils/custom_api_keys",
+                        "python/utils/custom_endpoints",
                         "python/utils/datasets",
                         "python/utils/evaluations",
+                        "python/utils/evaluators",
+                        "python/utils/logging",
                         "python/utils/supported_endpoints"
                     ]
                 }

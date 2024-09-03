@@ -1,0 +1,139 @@
+---
+title: 'evaluators'
+---
+
+<a id="utils.evaluators.create_evaluator"></a>
+
+---
+
+### create\_evaluator
+
+```python
+def create_evaluator(evaluator_config: Dict[str, Any],
+                     api_key: Optional[str] = None) -> Dict[str, str]
+```
+
+Create a new evaluator based on the provided configuration.
+
+**Arguments**:
+
+- `evaluator_config` - A dictionary containing the configuration for the evaluator.
+- `api_key` - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  A dictionary containing information about the created evaluator.
+
+<a id="utils.evaluators.get_evaluator"></a>
+
+---
+
+### get\_evaluator
+
+```python
+def get_evaluator(name: str, api_key: Optional[str] = None) -> Dict[str, Any]
+```
+
+Get the configuration of a specific evaluator.
+
+**Arguments**:
+
+- `name` - Name of the evaluator to return the configuration of.
+- `api_key` - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  A dictionary containing the evaluator configuration if successful.
+  
+
+**Raises**:
+
+- `requests.HTTPError` - If the API request fails.
+
+<a id="utils.evaluators.delete_evaluator"></a>
+
+---
+
+### delete\_evaluator
+
+```python
+def delete_evaluator(name: str,
+                     api_key: Optional[str] = None) -> Dict[str, str]
+```
+
+Delete an evaluator by its name.
+
+**Arguments**:
+
+- `name` - Name of the evaluator to delete.
+- `api_key` - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  A dictionary containing the response message if successful.
+  
+
+**Raises**:
+
+- `requests.HTTPError` - If the API request fails.
+
+<a id="utils.evaluators.rename_evaluator"></a>
+
+---
+
+### rename\_evaluator
+
+```python
+def rename_evaluator(name: str,
+                     new_name: str,
+                     api_key: Optional[str] = None) -> Dict[str, str]
+```
+
+Rename an existing evaluator.
+
+**Arguments**:
+
+- `name` - Name of the evaluator to rename.
+- `new_name` - New name for the evaluator.
+- `api_key` - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  A dictionary containing the response message if successful.
+  
+
+**Raises**:
+
+- `requests.HTTPError` - If the API request fails.
+
+<a id="utils.evaluators.list_evaluators"></a>
+
+---
+
+### list\_evaluators
+
+```python
+def list_evaluators(api_key: Optional[str] = None) -> List[str]
+```
+
+Get a list of available evaluators.
+
+**Arguments**:
+
+- `api_key` - If specified, unify API key to be used. Defaults
+  to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  A list of available evaluator names if successful, otherwise an empty list.
+
+<a id="utils.router_training"></a>
