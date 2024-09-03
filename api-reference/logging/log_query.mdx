@@ -1,0 +1,76 @@
+---
+title: 'Log Query'
+api: 'POST /v0/queries'
+---
+
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="endpoint" type="string" required="true">
+Endpoint to log query for.
+</ParamField>
+
+<ParamField query="query_body" type="string" required="true">
+A string containing the body of the request
+</ParamField>
+
+<ParamField query="response_body" type="string | null" >
+An optional string containing the response to the request
+</ParamField>
+
+<ParamField query="tags" type="array | null" >
+Tags for later filtering.
+</ParamField>
+
+<ParamField query="timestamp" type="string | null" >
+A timestamp (if not set, will be the time of sending)
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/queries?endpoint=llama-3.1-8b-chat_ollama@external&query_body='{"messages":%20[{"role":%20"system",%20"content":%20"You%20are%20an%20useful%20assistant"},%20{"role":%20"user",%20"content":%20"Explain%20who%20Newton%20was."}],%20"model":%20"llama-3-8b-chat@aws-bedrock",%20"max_tokens":%20100,"stream":%20false,%20"temperature":%200.5,}'&response_body='{"model":%20"meta.llama3-8b-instruct-v1:0",%20"created":%201725396241,%20"id":%20"chatcmpl-92d3b36e-7b64-4ae8-8102-9b7e3f5dd30f",%20"object":%20"chat.completion",%20"usage":%20{"completion_tokens":%20100,%20"prompt_tokens":%2044,%20"total_tokens":%20144},%20"choices":%20[{"finish_reason":%20"stop",%20"index":%200,%20"message":%20{"content":%20"Sir%20Isaac%20Newton%20was%20an%20English%20mathematician,%20physicist,%20and%20astronomer%20who%20lived%20from%201643%20to%201727.\n\nHe%20is%20widely%20recognized%20as%20one%20of%20the%20most%20influential%20scientists%20in%20history,%20and%20his%20work%20laid%20the%20foundation%20for%20the%20Scientific%20Revolution%20of%20the%2017th%20century.\n\nNewton's%20most%20famous%20achievement%20is%20his%20theory%20of%20universal%20gravitation,%20which%20he%20presented%20in%20his%20groundbreaking%20book%20\"Philosophi\u00e6%20Naturalis%20Principia%20Mathematica\"%20in%201687.\n\nAccording%20to%20Newton's%20theory,%20every",%20"role":%20"assistant",%20"tool_calls":%20null,%20"function_call":%20null}}]}'&tags=None&timestamp=2024-07-12T04:20:32.808410' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/queries?endpoint=llama-3.1-8b-chat_ollama@external&query_body='{"messages":%20[{"role":%20"system",%20"content":%20"You%20are%20an%20useful%20assistant"},%20{"role":%20"user",%20"content":%20"Explain%20who%20Newton%20was."}],%20"model":%20"llama-3-8b-chat@aws-bedrock",%20"max_tokens":%20100,"stream":%20false,%20"temperature":%200.5,}'&response_body='{"model":%20"meta.llama3-8b-instruct-v1:0",%20"created":%201725396241,%20"id":%20"chatcmpl-92d3b36e-7b64-4ae8-8102-9b7e3f5dd30f",%20"object":%20"chat.completion",%20"usage":%20{"completion_tokens":%20100,%20"prompt_tokens":%2044,%20"total_tokens":%20144},%20"choices":%20[{"finish_reason":%20"stop",%20"index":%200,%20"message":%20{"content":%20"Sir%20Isaac%20Newton%20was%20an%20English%20mathematician,%20physicist,%20and%20astronomer%20who%20lived%20from%201643%20to%201727.\n\nHe%20is%20widely%20recognized%20as%20one%20of%20the%20most%20influential%20scientists%20in%20history,%20and%20his%20work%20laid%20the%20foundation%20for%20the%20Scientific%20Revolution%20of%20the%2017th%20century.\n\nNewton's%20most%20famous%20achievement%20is%20his%20theory%20of%20universal%20gravitation,%20which%20he%20presented%20in%20his%20groundbreaking%20book%20\"Philosophi\u00e6%20Naturalis%20Principia%20Mathematica\"%20in%201687.\n\nAccording%20to%20Newton's%20theory,%20every",%20"role":%20"assistant",%20"tool_calls":%20null,%20"function_call":%20null}}]}'&tags=None&timestamp=2024-07-12T04:20:32.808410"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
