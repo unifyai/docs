@@ -100,26 +100,24 @@
             "pages": [
                 "python/dataset",
                 "python/evaluation",
-                "python/evaluator",
                 "python/exceptions",
-                "python/queries",
-                "python/queries.chat",
-                "python/queries.clients",
-                "python/queries.multi_llm",
-                "python/utils",
-                "python/utils.credits",
-                "python/utils.custom_api_keys",
-                "python/utils.custom_endpoints",
-                "python/utils.datasets",
-                "python/utils.efficiency_benchmarks",
-                "python/utils.evaluations",
-                "python/utils.evaluators",
-                "python/utils.helpers",
-                "python/utils.logging",
-                "python/utils.router_configurations",
-                "python/utils.router_deployment",
-                "python/utils.router_training",
-                "python/utils.supported_endpoints"
+                {
+                    "group": "queries",
+                    "pages": [
+                        "python/queries/chat",
+                        "python/queries/clients",
+                        "python/queries/multi_llm"
+                    ]
+                },
+                {
+                    "group": "utils",
+                    "pages": [
+                        "python/utils/credits",
+                        "python/utils/datasets",
+                        "python/utils/evaluations",
+                        "python/utils/supported_endpoints"
+                    ]
+                }
             ]
         },
         {
