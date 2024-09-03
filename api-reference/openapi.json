@@ -247,14 +247,45 @@
                 ]
             }
         },
-        "/v0/prompt_history": {
+        "/v0/tags": {
             "get": {
                 "tags": [
                     "Logging"
                 ],
-                "summary": "Get Prompt History",
-                "description": "Get the prompt history, optionally for a given set of tags for a narrowed search.",
-                "operationId": "get_prompt_history_v0_prompt_history_get",
+                "summary": "Get Query Tags",
+                "description": "Returns a list of the tags in your account",
+                "operationId": "get_query_tags_v0_tags_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Query Tags V0 Tags Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/queries": {
+            "get": {
+                "tags": [
+                    "Logging"
+                ],
+                "summary": "Get Query History",
+                "description": "Get the queries history, optionally for a given set of tags for a narrowed search.",
+                "operationId": "get_query_history_v0_queries_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -275,12 +306,79 @@
                                     "items": {
                                         "type": "string"
                                     }
+                                },
+                                {
+                                    "type": "null"
                                 }
                             ],
-                            "description": "Tags to filter for prompts that are marked with these tags.",
+                            "description": "Tags to filter for queries that are marked with these tags.",
                             "title": "Tags"
                         },
-                        "description": "Tags to filter for prompts that are marked with these tags."
+                        "description": "Tags to filter for queries that are marked with these tags.",
+                        "example": "my_tag"
+                    },
+                    {
+                        "name": "endpoints",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Optionally specify an endpoint, or a list of endpoints to filter for",
+                            "title": "Endpoints"
+                        },
+                        "description": "Optionally specify an endpoint, or a list of endpoints to filter for",
+                        "example": "gpt-4o@openai"
+                    },
+                    {
+                        "name": "start_time",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
+                            "title": "Start Time"
+                        },
+                        "description": "Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
+                        "example": "2024-07-12 04:20:32"
+                    },
+                    {
+                        "name": "end_time",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
+                            "title": "End Time"
+                        },
+                        "description": "Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.",
+                        "example": "2024-08-12 04:20:32"
                     }
                 ],
                 "responses": {
@@ -3380,6 +3478,9 @@
                     },
                     "tags": {
                         "anyOf": [
+                            {
+                                "type": "string"
+                            },
                             {
                                 "items": {
                                     "type": "string"
