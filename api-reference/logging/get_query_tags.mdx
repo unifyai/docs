@@ -1,0 +1,40 @@
+---
+title: 'Get Query Tags'
+api: 'GET /v0/tags'
+---
+Returns a list of the tags in your account
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/tags' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/tags"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+</ResponseExample>

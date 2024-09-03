@@ -140,7 +140,8 @@
                 {
                     "group": "Logging",
                     "pages": [
-                        "api-reference/logging/get_prompt_history",
+                        "api-reference/logging/get_query_tags",
+                        "api-reference/logging/get_query_history",
                         "api-reference/logging/get_query_metrics"
                     ]
                 },
