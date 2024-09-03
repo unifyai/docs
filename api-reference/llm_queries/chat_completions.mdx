@@ -143,6 +143,10 @@ Whether or not to use custom API keys with the specified provider, meaning that 
 Comma-separated list of tags to associate with the corresponding prompt.
 </ParamField>
 
+<ParamField body="drop_params" type="boolean"  default={true}>
+Whether or not to drop unsupported OpenAI params by the provider you're using
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -187,7 +191,8 @@ curl --request POST \
     "user": "some_user",
     "signature": "python",
     "use_custom_keys": true,
-    "tags": true
+    "tags": true,
+    "drop_params": true
 }'
 ```
 
@@ -198,7 +203,7 @@ url = "https://api.unify.ai/v0/chat/completions"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"messages": [{"content": "Tell me a joke", "role": "user"}], "model": "gpt-4o-mini@openai", "max_tokens": 1024, "stop": ["The End.", " is the answer."], "stream": False, "temperature": 0.9, "frequency_penalty": 1.5, "logit_bias": {"0": 10, "1": -75, "2": 90}, "logprobs": False, "top_logprobs": 15, "n": 15, "presence_penalty": -1.1, "response_format": "{ "type": "json_mode"}", "seed": 11, "stream_options": [True, "include_usage"], "top_p": 0.5, "tool_choice": "{"type": "function", "function": {"name": "my_function"}}", "parallel_tool_calls": True, "user": "some_user", "signature": "python", "use_custom_keys": True, "tags": True}
+json_input = {"messages": [{"content": "Tell me a joke", "role": "user"}], "model": "gpt-4o-mini@openai", "max_tokens": 1024, "stop": ["The End.", " is the answer."], "stream": False, "temperature": 0.9, "frequency_penalty": 1.5, "logit_bias": {"0": 10, "1": -75, "2": 90}, "logprobs": False, "top_logprobs": 15, "n": 15, "presence_penalty": -1.1, "response_format": "{ "type": "json_mode"}", "seed": 11, "stream_options": [True, "include_usage"], "top_p": 0.5, "tool_choice": "{"type": "function", "function": {"name": "my_function"}}", "parallel_tool_calls": True, "user": "some_user", "signature": "python", "use_custom_keys": True, "tags": True, "drop_params": True}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

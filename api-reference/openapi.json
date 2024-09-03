@@ -3393,6 +3393,13 @@
                         "title": "Tags",
                         "description": "Comma-separated list of tags to associate with the corresponding prompt.",
                         "example": true
+                    },
+                    "drop_params": {
+                        "type": "boolean",
+                        "title": "Drop Params",
+                        "description": "Whether or not to drop unsupported OpenAI params by the provider you're using",
+                        "default": true,
+                        "example": true
                     }
                 },
                 "additionalProperties": true,
