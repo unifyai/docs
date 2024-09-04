@@ -137,8 +137,8 @@ Generate content using the Unify API.
   message. auto means the model can pick between generating a message or
   calling one or more tools. required means the model must call one or more
   tools. Specifying a particular tool via
-- ``{"type"` - "function", "function": {"name": "my_function"}}` forces the model
-  to call that tool.
+  `{ "type": "function", "function": {"name": "my_function"} }`
+  forces the model to call that tool.
   none is the default when no tools are present. auto is the default if tools
   are present.
   
@@ -362,4 +362,4 @@ class AsyncUnify(Client)
 Class for interacting with the Unify chat completions endpoint in a synchronous
 manner.
 
-<a id="queries.multi_llm"></a>
+<a id="queries.chat"></a>
