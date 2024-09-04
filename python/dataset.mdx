@@ -17,10 +17,10 @@ class Dataset()
 ### \_\_init\_\_
 
 ```python
-def __init__(name: str = None,
-             queries: List[Union[str, ChatCompletion]] = None,
+def __init__(queries: List[Union[str, ChatCompletion]] = None,
              extra_fields: Dict[str, List[Any]] = None,
              data: List[Dict[str, Union[ChatCompletion, Any]]] = None,
+             name: str = None,
              auto_sync: bool = False,
              api_key: Optional[str] = None)
 ```
@@ -29,8 +29,6 @@ Initialize a local dataset of LLM queries.
 
 **Arguments**:
 
-- `name` - The name of the dataset.
-  
 - `queries` - List of LLM queries to initialize the dataset with.
   
 - `extra_fields` - Dictionary of lists for arbitrary extra fields contained
@@ -40,6 +38,8 @@ Initialize a local dataset of LLM queries.
   be specified instead, which is simply a list of dicts with each first key as
   "query" and all other keys otherwise coming from the `extra_fields`. This is
   the internal representation used by the class.
+  
+- `name` - The name of the dataset.
   
 - `auto_sync` - Whether to automatically keep this dataset fully synchronized
   with the upstream variant at all times.
@@ -199,7 +199,7 @@ Saves to dataset to a local .jsonl filepath.
 ### add
 
 ```python
-def add(other: __class__)
+def add(other: Dataset)
 ```
 
 Adds another dataset to this one, return a new Dataset instance, with this
@@ -216,7 +216,7 @@ new dataset receiving all unique queries from the other added dataset.
 ### sub
 
 ```python
-def sub(other: __class__)
+def sub(other: Dataset)
 ```
 
 Subtracts another dataset from this one, return a new Dataset instance, with
