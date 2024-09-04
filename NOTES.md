@@ -20,7 +20,7 @@ Just a few notes while making changes to the docs,
 
 10. Also any descriptions of the form `<model>`, `<model>@<provider>`, etc. get treated as html elements in an mdx file so ideally it should be `\<model\>`, `\<model\>\<provider\>`, etc.
 
-11. There's also formatting issues like [this](https://github.com/unifyai/unify/commit/b5a52fabc9e77f12a2952dac35531ed86904d48a) where `{ "type": "json_object" }` without the back-ticks wouldn't work.
+11. There's also formatting issues like [this](https://github.com/unifyai/unify/commit/b5a52fabc9e77f12a2952dac35531ed86904d48a) where `{ "type": "json_object" }` without the back-ticks wouldn't work. Also the ` ` between `{` and the `"` is necessary on both sides.
 
 12. Same applies to code blocks like [this](https://github.com/unifyai/orchestra/blob/0b04c01cae317f2eb7e569e84a3a66f96b21f742/orchestra/web/api/dataset_evaluation/views.py#L746-L761) which should also be enclosed with triple quotes like [this](https://github.com/unifyai/orchestra/commit/99d63db6b2839feab2de456066c311f317c0c5c8) to avoid parsing errors.
 
