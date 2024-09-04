@@ -20,7 +20,7 @@ class Dataset()
 def __init__(data: Union[str, List[str, Query, DatasetEntry]],
              *,
              name: str = None,
-             auto_sync: bool = False,
+             auto_sync: Union[bool, str] = False,
              api_key: Optional[str] = None)
 ```
 
@@ -35,7 +35,11 @@ Initialize a local dataset of LLM queries.
 - `name` - The name of the dataset.
   
 - `auto_sync` - Whether to automatically keep this dataset fully synchronized
-  with the upstream variant at all times.
+  with the upstream variant at all times. If `True` or "both" then the sync
+  will be bi-directional, if "upload_only" then all local changes will be
+  uploaded to the upstream account without any downloads, if "download_only"
+  then all upstream changes will be downloaded locally without any uploads.
+  If `False` or "neither" then no synchronization will be done automatically.
   
 - `api_key` - API key for accessing the Unify API. If None, it attempts to
   retrieve the API key from the environment variable UNIFY_KEY. Defaults to
