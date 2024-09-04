@@ -17,7 +17,7 @@ class Dataset()
 ### \_\_init\_\_
 
 ```python
-def __init__(data: Union[str, List[str, Query, DatasetEntry]],
+def __init__(data: Union[str, List[Union[str, Query, DatasetEntry]]],
              *,
              name: str = None,
              auto_sync: Union[bool, str] = False,
