@@ -1,0 +1,41 @@
+---
+title: 'evaluator'
+---
+
+<a id="evaluator.Evaluator"></a>
+
+## Evaluator
+
+```python
+class Evaluator(abc.ABC)
+```
+
+<a id="evaluator.Evaluator.evaluate"></a>
+
+---
+
+### evaluate
+
+```python
+@abstractmethod
+def evaluate(agent: Union[str, Client, Agent],
+             dataset: Union[str, Dataset],
+             default_query: Query = None)
+```
+
+Evaluate the agent on the given dataset, based on this evaluator.
+
+**Arguments**:
+
+- `agent` - Name of the endpoint or handle to the local Agent (possibly
+  multi-step LLM calls) to evaluate.
+  
+- `dataset` - Name of the uploaded dataset or handle to the local Dataset
+  instance to evaluate
+  
+- `default_query` - The default query for evaluation, which each unique query in
+  the dataset will inherit from, overwriting the extra fields. This query can
+  therefore include temperature, system prompt, tools etc. which are not
+  present in each query in the dataset.
+
+<a id="utils"></a>

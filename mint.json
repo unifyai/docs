@@ -100,6 +100,7 @@
             "pages": [
                 "python/dataset",
                 "python/evaluation",
+                "python/evaluator",
                 "python/exceptions",
                 {
                     "group": "queries",
