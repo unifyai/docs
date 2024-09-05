@@ -2,7 +2,7 @@
 title: 'multi_llm'
 ---
 
-<a id="queries.multi_llm.MultiLLMClient"></a>
+<a id="chat.multi_llm.MultiLLMClient"></a>
 
 ## MultiLLMClient
 
@@ -10,7 +10,7 @@ title: 'multi_llm'
 class MultiLLMClient(ABC)
 ```
 
-<a id="queries.multi_llm.MultiLLMClient.get_credit_balance"></a>
+<a id="chat.multi_llm.MultiLLMClient.get_credit_balance"></a>
 
 ---
 
@@ -31,7 +31,7 @@ Get the remaining credits left on your account.
 - `BadRequestError` - If there was an HTTP error.
 - `ValueError` - If there was an error parsing the JSON response.
 
-<a id="queries.multi_llm.MultiLLMClient.generate"></a>
+<a id="chat.multi_llm.MultiLLMClient.generate"></a>
 
 ---
 
@@ -195,4 +195,3 @@ Generate content using the Unify API.
 
 - `UnifyError` - If an error occurs during content generation.
 
-<a id="queries.chat"></a>

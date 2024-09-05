@@ -98,18 +98,18 @@
         {
             "group": "",
             "pages": [
+                {
+                    "group": "chat",
+                    "pages": [
+                        "python/chat/chatbot",
+                        "python/chat/clients",
+                        "python/chat/multi_llm"
+                    ]
+                },
                 "python/dataset",
                 "python/evaluation",
                 "python/evaluator",
                 "python/exceptions",
-                {
-                    "group": "queries",
-                    "pages": [
-                        "python/queries/chat",
-                        "python/queries/clients",
-                        "python/queries/multi_llm"
-                    ]
-                },
                 {
                     "group": "utils",
                     "pages": [

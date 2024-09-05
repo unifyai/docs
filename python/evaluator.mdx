@@ -20,7 +20,7 @@ class Evaluator(abc.ABC)
 @abstractmethod
 def evaluate(agent: Union[str, Client, Agent],
              dataset: Union[str, Dataset],
-             default_query: Query = None)
+             default_query: Prompt = None)
 ```
 
 Evaluate the agent on the given dataset, based on this evaluator.
