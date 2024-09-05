@@ -1,48 +1,28 @@
 ---
-title: 'multi_llm'
+title: 'clients.uni_llm'
 ---
 
-<a id="chat.multi_llm.MultiLLMClient"></a>
+<a id="chat.clients.uni_llm.UniLLMClient"></a>
 
-## MultiLLMClient
+## UniLLMClient
 
 ```python
-class MultiLLMClient(ABC)
+class UniLLMClient(Client, abc.ABC)
 ```
 
-<a id="chat.multi_llm.MultiLLMClient.get_credit_balance"></a>
+<a id="chat.clients.uni_llm.UniLLMClient.__init__"></a>
 
 ---
 
-### get\_credit\_balance
+### \_\_init\_\_
 
 ```python
-def get_credit_balance() -> Union[float, None]
-```
-
-Get the remaining credits left on your account.
-
-**Returns**:
-
-  The remaining credits on the account if successful, otherwise None.
-
-**Raises**:
-
-- `BadRequestError` - If there was an HTTP error.
-- `ValueError` - If there was an error parsing the JSON response.
-
-<a id="chat.multi_llm.MultiLLMClient.generate"></a>
-
----
-
-### generate
-
-```python
-@abstractmethod
-def generate(user_message: Optional[str] = None,
+def __init__(endpoint: Optional[str] = None,
+             *,
+             model: Optional[str] = None,
+             provider: Optional[str] = None,
              system_message: Optional[str] = None,
              messages: Optional[Iterable[ChatCompletionMessageParam]] = None,
-             *,
              frequency_penalty: Optional[float] = None,
              logit_bias: Optional[Dict[str, int]] = None,
              logprobs: Optional[bool] = None,
@@ -53,6 +33,8 @@ def generate(user_message: Optional[str] = None,
              response_format: Optional[ResponseFormat] = None,
              seed: Optional[int] = None,
              stop: Union[Optional[str], List[str]] = None,
+             stream: Optional[bool] = False,
+             stream_options: Optional[ChatCompletionStreamOptionsParam] = None,
              temperature: Optional[float] = 1.0,
              top_p: Optional[float] = None,
              tools: Optional[Iterable[ChatCompletionToolParam]] = None,
@@ -60,23 +42,30 @@ def generate(user_message: Optional[str] = None,
              parallel_tool_calls: Optional[bool] = None,
              use_custom_keys: bool = False,
              tags: Optional[List[str]] = None,
+             api_key: Optional[str] = None,
              message_content_only: bool = True,
+             cache: bool = False,
              extra_headers: Optional[Headers] = None,
              extra_query: Optional[Query] = None,
-             **kwargs) -> Union[Generator[str, None, None], str]
+             **kwargs)
 ```
 
-Generate content using the Unify API.
+Initialize the base Single LLM Unify client.
 
 **Arguments**:
 
-- `user_message` - A string containing the user message.
-  If provided, messages must be None.
+- `endpoint` - Endpoint name in OpenAI API format:
+  \<model_name\>@\<provider_name\>
+  Defaults to None.
+  
+- `model` - Name of the model. Should only be set if endpoint is not set.
+  
+- `provider` - Name of the provider. Should only be set if endpoint is not set.
   
 - `system_message` - An optional string containing the system message.
   
-- `messages` - A list of messages comprising the conversation so far. If
-  provided, user_message must be None.
+- `messages` - A list of messages comprising the conversation so far.
+  If provided, user_message must be None.
   
 - `frequency_penalty` - Number between -2.0 and 2.0. Positive values penalize new
   tokens based on their existing frequency in the text so far, decreasing the
@@ -154,8 +143,7 @@ Generate content using the Unify API.
   calling one or more tools. required means the model must call one or more
   tools. Specifying a particular tool via
   `{ "type": "function", "function": {"name": "my_function"} }`
-  forces the model
-  to call that tool.
+  forces the model to call that tool.
   none is the default when no tools are present. auto is the default if tools
   are present.
   
@@ -173,6 +161,12 @@ Generate content using the Unify API.
   return. Otherwise, the full response chat_completion is returned.
   Defaults to True.
   
+- `cache` - If True, then the arguments will be stored in a local cache file, and
+  any future calls with identical arguments will read from the cache instead
+  of running the LLM query. This can help to save costs and also debug
+  multi-step LLM applications, while keeping early steps fixed.
+  This argument only has any effect when stream=False.
+  
 - `extra_headers` - Additional "passthrough" headers for the request which are
   provider-specific, and are not part of the OpenAI standard. They are handled
   by the provider-specific API.
@@ -186,12 +180,129 @@ Generate content using the Unify API.
   standard. They will be handled by the provider-specific API.
   
 
-**Returns**:
-
-  A dictionary of responses from each of the LLM clients.
-  
-
 **Raises**:
 
-- `UnifyError` - If an error occurs during content generation.
+- `UnifyError` - If the API key is missing.
 
+<a id="chat.clients.uni_llm.UniLLMClient.endpoint"></a>
+
+---
+
+### endpoint
+
+```python
+@property
+def endpoint() -> str
+```
+
+Get the endpoint name.
+
+**Returns**:
+
+  The endpoint name.
+
+<a id="chat.clients.uni_llm.UniLLMClient.model"></a>
+
+---
+
+### model
+
+```python
+@property
+def model() -> str
+```
+
+Get the model name.
+
+**Returns**:
+
+  The model name.
+
+<a id="chat.clients.uni_llm.UniLLMClient.provider"></a>
+
+---
+
+### provider
+
+```python
+@property
+def provider() -> str
+```
+
+Get the provider name.
+
+**Returns**:
+
+  The provider name.
+
+<a id="chat.clients.uni_llm.UniLLMClient.set_endpoint"></a>
+
+---
+
+### set\_endpoint
+
+```python
+def set_endpoint(value: str) -> None
+```
+
+Set the endpoint name.  
+
+**Arguments**:
+
+- `value` - The endpoint name.
+
+<a id="chat.clients.uni_llm.UniLLMClient.set_model"></a>
+
+---
+
+### set\_model
+
+```python
+def set_model(value: str) -> None
+```
+
+Set the model name.  
+
+**Arguments**:
+
+- `value` - The model name.
+
+<a id="chat.clients.uni_llm.UniLLMClient.set_provider"></a>
+
+---
+
+### set\_provider
+
+```python
+def set_provider(value: str) -> None
+```
+
+Set the provider name.  
+
+**Arguments**:
+
+- `value` - The provider name.
+
+<a id="chat.clients.uni_llm.Unify"></a>
+
+## Unify
+
+```python
+class Unify(UniLLMClient)
+```
+
+Class for interacting with the Unify chat completions endpoint in a synchronous
+manner.
+
+<a id="chat.clients.uni_llm.AsyncUnify"></a>
+
+## AsyncUnify
+
+```python
+class AsyncUnify(UniLLMClient)
+```
+
+Class for interacting with the Unify chat completions endpoint in a synchronous
+manner.
+
+<a id="chat.clients.multi_llm"></a>
