@@ -18,7 +18,7 @@ class Evaluator(abc.ABC)
 
 ```python
 @abstractmethod
-def evaluate(agent: Union[str, Client, Agent],
+def evaluate(agent: Union[str, UniLLMClient, Agent],
              dataset: Union[str, Dataset],
              default_prompt: Prompt = None)
 ```

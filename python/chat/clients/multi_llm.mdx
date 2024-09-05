@@ -1,0 +1,34 @@
+---
+title: 'clients.multi_llm'
+---
+
+<a id="chat.clients.multi_llm.MultiLLMClient"></a>
+
+## MultiLLMClient
+
+```python
+class MultiLLMClient(Client, abc.ABC)
+```
+
+<a id="chat.clients.multi_llm.MultiLLMClient.get_credit_balance"></a>
+
+---
+
+### get\_credit\_balance
+
+```python
+def get_credit_balance() -> Union[float, None]
+```
+
+Get the remaining credits left on your account.
+
+**Returns**:
+
+  The remaining credits on the account if successful, otherwise None.
+
+**Raises**:
+
+- `BadRequestError` - If there was an HTTP error.
+- `ValueError` - If there was an error parsing the JSON response.
+
+<a id="chat.clients"></a>

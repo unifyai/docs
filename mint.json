@@ -102,8 +102,9 @@
                     "group": "chat",
                     "pages": [
                         "python/chat/chatbot",
-                        "python/chat/clients",
-                        "python/chat/multi_llm"
+                        "python/chat/clients/base",
+                        "python/chat/clients/multi_llm",
+                        "python/chat/clients/uni_llm"
                     ]
                 },
                 "python/dataset",
