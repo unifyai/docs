@@ -1008,6 +1008,20 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/CustomApiKeyModelResponse"
+                                },
+                                "example": {
+                                    "name": "custom_api_key_name",
+                                    "value": "custom_api_key_value"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Custom API key Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "API key not found."
                                 }
                             }
                         }

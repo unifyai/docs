@@ -41,8 +41,14 @@ print(response.text)
 
 ```json 200
 {
-    "name": "string",
-    "value": "string"
+    "name": "custom_api_key_name",
+    "value": "custom_api_key_value"
+}
+```
+
+```json 404
+{
+    "detail": "API key not found."
 }
 ```
 
