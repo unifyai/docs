@@ -2,7 +2,7 @@
 title: 'clients'
 ---
 
-<a id="queries.clients.Client"></a>
+<a id="chat.clients.Client"></a>
 
 ## Client
 
@@ -12,7 +12,7 @@ class Client(ABC)
 
 Base Abstract class for interacting with the Unify chat completions endpoint.
 
-<a id="queries.clients.Client.__init__"></a>
+<a id="chat.clients.Client.__init__"></a>
 
 ---
 
@@ -78,7 +78,7 @@ Initialize the Unify client.
 
 - `UnifyError` - If the API key is missing.
 
-<a id="queries.clients.Client.endpoint"></a>
+<a id="chat.clients.Client.endpoint"></a>
 
 ---
 
@@ -95,7 +95,7 @@ Get the endpoint name.
 
   The endpoint name.
 
-<a id="queries.clients.Client.model"></a>
+<a id="chat.clients.Client.model"></a>
 
 ---
 
@@ -112,7 +112,7 @@ Get the model name.
 
   The model name.
 
-<a id="queries.clients.Client.provider"></a>
+<a id="chat.clients.Client.provider"></a>
 
 ---
 
@@ -129,7 +129,7 @@ Get the provider name.
 
   The provider name.
 
-<a id="queries.clients.Client.system_prompt"></a>
+<a id="chat.clients.Client.system_prompt"></a>
 
 ---
 
@@ -146,7 +146,7 @@ Get the default system prompt, if set.
 
   The default system prompt.
 
-<a id="queries.clients.Client.messages"></a>
+<a id="chat.clients.Client.messages"></a>
 
 ---
 
@@ -163,7 +163,7 @@ Get the default messages, if set.
 
   The default messages.
 
-<a id="queries.clients.Client.frequency_penalty"></a>
+<a id="chat.clients.Client.frequency_penalty"></a>
 
 ---
 
@@ -180,7 +180,7 @@ Get the default frequency penalty, if set.
 
   The default frequency penalty.
 
-<a id="queries.clients.Client.logit_bias"></a>
+<a id="chat.clients.Client.logit_bias"></a>
 
 ---
 
@@ -197,7 +197,7 @@ Get the default logit bias, if set.
 
   The default logit bias.
 
-<a id="queries.clients.Client.logprobs"></a>
+<a id="chat.clients.Client.logprobs"></a>
 
 ---
 
@@ -214,7 +214,7 @@ Get the default logprobs, if set.
 
   The default logprobs.
 
-<a id="queries.clients.Client.top_logprobs"></a>
+<a id="chat.clients.Client.top_logprobs"></a>
 
 ---
 
@@ -231,7 +231,7 @@ Get the default top logprobs, if set.
 
   The default top logprobs.
 
-<a id="queries.clients.Client.max_tokens"></a>
+<a id="chat.clients.Client.max_tokens"></a>
 
 ---
 
@@ -248,7 +248,7 @@ Get the default max tokens, if set.
 
   The default max tokens.
 
-<a id="queries.clients.Client.n"></a>
+<a id="chat.clients.Client.n"></a>
 
 ---
 
@@ -265,7 +265,7 @@ Get the default n, if set.
 
   The default n value.
 
-<a id="queries.clients.Client.presence_penalty"></a>
+<a id="chat.clients.Client.presence_penalty"></a>
 
 ---
 
@@ -282,7 +282,7 @@ Get the default presence penalty, if set.
 
   The default presence penalty.
 
-<a id="queries.clients.Client.response_format"></a>
+<a id="chat.clients.Client.response_format"></a>
 
 ---
 
@@ -299,7 +299,7 @@ Get the default response format, if set.
 
   The default response format.
 
-<a id="queries.clients.Client.seed"></a>
+<a id="chat.clients.Client.seed"></a>
 
 ---
 
@@ -316,7 +316,7 @@ Get the default seed value, if set.
 
   The default seed value.
 
-<a id="queries.clients.Client.stop"></a>
+<a id="chat.clients.Client.stop"></a>
 
 ---
 
@@ -333,7 +333,7 @@ Get the default stop value, if set.
 
   The default stop value.
 
-<a id="queries.clients.Client.stream"></a>
+<a id="chat.clients.Client.stream"></a>
 
 ---
 
@@ -350,7 +350,7 @@ Get the default stream bool, if set.
 
   The default stream bool.
 
-<a id="queries.clients.Client.stream_options"></a>
+<a id="chat.clients.Client.stream_options"></a>
 
 ---
 
@@ -367,7 +367,7 @@ Get the default stream options, if set.
 
   The default stream options.
 
-<a id="queries.clients.Client.temperature"></a>
+<a id="chat.clients.Client.temperature"></a>
 
 ---
 
@@ -384,7 +384,7 @@ Get the default temperature, if set.
 
   The default temperature.
 
-<a id="queries.clients.Client.top_p"></a>
+<a id="chat.clients.Client.top_p"></a>
 
 ---
 
@@ -401,7 +401,7 @@ Get the default top p value, if set.
 
   The default top p value.
 
-<a id="queries.clients.Client.tools"></a>
+<a id="chat.clients.Client.tools"></a>
 
 ---
 
@@ -418,7 +418,7 @@ Get the default tools, if set.
 
   The default tools.
 
-<a id="queries.clients.Client.tool_choice"></a>
+<a id="chat.clients.Client.tool_choice"></a>
 
 ---
 
@@ -435,7 +435,7 @@ Get the default tool choice, if set.
 
   The default tool choice.
 
-<a id="queries.clients.Client.parallel_tool_calls"></a>
+<a id="chat.clients.Client.parallel_tool_calls"></a>
 
 ---
 
@@ -452,7 +452,7 @@ Get the default parallel tool calls bool, if set.
 
   The default parallel tool calls bool.
 
-<a id="queries.clients.Client.use_custom_keys"></a>
+<a id="chat.clients.Client.use_custom_keys"></a>
 
 ---
 
@@ -469,7 +469,7 @@ Get the default use custom keys bool, if set.
 
   The default use custom keys bool.
 
-<a id="queries.clients.Client.tags"></a>
+<a id="chat.clients.Client.tags"></a>
 
 ---
 
@@ -486,7 +486,7 @@ Get the default tags, if set.
 
   The default tags.
 
-<a id="queries.clients.Client.message_content_only"></a>
+<a id="chat.clients.Client.message_content_only"></a>
 
 ---
 
@@ -503,7 +503,7 @@ Get the default message content only bool.
 
   The default message content only bool.
 
-<a id="queries.clients.Client.cache"></a>
+<a id="chat.clients.Client.cache"></a>
 
 ---
 
@@ -520,7 +520,7 @@ Get default the cache bool.
 
   The default cache bool.
 
-<a id="queries.clients.Client.extra_headers"></a>
+<a id="chat.clients.Client.extra_headers"></a>
 
 ---
 
@@ -537,7 +537,7 @@ Get the default extra headers, if set.
 
   The default extra headers.
 
-<a id="queries.clients.Client.extra_query"></a>
+<a id="chat.clients.Client.extra_query"></a>
 
 ---
 
@@ -554,7 +554,7 @@ Get the default extra query, if set.
 
   The default extra query.
 
-<a id="queries.clients.Client.extra_body"></a>
+<a id="chat.clients.Client.extra_body"></a>
 
 ---
 
@@ -571,7 +571,7 @@ Get the default extra body, if set.
 
   The default extra body.
 
-<a id="queries.clients.Client.set_endpoint"></a>
+<a id="chat.clients.Client.set_endpoint"></a>
 
 ---
 
@@ -587,7 +587,7 @@ Set the endpoint name.
 
 - `value` - The endpoint name.
 
-<a id="queries.clients.Client.set_model"></a>
+<a id="chat.clients.Client.set_model"></a>
 
 ---
 
@@ -603,7 +603,7 @@ Set the model name.
 
 - `value` - The model name.
 
-<a id="queries.clients.Client.set_provider"></a>
+<a id="chat.clients.Client.set_provider"></a>
 
 ---
 
@@ -619,7 +619,7 @@ Set the provider name.
 
 - `value` - The provider name.
 
-<a id="queries.clients.Client.set_system_prompt"></a>
+<a id="chat.clients.Client.set_system_prompt"></a>
 
 ---
 
@@ -635,7 +635,7 @@ Set the default system prompt.
 
 - `value` - The default system prompt.
 
-<a id="queries.clients.Client.set_messages"></a>
+<a id="chat.clients.Client.set_messages"></a>
 
 ---
 
@@ -651,7 +651,7 @@ Set the default messages.
 
 - `value` - The default messages.
 
-<a id="queries.clients.Client.set_frequency_penalty"></a>
+<a id="chat.clients.Client.set_frequency_penalty"></a>
 
 ---
 
@@ -667,7 +667,7 @@ Set the default frequency penalty.
 
 - `value` - The default frequency penalty.
 
-<a id="queries.clients.Client.set_logit_bias"></a>
+<a id="chat.clients.Client.set_logit_bias"></a>
 
 ---
 
@@ -683,7 +683,7 @@ Set the default logit bias.
 
 - `value` - The default logit bias.
 
-<a id="queries.clients.Client.set_logprobs"></a>
+<a id="chat.clients.Client.set_logprobs"></a>
 
 ---
 
@@ -699,7 +699,7 @@ Set the default logprobs.
 
 - `value` - The default logprobs.
 
-<a id="queries.clients.Client.set_top_logprobs"></a>
+<a id="chat.clients.Client.set_top_logprobs"></a>
 
 ---
 
@@ -715,7 +715,7 @@ Set the default top logprobs.
 
 - `value` - The default top logprobs.
 
-<a id="queries.clients.Client.set_max_tokens"></a>
+<a id="chat.clients.Client.set_max_tokens"></a>
 
 ---
 
@@ -731,7 +731,7 @@ Set the default max tokens.
 
 - `value` - The default max tokens.
 
-<a id="queries.clients.Client.set_n"></a>
+<a id="chat.clients.Client.set_n"></a>
 
 ---
 
@@ -747,7 +747,7 @@ Set the default n value.
 
 - `value` - The default n value.
 
-<a id="queries.clients.Client.set_presence_penalty"></a>
+<a id="chat.clients.Client.set_presence_penalty"></a>
 
 ---
 
@@ -763,7 +763,7 @@ Set the default presence penalty.
 
 - `value` - The default presence penalty.
 
-<a id="queries.clients.Client.set_response_format"></a>
+<a id="chat.clients.Client.set_response_format"></a>
 
 ---
 
@@ -779,7 +779,7 @@ Set the default response format.
 
 - `value` - The default response format.
 
-<a id="queries.clients.Client.set_seed"></a>
+<a id="chat.clients.Client.set_seed"></a>
 
 ---
 
@@ -795,7 +795,7 @@ Set the default seed value.
 
 - `value` - The default seed value.
 
-<a id="queries.clients.Client.set_stop"></a>
+<a id="chat.clients.Client.set_stop"></a>
 
 ---
 
@@ -811,7 +811,7 @@ Set the default stop value.
 
 - `value` - The default stop value.
 
-<a id="queries.clients.Client.set_stream"></a>
+<a id="chat.clients.Client.set_stream"></a>
 
 ---
 
@@ -827,7 +827,7 @@ Set the default stream bool.
 
 - `value` - The default stream bool.
 
-<a id="queries.clients.Client.set_stream_options"></a>
+<a id="chat.clients.Client.set_stream_options"></a>
 
 ---
 
@@ -843,7 +843,7 @@ Set the default stream options.
 
 - `value` - The default stream options.
 
-<a id="queries.clients.Client.set_temperature"></a>
+<a id="chat.clients.Client.set_temperature"></a>
 
 ---
 
@@ -859,7 +859,7 @@ Set the default temperature.
 
 - `value` - The default temperature.
 
-<a id="queries.clients.Client.set_top_p"></a>
+<a id="chat.clients.Client.set_top_p"></a>
 
 ---
 
@@ -875,7 +875,7 @@ Set the default top p value.
 
 - `value` - The default top p value.
 
-<a id="queries.clients.Client.set_tools"></a>
+<a id="chat.clients.Client.set_tools"></a>
 
 ---
 
@@ -891,7 +891,7 @@ Set the default tools.
 
 - `value` - The default tools.
 
-<a id="queries.clients.Client.set_tool_choice"></a>
+<a id="chat.clients.Client.set_tool_choice"></a>
 
 ---
 
@@ -907,7 +907,7 @@ Set the default tool choice.
 
 - `value` - The default tool choice.
 
-<a id="queries.clients.Client.set_parallel_tool_calls"></a>
+<a id="chat.clients.Client.set_parallel_tool_calls"></a>
 
 ---
 
@@ -923,7 +923,7 @@ Set the default parallel tool calls bool.
 
 - `value` - The default parallel tool calls bool.
 
-<a id="queries.clients.Client.set_use_custom_keys"></a>
+<a id="chat.clients.Client.set_use_custom_keys"></a>
 
 ---
 
@@ -939,7 +939,7 @@ Set the default use custom keys bool.
 
 - `value` - The default use custom keys bool.
 
-<a id="queries.clients.Client.set_tags"></a>
+<a id="chat.clients.Client.set_tags"></a>
 
 ---
 
@@ -955,7 +955,7 @@ Set the default tags.
 
 - `value` - The default tags.
 
-<a id="queries.clients.Client.set_message_content_only"></a>
+<a id="chat.clients.Client.set_message_content_only"></a>
 
 ---
 
@@ -971,7 +971,7 @@ Set the default message content only bool.
 
 - `value` - The default message content only bool.
 
-<a id="queries.clients.Client.set_cache"></a>
+<a id="chat.clients.Client.set_cache"></a>
 
 ---
 
@@ -987,7 +987,7 @@ Set the default cache bool.
 
 - `value` - The default cache bool.
 
-<a id="queries.clients.Client.set_extra_headers"></a>
+<a id="chat.clients.Client.set_extra_headers"></a>
 
 ---
 
@@ -1003,7 +1003,7 @@ Set the default extra headers.
 
 - `value` - The default extra headers.
 
-<a id="queries.clients.Client.set_extra_query"></a>
+<a id="chat.clients.Client.set_extra_query"></a>
 
 ---
 
@@ -1019,7 +1019,7 @@ Set the default extra query.
 
 - `value` - The default extra query.
 
-<a id="queries.clients.Client.set_extra_body"></a>
+<a id="chat.clients.Client.set_extra_body"></a>
 
 ---
 
@@ -1035,7 +1035,7 @@ Set the default extra body.
 
 - `value` - The default extra body.
 
-<a id="queries.clients.Client.generate"></a>
+<a id="chat.clients.Client.generate"></a>
 
 ---
 
@@ -1207,7 +1207,7 @@ Generate content using the Unify API.
 
 - `UnifyError` - If an error occurs during content generation.
 
-<a id="queries.clients.Client.get_credit_balance"></a>
+<a id="chat.clients.Client.get_credit_balance"></a>
 
 ---
 
@@ -1228,7 +1228,7 @@ Get the remaining credits left on your account.
 - `BadRequestError` - If there was an HTTP error.
 - `ValueError` - If there was an error parsing the JSON response.
 
-<a id="queries.clients.Unify"></a>
+<a id="chat.clients.Unify"></a>
 
 ## Unify
 
@@ -1239,7 +1239,7 @@ class Unify(Client)
 Class for interacting with the Unify chat completions endpoint in a synchronous
 manner.
 
-<a id="queries.clients.AsyncUnify"></a>
+<a id="chat.clients.AsyncUnify"></a>
 
 ## AsyncUnify
 
@@ -1250,4 +1250,4 @@ class AsyncUnify(Client)
 Class for interacting with the Unify chat completions endpoint in a synchronous
 manner.
 
-<a id="queries.multi_llm"></a>
+<a id="chat.chatbot"></a>

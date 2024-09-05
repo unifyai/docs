@@ -1,8 +1,8 @@
 ---
-title: 'chat'
+title: 'chatbot'
 ---
 
-<a id="queries.chat.ChatBot"></a>
+<a id="chat.chatbot.ChatBot"></a>
 
 ## ChatBot
 
@@ -12,7 +12,7 @@ class ChatBot()
 
 Agent class represents an LLM chat agent.
 
-<a id="queries.chat.ChatBot.__init__"></a>
+<a id="chat.chatbot.ChatBot.__init__"></a>
 
 ---
 
@@ -46,7 +46,7 @@ Initializes the ChatBot object.
 
 - `UnifyError` - If the API key is missing.
 
-<a id="queries.chat.ChatBot.client"></a>
+<a id="chat.chatbot.ChatBot.client"></a>
 
 ---
 
@@ -63,7 +63,7 @@ Get the client object.
 
   The client.
 
-<a id="queries.chat.ChatBot.set_client"></a>
+<a id="chat.chatbot.ChatBot.set_client"></a>
 
 ---
 
@@ -79,7 +79,7 @@ Set the client.
 
 - `value` - The unify client.
 
-<a id="queries.chat.ChatBot.model"></a>
+<a id="chat.chatbot.ChatBot.model"></a>
 
 ---
 
@@ -96,7 +96,7 @@ Get the model name.
 
   The model name.
 
-<a id="queries.chat.ChatBot.set_model"></a>
+<a id="chat.chatbot.ChatBot.set_model"></a>
 
 ---
 
@@ -112,7 +112,7 @@ Set the model name.
 
 - `value` - The model name.
 
-<a id="queries.chat.ChatBot.provider"></a>
+<a id="chat.chatbot.ChatBot.provider"></a>
 
 ---
 
@@ -129,7 +129,7 @@ Get the provider name.
 
   The provider name.
 
-<a id="queries.chat.ChatBot.set_provider"></a>
+<a id="chat.chatbot.ChatBot.set_provider"></a>
 
 ---
 
@@ -145,7 +145,7 @@ Set the provider name.
 
 - `value` - The provider name.
 
-<a id="queries.chat.ChatBot.endpoint"></a>
+<a id="chat.chatbot.ChatBot.endpoint"></a>
 
 ---
 
@@ -162,7 +162,7 @@ Get the endpoint name.
 
   The endpoint name.
 
-<a id="queries.chat.ChatBot.set_endpoint"></a>
+<a id="chat.chatbot.ChatBot.set_endpoint"></a>
 
 ---
 
@@ -178,7 +178,7 @@ Set the endpoint name.
 
 - `value` - The endpoint name.
 
-<a id="queries.chat.ChatBot.clear_chat_history"></a>
+<a id="chat.chatbot.ChatBot.clear_chat_history"></a>
 
 ---
 
@@ -190,7 +190,7 @@ def clear_chat_history() -> None
 
 Clears the chat history.
 
-<a id="queries.chat.ChatBot.run"></a>
+<a id="chat.chatbot.ChatBot.run"></a>
 
 ---
 
@@ -207,3 +207,4 @@ Starts the chat interaction loop.
 - `show_credits` - Whether to show credit consumption. Defaults to False.
 - `show_provider` - Whether to show the provider used. Defaults to False.
 
+<a id="chat.multi_llm"></a>
