@@ -39,8 +39,8 @@ Get the remaining credits left on your account.
 
 ```python
 @abstractmethod
-def generate(user_prompt: Optional[str] = None,
-             system_prompt: Optional[str] = None,
+def generate(user_message: Optional[str] = None,
+             system_message: Optional[str] = None,
              messages: Optional[Iterable[ChatCompletionMessageParam]] = None,
              *,
              frequency_penalty: Optional[float] = None,
@@ -70,13 +70,13 @@ Generate content using the Unify API.
 
 **Arguments**:
 
-- `user_prompt` - A string containing the user prompt.
+- `user_message` - A string containing the user message.
   If provided, messages must be None.
   
-- `system_prompt` - An optional string containing the system prompt.
+- `system_message` - An optional string containing the system message.
   
 - `messages` - A list of messages comprising the conversation so far. If
-  provided, user_prompt must be None.
+  provided, user_message must be None.
   
 - `frequency_penalty` - Number between -2.0 and 2.0. Positive values penalize new
   tokens based on their existing frequency in the text so far, decreasing the

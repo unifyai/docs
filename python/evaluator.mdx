@@ -20,7 +20,7 @@ class Evaluator(abc.ABC)
 @abstractmethod
 def evaluate(agent: Union[str, Client, Agent],
              dataset: Union[str, Dataset],
-             default_query: Prompt = None)
+             default_prompt: Prompt = None)
 ```
 
 Evaluate the agent on the given dataset, based on this evaluator.
@@ -33,9 +33,9 @@ Evaluate the agent on the given dataset, based on this evaluator.
 - `dataset` - Name of the uploaded dataset or handle to the local Dataset
   instance to evaluate
   
-- `default_query` - The default query for evaluation, which each unique query in
-  the dataset will inherit from, overwriting the extra fields. This query can
-  therefore include temperature, system prompt, tools etc. which are not
-  present in each query in the dataset.
+- `default_prompt` - The default prompt for evaluation, which each unique query in
+  the dataset will inherit from, overwriting the extra fields. This prompt can
+  therefore include temperature, system message, tools etc. which are not
+  present in each prompt in the dataset.
 
 <a id="utils"></a>
