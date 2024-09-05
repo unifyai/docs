@@ -23,7 +23,7 @@ def __init__(endpoint: Optional[str] = None,
              *,
              model: Optional[str] = None,
              provider: Optional[str] = None,
-             system_prompt: Optional[str] = None,
+             system_message: Optional[str] = None,
              messages: Optional[Iterable[ChatCompletionMessageParam]] = None,
              frequency_penalty: Optional[float] = None,
              logit_bias: Optional[Dict[str, int]] = None,
@@ -64,10 +64,10 @@ Initialize the Unify client.
   
 - `provider` - Name of the provider. Should only be set if endpoint is not set.
   
-- `system_prompt` - An optional string containing the system prompt.
+- `system_message` - An optional string containing the system message.
   
 - `messages` - A list of messages comprising the conversation so far.
-  If provided, user_prompt must be None.
+  If provided, user_message must be None.
   
 - `api_key` - API key for accessing the Unify API.
   If None, it attempts to retrieve the API key from the environment variable
@@ -129,22 +129,22 @@ Get the provider name.
 
   The provider name.
 
-<a id="chat.clients.Client.system_prompt"></a>
+<a id="chat.clients.Client.system_message"></a>
 
 ---
 
-### system\_prompt
+### system\_message
 
 ```python
 @property
-def system_prompt() -> Optional[str]
+def system_message() -> Optional[str]
 ```
 
-Get the default system prompt, if set.
+Get the default system message, if set.
 
 **Returns**:
 
-  The default system prompt.
+  The default system message.
 
 <a id="chat.clients.Client.messages"></a>
 
@@ -619,21 +619,21 @@ Set the provider name.
 
 - `value` - The provider name.
 
-<a id="chat.clients.Client.set_system_prompt"></a>
+<a id="chat.clients.Client.set_system_message"></a>
 
 ---
 
-### set\_system\_prompt
+### set\_system\_message
 
 ```python
-def set_system_prompt(value: str) -> None
+def set_system_message(value: str) -> None
 ```
 
-Set the default system prompt.  
+Set the default system message.  
 
 **Arguments**:
 
-- `value` - The default system prompt.
+- `value` - The default system message.
 
 <a id="chat.clients.Client.set_messages"></a>
 
@@ -1042,8 +1042,8 @@ Set the default extra body.
 ### generate
 
 ```python
-def generate(user_prompt: Optional[str] = None,
-             system_prompt: Optional[str] = None,
+def generate(user_message: Optional[str] = None,
+             system_message: Optional[str] = None,
              messages: Optional[Iterable[ChatCompletionMessageParam]] = None,
              *,
              frequency_penalty: Optional[float] = None,
@@ -1076,13 +1076,13 @@ Generate content using the Unify API.
 
 **Arguments**:
 
-- `user_prompt` - A string containing the user prompt.
+- `user_message` - A string containing the user message.
   If provided, messages must be None.
   
-- `system_prompt` - An optional string containing the system prompt.
+- `system_message` - An optional string containing the system message.
   
 - `messages` - A list of messages comprising the conversation so far.
-  If provided, user_prompt must be None.
+  If provided, user_message must be None.
   
 - `frequency_penalty` - Number between -2.0 and 2.0. Positive values penalize new
   tokens based on their existing frequency in the text so far, decreasing the
