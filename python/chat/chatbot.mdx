@@ -19,32 +19,14 @@ Agent class represents an LLM chat agent.
 ### \_\_init\_\_
 
 ```python
-def __init__(endpoint: Optional[str] = None,
-             model: Optional[str] = None,
-             provider: Optional[str] = None,
-             api_key: Optional[str] = None) -> None
+def __init__(client: Client) -> None
 ```
 
-Initializes the ChatBot object.
+Initializes the ChatBot object, wrapped around a client.
 
 **Arguments**:
 
-- `endpoint` - Endpoint name in OpenAI API format:
-  \<uploaded_by\>/\<model_name\>@\<provider_name\>
-  Defaults to None.
-  
-- `model` - Name of the model. If None, endpoint must be provided.
-  
-- `provider` - Name of the provider. If None, endpoint must be provided.
-  
-- `api_key` - API key for accessing the Unify API. If None, it attempts to
-  retrieve the API key from the environment variable UNIFY_KEY.
-  Defaults to None.
-  
-
-**Raises**:
-
-- `UnifyError` - If the API key is missing.
+- `client` - The Client instance to wrap the chatbot logic around.
 
 <a id="chat.chatbot.ChatBot.client"></a>
 
@@ -54,7 +36,7 @@ Initializes the ChatBot object.
 
 ```python
 @property
-def client() -> Unify
+def client() -> Client
 ```
 
 Get the client object.  
@@ -70,7 +52,7 @@ Get the client object.
 ### set\_client
 
 ```python
-def set_client(value: Unify) -> None
+def set_client(value: client) -> None
 ```
 
 Set the client.  
@@ -78,105 +60,6 @@ Set the client.
 **Arguments**:
 
 - `value` - The unify client.
-
-<a id="chat.chatbot.ChatBot.model"></a>
-
----
-
-### model
-
-```python
-@property
-def model() -> str
-```
-
-Get the model name.  
-
-**Returns**:
-
-  The model name.
-
-<a id="chat.chatbot.ChatBot.set_model"></a>
-
----
-
-### set\_model
-
-```python
-def set_model(value: str) -> None
-```
-
-Set the model name.  
-
-**Arguments**:
-
-- `value` - The model name.
-
-<a id="chat.chatbot.ChatBot.provider"></a>
-
----
-
-### provider
-
-```python
-@property
-def provider() -> Optional[str]
-```
-
-Get the provider name.  
-
-**Returns**:
-
-  The provider name.
-
-<a id="chat.chatbot.ChatBot.set_provider"></a>
-
----
-
-### set\_provider
-
-```python
-def set_provider(value: str) -> None
-```
-
-Set the provider name.  
-
-**Arguments**:
-
-- `value` - The provider name.
-
-<a id="chat.chatbot.ChatBot.endpoint"></a>
-
----
-
-### endpoint
-
-```python
-@property
-def endpoint() -> str
-```
-
-Get the endpoint name.  
-
-**Returns**:
-
-  The endpoint name.
-
-<a id="chat.chatbot.ChatBot.set_endpoint"></a>
-
----
-
-### set\_endpoint
-
-```python
-def set_endpoint(value: str) -> None
-```
-
-Set the endpoint name.  
-
-**Arguments**:
-
-- `value` - The endpoint name.
 
 <a id="chat.chatbot.ChatBot.clear_chat_history"></a>
 
