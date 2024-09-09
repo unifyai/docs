@@ -21,9 +21,8 @@ Base Abstract class for interacting with the Unify chat completions endpoint.
 ```python
 def __init__(*,
              system_message: Optional[str] = None,
-             messages: Optional[Union[
-                 Iterable[ChatCompletionMessageParam],
-                 Dict[str, Iterable[ChatCompletionMessageParam]]]] = None,
+             messages: Optional[Union[List[ChatCompletionMessageParam], Dict[
+                 str, List[ChatCompletionMessageParam]]]] = None,
              frequency_penalty: Optional[float] = None,
              logit_bias: Optional[Dict[str, int]] = None,
              logprobs: Optional[bool] = None,
@@ -205,8 +204,8 @@ Get the default system message, if set.
 
 ```python
 @property
-def messages() -> Optional[Union[Iterable[ChatCompletionMessageParam], Dict[
-    str, Iterable[ChatCompletionMessageParam]]]]
+def messages() -> Optional[Union[List[ChatCompletionMessageParam], Dict[
+    str, List[ChatCompletionMessageParam]]]]
 ```
 
 Get the default messages, if set.
@@ -647,8 +646,8 @@ Set the default system message.
 
 ```python
 def set_messages(
-    value: Union[Iterable[ChatCompletionMessageParam],
-                 Dict[str, Iterable[ChatCompletionMessageParam]]]
+    value: Union[List[ChatCompletionMessageParam],
+                 Dict[str, List[ChatCompletionMessageParam]]]
 ) -> None
 ```
 
@@ -1051,9 +1050,8 @@ Set the default extra body.
 ```python
 def generate(user_message: Optional[str] = None,
              system_message: Optional[str] = None,
-             messages: Optional[Union[
-                 Iterable[ChatCompletionMessageParam],
-                 Dict[str, Iterable[ChatCompletionMessageParam]]]] = None,
+             messages: Optional[Union[List[ChatCompletionMessageParam], Dict[
+                 str, List[ChatCompletionMessageParam]]]] = None,
              *,
              frequency_penalty: Optional[float] = None,
              logit_bias: Optional[Dict[str, int]] = None,
