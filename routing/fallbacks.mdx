@@ -10,9 +10,45 @@ so if one provider is down or fails for some reason,
 the request will go to the next model on the list, and so on, until either the
 request succeeds, or the end of the list is reached.
 
-To specify the list of fallback models, use `->` between individual model tags, so the
-model string becomes `model_a@provider_a->model_b@provider_b`.
+### Example
 
-There is no limit on the number of models that can be specified.
-The `model` field in the response contains the model and provider that the request
-actually went to.
+Let's assume you have an application that uses `gemini-1.5-pro@vertex-ai`.
+You're currently using the endpoint through the `us-west1` region.
+But in cases where you face outages in `us-west1`, you would like to fallback to the `us-east1` region instead.
+In such cases, you can specify the params passed to both the endpoints when making use of `/chat/completions` as follows:
+
+```python
+
+import requests
+
+url = "https://api.unify.ai/v0/chat/completions"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = [
+    {
+        "messages": [
+            {
+                "role": "user",
+                "content": "Tell me a joke"
+            }
+        ],
+        "model": "gemini-1.5-pro@vertex-ai",
+        "region": "us-west1",
+        "max_tokens": 100
+    },
+        {
+        "messages": [
+            {
+                "role": "user",
+                "content": "Tell me a joke"
+            }
+        ],
+        "model": "gemini-1.5-pro@vertex-ai",
+        "region": "us-east1",
+        "max_tokens": 100
+    }
+]
+
+You can add as many fallbacks across any of the arguments to the `/chat/completions` endpoint,
+based on your requirements.
