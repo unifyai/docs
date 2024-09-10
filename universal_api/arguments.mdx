@@ -30,9 +30,9 @@ platform. We're calling these **Platform Arguments**
 - `drop_params`: in case arguments passed aren't supported by certain providers, uses [this](https://docs.litellm.ai/docs/completion/drop_params)
 
 All these arguments (i.e. the ones accepted by LiteLLM's API and the Platform Arguments) are explicitly mirrored in the
-[generate](https://docs.unify.ai/python/clients#generate) function of the
-[Unify](https://docs.unify.ai/python/clients#unify) client and
-[AsyncUnify](https://docs.unify.ai/python/clients#asyncunify) client
+[generate](https://docs.unify.ai/python/chat/clients/base#generate) function of the
+[Unify](https://docs.unify.ai/python/chat/clients/uni_llm#unify) client and
+[AsyncUnify](https://docs.unify.ai/python/chat/clients/uni_llm#asyncunify) client
 in the Python SDK.
 
 If you believe one of these arguments *could* be supported by a certain model or provider, but is not currently
@@ -103,7 +103,7 @@ There are three types of passthrough arguments:
     ```
 
 In the Python client, these extra arguments are handled by the `extra_headers` argument, `extra_query` argument,
-and direct `**kwargs` of the [generate function](https://docs.unify.ai/python/clients#generate), respectively.
+and direct `**kwargs` of the [generate function](https://docs.unify.ai/python/chat/clients/base#generate), respectively.
 
 ### Anthropic-Only Example
 
