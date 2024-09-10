@@ -28,6 +28,7 @@ platform. We're calling these **Platform Arguments**
 - `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
 - `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
 - `drop_params`: in case arguments passed aren't supported by certain providers, uses [this](https://docs.litellm.ai/docs/completion/drop_params)
+- `region`: the region where the endpoint is accessed, only relevant for certain providers like `vertex-ai` and `aws-bedrock`.
 
 All these arguments (i.e. the ones accepted by LiteLLM's API and the Platform Arguments) are explicitly mirrored in the
 [generate](https://docs.unify.ai/python/chat/clients/base#generate) function of the
@@ -230,3 +231,9 @@ The image captures intricate details of the ant's body segments and legs.
 The background has a reddish-brown hue, creating a striking contrast against the dark coloration of the ant.
 This macro photography shot highlights the remarkable structure and form of this small insect in great detail.
 ```
+
+### Region-specific endpoints (`vertex-ai`, `aws-bedrock`)
+
+In case of models accessible under `vertex-ai` and `aws-bedrock`, you can specify the region where you'd like to
+access the model through the `region` parameter on the `/chat/completions` endpoint. This is only required for
+on-prem usage, as the serverless offering selects a region for you.
