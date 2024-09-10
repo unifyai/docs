@@ -147,6 +147,10 @@ Comma-separated list of tags to associate with the corresponding prompt.
 Whether or not to drop unsupported OpenAI params by the provider you're using
 </ParamField>
 
+<ParamField body="region" type="string | null" >
+A string used to represent the region where the endpoint is accessed. This is only relevant for certain providers like `vertex-ai`, `azure-ai` and `aws-bedrock`, where the endpoint is being accessed through a specified region.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
