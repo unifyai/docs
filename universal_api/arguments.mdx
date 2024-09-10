@@ -15,22 +15,24 @@ and many other increasingly complex modes of operation.
 
 ### Supported Arguments
 
-To *simplify* the design, we have built our API on top of LiteLLM and so the unification logic
-for the arguments passed is handled by LiteLLM. We recommend you to go through their chat completions
-[docs](https://docs.litellm.ai/docs/completion) to find out the arguments supported.
+Our API builds on top of and extends LiteLLM under the hood. As a starting point, we recommend you go through their
+chat completions [docs](https://docs.litellm.ai/docs/completion) to find out the arguments supported.
+In general, all models and providers are unified under the
+[OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat),
+as can be seen in our own chat completion
+[API reference](https://docs.unify.ai/api-reference/llm_queries/chat_completions),
+but we also support [provider-specific parameters](https://docs.litellm.ai/docs/completion/provider_specific_params).
+Additionally, we extend support to several other providers, such as [Lepton AI](https://www.lepton.ai/)
+and [OctoAI](https://octo.ai/).
 
-There are some providers (e.g. Lepton AI) that aren't supported by LiteLLM but are supported under our 
-API. We've tried to maintain the same argument signature for those providers as well.
-
-Alongside the arguments accepted by LiteLLM in the input, we accept a few other arguments specific to our
-platform. We're calling these **Platform Arguments**
+We also accept a few other arguments specific to our platform. We refer to these as the **Platform Arguments**
 - `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
 - `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
 - `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
 - `drop_params`: in case arguments passed aren't supported by certain providers, uses [this](https://docs.litellm.ai/docs/completion/drop_params)
 - `region`: the region where the endpoint is accessed, only relevant for certain providers like `vertex-ai` and `aws-bedrock`.
 
-All these arguments (i.e. the ones accepted by LiteLLM's API and the Platform Arguments) are explicitly mirrored in the
+All of these arguments (LiteLLM + platform arguments) are explicitly mirrored in the
 [generate](https://docs.unify.ai/python/chat/clients/base#generate) function of the
 [Unify](https://docs.unify.ai/python/chat/clients/uni_llm#unify) client and
 [AsyncUnify](https://docs.unify.ai/python/chat/clients/uni_llm#asyncunify) client
@@ -43,7 +45,7 @@ and we'll get it supported as soon as possible! ⚡
 ### Tool Use Example
 
 OpenAI and Anthropic have different interfaces for tool use.
-Since we adhere to the OpenAI standard, we accept tools as specified by the OpenAI standard.
+Since our API adheres to the OpenAI standard, we accept tools as specified by this standard.
 
 This is the default function calling example from OpenAI, working with an Anthropic model:
 
@@ -71,6 +73,89 @@ tools = [
 client = unify.Unify("claude-3.5-sonnet@aws-bedrock")
 client.generate("What is the current temperature of New York, San Francisco and Chicago?", tools=tools, tool_choice="auto", message_content_only=False)
 ```
+
+### Vision Example Queries
+
+Unify also supports multi-modal inputs. Below are a couple of examples analyzing the content of images.
+
+Firstly, let's use `gpt-4o` to work out what's in this picture:
+<p align="left">
+    <img width={384} src="/images/nature.png" alt="Nature Image" />
+</p>
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai")
+response = client.generate(
+  messages=[
+    {
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "What’s in this image?"},
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+          },
+        },
+      ],
+    }
+  ],
+  max_tokens=300,
+)
+
+print(response)
+```
+
+We get something like the following:
+
+```
+The image depicts a serene landscape featuring a wooden pathway that extends into the distance, cutting through a lush green field.
+The field is filled with tall grasses and a variety of low-lying shrubs and bushes.
+In the background, there are scattered trees, and the sky above is a clear blue with some wispy clouds.
+The scene exudes a calm, peaceful, and natural atmosphere.
+```
+
+Let's do the same with `claude-3-sonnet`, with a different image this time:
+
+<p align="left">
+    <img width={384} src="/images/ant.jpg" alt="Ant Image" />
+</p>
+
+```python
+import unify
+client = unify.Unify("claude-3-sonnet@anthropic")
+response = client.generate(
+  messages=[
+    {
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "What’s in this image?"},
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg",
+          },
+        },
+      ],
+    }
+  ],
+  max_tokens=300,
+)
+
+print(response)
+```
+
+We get something like the following:
+
+```
+The image shows a close-up view of an ant. The ant appears to be a large black carpenter ant species.
+The ant is standing on a light-colored surface, with its mandibles open and antennae extended.
+The image captures intricate details of the ant's body segments and legs.
+The background has a reddish-brown hue, creating a striking contrast against the dark coloration of the ant.
+This macro photography shot highlights the remarkable structure and form of this small insect in great detail.
+```
+
 
 ## Passthrough Arguments
 
@@ -119,7 +204,7 @@ curl --request POST \
   --url 'https://api.unify.ai/v0/chat/completions' \
   --header 'Authorization: Bearer $UNIFY_KEY' \
   --header 'Content-Type: application/json' \
-  --header 'anthropic-beta: max-tokens-3-5-sonnet-2024-07-15'
+  --header 'anthropic-beta: max-tokens-3-5-sonnet-2024-07-15' \
   --data '{
     "model": "claude-3.5-sonnet@anthropic",
     "messages": [
@@ -139,101 +224,3 @@ client.generate("hello world!", extra_headers={"anthropic-beta": "max-tokens-3-5
 ```
 
 {/* ToDo: add an example for a query parameter, again with both curl + python examples */}
-
-### Multi-Modal Queries
-
-The *passthrough* approach means that Unify also supports multi-modal inputs,
-and indeed supports anything which *any* of the providers support via their chat completions API.
-Below are a few examples of multi-modal queries, making use of passthrough arguments:
-
-For example, let's use `gpt-4o` to work out what's in this picture:
-<p align="left">
-    <img width={384} src="/images/nature.png" alt="Nature Image" />
-</p>
-
-```python
-import unify
-client = unify.Unify("gpt-4o@openai")
-response = client.generate(
-  messages=[
-    {
-      "role": "user",
-      "content": [
-        {"type": "text", "text": "What’s in this image?"},
-        {
-          "type": "image_url",
-          "image_url": {
-            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
-          },
-        },
-      ],
-    }
-  ],
-  max_tokens=300,
-)
-
-print(response)
-```
-
-We get something like the following:
-
-```
-The image depicts a serene landscape featuring a wooden pathway that extends into the distance, cutting through a lush green field.
-The field is filled with tall grasses and a variety of low-lying shrubs and bushes.
-In the background, there are scattered trees, and the sky above is a clear blue with some wispy clouds.
-The scene exudes a calm, peaceful, and natural atmosphere.
-```
-
-Let's do the same with `claude-3-sonnet`, with a different image this time:
-
-<p align="left">
-    <img width={384} src="/images/ant.jpg" alt="Ant Image" />
-</p>
-
-```python
-import unify
-import base64
-import httpx
-
-image_url = "https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg"
-image_media_type = "image/jpeg"
-image_data = base64.b64encode(httpx.get(image_url).content).decode("utf-8")
-
-client = unify.Unify("claude-3-sonnet@anthropic")
-response = client.generate(
-    messages=[
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": "What’s in this image?"},
-                {
-                    "type": "image",
-                    "source": {
-                        "type": "base64",
-                        "media_type": image_media_type,
-                        "data": image_data,
-                    },
-                },
-            ],
-        }
-    ],
-    max_tokens=300,
-)
-print(response)
-```
-
-We get something like the following:
-
-```
-The image shows a close-up view of an ant. The ant appears to be a large black carpenter ant species.
-The ant is standing on a light-colored surface, with its mandibles open and antennae extended.
-The image captures intricate details of the ant's body segments and legs.
-The background has a reddish-brown hue, creating a striking contrast against the dark coloration of the ant.
-This macro photography shot highlights the remarkable structure and form of this small insect in great detail.
-```
-
-### Region-specific endpoints (`vertex-ai`, `aws-bedrock`)
-
-In case of models accessible under `vertex-ai` and `aws-bedrock`, you can specify the region where you'd like to
-access the model through the `region` parameter on the `/chat/completions` endpoint. This is only required for
-on-prem usage, as the serverless offering selects a region for you.
