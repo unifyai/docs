@@ -212,7 +212,18 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ChatCompletionRequest"
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ChatCompletionRequest"
+                                    },
+                                    {
+                                        "items": {
+                                            "$ref": "#/components/schemas/ChatCompletionRequest"
+                                        },
+                                        "type": "array"
+                                    }
+                                ],
+                                "title": "Request"
                             }
                         }
                     },
@@ -3520,8 +3531,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
