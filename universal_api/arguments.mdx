@@ -186,6 +186,87 @@ There are three types of passthrough arguments:
 In the Python client, these extra arguments are handled by the `extra_headers` argument, `extra_query` argument,
 and direct `**kwargs` of the [generate function](https://docs.unify.ai/python/chat/clients/base#generate), respectively.
 
+For arguments which are part of the OpenAI standard **and also** another provider standard,
+then **only the OpenAI behaviour is supported**.
+
+For example, `messages` is an argument used in the APIs of both OpenAI and Anthropic ,
+as can be seen [here](https://platform.openai.com/docs/api-reference/chat)
+and [here](https://docs.anthropic.com/en/api/messages) respectively.
+Any provider-specific aspects of this argument (different to OpenAI behaviour) are
+therefore not supported, and only the OpenAI behaviour is supported.
+
+As an example, the following example works with Anthropic:
+
+```python
+import anthropic
+import base64
+import httpx
+
+image_url = "https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg"
+image_media_type = "image/jpeg"
+image_data = base64.b64encode(httpx.get(image_url).content).decode("utf-8")
+
+client = anthropic.Anthropic()
+response = client.messages.create(
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What’s in this image?"},
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": image_media_type,
+                        "data": image_data,
+                    },
+                },
+            ],
+        }
+    ],
+    max_tokens=300,
+    model="claude-3-opus-20240229"
+)
+print(response)
+```
+
+But an example using the same formatting would fail with our API:
+
+```python
+import unify
+import base64
+import httpx
+
+image_url = "https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg"
+image_media_type = "image/jpeg"
+image_data = base64.b64encode(httpx.get(image_url).content).decode("utf-8")
+
+client = unify.Unify("claude-3-sonnet@anthropic")
+response = client.generate(
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What’s in this image?"},
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": image_media_type,
+                        "data": image_data,
+                    },
+                },
+            ],
+        }
+    ],
+    max_tokens=300,
+)
+print(response)
+```
+
+To make use of vision features, then the OpenAI format must be adopted in the messages
+argument, as per the working Anthropic vision example above.
+
 ### Anthropic Headers Example
 
 Features supported by providers outside of the OpenAI standard are sometimes released
