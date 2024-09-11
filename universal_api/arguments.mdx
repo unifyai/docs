@@ -17,12 +17,13 @@ and many other increasingly complex modes of operation.
 
 Our API builds on top of and extends LiteLLM under the hood. As a starting point, we recommend you go through the
 [Input Params](https://docs.litellm.ai/docs/completion/input) in their
-chat completions [docs](https://docs.litellm.ai/docs/completion) to find out the *unified* arguments supported.
-We use the latest PyPI version at all times. In general, all models and providers are unified under the
-[OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat),
+chat completions [docs](https://docs.litellm.ai/docs/completion) to find out the *unified* arguments we support
+(an alias to their "Input Params").
+We use the latest PyPI version at all times. In general, all models and providers are unified to adopt the
+[OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat) standard,
 as can be seen in our own chat completion
 [API reference](https://docs.unify.ai/api-reference/llm_queries/chat_completions).
-We also extend the LiteLLM backend to support several other providers, such as [Lepton AI](https://www.lepton.ai/)
+We also extend support to several other providers not handled by LiteLLM, such as [Lepton AI](https://www.lepton.ai/)
 and [OctoAI](https://octo.ai/).
 
 ### Tool Use Example
@@ -154,7 +155,7 @@ referred to as **Platform Arguments**
 The *passthrough* arguments are not handled by Unify at all, they are *passed through*
 directly to the backend provider, without any modification.
 We build upon LiteLLM's [Provider-specific Params](https://docs.litellm.ai/docs/completion/provider_specific_params)
-for handling these arguments.
+for handling these arguments. "Passthrough arguments" is effectively an alias for LiteLLM's "Provider-specific Params".
 
 There are three types of passthrough arguments:
 
