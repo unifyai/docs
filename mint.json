@@ -177,7 +177,9 @@
                         "api-reference/datasets/download_dataset",
                         "api-reference/datasets/delete_dataset",
                         "api-reference/datasets/rename_dataset",
-                        "api-reference/datasets/list_datasets"
+                        "api-reference/datasets/list_datasets",
+                        "api-reference/datasets/delete_prompt",
+                        "api-reference/datasets/add_prompt"
                     ]
                 },
                 {
@@ -191,12 +193,21 @@
                     ]
                 },
                 {
+                    "group": "Default Prompts",
+                    "pages": [
+                        "api-reference/default_prompts/create_default_prompt",
+                        "api-reference/default_prompts/get_default_prompt",
+                        "api-reference/default_prompts/delete_default_prompt",
+                        "api-reference/default_prompts/rename_default_prompt",
+                        "api-reference/default_prompts/list_default_prompts"
+                    ]
+                },
+                {
                     "group": "Evaluations",
                     "pages": [
                         "api-reference/evaluations/trigger_evaluation",
                         "api-reference/evaluations/get_evaluations",
-                        "api-reference/evaluations/delete_evaluations",
-                        "api-reference/evaluations/eval_status"
+                        "api-reference/evaluations/delete_evaluations"
                     ]
                 },
                 {

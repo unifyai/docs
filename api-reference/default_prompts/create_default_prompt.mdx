@@ -1,0 +1,73 @@
+---
+title: 'Create Default Prompt'
+api: 'POST /v0/default_prompt'
+---
+Create a re-usable, named default prompt, and adds this to your account. This can be used
+as an argument to the `/evaluation` POST endpoint.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="name" type="string" required="true">
+A unique, user-defined name used when referencing  the default prompt.
+</ParamField>
+
+<ParamField body="prompt" type="object"  default={false}>
+Prompt fields that will override any field in the prompt to be evaluated when triggering an evaluation.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/default_prompt' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "eval1"
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/default_prompt"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"name": "eval1"}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Default Prompt created successfully!"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
