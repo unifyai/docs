@@ -2,7 +2,7 @@
 title: 'Arguments'
 ---
 
-### Introduction
+## Introduction
 
 With so many LLMs and providers constantly coming onto the scene, each of these is
 increasingly striving to provide unique value to end users, and this means that there
@@ -13,34 +13,17 @@ others support function calling, tool use, image processing, audio,
 structured output (such as json mode),
 and many other increasingly complex modes of operation.
 
-### Supported Arguments
+## Unified Arguments
 
-Our API builds on top of and extends LiteLLM under the hood. As a starting point, we recommend you go through their
-chat completions [docs](https://docs.litellm.ai/docs/completion) to find out the arguments supported.
-In general, all models and providers are unified under the
+Our API builds on top of and extends LiteLLM under the hood. As a starting point, we recommend you go through the
+[Input Params](https://docs.litellm.ai/docs/completion/input) in their
+chat completions [docs](https://docs.litellm.ai/docs/completion) to find out the *unified* arguments supported.
+We use the latest PyPI version at all times. In general, all models and providers are unified under the
 [OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat),
 as can be seen in our own chat completion
-[API reference](https://docs.unify.ai/api-reference/llm_queries/chat_completions),
-but we also support [provider-specific parameters](https://docs.litellm.ai/docs/completion/provider_specific_params).
-Additionally, we extend support to several other providers, such as [Lepton AI](https://www.lepton.ai/)
+[API reference](https://docs.unify.ai/api-reference/llm_queries/chat_completions).
+We also extend the LiteLLM backend to support several other providers, such as [Lepton AI](https://www.lepton.ai/)
 and [OctoAI](https://octo.ai/).
-
-We also accept a few other arguments specific to our platform. We refer to these as the **Platform Arguments**
-- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
-- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
-- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
-- `drop_params`: in case arguments passed aren't supported by certain providers, uses [this](https://docs.litellm.ai/docs/completion/drop_params)
-- `region`: the region where the endpoint is accessed, only relevant for certain providers like `vertex-ai` and `aws-bedrock`.
-
-All of these arguments (LiteLLM + platform arguments) are explicitly mirrored in the
-[generate](https://docs.unify.ai/python/chat/clients/base#generate) function of the
-[Unify](https://docs.unify.ai/python/chat/clients/uni_llm#unify) client and
-[AsyncUnify](https://docs.unify.ai/python/chat/clients/uni_llm#asyncunify) client
-in the Python SDK.
-
-If you believe one of these arguments *could* be supported by a certain model or provider, but is not currently
-supported, then feel free to let us know [on discord](https://discord.com/invite/sXyFF8tDtm)
-and we'll get it supported as soon as possible! ⚡
 
 ### Tool Use Example
 
@@ -74,7 +57,7 @@ client = unify.Unify("claude-3.5-sonnet@aws-bedrock")
 client.generate("What is the current temperature of New York, San Francisco and Chicago?", tools=tools, tool_choice="auto", message_content_only=False)
 ```
 
-### Vision Example Queries
+### Vision Example
 
 Unify also supports multi-modal inputs. Below are a couple of examples analyzing the content of images.
 
@@ -156,6 +139,15 @@ The background has a reddish-brown hue, creating a striking contrast against the
 This macro photography shot highlights the remarkable structure and form of this small insect in great detail.
 ```
 
+## Platform Arguments
+
+In addition to the unified arguments, we also accept other arguments specific to our platform,
+referred to as **Platform Arguments**
+- `signature` specifying how the API was called (Unify Python Client, NodeJS client, Console etc.)
+- `use_custom_keys` specifying whether to use custom keys or the unified keys with the provider.
+- `tags`: to mark a prompt with string-metadata which can be used for filtering later on.
+- `drop_params`: in case arguments passed aren't supported by certain providers, uses [this](https://docs.litellm.ai/docs/completion/drop_params)
+- `region`: the region where the endpoint is accessed, only relevant for certain providers like `vertex-ai` and `aws-bedrock`.
 
 ## Passthrough Arguments
 
@@ -191,7 +183,7 @@ There are three types of passthrough arguments:
 In the Python client, these extra arguments are handled by the `extra_headers` argument, `extra_query` argument,
 and direct `**kwargs` of the [generate function](https://docs.unify.ai/python/chat/clients/base#generate), respectively.
 
-### Anthropic-Only Example
+### Anthropic Headers Example
 
 Features supported by providers outside of the OpenAI standard are sometimes released
 as beta features, which can be accessed via specific headers, as explained in
@@ -224,3 +216,15 @@ client.generate("hello world!", extra_headers={"anthropic-beta": "max-tokens-3-5
 ```
 
 {/* ToDo: add an example for a query parameter, again with both curl + python examples */}
+
+## Python SDK
+
+All of these arguments (both unified + platform arguments) are explicitly mirrored in the
+[generate](https://docs.unify.ai/python/chat/clients/base#generate) function of the
+[Unify](https://docs.unify.ai/python/chat/clients/uni_llm#unify) client and
+[AsyncUnify](https://docs.unify.ai/python/chat/clients/uni_llm#asyncunify) client
+in the Python SDK.
+
+If you believe one of these arguments *could* be supported by a certain model or provider, but is not currently
+supported, then feel free to let us know [on discord](https://discord.com/invite/sXyFF8tDtm)
+and we'll get it supported as soon as possible! ⚡
