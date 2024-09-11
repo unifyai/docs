@@ -224,7 +224,8 @@
                         "api-reference/router_training/train_router",
                         "api-reference/router_training/delete_router",
                         "api-reference/router_training/rename_router",
-                        "api-reference/router_training/list_routers"
+                        "api-reference/router_training/list_routers",
+                        "api-reference/router_training/get_dataset_evaluation"
                     ]
                 },
                 {
