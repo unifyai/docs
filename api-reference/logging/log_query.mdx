@@ -10,25 +10,25 @@ api: 'POST /v0/queries'
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
-#### Query Parameters
+#### Body
 
-<ParamField query="endpoint" type="string" required="true">
+<ParamField body="endpoint" type="string" required="true">
 Endpoint to log query for.
 </ParamField>
 
-<ParamField query="query_body" type="string" required="true">
-A string containing the body of the request
+<ParamField body="query_body" type="object" required="true">
+A JSON object containing the body of the request
 </ParamField>
 
-<ParamField query="response_body" type="string | null" >
-An optional string containing the response to the request
+<ParamField body="response_body" type="object | null" >
+An optional JSON object containing the response to the request
 </ParamField>
 
-<ParamField query="tags" type="array | null" >
+<ParamField body="tags" type="array | null" >
 Tags for later filtering.
 </ParamField>
 
-<ParamField query="timestamp" type="string | null" >
+<ParamField body="timestamp" type="string | null" >
 A timestamp (if not set, will be the time of sending)
 </ParamField>
 
@@ -36,18 +36,61 @@ A timestamp (if not set, will be the time of sending)
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/queries?endpoint=llama-3.1-8b-chat_ollama@external&query_body='{"messages":%20[{"role":%20"system",%20"content":%20"You%20are%20an%20useful%20assistant"},%20{"role":%20"user",%20"content":%20"Explain%20who%20Newton%20was."}],%20"model":%20"llama-3-8b-chat@aws-bedrock",%20"max_tokens":%20100,"stream":%20false,%20"temperature":%200.5,}'&response_body='{"model":%20"meta.llama3-8b-instruct-v1:0",%20"created":%201725396241,%20"id":%20"chatcmpl-92d3b36e-7b64-4ae8-8102-9b7e3f5dd30f",%20"object":%20"chat.completion",%20"usage":%20{"completion_tokens":%20100,%20"prompt_tokens":%2044,%20"total_tokens":%20144},%20"choices":%20[{"finish_reason":%20"stop",%20"index":%200,%20"message":%20{"content":%20"Sir%20Isaac%20Newton%20was%20an%20English%20mathematician,%20physicist,%20and%20astronomer%20who%20lived%20from%201643%20to%201727.\n\nHe%20is%20widely%20recognized%20as%20one%20of%20the%20most%20influential%20scientists%20in%20history,%20and%20his%20work%20laid%20the%20foundation%20for%20the%20Scientific%20Revolution%20of%20the%2017th%20century.\n\nNewton's%20most%20famous%20achievement%20is%20his%20theory%20of%20universal%20gravitation,%20which%20he%20presented%20in%20his%20groundbreaking%20book%20\"Philosophi\u00e6%20Naturalis%20Principia%20Mathematica\"%20in%201687.\n\nAccording%20to%20Newton's%20theory,%20every",%20"role":%20"assistant",%20"tool_calls":%20null,%20"function_call":%20null}}]}'&tags=None&timestamp=2024-07-12T04:20:32.808410' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --url 'https://api.unify.ai/v0/queries' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "endpoint": "llama-3.1-8b-chat_ollama@external",
+    "query_body": {
+        "max_tokens": 100,
+        "messages": [
+            {
+                "content": "You are an useful assistant",
+                "role": "system"
+            },
+            {
+                "content": "Explain who Newton was.",
+                "role": "user"
+            }
+        ],
+        "model": "llama-3.1-8b-chat_ollama@external",
+        "temperature": 0.5
+    },
+    "response_body": {
+        "choices": [
+            {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                    "content": "Sir Isaac Newton was an English mathematician, physicist, and astronomer who lived from 1643 to 1727.\\n\\nHe is widely recognized as one of the most influential scientists in history, and his work laid the foundation for the Scientific Revolution of the 17th century.\\n\\nNewton's most famous achievement is his theory of universal gravitation, which he presented in his groundbreaking book \"Philosophi\\u00e6 Naturalis Principia Mathematica\" in 1687.\\n\\nAccording to Newton's theory, every",
+                    "role": "assistant"
+                }
+            }
+        ],
+        "created": 1725396241,
+        "id": "chatcmpl-92d3b36e-7b64-4ae8-8102-9b7e3f5dd30f",
+        "model": "meta.llama3-8b-instruct-v1:0",
+        "object": "chat.completion",
+        "usage": {
+            "completion_tokens": 100,
+            "prompt_tokens": 44,
+            "total_tokens": 144
+        }
+    },
+    "timestamp": "2024-07-12T04:20:32.808410"
+}'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/queries?endpoint=llama-3.1-8b-chat_ollama@external&query_body='{"messages":%20[{"role":%20"system",%20"content":%20"You%20are%20an%20useful%20assistant"},%20{"role":%20"user",%20"content":%20"Explain%20who%20Newton%20was."}],%20"model":%20"llama-3-8b-chat@aws-bedrock",%20"max_tokens":%20100,"stream":%20false,%20"temperature":%200.5,}'&response_body='{"model":%20"meta.llama3-8b-instruct-v1:0",%20"created":%201725396241,%20"id":%20"chatcmpl-92d3b36e-7b64-4ae8-8102-9b7e3f5dd30f",%20"object":%20"chat.completion",%20"usage":%20{"completion_tokens":%20100,%20"prompt_tokens":%2044,%20"total_tokens":%20144},%20"choices":%20[{"finish_reason":%20"stop",%20"index":%200,%20"message":%20{"content":%20"Sir%20Isaac%20Newton%20was%20an%20English%20mathematician,%20physicist,%20and%20astronomer%20who%20lived%20from%201643%20to%201727.\n\nHe%20is%20widely%20recognized%20as%20one%20of%20the%20most%20influential%20scientists%20in%20history,%20and%20his%20work%20laid%20the%20foundation%20for%20the%20Scientific%20Revolution%20of%20the%2017th%20century.\n\nNewton's%20most%20famous%20achievement%20is%20his%20theory%20of%20universal%20gravitation,%20which%20he%20presented%20in%20his%20groundbreaking%20book%20\"Philosophi\u00e6%20Naturalis%20Principia%20Mathematica\"%20in%201687.\n\nAccording%20to%20Newton's%20theory,%20every",%20"role":%20"assistant",%20"tool_calls":%20null,%20"function_call":%20null}}]}'&tags=None&timestamp=2024-07-12T04:20:32.808410"
+url = "https://api.unify.ai/v0/queries"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("POST", url, headers=headers)
+json_input = {"endpoint": "llama-3.1-8b-chat_ollama@external", "query_body": {"max_tokens": 100, "messages": [{"content": "You are an useful assistant", "role": "system"}, {"content": "Explain who Newton was.", "role": "user"}], "model": "llama-3.1-8b-chat_ollama@external", "temperature": 0.5}, "response_body": {"choices": [{"finish_reason": "stop", "index": 0, "message": {"content": "Sir Isaac Newton was an English mathematician, physicist, and astronomer who lived from 1643 to 1727.\\n\\nHe is widely recognized as one of the most influential scientists in history, and his work laid the foundation for the Scientific Revolution of the 17th century.\\n\\nNewton\"s most famous achievement is his theory of universal gravitation, which he presented in his groundbreaking book "Philosophi\\u00e6 Naturalis Principia Mathematica" in 1687.\\n\\nAccording to Newton\"s theory, every", "role": "assistant"}}], "created": 1725396241, "id": "chatcmpl-92d3b36e-7b64-4ae8-8102-9b7e3f5dd30f", "model": "meta.llama3-8b-instruct-v1:0", "object": "chat.completion", "usage": {"completion_tokens": 100, "prompt_tokens": 44, "total_tokens": 144}}, "timestamp": "2024-07-12T04:20:32.808410"}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
