@@ -1492,6 +1492,110 @@
                 ]
             }
         },
+        "/v0/dataset/delete_prompt": {
+            "delete": {
+                "tags": [
+                    "Datasets"
+                ],
+                "summary": "Delete Prompt",
+                "operationId": "delete_prompt_v0_dataset_delete_prompt_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset for prompt to be deleted from.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the dataset for prompt to be deleted from.",
+                        "example": "dataset1"
+                    },
+                    {
+                        "name": "prompt_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "ID of the prompt to be removed.",
+                            "title": "Prompt Id"
+                        },
+                        "description": "ID of the prompt to be removed.",
+                        "example": "123"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/dataset/add_prompt": {
+            "put": {
+                "tags": [
+                    "Datasets"
+                ],
+                "summary": "Add Prompt",
+                "operationId": "add_prompt_v0_dataset_add_prompt_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_add_prompt_v0_dataset_add_prompt_put"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/evaluator": {
             "post": {
                 "tags": [
@@ -1738,13 +1842,256 @@
                 ]
             }
         },
+        "/v0/default_prompt": {
+            "post": {
+                "tags": [
+                    "Default Prompts"
+                ],
+                "summary": "Create Default Prompt",
+                "description": "Create a re-usable, named default prompt, and adds this to your account. This can be used\nas an argument to the `/evaluation` POST endpoint.",
+                "operationId": "create_default_prompt_v0_default_prompt_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DefaultPromptConfig"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Default Prompt created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Default Prompts"
+                ],
+                "summary": "Get Default Prompt",
+                "description": "Returns the name and prompt of a default prompt from your account. The configuration\ncontains the same information as the arguments passed to the `POST` function of\n`/v0/default_prompt`.",
+                "operationId": "get_default_prompt_v0_default_prompt_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the default prompt to return the configuration of.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the default prompt to return the configuration of.",
+                        "example": "default_prompt_1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "name": "default_prompt_1",
+                                    "prompt": "{...}"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Default Prompts"
+                ],
+                "summary": "Delete Default Prompt",
+                "description": "Deletes a default prompt from your account.",
+                "operationId": "delete_default_prompt_v0_default_prompt_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the default_prompt to delete.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the default_prompt to delete.",
+                        "example": "default_prompt_1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Default Prompt deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/default_prompt/rename": {
+            "post": {
+                "tags": [
+                    "Default Prompts"
+                ],
+                "summary": "Rename Default Prompt",
+                "description": "Renames a default prompt from `name` to `new_name` in your account.",
+                "operationId": "rename_default_prompt_v0_default_prompt_rename_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the default prompt to rename.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the default prompt to rename.",
+                        "example": "default_prompt_1"
+                    },
+                    {
+                        "name": "new_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "New name for the default prompt.",
+                            "title": "New Name"
+                        },
+                        "description": "New name for the default prompt.",
+                        "example": "default_prompt_2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Default Prompt renamed successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/default_prompt/list": {
+            "get": {
+                "tags": [
+                    "Default Prompts"
+                ],
+                "summary": "List Default Prompts",
+                "description": "Returns the names of all default prompts stored in your account.",
+                "operationId": "list_default_prompts_v0_default_prompt_list_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": [
+                                    "default_prompt_a",
+                                    "default_prompt_b",
+                                    "default_prompt_c"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/evaluation": {
             "post": {
                 "tags": [
                     "Evaluations"
                 ],
                 "summary": "Trigger Evaluation",
-                "description": "Uses the named `evaluator` to trigger an evaluation of quality scores for the\nselected LLM `endpoint` on the selected `dataset`. You can upload custom scores (and\nbypass the LLM judge entirely) by uploading a file via the `client_side_scores`\nargument. Once the evaluation has finished, you can access the scores using the\n`/v0/evaluation` endpoint.",
+                "description": "Uses the named `evaluator` to trigger an evaluation of quality scores for the\nselected LLM `endpoint` on the selected `dataset`. You can upload custom scores (and\nbypass the LLM judge entirely) by uploading a file via the `client_side_scores`\nargument. Once the evaluation has finished, you can access the scores using the\n`/v0/evaluation` endpoint. If a custom prompt is specified, its fields will overwrite\nthe corresponding fields in each one of the evaluated prompts.",
                 "operationId": "trigger_evaluation_v0_evaluation_post",
                 "security": [
                     {
@@ -1763,6 +2110,18 @@
                         },
                         "description": "Name of the evaluator to use.",
                         "example": "eval1"
+                    },
+                    {
+                        "name": "default_prompt",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the default prompt to use.",
+                            "title": "Default Prompt"
+                        },
+                        "description": "Name of the default prompt to use.",
+                        "example": "default_prompt1"
                     },
                     {
                         "name": "dataset",
@@ -1884,10 +2243,10 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "description": "The endpoint to fetch the evaluation for. If `None`, returns evaluations for all endpoints.",
+                            "description": "The endpoint to fetch the evaluation for. If `None`, returns all available evaluations for the dataset and evaluator pair.",
                             "title": "Endpoint"
                         },
-                        "description": "The endpoint to fetch the evaluation for. If `None`, returns evaluations for all endpoints.",
+                        "description": "The endpoint to fetch the evaluation for. If `None`, returns all available evaluations for the dataset and evaluator pair.",
                         "example": "gpt-4o-mini@openai"
                     },
                     {
@@ -1908,11 +2267,11 @@
                         "required": false,
                         "schema": {
                             "type": "boolean",
-                            "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an eval name and endpoint to be set.",
+                            "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an endpoint and evaluator to be set.",
                             "default": false,
                             "title": "Per Prompt"
                         },
-                        "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an eval name and endpoint to be set.",
+                        "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an endpoint and evaluator to be set.",
                         "example": false
                     }
                 ],
@@ -1998,95 +2357,6 @@
                                 "schema": {},
                                 "example": {
                                     "info": "Evaluation deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/evaluation/status": {
-            "get": {
-                "tags": [
-                    "Evaluations"
-                ],
-                "summary": "Eval Status",
-                "description": "Fetches the eval status on a given dataset. Returns object of the form:\n\n```\n{\n    \"responses\": {\n        \"last_updated\": \"2024-08-19 13:58:20.866092\",\n        \"num_failed\": 0,\n        \"num_processed\": 3,\n        \"num_remaining\": 0,\n    },\n    \"judgements\": {\n        \"judge_model_a\": {\n            \"last_updated\": \"2024-08-19 13:58:20.866092\",\n            \"num_failed\": 0,\n            \"num_processed\": 3,\n            \"num_remaining\": 0,\n        }\n    },\n}\n```",
-                "operationId": "eval_status_v0_evaluation_status_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "dataset",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the dataset to get evaluation status of.",
-                            "title": "Dataset"
-                        },
-                        "description": "Name of the dataset to get evaluation status of.",
-                        "example": "dataset1"
-                    },
-                    {
-                        "name": "endpoint",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Endpoint to get evaluation status of",
-                            "title": "Endpoint"
-                        },
-                        "description": "Endpoint to get evaluation status of",
-                        "example": "llama-3-8b-chat@aws-bedrock"
-                    },
-                    {
-                        "name": "evaluator",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the evaluator to get status of.",
-                            "title": "Evaluator"
-                        },
-                        "description": "Name of the evaluator to get status of.",
-                        "example": "eval1"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "responses": {
-                                        "last_updated": "2024-08-19 13:58:20.866092",
-                                        "num_failed": 0,
-                                        "num_processed": 3,
-                                        "num_remaining": 0
-                                    },
-                                    "judgements": {
-                                        "judge_model_a": {
-                                            "last_updated": "2024-08-19 13:58:20.866092",
-                                            "num_failed": 0,
-                                            "num_processed": 3,
-                                            "num_remaining": 0
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -3243,6 +3513,26 @@
     },
     "components": {
         "schemas": {
+            "Body_add_prompt_v0_dataset_add_prompt_put": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Name of the dataset to add to"
+                    },
+                    "prompt_data": {
+                        "type": "object",
+                        "title": "Prompt Data",
+                        "description": "JSON object containing the prompt data to upload."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "prompt_data"
+                ],
+                "title": "Body_add_prompt_v0_dataset_add_prompt_put"
+            },
             "Body_log_query_v0_queries_post": {
                 "properties": {
                     "endpoint": {
@@ -3346,7 +3636,7 @@
                         "type": "string",
                         "format": "binary",
                         "title": "Client Side Scores",
-                        "description": "An optional file upload for client-side scores. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `prompt` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `evaluator` must have `client_side=True`.",
+                        "description": "An optional file upload for client-side scores. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `prompt_id` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `evaluator` must have `client_side=True`.",
                         "example": "client_scores.jsonl"
                     }
                 },
@@ -3826,6 +4116,27 @@
                     "key"
                 ],
                 "title": "CustomEndpointModelResponse"
+            },
+            "DefaultPromptConfig": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "A unique, user-defined name used when referencing  the default prompt.",
+                        "example": "eval1"
+                    },
+                    "prompt": {
+                        "type": "object",
+                        "title": "Prompt",
+                        "description": "Prompt fields that will override any field in the prompt to be evaluated when triggering an evaluation.",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "DefaultPromptConfig"
             },
             "EvaluatorConfig": {
                 "properties": {

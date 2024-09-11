@@ -6,7 +6,8 @@ Uses the named `evaluator` to trigger an evaluation of quality scores for the
 selected LLM `endpoint` on the selected `dataset`. You can upload custom scores (and
 bypass the LLM judge entirely) by uploading a file via the `client_side_scores`
 argument. Once the evaluation has finished, you can access the scores using the
-`/v0/evaluation` endpoint.
+`/v0/evaluation` endpoint. If a custom prompt is specified, its fields will overwrite
+the corresponding fields in each one of the evaluated prompts.
 
 #### Authorizations
 
@@ -20,6 +21,10 @@ argument. Once the evaluation has finished, you can access the scores using the
 Name of the evaluator to use.
 </ParamField>
 
+<ParamField query="default_prompt" type="string" >
+Name of the default prompt to use.
+</ParamField>
+
 <ParamField query="dataset" type="string" required="true">
 Name of the uploaded dataset to evaluate.
 </ParamField>
@@ -31,14 +36,14 @@ Name of the endpoint to evaluate. Endpoints must be specified using the `model@p
 #### Body
 
 <ParamField body="client_side_scores" type="binary" >
-An optional file upload for client-side scores. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `prompt` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `evaluator` must have `client_side=True`.
+An optional file upload for client-side scores. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `prompt_id` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `evaluator` must have `client_side=True`.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/evaluation?evaluator=eval1&dataset=dataset1&endpoint=gpt-4o-mini@openai' \
+  --url 'https://api.unify.ai/v0/evaluation?evaluator=eval1&default_prompt=default_prompt1&dataset=dataset1&endpoint=gpt-4o-mini@openai' \
   --header 'Authorization: Bearer <UNIFY_KEY>'
   --header 'Content-Type: multipart/form-data' \
   --form 'client_side_scores=@client_scores.jsonl'
@@ -47,7 +52,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/evaluation?evaluator=eval1&dataset=dataset1&endpoint=gpt-4o-mini@openai"
+url = "https://api.unify.ai/v0/evaluation?evaluator=eval1&default_prompt=default_prompt1&dataset=dataset1&endpoint=gpt-4o-mini@openai"
 
 headers = {"Authorization": "Bearer <token>"}
 

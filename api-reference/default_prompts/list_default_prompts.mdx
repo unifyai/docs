@@ -1,0 +1,44 @@
+---
+title: 'List Default Prompts'
+api: 'GET /v0/default_prompt/list'
+---
+Returns the names of all default prompts stored in your account.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/default_prompt/list' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/default_prompt/list"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+[
+    "default_prompt_a",
+    "default_prompt_b",
+    "default_prompt_c"
+]
+```
+
+</ResponseExample>

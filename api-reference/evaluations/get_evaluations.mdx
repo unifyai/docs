@@ -20,7 +20,7 @@ Name of the dataset to fetch evaluation from.
 </ParamField>
 
 <ParamField query="endpoint" type="string" >
-The endpoint to fetch the evaluation for. If `None`, returns evaluations for all endpoints.
+The endpoint to fetch the evaluation for. If `None`, returns all available evaluations for the dataset and evaluator pair.
 </ParamField>
 
 <ParamField query="evaluator" type="string" >
@@ -28,7 +28,7 @@ Name of the evaluator to fetch the evaluation for. If `None`, returns all availa
 </ParamField>
 
 <ParamField query="per_prompt" type="boolean" >
-If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an eval name and endpoint to be set.
+If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an endpoint and evaluator to be set.
 </ParamField>
 
 <RequestExample>

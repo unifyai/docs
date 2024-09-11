@@ -1,0 +1,64 @@
+---
+title: 'Delete Prompt'
+api: 'DELETE /v0/dataset/delete_prompt'
+---
+
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="name" type="string" required="true">
+Name of the dataset for prompt to be deleted from.
+</ParamField>
+
+<ParamField query="prompt_id" type="string" required="true">
+ID of the prompt to be removed.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/dataset/delete_prompt?name=dataset1&prompt_id=123' \
+  --header 'Authorization: Bearer <UNIFY_KEY>'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/dataset/delete_prompt?name=dataset1&prompt_id=123"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("DELETE", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
