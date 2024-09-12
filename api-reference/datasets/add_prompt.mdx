@@ -1,6 +1,6 @@
 ---
 title: 'Add Prompt'
-api: 'PUT /v0/dataset/add_prompt'
+api: 'POST /v0/dataset/add_prompt'
 ---
 
 
@@ -23,11 +23,24 @@ JSON object containing the prompt data to upload.
 <RequestExample>
 
 ```bash cURL
-curl --request PUT \
+curl --request POST \
   --url 'https://api.unify.ai/v0/dataset/add_prompt' \
   --header 'Authorization: Bearer <UNIFY_KEY>' \
   --header 'Content-Type: application/json' \
-  --data '{}'
+  --data '{
+    "name": "dataset_1",
+    "prompt_data": {
+        "prompt": {
+            "messages": [
+                {
+                    "content": "What is the capital of Spain?",
+                    "role": "user"
+                }
+            ]
+        },
+        "ref_answer": "Madrid"
+    }
+}'
 ```
 
 ```python Python
@@ -37,9 +50,9 @@ url = "https://api.unify.ai/v0/dataset/add_prompt"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {}
+json_input = {"name": "dataset_1", "prompt_data": {"prompt": {"messages": [{"content": "What is the capital of Spain?", "role": "user"}]}, "ref_answer": "Madrid"}}
 
-response = requests.request("PUT", url, json=json_input, headers=headers)
+response = requests.request("POST", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
@@ -48,7 +61,9 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{}
+{
+    "info": "Prompt added sucessfully!"
+}
 ```
 
 ```json 422

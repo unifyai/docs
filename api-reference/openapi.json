@@ -1535,7 +1535,10 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "info": "Dataset prompt deleted successfully"
+                                }
                             }
                         }
                     },
@@ -1553,17 +1556,17 @@
             }
         },
         "/v0/dataset/add_prompt": {
-            "put": {
+            "post": {
                 "tags": [
                     "Datasets"
                 ],
                 "summary": "Add Prompt",
-                "operationId": "add_prompt_v0_dataset_add_prompt_put",
+                "operationId": "add_prompt_v0_dataset_add_prompt_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Body_add_prompt_v0_dataset_add_prompt_put"
+                                "$ref": "#/components/schemas/Body_add_prompt_v0_dataset_add_prompt_post"
                             }
                         }
                     },
@@ -1574,7 +1577,10 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "info": "Prompt added sucessfully!"
+                                }
                             }
                         }
                     },
@@ -3571,17 +3577,29 @@
     },
     "components": {
         "schemas": {
-            "Body_add_prompt_v0_dataset_add_prompt_put": {
+            "Body_add_prompt_v0_dataset_add_prompt_post": {
                 "properties": {
                     "name": {
                         "type": "string",
                         "title": "Name",
-                        "description": "Name of the dataset to add to"
+                        "description": "Name of the dataset to add to",
+                        "example": "dataset_1"
                     },
                     "prompt_data": {
                         "type": "object",
                         "title": "Prompt Data",
-                        "description": "JSON object containing the prompt data to upload."
+                        "description": "JSON object containing the prompt data to upload.",
+                        "example": {
+                            "prompt": {
+                                "messages": [
+                                    {
+                                        "content": "What is the capital of Spain?",
+                                        "role": "user"
+                                    }
+                                ]
+                            },
+                            "ref_answer": "Madrid"
+                        }
                     }
                 },
                 "type": "object",
@@ -3589,7 +3607,7 @@
                     "name",
                     "prompt_data"
                 ],
-                "title": "Body_add_prompt_v0_dataset_add_prompt_put"
+                "title": "Body_add_prompt_v0_dataset_add_prompt_post"
             },
             "Body_log_query_v0_queries_post": {
                 "properties": {
