@@ -2,17 +2,16 @@
 title: 'Logging'
 ---
 
-## Tagging Prompts
+Logging enables previously sent requests to the retrieved at a later date for analysis,
+reporting, debugging and/or testing. For convenience, these prompts can be filtered
+based on many factors, such as arbitrary string tags, the model, the provider,
+the endpoint, start time for retrieval window, end time for retrieval window etc.
 
-LLM queries can be given any number of custom tags, via the `tags` argument.
-See the chat completions
-[API reference](https://docs.unify.ai/api-reference/llm_queries/chat_completions)
-for details.
+Queries sent to Unify's chat completion API can be logged behind the scenes
+(#via-unify), and queries made to external LLM providers can also be logged explicitly
+(#Other Clients), both of which are explained below.
 
-Referring to our [example](https://docs.unify.ai/basics/welcome#guiding-example),
-it would make sense to tag queries based on both the *subject* and the *student*.
-
-### Via Unify
+## Via Unify
 
 If the LLM queries are being handled by Unify, then we could make queries as follows,
 such that the queries are all sensibly categorized (tagged):
@@ -44,8 +43,6 @@ import unify
 client = unify.Unify("llama-3-8b-chat@together-ai")
 client.generate("What is the capital of Spain?", tags=["geography", "john_smith"])
 ```
-
-#### Logging Controls
 
 If you want to turn off logging *entirely*, this can be done via
 [the usage page](https://console.unify.ai/usage) in your console.
@@ -95,7 +92,7 @@ client.generate(
 If `log_query_body` is `False`, then `log_response_body` will be ignored.
 In other words, **a response cannot be logged without a corresponding logged query**.
 
-### Other Clients
+## Other Clients
 
 If you are *not* deploying your LLM via Unify, you can *still* manually log your prompts
 to the Unify platform via the CURL request as follows:
@@ -238,6 +235,16 @@ ollama.chat = unify.log(
 )
 res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}], tags=["tagB", "tagC"])
 ```
+
+## Tagging Prompts
+
+With using Unify or another client, LLM queries can be given any number of custom tags,
+via the `tags` argument. See the chat completions
+[API reference](https://docs.unify.ai/api-reference/llm_queries/chat_completions)
+for details.
+
+Referring to our [example](https://docs.unify.ai/basics/welcome#guiding-example),
+it would make sense to tag queries based on both the *subject* and the *student*.
 
 ## Retrieving Prompts
 
