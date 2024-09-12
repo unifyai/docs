@@ -20,7 +20,7 @@ such that the queries are all sensibly categorized (tagged):
 ```shell
 curl --request POST \
   --url 'https://api.unify.ai/v0/chat/completions' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
     "model": "llama-3-8b-chat@together-ai",
@@ -60,7 +60,7 @@ As a cURL request, this looks as follows:
 ```shell
 curl --request POST \
   --url 'https://api.unify.ai/v0/chat/completions' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
     "model": "llama-3-8b-chat@together-ai",
