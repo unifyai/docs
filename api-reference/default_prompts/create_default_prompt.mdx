@@ -26,7 +26,7 @@ Prompt fields that will override any field in the prompt to be evaluated when tr
 ```bash cURL
 curl --request POST \
   --url 'https://api.unify.ai/v0/default_prompt' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
     "name": "eval1"

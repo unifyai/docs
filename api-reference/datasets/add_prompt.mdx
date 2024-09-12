@@ -25,7 +25,7 @@ JSON object containing the prompt data to upload.
 ```bash cURL
 curl --request POST \
   --url 'https://api.unify.ai/v0/dataset/add_prompt' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
     "name": "dataset_1",

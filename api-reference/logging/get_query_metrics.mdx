@@ -44,7 +44,7 @@ Secondary user id. The secondary user id will match any string previously sent i
 ```bash cURL
 curl --request GET \
   --url 'https://api.unify.ai/v0/metrics?start_time=2024-07-12%2004:20:32&end_time=2024-08-12%2004:20:32&models=gpt-4o,llama-3.1-405b-chat,claude-3.5-sonnet&providers=openai,anthropic,fireworks-ai&interval=300&secondary_user_id=sample_user_id' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python

@@ -43,7 +43,7 @@ If the custom endpoint is for a fine-tuned model which is hosted directly via on
 ```bash cURL
 curl --request POST \
   --url 'https://api.unify.ai/v0/custom_endpoint?name=endpoint1&url=https://api.url1.com&key_name=key1&model_name=llama-3.1-8b-finetuned&provider=together-ai' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
