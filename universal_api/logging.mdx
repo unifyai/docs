@@ -27,11 +27,11 @@ curl --request POST \
     "messages": [
         {
             "role": "user",
-            "content": "Can you prove the Pythagoras Theorem?"
+            "content": "What is the capital of Spain?"
         }
-    ]
+    ],
     "tags": [
-        "maths",
+        "geography",
         "john_smith"
     ]
 }'
@@ -42,31 +42,121 @@ In Python, this would look like:
 ```python
 import unify
 client = unify.Unify("llama-3-8b-chat@together-ai")
-client.generate("Can you prove the Pythagoras Theorem?", tags=["maths", "john_smith"])
+client.generate("What is the capital of Spain?", tags=["geography", "john_smith"])
 ```
 
-### Other Clients (Coming Soon!)
+#### Logging Controls
+
+If you want to turn off logging *entirely*, this can be done via
+[the usage page](https://console.unify.ai/usage) in your console.
+
+Presuming that logging is *turned on* in the console, and presuming you have a
+professional plan or higher, then logging can be controlled on a prompt-by-prompt basis,
+by specifying one or both of the arguments `log_query_body` and `log_response_body` in
+the [chat completions endpoint](https://docs.unify.ai/api-reference/llm_queries/chat_completions).
+
+As a cURL request, this looks as follows:
+
+```shell
+curl --request POST \
+  --url 'https://api.unify.ai/v0/chat/completions' \
+  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "llama-3-8b-chat@together-ai",
+    "messages": [
+        {
+            "role": "user",
+            "content": "What is the capital of Spain?"
+        }
+    ],
+    "tags": [
+        "geography",
+        "john_smith"
+    ]
+    "log_prompt_body": true,
+    "log_response_body": false
+}'
+```
+
+In Python, the arguments are passed as keywords:
+
+```python
+import unify
+client = unify.Unify("llama-3-8b-chat@together-ai")
+client.generate(
+    "What is the capital of Spain?",
+    tags=["geography", "john_smith"],
+    log_prompt_body = True,
+    log_response_body = False
+)
+```
+
+If `log_query_body` is `False`, then `log_response_body` will be ignored.
+In other words, **a response cannot be logged without a corresponding logged query**.
+
+### Other Clients
 
 If you are *not* deploying your LLM via Unify, you can *still* manually log your prompts
 to the Unify platform via the CURL request as follows:
 
 ```shell
 curl --request POST \
-  --url 'https://api.unify.ai/v0/prompts' \
-  --header 'Authorization: Bearer $UNIFY_KEY' \
+  --url 'https://api.unify.ai/v0/queries' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
-    "model": "llama-3-8b-chat",
-    "messages": [
-        {
-            "role": "user",
-            "content": "Can you prove the Pythagoras Theorem?"
-        }
-    ]
-    "tags": [
-        "maths",
-        "john_smith"
-    ]
+    "endpoint": "llama-3-8b-chat@together-ai",
+    "query_body": {
+        "model": "llama-3-8b-chat@together-ai",
+        "messages": [
+            {
+                "role": "user",
+                "content": "What is the capital of Spain?"
+            }
+        ],
+        "tags": [
+            "geography",
+            "john_smith"
+        ]
+  }
+}'
+```
+
+If you also want to include the LLM *response* in your logged query,
+you can use the `response_body` key as follows:
+
+```shell
+curl --request POST \
+  --url 'https://api.unify.ai/v0/queries' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "endpoint": "llama-3-8b-chat@together-ai",
+    "query_body": {
+        "model": "llama-3-8b-chat@together-ai",
+        "messages": [
+            {
+                "role": "user",
+                "content": "What is the capital of Spain?"
+            }
+        ],
+        "tags": [
+            "geography",
+            "john_smith"
+        ]
+    },
+    "response_body": {
+        "choices": [
+            {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                    "content": "The capital of Spain is Madrid.",
+                    "role": "assistant"
+                }
+            }
+        ],
 }'
 ```
 
