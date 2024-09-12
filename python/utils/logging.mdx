@@ -53,6 +53,44 @@ Get query history based on specified filters.
 
   A dictionary containing the query history data.
 
+<a id="utils.logging.log_query"></a>
+
+---
+
+### log\_query
+
+```python
+def log_query(endpoint: str,
+              query_body: Dict,
+              response_body: Optional[Dict] = None,
+              tags: Optional[List[str]] = None,
+              timestamp: Optional[datetime.datetime] = None,
+              api_key: Optional[str] = None)
+```
+
+Log a query (and optionally response) for a locally deployed (non-Unify-registered)
+model, with tagging (default None) and timestamp (default datetime.now() also
+optionally writeable.
+
+**Arguments**:
+
+- `endpoint` - Endpoint to log query for.
+- `query_body` - A dict containing the body of the request.
+- `response_body` - An optional dict containing the response to the request.
+- `tags` - Custom tags for later filtering.
+- `timestamp` - A timestamp (if not set, will be the time of sending).
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+  
+
+**Returns**:
+
+  A dictionary containing the response message if successful.
+  
+
+**Raises**:
+
+- `requests.HTTPError` - If the API request fails.
+
 <a id="utils.logging.get_query_metrics"></a>
 
 ---
