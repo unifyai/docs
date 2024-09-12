@@ -93,7 +93,7 @@ We can do this via the REST API as follows:
 ```shell
 curl --request POST \
   --url 'https://api.unify.ai/v0/dataset' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: multipart/form-data' \
   --form 'file=@english_language.jsonl'\
   --form 'name=english_language'
@@ -120,7 +120,7 @@ First, using the REST API:
 ```shell
 curl --request DELETE \
   --url 'https://api.unify.ai/v0/dataset?name=english_language' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 Or via Python:
@@ -136,7 +136,7 @@ We can retrieve a list of our uploaded datasets using the `/dataset/list` endpoi
 ```shell
 curl --request GET \
   --url 'https://api.unify.ai/v0/dataset/list' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python
@@ -157,7 +157,7 @@ via the following REST API command:
 ```shell
 curl --request POST \
   --url 'https://api.unify.ai/v0/dataset/rename?name=english&new_name=english_literature' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 Or via Python:
