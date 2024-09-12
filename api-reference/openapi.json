@@ -294,9 +294,9 @@
                 "tags": [
                     "Logging"
                 ],
-                "summary": "Get Query History",
+                "summary": "Get Queries",
                 "description": "Get the queries history, optionally for a given set of tags for a narrowed search.",
-                "operationId": "get_query_history_v0_queries_get",
+                "operationId": "get_queries_v0_queries_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3940,8 +3940,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
