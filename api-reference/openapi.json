@@ -2108,13 +2108,14 @@
                     {
                         "name": "evaluator",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the evaluator to use.",
+                            "description": "Name of the evaluator to use. If not specified, 'default_evaluator' will be used.",
+                            "default": "default_evaluator",
                             "title": "Evaluator"
                         },
-                        "description": "Name of the evaluator to use.",
+                        "description": "Name of the evaluator to use. If not specified, 'default_evaluator' will be used.",
                         "example": "eval1"
                     },
                     {
@@ -3939,8 +3940,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
