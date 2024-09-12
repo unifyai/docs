@@ -828,9 +828,9 @@
                 "tags": [
                     "Custom Endpoints"
                 ],
-                "summary": "Get Custom Endpoint List",
+                "summary": "List Custom Endpoints",
                 "description": "Returns a list of the available custom endpoints.",
-                "operationId": "get_custom_endpoint_list_v0_custom_endpoint_list_get",
+                "operationId": "list_custom_endpoints_v0_custom_endpoint_list_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -841,7 +841,7 @@
                                         "$ref": "#/components/schemas/CustomEndpointModelResponse"
                                     },
                                     "type": "array",
-                                    "title": "Response Get Custom Endpoint List V0 Custom Endpoint List Get"
+                                    "title": "Response List Custom Endpoints V0 Custom Endpoint List Get"
                                 },
                                 "example": [
                                     {
