@@ -17,8 +17,8 @@ the corresponding fields in each one of the evaluated prompts.
 
 #### Query Parameters
 
-<ParamField query="evaluator" type="string" required="true">
-Name of the evaluator to use.
+<ParamField query="evaluator" type="string"  default={"default_evaluator"}>
+Name of the evaluator to use. If not specified, 'default_evaluator' will be used.
 </ParamField>
 
 <ParamField query="default_prompt" type="string" >
