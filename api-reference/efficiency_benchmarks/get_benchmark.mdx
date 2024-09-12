@@ -53,7 +53,7 @@ Window end time. Assumed to be the current time if this is unspecified *and* sta
 ```bash cURL
 curl --request GET \
   --url 'https://api.unify.ai/v0/benchmark?model=gpt-4o-mini&provider=openai&region=Belgium&seq_len=short&start_time=2024-07-12T04:20:32.808410&end_time=2024-08-12T04:20:32.808410' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python

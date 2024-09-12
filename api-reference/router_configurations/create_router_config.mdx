@@ -26,7 +26,7 @@ The raw string which fully defines the router endpoint, with all constraints app
 ```bash cURL
 curl --request POST \
   --url 'https://api.unify.ai/v0/router/config?config_name=cost_and_speed_optimized&router_endpoint=router1|models:llama-3.1-8b-chat,mixtral-8x22b-instruct-v0.1|providers:fireworks-ai,together-ai|q:1|c:4.65e-03|t:2.08e-05|i:2.07e-03@routers' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python

@@ -44,7 +44,7 @@ An optional file upload for client-side scores. The file must be in JSONL format
 ```bash cURL
 curl --request POST \
   --url 'https://api.unify.ai/v0/evaluation?evaluator=eval1&default_prompt=default_prompt1&dataset=dataset1&endpoint=gpt-4o-mini@openai' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: multipart/form-data' \
   --form 'client_side_scores=@client_scores.jsonl'
 ```

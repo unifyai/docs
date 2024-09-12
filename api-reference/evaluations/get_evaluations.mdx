@@ -36,7 +36,7 @@ If `True`, returns the scores on a per-prompt level. By default set to `False`. 
 ```bash cURL
 curl --request GET \
   --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python

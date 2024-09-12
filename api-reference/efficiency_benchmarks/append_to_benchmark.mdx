@@ -35,7 +35,7 @@ The timestamp to associate with the submission. Defaults to current time if unsp
 ```bash cURL
 curl --request POST \
   --url 'https://api.unify.ai/v0/benchmark?endpoint_name=my_endpoint&metric_name=tokens-per-second&value=10&measured_at=2024-08-12T04:20:32.808410' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python

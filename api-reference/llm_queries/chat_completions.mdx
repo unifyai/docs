@@ -156,7 +156,7 @@ A string used to represent the region where the endpoint is accessed. This is on
 ```bash cURL
 curl --request POST \
   --url 'https://api.unify.ai/v0/chat/completions' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
     "messages": [

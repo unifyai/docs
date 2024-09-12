@@ -37,7 +37,7 @@ A timestamp (if not set, will be the time of sending)
 ```bash cURL
 curl --request POST \
   --url 'https://api.unify.ai/v0/queries' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
     "endpoint": "llama-3.1-8b-chat_ollama@external",

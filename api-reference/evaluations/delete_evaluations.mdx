@@ -32,7 +32,7 @@ Name of the evaluator to delete the evaluation for. If `None`, deletes all avail
 ```bash cURL
 curl --request DELETE \
   --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python

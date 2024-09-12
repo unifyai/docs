@@ -47,7 +47,7 @@ Indicates whether evaluations are performed on the client-side. If `True`, the L
 ```bash cURL
 curl --request POST \
   --url 'https://api.unify.ai/v0/evaluator' \
-  --header 'Authorization: Bearer <UNIFY_KEY>' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
     "name": "eval1",
