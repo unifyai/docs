@@ -155,14 +155,14 @@ curl --request POST \
 }'
 ```
 
-In Python, this is more convenient via the `unify.log` decorator,
+In Python, this is more convenient via the `unify.with_logging` decorator,
 as follows for the OpenAI client:
 
 ```python
 import unify
 from openai import OpenAI
 client = OpenAI()
-client.chat.completions.create = unify.log(client.chat.completions.create, endpoint="gpt-4o_oai@external")
+client.chat.completions.create = unify.with_logging(client.chat.completions.create, endpoint="gpt-4o_oai@external")
 res = client.chat.completions.create(model="gpt-4o", messages=[{"role": "user", "content": "Say hi."}])
 ```
 
@@ -171,7 +171,7 @@ The same can be done for any other provider.
 ```python
 import unify
 import ollama
-ollama.chat = unify.log(ollama.chat, endpoint="llama-3.1-8b-chat_ollama@external")
+ollama.chat = unify.with_logging(ollama.chat, endpoint="llama-3.1-8b-chat_ollama@external")
 res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}])
 ```
 
@@ -181,7 +181,7 @@ controlling exactly what is logged to the account.
 ```python
 import unify
 import ollama
-ollama.chat = unify.log(
+ollama.chat = unify.with_logging(
     ollama.chat,
     endpoint="llama-3.1-8b-chat_ollama@external",
     log_query_body=True,
@@ -190,20 +190,20 @@ ollama.chat = unify.log(
 res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}])
 ```
 
-The function `unify.log` by default will assume `tags` to be empty.
-The log arguments can either be specified when `unify.log` is called as a decorator,
+The function `unify.with_logging` by default will assume `tags` to be empty.
+The log arguments can either be specified when `unify.with_logging` is called as a decorator,
 or the arguments can be intercepted from the wrapped inner function call.
 
 Arguments passed to the inner wrapped function override arguments passed directly to
-`unify.log`, except for the `tags` argument which will be extended with the additional
-tags.
+`unify.with_logging`, except for the `tags` argument which will be extended with the
+additional tags.
 
 For example, the following will tag the prompts as `tagA` and `tagB`.
 
 ```python
 import unify
 import ollama
-ollama.chat = unify.log(
+ollama.chat = unify.with_logging(
     ollama.chat,
     endpoint="llama-3.1-8b-chat_ollama@external",
     tags=["tagA", "tagB"]
@@ -216,7 +216,7 @@ The following will also tag the prompts as `tagA` and `tagB`.
 ```python
 import unify
 import ollama
-ollama.chat = unify.log(
+ollama.chat = unify.with_logging(
     ollama.chat,
     endpoint="llama-3.1-8b-chat_ollama@external"
 )
@@ -228,7 +228,7 @@ However, the following will tag the prompts with `tagA`, `tagB` and `tagC`.
 ```python
 import unify
 import ollama
-ollama.chat = unify.log(
+ollama.chat = unify.with_logging(
     ollama.chat,
     endpoint="llama-3.1-8b-chat_ollama@external",
     tags=["tagA"]
