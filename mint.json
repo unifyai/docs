@@ -110,6 +110,7 @@
                 "python/dataset",
                 "python/evaluation",
                 "python/evaluator",
+                "python/logging",
                 {
                     "group": "utils",
                     "pages": [
