@@ -106,9 +106,8 @@ curl --request POST \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
-    "endpoint": "llama-3-8b-chat@together-ai",
+    "endpoint": "llama-3.1-8b-chat_ollama@external",
     "query_body": {
-        "model": "llama-3-8b-chat@together-ai",
         "messages": [
             {
                 "role": "user",
@@ -123,7 +122,7 @@ curl --request POST \
 }'
 ```
 
-If you also want to include the LLM *response* in your logged query,
+Similarly, if you also want to include the LLM *response* in your logged query,
 you can use the `response_body` key as follows:
 
 ```shell
@@ -132,9 +131,8 @@ curl --request POST \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
-    "endpoint": "llama-3-8b-chat@together-ai",
+    "endpoint": "llama-3.1-8b-chat_ollama@external",
     "query_body": {
-        "model": "llama-3-8b-chat@together-ai",
         "messages": [
             {
                 "role": "user",
@@ -167,7 +165,7 @@ as follows for the OpenAI client:
 import unify
 from openai import OpenAI
 client = OpenAI()
-client.chat.completions.create = unify.log(client.chat.completions.create)
+client.chat.completions.create = unify.log(client.chat.completions.create, endpoint="gpt-4o_oai@external")
 res = client.chat.completions.create(model="gpt-4o", messages=[{"role": "user", "content": "Say hi."}])
 ```
 
@@ -176,7 +174,22 @@ The same can be done for any other provider.
 ```python
 import unify
 import ollama
-ollama.chat = unify.log(ollama.chat)
+ollama.chat = unify.log(ollama.chat, endpoint="llama-3.1-8b-chat_ollama@external")
+res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}])
+```
+
+As before, the arguments `log_query_body` and `log_response_body` can be specified,
+controlling exactly what is logged to the account.
+
+```python
+import unify
+import ollama
+ollama.chat = unify.log(
+    ollama.chat,
+    endpoint="llama-3.1-8b-chat_ollama@external",
+    log_query_body=True,
+    log_response_body=False
+)
 res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}])
 ```
 
@@ -193,7 +206,11 @@ For example, the following will tag the prompts as `tagA` and `tagB`.
 ```python
 import unify
 import ollama
-ollama.chat = unify.log(ollama.chat, tags=["tagA", "tagB"])
+ollama.chat = unify.log(
+    ollama.chat,
+    endpoint="llama-3.1-8b-chat_ollama@external",
+    tags=["tagA", "tagB"]
+)
 res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}])
 ```
 
@@ -202,7 +219,10 @@ The following will also tag the prompts as `tagA` and `tagB`.
 ```python
 import unify
 import ollama
-ollama.chat = unify.log(ollama.chat)
+ollama.chat = unify.log(
+    ollama.chat,
+    endpoint="llama-3.1-8b-chat_ollama@external"
+)
 res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}], tags=["tagA", "tagB"])
 ```
 
@@ -211,7 +231,11 @@ However, the following will tag the prompts with `tagA`, `tagB` and `tagC`.
 ```python
 import unify
 import ollama
-ollama.chat = unify.log(ollama.chat, tags=["tagA"])
+ollama.chat = unify.log(
+    ollama.chat,
+    endpoint="llama-3.1-8b-chat_ollama@external",
+    tags=["tagA"]
+)
 res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}], tags=["tagB", "tagC"])
 ```
 
@@ -219,20 +243,20 @@ res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say h
 
 Every query made via the API *or* manually logged can then be retrieved at a later
 stage, using the `GET` request with the
-[`/prompts`](https://docs.unify.ai/api-reference/logging/get_prompts) endpoint,
+[`/queries`](https://docs.unify.ai/api-reference/logging/get_queries) endpoint,
 as follows:
 
 ```shell
 curl --request GET \
-  --url 'https://api.unify.ai/v0/prompts?tags=maths,john_smith' \
-  --header 'Authorization: Bearer <UNIFY_KEY>'
+  --url 'https://api.unify.ai/v0/queries?tags=maths,john_smith' \
+  --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 Again, in Python this would look like:
 
 ```python
 import unify
-prompts = unify.utils.get_prompts(tags=["maths", "john_smith"])
+prompts = unify.utils.get_queries(tags=["maths", "john_smith"])
 for prompt in prompts:
     print(prompt)
 ```
@@ -249,9 +273,9 @@ If there is a lot of production traffic, you can also limit the retrieval to a s
 time window, using the argument `start_time` (and optionally also `end_time`), like so:
 
 ```python
-import time
 import unify
-start_time = datetime.now() - timedelta(weeks=1)
+import datetime
+start_time = datetime.now() - datetime.timedelta(weeks=1)
 prompts = unify.utils.get_prompts(tags=["maths", "john_smith"], start_time=start_time)
 for prompt in prompts:
     print(prompt)
