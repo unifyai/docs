@@ -236,7 +236,28 @@ ollama.chat = unify.with_logging(
 res = ollama.chat(model="llama3.1", messages=[{"role": "user", "content": "Say hi."}], tags=["tagB", "tagC"])
 ```
 
-## Tagging Prompts
+If you've already processed the input and output, and would like to retrospectively log
+the query, you can make use of `unify.log_query`, which is one of the utility functions
+which thinly wraps the [REST API](https://docs.unify.ai/api-reference):
+
+```python
+import unify
+import ollama
+kw = dict(
+    model="llama3.1",
+    messages=[{"role": "user", "content": "Say hi."}],
+    tags=["tagB", "tagC"]
+)
+res = ollama.chat(**kw)
+unify.log_query(
+    endpoint="llama-3.1-8b-chat_ollama@external",
+    query_body=kw,
+    response_body={"response": res},
+    tags=["A", "B"]
+)
+```
+
+## Tagging Queries
 
 With using Unify or another client, LLM queries can be given any number of custom tags,
 via the `tags` argument. See the chat completions
@@ -246,7 +267,7 @@ for details.
 Referring to our [example](https://docs.unify.ai/basics/welcome#guiding-example),
 it would make sense to tag queries based on both the *subject* and the *student*.
 
-## Retrieving Prompts
+## Retrieving Queries
 
 Every query made via the API *or* manually logged can then be retrieved at a later
 stage, using the `GET` request with the
