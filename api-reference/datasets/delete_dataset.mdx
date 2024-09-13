@@ -47,7 +47,13 @@ print(response.text)
 
 ```json 400
 {
-    "detail": "Invalid name for a dataset.Please, choose a different one."
+    "detail": "You can't delete a public dataset."
+}
+```
+
+```json 404
+{
+    "detail": "The dataset <dataset> does not exist."
 }
 ```
 

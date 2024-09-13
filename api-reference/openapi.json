@@ -1354,11 +1354,21 @@
                         }
                     },
                     "400": {
-                        "description": "Invalid dataset name",
+                        "description": "Can't Delete Public Dataset",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Invalid name for a dataset.Please, choose a different one."
+                                    "detail": "You can't delete a public dataset."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "The dataset <dataset> does not exist."
                                 }
                             }
                         }
