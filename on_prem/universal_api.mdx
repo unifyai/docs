@@ -98,4 +98,5 @@ In order to update your local environment based on the latest versions, you woul
 - Re-build the service container: `docker compose build <service_name>`
 - Get it running again `docker compose up <service_name>`
 
-> **\<service_name\>** can be one of `console`, `orchestra` or `dataset_evaluation`
+> **\<service_name\>** can be one of `console`, `orchestra` or `dataset_evaluation`. The goal here is to make sure
+> that your data remains intact, so we would advice against deleting the `db` service.
