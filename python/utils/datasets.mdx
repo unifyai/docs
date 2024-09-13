@@ -121,6 +121,18 @@ Deletes a dataset from the platform.
 
 - `ValueError` - If there was an HTTP error.
 
+<a id="utils.datasets.rename_dataset"></a>
+
+---
+
+### rename\_dataset
+
+```python
+def rename_dataset(name: str, new_name: str, api_key: Optional[str] = None)
+```
+
+Renames a dataset.
+
 <a id="utils.datasets.list_datasets"></a>
 
 ---
@@ -146,5 +158,29 @@ Fetches a list of all uploaded datasets.
 **Raises**:
 
 - `ValueError` - If there was an HTTP error.
+
+<a id="utils.datasets.add_prompt"></a>
+
+---
+
+### add\_prompt
+
+```python
+def add_prompt(name: str, prompt_data: dict, api_key: Optional[str] = None)
+```
+
+Adds a prompt to a dataset.
+
+<a id="utils.datasets.delete_prompt"></a>
+
+---
+
+### delete\_prompt
+
+```python
+def delete_prompt(name: str, prompt_id: int, api_key: Optional[str] = None)
+```
+
+Delete a prompt from a dataset
 
 <a id="utils.logging"></a>
