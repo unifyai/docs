@@ -33,12 +33,12 @@
     },
     "tabs": [
         {
-            "name": "REST API Reference",
-            "url": "api-reference"
+            "name": "Python",
+            "url": "python"
         },
         {
-            "name": "Python SDK",
-            "url": "python"
+            "name": "REST API",
+            "url": "api-reference"
         }
     ],
     "navigation": [
