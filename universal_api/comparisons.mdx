@@ -9,7 +9,14 @@ Trying out LLMs one after the other can be tedious. We've therefore made it very
 compare LLM outputs to the same question side-by-side, both via our browser-based
 [chat interface](https://console.unify.ai/dashboard?tab=Chat),
 and the [MultiLLM](https://docs.unify.ai/python/chat/clients/multi_llm#multillm) and
-[MultiLLMAsync](https://docs.unify.ai/python/chat/clients/multi_llm#multillmasync) classes in our Python SDK.
+[MultiLLMAsync](https://docs.unify.ai/python/chat/clients/multi_llm#multillmasync)
+classes in our Python SDK.
+
+Both `MultiLLM` and `MultiLLMAsync` wrap `AsyncUnify` instances under the hood,
+such that the LLMs are queried in parallel. The distinction between `MultiLLM` and
+`MultiLLMAsync` refers to whether the `.generate()` method is also itself an
+asynchronous function, which can be nested inside a broader outer program orchestrated
+by `asyncio.run`.
 
 An interactive session with several LLM can be spun up in Python very quickly, as follows:
 
@@ -23,18 +30,34 @@ for endpoint, response in responses.items():
     print("response: {}\n".format(response))
 ```
 
-If you want each LLM to be queried asynchronously (recommended, especially when querying many endpoints)
-then you can run the command as follows:
+If you want to query several multi-llm clients in parallel,
+then it's best to use `MultiLLMAsync`, as follows:
 
 ```python
 import unify
 import asyncio
 
-endpoints = ("llama-3-8b-chat@together-ai", "gpt-4o@openai", "claude-3.5-sonnet@anthropic")
-client = unify.MultiLLMAsync(endpoints=endpoints)
+openai_endpoints = ("llama-3-8b-chat@together-ai", "gpt-4o@openai", "claude-3.5-sonnet@anthropic")
+openai_client = unify.MultiLLMAsync(
+    endpoints=openai_endpoints,
+    system_message="This is a system message specifically optimized for OpenAI models."
+)
+anthropic_endpoints = ("llama-3-8b-chat@together-ai", "gpt-4o@openai", "claude-3.5-sonnet@anthropic")
+anthropic_client = unify.MultiLLMAsync(
+    endpoints=anthropic_endpoints,
+    system_message="This is a system message specifically optimized for Anthropic models."
+)
 
-responses = asyncio.run(client.generate("Hello, how it is going?"))
-for endpoint, response in responses.items():
-    print("endpoint: {}".format(endpoint))
-    print("response: {}\n".format(response))
+async def generate_responses(user_message: str):
+    openai_responses = openai_client.generate(user_message)
+    anthropic_responses = openai_client.generate(user_message)
+    return {"openai": openai_responses, "anthropic": anthropic_responses}
+
+
+all_responses = asyncio.run(generate_responses("Hello, how's it going?"))
+for provider, responses in all_responses.items():
+    print("provider: {}\n".format(provider))
+    for endpoint, response in responses.items():
+        print("endpoint: {}".format(endpoint))
+        print("response: {}\n".format(response))
 ```
