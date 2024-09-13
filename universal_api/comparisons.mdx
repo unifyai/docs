@@ -12,6 +12,58 @@ and the [MultiLLM](https://docs.unify.ai/python/chat/clients/multi_llm#multillm)
 [MultiLLMAsync](https://docs.unify.ai/python/chat/clients/multi_llm#multillmasync)
 classes in our Python SDK.
 
+## Single LLM Clients
+
+Before diving into the Multi-LLM clients,
+it's helpful to have a quick recap on how the `UniLLM` clients,
+`Unify` and `AsyncUnify`, can be used:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai")
+print(client.generate("Hello, how it is going?"))
+```
+
+For optimal performance in handling multiple user requests simultaneously,
+such as in a chatbot application, processing them asynchronously is recommended.
+A minimal example using `AsyncUnify` is given below:
+
+ ```python
+import unify
+import asyncio
+async_client = unify.AsyncUnify("llama-3-8b-chat@fireworks-ai")
+asyncio.run(async_client.generate("Hello Llama! Who was Isaac Newton?"))
+```
+
+More a more applied example,
+processing multiple requests in parallel can then be done as follows:
+
+ ```python
+import unify
+import asyncio
+clients = dict()
+clients["gpt-4o@openai"] = unify.AsyncUnify("gpt-4o@openai")
+clients["claude-3-opus@anthropic"] = unify.AsyncUnify("claude-3-opus@anthropic")
+clients["llama-3-8b-chat@fireworks-ai"] = unify.AsyncUnify("llama-3-8b-chat@fireworks-ai")
+
+
+async def generate_responses(user_message: str):
+    responses_ = dict()
+    for endpoint_, client in clients.items():
+        responses_[endpoint_] = await client.generate(user_message)
+    return responses_
+
+responses = asyncio.run(generate_responses("Hello, how's it going?"))
+for endpoint, response in responses.items():
+    print("endpoint: {}".format(endpoint))
+    print("response: {}\n".format(response))
+```
+
+Functionality wise, the asynchronous and synchronous clients are identical.
+
+
+## Multi-LLM Clients
+
 Both `MultiLLM` and `MultiLLMAsync` wrap `AsyncUnify` instances under the hood,
 such that the LLMs are queried in parallel. The distinction between `MultiLLM` and
 `MultiLLMAsync` refers to whether the `.generate()` method is also itself an
