@@ -33,10 +33,7 @@ import asyncio
 endpoints = ("llama-3-8b-chat@together-ai", "gpt-4o@openai", "claude-3.5-sonnet@anthropic")
 client = unify.MultiLLMAsync(endpoints=endpoints)
 
-async def get_responses():
-    return await client.generate("Hello, how it is going?")
-
-responses = asyncio.run(get_responses())
+responses = asyncio.run(client.generate("Hello, how it is going?"))
 for endpoint, response in responses.items():
     print("endpoint: {}".format(endpoint))
     print("response: {}\n".format(response))
