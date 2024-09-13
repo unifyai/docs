@@ -83,7 +83,7 @@ response = client.generate(
       ],
     }
   ],
-  max_tokens=300,
+  max_completion_tokens=300,
 )
 
 print(response)
@@ -122,7 +122,7 @@ response = client.generate(
       ],
     }
   ],
-  max_tokens=300,
+  max_completion_tokens=300,
 )
 
 print(response)
@@ -222,7 +222,7 @@ response = client.messages.create(
             ],
         }
     ],
-    max_tokens=300,
+    max_completion_tokens=300,
     model="claude-3-opus-20240229"
 )
 print(response)
@@ -257,7 +257,7 @@ response = client.generate(
             ],
         }
     ],
-    max_tokens=300,
+    max_completion_tokens=300,
 )
 print(response)
 ```

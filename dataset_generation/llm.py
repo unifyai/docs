@@ -26,7 +26,7 @@ def generate(prompt, sys_prompt=None):
         # "model": "gpt-4o@openai",
         "messages": messages,
         "temperature": 0.5,
-        "max_tokens": 4096,
+        "max_completion_tokens": 4096,
     }
     response = requests.post(url, json=payload, headers=headers)
     if response.status_code == 200:
