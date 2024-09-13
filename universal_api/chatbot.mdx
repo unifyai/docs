@@ -12,7 +12,8 @@ the [MultiLLM](https://docs.unify.ai/python/chat/clients/multi_llm#asyncmultillm
 client.
 
 The asynchronous clients are also supported, but there is no benefit in using them over
-the synchronous versions in this case, as the [ChatBot]() `.run()` method is
+the synchronous versions in this case,
+as the [ChatBot](https://docs.unify.ai/python/chat/chatbot#chatbot) `.run()` method is
 *interactive*, and therefore cannot be combined with other `.run()` calls in parallel,
 with an `asyncio.run` call sitting on top.
 
@@ -47,7 +48,8 @@ streamed to the terminal.
 
 ## MultiLLM Chatbot
 
-In order to chat with several LLMs in parallel (similar to our [chat interface]()),
+In order to chat with several LLMs in parallel
+(similar to our [chat interface](https://console.unify.ai/dashboard?tab=Chat)),
 then you can create a multi-llm chatbot as follows:
 
 ```python
