@@ -60,6 +60,7 @@
                         "universal_api/supported_endpoints",
                         "universal_api/making_queries",
                         "universal_api/arguments",
+                        "universal_api/prompts",
                         "universal_api/logging",
                         "universal_api/comparisons",
                         "universal_api/chatbot"
