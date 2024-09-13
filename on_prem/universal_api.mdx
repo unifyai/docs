@@ -69,7 +69,13 @@ Along with the above, you would also need to uncomment a line in the docker-comp
 account json onto the container. For e.g. if `application_default_credentials.json` is the name of the file, then
 `GOOGLE_APPLICATION_CREDENTIALS` would be set as `/app/src/application_default_credentials.json`.
 
-Once you’ve set the environment variables, you can now spin up the containers for the images with docker compose up.
+Once you’ve set the environment variables, you can now spin up the containers for the images with `docker compose up`.
+There's a total of 5 containers that should be running,
+- `console`
+- `orchestra`
+- `dataset_evaluation`
+- `db`
+- `redis`
 
 The containers should start running after that, you should wait until you see the log entry of on-prem-orchestra
 saying Uvicorn running on `http://0.0.0.0:8000`. After that is displayed, you’re set to start using the console.
@@ -82,3 +88,14 @@ API Reference by making calls to `http://localhost:8000` instead of `https://api
 
 The shared_volume would contain the results of the dataset evaluations and custom endpoints you create. You shouldn’t
 need to update this folder manually, the information stored in it can be retrieved from the relevant endpoints.
+
+## Updates
+
+The images would continue to be updated as the platform evolves.
+In order to update your local environment based on the latest versions, you would need to do the following,
+- Pull the latest images: [same as above](#pull-the-images)
+- Kill the currently running container for the service: `docker compose stop <service_name>`
+- Re-build the service container: `docker compose build <service_name>`
+- Get it running again `docker compose up <service_name>`
+
+> **\<service_name\>** can be one of `console`, `orchestra` or `dataset_evaluation`
