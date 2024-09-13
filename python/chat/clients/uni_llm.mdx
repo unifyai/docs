@@ -2,15 +2,15 @@
 title: 'clients.uni_llm'
 ---
 
-<a id="chat.clients.uni_llm.UniLLMClient"></a>
+<a id="chat.clients.uni_llm._UniLLMClient"></a>
 
-## UniLLMClient
+## \_UniLLMClient
 
 ```python
-class UniLLMClient(Client, abc.ABC)
+class _UniLLMClient(_Client, abc.ABC)
 ```
 
-<a id="chat.clients.uni_llm.UniLLMClient.__init__"></a>
+<a id="chat.clients.uni_llm._UniLLMClient.__init__"></a>
 
 ---
 
@@ -186,7 +186,7 @@ Initialize the base Single LLM Unify client.
 
 - `UnifyError` - If the API key is missing.
 
-<a id="chat.clients.uni_llm.UniLLMClient.endpoint"></a>
+<a id="chat.clients.uni_llm._UniLLMClient.endpoint"></a>
 
 ---
 
@@ -203,7 +203,7 @@ Get the endpoint name.
 
   The endpoint name.
 
-<a id="chat.clients.uni_llm.UniLLMClient.model"></a>
+<a id="chat.clients.uni_llm._UniLLMClient.model"></a>
 
 ---
 
@@ -220,7 +220,7 @@ Get the model name.
 
   The model name.
 
-<a id="chat.clients.uni_llm.UniLLMClient.provider"></a>
+<a id="chat.clients.uni_llm._UniLLMClient.provider"></a>
 
 ---
 
@@ -237,7 +237,7 @@ Get the provider name.
 
   The provider name.
 
-<a id="chat.clients.uni_llm.UniLLMClient.set_endpoint"></a>
+<a id="chat.clients.uni_llm._UniLLMClient.set_endpoint"></a>
 
 ---
 
@@ -253,7 +253,7 @@ Set the endpoint name.
 
 - `value` - The endpoint name.
 
-<a id="chat.clients.uni_llm.UniLLMClient.set_model"></a>
+<a id="chat.clients.uni_llm._UniLLMClient.set_model"></a>
 
 ---
 
@@ -269,7 +269,7 @@ Set the model name.
 
 - `value` - The model name.
 
-<a id="chat.clients.uni_llm.UniLLMClient.set_provider"></a>
+<a id="chat.clients.uni_llm._UniLLMClient.set_provider"></a>
 
 ---
 
@@ -290,7 +290,7 @@ Set the provider name.
 ## Unify
 
 ```python
-class Unify(UniLLMClient)
+class Unify(_UniLLMClient)
 ```
 
 Class for interacting with the Unify chat completions endpoint in a synchronous
@@ -301,7 +301,7 @@ manner.
 ## AsyncUnify
 
 ```python
-class AsyncUnify(UniLLMClient)
+class AsyncUnify(_UniLLMClient)
 ```
 
 Class for interacting with the Unify chat completions endpoint in a synchronous
