@@ -19,7 +19,7 @@ Agent class represents an LLM chat agent.
 ### \_\_init\_\_
 
 ```python
-def __init__(client: Client) -> None
+def __init__(client: _Client) -> None
 ```
 
 Initializes the ChatBot object, wrapped around a client.
@@ -36,7 +36,7 @@ Initializes the ChatBot object, wrapped around a client.
 
 ```python
 @property
-def client() -> Client
+def client() -> _Client
 ```
 
 Get the client object.  
