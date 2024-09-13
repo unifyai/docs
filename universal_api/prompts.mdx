@@ -1,0 +1,113 @@
+---
+title: 'Prompts'
+---
+
+Terms like prompt, message, query etc. are used very interchangeably, and we've reached
+a point where the terms mean everything and nothing.
+
+For example, in OpenAI's
+[prompt engineering guide](https://platform.openai.com/docs/guides/prompt-engineering),
+they talk about tool use, structured output, and task decomposition.
+In their mental model, the "prompt" is therefore the *entire set of arguments* passed to
+the [chat completions endpoint](https://platform.openai.com/docs/api-reference/chat/create).
+OpenAI are therefore very careful to refer to the `system message` and `user message`,
+and avoid calling these messages "prompts".
+
+In contrast, Anthropic does use the term
+[system prompt](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/system-prompts)
+to refer to the system message.
+
+There is therefore no consensus on whether the "prompt" is only the text content of the
+message, the entire json body, or something in between.
+
+## Our Definition
+
+We generally adopt OpenAI's vocabulary, but more specifically we refer to the prompt as
+the components of the
+[OpenAI Request Body](https://platform.openai.com/docs/api-reference/chat/create)
+which **affect the output**. As such, `stream`, `stream_options` etc. are omitted from
+our [Prompt](https://github.com/unifyai/unify/blob/af0253995c785898ef3099aa664ac9e9039fe84c/unify/chat/__init__.py#L12).
+
+Our motivation for this is simple. Our platform is primarily built for *evaluations*.
+In other words, iterating on the input and assessing how these iterations impact the
+output, and more specifically how these changes affect evaluations on the output.
+
+In this light, we're only concerned with storing and tracking the components of the chat
+completions request which have an impact on the output, and thus we have adopted this
+"prompt" definition.
+
+> A prompt is a json object containing all arguments in the OpenAI chat
+> completions request body which **impact the output**.
+
+
+## Creating Prompts
+
+Prompts can be created locally like so:
+
+```python
+import unify
+prompt = unify.Prompt(
+    messages=[{"role": "user", "content": "This is a user message"}]
+)
+print(prompt)
+another_prompt = unify.Prompt(
+    messages=[{"role": "user", "content": "This is another user message"}],
+    temperature=0.5
+)
+print(another_prompt)
+```
+
+The optional parameters will not be shown when printing the prompt:
+
+```
+Prompt(
+    "messages": [
+        {
+            "content": "This is a user message",
+            "role": "user"
+        }
+    ],
+    "max_tokens": 1024,
+    "temperature": 1.0
+)
+Prompt(
+    "messages": [
+        {
+            "content": "This is another user message",
+            "role": "user"
+        }
+    ],
+    "max_tokens": 1024,
+    "temperature": 0.5
+)
+```
+
+## Passing Prompts
+
+Prompts can be passed to our various clients by simply unpacking the return of their
+`.dict()` them as keyword arguments into the constructor (to set default arguments) or
+into the `.generate()` method to limit to current query.
+
+```python
+import unify
+prompt = unify.Prompt(
+    temperature=0.5
+)
+client = unify.Unify(**prompt.dict())
+assert client.temperature == 0.5
+```
+
+```python
+import unify
+prompt = unify.Prompt(
+    messages=[{"role": "user", "content": "This is a user message"}]
+)
+client = unify.Unify("gpt-4o@openai")
+client.generate(**prompt.dict())
+```
+
+In the next [Logging](https://docs.unify.ai/universal_api/logging) section, we learn how
+prompts are logged into your account for future retrieval, and in the
+[Datasets](https://docs.unify.ai/benchmarking/datasets)
+section we'll learn how prompts can be grouped into datasets and uploaded to your
+account, for running evals and monitoring performance etc.
