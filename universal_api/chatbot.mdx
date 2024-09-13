@@ -11,15 +11,10 @@ either the [Unify](https://docs.unify.ai/python/chat/clients/uni_llm#unify) clie
 the [MultiLLM](https://docs.unify.ai/python/chat/clients/multi_llm#asyncmultillm)
 client.
 
-The asyncrhonous clients are also supported, but there is no benefit in using them over
+The asynchronous clients are also supported, but there is no benefit in using them over
 the synchronous versions in this case, as the [ChatBot]() `.run()` method is
 *interactive*, and therefore cannot be combined with other `.run()` calls in parallel,
-with `asyncio` orchestrating them to run in parallel. In contrast, the client
-`.generate()` method is not interactive, and so several of these calls can be run in
-parallel within a single `asyncio.run()` call.
-
-In this manner, the chatbot can either be uni-LLM or multi-LLM, and can either be
-synchronous or asynchronous, depending on the client which is passed in the constructor.
+with an `asyncio.run` call sitting on top.
 
 Below, we show simple examples, and explain the potential use cases for each
 client + chatbot combination.
@@ -50,20 +45,84 @@ In order to create a more ChatGPT-esq experience, streaming can be turned on via
 `stream=True` in the `unify.Unify` constructor, such that the chatbot responses are
 streamed to the terminal.
 
-## AsyncUnify Chatbot
+## MultiLLM Chatbot
 
-If several different chatbots are being run in parallel, perhaps in different threads,
-then it would be best to wrap the AsyncUnify class in the ChatBot, as follows:
+In order to chat with several LLMs in parallel (similar to our [chat interface]()),
+then you can create a multi-llm chatbot as follows:
 
 ```python
 import unify
-client = unify.AsyncUnify("llama-3-8b-chat@fireworks-ai")
+client = unify.MultiLLM((
+    "gpt-4o@openai",
+    "claude-3-opus@anthropic",
+    "llama-3-8b-chat@fireworks-ai"
+))
 chatbot = unify.ChatBot(client)
 chatbot.run()
 ```
 
-Again, streaming can be set in the same manner as before.
+A back and forth conversation is then triggered, with **multiple LLMs**,
+such as the following:
 
-## MultiLLM Chatbot
+```shell
+> What is 2+2?
+gpt-4o@openai:
+2+2 equals 4.
 
-## AsyncMultiLLM Chatbot
+claude-3-opus@anthropic:
+The answer to the question "What is 2+2?" is 4.
+
+The question involves simple addition. When you add two plus two, it equals four.
+
+llama-3-8b-chat@fireworks-ai:
+The answer to 2+2 is 4!
+```
+
+As explained in the [Comparisons](https://docs.unify.ai/universal_api/comparisons) section,
+bear in mind that the `MultiLLM` still uses `AsyncUnify` instances under the hood,
+and each LLM is queried asynchronously (in parallel).
+Therefore, the chatbot response time will not depend on the number of LLMs being
+conversed with when wrapping `MultiLLM`.
+
+Streaming is not supported by any multi-llm client, and so the responses are always
+returned as the final full string.
+The same is therefore also true for any multi-llm chatbots.
+
+With a multi-llm chatbot, each LLM receives *it's own unique message history*.
+This can be seen in the following example:
+
+```shell
+> Tell me a random number between 0 and 100, only respond with the number.
+gpt-4o@openai:
+42
+
+claude-3-opus@anthropic:
+27
+
+llama-3-8b-chat@fireworks-ai:
+43
+
+> repeat this number.
+gpt-4o@openai:
+42
+
+claude-3-opus@anthropic:
+27
+
+llama-3-8b-chat@fireworks-ai:
+43
+```
+
+The `ChatBot` class can be helpful for quickly testing out models in an interactive
+manner inside your Python environment,
+even those which are not specifically chatbot applications.
+
+If the message history is no longer needed,
+it can be cleared at any point in time by calling `.clear_chat_history()`.
+
+The chat can also be paused any time by typing `pause` in the response,
+and can be exited by typing `quit`.
+
+For a more visually rich chatbot experience,
+we'd recommend using our [chat interface](https://console.unify.ai/dashboard?tab=Chat)
+in the console! 🤖
