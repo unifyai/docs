@@ -1,0 +1,69 @@
+---
+title: 'Chatbot'
+---
+
+Having a back-and-forth conversation with an LLM is a very useful format for engagement,
+it is one of the primary reasons that ChatGPT became such an instant success.
+
+In order to make back-and-forth chats simple in the platform, we've created a simple
+[Chatbot](https://docs.unify.ai/python/chat/chatbot#chatbot) class which wraps around
+either the [Unify](https://docs.unify.ai/python/chat/clients/uni_llm#unify) client or
+the [MultiLLM](https://docs.unify.ai/python/chat/clients/multi_llm#asyncmultillm)
+client.
+
+The asyncrhonous clients are also supported, but there is no benefit in using them over
+the synchronous versions in this case, as the [ChatBot]() `.run()` method is
+*interactive*, and therefore cannot be combined with other `.run()` calls in parallel,
+with `asyncio` orchestrating them to run in parallel. In contrast, the client
+`.generate()` method is not interactive, and so several of these calls can be run in
+parallel within a single `asyncio.run()` call.
+
+In this manner, the chatbot can either be uni-LLM or multi-LLM, and can either be
+synchronous or asynchronous, depending on the client which is passed in the constructor.
+
+Below, we show simple examples, and explain the potential use cases for each
+client + chatbot combination.
+
+## Unify Chatbot
+
+This is the simplest chatbot, running synchronously with a single LLM:
+
+```python
+import unify
+client = unify.Unify("llama-3-8b-chat@fireworks-ai")
+chatbot = unify.ChatBot(client)
+chatbot.run()
+```
+
+A back and forth conversation is then triggered, with a single LLM,
+such as the following:
+
+```shell
+> What is the capital of Spain?
+The capital of Spain is Madrid.
+> Who is their most famous sports player?
+Spain has produced many talented sports players, but one of the most famous and
+successful is probably Andrés Iniesta
+```
+
+In order to create a more ChatGPT-esq experience, streaming can be turned on via
+`stream=True` in the `unify.Unify` constructor, such that the chatbot responses are
+streamed to the terminal.
+
+## AsyncUnify Chatbot
+
+If several different chatbots are being run in parallel, perhaps in different threads,
+then it would be best to wrap the AsyncUnify class in the ChatBot, as follows:
+
+```python
+import unify
+client = unify.AsyncUnify("llama-3-8b-chat@fireworks-ai")
+chatbot = unify.ChatBot(client)
+chatbot.run()
+```
+
+Again, streaming can be set in the same manner as before.
+
+## MultiLLM Chatbot
+
+## AsyncMultiLLM Chatbot
