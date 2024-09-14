@@ -5,7 +5,7 @@ title: 'Datasets'
 Prompt datasets are simply a collection of
 [Prompts](https://github.com/unifyai/unify/blob/26247d88da2d46dea62fe0a665934f7f98523c92/unify/types.py#L23)
 which are stored in your account,
-with extra corresponding fields optionally also included in the dataset,
+with extra fields optionally also included in the dataset,
 such as reference answers etc.
 
 The primary use case for these datasets is to group prompts into various helpful test
@@ -23,9 +23,53 @@ then you'll need to connect and synchronize your datasets with your unify accoun
 This is what's covered in the final sections: [Uploading](#uploading),
 [Downloading](#downloading) and [Synchronizing](#synchronizing).
 
+## Composition
+
+Each dataset entry is a pydantic
+[Datum](https://github.com/unifyai/unify/blob/b7743c6b204633c7eb77a65a1107c2031aec18a9/unify/types.py#L123)
+instance, which contains a `prompt` field of type `Prompt`, with the pydantic
+argument `extra=Extra.allow`, enabling *extra arbitrary fields*.
+
+A `Datum` instance can be initialized as follows. If a single string is passed,
+then this is interpreted as the user message
+(also the case with `Prompt` initialization):
+
+```python
+import unify
+datum = unify.Datum("This is a user message.")
+```
+```
+Datum(
+    prompt=Prompt(
+        messages=[{'content': 'This is a user message.', 'role': 'user'}]
+    )
+)
+```
+
+A prompt can also be passed explicitly, with *optional extra fields* as well:
+
+```python
+import unify
+datum = unify.Datum(
+    prompt=unify.Prompt(
+        "This is a user message."
+    ),
+    ref_answer="This is an answer."
+)
+```
+```
+Datum(
+    prompt=Prompt(
+        messages=[{'content': 'This is a user message.', 'role': 'user'}]
+    ),
+    ref_answer='This is an answer.'
+)
+```
+
 ## Creation
 
-Creating a local prompt dataset is very simple:
+A dataset is just a collection of `Datum` instances.
+Creating a local dataset is very simple:
 
 ```python
 import unify
@@ -36,9 +80,9 @@ dataset = unify.Dataset([
 ])
 ```
 
-When a list of strings is passed, these strings are interpreted as *user messages*,
-but the underlying dataset will contains `Datum` instances, which themselves
-contain `Prompt` instances:
+When a list of strings is passed, these strings are also interpreted as *user messages*,
+but as explained above, the underlying dataset will contains `Datum` instances,
+which themselves contain `Prompt` instances:
 
 ```
 Dataset(
@@ -164,7 +208,7 @@ Dataset(
 )
 ```
 
-Strings, prompts and data entries can also be passed individually, and these will be
+`str`, `Prompt` and `Datum` instances can also be passed individually, and these will be
 interpreted as single-item datasets:
 
 ```python
