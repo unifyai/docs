@@ -70,9 +70,10 @@ Each dictionary in the list must contain a `prompt` key.
 ### download\_dataset
 
 ```python
-def download_dataset(name: str,
-                     path: Optional[str] = None,
-                     api_key: Optional[str] = None) -> Optional[str]
+def download_dataset(
+        name: str,
+        path: Optional[str] = None,
+        api_key: Optional[str] = None) -> Union[List[DatasetEntry], None]
 ```
 
 Downloads a dataset from the platform.
