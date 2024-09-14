@@ -151,3 +151,82 @@ Dataset(
     ]
 )
 ```
+
+## Adding Datasets
+
+Datasets can be added together to create combined datasets easily:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+])
+dataset2 = unify.Dataset([
+    "Third user message.",
+    "Fourth user message.",
+])
+print(dataset1 + dataset2)
+```
+```
+Dataset(
+    [
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Fourth user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+Duplicates will also be handled, such that entries in both datasets are not repeated:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+])
+dataset2 = unify.Dataset([
+    "Second user message.",
+    "Third user message.",
+])
+print(dataset1 + dataset2)
+```
+```
+Dataset(
+    [
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
