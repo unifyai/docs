@@ -506,7 +506,33 @@ dataset1 -= dataset2
 ```
 
 All of the points made in the previous section about addition also apply for
-subtraction. This section is less verbose than the previous section in order to avoid
+subtraction. For example, individual entries can be removed from a `Dataset` by value,
+like so:
+
+```python
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message."
+])
+dataset -= "First user message"
+dataset = dataset - unify.Prompt("Second user message.")
+print(dataset)
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+This section is less verbose than the previous section in order to avoid
 repetition, but all points made apply equally in this case as well, and you're
 encouraged to test things out accordingly!
 
