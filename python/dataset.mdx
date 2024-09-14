@@ -17,7 +17,8 @@ class Dataset(_Formatted)
 ### \_\_init\_\_
 
 ```python
-def __init__(data: Union[str, List[Union[str, Dict, Prompt, DatasetEntry]]],
+def __init__(data: Union[str, Dict, Prompt, DatasetEntry,
+                         List[Union[str, Dict, Prompt, DatasetEntry]]],
              *,
              name: str = None,
              auto_sync: Union[bool, str] = False,
@@ -28,9 +29,10 @@ Initialize a local dataset of LLM queries.
 
 **Arguments**:
 
-- `data` - The data for populating the dataset. This can either can a string
-  specifying an upstream dataset, a list of user messages, a list of full
-  queries, or a list of dicts of queries alongside any extra fields.
+- `data` - The data for populating the dataset. This can either can a list of
+  user messages, a list of full queries, or a list of dicts of queries
+  alongside any extra fields. Individual items in any of the formats listed
+  above will also be converted to lists and processed automatically.
   
 - `name` - The name of the dataset.
   
