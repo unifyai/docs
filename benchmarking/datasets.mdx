@@ -230,3 +230,38 @@ Dataset(
     ]
 )
 ```
+
+## Subtracting Datasets
+
+Datasets can also be subtracted from one another easily:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message.",
+    "Fourth user message.",
+])
+dataset2 = unify.Dataset([
+    "Second user message.",
+    "Fourth user message.",
+])
+print(dataset1 - dataset2)
+```
+```
+Dataset(
+    [
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
