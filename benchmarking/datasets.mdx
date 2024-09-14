@@ -351,9 +351,78 @@ dataset2 = unify.Dataset([
 dataset1 += dataset2
 ```
 
+Addition also works with *all types which can be passed into the dataset constructor*.
+In such cases, the item will be automatically passed to the constructor to create a
+`Dataset`:
+
+```python
+import unify
+dataset = unify.Dataset(["First user message."])
+dataset += "Second user message."
+dataset += unify.Prompt(messages=[{'content': 'Third user message.', 'role': 'user'}])
+dataset += ["Fourth user message.", "Fifth user message."]
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Fourth user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Fifth user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+The ordering of the operation also does not matter, by virtue of `__radd__` and
+`__rsub__` implemented for the `Dataset` class:
+
+```python
+import unify
+"User message" + unify.Dataset("Another user message.")
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'User message', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[
+                    {'content': 'Another user message.', 'role': 'user'}
+                ]
+            )
+        )
+    ]
+)
+```
+
 ## Trimming
 
-Datasets can also be subtracted from one another easily:
+Datasets can also be subtracted from one another easily, as follows:
 
 ```python
 import unify
@@ -403,6 +472,11 @@ dataset2 = unify.Dataset([
 ])
 dataset1 -= dataset2
 ```
+
+All of the points made in the previous section about addition also apply for
+subtraction. This section is less verbose than the previous section in order to avoid
+repetition, but all points made apply equally in this case as well, and you're
+encouraged to test things out accordingly!
 
 ## Uploading
 
