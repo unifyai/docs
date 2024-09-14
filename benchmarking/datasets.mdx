@@ -152,6 +152,35 @@ Dataset(
 )
 ```
 
+## Indexing and Iterating
+
+Datasets can be iterated over as follows:
+
+```python
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message."
+])
+for entry in dataset:
+    assert isinstance(entry, unify.DatasetEntry)
+    print(entry)
+```
+
+Similarly, they can be indexed:
+
+```python
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message."
+])
+assert isinstance(dataset[1], unify.DatasetEntry)
+print(dataset[1])
+```
+
 ## Adding Datasets
 
 Datasets can be added together to create combined datasets easily:
