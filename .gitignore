@@ -7,3 +7,4 @@ results_pruned.json
 __pycache__/
 *.swp
 .pytest_cache/
+.DS_Store/

@@ -11,7 +11,19 @@ such as reference answers etc.
 The primary use case for these datasets is to group prompts into various helpful test
 cases and test sets, which can then form part of an evaluation pipeline.
 
-## Creating a Dataset
+Firstly, we cover topics focused on local development: [Creation](#creation),
+[Indexing and Iterating](#indexing-and-iterating), [Combining](#combining)
+and [Trimming](#trimming). This covers everything you need to know for purely local development,
+which can be great for initial experimentation.
+
+However, if
+you need these experiments to be preserved across sessions,
+you need to work with other team members, or you need to handle large volumes of data,
+then you'll need to connect and synchronize your datasets with your unify account.
+This is what's covered in the final sections: [Uploading](#uploading),
+[Downloading](#downloading) and [Synchronizing](#synchronizing).
+
+## Creation
 
 Creating a local prompt dataset is very simple:
 
@@ -181,7 +193,7 @@ assert isinstance(dataset[1], unify.DatasetEntry)
 print(dataset[1])
 ```
 
-## Adding Datasets
+## Combining
 
 Datasets can be added together to create combined datasets easily:
 
@@ -276,7 +288,7 @@ dataset2 = unify.Dataset([
 dataset1 += dataset2
 ```
 
-## Subtracting Datasets
+## Trimming
 
 Datasets can also be subtracted from one another easily:
 
@@ -328,3 +340,56 @@ dataset2 = unify.Dataset([
 ])
 dataset1 -= dataset2
 ```
+
+## Uploading
+
+You can see your listed datasets on the [Datasets](https://console.unify.ai/datasets)
+page of your account.
+
+<p align="left">
+    <img src="/images/datasets_page_empty.png" alt="Datasets Empty" />
+</p>
+
+By default, there is a single dataset added to all new accounts: "Open Hermes".
+This is...
+
+In order to synchronize your local dataset with an upstream dataset in the platform,
+your dataset **needs to have a name**.
+
+If this was not set in the constructor, then it can be set as follows:
+
+```python
+dataset.set_name("my_dataset")
+```
+
+Provided your dataset has a name, it can then be uploaded to your account like so:
+
+```python
+dataset.upload()
+```
+
+This will not overwrite any dataset entries which are contained in the upstream dataset,
+it will only add any missing entries.
+If you want to fully overwrite any existing upstream dataset called "my_dataset",
+then pass `overwrite=True`:
+
+```python
+dataset.upload(overwrite=True)
+```
+
+Once your dataset has been uploaded, you'll be able to see it in the console like so:
+
+<p align="left">
+    <img src="/images/datasets_page_w_upload.png" alt="Datasets with Upload" />
+</p>
+
+The dataset can be renamed, deleted, and viewed from the console.
+Clicking `View Dataset` will present the following view of the dataset:
+
+IMAGE
+
+## Downloading
+
+
+
+## Synchronizing
