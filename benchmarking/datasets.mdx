@@ -2,216 +2,152 @@
 title: 'Datasets'
 ---
 
-Prompt datasets are useful for:
+Prompt datasets are simply a collection of
+[Prompts](https://github.com/unifyai/unify/blob/26247d88da2d46dea62fe0a665934f7f98523c92/unify/types.py#L23)
+which are stored in your account,
+with extra corresponding fields optionally also included in the dataset,
+such as reference answers etc.
 
-- evaluating LLMs on prompts which are representative of the final task
+The primary use case for these datasets is to group prompts into various helpful test
+cases and test sets, which can then form part of an evaluation pipeline.
 
-- training a router on the prompt data, to improve the overall LLM performance
+## Creating a Dataset
 
-We will refer to our representative example of building an AI educational assistant.
-
-## Creating Datasets
-
-Before we start any benchmarking, we need a dataset of prompts to benchmark on!
-
-There are three main ways to create a prompt dataset for your task,
-as explained below.
-
-### Using Public Data
-
-The best starting point is to try and find an existing public dataset which aligns well
-with your specific task. In this case, we can take all past exam questions and all
-practice questions from the textbooks for each subject.
-
-This gives us a great starting point. For example, for the
-[Maths](https://ocr.org.uk/qualifications/gcse/mathematics-j560-from-2015/)
-syllabus we can look into the
-[assessment section](https://ocr.org.uk/qualifications/gcse/mathematics-j560-from-2015/assessment/)
-and find many sample papers and real past papers.
-
-A couple of example questions are as follows (taken from the papers),
-with their corresponding answers (taken from the mark scheme).
-
-```
-18 rice cakes weigh a total of 130g.
-There are 329 calories in 100g of rice cakes.
-How many calories are there in one rice cake?
-
-A circular table top has radius 70cm.
-(a) Calculate the area of the table top in cm^2, giving your answer as a multiple of π.
-(b) The volume of the table top is 17150πcm^3. Calculate the thickness of the table top.
-```
-
-The answers can be found from the corresponding mark scheme,
-
-### Synthetic Data Generation
-
-In order to expand the prompt data that we've already extracted,
-we can use LLMs to generate more questions.
-
-In this case, we use Claude Opus 3.5 and we provide all extracted questions in the
-system prompt, and we also provide the full subject syllabus, and inform the LLM that
-the questions must related to the syllabus, and the LLM must explain the exact point in
-the syllabus that the questions is referring to.
-
-By running this,
-we are able to increase the prompt dataset size by X% for most subjects.
-
-We can then add this to the local `.jsonl` file as follows:
-
-CODE
-
-### Production Data
-
-Finally, if our application is actually being run in production, then we can capture
-real data from real users, and augment our prompt datasets accordingly.
-This data is especially important, as it represents the *true distribution* observed
-*in the wild* for the task, which will inevitably deviate from our best guess
-before deployment.
-
-It's easy to extract any prompt queries previously made to the API,
-via the [`prompt_history`](benchmarks/get_prompt_history) endpoint, as explained [here]().
-For example, the last 100 prompts with the tag `physics` can be extracted as follows:
+Creating a local prompt dataset is very simple:
 
 ```python
-phyiscs_prompts = client.prompt_history(tag="phyiscs", limit=100)
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message."
+])
 ```
 
-We can then add this to the local `.jsonl` file as follows:
+When a list of strings is passed, these strings are interpreted as *user messages*,
+but the underlying dataset will contains `DatasetEntry` instances, which themselves
+contain `Prompt` instances:
 
-CODE
-
-## Uploading Datasets
-
-As shown above, the representation for prompt datasets is `.jsonl`,
-which is a file format where each line is a json object (or in Python, a list of dicts).
-
-Lets upload our `english_language.jsonl` dataset.
-
-We can do this via the REST API as follows:
-
-```shell
-curl --request POST \
-  --url 'https://api.unify.ai/v0/dataset' \
-  --header "Authorization: Bearer $UNIFY_KEY" \
-  --header 'Content-Type: multipart/form-data' \
-  --form 'file=@english_language.jsonl'\
-  --form 'name=english_language'
 ```
-
-Or we can create a `Dataset` instance in Python,
-and then call `.upload("english_language")` as follows:
-
-{/* ToDo: the Dataset instance isn't implemented */}
-
-```python
-client.dataset.upload(
-    path="english_language.jsonl",
-    name="english_language"
+Dataset(
+    [
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
 )
 ```
 
-## Deleting Datasets
-
-We can delete the dataset just as easily as we created it.
-
-First, using the REST API:
-
-```shell
-curl --request DELETE \
-  --url 'https://api.unify.ai/v0/dataset?name=english_language' \
-  --header "Authorization: Bearer $UNIFY_KEY"
-```
-
-Or via Python:
+Prompts can also be passed directly into the constructor:
 
 ```python
-client.datasets.delete(name="english_language")
+import unify
+dataset = unify.Dataset([
+    unify.Prompt(
+        messages=[{'content': 'First user message.', 'role': 'user'}],
+        temperature=0.2
+    ),
+    unify.Prompt(
+        messages=[{'content': 'Second user message.', 'role': 'user'}],
+        temperature=0.4
+    ),
+    unify.Prompt(
+        messages=[{'content': 'Third user message.', 'role': 'user'}],
+        temperature=0.6
+    ),
+])
+```
+```
+Dataset(
+    [
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}],
+                temperature=0.2
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}],
+                temperature=0.4
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}],
+                temperature=0.6
+            )
+        )
+    ]
+)
 ```
 
-## Listing Datasets
-
-We can retrieve a list of our uploaded datasets using the `/dataset/list` endpoint.
-
-```shell
-curl --request GET \
-  --url 'https://api.unify.ai/v0/dataset/list' \
-  --header "Authorization: Bearer $UNIFY_KEY"
-```
+Similarly, DatasetEntry instances can also be passed into the constructor, which can
+optionally have extra arbitrary fields (due to `extra=Extra.allow`),
+such as `ref_answer`:
 
 ```python
-datasets = client.datasets.list()
-print(datasets)
+import unify
+dataset = unify.Dataset([
+    unify.DatasetEntry(
+        prompt=unify.Prompt(
+            messages=[{'content': 'First user message.', 'role': 'user'}],
+            temperature=0.2
+        ),
+        ref_answer="First answer."
+    ),
+    unify.DatasetEntry(
+        prompt=unify.Prompt(
+            messages=[{'content': 'First user message.', 'role': 'user'}],
+            temperature=0.2
+        ),
+        ref_answer="Second answer."
+    ),
+    unify.DatasetEntry(
+        prompt=unify.Prompt(
+            messages=[{'content': 'First user message.', 'role': 'user'}],
+            temperature=0.2
+        ),
+        ref_answer="Third answer."
+    ),
+])
 ```
-
-
-## Renaming Datasets
-
-Let's imagine we accidentally named our dataset `"english"` when uploading it,
-which would cause confusion as students need to learn both subjects `english literature`
-and `english language`.
-
-We can easily rename the dataset without deleting and re-uploading,
-via the following REST API command:
-
-```shell
-curl --request POST \
-  --url 'https://api.unify.ai/v0/dataset/rename?name=english&new_name=english_literature' \
-  --header "Authorization: Bearer $UNIFY_KEY"
 ```
-
-Or via Python:
-
-```python
-client.datasets.rename(name="english", new_name="english_literature")
+Dataset(
+    [
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}],
+                temperature=0.2
+            ),
+            ref_answer='First answer.'
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}],
+                temperature=0.2
+            ),
+            ref_answer='Second answer.'
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}],
+                temperature=0.2
+            ),
+            ref_answer='Third answer.'
+        )
+    ]
+)
 ```
-
-## Appending to Datasets
-
-As explained above, we might want to add to an existing dataset, either because we have
-[generated some synthetic examples](), or perhaps because we have some relevant
-[production traffic](datasets#production-data).
-
-In the examples above, we simply appended to these datasets locally,
-before then uploading the full `.jsonl` file. However,
-we can also make incremental updates to datasets which have previously been uploaded.
-
-We simply use the X command as follows:
-
-CODE
-
-Or via Python:
-
-CODE
-
-## Dataset Chunks
-
-Whenever a dataset is appended to, this is stored as a new dataset "chunk".
-This is relevant as it is effectively how dataset version control works.
-
-Datasets can be used as inputs to other triggered jobs in the platform
-(such as [performing an evaluation]() or [training a router]()),
-and appending to a *dependent* dataset will make those completed jobs "out of sync"
-with the *full* dataset, as per the latest append operation.
-
-The chunks enable the correspondence across other jobs to be easily tracked.
-Previous jobs will show as being "partially" completed if the dataset has changed
-since the last job, and the chunk id will express *how partial* the job is with respect
-to the full dataset.
-
-The chunk structure of any dataset, and the timestamp of each chunk upload,
-can be observed as follows:
-
-CODE
-
-## Dataset Fields
-
-All of the examples above only included a `prompt` key in the data,
-but any arbitrary structure can be used.
-
-For example, you might want to include a reference answer alongside each prompt,
-or perhaps include a document which a downstream RAG pipeline must have use of, if the
-dataset is an evaluation dataset.
-
-There is no limit to the extra fields that can be added, and their entries,
-provided all of the data is expressed as strings.
