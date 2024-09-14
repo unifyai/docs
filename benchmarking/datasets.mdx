@@ -164,6 +164,25 @@ Dataset(
 )
 ```
 
+Strings, prompts and data entries can also be passed individually, and these will be
+interpreted as single-item datasets:
+
+```python
+import unify
+dataset = unify.Dataset("First user message.")
+```
+```
+Dataset(
+    [
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
 ## Indexing and Iterating
 
 Datasets can be iterated over as follows:
@@ -483,8 +502,8 @@ called on the local `Dataset` instance (even if that method does not change the
 synchronized until a method is called on the local `Dataset`, but new local changes will
 **always** be fully synchronized with upstream. It's worth keeping this asymmetry in
 mind, understanding that local changes do trigger the sync, but upstream changes do not
-trigger the sync. If you need track upstream changes, then occasionally calling
-`.sync()` on your dataset explicitly will be needed.
+trigger the sync. If you need track upstream changes, then you'll need to occasionally
+call `.sync()` or `.download()` explicitly on your local dataset.
 
 Setting `dataset.auto_sync` to `True` will configure bi-directional synchronization, but
 sometimes you might only care about synchronization in one direction. You might only
