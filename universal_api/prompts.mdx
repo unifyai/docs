@@ -42,23 +42,14 @@ completions request which have an impact on the output, and thus we have adopted
 
 ## Creating Prompts
 
-Prompts can be created locally like so:
+Creating prompts is easy. If a single string is passed,
+then this is interpreted as the user message:
 
 ```python
 import unify
-prompt = unify.Prompt(
-    messages=[{"role": "user", "content": "This is a user message"}]
-)
+prompt = unify.Prompt("This is a user message.")
 print(prompt)
-another_prompt = unify.Prompt(
-    messages=[{"role": "user", "content": "This is another user message"}],
-    temperature=0.5
-)
-print(another_prompt)
 ```
-
-The optional parameters will not be shown when printing the prompt:
-
 ```
 Prompt(
     "messages": [
@@ -66,10 +57,44 @@ Prompt(
             "content": "This is a user message",
             "role": "user"
         }
-    ],
-    "max_completion_tokens": 1024,
-    "temperature": 1.0
+    ]
 )
+```
+
+The messages can also be expressed explicitly:
+
+```python
+import unify
+prompt = unify.Prompt(
+    messages=[{"role": "user", "content": "This is a user message"}]
+)
+print(prompt)
+```
+```
+Prompt(
+    "messages": [
+        {
+            "content": "This is a user message",
+            "role": "user"
+        }
+    ]
+)
+```
+
+Other parameters can also be passed:
+
+```python
+import unify
+another_prompt = unify.Prompt(
+    messages=[{"role": "user", "content": "This is another user message"}],
+    temperature=0.5
+)
+print(another_prompt)
+```
+
+Only the parameters *explicitly provided* will be printed:
+
+```
 Prompt(
     "messages": [
         {
@@ -77,7 +102,6 @@ Prompt(
             "role": "user"
         }
     ],
-    "max_completion_tokens": 1024,
     "temperature": 0.5
 )
 ```
