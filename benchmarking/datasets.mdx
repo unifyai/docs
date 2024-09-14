@@ -37,23 +37,23 @@ dataset = unify.Dataset([
 ```
 
 When a list of strings is passed, these strings are interpreted as *user messages*,
-but the underlying dataset will contains `DatasetEntry` instances, which themselves
+but the underlying dataset will contains `Datum` instances, which themselves
 contain `Prompt` instances:
 
 ```
 Dataset(
     [
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Second user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Third user message.', 'role': 'user'}]
             )
@@ -84,19 +84,19 @@ dataset = unify.Dataset([
 ```
 Dataset(
     [
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}],
                 temperature=0.2
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Second user message.', 'role': 'user'}],
                 temperature=0.4
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Third user message.', 'role': 'user'}],
                 temperature=0.6
@@ -106,28 +106,28 @@ Dataset(
 )
 ```
 
-Similarly, DatasetEntry instances can also be passed into the constructor, which can
+Similarly, Datum instances can also be passed into the constructor, which can
 optionally have extra arbitrary fields (due to `extra=Extra.allow`),
 such as `ref_answer`:
 
 ```python
 import unify
 dataset = unify.Dataset([
-    unify.DatasetEntry(
+    unify.Datum(
         prompt=unify.Prompt(
             messages=[{'content': 'First user message.', 'role': 'user'}],
             temperature=0.2
         ),
         ref_answer="First answer."
     ),
-    unify.DatasetEntry(
+    unify.Datum(
         prompt=unify.Prompt(
             messages=[{'content': 'First user message.', 'role': 'user'}],
             temperature=0.2
         ),
         ref_answer="Second answer."
     ),
-    unify.DatasetEntry(
+    unify.Datum(
         prompt=unify.Prompt(
             messages=[{'content': 'First user message.', 'role': 'user'}],
             temperature=0.2
@@ -139,21 +139,21 @@ dataset = unify.Dataset([
 ```
 Dataset(
     [
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}],
                 temperature=0.2
             ),
             ref_answer='First answer.'
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}],
                 temperature=0.2
             ),
             ref_answer='Second answer.'
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}],
                 temperature=0.2
@@ -174,7 +174,7 @@ dataset = unify.Dataset("First user message.")
 ```
 Dataset(
     [
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}]
             )
@@ -195,7 +195,7 @@ dataset = unify.Dataset([
     "Third user message."
 ])
 for entry in dataset:
-    assert isinstance(entry, unify.DatasetEntry)
+    assert isinstance(entry, unify.Datum)
     print(entry)
 ```
 
@@ -208,7 +208,7 @@ dataset = unify.Dataset([
     "Second user message.",
     "Third user message."
 ])
-assert isinstance(dataset[1], unify.DatasetEntry)
+assert isinstance(dataset[1], unify.Datum)
 print(dataset[1])
 ```
 
@@ -231,22 +231,22 @@ print(dataset1 + dataset2)
 ```
 Dataset(
     [
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Second user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Third user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Fourth user message.', 'role': 'user'}]
             )
@@ -272,17 +272,17 @@ print(dataset1 + dataset2)
 ```
 Dataset(
     [
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Second user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Third user message.', 'role': 'user'}]
             )
@@ -328,12 +328,12 @@ print(dataset1 - dataset2)
 ```
 Dataset(
     [
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Third user message.', 'role': 'user'}]
             )
@@ -418,17 +418,17 @@ dataset = unify.Dataset.from_upstream("my_dataset")
 ```
 Dataset(
     [
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Second user message.', 'role': 'user'}]
             )
         ),
-        DatasetEntry(
+        Datum(
             prompt=Prompt(
                 messages=[{'content': 'Third user message.', 'role': 'user'}]
             )
