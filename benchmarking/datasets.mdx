@@ -167,14 +167,14 @@ dataset = unify.Dataset([
     unify.Datum(
         prompt=unify.Prompt(
             messages=[{'content': 'First user message.', 'role': 'user'}],
-            temperature=0.2
+            temperature=0.4
         ),
         ref_answer="Second answer."
     ),
     unify.Datum(
         prompt=unify.Prompt(
             messages=[{'content': 'First user message.', 'role': 'user'}],
-            temperature=0.2
+            temperature=0.6
         ),
         ref_answer="Third answer."
     ),
@@ -193,14 +193,14 @@ Dataset(
         Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}],
-                temperature=0.2
+                temperature=0.4
             ),
             ref_answer='Second answer.'
         ),
         Datum(
             prompt=Prompt(
                 messages=[{'content': 'First user message.', 'role': 'user'}],
-                temperature=0.2
+                temperature=0.6
             ),
             ref_answer='Third answer.'
         )
