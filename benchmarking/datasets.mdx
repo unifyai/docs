@@ -420,6 +420,38 @@ Dataset(
 )
 ```
 
+The same is true for `Prompt` and `Datum` instances, which can simply be summed
+to create a `Dataset`.
+
+```python
+import unify
+dataset = "First user message." \
+           + unify.Prompt("Second user message.") \
+           + unify.Datum("Third user message")
+print(dataset)
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
 ## Trimming
 
 Datasets can also be subtracted from one another easily, as follows:
