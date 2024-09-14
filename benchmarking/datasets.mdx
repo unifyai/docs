@@ -231,6 +231,22 @@ Dataset(
 )
 ```
 
+In the above example, a new `Dataset` instance is created. However, datasets can also be
+updated inplace via addition, as follows:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+])
+dataset2 = unify.Dataset([
+    "Third user message.",
+    "Fourth user message.",
+])
+dataset1 += dataset2
+```
+
 ## Subtracting Datasets
 
 Datasets can also be subtracted from one another easily:
@@ -264,4 +280,22 @@ Dataset(
         )
     ]
 )
+```
+
+As with addition, in the above examples a new `Dataset` instance is created.
+However, datasets can also be updated inplace via subtraction, as follows:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message.",
+    "Fourth user message.",
+])
+dataset2 = unify.Dataset([
+    "Second user message.",
+    "Fourth user message.",
+])
+dataset1 -= dataset2
 ```
