@@ -432,9 +432,83 @@ If you want to overwrite your local changes, then pass `overwrite=True`:
 dataset.download(overwrite=True)
 ```
 
-This is basically equivalent to creating a new dataset instance
-`dataset = unify.Dataset.from_upstream("my_dataset")`, although the `id` of the
+This is equivalent to creating a new dataset instance
+`dataset = unify.Dataset.from_upstream("my_dataset")`, but the `id` of the
 `Dataset` instance will be preserved when calling `dataset.download(overwrite=True)`,
 as the update will happen in-place.
 
 ## Synchronizing
+
+If you want to synchronize your dataset with the upstream dataset in **both
+directions**, then you can call `.sync()` as follows:
+
+```python
+dataset.sync()
+```
+
+This is implemented as a call to `.download()` (add any missing upstream entries to the
+local database) followed by a call to `.upload()` (add any missing local entries to the
+upstream database). Therefore, `.sync()` will bring both datasets into alignment, such
+that they both contain the *superset* of entries from both the local and upstream
+versions.
+
+By default, auto-synchronization is turned off, but if you want your local dataset to
+remain synchronized with the upstream dataset **at all times**,
+then you can set `auto_sync=True` in the constructor, as follows:
+
+```python
+import unify
+dataset = unify.Dataset(
+    [
+        "First user message.",
+        "Second user message.",
+        "Third user message."
+    ],
+    auto_sync=True
+)
+```
+
+Similarly, you can set this via the setter method.
+This is useful if you've downloaded your dataset for example:
+
+```python
+dataset = unify.Dataset.from_upstream("my_dataset")
+dataset.set_auto_sync(True)
+assert dataset.auto_sync
+```
+
+When `dataset.auto_sync is True`, this will call `.sync()` **every time** any method is
+called on the local `Dataset` instance (even if that method does not change the
+`Dataset` contents). This does mean that upstream changes will **not** be
+synchronized until a method is called on the local `Dataset`, but new local changes will
+**always** be fully synchronized with upstream. It's worth keeping this asymmetry in
+mind, understanding that local changes do trigger the sync, but upstream changes do not
+trigger the sync. If you need track upstream changes, then occasionally calling
+`.sync()` on your dataset explicitly will be needed.
+
+Setting `dataset.auto_sync` to `True` will configure bi-directional synchronization, but
+sometimes you might only care about synchronization in one direction. You might only
+want to retrieve upstream changes but not upload anything, or you might only want to add
+to the upstream dataset without downloading anything. The `auto_sync` parameter can also
+be set as `"download_only"` or `"upload_only"` (or `"both"` which is the same as
+`True`), for example:
+
+```python
+dataset = unify.Dataset.from_upstream("my_dataset")
+dataset.set_auto_sync("upload_only")
+```
+
+```python
+import unify
+dataset = unify.Dataset(
+    [
+        "First user message.",
+        "Second user message.",
+        "Third user message."
+    ],
+    auto_sync="download_only"
+)
+```
+
+These settings will only trigger synchronizations in *one direction*,
+again triggered every time a method is called on the local `Dataset`.
