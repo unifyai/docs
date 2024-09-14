@@ -256,6 +256,35 @@ assert isinstance(dataset[1], unify.Datum)
 print(dataset[1])
 ```
 
+They can also be sliced:
+
+```python
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message.",
+    "Fourth user message."
+])
+print(dataset[1:-1])
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
 ## Combining
 
 Datasets can be added together to create combined datasets easily:
