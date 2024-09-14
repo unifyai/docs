@@ -390,6 +390,51 @@ IMAGE
 
 ## Downloading
 
+You can directly download a dataset from your account as follows:
 
+```python
+import unify
+dataset = unify.Dataset.from_upstream("my_dataset")
+```
+```
+Dataset(
+    [
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        DatasetEntry(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+If you have a local copy of a dataset, and someone else has pushed changes to the
+upstream version in a shared team account, then you can download those changes into your
+own local dataset version, *without overwriting your own local changes*:
+
+```python
+dataset.download()
+```
+
+If you want to overwrite your local changes, then pass `overwrite=True`:
+
+```python
+dataset.download(overwrite=True)
+```
+
+This is basically equivalent to creating a new dataset instance
+`dataset = unify.Dataset.from_upstream("my_dataset")`, although the `id` of the
+`Dataset` instance will be preserved when calling `dataset.download(overwrite=True)`,
+as the update will happen in-place.
 
 ## Synchronizing
