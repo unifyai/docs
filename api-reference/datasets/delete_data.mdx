@@ -1,6 +1,6 @@
 ---
 title: 'Delete Data'
-api: 'DELETE /v0/dataset/delete_data'
+api: 'DELETE /v0/dataset/data'
 ---
 
 
@@ -24,14 +24,14 @@ Unique ids for the data to be removed.
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/dataset/delete_data?name=dataset1&data_ids=['001',%20'002',%20'003']' \
+  --url 'https://api.unify.ai/v0/dataset/data?name=dataset1&data_ids=['001',%20'002',%20'003']' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/dataset/delete_data?name=dataset1&data_ids=['001',%20'002',%20'003']"
+url = "https://api.unify.ai/v0/dataset/data?name=dataset1&data_ids=['001',%20'002',%20'003']"
 
 headers = {"Authorization": "Bearer <token>"}
 

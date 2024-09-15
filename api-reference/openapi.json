@@ -1502,13 +1502,13 @@
                 ]
             }
         },
-        "/v0/dataset/delete_data": {
+        "/v0/dataset/data": {
             "delete": {
                 "tags": [
                     "Datasets"
                 ],
                 "summary": "Delete Data",
-                "operationId": "delete_data_v0_dataset_delete_data_delete",
+                "operationId": "delete_data_v0_dataset_data_delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1577,24 +1577,27 @@
                         }
                     }
                 }
-            }
-        },
-        "/v0/dataset/add_data": {
+            },
             "post": {
                 "tags": [
                     "Datasets"
                 ],
                 "summary": "Add Data",
-                "operationId": "add_data_v0_dataset_add_data_post",
+                "operationId": "add_data_v0_dataset_data_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Body_add_data_v0_dataset_add_data_post"
+                                "$ref": "#/components/schemas/Body_add_data_v0_dataset_data_post"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -1618,12 +1621,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
+                }
             }
         },
         "/v0/evaluator": {
@@ -3602,7 +3600,7 @@
     },
     "components": {
         "schemas": {
-            "Body_add_data_v0_dataset_add_data_post": {
+            "Body_add_data_v0_dataset_data_post": {
                 "properties": {
                     "name": {
                         "type": "string",
@@ -3655,7 +3653,7 @@
                     "name",
                     "data"
                 ],
-                "title": "Body_add_data_v0_dataset_add_data_post"
+                "title": "Body_add_data_v0_dataset_data_post"
             },
             "Body_log_query_v0_queries_post": {
                 "properties": {
@@ -3987,8 +3985,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
