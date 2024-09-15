@@ -768,3 +768,38 @@ dataset = unify.Dataset(
 
 These settings will only trigger synchronizations in *one direction*,
 again triggered every time a method is called on the local `Dataset`.
+
+Going further, you might want one of your datasets (either the local one or the upstream
+one) to **mirror** the other one exactly **at all times**. This is what the modes
+`"local_mirrors_upstream"` and `"upstream_mirrors_local"` are for.
+
+When `"local_mirrors_upstream"` is set, then the local dataset will follow the
+upstream version exactly, meaning any local entries not present upstream will be deleted
+during the sync. This is suitable in situations where you just want to test out the
+"ground-truth" upstream dataset locally, whilst keeping it fully synced, but not make
+any upstream changes, nor have the local version deviate from upstream at any time.
+
+```python
+import unify
+dataset = unify.Dataset.from_upstream("my_dataset", auto_sync="local_mirrors_upstream")
+dataset += "a" # not permitted, raises exception
+# someone pushes some upstream changes, you'd like to include
+print(dataset) # these changes are reflected locally
+```
+
+Similarly, when `"upstream_mirrors_local"` is set, then the upstream dataset will
+follow the local version exactly, meaning any upstream entries not present locally will
+be deleted during the sync. This is suitable in situations where you want your upstream
+console to mirror your local "ground-truth" dataset exactly at all times, when simply
+using the console for dynamic visualization complementing your local experimentation,
+for example. This mode is not suitable if working on a shared dataset with team-mates,
+as your local version will continually overwrite any additions they've pushed upstream!
+
+```python
+import unify
+dataset = unify.Dataset.from_upstream("my_dataset", auto_sync="upstream_mirrors_local")
+# you pushed some upstream changes in another session, that you don't want to keep
+dataset += "a" # the other changes are removed upstream, but "a" is added
+# more upstream changes are added in another session, again we don't want to keep
+print(dataset) # these other changes are again deleted, and upstream mirrors local again
+```
