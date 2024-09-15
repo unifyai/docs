@@ -14,7 +14,7 @@ Firstly, we cover topics focused on local dataset development:
 [Creation](#creation), [Indexing and Iterating](#indexing-and-iterating),
 [Combining](#combining), [Trimming](#trimming) and [One-Liners](#one-liners).
 This covers everything you need to know to get started with some initial
-experimentation.
+experimentation using datasets locally.
 
 However, if you need these experiments to be preserved across sessions,
 you need to work with other team members, or you need to handle large volumes of data,
@@ -798,16 +798,17 @@ import unify
 dataset = unify.Dataset.from_upstream("my_dataset", auto_sync="local_mirrors_upstream")
 dataset += "a" # not permitted, raises exception
 # someone pushes some upstream changes, you'd like to include
-print(dataset) # these changes are reflected locally
+print(dataset) # these changes are reflected locally, with __repr__ triggering the sync
 ```
 
 Similarly, when `"upstream_mirrors_local"` is set, then the upstream dataset will
 follow the local version exactly, meaning any upstream entries not present locally will
 be deleted during the sync. This is suitable in situations where you want your upstream
-console to mirror your local "ground-truth" dataset exactly at all times, when simply
-using the console for dynamic visualization complementing your local experimentation,
-for example. This mode is not suitable if working on a shared dataset with team-mates,
-as your local version will continually overwrite any additions they've pushed upstream!
+console to mirror your local "ground-truth" dataset exactly **at all times**, when
+simply using the console for dynamic visualization complementing your local
+experimentation, for example. This mode is not suitable if working on a shared dataset
+with team-mates, as your local version will continually overwrite any additions they've
+pushed upstream!
 
 ```python
 import unify
