@@ -644,6 +644,21 @@ Clicking `View Dataset` will present the following view of the dataset:
 
 IMAGE
 
+Dataset names can also be used to specify the directory structure which is observed
+inside your user account. For example, the following dataset will appear in the `maths`
+folder and `john_smith` sub-folder, with the dataset name `results`:
+
+```python
+import unify
+unify.Dataset(["a", "b", "c"]).set_name("maths/john_smith/results").upload()
+```
+
+This makes it much easier to organize datasets in a hierarchical manner, and it also
+makes things easier to manage in the console, where datasets can be moved and
+re-organized freely:
+
+IMAGE
+
 ## Downloading
 
 You can directly download a dataset from your account as follows:
