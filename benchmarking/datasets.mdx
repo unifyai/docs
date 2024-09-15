@@ -587,7 +587,7 @@ This makes it possible to chain in-place methods together:
 
 ```python
 import unify
-("1st msg" + unify.Prompt("2nd msg.", temperature=0.5)).set_name("my_dataset").upload()
+("1st msg" + unify.Prompt("2nd msg.")).set_name("my_dataset").upload()
 ```
 
 If the return is not caught from any of these inplace methods,
