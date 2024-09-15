@@ -38,10 +38,15 @@ Initialize a local dataset of LLM queries.
   
 - `auto_sync` - Whether to automatically keep this dataset fully synchronized
   with the upstream variant at all times. If `True` or "both" then the sync
-  will be bi-directional, if "upload_only" then all local changes will be
-  uploaded to the upstream account without any downloads, if "download_only"
+  will be bi-directional, if "upload" then all local changes will be
+  uploaded to the upstream account without any downloads, if "download"
   then all upstream changes will be downloaded locally without any uploads.
-  If `False` or "neither" then no synchronization will be done automatically.
+  If "upload_overwrite" then the upstream dataset will be anchored to the
+  local version at all times, and any other uploads outside the local dataset
+  will be overwritten. If "download_overwrite" then the local version will be
+  anchored to the upstream version at all times, and any local changes will be
+  overwritten. If `False` or "neither" then no synchronization will be done
+  automatically.
   
 - `api_key` - API key for accessing the Unify API. If None, it attempts to
   retrieve the API key from the environment variable UNIFY_KEY. Defaults to
@@ -76,7 +81,18 @@ Name of the dataset.
 def auto_sync() -> Union[bool, str]
 ```
 
-Whether or not auto-sync is turned on
+The auto-sync mode currently selected.
+This dictates whether to automatically keep this dataset fully synchronized
+with the upstream variant at all times. If `True` or "both" then the sync
+will be bi-directional, if "upload" then all local changes will be
+uploaded to the upstream account without any downloads, if "download"
+then all upstream changes will be downloaded locally without any uploads.
+If "upload_overwrite" then the upstream dataset will be anchored to the
+local version at all times, and any other uploads outside the local dataset
+will be overwritten. If "download_overwrite" then the local version will be
+anchored to the upstream version at all times, and any local changes will be
+overwritten. If `False` or "neither" then no synchronization will be done
+automatically.
 
 <a id="dataset.Dataset.set_name"></a>
 
@@ -113,7 +129,17 @@ Set the value of the auto-sync flag.
 
 **Arguments**:
 
-- `auto_sync` - The value to set the auto-sync flag to.
+- `auto_sync` - Whether to automatically keep this dataset fully synchronized
+  with the upstream variant at all times. If `True` or "both" then the sync
+  will be bi-directional, if "upload" then all local changes will be
+  uploaded to the upstream account without any downloads, if "download"
+  then all upstream changes will be downloaded locally without any uploads.
+  If "upload_overwrite" then the upstream dataset will be anchored to the
+  local version at all times, and any other uploads outside the local dataset
+  will be overwritten. If "download_overwrite" then the local version will be
+  anchored to the upstream version at all times, and any local changes will be
+  overwritten. If `False` or "neither" then no synchronization will be done
+  automatically.
   
 
 **Returns**:
