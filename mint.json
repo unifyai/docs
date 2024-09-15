@@ -184,8 +184,8 @@
                         "api-reference/datasets/delete_dataset",
                         "api-reference/datasets/rename_dataset",
                         "api-reference/datasets/list_datasets",
-                        "api-reference/datasets/delete_prompt",
-                        "api-reference/datasets/add_prompt"
+                        "api-reference/datasets/delete_data",
+                        "api-reference/datasets/add_data"
                     ]
                 },
                 {
