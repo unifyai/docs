@@ -580,6 +580,23 @@ This section is less verbose than the previous section in order to avoid
 repetition, but all points made apply equally in this case as well, and you're
 encouraged to test things out accordingly!
 
+## One-Liners
+
+All `Dataset` methods which perform in-place updates also return `self`.
+This makes it possible to chain in-place methods together:
+
+```python
+import unify
+("1st msg" + unify.Prompt("2nd msg.", temperature=0.5)).set_name("my_dataset").upload()
+```
+
+If the return is not caught from any of these inplace methods,
+then this makes no difference to the behaviour:
+
+```python
+dataset.set_name("some_name")
+```
+
 ## Uploading
 
 You can see your listed datasets on the [Datasets](https://console.unify.ai/datasets)
