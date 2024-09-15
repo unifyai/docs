@@ -155,7 +155,7 @@ Set the value of the auto-sync flag.
 ```python
 @staticmethod
 def from_upstream(name: str,
-                  auto_sync: bool = False,
+                  auto_sync: Union[bool, str] = False,
                   api_key: Optional[str] = None) -> Dataset
 ```
 
