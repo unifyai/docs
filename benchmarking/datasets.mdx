@@ -645,12 +645,12 @@ Clicking `View Dataset` will present the following view of the dataset:
 IMAGE
 
 Dataset names can also be used to specify the directory structure which is observed
-inside your user account. For example, the following dataset will appear in the `maths`
-folder and `john_smith` sub-folder, with the dataset name `results`:
+inside your user account. For example, the following dataset will appear in the
+`maths_quiz` folder and `john_smith` sub-folder, with the dataset name `answers`:
 
 ```python
 import unify
-unify.Dataset(["a", "b", "c"]).set_name("maths/john_smith/results").upload()
+unify.Dataset(["a", "b", "c"]).set_name("maths_quiz/john_smith/answers").upload()
 ```
 
 This makes it much easier to organize datasets in a hierarchical manner, and it also
