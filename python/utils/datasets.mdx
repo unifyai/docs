@@ -184,10 +184,10 @@ Adds data to a dataset.
 
 ```python
 def delete_data(name: str,
-                data_ids: Union[int, List[int]],
+                data: Union[int, List[int], Dict, List[Dict]],
                 api_key: Optional[str] = None)
 ```
 
-Delete data from a dataset
+Delete data from a dataset, either by id or by value
 
 <a id="utils.logging"></a>
