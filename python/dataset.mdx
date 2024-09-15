@@ -41,9 +41,9 @@ Initialize a local dataset of LLM queries.
   will be bi-directional, if "upload" then all local changes will be
   uploaded to the upstream account without any downloads, if "download"
   then all upstream changes will be downloaded locally without any uploads.
-  If "upload_overwrite" then the upstream dataset will be anchored to the
+  If "upstream_mirrors_local" then the upstream dataset will be anchored to the
   local version at all times, and any other uploads outside the local dataset
-  will be overwritten. If "download_overwrite" then the local version will be
+  will be overwritten. If "local_mirrors_upstream" then the local version will be
   anchored to the upstream version at all times, and any local changes will be
   overwritten. If `False` or "neither" then no synchronization will be done
   automatically.
@@ -87,9 +87,9 @@ with the upstream variant at all times. If `True` or "both" then the sync
 will be bi-directional, if "upload" then all local changes will be
 uploaded to the upstream account without any downloads, if "download"
 then all upstream changes will be downloaded locally without any uploads.
-If "upload_overwrite" then the upstream dataset will be anchored to the
+If "upstream_mirrors_local" then the upstream dataset will be anchored to the
 local version at all times, and any other uploads outside the local dataset
-will be overwritten. If "download_overwrite" then the local version will be
+will be overwritten. If "local_mirrors_upstream" then the local version will be
 anchored to the upstream version at all times, and any local changes will be
 overwritten. If `False` or "neither" then no synchronization will be done
 automatically.
@@ -134,9 +134,9 @@ Set the value of the auto-sync flag.
   will be bi-directional, if "upload" then all local changes will be
   uploaded to the upstream account without any downloads, if "download"
   then all upstream changes will be downloaded locally without any uploads.
-  If "upload_overwrite" then the upstream dataset will be anchored to the
+  If "upstream_mirrors_local" then the upstream dataset will be anchored to the
   local version at all times, and any other uploads outside the local dataset
-  will be overwritten. If "download_overwrite" then the local version will be
+  will be overwritten. If "local_mirrors_upstream" then the local version will be
   anchored to the upstream version at all times, and any local changes will be
   overwritten. If `False` or "neither" then no synchronization will be done
   automatically.
