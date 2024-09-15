@@ -130,6 +130,30 @@ client = unify.Unify("gpt-4o@openai")
 client.generate(**prompt.dict())
 ```
 
+As explained in the previous [Arguments](https://docs.unify.ai/universal_api/arguments)
+section, default prompts can be both *extracted* and *set* for clients *directly*.
+The default prompt is determined dynamically based on all of the default values
+mentioned above during retrieval:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai", temperature=0.5, n=2)
+assert client.default_prompt.temperature == 0.5
+assert client.default_prompt.n == 2
+```
+
+In other direction, setting the default prompt will update the various default
+parameters that were explained above:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai", temperature=0.5, n=2)
+prompt = unify.Prompt(temperature=0.4)
+client.set_default_prompt(prompt)
+assert client.temperature == 0.4
+assert client.n is None
+```
+
 In the next [Logging](https://docs.unify.ai/universal_api/logging) section, we learn how
 prompts are logged into your account for future retrieval, and in the
 [Datasets](https://docs.unify.ai/benchmarking/datasets)
