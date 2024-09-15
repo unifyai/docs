@@ -1,6 +1,6 @@
 ---
-title: 'Delete Prompt'
-api: 'DELETE /v0/dataset/delete_prompt'
+title: 'Delete Data'
+api: 'DELETE /v0/dataset/delete_data'
 ---
 
 
@@ -16,22 +16,22 @@ api: 'DELETE /v0/dataset/delete_prompt'
 Name of the dataset for prompt to be deleted from.
 </ParamField>
 
-<ParamField query="prompt_id" type="string" required="true">
-ID of the prompt to be removed.
+<ParamField query="data_ids" type="string | array" required="true">
+Unique ids for the data to be removed.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/dataset/delete_prompt?name=dataset1&prompt_id=123' \
+  --url 'https://api.unify.ai/v0/dataset/delete_data?name=dataset1&data_ids=['001',%20'002',%20'003']' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/dataset/delete_prompt?name=dataset1&prompt_id=123"
+url = "https://api.unify.ai/v0/dataset/delete_data?name=dataset1&data_ids=['001',%20'002',%20'003']"
 
 headers = {"Authorization": "Bearer <token>"}
 
