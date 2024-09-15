@@ -313,14 +313,14 @@ this new dataset losing all queries from the other subtracted dataset.
 
   The new dataset following the subtraction.
 
-<a id="dataset.Dataset.__iadd__"></a>
+<a id="dataset.Dataset.inplace_add"></a>
 
 ---
 
-### \_\_iadd\_\_
+### inplace\_add
 
 ```python
-def __iadd__(
+def inplace_add(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
 ) -> Dataset
@@ -338,14 +338,14 @@ from the other added dataset.
 
   This dataset following the in-place addition.
 
-<a id="dataset.Dataset.__isub__"></a>
+<a id="dataset.Dataset.inplace_sub"></a>
 
 ---
 
-### \_\_isub\_\_
+### inplace\_sub
 
 ```python
-def __isub__(
+def inplace_sub(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
 ) -> Dataset
@@ -416,6 +416,31 @@ the other added dataset.
 
   The new dataset following the addition.
 
+<a id="dataset.Dataset.__iadd__"></a>
+
+---
+
+### \_\_iadd\_\_
+
+```python
+def __iadd__(
+    other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
+                                                               Prompt, Datum]]]
+) -> Dataset
+```
+
+Adds another dataset to this one, with this dataset receiving all unique queries
+from the other added dataset.
+
+**Arguments**:
+
+- `other` - The other dataset being added to this one.
+  
+
+**Returns**:
+
+  This dataset following the in-place addition.
+
 <a id="dataset.Dataset.__sub__"></a>
 
 ---
@@ -468,6 +493,31 @@ subtracted dataset.
 **Returns**:
 
   The new dataset following the subtraction.
+
+<a id="dataset.Dataset.__isub__"></a>
+
+---
+
+### \_\_isub\_\_
+
+```python
+def __isub__(
+    other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
+                                                               Prompt, Datum]]]
+) -> Dataset
+```
+
+Subtracts another dataset from this one, with this dataset losing all queries
+from the other subtracted dataset.
+
+**Arguments**:
+
+- `other` - The other dataset being added to this one.
+  
+
+**Returns**:
+
+  This dataset following the in-place subtraction.
 
 <a id="dataset.Dataset.__iter__"></a>
 
