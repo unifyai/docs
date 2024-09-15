@@ -746,12 +746,12 @@ Setting `dataset.auto_sync` to `True` will configure bi-directional synchronizat
 sometimes you might only care about synchronization in one direction. You might only
 want to retrieve upstream changes but not upload anything, or you might only want to add
 to the upstream dataset without downloading anything. The `auto_sync` parameter can also
-be set as `"download_only"` or `"upload_only"` (or `"both"` which is the same as
+be set as `"download"` or `"upload"` (or `"both"` which is the same as
 `True`), for example:
 
 ```python
 dataset = unify.Dataset.from_upstream("my_dataset")
-dataset.set_auto_sync("upload_only")
+dataset.set_auto_sync("upload")
 ```
 
 ```python
@@ -762,7 +762,7 @@ dataset = unify.Dataset(
         "Second user message.",
         "Third user message."
     ],
-    auto_sync="download_only"
+    auto_sync="download"
 )
 ```
 
