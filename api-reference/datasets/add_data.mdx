@@ -1,6 +1,6 @@
 ---
 title: 'Add Data'
-api: 'POST /v0/dataset/add_data'
+api: 'POST /v0/dataset/data'
 ---
 
 
@@ -24,7 +24,7 @@ JSON object containing the Datum dict to upload, or a list of Datum dicts to upl
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/dataset/add_data' \
+  --url 'https://api.unify.ai/v0/dataset/data' \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
@@ -59,7 +59,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/dataset/add_data"
+url = "https://api.unify.ai/v0/dataset/data"
 
 headers = {"Authorization": "Bearer <token>"}
 
