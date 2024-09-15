@@ -782,6 +782,9 @@ dataset = unify.Dataset(
 
 These settings will only trigger synchronizations in *one direction*,
 again triggered every time a method is called on the local `Dataset`.
+However, any unique contents **will be preserved** on the receiving end.
+For example, having mode `"download"` will add any extra data from upstream,
+but it will not delete the data you have stored locally which is not stored upstream.
 
 Going further, you might want one of your datasets (either the local one or the upstream
 one) to **mirror** the other one exactly **at all times**. This is what the modes
