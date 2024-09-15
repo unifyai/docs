@@ -2,11 +2,10 @@
 title: 'Datasets'
 ---
 
-Prompt datasets are simply a collection of
+Datasets are basically a collection of
 [Prompts](https://github.com/unifyai/unify/blob/26247d88da2d46dea62fe0a665934f7f98523c92/unify/types.py#L23)
 which are stored in your account,
-with extra fields optionally also included in the dataset,
-such as reference answers etc.
+with extra fields optionally also included, such as reference answers etc.
 
 The primary use case for these datasets is to group prompts into various helpful test
 cases and test sets, which can then form part of an evaluation pipeline.
@@ -25,7 +24,7 @@ This is what's covered in the final sections: [Uploading](#uploading),
 
 ## Composition
 
-Each dataset entry is a pydantic
+Strictly speaking, each dataset entry is a pydantic
 [Datum](https://github.com/unifyai/unify/blob/b7743c6b204633c7eb77a65a1107c2031aec18a9/unify/types.py#L123)
 instance, which contains a `prompt` field of type `Prompt`, with the pydantic
 argument `extra=Extra.allow`, enabling *extra arbitrary fields*.
