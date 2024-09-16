@@ -24,9 +24,9 @@ are as follows:
 - **Quality** (The quality of the generated response): `quality, q`
 - **Time to First Token**: `time-to-first-token, ttft, t`
 - **Inter Token Latency**: `inter-token-latency, itl, i`
-- **Cost** ($ per token, for expected input/output ratio): `cost, c`
-- **Input Cost** ($ per input token): `input-cost, ic`
-- **Output Cost** ($ per output token): `output-cost, oc`
+- **Cost** ($ per million tokens based on OpenHermes input/output ratio): `cost, c`
+- **Input Cost** ($ per million input tokens): `input-cost, ic`
+- **Output Cost** ($ per million output tokens): `output-cost, oc`
 
 ## Meta Providers
 
@@ -52,6 +52,29 @@ is `highest-` for quality and `lowest-` for all other metrics.
 The example above is equivalent to `claude-3-opus@lowest-inter-token-latency`.
 
 ## Thresholds
+
+You can specify upper and/or lower bounds for any of these metrics using `<`, `>`, `<=`
+and `>=` and separating each specification with `|` in the command. For example, the
+following command will find the `llama-3.1-405b-chat` provider with the lowest inter
+token latency (the fastest), provided that the endpoint is not more expensive that $5
+per million tokens:
+
+```shell
+llama-3.1-405b-chat@inter-token-latency|c<5
+```
+
+The following will find the `llama-3.1-70b-chat` provider with the highest `quality`
+(see explanation for how this is computed below). The endpoint is also constrained to
+not be more expensive than `$0.8` per million tokens in the *input*, not be more
+expensive than `$0.6` per million tokens in the *output*, have an inter token latency
+faster than `20ms`, but not faster than `1ms`:
+
+```shell
+llama-3.1-70b-chat@quality|input-cost<=0.8|output-cost<=0.6|1<itl<20
+```
+
+As explained above, any of the aliases defined above can be used interchangeably,
+such as `i`, `itl` or `inter-token-latency` for the inter token latency.
 
 ## Models, Providers and Endpoints
 
