@@ -2,12 +2,105 @@
 title: 'Overview'
 ---
 
-In some cases, deployment locally on your own virtual private cloud (VPC) or on your own servers is important,
-especially in cases where privacy is of utmost importance. The
-[Universal API](https://docs.unify.ai/universal_api),
-[Benchmarking](https://docs.unify.ai/benchmarking) and
-[Routing](https://docs.unify.ai/routing)
-can *all* be deployed in a fully on-prem manner.
+## Sign up to the platform
 
-To get access to each of these services for on-prem deployments,
-simply [book a call](https://calendly.com/unify-chat/general) with us!
+Even though you would have your own on-prem console, you would need to sign in through the
+[public](https://console.unify.ai/) one so that you have a user id and an api key.
+
+## Get access to the docker images
+
+We have pushed the images you’d need to set up with on docker hub. Given that the images are private,
+you would need to provide us with the docker user to which you would want the images shared.
+You would then use that account to pull those images for setting up.
+
+## Pull the images
+
+In order to set up on-prem, you would need to pull 3 images,
+- **unify/orchestra-on-prem:latest**: The backend app
+- **unify/dataset_evaluation-on-prem:latest**: The dataset evaluation service
+- **unify/unify-interfaces-on-prem:latest**: The console app
+Given that these images are private, you would need to [log in](https://docs.docker.com/reference/cli/docker/login/)
+to docker before pulling the images.
+
+## Local folder structure
+
+We have shared a folder with you which contains the necessary configs to set up.
+This section is mainly for explaning what’s contained in the folder, you don’t need to edit anything manually
+(except VertexAI users as explained in the next section). Following are the folder contents,
+various dataset evaluations you’ve run (in the uploaded_datasets folder) and the custom endpoints and api keys
+you’re using (in the db folder)
+- `.env_orchestra`: Contains the necessary environment variables to set up the backend app
+- `.env_console`: Contains the necessary environment variables to set up the console app
+- `sessionInfo.json`: The session information for the console app, it’s mainly used for displaying data on your
+profile page. The file should contain the following fields when we share the folder with you,
+    - `name`: first name
+    - `email`: email id
+    - `image`: a link to the profile image
+    - `userInfo.json`: Contains more information about the user currently using the app.
+    This is something we need to do so to bypass the login process. The file should contain the following
+    fields when we share the folder with you,
+        - `id`: user id
+        - `name`: first name
+        - `lastName`: last name
+        - `image`: a link to the profile image
+        - `email`: the email id
+        - `createdAt`: the date when the account was created
+        - `apiKey`: the details about your api key
+        - `UserDetails`: your organization and jobTitle (Optional)
+        - `docker-compose.yaml`: The compose file to get the containers set up
+
+## Setting up
+
+In order to set up, you would need to populate the `.env_orchestra` file with the credentials of the providers
+you would like to use,
+- For providers like OpenAI, Anthropic, etc. (which require a single API key), you would need to add your key
+corresponding to the `ORCHESTRA_OPENAI_KEY` variable and so on.
+- For using AWS Bedrock, you would need to add,
+    - `AWS_SECRET_KEY_ID`
+    - `AWS_SECRET_ACCESS_KEY`
+    - `AWS_REGION`
+- For using VertexAI, you would need to add,
+    - `GOOGLE_APPLICATION_CREDENTIALS`
+    - `ORCHESTRA_VERTEXAI_PROJECT`
+    - `ORCHESTRA_VERTEXAI_LOCATION` (the location can also be instead passed as the `region` field in `/chat/completions`)
+
+Along with the above, you would also need to uncomment a line in the docker-compose.yaml that mounts the service
+account json onto the container. For e.g. if `application_default_credentials.json` is the name of the file, then
+`GOOGLE_APPLICATION_CREDENTIALS` would be set as `/app/src/application_default_credentials.json`.
+
+Once you’ve set the environment variables, you can now spin up the containers for the images with `docker compose up`.
+There's a total of 5 containers that should be running,
+- `console`
+- `orchestra`
+- `dataset_evaluation`
+- `db`
+- `redis`
+
+The containers should start running after that, you should wait until you see the log
+entry of on-prem-orchestra saying Uvicorn running on `http://0.0.0.0:8000`
+(as `orchestra` takes a few seconds to be up and running). After that is displayed,
+you’re set to start using the console.
+
+## Usage
+
+The console should be usable at `http://localhost:3000`, you should be able to access features like uploading datasets
+and running evaluations, adding custom api keys and endpoints and so on. You can also use all the endpoints in the
+API Reference by making calls to `http://localhost:8000` instead of `https://api.unify.ai`
+
+## Python Client
+
+In order to use the [python client](https://docs.unify.ai/basics/quickstart) with the
+on-prem deployment, you would need to set the `UNIFY_BASE_URL` environment variable as
+the address to the orchestra service. For e.g. if you're using the python client in the
+same host as the orchestra service, then the `UNIFY_BASE_URL` would be
+`http://localhost:8000`.
+
+## Updates
+
+The images would continue to be updated as the platform evolves.
+In order to update your local environment based on the latest versions, you would need to do the following,
+- Pull the latest images: [same as above](#pull-the-images)
+- Update the service to use the latest image: `docker compose up -d --no-deps --build <service_name>`
+
+> **\<service_name\>** can be one of `console`, `orchestra` or `dataset_evaluation`. The goal here is to make sure
+> that your data remains intact, so we would advice against deleting the `db` service.
