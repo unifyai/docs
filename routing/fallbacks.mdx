@@ -4,7 +4,6 @@ title: 'Fallbacks'
 
 Sometimes individual providers have outages,
 which can disrupt live workflows in production.
-
 To combat this, you can set a list of fallback providers, models, endpoints, or even
 entire fallback queries (if different models require unique system messages,
 temperature etc.). Therefore, if one provider goes down or fails to respond for some
@@ -120,7 +119,7 @@ curl -X 'POST' \
 
 Fallback queries can also be combined with fallback models, providers, and endpoints.
 For example, this fallback logic will attempt `claude-3-opus@aws-bedrock` with custom
-API keys, then `vertex-ai` (again with custom API keys, to use GCP credits),
+API keys, then `vertex-ai` (again with custom API keys, to use your own GCP credits),
 before finally falling back to `anthropic` if both fail:
 
 ```shell
