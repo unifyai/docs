@@ -89,9 +89,9 @@ API Reference by making calls to `http://localhost:8000` instead of `https://api
 
 In order to use the [python client](https://docs.unify.ai/basics/quickstart) with the
 on-prem deployment, you would need to set the `UNIFY_BASE_URL` environment variable as
-the address to the orchestra service. You can find it under the `networks:` field for
-the `orchestra` service inside `docker-compose.yaml`. So for e.g. if the IP assigned to
-`orchestra` is `10.5.0.11`, then the `UNIFY_BASE_URL` would be `http://10.5.0.11/v0`.
+the address to the orchestra service. For e.g. if you're using the python client in the
+same host as the orchestra service, then the `UNIFY_BASE_URL` would be
+`http://localhost:8000`.
 
 ## Updates
 
