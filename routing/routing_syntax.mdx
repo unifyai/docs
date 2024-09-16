@@ -12,9 +12,9 @@ of [Meta Providers](#meta-providers) (models used with whatever provider optimiz
 given metric, based on the latest available benchmark data),
 we then introduce [Thresholds](#thresholds) (specifying the permitted bounds for certain metrics),
 we then explain how [Models, Providers, and Endpoints](#models-providers-and-endpoints)
-can be specified, then how [Default Prompts](#default-prompts) can be specified, and
-finally we introduce [Custom Metrics](#custom-metrics), which enable you to customize
-exactly how cost, quality and speed should be balanced when routing.
+can be specified, and finally we introduce [Custom Metrics](#custom-metrics),
+which enable you to customize exactly how cost, quality and speed should be balanced
+when routing.
 
 ## Base Metrics
 
@@ -213,6 +213,12 @@ functionally equivalent to specifying that model on the left-hand-side:
 router@itl|models:llama-3.1-405b-chat == llama-3.1-405b-chat@itl
 ```
 
-## Quality Prediction
+Given that `skip_{entity}:` and `{entity}:` specify the *only inclusions* or the
+*only exclusions*, they **cannot** both be specified in the same query, but they can
+for other entities. For example, the following *is* permitted:
 
-## Default Prompts
+```shell
+router@q:1|i:0.5|models:claude-3-haiku,claude-3-sonnet|skip_providers:aws-bedrock
+```
+
+## Quality Prediction
