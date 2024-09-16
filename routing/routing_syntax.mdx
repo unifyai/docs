@@ -64,10 +64,11 @@ llama-3.1-405b-chat@inter-token-latency|c<5
 ```
 
 The following will find the `llama-3.1-70b-chat` provider with the highest `quality`
-(see explanation for how this is computed below). The endpoint is also constrained to
-not be more expensive than `$0.8` per million tokens in the *input*, not be more
-expensive than `$0.6` per million tokens in the *output*, have an inter token latency
-faster than `20ms`, but not faster than `1ms`:
+(see explanation for how this is computed below).
+Differences such as quantization can result in *different quality* for the *same model*.
+The endpoint is also constrained to not be more expensive than `$0.8` per million tokens
+in the *input*, not be more expensive than `$0.6` per million tokens in the *output*,
+have an inter token latency faster than `20ms`, but not faster than `1ms`:
 
 ```shell
 llama-3.1-70b-chat@quality|input-cost<=0.8|output-cost<=0.6|1<itl<20
@@ -76,10 +77,21 @@ llama-3.1-70b-chat@quality|input-cost<=0.8|output-cost<=0.6|1<itl<20
 As explained above, any of the aliases defined above can be used interchangeably,
 such as `i`, `itl` or `inter-token-latency` for the inter token latency.
 
-## Models, Providers and Endpoints
+## Model Routing
 
-## Default Prompts
+All of the examples above have assumed that there is a *single model* chosen,
+and we're then just optimizing over the *provider* for that chosen model.
 
-## Custom Metrics
+However, we can also include the model within the routing decision. To do so, we simply
+specify the model as `router`. For example, the following will find the highest quality
+endpoint (among *all* supported endpoints!), which is cheaper than `$0.8` per million
+input tokens, cheaper than `$0.6` per million output tokens, and has an inter token
+latency faster than `20ms`:
+
+```shell
+router@quality|input-cost<0.8|output-cost<0.6|itl<20
+```
 
 ## Quality Prediction
+
+## Default Prompts
