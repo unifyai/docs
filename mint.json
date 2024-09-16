@@ -91,13 +91,7 @@
                         "routing/deploy_your_router"
                     ]
                 },
-                {
-                    "group": "On-Prem",
-                    "pages": [
-                        "on_prem/overview",
-                        "on_prem/universal_api"
-                    ]
-                }
+                "on_prem/overview"
             ]
         },
         {
