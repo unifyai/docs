@@ -60,7 +60,7 @@ curl -X 'POST' \
     }'
 ```
 
-The Fallback logic can be composed arbitrarily across providers, models, and endpoints.
+The Fallback logic can be composed arbitrarily across models, providers and endpoints.
 For example, the following will attempt `llama-3.1-405b-chat` for a variety of providers
 before falling back to `llama-3.1-70b-chat@groq` if they all fail:
 
@@ -86,6 +86,54 @@ curl -X 'POST' \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "gemini-1.5-pro->gemini-1.5-flash@vertex-ai->llama-3.1-405b-chat@together-ai->fireworks-ai->vertex-ai->llama-3.1-70b-chat@groq",
+        "messages": [{"role": "user", "content": "Hello."}]
+    }'
+```
+
+## Fallback Queries
+
+As mentioned above, fallbacks can also be specified for *entire queries*.
+This is useful in cases where aspects of the prompt need to be handled in a
+model-specific or provider-specific manner.
+
+Taking the very first example again, lets assume you're deploying `claude-3-opus` for a
+production application. You would like to use `aws-bedrock` to make use of credits on
+your own account, but you want to use `anthropic` as a fallback. Your have your own API
+key for bedrock (and so you'll be passing `"use_custom_keys": true` in the request),
+but you don't have your own API key for Anthropic. This fallback logic can be specified
+as follows:
+
+```shell
+curl -X 'POST' \
+    'https://api.unify.ai/v0/chat/completions' \
+    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "model": "claude-3-opus@aws-bedrock",
+        "messages": [{"role": "user", "content": "Hello."}],
+        "use_custom_keys": true
+    } -> {
+        "model": "claude-3-opus@anthropic",
+        "messages": [{"role": "user", "content": "Hello."}]
+    }'
+```
+
+Fallback queries can also be combined with fallback models, providers, and endpoints.
+For example, this fallback logic will attempt `claude-3-opus@aws-bedrock` with custom
+API keys, then `vertex-ai` (again with custom API keys, to use GCP credits),
+before finally falling back to `anthropic` if both fail:
+
+```shell
+curl -X 'POST' \
+    'https://api.unify.ai/v0/chat/completions' \
+    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "model": "claude-3-opus@aws-bedrock->vertex-ai",
+        "messages": [{"role": "user", "content": "Hello."}],
+        "use_custom_keys": true
+    } -> {
+        "model": "claude-3-opus@anthropic",
         "messages": [{"role": "user", "content": "Hello."}]
     }'
 ```
