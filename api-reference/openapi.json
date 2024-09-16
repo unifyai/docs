@@ -1502,13 +1502,13 @@
                 ]
             }
         },
-        "/v0/dataset/delete_prompt": {
+        "/v0/dataset/data": {
             "delete": {
                 "tags": [
                     "Datasets"
                 ],
-                "summary": "Delete Prompt",
-                "operationId": "delete_prompt_v0_dataset_delete_prompt_delete",
+                "summary": "Delete Data",
+                "operationId": "delete_data_v0_dataset_data_delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1528,16 +1528,30 @@
                         "example": "dataset1"
                     },
                     {
-                        "name": "prompt_id",
+                        "name": "data_ids",
                         "in": "query",
                         "required": true,
                         "schema": {
-                            "type": "string",
-                            "description": "ID of the prompt to be removed.",
-                            "title": "Prompt Id"
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            ],
+                            "description": "Unique ids for the data to be removed.",
+                            "title": "Data Ids"
                         },
-                        "description": "ID of the prompt to be removed.",
-                        "example": "123"
+                        "description": "Unique ids for the data to be removed.",
+                        "example": [
+                            "001",
+                            "002",
+                            "003"
+                        ]
                     }
                 ],
                 "responses": {
@@ -1563,24 +1577,27 @@
                         }
                     }
                 }
-            }
-        },
-        "/v0/dataset/add_prompt": {
+            },
             "post": {
                 "tags": [
                     "Datasets"
                 ],
-                "summary": "Add Prompt",
-                "operationId": "add_prompt_v0_dataset_add_prompt_post",
+                "summary": "Add Data",
+                "operationId": "add_data_v0_dataset_data_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Body_add_prompt_v0_dataset_add_prompt_post"
+                                "$ref": "#/components/schemas/Body_add_data_v0_dataset_data_post"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -1604,12 +1621,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
+                }
             }
         },
         "/v0/evaluator": {
@@ -3588,7 +3600,7 @@
     },
     "components": {
         "schemas": {
-            "Body_add_prompt_v0_dataset_add_prompt_post": {
+            "Body_add_data_v0_dataset_data_post": {
                 "properties": {
                     "name": {
                         "type": "string",
@@ -3596,29 +3608,52 @@
                         "description": "Name of the dataset to add to",
                         "example": "dataset_1"
                     },
-                    "prompt_data": {
-                        "type": "object",
-                        "title": "Prompt Data",
-                        "description": "JSON object containing the prompt data to upload.",
-                        "example": {
-                            "prompt": {
-                                "messages": [
-                                    {
-                                        "content": "What is the capital of Spain?",
-                                        "role": "user"
-                                    }
-                                ]
+                    "data": {
+                        "anyOf": [
+                            {
+                                "type": "object"
                             },
-                            "ref_answer": "Madrid"
-                        }
+                            {
+                                "items": {
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Data",
+                        "description": "JSON object containing the Datum dict to upload, or a list of Datum dicts to upload",
+                        "example": [
+                            {
+                                "prompt": {
+                                    "messages": [
+                                        {
+                                            "content": "What is the capital of Spain?",
+                                            "role": "user"
+                                        }
+                                    ]
+                                },
+                                "ref_answer": "Madrid"
+                            },
+                            {
+                                "prompt": {
+                                    "messages": [
+                                        {
+                                            "content": "What is the capital of England?",
+                                            "role": "user"
+                                        }
+                                    ]
+                                },
+                                "ref_answer": "London"
+                            }
+                        ]
                     }
                 },
                 "type": "object",
                 "required": [
                     "name",
-                    "prompt_data"
+                    "data"
                 ],
-                "title": "Body_add_prompt_v0_dataset_add_prompt_post"
+                "title": "Body_add_data_v0_dataset_data_post"
             },
             "Body_log_query_v0_queries_post": {
                 "properties": {
@@ -3950,8 +3985,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {

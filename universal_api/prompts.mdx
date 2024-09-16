@@ -42,23 +42,14 @@ completions request which have an impact on the output, and thus we have adopted
 
 ## Creating Prompts
 
-Prompts can be created locally like so:
+Creating prompts is easy. If a single string is passed,
+then this is interpreted as the user message:
 
 ```python
 import unify
-prompt = unify.Prompt(
-    messages=[{"role": "user", "content": "This is a user message"}]
-)
+prompt = unify.Prompt("This is a user message.")
 print(prompt)
-another_prompt = unify.Prompt(
-    messages=[{"role": "user", "content": "This is another user message"}],
-    temperature=0.5
-)
-print(another_prompt)
 ```
-
-The optional parameters will not be shown when printing the prompt:
-
 ```
 Prompt(
     "messages": [
@@ -66,10 +57,44 @@ Prompt(
             "content": "This is a user message",
             "role": "user"
         }
-    ],
-    "max_completion_tokens": 1024,
-    "temperature": 1.0
+    ]
 )
+```
+
+The messages can also be expressed explicitly:
+
+```python
+import unify
+prompt = unify.Prompt(
+    messages=[{"role": "user", "content": "This is a user message"}]
+)
+print(prompt)
+```
+```
+Prompt(
+    "messages": [
+        {
+            "content": "This is a user message",
+            "role": "user"
+        }
+    ]
+)
+```
+
+Other parameters can also be passed:
+
+```python
+import unify
+another_prompt = unify.Prompt(
+    messages=[{"role": "user", "content": "This is another user message"}],
+    temperature=0.5
+)
+print(another_prompt)
+```
+
+Only the parameters *explicitly provided* will be printed:
+
+```
 Prompt(
     "messages": [
         {
@@ -77,7 +102,6 @@ Prompt(
             "role": "user"
         }
     ],
-    "max_completion_tokens": 1024,
     "temperature": 0.5
 )
 ```
@@ -104,6 +128,30 @@ prompt = unify.Prompt(
 )
 client = unify.Unify("gpt-4o@openai")
 client.generate(**prompt.dict())
+```
+
+As explained in the previous [Arguments](https://docs.unify.ai/universal_api/arguments)
+section, default prompts can be both *extracted* and *set* for clients *directly*.
+The default prompt is determined dynamically based on all of the default values
+mentioned above during retrieval:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai", temperature=0.5, n=2)
+assert client.default_prompt.temperature == 0.5
+assert client.default_prompt.n == 2
+```
+
+In other direction, setting the default prompt will update the various default
+parameters that were explained above:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai", temperature=0.5, n=2)
+prompt = unify.Prompt(temperature=0.4)
+client.set_default_prompt(prompt)
+assert client.temperature == 0.4
+assert client.n is None
 ```
 
 In the next [Logging](https://docs.unify.ai/universal_api/logging) section, we learn how

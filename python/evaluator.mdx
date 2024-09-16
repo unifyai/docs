@@ -17,25 +17,24 @@ class Evaluator(abc.ABC)
 ### evaluate
 
 ```python
-@abstractmethod
-def evaluate(agent: Union[str, _UniLLMClient, Agent],
-             dataset: Union[str, Dataset],
-             default_prompt: Prompt = None)
+def evaluate(datum: Datum, response: ChatCompletion,
+             agent: Union[str, _Client, unify.Agent])
 ```
 
-Evaluate the agent on the given dataset, based on this evaluator.
+Evaluate the given response for this datum.
 
 **Arguments**:
 
-- `agent` - Name of the endpoint or handle to the local Agent (possibly
-  multi-step LLM calls) to evaluate.
+- `datum` - The datum (dataset entry) used for evaluation, containing an input
+  prompt and optionally other extra data, such as a reference answer.
   
-- `dataset` - Name of the uploaded dataset or handle to the local Dataset
-  instance to evaluate
+- `response` - The chat completion response which is being evaluated.
   
-- `default_prompt` - The default prompt for evaluation, which each unique query in
-  the dataset will inherit from, overwriting the extra fields. This prompt can
-  therefore include temperature, system message, tools etc. which are not
-  present in each prompt in the dataset.
+- `agent` - The agent for whom the evaluation is for.
+  
+
+**Returns**:
+
+  An Evaluation instance, containing the datum, response, agent and score.
 
 <a id="utils"></a>
