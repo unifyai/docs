@@ -7,14 +7,18 @@ do in the case of outages.
 
 However, you can also specify routing logic to directly *maximize LLM performance*,
 whether that be be improving *cost*, *quality* or *speed*. First, we outline the
-[Base Metrics](#base-metrics) which can be optimized over, we then introduce the concept
-of [Meta Providers](#meta-providers) (models used with whatever provider optimizes a
+[Base Metrics](#base-metrics) which can be optimized over, we then introduce
+[Meta Providers](#meta-providers) (models used with whatever provider optimizes a
 given metric, based on the latest available benchmark data),
-we then introduce [Thresholds](#thresholds) (specifying the permitted bounds for certain metrics),
-we then explain how [Models, Providers, and Endpoints](#models-providers-and-endpoints)
-can be specified, and finally we introduce [Custom Metrics](#custom-metrics),
-which enable you to customize exactly how cost, quality and speed should be balanced
-when routing.
+we then explain [Thresholds](#thresholds) (specifying the permitted bounds for certain
+metrics), we then explain how routing can be performed across models (not only
+providers) in [Model Routing](#model-routing), we then explain how
+[Custom Metrics](#custom-metrics) can be specified as a linear combination of the base
+metrics, we then explain how [The Search Space](#the-search-space) across models,
+providers and endpoints can be defined, and finally we explain how
+[Quality Prediction](#quality-prediction) works under the hood, and why training
+your own router is the best option in order to maximize quality when routing over models
+(explained in the subsequent sections!).
 
 ## Base Metrics
 
