@@ -2,11 +2,11 @@
 title: 'Overview'
 ---
 
-LLM routing allows you to be flexible about which model handles each prompt. 
-Flexibility can be advantageous for several reasons:
+LLM routing allows you to be flexible about which model, provider and endpoint handles
+each prompt. Flexibility can be advantageous for several reasons:
 
 1. Small models are (in general) faster and cheaper, whereas bigger models are more capable.
-2. Tasks often contain a range of difficulties.
+2. Tasks often exhibit a range of difficulties, suitable for varying LLM capability
 3. Different providers have different latencies, and these **change** over time.
 4. New models come out every week, each having different strengths and weaknesses.
 
@@ -15,3 +15,4 @@ LLM routing provides:
 - Faster and cheaper responses when a smaller model is capable of answering
 - Continuous improvement: ‘riding the wave’ of new model releases
 - Ability to maximise throughput or minimise latency based on live runtime statistics
+- Reliability via fallbacks, if providers go down or latency limits are hit
