@@ -2,216 +2,822 @@
 title: 'Datasets'
 ---
 
-Prompt datasets are useful for:
+Datasets are basically a collection of
+[Prompts](https://github.com/unifyai/unify/blob/26247d88da2d46dea62fe0a665934f7f98523c92/unify/types.py#L23)
+which are stored in your account,
+with extra fields optionally also included, such as reference answers etc.
 
-- evaluating LLMs on prompts which are representative of the final task
+The primary use case for these datasets is to group prompts into various helpful test
+cases and test sets, which can then form part of an evaluation pipeline.
 
-- training a router on the prompt data, to improve the overall LLM performance
+Firstly, we cover topics focused on local dataset development:
+[Creation](#creation), [Indexing and Iterating](#indexing-and-iterating),
+[Combining](#combining), [Trimming](#trimming) and [One-Liners](#one-liners).
+This covers everything you need to know to get started with some initial
+experimentation using datasets locally.
 
-We will refer to our representative example of building an AI educational assistant.
+However, if you need these experiments to be preserved across sessions,
+you need to work with other team members, or you need to handle large volumes of data,
+then you'll need to connect and synchronize your datasets with your unify account.
+This is what's covered in the final sections: [Uploading](#uploading),
+[Downloading](#downloading) and [Synchronizing](#synchronizing).
 
-## Creating Datasets
+## Composition
 
-Before we start any benchmarking, we need a dataset of prompts to benchmark on!
+Strictly speaking, each dataset entry is a pydantic
+[Datum](https://github.com/unifyai/unify/blob/b7743c6b204633c7eb77a65a1107c2031aec18a9/unify/types.py#L123)
+instance, which contains a `prompt` field of type `Prompt`, with the pydantic
+argument `extra=Extra.allow`, enabling *extra arbitrary fields*.
 
-There are three main ways to create a prompt dataset for your task,
-as explained below.
-
-### Using Public Data
-
-The best starting point is to try and find an existing public dataset which aligns well
-with your specific task. In this case, we can take all past exam questions and all
-practice questions from the textbooks for each subject.
-
-This gives us a great starting point. For example, for the
-[Maths](https://ocr.org.uk/qualifications/gcse/mathematics-j560-from-2015/)
-syllabus we can look into the
-[assessment section](https://ocr.org.uk/qualifications/gcse/mathematics-j560-from-2015/assessment/)
-and find many sample papers and real past papers.
-
-A couple of example questions are as follows (taken from the papers),
-with their corresponding answers (taken from the mark scheme).
-
-```
-18 rice cakes weigh a total of 130g.
-There are 329 calories in 100g of rice cakes.
-How many calories are there in one rice cake?
-
-A circular table top has radius 70cm.
-(a) Calculate the area of the table top in cm^2, giving your answer as a multiple of π.
-(b) The volume of the table top is 17150πcm^3. Calculate the thickness of the table top.
-```
-
-The answers can be found from the corresponding mark scheme,
-
-### Synthetic Data Generation
-
-In order to expand the prompt data that we've already extracted,
-we can use LLMs to generate more questions.
-
-In this case, we use Claude Opus 3.5 and we provide all extracted questions in the
-system prompt, and we also provide the full subject syllabus, and inform the LLM that
-the questions must related to the syllabus, and the LLM must explain the exact point in
-the syllabus that the questions is referring to.
-
-By running this,
-we are able to increase the prompt dataset size by X% for most subjects.
-
-We can then add this to the local `.jsonl` file as follows:
-
-CODE
-
-### Production Data
-
-Finally, if our application is actually being run in production, then we can capture
-real data from real users, and augment our prompt datasets accordingly.
-This data is especially important, as it represents the *true distribution* observed
-*in the wild* for the task, which will inevitably deviate from our best guess
-before deployment.
-
-It's easy to extract any prompt queries previously made to the API,
-via the [`prompt_history`](benchmarks/get_prompt_history) endpoint, as explained [here]().
-For example, the last 100 prompts with the tag `physics` can be extracted as follows:
+A `Datum` instance can be initialized as follows. If a single string is passed,
+then this is interpreted as the user message
+(also the case with `Prompt` initialization):
 
 ```python
-phyiscs_prompts = client.prompt_history(tag="phyiscs", limit=100)
+import unify
+datum = unify.Datum("This is a user message.")
 ```
-
-We can then add this to the local `.jsonl` file as follows:
-
-CODE
-
-## Uploading Datasets
-
-As shown above, the representation for prompt datasets is `.jsonl`,
-which is a file format where each line is a json object (or in Python, a list of dicts).
-
-Lets upload our `english_language.jsonl` dataset.
-
-We can do this via the REST API as follows:
-
-```shell
-curl --request POST \
-  --url 'https://api.unify.ai/v0/dataset' \
-  --header "Authorization: Bearer $UNIFY_KEY" \
-  --header 'Content-Type: multipart/form-data' \
-  --form 'file=@english_language.jsonl'\
-  --form 'name=english_language'
 ```
-
-Or we can create a `Dataset` instance in Python,
-and then call `.upload("english_language")` as follows:
-
-{/* ToDo: the Dataset instance isn't implemented */}
-
-```python
-client.dataset.upload(
-    path="english_language.jsonl",
-    name="english_language"
+Datum(
+    prompt=Prompt(
+        messages=[{'content': 'This is a user message.', 'role': 'user'}]
+    )
 )
 ```
 
-## Deleting Datasets
-
-We can delete the dataset just as easily as we created it.
-
-First, using the REST API:
-
-```shell
-curl --request DELETE \
-  --url 'https://api.unify.ai/v0/dataset?name=english_language' \
-  --header "Authorization: Bearer $UNIFY_KEY"
-```
-
-Or via Python:
+A prompt can also be passed explicitly, with *optional extra fields* as well:
 
 ```python
-client.datasets.delete(name="english_language")
+import unify
+datum = unify.Datum(
+    prompt=unify.Prompt(
+        "This is a user message."
+    ),
+    ref_answer="This is an answer."
+)
+```
+```
+Datum(
+    prompt=Prompt(
+        messages=[{'content': 'This is a user message.', 'role': 'user'}]
+    ),
+    ref_answer='This is an answer.'
+)
 ```
 
-## Listing Datasets
+## Creation
 
-We can retrieve a list of our uploaded datasets using the `/dataset/list` endpoint.
+A dataset is just a collection of `Datum` instances.
+Creating a local dataset is very simple:
 
-```shell
-curl --request GET \
-  --url 'https://api.unify.ai/v0/dataset/list' \
-  --header "Authorization: Bearer $UNIFY_KEY"
+```python
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message."
+])
+```
+
+When a list of strings is passed, these strings are also interpreted as *user messages*,
+but as explained above, the underlying dataset will contains `Datum` instances,
+which themselves contain `Prompt` instances:
+
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+Prompts can also be passed directly into the constructor:
+
+```python
+import unify
+dataset = unify.Dataset([
+    unify.Prompt(
+        messages=[{'content': 'First user message.', 'role': 'user'}],
+        temperature=0.2
+    ),
+    unify.Prompt(
+        messages=[{'content': 'Second user message.', 'role': 'user'}],
+        temperature=0.4
+    ),
+    unify.Prompt(
+        messages=[{'content': 'Third user message.', 'role': 'user'}],
+        temperature=0.6
+    ),
+])
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}],
+                temperature=0.2
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}],
+                temperature=0.4
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}],
+                temperature=0.6
+            )
+        )
+    ]
+)
+```
+
+Similarly, Datum instances can also be passed into the constructor, which can
+optionally have extra arbitrary fields (due to `extra=Extra.allow`),
+such as `ref_answer`:
+
+```python
+import unify
+dataset = unify.Dataset([
+    unify.Datum(
+        prompt=unify.Prompt(
+            messages=[{'content': 'First user message.', 'role': 'user'}],
+            temperature=0.2
+        ),
+        ref_answer="First answer."
+    ),
+    unify.Datum(
+        prompt=unify.Prompt(
+            messages=[{'content': 'First user message.', 'role': 'user'}],
+            temperature=0.4
+        ),
+        ref_answer="Second answer."
+    ),
+    unify.Datum(
+        prompt=unify.Prompt(
+            messages=[{'content': 'First user message.', 'role': 'user'}],
+            temperature=0.6
+        ),
+        ref_answer="Third answer."
+    ),
+])
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}],
+                temperature=0.2
+            ),
+            ref_answer='First answer.'
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}],
+                temperature=0.4
+            ),
+            ref_answer='Second answer.'
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}],
+                temperature=0.6
+            ),
+            ref_answer='Third answer.'
+        )
+    ]
+)
+```
+
+`str`, `Prompt` and `Datum` instances can also be passed individually, and these will be
+interpreted as single-item datasets:
+
+```python
+import unify
+dataset = unify.Dataset("First user message.")
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+## Indexing and Iterating
+
+Datasets can be iterated over as follows:
+
+```python
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message."
+])
+for entry in dataset:
+    assert isinstance(entry, unify.Datum)
+    print(entry)
+```
+
+Similarly, they can be indexed:
+
+```python
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message."
+])
+assert isinstance(dataset[1], unify.Datum)
+print(dataset[1])
+```
+
+They can also be sliced:
+
+```python
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message.",
+    "Fourth user message."
+])
+print(dataset[1:-1])
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+It's also possible to check whether one item or dataset is a subset of another dataset:
+
+```python
+import unify
+dataset1 = unify.Dataset(["a", "b", "c"])
+dataset2 = unify.Dataset(["a", "b"])
+assert dataset2 in dataset1
+assert "a" in dataset1
+assert unify.Prompt("b") in dataset1
+assert ["b", "c"] in dataset1
+assert "d" not in dataset1
+dataset3 = unify.Dataset(["c", "d"])
+assert dataset3 not in dataset1
+```
+
+## Combining
+
+Datasets can be added together to create combined datasets easily:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+])
+dataset2 = unify.Dataset([
+    "Third user message.",
+    "Fourth user message.",
+])
+print(dataset1 + dataset2)
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Fourth user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+Duplicates will also be handled, such that entries in both datasets are not repeated:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+])
+dataset2 = unify.Dataset([
+    "Second user message.",
+    "Third user message.",
+])
+print(dataset1 + dataset2)
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+In the above example, a new `Dataset` instance is created. However, datasets can also be
+updated inplace via addition, as follows:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+])
+dataset2 = unify.Dataset([
+    "Third user message.",
+    "Fourth user message.",
+])
+dataset1 += dataset2
+```
+
+Addition also works with *all types which can be passed into the dataset constructor*.
+In such cases, the item will be automatically passed to the constructor to create a
+`Dataset`:
+
+```python
+import unify
+dataset = unify.Dataset(["First user message."])
+dataset += "Second user message."
+dataset += unify.Prompt(messages=[{'content': 'Third user message.', 'role': 'user'}])
+dataset += ["Fourth user message.", "Fifth user message."]
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Fourth user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Fifth user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+The ordering of the operation also does not matter, by virtue of `__radd__` and
+`__rsub__` implemented for the `Dataset` class:
+
+```python
+import unify
+"User message" + unify.Dataset("Another user message.")
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'User message', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[
+                    {'content': 'Another user message.', 'role': 'user'}
+                ]
+            )
+        )
+    ]
+)
+```
+
+The same is true for `Prompt` and `Datum` instances, which can simply be summed
+to create a `Dataset`.
+
+```python
+import unify
+dataset = "First user message." \
+           + unify.Prompt("Second user message.") \
+           + unify.Datum("Third user message")
+print(dataset)
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+## Trimming
+
+Datasets can also be subtracted from one another easily, as follows:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message.",
+    "Fourth user message.",
+])
+dataset2 = unify.Dataset([
+    "Second user message.",
+    "Fourth user message.",
+])
+print(dataset1 - dataset2)
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+As with addition, in the above examples a new `Dataset` instance is created.
+However, datasets can also be updated inplace via subtraction, as follows:
+
+```python
+import unify
+dataset1 = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message.",
+    "Fourth user message.",
+])
+dataset2 = unify.Dataset([
+    "Second user message.",
+    "Fourth user message.",
+])
+dataset1 -= dataset2
+```
+
+All of the points made in the previous section about addition also apply for
+subtraction. For example, individual entries can be removed from a `Dataset` by value,
+like so:
+
+```python
+import unify
+dataset = unify.Dataset([
+    "First user message.",
+    "Second user message.",
+    "Third user message."
+])
+dataset -= "First user message"
+dataset = dataset - unify.Prompt("Second user message.")
+print(dataset)
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+This section is less verbose than the previous section in order to avoid
+repetition, but all points made apply equally in this case as well, and you're
+encouraged to test things out accordingly!
+
+## One-Liners
+
+All `Dataset` methods which perform in-place updates also return `self`.
+This makes it possible to chain in-place methods together:
+
+```python
+import unify
+("1st msg" + unify.Prompt("2nd msg.")).set_name("my_dataset").upload()
+```
+
+If the return is not caught from any of these inplace methods,
+then this makes no difference to the behaviour:
+
+```python
+dataset.set_name("some_name")
+```
+
+## Uploading
+
+You can see your listed datasets on the [Datasets](https://console.unify.ai/datasets)
+page of your account.
+
+<p align="left">
+    <img src="/images/datasets_page_empty.png" alt="Datasets Empty" />
+</p>
+
+By default, there is a single dataset added to all new accounts: "Open Hermes".
+This is...
+
+In order to synchronize your local dataset with an upstream dataset in the platform,
+your dataset **needs to have a name**.
+
+If this was not set in the constructor, then it can be set as follows:
+
+```python
+dataset.set_name("my_dataset")
+```
+
+Provided your dataset has a name, it can then be uploaded to your account like so:
+
+```python
+dataset.upload()
+```
+
+This will not overwrite any dataset entries which are contained in the upstream dataset,
+it will only add any missing entries.
+If you want to fully overwrite any existing upstream dataset called "my_dataset",
+then pass `overwrite=True`:
+
+```python
+dataset.upload(overwrite=True)
+```
+
+Once your dataset has been uploaded, you'll be able to see it in the console like so:
+
+<p align="left">
+    <img src="/images/datasets_page_w_upload.png" alt="Datasets with Upload" />
+</p>
+
+The dataset can be renamed, deleted, and viewed from the console.
+Clicking `View Dataset` will present the following view of the dataset:
+
+IMAGE
+
+Dataset names can also be used to specify the directory structure which is observed
+inside your user account. For example, the following dataset will appear in the
+`maths_quiz` folder and `john_smith` sub-folder, with the dataset name `answers`:
+
+```python
+import unify
+unify.Dataset(["a", "b", "c"]).set_name("maths_quiz/john_smith/answers").upload()
+```
+
+This makes it much easier to organize datasets in a hierarchical manner, and it also
+makes things easier to manage in the console, where datasets can be moved and
+re-organized freely:
+
+IMAGE
+
+## Downloading
+
+You can directly download a dataset from your account as follows:
+
+```python
+import unify
+dataset = unify.Dataset.from_upstream("my_dataset")
+```
+```
+Dataset(
+    [
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'First user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Second user message.', 'role': 'user'}]
+            )
+        ),
+        Datum(
+            prompt=Prompt(
+                messages=[{'content': 'Third user message.', 'role': 'user'}]
+            )
+        )
+    ]
+)
+```
+
+If you have a local copy of a dataset, and someone else has pushed changes to the
+upstream version in a shared team account, then you can download those changes into your
+own local dataset version, *without overwriting your own local changes*:
+
+```python
+dataset.download()
+```
+
+If you want to overwrite your local changes, then pass `overwrite=True`:
+
+```python
+dataset.download(overwrite=True)
+```
+
+This is equivalent to creating a new dataset instance
+`dataset = unify.Dataset.from_upstream("my_dataset")`, but the `id` of the
+`Dataset` instance will be preserved when calling `dataset.download(overwrite=True)`,
+as the update will happen in-place.
+
+## Synchronizing
+
+If you want to synchronize your dataset with the upstream dataset in **both
+directions**, then you can call `.sync()` as follows:
+
+```python
+dataset.sync()
+```
+
+This is implemented as a call to `.download()` (add any missing upstream entries to the
+local database) followed by a call to `.upload()` (add any missing local entries to the
+upstream database). Therefore, `.sync()` will bring both datasets into alignment, such
+that they both contain the *superset* of entries from both the local and upstream
+versions.
+
+By default, auto-synchronization is turned off, but if you want your local dataset to
+remain synchronized with the upstream dataset **at all times**,
+then you can set `auto_sync=True` in the constructor, as follows:
+
+```python
+import unify
+dataset = unify.Dataset(
+    [
+        "First user message.",
+        "Second user message.",
+        "Third user message."
+    ],
+    auto_sync=True
+)
+```
+
+Similarly, you can set this via the setter method.
+This is useful if you've downloaded your dataset for example:
+
+```python
+dataset = unify.Dataset.from_upstream("my_dataset")
+dataset.set_auto_sync(True)
+assert dataset.auto_sync
+```
+
+When `dataset.auto_sync is True`, this will call `.sync()` **every time** any method is
+called on the local `Dataset` instance (even if that method does not change the
+`Dataset` contents). This does mean that upstream changes will **not** be
+synchronized until a method is called on the local `Dataset`, but new local changes will
+**always** be fully synchronized with upstream. It's worth keeping this asymmetry in
+mind, understanding that local changes do trigger the sync, but upstream changes do not
+trigger the sync. If you need track upstream changes, then you'll need to occasionally
+call `.sync()` or `.download()` explicitly on your local dataset.
+
+Setting `dataset.auto_sync` to `True` will configure bi-directional synchronization, but
+sometimes you might only care about synchronization in one direction. You might only
+want to retrieve upstream changes but not upload anything, or you might only want to add
+to the upstream dataset without downloading anything. The `auto_sync` parameter can also
+be set as `"download"` or `"upload"` (or `"both"` which is the same as
+`True`), for example:
+
+```python
+dataset = unify.Dataset.from_upstream("my_dataset")
+dataset.set_auto_sync("upload")
 ```
 
 ```python
-datasets = client.datasets.list()
-print(datasets)
+import unify
+dataset = unify.Dataset(
+    [
+        "First user message.",
+        "Second user message.",
+        "Third user message."
+    ],
+    auto_sync="download"
+)
 ```
 
+These settings will only trigger synchronizations in *one direction*,
+again triggered every time a method is called on the local `Dataset`.
+However, any unique contents **will be preserved** on the receiving end.
+For example, having mode `"download"` will add any extra data from upstream,
+but it will not delete the data you have stored locally which is not stored upstream.
 
-## Renaming Datasets
+Going further, you might want one of your datasets (either the local one or the upstream
+one) to **mirror** the other one exactly **at all times**. This is what the modes
+`"local_mirrors_upstream"` and `"upstream_mirrors_local"` are for.
 
-Let's imagine we accidentally named our dataset `"english"` when uploading it,
-which would cause confusion as students need to learn both subjects `english literature`
-and `english language`.
-
-We can easily rename the dataset without deleting and re-uploading,
-via the following REST API command:
-
-```shell
-curl --request POST \
-  --url 'https://api.unify.ai/v0/dataset/rename?name=english&new_name=english_literature' \
-  --header "Authorization: Bearer $UNIFY_KEY"
-```
-
-Or via Python:
+When `"local_mirrors_upstream"` is set, then the local dataset will follow the
+upstream version exactly, meaning any local entries not present upstream will be deleted
+during the sync. This is suitable in situations where you just want to test out the
+"ground-truth" upstream dataset locally, whilst keeping it fully synced, but not make
+any upstream changes, nor have the local version deviate from upstream at any time.
 
 ```python
-client.datasets.rename(name="english", new_name="english_literature")
+import unify
+dataset = unify.Dataset.from_upstream("my_dataset", auto_sync="local_mirrors_upstream")
+dataset += "a" # not permitted, raises exception
+# someone pushes some upstream changes, you'd like to include
+print(dataset) # these changes are reflected locally, with __repr__ triggering the sync
 ```
 
-## Appending to Datasets
+Similarly, when `"upstream_mirrors_local"` is set, then the upstream dataset will
+follow the local version exactly, meaning any upstream entries not present locally will
+be deleted during the sync. This is suitable in situations where you want your upstream
+console to mirror your local "ground-truth" dataset exactly **at all times**, when
+simply using the console for dynamic visualization complementing your local
+experimentation, for example. This mode is not suitable if working on a shared dataset
+with team-mates, as your local version will continually overwrite any additions they've
+pushed upstream!
 
-As explained above, we might want to add to an existing dataset, either because we have
-[generated some synthetic examples](), or perhaps because we have some relevant
-[production traffic](datasets#production-data).
-
-In the examples above, we simply appended to these datasets locally,
-before then uploading the full `.jsonl` file. However,
-we can also make incremental updates to datasets which have previously been uploaded.
-
-We simply use the X command as follows:
-
-CODE
-
-Or via Python:
-
-CODE
-
-## Dataset Chunks
-
-Whenever a dataset is appended to, this is stored as a new dataset "chunk".
-This is relevant as it is effectively how dataset version control works.
-
-Datasets can be used as inputs to other triggered jobs in the platform
-(such as [performing an evaluation]() or [training a router]()),
-and appending to a *dependent* dataset will make those completed jobs "out of sync"
-with the *full* dataset, as per the latest append operation.
-
-The chunks enable the correspondence across other jobs to be easily tracked.
-Previous jobs will show as being "partially" completed if the dataset has changed
-since the last job, and the chunk id will express *how partial* the job is with respect
-to the full dataset.
-
-The chunk structure of any dataset, and the timestamp of each chunk upload,
-can be observed as follows:
-
-CODE
-
-## Dataset Fields
-
-All of the examples above only included a `prompt` key in the data,
-but any arbitrary structure can be used.
-
-For example, you might want to include a reference answer alongside each prompt,
-or perhaps include a document which a downstream RAG pipeline must have use of, if the
-dataset is an evaluation dataset.
-
-There is no limit to the extra fields that can be added, and their entries,
-provided all of the data is expressed as strings.
+```python
+import unify
+dataset = unify.Dataset.from_upstream("my_dataset", auto_sync="upstream_mirrors_local")
+# you pushed some upstream changes in another session, that you don't want to keep
+dataset += "a" # the other changes are removed upstream, but "a" is added
+# more upstream changes are added in another session, again we don't want to keep
+print(dataset) # these other changes are again deleted, and upstream mirrors local again
+```

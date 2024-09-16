@@ -70,9 +70,11 @@ Each dictionary in the list must contain a `prompt` key.
 ### download\_dataset
 
 ```python
-def download_dataset(name: str,
-                     path: Optional[str] = None,
-                     api_key: Optional[str] = None) -> Optional[str]
+def download_dataset(
+        name: str,
+        path: Optional[str] = None,
+        raw_return: bool = False,
+        api_key: Optional[str] = None) -> Union[List[Datum], None]
 ```
 
 Downloads a dataset from the platform.
@@ -81,6 +83,7 @@ Downloads a dataset from the platform.
 
 - `name` - Name of the dataset to download.
 - `path` - If specified, path to save the dataset.
+- `raw_return` - Whether to provide the raw return, with extra meta-data.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
   `UNIFY_KEY` environment variable.
   
@@ -121,6 +124,18 @@ Deletes a dataset from the platform.
 
 - `ValueError` - If there was an HTTP error.
 
+<a id="utils.datasets.rename_dataset"></a>
+
+---
+
+### rename\_dataset
+
+```python
+def rename_dataset(name: str, new_name: str, api_key: Optional[str] = None)
+```
+
+Renames a dataset.
+
 <a id="utils.datasets.list_datasets"></a>
 
 ---
@@ -146,5 +161,33 @@ Fetches a list of all uploaded datasets.
 **Raises**:
 
 - `ValueError` - If there was an HTTP error.
+
+<a id="utils.datasets.add_data"></a>
+
+---
+
+### add\_data
+
+```python
+def add_data(name: str,
+             data: Union[Dict, List[Dict]],
+             api_key: Optional[str] = None)
+```
+
+Adds data to a dataset.
+
+<a id="utils.datasets.delete_data"></a>
+
+---
+
+### delete\_data
+
+```python
+def delete_data(name: str,
+                data: Union[int, List[int], Dict, List[Dict]],
+                api_key: Optional[str] = None)
+```
+
+Delete data from a dataset, either by id or by value
 
 <a id="utils.logging"></a>

@@ -346,6 +346,30 @@ client.generate("Hello world!") # temperature of 0.5
 client.generate("What a nice day.", temperature=1.0) # temperature of 1.0
 ```
 
+`Prompt` instances are explained in the next section, but it's worth mentioning here
+that default prompts can also be both *extracted* and *set* for clients.
+The default prompt is determined dynamically based on all of the default values
+mentioned above during retrieval:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai", temperature=0.5, n=2)
+assert client.default_prompt.temperature == 0.5
+assert client.default_prompt.n == 2
+```
+
+In other direction, setting the default prompt will update the various default
+parameters that were explained above:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai", temperature=0.5, n=2)
+prompt = unify.Prompt(temperature=0.4)
+client.set_default_prompt(prompt)
+assert client.temperature == 0.4
+assert client.n is None
+```
+
 ## Feedback
 
 If you believe any of these arguments *could* be supported by a certain model or provider, but is not currently
