@@ -94,9 +94,7 @@ need to update this folder manually, the information stored in it can be retriev
 The images would continue to be updated as the platform evolves.
 In order to update your local environment based on the latest versions, you would need to do the following,
 - Pull the latest images: [same as above](#pull-the-images)
-- Kill the currently running container for the service: `docker compose stop <service_name>`
-- Re-build the service container: `docker compose build <service_name>`
-- Get it running again `docker compose up <service_name>`
+- Update the service to use the latest image: `docker-compose up -d --no-deps --build <service_name>`
 
 > **\<service_name\>** can be one of `console`, `orchestra` or `dataset_evaluation`. The goal here is to make sure
 > that your data remains intact, so we would advice against deleting the `db` service.
