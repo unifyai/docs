@@ -163,6 +163,56 @@ This will return a dictionary like below:
 The custom metric can then be reasoned with very easily on the client side,
 by applying any linear combination as desired.
 
+
+## The Search Space
+
+All of the examples above have assumed that *all compatible* models and/or providers are
+included in the "search space" when making routing decisions. However,
+you might want to limit the search space.
+This can be achieved with the `models`, `providers`, `endpoints`, `skip_models`,
+`skip_providers`, and `skip_endpoints` keywords.
+Again, this is simply specified within the same chain, separated by `|`.
+
+The following finds the fastest (lowest `itl`) endpoint for `llama-3.1-405b-chat`,
+among the providers: `groq`, `fireworks-ai` and `together-ai`:
+
+```shell
+llama-3.1-405b-chat@itl|providers:groq,fireworks-ai,together-ai
+```
+
+The following finds the fastest `llama-3.1-405b-chat` endpoint among *all supported*
+providers, *excluding* (skipping): `azure-ai` and `aws-bedrock`:
+
+```shell
+llama-3.1-405b-chat@itl|skip_providers:azure-ai,aws-bedrock
+```
+
+These keywords are also compatible when routing across models. The following optimizes
+a custom metric, whilst only considering the models `gpt-4o`, `o1-preview` and
+`claude-3-sonnet`:
+
+```shell
+router@q:1|i:0.5|models:gpt-4o,o1-preview,claude-3-sonnet
+```
+
+Providers and models can also *both* be limited. The following only considers endpoints
+which are within the set of models **and** providers. It does not find the *superset* of
+endpoints matching the models and providers, but rather the *subset*. For example,
+the endpoints `claude-3-haiku@vertex-ai` and `llama-3-8b-chat@aws-bedrock` are **not**
+included in the search space for the query below, but the endpoint
+`claude-3-haiku@anthropic` **is** included:
+
+```shell
+router@q:1|i:0.5|models:claude-3-haiku,claude-3-sonnet,claude-3-opus|providers:anthropic,aws-bedrock
+```
+
+Note that specifying a single model in `models` using the `router` keyword is
+functionally equivalent to specifying that model on the left-hand-side:
+
+```
+router@itl|models:llama-3.1-405b-chat == llama-3.1-405b-chat@itl
+```
+
 ## Quality Prediction
 
 ## Default Prompts
