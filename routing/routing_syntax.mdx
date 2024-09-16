@@ -1,0 +1,62 @@
+---
+title: 'Routing Syntax'
+---
+
+In the previous section, we introduced *fallbacks*, which enable you to specify what to
+do in the case of outages.
+
+However, you can also specify routing logic to directly *maximize LLM performance*,
+whether that be be improving *cost*, *quality* or *speed*. First, we outline the
+[Base Metrics](#base-metrics) which can be optimized over, we then introduce the concept
+of [Meta Providers](#meta-providers) (models used with whatever provider optimizes a
+given metric, based on the latest available benchmark data),
+we then introduce [Thresholds](#thresholds) (specifying the permitted bounds for certain metrics),
+we then explain how [Models, Providers, and Endpoints](#models-providers-and-endpoints)
+can be specified, then how [Default Prompts](#default-prompts) can be specified, and
+finally we introduce [Custom Metrics](#custom-metrics), which enable you to customize
+exactly how cost, quality and speed should be balanced when routing.
+
+## Base Metrics
+
+The *base metrics* and their permitted syntax when making chat completion queries,
+are as follows:
+
+- **Quality** (The quality of the generated response): `quality, q`
+- **Time to First Token**: `time-to-first-token, ttft, t`
+- **Inter Token Latency**: `inter-token-latency, itl, i`
+- **Cost** ($ per token, for expected input/output ratio): `cost, c`
+- **Input Cost** ($ per input token): `input-cost, ic`
+- **Output Cost** ($ per output token): `output-cost, oc`
+
+## Meta Providers
+
+Any of these *base metrics* can be specified in place of a *provider*,
+when making chat completion requests. For example, lets assume we want to deploy
+`claude-3-opus` with whichever provider has the fastest `inter-token-latency`,
+based on the latest benchmark data. We can specify the following:
+
+```shell
+curl -X 'POST' \
+    'https://api.unify.ai/v0/chat/completions' \
+    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "model": "claude-3-opus@inter-token-latency",
+        "messages": [{"role": "user", "content": "Hello."}]
+    }'
+```
+
+To be more explicit, the prepending keywords `highest-` and `lowest-` can be specified.
+When the keyword is omitted, it's assumed that the user wants the "best" option, which
+is `highest-` for quality and `lowest-` for all other metrics.
+The example above is equivalent to `claude-3-opus@lowest-inter-token-latency`.
+
+## Thresholds
+
+## Models, Providers and Endpoints
+
+## Default Prompts
+
+## Custom Metrics
+
+## Quality Prediction
