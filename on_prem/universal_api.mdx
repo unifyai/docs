@@ -27,7 +27,6 @@ to docker before pulling the images.
 We have shared a folder with you which contains the necessary configs to set up.
 This section is mainly for explaning what’s contained in the folder, you don’t need to edit anything manually
 (except VertexAI users as explained in the next section). Following are the folder contents,
-- `shared_volume`: A folder that would be shared between the images and would contain the information about
 various dataset evaluations you’ve run (in the uploaded_datasets folder) and the custom endpoints and api keys
 you’re using (in the db folder)
 - `.env_orchestra`: Contains the necessary environment variables to set up the backend app
@@ -63,7 +62,7 @@ corresponding to the `ORCHESTRA_OPENAI_KEY` variable and so on.
 - For using VertexAI, you would need to add,
     - `GOOGLE_APPLICATION_CREDENTIALS`
     - `ORCHESTRA_VERTEXAI_PROJECT`
-    - `ORCHESTRA_VERTEXAI_LOCATION`
+    - `ORCHESTRA_VERTEXAI_LOCATION` (the location can also be instead passed as the `region` field in `/chat/completions`)
 
 Along with the above, you would also need to uncomment a line in the docker-compose.yaml that mounts the service
 account json onto the container. For e.g. if `application_default_credentials.json` is the name of the file, then
@@ -86,8 +85,13 @@ The console should be usable at `http://localhost:3000`, you should be able to a
 and running evaluations, adding custom api keys and endpoints and so on. You can also use all the endpoints in the
 API Reference by making calls to `http://localhost:8000` instead of `https://api.unify.ai`
 
-The shared_volume would contain the results of the dataset evaluations and custom endpoints you create. You shouldn’t
-need to update this folder manually, the information stored in it can be retrieved from the relevant endpoints.
+## Python Client
+
+In order to use the [python client](https://docs.unify.ai/basics/quickstart) with the
+on-prem deployment, you would need to set the `UNIFY_BASE_URL` environment variable as
+the address to the orchestra service. You can find it under the `networks:` field for
+the `orchestra` service inside `docker-compose.yaml`. So for e.g. if the IP assigned to
+`orchestra` is `10.5.0.11`, then the `UNIFY_BASE_URL` would be `http://10.5.0.11/v0`.
 
 ## Updates
 
