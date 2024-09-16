@@ -128,14 +128,17 @@ curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
     -H 'Authorization: Bearer $UNIFY_KEY' \
     -H 'Content-Type: application/json' \
-    -d '{
-        "model": "claude-3-opus@aws-bedrock",
-        "messages": [{"role": "user", "content": "Hello."}],
-        "use_custom_keys": true
-    } -> {
-        "model": "claude-3-opus@anthropic",
-        "messages": [{"role": "user", "content": "Hello."}]
-    }'
+    -d '[
+          {
+            "model": "claude-3-opus@aws-bedrock",
+            "messages": [{"role": "user", "content": "Hello."}],
+            "use_custom_keys": true
+          },
+          {
+            "model": "claude-3-opus@anthropic",
+            "messages": [{"role": "user", "content": "Hello."}]
+          }
+    ]'
 ```
 
 Fallback queries can also be combined with fallback models, providers, and endpoints.
@@ -148,12 +151,15 @@ curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
     -H 'Authorization: Bearer $UNIFY_KEY' \
     -H 'Content-Type: application/json' \
-    -d '{
-        "model": "claude-3-opus@aws-bedrock->vertex-ai",
-        "messages": [{"role": "user", "content": "Hello."}],
-        "use_custom_keys": true
-    } -> {
-        "model": "claude-3-opus@anthropic",
-        "messages": [{"role": "user", "content": "Hello."}]
-    }'
+    -d '[
+          {
+            "model": "claude-3-opus@aws-bedrock->vertex-ai",
+            "messages": [{"role": "user", "content": "Hello."}],
+            "use_custom_keys": true
+          },
+          {
+            "model": "claude-3-opus@anthropic",
+            "messages": [{"role": "user", "content": "Hello."}]
+          }
+    ]'
 ```
