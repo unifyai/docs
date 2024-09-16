@@ -92,6 +92,77 @@ latency faster than `20ms`:
 router@quality|input-cost<0.8|output-cost<0.6|itl<20
 ```
 
+## Custom Metrics
+
+So far, we have only considered cases where we optimize for a *single base metric*, and
+then constrain the search space for other metrics. However, you can also specify your
+own *custom metric*, as a linear combination of the base metrics:
+
+```
+custom_metric = q_f*q - i_f*i - t_f*t - c_f*c
+```
+
+In words, this metric takes factors `{}_f` for each of the four base metrics:
+`quality`, `inter-token-latency`, `time-to-first-token` and `cost`, and then computes
+their linear combination, with the objective of *maximizing* `custom_metric`.
+
+With this form factor, controlling the custom metric is reduced to specifying the linear
+factors `{}_f`. These linear factors can be specified as follows:
+
+```
+router@q:1|i:0.5|t:2|c:0.7
+```
+
+Factors which are left unspecified are assumed to be zero (their contribution to the
+custom metric is ignored). For example, the following as aliases:
+
+```
+router@q:1|i:0.5 == router@q:1|i:0.5|t:0|c:0
+```
+
+As before, any variant of the metric can be used to specify the factors:
+
+```
+router@q:1|i:0.5 == router@quality:1|inter-token-latency:0.5
+```
+
+The Meta Providers explained above are actually aliases to this same logic,
+and under the hood they resolve to these factors:
+
+```
+llama-3.1-70b-chat@quality == llama-3.1-70b-chat@q:1 == llama-3.1-70b-chat@q:1|i:0|t:0|c:0
+llama-3.1-70b-chat@itl == llama-3.1-70b-chat@i:1 == llama-3.1-70b-chat@q:0|i:1|t:0|c:0
+```
+
+For this reason, meta-providers cannot be specified alongside these factors.
+Meta providers are basically convenient one-liners to specify *all four factors*.
+
+Note that the units are **not normalized**. It's down to **you** to reason about
+sensible values for the factors, based on the respective units:
+`cost` in $ per M tokens, `itl` in ms, `ttft` in ms, and `quality` normalized to `0-1`.
+
+When experimenting, you can retrieve the four metrics for any endpoint as follows:
+
+```shell
+curl -X 'GET' \
+    'https://api.unify.ai/v0/router/metric?endpoint=llama-3.1-405b-chat@together-ai' \
+    -H 'Authorization: Bearer $UNIFY_KEY'
+```
+
+This will return a dictionary like below:
+
+```
+{
+    "quality": 0.78
+    "inter-token-latency": 15.67
+    "time-to-first-token": 752.39
+    "cost": 0.73
+}
+```
+
+The custom metric can then be reasoned with very easily on the client side,
+by applying any linear combination as desired.
+
 ## Quality Prediction
 
 ## Default Prompts
