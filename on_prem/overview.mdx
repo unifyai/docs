@@ -29,25 +29,26 @@ This section is mainly for explaning what’s contained in the folder, you don�
 (except VertexAI users as explained in the next section). Following are the folder contents,
 various dataset evaluations you’ve run (in the uploaded_datasets folder) and the custom endpoints and api keys
 you’re using (in the db folder)
-- `.env_orchestra`: Contains the necessary environment variables to set up the backend app
 - `.env_console`: Contains the necessary environment variables to set up the console app
+- `.env_db`: Contains the env variables for the database
+- `.env_orchestra`: Contains the necessary environment variables to set up the backend app
 - `sessionInfo.json`: The session information for the console app, it’s mainly used for displaying data on your
 profile page. The file should contain the following fields when we share the folder with you,
     - `name`: first name
     - `email`: email id
     - `image`: a link to the profile image
-    - `userInfo.json`: Contains more information about the user currently using the app.
+- `userInfo.json`: Contains more information about the user currently using the app.
     This is something we need to do so to bypass the login process. The file should contain the following
     fields when we share the folder with you,
-        - `id`: user id
-        - `name`: first name
-        - `lastName`: last name
-        - `image`: a link to the profile image
-        - `email`: the email id
-        - `createdAt`: the date when the account was created
-        - `apiKey`: the details about your api key
-        - `UserDetails`: your organization and jobTitle (Optional)
-        - `docker-compose.yaml`: The compose file to get the containers set up
+    - `id`: user id
+    - `name`: first name
+    - `lastName`: last name
+    - `image`: a link to the profile image
+    - `email`: the email id
+    - `createdAt`: the date when the account was created
+    - `apiKey`: the details about your api key
+    - `UserDetails`: your organization and jobTitle (Optional)
+    - `docker-compose.yaml`: The compose file to get the containers set up
 
 ## Setting up
 
@@ -62,7 +63,8 @@ corresponding to the `ORCHESTRA_OPENAI_KEY` variable and so on.
 - For using VertexAI, you would need to add,
     - `GOOGLE_APPLICATION_CREDENTIALS`
     - `ORCHESTRA_VERTEXAI_PROJECT`
-    - `ORCHESTRA_VERTEXAI_LOCATION` (the location can also be instead passed as the `region` field in `/chat/completions`)
+    - `ORCHESTRA_VERTEXAI_LOCATION` (the location can also be instead passed as the `region`
+    field to `/chat/completions`)
 
 Along with the above, you would also need to uncomment a line in the docker-compose.yaml that mounts the service
 account json onto the container. For e.g. if `application_default_credentials.json` is the name of the file, then
