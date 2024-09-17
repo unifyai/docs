@@ -88,7 +88,7 @@ and we're then just optimizing over the *provider* for that chosen model.
 
 However, we can also include the model within the routing decision. To do so, we simply
 specify the model as `router`. For example, the following will find the highest quality
-endpoint (among *all* supported endpoints!), which is cheaper than `$0.8` per million
+endpoint (among *all* supported endpoints), which is cheaper than `$0.8` per million
 input tokens, cheaper than `$0.6` per million output tokens, and has an inter token
 latency faster than `20ms`:
 
@@ -118,7 +118,7 @@ router@q:1|i:0.5|t:2|c:0.7
 ```
 
 Factors which are left unspecified are assumed to be zero (their contribution to the
-custom metric is ignored). For example, the following as aliases:
+custom metric is ignored). For example, the following are aliases:
 
 ```shell
 router@q:1|i:0.5 == router@q:1|i:0.5|t:0|c:0
@@ -230,7 +230,7 @@ router@q:1|i:0.5|models:claude-3-haiku,claude-3-sonnet|skip_providers:aws-bedroc
 Up to now, we have not explained how quality is predicted ahead of time for each
 endpoint being evaluated, during routing decisions. We have trained a neural scoring
 function on many prompts across several open datasets (such as Open Hermes), with the
-labels training targets provided via LLM-as-a-judge.
+training targets provided via LLM-as-a-judge.
 
 This is a useful baseline for general tasks, but to really get top performance on your
 task, it's necessary to train *your own* neural scoring function on *your own* prompts,
