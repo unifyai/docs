@@ -43,7 +43,7 @@ def __init__(endpoint: Optional[str] = None,
              use_custom_keys: bool = False,
              tags: Optional[List[str]] = None,
              api_key: Optional[str] = None,
-             message_content_only: bool = True,
+             return_full_completion: bool = False,
              cache: bool = False,
              extra_headers: Optional[Headers] = None,
              extra_query: Optional[Query] = None,
@@ -158,10 +158,10 @@ Initialize the base Single LLM Unify client.
 - `tags` - Arbitrary number of tags to classify this API query as needed. Helpful
   for generally grouping queries across tasks and users, for logging purposes.
   
-- `message_content_only` - If True, only return the message content
+- `return_full_completion` - If False, only return the message content
   chat_completion.choices[0].message.content.strip(" ") from the OpenAI
   return. Otherwise, the full response chat_completion is returned.
-  Defaults to True.
+  Defaults to False.
   
 - `cache` - If True, then the arguments will be stored in a local cache file, and
   any future calls with identical arguments will read from the cache instead
