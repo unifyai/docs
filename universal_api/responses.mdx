@@ -1,0 +1,234 @@
+---
+title: 'Responses'
+---
+
+When making queries via
+[HTTP Requests](https://docs.unify.ai/universal_api/making_queries#http-requests),
+the [OpenAI Python Package](https://docs.unify.ai/universal_api/making_queries#openai-python-package),
+and the [OpenAI NodeJS Package](https://docs.unify.ai/universal_api/making_queries#openai-nodejs-package),
+then the full `ChatCompletion` is returned, as per the
+[OpenAI Standard](https://platform.openai.com/docs/api-reference/chat/object).
+
+Firstly, lets take a look at how we can *format* these returned `ChatCompletion`
+instances more elegantly, so we can easily examine the contents.
+
+## Formatting
+
+As a recap, requests can be made directly to our
+[REST API](https://docs.unify.ai/api-reference/llm_queries/chat_completions) as follows:
+```shell
+curl -X 'POST' \
+    'https://api.unify.ai/v0/chat/completions' \
+    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "model": "llama-3-8b-chat@fireworks-ai",
+        "messages": [{"role": "user", "content": "Say hello."}]
+    }'
+```
+The response is printed on a single line by default, which is not very human-readable:
+```
+{"model":"llama-3-8b-chat@fireworks-ai","created":1726589635,"id":"21f88b05-5aea-4e9d-8179-8959ac1c7c03","object":"chat.completion","usage":{"completion_tokens":26,"prompt_tokens":13,"total_tokens":39,"completion_tokens_details":null,"cost":7.8e-6},"choices":[{"finish_reason":"stop","index":0,"message":{"content":"Hello! It's nice to meet you. Is there something I can help you with, or would you like to chat?","role":"assistant","tool_calls":null,"function_call":null}}]}
+```
+The [jq package](https://jqlang.github.io/jq/) can be used to render the returned
+`ChatCompletion` **much** more elegantly in the terminal:
+```shell
+curl -X 'POST' \
+    'https://api.unify.ai/v0/chat/completions' \
+    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "model": "llama-3-8b-chat@fireworks-ai",
+        "messages": [{"role": "user", "content": "Say hello."}]
+    }' | jq .
+```
+```json
+{
+  "model": "llama-3-8b-chat@fireworks-ai",
+  "created": 1726589999,
+  "id": "5dba39ee-7354-4f98-802d-8666b0668ba1",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 25,
+    "prompt_tokens": 13,
+    "total_tokens": 38,
+    "completion_tokens_details": null,
+    "cost": 0.0000076
+  },
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Hello! It's nice to meet you. Is there something I can help you with or would you like to chat?",
+        "role": "assistant",
+        "tool_calls": null,
+        "function_call": null
+      }
+    }
+  ]
+}
+```
+
+Again, as a recap, requests can also be made via the
+[OpenAI Python Package](https://github.com/openai/openai-python) as follows:
+
+```python
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://api.unify.ai/v0/",
+    api_key=os.environ["UNIFY_KEY"]
+)
+
+response = client.chat.completions.create(
+    model="llama-3.1-405b-chat@fireworks-ai",
+    messages=[{"role": "user", "content": "Say hi."}]
+)
+print(response)
+```
+As with the REST API request, the response is printed on a *single line* by default:
+```python
+ChatCompletion(id='d5f1c31d-f802-4c66-a0ea-74a7163bb680', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Hi! How are you today?', refusal=None, role='assistant', function_call=None, tool_calls=None))], created=1726590242, model='llama-3.1-405b-chat@fireworks-ai', object='chat.completion', service_tier=None, system_fingerprint=None, usage=CompletionUsage(completion_tokens=8, prompt_tokens=13, total_tokens=21, completion_tokens_details=None, cost=6.3e-05))
+```
+The [rich package](https://rich.readthedocs.io/) can be used to print the chat
+completion **much** more elegantly:
+```python
+from rich import print
+print(response)
+```
+```
+ChatCompletion(
+    id='a1148d09-48d7-48ab-9001-740af89cc759',
+    choices=[
+        Choice(
+            finish_reason='stop',
+            index=0,
+            logprobs=None,
+            message=ChatCompletionMessage(
+                content="Hi! How's it going? Is there something I can help you
+with or would you like to chat?",
+                refusal=None,
+                role='assistant',
+                function_call=None,
+                tool_calls=None
+            )
+        )
+    ],
+    created=1726590370,
+    model='llama-3.1-405b-chat@fireworks-ai',
+    object='chat.completion',
+    service_tier=None,
+    system_fingerprint=None,
+    usage=CompletionUsage(
+        completion_tokens=23,
+        prompt_tokens=13,
+        total_tokens=36,
+        completion_tokens_details=None,
+        cost=0.000108
+    )
+)
+```
+
+Finally, again as a recap, queries to the
+[OpenAI NodeJS Package](https://www.npmjs.com/package/openai) can be made as follows:
+
+```js
+const openai = new OpenAI({
+  baseUrl: "https://api.unify.ai/v0/",
+  apiKey: "UNIFY_KEY"
+});
+
+const response = await openai.chat.completions.create({
+  model: "llama-3.1-405b-chat@fireworks-ai",
+  messages: [{"role": "user", "content": "Say hi."}]
+});
+console.log(response);
+```
+As with the previous two examples, the response is printed on a single line by default:
+```
+```
+The [X]() package can be used to print the `ChatCompletion` **much** more elegantly:
+```js
+```
+
+## Unify Python Client
+
+In order to make things more user friendly, by default the
+[Unify Python Client](https://docs.unify.ai/universal_api/making_queries#unify-python-package)
+only returns the `message` `content` of the *first choice* among the returned `choices`.
+In Python, this is indexed like so: `response.choices[0].message.content`
+
+
+```python
+import unify
+client = unify.Unify("llama-3-8b-chat@fireworks-ai")
+response = client.generate("hello world!")
+print(response)
+```
+```
+Hello World! It's nice to meet you! Is there something I can help you with, or would you like to chat?
+```
+
+The *full* `ChatCompletion` can also easily be returned in the Python client, by setting
+`return_full_completion=True`, either in the constructor
+(making it a [Default Argument](https://docs.unify.ai/universal_api/arguments#default-arguments)),
+or in the `generate` method, as below:
+
+```python
+import unify
+client = unify.Unify("llama-3-8b-chat@fireworks-ai", return_full_completion=True)
+response = client.generate("hello world!")
+print(response)
+```
+In this case, the `ChatCompletion` returned only *prints* the `choices` field when
+being displayed in the terminal, and includes nested formatting by default,
+*without requiring an external library*:
+```
+ChatCompletion(
+    choices=[
+        Choice(
+            finish_reason='stop',
+            index=0,
+            logprobs=None,
+            message=ChatCompletionMessage(
+                content="Hello World! It's great to meet you! Is there something
+I can help you with, or would you like to chat about something in particular?",
+                refusal=None,
+                role='assistant',
+                function_call=None,
+                tool_calls=None
+            )
+        )
+    ]
+)
+```
+
+We've created a custom
+[ChatCompletion](https://github.com/unifyai/unify/blob/6fdfdc51b2a0d64a9c05ede7893c99180eb82985/unify/types.py#L160)
+pydantic class, which inherits from OpenAI's
+[ChatCompletion](https://github.com/unifyai/unify/blob/6fdfdc51b2a0d64a9c05ede7893c99180eb82985/unify/types.py#L12)
+class and also our
+[_FormattedBaseModel](https://github.com/unifyai/unify/blob/6fdfdc51b2a0d64a9c05ede7893c99180eb82985/unify/types.py#L45)
+class, which updates the `__repr__` logic such that `None` values are pruned,
+and the `rich` formatting is applied without needing to use `from rich import print`.
+
+## Broader Usage
+
+Aside from being the default response type from the
+[chat/completions](https://docs.unify.ai/api-reference/llm_queries/chat_completions)
+endpoint, `ChatCompletion` instances are also what are *logged* in the platform
+(see [Logging](https://docs.unify.ai/universal_api/logging) section), cached
+(see [Caching](https://docs.unify.ai/universal_api/caching) section),
+and stored in datasets
+(see [Datasets](https://docs.unify.ai/benchmarking/datasets) section).
+
+This section is mainly to give a quick introduction to the `ChatCompletion` return type,
+explain how to print this in a human-readable way when making queries via the various
+options available, and explain some of the design decisions we've made for our own
+[Python client](https://github.com/unifyai/unify).
+
+To learn more about what each field represents, you should consult
+[OpenAI's documentation](https://platform.openai.com/docs/api-reference/chat/object).
+If anything is unclear, let us know on [discord](https://discord.com/invite/sXyFF8tDtm)! 👾
