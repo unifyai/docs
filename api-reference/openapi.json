@@ -1905,6 +1905,16 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Invalid Default Prompt",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Incorrect format. Could not create default prompt."
+                                }
+                            }
+                        }
+                    },
                     "422": {
                         "description": "Validation Error",
                         "content": {
@@ -1956,6 +1966,14 @@
                             }
                         }
                     },
+                    "404": {
+                        "description": "Default Prompt Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Default Prompt <name> not found in your account."
+                            }
+                        }
+                    },
                     "422": {
                         "description": "Validation Error",
                         "content": {
@@ -2003,6 +2021,14 @@
                                 "example": {
                                     "info": "Default Prompt deleted successfully!"
                                 }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Default Prompt Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Default Prompt <name> not found in your account."
                             }
                         }
                     },
@@ -2067,6 +2093,14 @@
                                 "example": {
                                     "info": "Default Prompt renamed successfully!"
                                 }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Default Prompt Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Default Prompt <name> not found in your account."
                             }
                         }
                     },
@@ -3998,8 +4032,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
