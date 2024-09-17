@@ -17,7 +17,7 @@ To begin with, let's assume we have the following dataset to evaluate:
 
 ```python
 import unify
-from typing import Union, Type
+from typing import Union, Type, Dict
 system_msg = "Answer the following maths question, " \
              "returning only the numeric answer, and nothing else."
 dataset = unify.Dataset(
@@ -34,7 +34,7 @@ as follows:
 class Binary(unify.Score):
 
     @property
-    def config(self):
+    def config(self) -> Dict[float, str]:
         return {
             0.: "incorrect",
             1.: "correct"
