@@ -222,12 +222,45 @@ Looking through OpenAI's
 we can see that the only field which is affected by the input is the `choices` field.
 
 As such, everything else returned in the `ChatCompletion` instance is *irrelevant*
-from the perspective of *evaluations*, which is why we omit it. If desired, you can view
-the full `ChatCompletion` instance (in the same indented manner) like so:
+from the perspective of *evaluations*, which is why we omit it during *visualization*.
+If desired, you can view the full `ChatCompletion` instance with all meta data
+(in the same nested manner), like so:
 
 ```python
 from rich import print
 print(response.dict())
+```
+```
+{
+    'id': '983c861b-5e60-472a-b198-01b01d8533f9',
+    'choices': [
+        {
+            'finish_reason': 'stop',
+            'index': 0,
+            'logprobs': None,
+            'message': {
+                'content': "Hello World! It's great to meet you! Is there
+something I can help you with, or would you like to chat?",
+                'refusal': None,
+                'role': 'assistant',
+                'function_call': None,
+                'tool_calls': None
+            }
+        }
+    ],
+    'created': 1726602280,
+    'model': 'llama-3-8b-chat@fireworks-ai',
+    'object': 'chat.completion',
+    'service_tier': None,
+    'system_fingerprint': None,
+    'usage': {
+        'completion_tokens': 27,
+        'prompt_tokens': 13,
+        'total_tokens': 40,
+        'completion_tokens_details': None,
+        'cost': 8e-06
+    }
+}
 ```
 
 ## Broader Usage
