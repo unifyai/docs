@@ -51,7 +51,10 @@ sections = client.generate(parsed, system_message=split_into_sections)
 summaries = client.generate(sections, system_message=summarize_sections)
 ```
 
-Deleting the local `.cache.json` file will of course delete the entire cache,
+By default, the `.cache.json` file will be created in your current working directory.
+The location can be configured by setting the environment variable `UNIFY_CACHE_DIR`.
+
+Deleting the `.cache.json` file will of course delete the entire cache,
 and queries will once again be made to the LLMs. You can also open up the `.cache.json`
 file in any text editor, and modify the cache on a query-by-query basis if needed.
 
