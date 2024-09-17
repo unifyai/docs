@@ -16,7 +16,7 @@ Run the following command in a terminal (replacing `$UNIFY_KEY` with your own).
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
     "model": "llama-3-8b-chat@fireworks-ai",

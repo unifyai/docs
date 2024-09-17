@@ -42,7 +42,7 @@ based on the latest benchmark data. We can specify the following:
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "claude-3-opus@inter-token-latency",
@@ -150,7 +150,7 @@ When experimenting, you can retrieve the four metrics for any endpoint as follow
 ```shell
 curl -X 'GET' \
     'https://api.unify.ai/v0/router/metric?endpoint=llama-3.1-405b-chat@together-ai' \
-    -H 'Authorization: Bearer $UNIFY_KEY'
+    -H "Authorization: Bearer $UNIFY_KEY"
 ```
 
 This will return a dictionary like below:

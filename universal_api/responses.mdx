@@ -19,7 +19,7 @@ As a recap, requests can be made directly to our
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
     "model": "llama-3-8b-chat@fireworks-ai",
@@ -35,7 +35,7 @@ The [jq package](https://jqlang.github.io/jq/) can be used to render the returne
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
     "model": "llama-3-8b-chat@fireworks-ai",

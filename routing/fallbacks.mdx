@@ -20,7 +20,7 @@ are rate limit issues, like so:
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "claude-3-opus@anthropic->aws-bedrock",
@@ -36,7 +36,7 @@ your *fallback model*, again on `vertex-ai`. This can be specified like so:
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "gemini-1.5-pro->gemini-1.5-flash@vertex-ai",
@@ -51,7 +51,7 @@ attempt to a larger model fails, then you just want to give them a response quic
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "llama-3.1-405b-chat@together-ai->llama-3.1-70b-chat@groq",
@@ -66,7 +66,7 @@ before falling back to `llama-3.1-70b-chat@groq` if they all fail:
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "llama-3.1-405b-chat@together-ai->fireworks-ai->vertex-ai->llama-3.1-70b-chat@groq",
@@ -81,7 +81,7 @@ and then finally attempt `llama-3.1-70b-chat@groq`:
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "gemini-1.5-pro->gemini-1.5-flash@vertex-ai->llama-3.1-405b-chat@together-ai->fireworks-ai->vertex-ai->llama-3.1-70b-chat@groq",
@@ -97,7 +97,7 @@ but sometimes hit rate limits. You can add a fallback to `us-west-1` as follows:
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "gemini-1.5-pro@vertex-ai",
@@ -126,7 +126,7 @@ as follows:
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '[
           {
@@ -149,7 +149,7 @@ before finally falling back to `anthropic` if both fail:
 ```shell
 curl -X 'POST' \
     'https://api.unify.ai/v0/chat/completions' \
-    -H 'Authorization: Bearer $UNIFY_KEY' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
     -H 'Content-Type: application/json' \
     -d '[
           {
