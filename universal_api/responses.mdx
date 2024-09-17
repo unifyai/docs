@@ -157,7 +157,7 @@ The [X]() package can be used to print the `ChatCompletion` **much** more elegan
 
 In order to make things more user friendly, by default the
 [Unify Python Client](https://docs.unify.ai/universal_api/making_queries#unify-python-package)
-only returns the `message` `content` of the *first choice* among the returned `choices`.
+only returns the message content of the *first choice* among the returned `choices`.
 In Python, this is indexed like so: `response.choices[0].message.content`
 
 
@@ -205,14 +205,30 @@ I can help you with, or would you like to chat about something in particular?",
 )
 ```
 
-We've created a custom
-[ChatCompletion](https://github.com/unifyai/unify/blob/6fdfdc51b2a0d64a9c05ede7893c99180eb82985/unify/types.py#L160)
-pydantic class, which inherits from OpenAI's
-[ChatCompletion](https://github.com/unifyai/unify/blob/6fdfdc51b2a0d64a9c05ede7893c99180eb82985/unify/types.py#L12)
-class and also our
-[_FormattedBaseModel](https://github.com/unifyai/unify/blob/6fdfdc51b2a0d64a9c05ede7893c99180eb82985/unify/types.py#L45)
-class, which updates the `__repr__` logic such that `None` values are pruned,
-and the `rich` formatting is applied without needing to use `from rich import print`.
+The reason we omit all other fields when *visualizing* `ChatCompletion` instances is
+because Unify as a platform is primarily built for *evaluations*.
+From this perspective, the focus is on tracking the *input-output behaviour* of LLMs.
+We already explained our definition of a prompt in the
+[Prompts](https://docs.unify.ai/universal_api/prompts) section.
+As a recap, our definition of a prompt is as follows:
+
+> A prompt is a json object containing all arguments in the OpenAI chat
+> completions request body which **impact the output**.
+
+Similarly, when it comes to *evaluating* LLM responses, we're only concerned with the
+aspects in the `ChatCompletion` returned which are are **impacted by the input**.
+Looking through OpenAI's
+[ChatCompletion description](https://platform.openai.com/docs/api-reference/chat/object),
+we can see that the only field which is affected by the input is the `choices` field.
+
+As such, everything else returned in the `ChatCompletion` instance is *irrelevant*
+from the perspective of *evaluations*, which is why we omit it. If desired, you can view
+the full `ChatCompletion` instance (in the same indented manner) like so:
+
+```python
+from rich import print
+print(response.dict())
+```
 
 ## Broader Usage
 
@@ -231,4 +247,5 @@ options available, and explain some of the design decisions we've made for our o
 
 To learn more about what each field represents, you should consult
 [OpenAI's documentation](https://platform.openai.com/docs/api-reference/chat/object).
-If anything is unclear, let us know on [discord](https://discord.com/invite/sXyFF8tDtm)! 👾
+If anything is unclear, let us know on
+[discord](https://discord.com/invite/sXyFF8tDtm)! 👾
