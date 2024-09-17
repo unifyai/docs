@@ -14,21 +14,21 @@ You can find a list of all models, all providers and all endpoints
 ```shell
 curl -X 'GET' \
   'https://api.unify.ai/v0/models' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H "Authorization: Bearer $UNIFY_KEY" \
   -H 'accept: application/json'
 ```
 
 ```shell
 curl -X 'GET' \
   'https://api.unify.ai/v0/providers' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H "Authorization: Bearer $UNIFY_KEY" \
   -H 'accept: application/json'
 ```
 
 ```shell
 curl -X 'GET' \
   'https://api.unify.ai/v0/endpoints' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H "Authorization: Bearer $UNIFY_KEY" \
   -H 'accept: application/json'
 ```
 
@@ -38,28 +38,28 @@ returned list, like so:
 ```shell
 curl -X 'GET' \
   'https://api.unify.ai/v0/models?provider=openai' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H "Authorization: Bearer $UNIFY_KEY" \
   -H 'accept: application/json'
 ```
 
 ```shell
 curl -X 'GET' \
   'https://api.unify.ai/v0/providers?model=llama-3-8b-chat' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H "Authorization: Bearer $UNIFY_KEY" \
   -H 'accept: application/json'
 ```
 
 ```shell
 curl -X 'GET' \
   'https://api.unify.ai/v0/endpoints?provider=openai' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H "Authorization: Bearer $UNIFY_KEY" \
   -H 'accept: application/json'
 ```
 
 ```shell
 curl -X 'GET' \
   'https://api.unify.ai/v0/endpoints?model=llama-3-8b-chat' \
-  -H 'Authorization: Bearer $UNIFY_KEY' \
+  -H "Authorization: Bearer $UNIFY_KEY" \
   -H 'accept: application/json'
 ```
 
