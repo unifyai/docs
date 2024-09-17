@@ -3985,8 +3985,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -4112,6 +4112,32 @@
                         ],
                         "title": "Region",
                         "description": "A string used to represent the region where the endpoint is accessed. This is only relevant for certain providers like `vertex-ai` and `aws-bedrock`, where the endpoint is being accessed through a specified region."
+                    },
+                    "log_query_body": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Log Query Body",
+                        "description": "Whether to log the contents of the query json body.",
+                        "default": true
+                    },
+                    "log_response_body": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Log Response Body",
+                        "description": "Whether to log the contents of the response json body.",
+                        "default": true
                     }
                 },
                 "additionalProperties": true,
