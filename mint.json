@@ -65,6 +65,7 @@
                         "universal_api/arguments",
                         "universal_api/prompts",
                         "universal_api/logging",
+                        "universal_api/caching",
                         "universal_api/comparisons",
                         "universal_api/chatbot"
                     ]

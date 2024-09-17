@@ -1,0 +1,62 @@
+---
+title: 'Caching'
+---
+
+Caching LLM responses can be useful for a variety of use cases. For example, if you're
+creating a user-facing application, then it can help to speed up responses and save
+money for common requests.
+
+As another example, if you're building a complex multi-step LLM pipeline, caching makes
+it much easier to debug, without needing to continually send the same queries to the
+same LLMs over and over again, burning both time and money.
+
+Caching is currently only supported via the Python client. Caching behind the API is not
+yet supported. However, caching behind the API would be useful,
+then feel free to [hop on a call](https://calendly.com/unify-chat/general)
+or let us know in [discord](https://discord.com/invite/sXyFF8tDtm)!
+
+Caching can be turned on in the client constructor, like so:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai", cache=True)
+client.generate("Hello.")  # queries LLM, saves query + response to .cache.json
+client.generate("Hello.")  # does not query, loads from .cache.json
+```
+
+It can also be configured on a prompt-by-prompt basis:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai")
+client.generate("Hello.")  # queries LLM, does not save
+client.generate("Hello.", cache=True)  # queries LLM, saves query + response to .cache.json
+client.generate("Hello.")  # queries LLM, does not save nor load cache
+client.generate("Hello.", cache=True)  # does not query, loads from .cache.json
+```
+
+The examples above are very contrived, but with multi-step LLM applications this caching
+can be very helpful when debugging:
+
+```python
+import unify
+from docs import pdf_text
+from prompts import parse_doc, split_into_sections, summarize_sections
+client = unify.Unify("gpt-4o@openai", cache=True)
+# works fine
+parsed = client.generate(pdf_text, system_message=parse_doc)
+# works fine
+sections = client.generate(parsed, system_message=split_into_sections)
+# debugging, trying different system messages each time
+summaries = client.generate(sections, system_message=summarize_sections)
+```
+
+Deleting the local `.cache.json` file will of course delete the entire cache,
+and queries will once again be made to the LLMs. You can also open up the `.cache.json`
+file in any text editor, and modify the cache on a query-by-query basis if needed.
+
+It's also worth noting that this cache implementation is very simple. For production
+scale caching of thousands or millions of prompts, a more efficient caching mechanisms
+would be needed. If you need more sophisticated caching for your application,
+then [Get in touch](https://calendly.com/unify-chat/general) or ping us on
+[discord](https://discord.com/invite/sXyFF8tDtm)! 👾
