@@ -79,12 +79,13 @@ so on.
 - For using AWS Bedrock, you would need to add,
     - `AWS_SECRET_KEY_ID`
     - `AWS_SECRET_ACCESS_KEY`
-    - `AWS_REGION`
+    - `AWS_REGION` (the location can also be instead passed as the `region` field in
+  `/chat/completions`)
 - For using VertexAI, you would need to add,
     - `GOOGLE_APPLICATION_CREDENTIALS`
     - `ORCHESTRA_VERTEXAI_PROJECT`
-    - `ORCHESTRA_VERTEXAI_LOCATION` (the location can also be instead passed as the
-  `region` field in `/chat/completions`)
+    - `ORCHESTRA_VERTEXAI_LOCATION` (again, the location can also be instead passed as
+  the `region` field in `/chat/completions`)
 
 Along with the above, you would also need to uncomment a line in the
 `docker-compose.yaml` that mounts the service account `.json` onto the container.
