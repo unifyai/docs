@@ -8,3 +8,4 @@ __pycache__/
 *.swp
 .pytest_cache/
 .DS_Store/
+.cache.json
