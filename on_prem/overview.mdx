@@ -13,8 +13,8 @@ The entire console is replicated in the on-prem offering, all deployed locally.
 All images for on-prem deployment are available on Docker Hub.
 These are *private images*, with access granted to users on our
 [Enterprise Plan](https://unify.ai/pricing).
-[Get in touch](https://calendly.com/unify-chat/general) if you would like to get access
-for on-prem deployment.
+If you would like to get access for on-prem deployment,
+then [get in touch](https://calendly.com/unify-chat/general) with us!
 
 ## Pull the images
 
@@ -31,27 +31,26 @@ as part of the [enterprise](https://unify.ai/pricing) onboarding process.
 
 ## Local folder structure
 
-As part of the [enterprise](https://unify.ai/pricing) onboarding process,
-we will also share a folder with you called `on-prem`, which contains six files,
+We will also share a folder with you called `on-prem`, which contains six files,
 as explained below.
 
 Firstly, the following three files store environment variables for the three
 different applications:
 
-- `.env-console`: Contains the necessary environment variables to set up the console app
-- `.env-db`: Contains the necessary environment variables to set up the database app
-- `.env-orchestra`: Contains the necessary environment variables to set up the backend app
+- `.env-console` contains the necessary environment variables to set up the console app
+- `.env-db` contains the necessary environment variables to set up the database app
+- `.env-orchestra` contains the necessary environment variables to set up the backend app
 
 There are also two `.json` files, as explained below:
 
-- `sessionInfo.json`: The session information for the console app, it’s mainly used for
+- `sessionInfo.json` contains the session information for the console app, it’s mainly used for
 displaying data on your profile page. The file should contain the following fields when
 we share the folder with you:
     - `name`: first name
     - `email`: email id
     - `image`: a link to the profile image
 
-- `userInfo.json`: Contains more information about the user currently using the app.
+- `userInfo.json` contains more information about the user currently using the app.
 This is something we need to do so to bypass the login process. The file should contain
 the following fields when we share the folder with you:
     - `id`: user id
@@ -64,9 +63,9 @@ the following fields when we share the folder with you:
     - `UserDetails`: your organization and jobTitle (Optional)
 
 Finally, there is also a Docker Compose file, which stores the configuration for
-orchestrating everything via Docker Compose, which spins up the three containers:
+orchestrating everything via Docker Compose, which spins up the containers:
 
-- `docker-compose.yaml`: Config file for starting the Docker Compose service
+- `docker-compose.yaml`: contains the configuration for starting the Docker Compose service
 
 ## Setting up
 
