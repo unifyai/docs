@@ -14,37 +14,3 @@ iterate on your system prompt until all test cases pass, and you can deploy your
 
 * **🔀 Route to the Best LLM**: Improve quality, cost and speed by routing to the perfect 
 model and provider for each individual prompt.
-
-
-### Guiding Example
-
-Throughout the docs, we adopt a "show don't tell" approach,
-whereby we use a consistent example to illustrate the various functionality.
-Our intention is that this helps to tie everything together in a more concrete manner.
-
-Specifically, lets imagine we are building an educational AI application, to assist
-students in secondary education in the UK,
-who are studying for their GCSEs with the examiner [OCR](https://ocr.org.uk/).
-The app should help the students to answer questions,
-and should help to explain concepts.
-
-The app needs to be able to answer questions based on the *specific syllabus*,
-across the following subjects:
-[Maths](https://ocr.org.uk/qualifications/gcse/mathematics-j560-from-2015/),
-[Computer Science](https://ocr.org.uk/qualifications/gcse/computer-science-j277-from-2020/),
-[Physics](https://ocr.org.uk/qualifications/gcse/gateway-science-suite-physics-a-j249-from-2016/),
-[Chemistry](https://ocr.org.uk/qualifications/gcse/gateway-science-suite-chemistry-a-j248-from-2016/),
-[Biology](https://ocr.org.uk/qualifications/gcse/gateway-science-suite-biology-a-j247-from-2016/),
-[English Literature](https://ocr.org.uk/qualifications/gcse/english-literature-j352-from-2015/)
-and
-[English Language](https://ocr.org.uk/qualifications/gcse/english-language-j351-from-2015/).
-
-Each of these subjects requires unique knowledge and abilities,
-spanning more objective and more subjective criteria.
-This makes it a very complex problem to reason about.
-Perhaps some subjects would be better with a fine-tuned model,
-perhaps others would be better with a foundational model.
-Some models might be more *creative* and/or more *analytical*,
-making them more appropriate for different subject areas.
-
-Let's see how our universal API, benchmarking and routing might be able to help us out!

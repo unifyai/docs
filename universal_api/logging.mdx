@@ -16,8 +16,9 @@ Queries sent to Unify's chat completion API can be logged behind the scenes
 If the LLM queries are being handled by Unify, then we could make queries as follows,
 such that the queries are all sensibly categorized (tagged).
 
-Referring to our [example](https://docs.unify.ai/basics/welcome#guiding-example),
-it would make sense to tag queries based on both the *subject* and the *student*:
+Lets assume we're building an AI educational assistant, which is serving many students
+for many different subjects. In this case, it would make sense to tag queries based on
+both the *subject* and the *student*:
 
 ```shell
 curl --request POST \
