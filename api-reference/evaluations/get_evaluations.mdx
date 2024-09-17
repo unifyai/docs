@@ -31,18 +31,22 @@ Name of the evaluator to fetch the evaluation for. If `None`, returns all availa
 If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an endpoint and evaluator to be set.
 </ParamField>
 
+<ParamField query="include_runtime" type="boolean" >
+If `True`, returns additional metrics regarding the runtime of the endpoint (ITL, TTFT, cost). By default set to `False`. 
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False' \
+  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False&include_runtime=False' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False"
+url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False&include_runtime=False"
 
 headers = {"Authorization": "Bearer <token>"}
 

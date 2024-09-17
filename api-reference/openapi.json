@@ -2302,6 +2302,19 @@
                         },
                         "description": "If `True`, returns the scores on a per-prompt level. By default set to `False`. If `True` requires an endpoint and evaluator to be set.",
                         "example": false
+                    },
+                    {
+                        "name": "include_runtime",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If `True`, returns additional metrics regarding the runtime of the endpoint (ITL, TTFT, cost). By default set to `False`. ",
+                            "default": false,
+                            "title": "Include Runtime"
+                        },
+                        "description": "If `True`, returns additional metrics regarding the runtime of the endpoint (ITL, TTFT, cost). By default set to `False`. ",
+                        "example": false
                     }
                 ],
                 "responses": {
@@ -3985,8 +3998,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
