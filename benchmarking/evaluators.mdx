@@ -27,8 +27,9 @@ dataset = unify.Dataset(
 
 Before creating an `Evaluator`, we need to define the scoring system, giving several
 different available scores between 0-1, each with their own *description*.
-We do this by subclassing `unify.Score`, and overriding the abstract `config` property,
-as follows:
+We do this by subclassing `unify.Score`, and overriding the abstract `config` property.
+In this case, there are only two possible outcomes, and we can implement a simple binary
+score class as follows:
 
 ```python
 class Binary(unify.Score):
