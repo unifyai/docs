@@ -74,9 +74,9 @@ curl -X 'POST' \
     }'
 ```
 
-This will attempt `gemini-1.5-pro` and `gemini-1.5-flash` with `vertex-ai`,
-then attempt `llama-3.1-405b-chat` with `together-ai` and `fireworks-ai` if they fail,
-and then finally attempt `llama-3.1-70b-chat@groq`:
+As another example, the following will attempt `gemini-1.5-pro` and `gemini-1.5-flash`
+with `vertex-ai`, then attempt `llama-3.1-405b-chat` with `together-ai` and
+`fireworks-ai` if they fail, and then finally attempt `llama-3.1-70b-chat@groq`:
 
 ```shell
 curl -X 'POST' \
