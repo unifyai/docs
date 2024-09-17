@@ -17,7 +17,7 @@ class Evaluator(abc.ABC)
 ### evaluate
 
 ```python
-def evaluate(datum: Datum, response: ChatCompletion,
+def evaluate(datum: Union[Prompt, Datum], response: Union[ChatCompletion, str],
              agent: Union[str, _Client, unify.Agent])
 ```
 
@@ -25,10 +25,12 @@ Evaluate the given response for this datum.
 
 **Arguments**:
 
-- `datum` - The datum (dataset entry) used for evaluation, containing an input
-  prompt and optionally other extra data, such as a reference answer.
+- `datum` - The input prompt in isolation, or the datum (dataset entry),
+  containing the input prompt and optionally other extra data, such as a
+  reference answer.
   
-- `response` - The chat completion response which is being evaluated.
+- `response` - The chat completion response which is being evaluated, either as
+  the full chat completion or just the most recent assistant message.
   
 - `agent` - The agent for whom the evaluation is for.
   
