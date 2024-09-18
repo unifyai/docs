@@ -71,12 +71,12 @@ using OpenAI's `gpt-4o` as the model:
 client = unify.Unify("gpt-4o@openai")
 evaluator = MathsEvaluator()
 evaluation = evaluator.evaluate(
-    dataset[0],
-    client.generate(**dataset[0].prompt.dict()),
-    client
+    prompt=dataset[0],
+    response=client.generate(**dataset[0].prompt.dict()),
+    agent=client
 )
 ```
-```
+```python
 Evaluation(
     prompt=Prompt("1 + 3"),
     response=ChatCompletion("4"),
@@ -87,6 +87,45 @@ Evaluation(
 
 We can see that `gpt-4o` was able to get the answer correct!
 Maybe AGI is around the corner after all 👀
+
+You'll notice that the custom implemented `_evaluate` method only receives the `prompt`
+and `response`, whereas the public `evaluate` method that we called also receives the
+`agent` which is being evaluated, and also includes this in the `Evaluation` instance
+returned. The public `evaluate` method makes use of your custom `_evaluate` method
+internally.
+
+The public `evaluate` method *also* performs upcasting and downcasting of the inputs if
+needed, ensuring that all inputs passed to `evaluate` are cast to the required type,
+as per the **type hints you've added** to your `_evaluate` method. For example, the
+following runs without error, despite `_evaluate` only accepting `str` inputs for
+`prompt` and `response`:
+
+```python
+import unify
+for prompt in (unify.Datum("1 + 3"), unify.Prompt("1 + 3"), "1 + 3"):
+    for response in (unify.ChatCompletion("4"), "4"):
+        evaluator.evaluate(
+            prompt=prompt,
+            response=response,
+            agent=client
+        )
+```
+
+If type hints are **not provided** in your custom `_evaluate` implementation,
+then no automatic casting is performed, and `prompt` is passed to `_evaluate` as a
+`unify.Prompt` instance, and `response` is passed as a `unify.ChatCompletion` instance.
+
+Lets take another look at the output representation for the `Evaluation` instance
+returned:
+
+```python
+Evaluation(
+    prompt=Prompt("1 + 3"),
+    response=ChatCompletion("4"),
+    agent=Unify("gpt-4o@openai"),
+    score=Score(1.0, "correct")
+)
+```
 
 Note that the output format is *very minimal*.
 Again, as explain in both the [Prompt](https://docs.unify.ai/universal_api/prompts) and
@@ -100,7 +139,7 @@ As explained in the prior sections, the full representation can be viewed as fol
 ```python
 print(evaluation.full_repr())
 ```
-```
+```python
 Evaluation(
     datum=Datum(
         prompt=Prompt(messages=[{'content': '1 + 3', 'role': 'user'}])
