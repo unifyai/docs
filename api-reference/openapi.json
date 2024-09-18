@@ -1176,7 +1176,7 @@
                     "Datasets"
                 ],
                 "summary": "Upload Dataset",
-                "description": "Uploads a custom dataset to your account.\n\nThe uploaded file must be a JSONL file with **at least** a `prompt` key for\neach prompt each:\n\n```\n{\"prompt\": \"This is the first prompt\"}\n{\"prompt\": \"This is the second prompt\"}\n{\"prompt\": \"This is the third prompt\"}\n```\n\nAdditionally, you can include any extra keys as desired, depending on the use case\nfor the dataset, and how it will be used by the evaluators and/or router training.\nFor example, you could include a reference answer to each prompt as follows:\n\n```\n{\"prompt\": \"This is the first prompt\", \"ref_answer\": \"First reference answer\"}\n{\"prompt\": \"This is the second prompt\", \"ref_answer\": \"Second reference answer\"}\n{\"prompt\": \"This is the third prompt\", \"ref_answer\": \"Third reference answer\"}\n```",
+                "description": "Uploads a custom dataset to your account.\n\nThe uploaded file must be a JSONL file where each line contains **at least** a `prompt` key as follows:\n\n```\n{\"prompt\": \"This is the first prompt\"}\n{\"prompt\": \"This is the second prompt\"}\n{\"prompt\": \"This is the third prompt\"}\n```\n\nAdditionally, you can include arbitrary extra keys, which may be used downstream (e.g. in evaluations).\nFor example, you could include a reference answer to each prompt as follows:\n\n```\n{\"prompt\": \"This is the first prompt\", \"ref_answer\": \"First reference answer\"}\n{\"prompt\": \"This is the second prompt\", \"ref_answer\": \"Second reference answer\"}\n{\"prompt\": \"This is the third prompt\", \"ref_answer\": \"Third reference answer\"}\n```",
                 "operationId": "upload_dataset_v0_dataset_post",
                 "security": [
                     {
@@ -4036,8 +4036,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
