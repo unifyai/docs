@@ -112,6 +112,7 @@
                 "python/dataset",
                 "python/evaluator",
                 "python/logging",
+                "python/types",
                 {
                     "group": "utils",
                     "pages": [
