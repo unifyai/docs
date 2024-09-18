@@ -4,8 +4,7 @@ api: 'POST /v0/dataset'
 ---
 Uploads a custom dataset to your account.
 
-The uploaded file must be a JSONL file with **at least** a `prompt` key for
-each prompt each:
+The uploaded file must be a JSONL file where each line contains **at least** a `prompt` key as follows:
 
 ```
 {"prompt": "This is the first prompt"}
@@ -13,8 +12,7 @@ each prompt each:
 {"prompt": "This is the third prompt"}
 ```
 
-Additionally, you can include any extra keys as desired, depending on the use case
-for the dataset, and how it will be used by the evaluators and/or router training.
+Additionally, you can include arbitrary extra keys, which may be used downstream (e.g. in evaluations).
 For example, you could include a reference answer to each prompt as follows:
 
 ```
