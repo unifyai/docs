@@ -731,7 +731,7 @@ Get the default prompt, if set.
 ### set\_system\_message
 
 ```python
-def set_system_message(value: str) -> None
+def set_system_message(value: str) -> Self
 ```
 
 Set the default system message.  
@@ -750,7 +750,7 @@ Set the default system message.
 def set_messages(
     value: Union[List[ChatCompletionMessageParam],
                  Dict[str, List[ChatCompletionMessageParam]]]
-) -> None
+) -> Self
 ```
 
 Set the default messages.  
@@ -766,7 +766,7 @@ Set the default messages.
 ### set\_frequency\_penalty
 
 ```python
-def set_frequency_penalty(value: float) -> None
+def set_frequency_penalty(value: float) -> Self
 ```
 
 Set the default frequency penalty.  
@@ -782,7 +782,7 @@ Set the default frequency penalty.
 ### set\_logit\_bias
 
 ```python
-def set_logit_bias(value: Dict[str, int]) -> None
+def set_logit_bias(value: Dict[str, int]) -> Self
 ```
 
 Set the default logit bias.  
@@ -798,7 +798,7 @@ Set the default logit bias.
 ### set\_logprobs
 
 ```python
-def set_logprobs(value: bool) -> None
+def set_logprobs(value: bool) -> Self
 ```
 
 Set the default logprobs.  
@@ -814,7 +814,7 @@ Set the default logprobs.
 ### set\_top\_logprobs
 
 ```python
-def set_top_logprobs(value: int) -> None
+def set_top_logprobs(value: int) -> Self
 ```
 
 Set the default top logprobs.  
@@ -830,7 +830,7 @@ Set the default top logprobs.
 ### set\_max\_completion\_tokens
 
 ```python
-def set_max_completion_tokens(value: int) -> None
+def set_max_completion_tokens(value: int) -> Self
 ```
 
 Set the default max tokens.  
@@ -846,7 +846,7 @@ Set the default max tokens.
 ### set\_n
 
 ```python
-def set_n(value: int) -> None
+def set_n(value: int) -> Self
 ```
 
 Set the default n value.  
@@ -862,7 +862,7 @@ Set the default n value.
 ### set\_presence\_penalty
 
 ```python
-def set_presence_penalty(value: float) -> None
+def set_presence_penalty(value: float) -> Self
 ```
 
 Set the default presence penalty.  
@@ -878,7 +878,7 @@ Set the default presence penalty.
 ### set\_response\_format
 
 ```python
-def set_response_format(value: ResponseFormat) -> None
+def set_response_format(value: ResponseFormat) -> Self
 ```
 
 Set the default response format.  
@@ -894,7 +894,7 @@ Set the default response format.
 ### set\_seed
 
 ```python
-def set_seed(value: int) -> None
+def set_seed(value: int) -> Self
 ```
 
 Set the default seed value.  
@@ -910,7 +910,7 @@ Set the default seed value.
 ### set\_stop
 
 ```python
-def set_stop(value: Union[str, List[str]]) -> None
+def set_stop(value: Union[str, List[str]]) -> Self
 ```
 
 Set the default stop value.  
@@ -926,7 +926,7 @@ Set the default stop value.
 ### set\_stream
 
 ```python
-def set_stream(value: bool) -> None
+def set_stream(value: bool) -> Self
 ```
 
 Set the default stream bool.  
@@ -942,7 +942,7 @@ Set the default stream bool.
 ### set\_stream\_options
 
 ```python
-def set_stream_options(value: ChatCompletionStreamOptionsParam) -> None
+def set_stream_options(value: ChatCompletionStreamOptionsParam) -> Self
 ```
 
 Set the default stream options.  
@@ -958,7 +958,7 @@ Set the default stream options.
 ### set\_temperature
 
 ```python
-def set_temperature(value: float) -> None
+def set_temperature(value: float) -> Self
 ```
 
 Set the default temperature.  
@@ -974,7 +974,7 @@ Set the default temperature.
 ### set\_top\_p
 
 ```python
-def set_top_p(value: float) -> None
+def set_top_p(value: float) -> Self
 ```
 
 Set the default top p value.  
@@ -990,7 +990,7 @@ Set the default top p value.
 ### set\_tools
 
 ```python
-def set_tools(value: Iterable[ChatCompletionToolParam]) -> None
+def set_tools(value: Iterable[ChatCompletionToolParam]) -> Self
 ```
 
 Set the default tools.  
@@ -1006,7 +1006,7 @@ Set the default tools.
 ### set\_tool\_choice
 
 ```python
-def set_tool_choice(value: ChatCompletionToolChoiceOptionParam) -> None
+def set_tool_choice(value: ChatCompletionToolChoiceOptionParam) -> Self
 ```
 
 Set the default tool choice.  
@@ -1022,7 +1022,7 @@ Set the default tool choice.
 ### set\_parallel\_tool\_calls
 
 ```python
-def set_parallel_tool_calls(value: bool) -> None
+def set_parallel_tool_calls(value: bool) -> Self
 ```
 
 Set the default parallel tool calls bool.  
@@ -1038,7 +1038,7 @@ Set the default parallel tool calls bool.
 ### set\_use\_custom\_keys
 
 ```python
-def set_use_custom_keys(value: bool) -> None
+def set_use_custom_keys(value: bool) -> Self
 ```
 
 Set the default use custom keys bool.  
@@ -1054,7 +1054,7 @@ Set the default use custom keys bool.
 ### set\_tags
 
 ```python
-def set_tags(value: List[str]) -> None
+def set_tags(value: List[str]) -> Self
 ```
 
 Set the default tags.  
@@ -1070,7 +1070,7 @@ Set the default tags.
 ### set\_drop\_params
 
 ```python
-def set_drop_params(value: bool) -> None
+def set_drop_params(value: bool) -> Self
 ```
 
 Set the default drop params bool.  
@@ -1086,7 +1086,7 @@ Set the default drop params bool.
 ### set\_region
 
 ```python
-def set_region(value: str) -> None
+def set_region(value: str) -> Self
 ```
 
 Set the default region.  
@@ -1102,7 +1102,7 @@ Set the default region.
 ### set\_log\_query\_body
 
 ```python
-def set_log_query_body(value: bool) -> None
+def set_log_query_body(value: bool) -> Self
 ```
 
 Set the default log query body bool.  
@@ -1118,7 +1118,7 @@ Set the default log query body bool.
 ### set\_log\_response\_body
 
 ```python
-def set_log_response_body(value: bool) -> None
+def set_log_response_body(value: bool) -> Self
 ```
 
 Set the default log response body bool.  
@@ -1134,7 +1134,7 @@ Set the default log response body bool.
 ### set\_return\_full\_completion
 
 ```python
-def set_return_full_completion(value: bool) -> None
+def set_return_full_completion(value: bool) -> Self
 ```
 
 Set the default return full completion bool.  
@@ -1150,7 +1150,7 @@ Set the default return full completion bool.
 ### set\_cache
 
 ```python
-def set_cache(value: bool) -> None
+def set_cache(value: bool) -> Self
 ```
 
 Set the default cache bool.  
@@ -1166,7 +1166,7 @@ Set the default cache bool.
 ### set\_extra\_headers
 
 ```python
-def set_extra_headers(value: Headers) -> None
+def set_extra_headers(value: Headers) -> Self
 ```
 
 Set the default extra headers.  
@@ -1182,7 +1182,7 @@ Set the default extra headers.
 ### set\_extra\_query
 
 ```python
-def set_extra_query(value: Query) -> None
+def set_extra_query(value: Query) -> Self
 ```
 
 Set the default extra query.  
@@ -1198,7 +1198,7 @@ Set the default extra query.
 ### set\_extra\_body
 
 ```python
-def set_extra_body(value: Body) -> None
+def set_extra_body(value: Body) -> Self
 ```
 
 Set the default extra body.  
@@ -1214,7 +1214,7 @@ Set the default extra body.
 ### set\_default\_prompt
 
 ```python
-def set_default_prompt(value: Prompt) -> None
+def set_default_prompt(value: Prompt) -> Self
 ```
 
 Set the default prompt.  
