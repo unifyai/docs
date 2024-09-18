@@ -1081,7 +1081,8 @@ def generate(user_message: Optional[str] = None,
              **kwargs)
 ```
 
-Generate content using the Unify API.
+Generate a ChatCompletion response for the specified endpoint,
+from the provided query parameters.
 
 **Arguments**:
 
@@ -1253,3 +1254,4 @@ Get the remaining credits left on your account.
 - `BadRequestError` - If there was an HTTP error.
 - `ValueError` - If there was an error parsing the JSON response.
 
+<a id="chat.clients.multi_llm"></a>
