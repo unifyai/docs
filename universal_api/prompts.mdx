@@ -52,6 +52,32 @@ print(prompt)
 ```
 ```
 Prompt(
+    messages=[{'content': 'This is a user message.', 'role': 'user'}],
+    frequency_penalty=None,
+    logit_bias=None,
+    logprobs=None,
+    top_logprobs=None,
+    max_completion_tokens=None,
+    n=None,
+    presence_penalty=None,
+    response_format=None,
+    seed=None,
+    stop=None,
+    temperature=None,
+    top_p=None,
+    tools=None,
+    tool_choice=None,
+    parallel_tool_calls=None,
+    extra_headers=None,
+    extra_query=None,
+    extra_body=None
+)
+```
+
+We can prune all `None` values from the representation by setting
+`unify.set_repr_mode("concise")`, to print a more concise representation:
+```
+Prompt(
     "messages": [
         {
             "content": "This is a user message",
@@ -61,7 +87,10 @@ Prompt(
 )
 ```
 
-The messages can also be expressed explicitly:
+For all subsequent printed prompts in the docs,
+we will assume `concise` mode for brevity.
+
+The messages can also be passed explicitly in the `Prompt` constructor:
 
 ```python
 import unify
