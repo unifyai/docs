@@ -10,8 +10,10 @@ title: 'casting'
 
 ```python
 def cast(
-        input: Union[str, Prompt, Datum],
-        to_type: Type[Union[str, Prompt, Datum]]) -> Union[str, Prompt, Datum]
+    input: Union[str, Prompt, Datum,
+                 ChatCompletion], to_type: Type[Union[str, Prompt, Datum,
+                                                      ChatCompletion]]
+) -> Union[str, Prompt, Datum, ChatCompletion]
 ```
 
 Cast the input to the specified type.
