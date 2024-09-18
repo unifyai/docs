@@ -50,6 +50,23 @@ curl -X 'POST' \
     }'
 ```
 
+As before, the same can be done via any of the
+[query methods](https://docs.unify.ai/universal_api/making_queries)
+([HTTP Requests](https://docs.unify.ai/universal_api/making_queries#http-requests),
+[Unify Python Package](https://docs.unify.ai/universal_api/making_queries#unify-python-package),
+[OpenAI Python Package](https://docs.unify.ai/universal_api/making_queries#openai-python-package),
+[OpenAI NodeJS Package](https://docs.unify.ai/universal_api/making_queries#openai-nodejs-package),
+again by simply specifying the `model` argument in each case).
+For example, in the
+[Unify Python Package](https://docs.unify.ai/universal_api/making_queries#unify-python-package)
+it would simply look like this:
+
+```python
+import unify
+client = unify.Unify("claude-3-opus@inter-token-latency")
+response = client.generate("Hello.")
+```
+
 To be more explicit, the prepending keywords `highest-` and `lowest-` can be specified.
 When the keyword is omitted, it's assumed that the user wants the "best" option, which
 is `highest-` for quality and `lowest-` for all other metrics.
