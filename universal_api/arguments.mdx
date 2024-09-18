@@ -370,6 +370,17 @@ assert client.temperature == 0.4
 assert client.n is None
 ```
 
+Calls to set default arguments can also be chained together like so,
+as each call `set_<some_parameter>` returns `self`:
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai")
+client.set_temperature(0.5).set_n(2)
+assert client.temperature == 0.5
+assert client.n == 2
+```
+
 ## Feedback
 
 If you believe any of these arguments *could* be supported by a certain model or provider, but is not currently
