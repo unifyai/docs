@@ -17,7 +17,9 @@ class Prompt(_FormattedBaseModel)
 ### \_\_init\_\_
 
 ```python
-def __init__(user_message=None, system_message=None, **kwargs)
+def __init__(user_message: Optional[str] = None,
+             system_message: Optional[str] = None,
+             **kwargs)
 ```
 
 Create Prompt instance.
@@ -34,5 +36,34 @@ Create Prompt instance.
 **Returns**:
 
   The pydantic Prompt instance.
+
+<a id="types.ChatCompletion"></a>
+
+## ChatCompletion
+
+```python
+class ChatCompletion(_FormattedBaseModel, _ChatCompletion)
+```
+
+<a id="types.ChatCompletion.__init__"></a>
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(assistant_message: Optional[str] = None, **kwargs)
+```
+
+Create ChatCompletion instance.
+
+**Arguments**:
+
+- `assistant_message` - The assistant message, optional.
+  
+
+**Returns**:
+
+  The pydantic ChatCompletion instance.
 
 <a id="evaluator"></a>
