@@ -113,3 +113,23 @@ for provider, responses in all_responses.items():
         print("endpoint: {}".format(endpoint))
         print("response: {}\n".format(response))
 ```
+
+As explained in the [Arguments](https://docs.unify.ai/universal_api/arguments) page for
+the `Unify` client, setters can also be chained for multi-llm clients, like so:
+
+```python
+import unify
+endpoints = ("llama-3-8b-chat@together-ai", "gpt-4o@openai", "claude-3.5-sonnet@anthropic")
+client = unify.MultiLLM(endpoints=endpoints)
+client.add_endpoints(
+    ["gpt-4@openai", "gpt-4-turbo@openai"]
+).remove_endpoints(
+    "claude-3.5-sonnet@anthropic"
+)
+assert set(client.endpoints) == {
+    "llama-3-8b-chat@together-ai",
+    "gpt-4o@openai",
+    "gpt-4@openai",
+    "gpt-4-turbo@openai"
+}
+```
