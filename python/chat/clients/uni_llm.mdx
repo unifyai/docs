@@ -42,6 +42,10 @@ def __init__(endpoint: Optional[str] = None,
              parallel_tool_calls: Optional[bool] = None,
              use_custom_keys: bool = False,
              tags: Optional[List[str]] = None,
+             drop_params: Optional[bool] = True,
+             region: Optional[str] = None,
+             log_query_body: Optional[bool] = True,
+             log_response_body: Optional[bool] = True,
              api_key: Optional[str] = None,
              return_full_completion: bool = False,
              cache: bool = False,
@@ -158,6 +162,18 @@ Initialize the base Single LLM Unify client.
   
 - `tags` - Arbitrary number of tags to classify this API query as needed. Helpful
   for generally grouping queries across tasks and users, for logging purposes.
+  
+- `drop_params` - Whether or not to drop unsupported OpenAI params by the
+  provider you’re using.
+  
+- `region` - A string used to represent the region where the endpoint is
+  accessed. Only relevant for on-prem deployments with certain providers like
+  `vertex-ai`, `aws-bedrock` and `azure-ml`, where the endpoint is being
+  accessed through a specified region.
+  
+- `log_query_body` - Whether to log the contents of the query json body.
+  
+- `log_response_body` - Whether to log the contents of the response json body.
   
 - `return_full_completion` - If False, only return the message content
   chat_completion.choices[0].message.content.strip(" ") from the OpenAI
