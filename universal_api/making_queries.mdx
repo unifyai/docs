@@ -50,34 +50,6 @@ response = requests.post(url, json=payload, headers=headers)
 print(response.text)
 ```
 
-The response from a request should look something like this:
-
-```python
-{
-    "model": "llama-3-8b-chat@together-ai",
-    "created": 1718888877,
-    "id": "896bfc1ae84271aa-LHR",
-    "object": "chat.completion",
-    "usage": {
-        "completion_tokens": 25,
-        "prompt_tokens": 13,
-        "total_tokens": 38,
-        "cost": 7.6e-06
-    },
-    "choices": [
-        {
-        "finish_reason": "stop",
-        "index": 0,
-        "message": {
-            "content": "Hello! It's nice to meet you. Is there something I can help you with or would you like to chat?",
-            "role": "assistant",
-        },
-        "seed": 11563975138181362140
-        }
-    ]
-}
-```
-
 The output from the LLM is accessed via `choices[0].message.content`.
 The `usage` field contains the number of prompt/completion tokens, as well as
 the total cost of the request, in US$.
