@@ -146,39 +146,30 @@ curl -X 'POST' \
     ]'
 ```
 
-With the Python client, it would look as follows:
-
-```python
-import unify
-query1 = (
-    "claude-3-opus@aws-bedrock",
-    {
-        "use_custom_keys": True
-    }
-)
-query2 = (
-    "claude-3-opus@anthropic",
-)
-client = unify.Unify(queries=[query1, query2])
-response = client.generate("Hello.")
-```
-
 Fallback queries can also be combined with fallback models, providers, and endpoints.
-For example, this fallback logic will attempt `claude-3-opus@aws-bedrock` with custom
-API keys, then `vertex-ai` (again with custom API keys, to use your own GCP credits),
-before finally falling back to `anthropic` if both fail:
+For example, the fallback logic below will attempt `claude-3-opus@aws-bedrock` with
+custom API keys, then `vertex-ai` (again with custom API keys, to use your own GCP
+credits), before finally falling back to `anthropic` if both fail:
 
-```python
-import unify
-query1 = (
-    "claude-3-opus@aws-bedrock->vertex-ai",
-    {
-        "use_custom_keys": True
-    }
-)
-query2 = (
-    "claude-3-opus@anthropic",
-)
-client = unify.Unify(queries=[query1, query2])
-response = client.generate("Hello.")
+```shell
+curl -X 'POST' \
+    'https://api.unify.ai/v0/chat/completions' \
+    -H "Authorization: Bearer $UNIFY_KEY" \
+    -H 'Content-Type: application/json' \
+    -d '[
+          {
+            "model": "claude-3-opus@aws-bedrock->vertex-ai",
+            "messages": [{"role": "user", "content": "Hello."}],
+            "use_custom_keys": true
+          },
+          {
+            "model": "claude-3-opus@anthropic",
+            "messages": [{"role": "user", "content": "Hello."}]
+          }
+    ]'
 ```
+
+Currently, fallbacks across queries is not support in the
+[Python SDK](https://github.com/unifyai/unify), but if this would be useful,
+then feel free to [hop on a call](https://calendly.com/unify-chat/general)
+or ping us on [discord](https://discord.com/invite/sXyFF8tDtm)! 👾
