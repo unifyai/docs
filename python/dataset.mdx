@@ -41,12 +41,12 @@ Initialize a local dataset of LLM queries.
   will be bi-directional, if "upload" then all local changes will be
   uploaded to the upstream account without any downloads, if "download"
   then all upstream changes will be downloaded locally without any uploads.
-  If "upstream_mirrors_local" then the upstream dataset will be anchored to the
-  local version at all times, and any other uploads outside the local dataset
-  will be overwritten. If "local_mirrors_upstream" then the local version will be
-  anchored to the upstream version at all times, and any local changes will be
-  overwritten. If `False` or "neither" then no synchronization will be done
-  automatically.
+  If "upstream_mirrors_local" then the upstream dataset will be anchored to
+  the local version at all times, and any other uploads outside the local
+  dataset will be overwritten. If "local_mirrors_upstream" then the local
+  version will be anchored to the upstream version at all times, and any local
+  changes will be overwritten. If `False` or "neither" then no synchronization
+  will be done automatically.
   
 - `api_key` - API key for accessing the Unify API. If None, it attempts to
   retrieve the API key from the environment variable UNIFY_KEY. Defaults to
@@ -101,7 +101,7 @@ automatically.
 ### set\_name
 
 ```python
-def set_name(name: str) -> Dataset
+def set_name(name: str) -> Self
 ```
 
 Set the name of the dataset.
@@ -122,7 +122,7 @@ Set the name of the dataset.
 ### set\_auto\_sync
 
 ```python
-def set_auto_sync(auto_sync: Union[bool, str]) -> Dataset
+def set_auto_sync(auto_sync: Union[bool, str]) -> Self
 ```
 
 Set the value of the auto-sync flag.
@@ -134,12 +134,12 @@ Set the value of the auto-sync flag.
   will be bi-directional, if "upload" then all local changes will be
   uploaded to the upstream account without any downloads, if "download"
   then all upstream changes will be downloaded locally without any uploads.
-  If "upstream_mirrors_local" then the upstream dataset will be anchored to the
-  local version at all times, and any other uploads outside the local dataset
-  will be overwritten. If "local_mirrors_upstream" then the local version will be
-  anchored to the upstream version at all times, and any local changes will be
-  overwritten. If `False` or "neither" then no synchronization will be done
-  automatically.
+  If "upstream_mirrors_local" then the upstream dataset will be anchored to
+  the local version at all times, and any other uploads outside the local
+  dataset will be overwritten. If "local_mirrors_upstream" then the local
+  version will be anchored to the upstream version at all times, and any local
+  changes will be overwritten. If `False` or "neither" then no synchronization
+  will be done automatically.
   
 
 **Returns**:
@@ -156,7 +156,7 @@ Set the value of the auto-sync flag.
 @staticmethod
 def from_upstream(name: str,
                   auto_sync: Union[bool, str] = False,
-                  api_key: Optional[str] = None) -> Dataset
+                  api_key: Optional[str] = None) -> Self
 ```
 
 Initialize a local dataset of LLM queries, from the upstream dataset.
@@ -189,7 +189,7 @@ Initialize a local dataset of LLM queries, from the upstream dataset.
 ### upload
 
 ```python
-def upload(overwrite: bool = False) -> Dataset
+def upload(overwrite: bool = False) -> Self
 ```
 
 Uploads all unique local data in the dataset to the user account upstream.
@@ -213,7 +213,7 @@ Set `overwrite=True` to disregard any pre-existing upstream data.
 ### download
 
 ```python
-def download(overwrite: bool = False) -> Dataset
+def download(overwrite: bool = False) -> Self
 ```
 
 Downloads all unique upstream data from the user account to the local dataset.
@@ -237,7 +237,7 @@ Set `overwrite=True` to disregard any pre-existing data stored in this class.
 ### sync
 
 ```python
-def sync() -> Dataset
+def sync() -> Self
 ```
 
 Synchronize the dataset in both directions, downloading any values missing
@@ -254,7 +254,7 @@ locally, and uploading any values missing from upstream in the account.
 ### upstream\_diff
 
 ```python
-def upstream_diff() -> Dataset
+def upstream_diff() -> Self
 ```
 
 Prints the difference between the local dataset and the upstream dataset.
@@ -273,7 +273,7 @@ Prints the difference between the local dataset and the upstream dataset.
 def add(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Adds another dataset to this one, return a new Dataset instance, with this
@@ -298,7 +298,7 @@ new dataset receiving all unique queries from the other added dataset.
 def sub(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Subtracts another dataset from this one, return a new Dataset instance, with
@@ -323,7 +323,7 @@ this new dataset losing all queries from the other subtracted dataset.
 def inplace_add(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Adds another dataset to this one, with this dataset receiving all unique queries
@@ -348,7 +348,7 @@ from the other added dataset.
 def inplace_sub(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Subtracts another dataset from this one, with this dataset losing all queries
@@ -373,7 +373,7 @@ from the other subtracted dataset.
 def __add__(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Adds another dataset to this one via the + operator, return a new Dataset
@@ -399,7 +399,7 @@ added dataset.
 def __radd__(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Adds another dataset to this one via the + operator, this is used if the
@@ -426,7 +426,7 @@ the other added dataset.
 def __iadd__(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Adds another dataset to this one, with this dataset receiving all unique queries
@@ -451,7 +451,7 @@ from the other added dataset.
 def __sub__(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Subtracts another dataset from this one via the - operator, return a new Dataset
@@ -477,7 +477,7 @@ dataset.
 def __rsub__(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Subtracts another dataset from this one via the - operator, this is used if the
@@ -504,7 +504,7 @@ subtracted dataset.
 def __isub__(
     other: Union[Dataset, str, Dict, Prompt, Datum, List[Union[str, Dict,
                                                                Prompt, Datum]]]
-) -> Dataset
+) -> Self
 ```
 
 Subtracts another dataset from this one, with this dataset losing all queries
