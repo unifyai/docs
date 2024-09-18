@@ -90,15 +90,15 @@ Maybe AGI is around the corner after all 👀
 
 You'll notice that the custom implemented `_evaluate` method only receives the `prompt`
 and `response`, whereas the public `evaluate` method that we called also receives the
-`agent` which is being evaluated, and also includes this in the `Evaluation` instance
-returned. The public `evaluate` method makes use of your custom `_evaluate` method
-internally.
+`agent` which is being evaluated. The `agent` is also included in the `Evaluation`
+instance returned. The public `evaluate` method makes use of your custom `_evaluate`
+method internally, but `_evaluate` does not need to access the `agent`.
 
-The public `evaluate` method *also* performs upcasting and downcasting of the inputs if
-needed, ensuring that all inputs passed to `evaluate` are cast to the required type,
-as per the **type hints you've added** to your `_evaluate` method. For example, the
-following runs without error, despite `_evaluate` only accepting `str` inputs for
-`prompt` and `response`:
+The public `evaluate` method *also* performs automatic upcasting and downcasting of the
+inputs if needed, ensuring that all inputs passed to `evaluate` are subsequently cast to
+the required type, as per the **type hints you've added** to your `_evaluate` method.
+For example, the following runs without error, despite our custom `_evaluate`
+implementation only accepting `str` inputs for `prompt` and `response`:
 
 ```python
 import unify
@@ -112,8 +112,9 @@ for prompt in (unify.Datum("1 + 3"), unify.Prompt("1 + 3"), "1 + 3"):
 ```
 
 If type hints are **not provided** in your custom `_evaluate` implementation,
-then no automatic casting is performed, and `prompt` is passed to `_evaluate` as a
-`unify.Prompt` instance, and `response` is passed as a `unify.ChatCompletion` instance.
+then no automatic casting is performed, and `prompt` will be passed to `_evaluate` as a
+`unify.Prompt` instance, and `response` will be passed as a `unify.ChatCompletion`
+instance.
 
 Lets take another look at the output representation for the `Evaluation` instance
 returned:
