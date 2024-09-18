@@ -10,6 +10,56 @@ title: 'clients.multi_llm'
 class _MultiLLMClient(_Client, abc.ABC)
 ```
 
+<a id="chat.clients.multi_llm._MultiLLMClient.add_endpoints"></a>
+
+---
+
+### add\_endpoints
+
+```python
+def add_endpoints(endpoints: Union[List[str], str],
+                  ignore_duplicates: bool = True) -> Self
+```
+
+Add extra endpoints to be queried for each call to generate.
+
+**Arguments**:
+
+- `endpoints` - The extra endpoints to add.
+  
+- `ignore_duplicates` - Whether or not to ignore duplicate endpoints passed.
+  
+
+**Returns**:
+
+  This client, useful for chaining inplace calls.
+
+<a id="chat.clients.multi_llm._MultiLLMClient.remove_endpoints"></a>
+
+---
+
+### remove\_endpoints
+
+```python
+def remove_endpoints(endpoints: Union[List[str], str],
+                     ignore_missing: bool = True) -> Self
+```
+
+Remove endpoints from the current list, which are queried for each call to
+generate.
+
+**Arguments**:
+
+- `endpoints` - The extra endpoints to add.
+  
+- `ignore_missing` - Whether or not to ignore endpoints passed which are not
+  currently present in the client endpoint list.
+  
+
+**Returns**:
+
+  This client, useful for chaining inplace calls.
+
 <a id="chat.clients.multi_llm._MultiLLMClient.get_credit_balance"></a>
 
 ---
@@ -30,5 +80,40 @@ Get the remaining credits left on your account.
 
 - `BadRequestError` - If there was an HTTP error.
 - `ValueError` - If there was an error parsing the JSON response.
+
+<a id="chat.clients.multi_llm._MultiLLMClient.endpoints"></a>
+
+---
+
+### endpoints
+
+```python
+@property
+def endpoints() -> Tuple[str, ...]
+```
+
+Get the current tuple of endpoints.
+
+**Returns**:
+
+  The tuple of endpoints.
+
+<a id="chat.clients.multi_llm._MultiLLMClient.clients"></a>
+
+---
+
+### clients
+
+```python
+@property
+def clients() -> Dict[str, _UniLLMClient]
+```
+
+Get the current dictionary of clients, with endpoint names as keys and
+Unify or AsyncUnify instances as values.
+
+**Returns**:
+
+  The dictionary of clients.
 
 <a id="chat.clients"></a>
