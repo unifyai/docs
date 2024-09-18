@@ -28,7 +28,7 @@ are as follows:
 - **Quality** (The quality of the generated response): `quality, q`
 - **Time to First Token**: `time-to-first-token, ttft, t`
 - **Inter Token Latency**: `inter-token-latency, itl, i`
-- **Cost** ($ per million tokens based on OpenHermes input/output ratio): `cost, c`
+- **Cost** ($ per million tokens based on the default [Artificial Analysis](https://artificialanalysis.ai/) input:output ratio of 3:1): `cost, c`
 - **Input Cost** ($ per million input tokens): `input-cost, ic`
 - **Output Cost** ($ per million output tokens): `output-cost, oc`
 
@@ -127,6 +127,14 @@ In words, this metric takes factors `{}_f` for each of the four base metrics:
 `quality`, `inter-token-latency`, `time-to-first-token` and `cost`, and then computes
 their linear combination, with the objective of *maximizing* `custom_metric`.
 
+The `input-cost` and `output-cost` can also be specified independently,
+if you'd rather use a *different ratio* than the default `3:1` that `c_f*c` uses
+(as per the default ratio of [Artificial Analysis](https://artificialanalysis.ai/)):
+
+```shell
+custom_metric = q_f*q - i_f*i - t_f*t - ic_f*ic - oc_f*oc
+```
+
 With this form factor, controlling the custom metric is reduced to specifying the linear
 factors `{}_f`. These linear factors can be specified as follows:
 
@@ -140,6 +148,16 @@ custom metric is ignored). For example, the following are aliases:
 ```shell
 router@q:1|i:0.5 == router@q:1|i:0.5|t:0|c:0
 ```
+
+Returning the the `input-cost` and `output-cost` ratio,
+the following are also exact aliases:
+
+```shell
+router@c:1 == router@ic:0.75|oc:0.25
+```
+
+If `c` is specified, then neither `ic` nor `oc` can be specified in the command
+(as per the example above, they *already are* fully specified via the `c` argument).
 
 As before, any variant of the metric can be used to specify the factors:
 
