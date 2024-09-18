@@ -119,7 +119,11 @@ the `Unify` client, setters can also be chained for multi-llm clients, like so:
 
 ```python
 import unify
-endpoints = ("llama-3-8b-chat@together-ai", "gpt-4o@openai", "claude-3.5-sonnet@anthropic")
+endpoints = (
+    "llama-3-8b-chat@together-ai",
+    "gpt-4o@openai",
+    "claude-3.5-sonnet@anthropic"
+)
 client = unify.MultiLLM(endpoints=endpoints)
 client.add_endpoints(
     ["gpt-4@openai", "gpt-4-turbo@openai"]
