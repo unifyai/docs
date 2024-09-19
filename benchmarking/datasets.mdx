@@ -37,7 +37,36 @@ then this is interpreted as the user message
 import unify
 datum = unify.Datum("This is a user message.")
 ```
+```python
+Datum(
+    prompt=Prompt(
+        messages=[{'content': 'This is a user message.', 'role': 'user'}],
+        frequency_penalty=None,
+        logit_bias=None,
+        logprobs=None,
+        top_logprobs=None,
+        max_completion_tokens=None,
+        n=None,
+        presence_penalty=None,
+        response_format=None,
+        seed=None,
+        stop=None,
+        temperature=None,
+        top_p=None,
+        tools=None,
+        tool_choice=None,
+        parallel_tool_calls=None,
+        extra_headers=None,
+        extra_query=None,
+        extra_body=None
+    )
+)
 ```
+
+Again, this is better visualized after setting `unify.set_repr_mode("concise")`.
+We will assume `"concise"` mode for the rest of the examples on this page:
+
+```python
 Datum(
     prompt=Prompt(
         messages=[{'content': 'This is a user message.', 'role': 'user'}]
