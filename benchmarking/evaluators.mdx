@@ -75,13 +75,77 @@ evaluation = evaluator.evaluate(
     response=client.generate(**dataset[0].prompt.dict()),
     agent=client
 )
+print(evaluation)
 ```
-```python
+```
 Evaluation(
-    prompt=Prompt("1 + 3"),
-    response=ChatCompletion("4"),
-    agent=Unify("gpt-4o@openai"),
-    score=Score(1.0, "correct")
+    prompt=Prompt(
+        messages=[{'content': '1 + 3', 'role': 'user'}],
+        frequency_penalty=None,
+        logit_bias=None,
+        logprobs=None,
+        top_logprobs=None,
+        max_completion_tokens=None,
+        n=None,
+        presence_penalty=None,
+        response_format=None,
+        seed=None,
+        stop=None,
+        temperature=None,
+        top_p=None,
+        tools=None,
+        tool_choice=None,
+        parallel_tool_calls=None,
+        extra_headers=None,
+        extra_query=None,
+        extra_body=None
+    ),
+    response=ChatCompletion(
+        id='',
+        choices=[
+            Choice(
+                finish_reason='stop',
+                index=0,
+                logprobs=None,
+                message=ChatCompletionMessage(
+                    content='4',
+                    refusal=None,
+                    role='assistant',
+                    function_call=None,
+                    tool_calls=None
+                )
+            )
+        ],
+        created=0,
+        model='',
+        object='chat.completion',
+        service_tier=None,
+        system_fingerprint=None,
+        usage=None
+    ),
+    agent=Unify(endpoint=gpt-4o@openai),
+    score=Binary(score=(1.0, 'correct'))
+)
+```
+
+Again, we can print a much more concise representation after calling
+`unify.set_repr_mode("concise")`. As usual, we will assume `"concise"` mode is set
+for the rest of the examples on this page:
+
+```
+Evaluation(
+    prompt=Prompt(messages=[{'content': '1 + 3', 'role': 'user'}]),
+    response=ChatCompletion(
+        choices=[
+            Choice(
+                finish_reason='stop',
+                index=0,
+                message=ChatCompletionMessage(content='4', role='assistant')
+            )
+        ]
+    ),
+    agent=Unify(endpoint=gpt-4o@openai),
+    score=Score(score=(1.0, 'correct'))
 )
 ```
 
