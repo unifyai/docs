@@ -92,7 +92,7 @@ in the *input*, not be more expensive than `$0.6` per million tokens in the *out
 have an inter token latency faster than `20ms`, but not faster than `1ms`:
 
 ```shell
-llama-3.1-70b-chat@quality|input-cost<=0.8|output-cost<=0.6|1<itl<20
+llama-3.1-70b-chat@quality|input-cost<=0.8|output-cost<=0.8|itl>1|itl<20
 ```
 
 As explained above, any of the aliases defined above can be used interchangeably,
