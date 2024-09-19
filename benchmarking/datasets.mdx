@@ -37,7 +37,7 @@ then this is interpreted as the user message
 import unify
 datum = unify.Datum("This is a user message.")
 ```
-```python
+```
 Datum(
     prompt=Prompt(
         messages=[{'content': 'This is a user message.', 'role': 'user'}],
@@ -66,7 +66,7 @@ Datum(
 Again, this is better visualized after setting `unify.set_repr_mode("concise")`.
 We will assume `"concise"` mode for the rest of the examples on this page:
 
-```python
+```
 Datum(
     prompt=Prompt(
         messages=[{'content': 'This is a user message.', 'role': 'user'}]
@@ -85,7 +85,7 @@ datum = unify.Datum(
     ref_answer="This is an answer."
 )
 ```
-```python
+```
 Datum(
     prompt=Prompt(
         messages=[{'content': 'This is a user message.', 'role': 'user'}]
@@ -112,7 +112,7 @@ When a list of strings is passed, these strings are also interpreted as *user me
 but as explained above, the underlying dataset will contains `Datum` instances,
 which themselves contain `Prompt` instances:
 
-```python
+```
 Dataset(
     [
         Datum(
@@ -153,7 +153,7 @@ dataset = unify.Dataset([
     ),
 ])
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -208,7 +208,7 @@ dataset = unify.Dataset([
     ),
 ])
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -243,7 +243,7 @@ interpreted as single-item datasets:
 import unify
 dataset = unify.Dataset("First user message.")
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -296,7 +296,7 @@ dataset = unify.Dataset([
 ])
 print(dataset[1:-1])
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -344,7 +344,7 @@ dataset2 = unify.Dataset([
 ])
 print(dataset1 + dataset2)
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -385,7 +385,7 @@ dataset2 = unify.Dataset([
 ])
 print(dataset1 + dataset2)
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -434,7 +434,7 @@ dataset += "Second user message."
 dataset += unify.Prompt(messages=[{'content': 'Third user message.', 'role': 'user'}])
 dataset += ["Fourth user message.", "Fifth user message."]
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -473,7 +473,7 @@ The ordering of the operation also does not matter, by virtue of `__radd__` and
 import unify
 "User message" + unify.Dataset("Another user message.")
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -502,7 +502,7 @@ dataset = "First user message." \
            + unify.Datum("Third user message")
 print(dataset)
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -542,7 +542,7 @@ dataset2 = unify.Dataset([
 ])
 print(dataset1 - dataset2)
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -592,7 +592,7 @@ dataset -= "First user message"
 dataset = dataset - unify.Prompt("Second user message.")
 print(dataset)
 ```
-```python
+```
 Dataset(
     [
         Datum(
@@ -697,7 +697,7 @@ You can directly download a dataset from your account as follows:
 import unify
 dataset = unify.Dataset.from_upstream("my_dataset")
 ```
-```python
+```
 Dataset(
     [
         Datum(
