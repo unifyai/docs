@@ -188,8 +188,8 @@ and the nested structure to skip as values.
 
 **Arguments**:
 
-- `skip_keys` - A dictionary with the types as keys and dictionary representing the
-  structure of the keys to skip for that type.
+- `skip_keys` - The types as keywords arguments and dictionary representing the
+  structure of the keys to skip for that type as values.
 
 <a id="types.keys_to_keep"></a>
 
@@ -219,8 +219,8 @@ and the nested structure to keep as values.
 
 **Arguments**:
 
-- `keep_keys` - A dictionary with the types as keys and dictionary representing the
-  structure of the keys to keep for that type.
+- `keep_keys` - The types as keywords arguments and dictionary representing the
+  structure of the keys to keep for that type as values.
 
 <a id="types.set_repr_mode"></a>
 
@@ -263,5 +263,57 @@ Set a representation mode for a specific context in the code, by using the
 **Arguments**:
 
 - `val` - The value of the string, must be either "verbose" or "concise".
+
+<a id="types.KeepKeys"></a>
+
+## KeepKeys
+
+```python
+class KeepKeys()
+```
+
+<a id="types.KeepKeys.__init__"></a>
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(keep_keys: Dict[Type, Dict])
+```
+
+Set a the keys to keep for a specific context in the code, by using the
+`with` an instantiation of this class.
+
+**Arguments**:
+
+- `keep_keys` - The types as keywords arguments and dictionary representing the
+  structure of the keys to keep for that type as values.
+
+<a id="types.SkipKeys"></a>
+
+## SkipKeys
+
+```python
+class SkipKeys()
+```
+
+<a id="types.SkipKeys.__init__"></a>
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(skip_keys: Dict[Type, Dict])
+```
+
+Set a the keys to skip for a specific context in the code, by using the
+`with` an instantiation of this class.
+
+**Arguments**:
+
+- `skip_keys` - The types as keywords arguments and dictionary representing the
+  structure of the keys to skip for that type as values.
 
 <a id="__init__"></a>
