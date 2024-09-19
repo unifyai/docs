@@ -182,11 +182,9 @@ client = unify.Unify("llama-3-8b-chat@fireworks-ai", return_full_completion=True
 response = client.generate("hello world!")
 print(response)
 ```
-In this case, the `ChatCompletion` returned only *prints* the `choices` field when
-being displayed in the terminal, and includes nested formatting by default,
-*without requiring an external library*:
 ```
 ChatCompletion(
+    id='09a17ba1-f1d1-4fc9-90ac-1502e3e57e03',
     choices=[
         Choice(
             finish_reason='stop',
@@ -194,19 +192,51 @@ ChatCompletion(
             logprobs=None,
             message=ChatCompletionMessage(
                 content="Hello World! It's great to meet you! Is there something
-I can help you with, or would you like to chat about something in particular?",
+I can help you with, or would you like to chat?",
                 refusal=None,
                 role='assistant',
                 function_call=None,
                 tool_calls=None
             )
         )
+    ],
+    created=1726758685,
+    model='llama-3-8b-chat@fireworks-ai',
+    object='chat.completion',
+    service_tier=None,
+    system_fingerprint=None,
+    usage=CompletionUsage(
+        completion_tokens=27,
+        prompt_tokens=13,
+        total_tokens=40,
+        completion_tokens_details=None,
+        cost=8e-06
+    )
+)
+```
+
+Again, we can make the `ChatCompletion` output more concise by setting the mode
+`unify.set_repr_mode("concise")`. Aside from removing the `None` fields, `"concise"`
+mode *also* removes all fields apart from `choices`:
+
+```
+ChatCompletion(
+    choices=[
+        Choice(
+            finish_reason='stop',
+            index=0,
+            message=ChatCompletionMessage(
+                content="Hello World! It's great to meet you! Is there something
+I can help you with, or would you like to chat?",
+                role='assistant'
+            )
+        )
     ]
 )
 ```
 
-The reason we omit all other fields when *visualizing* `ChatCompletion` instances is
-because Unify as a platform is primarily built for *evaluations*.
+The reason we omit all other fields when *visualizing* `ChatCompletion` instances in
+`"concise"` mode is because Unify as a platform is primarily built for *evaluations*.
 From this perspective, the focus is on tracking the *input-output behaviour* of LLMs.
 We already explained our definition of a prompt in the
 [Prompts](https://docs.unify.ai/universal_api/prompts) section.
@@ -222,45 +252,11 @@ Looking through OpenAI's
 we can see that the only field which is affected by the input is the `choices` field.
 
 As such, everything else returned in the `ChatCompletion` instance is *irrelevant*
-from the perspective of *evaluations*, which is why we omit it during *visualization*.
-If desired, you can view the full `ChatCompletion` instance with all meta data
-(in the same nested manner), like so:
+from the perspective of *evaluations*. As before, even when `"concise"` mode is set,
+you can view the full `ChatCompletion` instance with all meta data like so:
 
 ```python
-from rich import print
-print(response.dict())
-```
-```
-{
-    'id': '983c861b-5e60-472a-b198-01b01d8533f9',
-    'choices': [
-        {
-            'finish_reason': 'stop',
-            'index': 0,
-            'logprobs': None,
-            'message': {
-                'content': "Hello World! It's great to meet you! Is there
-something I can help you with, or would you like to chat?",
-                'refusal': None,
-                'role': 'assistant',
-                'function_call': None,
-                'tool_calls': None
-            }
-        }
-    ],
-    'created': 1726602280,
-    'model': 'llama-3-8b-chat@fireworks-ai',
-    'object': 'chat.completion',
-    'service_tier': None,
-    'system_fingerprint': None,
-    'usage': {
-        'completion_tokens': 27,
-        'prompt_tokens': 13,
-        'total_tokens': 40,
-        'completion_tokens_details': None,
-        'cost': 8e-06
-    }
-}
+print(response.full_repr())
 ```
 
 ## Broader Usage
