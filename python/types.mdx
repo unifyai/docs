@@ -157,7 +157,7 @@ This is a tuple of arbitrary strings.
 ### set\_repr\_mode
 
 ```python
-def set_repr_mode(mode: str, keys_to_skip: Optional[List[str]] = None) -> None
+def set_repr_mode(mode: str, skip_keys: Optional[List[str]] = None) -> None
 ```
 
 Sets the global representation mode, to be used when representing the various unify
@@ -167,7 +167,7 @@ types on screen. Can be either "verbose" or "concise".
 
 - `mode` - The value to set the mode to, either "verbose" or "concise".
   
-- `keys_to_skip` - The value of the keys to skip.
+- `skip_keys` - The value of the keys to skip.
 
 <a id="types.ReprMode"></a>
 
@@ -184,7 +184,7 @@ class ReprMode(str)
 ### \_\_init\_\_
 
 ```python
-def __init__(val: str)
+def __init__(val: str, skip_keys: Optional[List[str]] = None)
 ```
 
 Set a representation mode for a specific context in the code, by using the
@@ -193,5 +193,7 @@ Set a representation mode for a specific context in the code, by using the
 **Arguments**:
 
 - `val` - The value of the string, must be either "verbose" or "concise".
+  
+- `skip_keys` - The value of the keys to skip.
 
 <a id="__init__"></a>
