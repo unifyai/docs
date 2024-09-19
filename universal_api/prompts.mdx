@@ -74,8 +74,9 @@ Prompt(
 )
 ```
 
-We can prune all `None` values from the representation by setting
-`unify.set_repr_mode("concise")`, to print a more concise representation:
+By default the representation mode is `"verbose"`, which means the entire pydantic
+object is printed. We can prune all `None` values from the representation by setting
+`unify.set_repr_mode("concise")`, printing a more concise representation:
 ```
 Prompt(
     "messages": [
@@ -87,10 +88,18 @@ Prompt(
 )
 ```
 
-For all subsequent printed prompts in the docs,
-we will assume `concise` mode for brevity.
+Even when `"concise"` mode is set,
+the full representation can be viewed any time like so:
 
-The messages can also be passed explicitly in the `Prompt` constructor:
+```python
+print(prompt.full_repr())
+```
+
+For all subsequent printed prompts in the docs,
+we will assume `"concise"` mode for brevity.
+
+Returning to the topic of *creating* prompts,
+the messages can also be passed explicitly in the `Prompt` constructor:
 
 ```python
 import unify
