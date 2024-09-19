@@ -124,4 +124,74 @@ Create Score instance.
 
   The pydantic Score instance, with associated value and class description
 
+<a id="types.repr_mode"></a>
+
+---
+
+### repr\_mode
+
+```python
+def repr_mode() -> str
+```
+
+Gets the global representation mode as currently set. This is used when representing
+the various unify types on screen. Can be either "verbose" or "concise".
+
+<a id="types.keys_to_skip"></a>
+
+---
+
+### keys\_to\_skip
+
+```python
+def keys_to_skip() -> Tuple[str]
+```
+
+Return the currently set keys to skip as part of the representation to mode.
+This is a tuple of arbitrary strings.
+
+<a id="types.set_repr_mode"></a>
+
+---
+
+### set\_repr\_mode
+
+```python
+def set_repr_mode(mode: str, keys_to_skip: Optional[List[str]] = None) -> None
+```
+
+Sets the global representation mode, to be used when representing the various unify
+types on screen. Can be either "verbose" or "concise".
+
+**Arguments**:
+
+- `mode` - The value to set the mode to, either "verbose" or "concise".
+  
+- `keys_to_skip` - The value of the keys to skip.
+
+<a id="types.ReprMode"></a>
+
+## ReprMode
+
+```python
+class ReprMode(str)
+```
+
+<a id="types.ReprMode.__init__"></a>
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(val: str)
+```
+
+Set a representation mode for a specific context in the code, by using the
+`with` an instantiation of this class.
+
+**Arguments**:
+
+- `val` - The value of the string, must be either "verbose" or "concise".
+
 <a id="__init__"></a>
