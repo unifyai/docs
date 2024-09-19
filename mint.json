@@ -112,6 +112,7 @@
                 "python/dataset",
                 "python/evaluator",
                 "python/logging",
+                "python/repr",
                 "python/types",
                 {
                     "group": "utils",
