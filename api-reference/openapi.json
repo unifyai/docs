@@ -4036,8 +4036,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -4078,7 +4078,14 @@
                         "example": "{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}"
                     },
                     "parallel_tool_calls": {
-                        "type": "boolean",
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Parallel Tool Calls",
                         "description": "Whether to enable parallel function calling during tool use.",
                         "default": true,
