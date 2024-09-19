@@ -180,7 +180,7 @@ nested structure to skip as values.
 ### set\_keys\_to\_skip
 
 ```python
-def set_keys_to_skip(skip_keys: Dict[Type, Dict]) -> None
+def set_keys_to_skip(skip_keys: Union[Dict[Type, Dict], str]) -> None
 ```
 
 Set the keys to be skipped during representation, which is a dict with types as keys
@@ -211,7 +211,7 @@ nested structure to keep as values.
 ### set\_keys\_to\_keep
 
 ```python
-def set_keys_to_keep(keep_keys: Dict[Type, Dict]) -> None
+def set_keys_to_keep(keep_keys: Union[Dict[Type, Dict], str]) -> None
 ```
 
 Set the keys to be kept during representation, which is a dict with types as keys
@@ -279,7 +279,7 @@ class KeepKeys()
 ### \_\_init\_\_
 
 ```python
-def __init__(keep_keys: Dict[Type, Dict])
+def __init__(keep_keys: Union[Dict[Type, Dict], str])
 ```
 
 Set a the keys to keep for a specific context in the code, by using the
@@ -305,7 +305,7 @@ class SkipKeys()
 ### \_\_init\_\_
 
 ```python
-def __init__(skip_keys: Dict[Type, Dict])
+def __init__(skip_keys: Union[Dict[Type, Dict], str])
 ```
 
 Set a the keys to skip for a specific context in the code, by using the
