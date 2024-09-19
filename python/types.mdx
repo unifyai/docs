@@ -137,6 +137,29 @@ def repr_mode() -> str
 Gets the global representation mode as currently set. This is used when representing
 the various unify types on screen. Can be either "verbose" or "concise".
 
+<a id="types.key_repr"></a>
+
+---
+
+### key\_repr
+
+```python
+def key_repr(instance: _FormattedBaseModel) -> Union[Dict, List]
+```
+
+Get the key representation for the instance passed, either as the keys to keep or
+the keys to remove.
+
+**Arguments**:
+
+  The instance for which we want to retrieve the key representation policy.
+  
+
+**Returns**:
+
+  Dict containing the policy, with a base key of "skip" or "keep", followed by
+  the nested structure of the elements to either remove or keep.
+
 <a id="types.keys_to_skip"></a>
 
 ---
@@ -144,11 +167,60 @@ the various unify types on screen. Can be either "verbose" or "concise".
 ### keys\_to\_skip
 
 ```python
-def keys_to_skip() -> Tuple[str]
+def keys_to_skip() -> Dict[Type, Dict]
 ```
 
-Return the currently set keys to skip as part of the representation to mode.
-This is a tuple of arbitrary strings.
+Return the currently set keys to skip, which is a dict with types as keys and the
+nested structure to skip as values.
+
+<a id="types.set_keys_to_skip"></a>
+
+---
+
+### set\_keys\_to\_skip
+
+```python
+def set_keys_to_skip(skip_keys: Dict[Type, Dict]) -> None
+```
+
+Set the keys to be skipped during representation, which is a dict with types as keys
+and the nested structure to skip as values.
+
+**Arguments**:
+
+- `skip_keys` - A dictionary with the types as keys and dictionary representing the
+  structure of the keys to skip for that type.
+
+<a id="types.keys_to_keep"></a>
+
+---
+
+### keys\_to\_keep
+
+```python
+def keys_to_keep() -> Dict[Type, Dict]
+```
+
+Return the currently set keys to keep, which is a dict with types as keys and the
+nested structure to keep as values.
+
+<a id="types.set_keys_to_keep"></a>
+
+---
+
+### set\_keys\_to\_keep
+
+```python
+def set_keys_to_keep(keep_keys: Dict[Type, Dict]) -> None
+```
+
+Set the keys to be kept during representation, which is a dict with types as keys
+and the nested structure to keep as values.
+
+**Arguments**:
+
+- `keep_keys` - A dictionary with the types as keys and dictionary representing the
+  structure of the keys to keep for that type.
 
 <a id="types.set_repr_mode"></a>
 
@@ -157,7 +229,7 @@ This is a tuple of arbitrary strings.
 ### set\_repr\_mode
 
 ```python
-def set_repr_mode(mode: str, skip_keys: Optional[List[str]] = None) -> None
+def set_repr_mode(mode: str) -> None
 ```
 
 Sets the global representation mode, to be used when representing the various unify
@@ -166,15 +238,13 @@ types on screen. Can be either "verbose" or "concise".
 **Arguments**:
 
 - `mode` - The value to set the mode to, either "verbose" or "concise".
-  
-- `skip_keys` - The value of the keys to skip.
 
 <a id="types.ReprMode"></a>
 
 ## ReprMode
 
 ```python
-class ReprMode()
+class ReprMode(str)
 ```
 
 <a id="types.ReprMode.__init__"></a>
@@ -184,7 +254,7 @@ class ReprMode()
 ### \_\_init\_\_
 
 ```python
-def __init__(val: str, skip_keys: Optional[List[str]] = None)
+def __init__(val: str)
 ```
 
 Set a representation mode for a specific context in the code, by using the
@@ -193,7 +263,5 @@ Set a representation mode for a specific context in the code, by using the
 **Arguments**:
 
 - `val` - The value of the string, must be either "verbose" or "concise".
-  
-- `skip_keys` - The value of the keys to skip.
 
 <a id="__init__"></a>
