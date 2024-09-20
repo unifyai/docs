@@ -3839,6 +3839,225 @@
                 ],
                 "title": "Body_upload_dataset_v0_dataset_post"
             },
+            "ChatCompletionAssistantMessageParam": {
+                "properties": {
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "assistant"
+                        ],
+                        "const": "assistant",
+                        "title": "Role"
+                    },
+                    "content": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionContentPartTextParam"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionContentPartRefusalParam"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Content"
+                    },
+                    "function_call": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/FunctionCall"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "refusal": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Refusal"
+                    },
+                    "tool_calls": {
+                        "items": {
+                            "$ref": "#/components/schemas/ChatCompletionMessageToolCallParam"
+                        },
+                        "type": "array",
+                        "title": "Tool Calls"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "role"
+                ],
+                "title": "ChatCompletionAssistantMessageParam"
+            },
+            "ChatCompletionContentPartImageParam": {
+                "properties": {
+                    "image_url": {
+                        "$ref": "#/components/schemas/ImageURL"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "image_url"
+                        ],
+                        "const": "image_url",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "image_url",
+                    "type"
+                ],
+                "title": "ChatCompletionContentPartImageParam"
+            },
+            "ChatCompletionContentPartRefusalParam": {
+                "properties": {
+                    "refusal": {
+                        "type": "string",
+                        "title": "Refusal"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "refusal"
+                        ],
+                        "const": "refusal",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "refusal",
+                    "type"
+                ],
+                "title": "ChatCompletionContentPartRefusalParam"
+            },
+            "ChatCompletionContentPartTextParam": {
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "title": "Text"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "text"
+                        ],
+                        "const": "text",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "text",
+                    "type"
+                ],
+                "title": "ChatCompletionContentPartTextParam"
+            },
+            "ChatCompletionFunctionMessageParam": {
+                "properties": {
+                    "content": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Content"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "function"
+                        ],
+                        "const": "function",
+                        "title": "Role"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "content",
+                    "name",
+                    "role"
+                ],
+                "title": "ChatCompletionFunctionMessageParam"
+            },
+            "ChatCompletionMessageToolCallParam": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "function": {
+                        "$ref": "#/components/schemas/openai__types__chat__chat_completion_message_tool_call_param__Function"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "function"
+                        ],
+                        "const": "function",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "function",
+                    "type"
+                ],
+                "title": "ChatCompletionMessageToolCallParam"
+            },
+            "ChatCompletionNamedToolChoiceParam": {
+                "properties": {
+                    "function": {
+                        "$ref": "#/components/schemas/openai__types__chat__chat_completion_named_tool_choice_param__Function"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "function"
+                        ],
+                        "const": "function",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "function",
+                    "type"
+                ],
+                "title": "ChatCompletionNamedToolChoiceParam"
+            },
             "ChatCompletionRequest": {
                 "properties": {
                     "messages": {
@@ -4261,6 +4480,143 @@
                 "title": "ChatCompletionResponse",
                 "description": "Response model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    created (int): Timestamp indicating when the response was created.\n    id (str): Identifier for the completion response.\n    object (str): The type of object, defaults to \"chat.completion\".\n    usage (dict): Usage statistics or additional information.\n    choices (List[Dict]): List of completion choices."
             },
+            "ChatCompletionSystemMessageParam": {
+                "properties": {
+                    "content": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/ChatCompletionContentPartTextParam"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Content"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "system"
+                        ],
+                        "const": "system",
+                        "title": "Role"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "content",
+                    "role"
+                ],
+                "title": "ChatCompletionSystemMessageParam"
+            },
+            "ChatCompletionToolMessageParam": {
+                "properties": {
+                    "content": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/ChatCompletionContentPartTextParam"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Content"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "tool"
+                        ],
+                        "const": "tool",
+                        "title": "Role"
+                    },
+                    "tool_call_id": {
+                        "type": "string",
+                        "title": "Tool Call Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "content",
+                    "role",
+                    "tool_call_id"
+                ],
+                "title": "ChatCompletionToolMessageParam"
+            },
+            "ChatCompletionToolParam": {
+                "properties": {
+                    "function": {
+                        "$ref": "#/components/schemas/FunctionDefinition"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "function"
+                        ],
+                        "const": "function",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "function",
+                    "type"
+                ],
+                "title": "ChatCompletionToolParam"
+            },
+            "ChatCompletionUserMessageParam": {
+                "properties": {
+                    "content": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionContentPartTextParam"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionContentPartImageParam"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Content"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "user"
+                        ],
+                        "const": "user",
+                        "title": "Role"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "content",
+                    "role"
+                ],
+                "title": "ChatCompletionUserMessageParam"
+            },
             "CreditsResponse": {
                 "properties": {
                     "id": {
@@ -4355,16 +4711,19 @@
                         "description": "A unique, user-defined name used when referencing and triggering the evaluation.",
                         "example": "eval1"
                     },
-                    "system_prompt": {
+                    "judge_prompt": {
                         "anyOf": [
                             {
                                 "type": "string"
                             },
                             {
+                                "$ref": "#/components/schemas/Prompt"
+                            },
+                            {
                                 "type": "null"
                             }
                         ],
-                        "title": "System Prompt",
+                        "title": "Judge Prompt",
                         "description": "An optional custom system prompt to provide specific instructions to the judge on how to score the answers."
                     },
                     "class_config": {
@@ -4410,6 +4769,56 @@
                 ],
                 "title": "EvaluatorConfig"
             },
+            "FunctionCall": {
+                "properties": {
+                    "arguments": {
+                        "type": "string",
+                        "title": "Arguments"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "arguments",
+                    "name"
+                ],
+                "title": "FunctionCall"
+            },
+            "FunctionDefinition": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "parameters": {
+                        "type": "object",
+                        "title": "Parameters"
+                    },
+                    "strict": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Strict"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "FunctionDefinition"
+            },
             "HTTPValidationError": {
                 "properties": {
                     "detail": {
@@ -4422,6 +4831,378 @@
                 },
                 "type": "object",
                 "title": "HTTPValidationError"
+            },
+            "ImageURL": {
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "title": "Url"
+                    },
+                    "detail": {
+                        "type": "string",
+                        "enum": [
+                            "auto",
+                            "low",
+                            "high"
+                        ],
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "url"
+                ],
+                "title": "ImageURL"
+            },
+            "JSONSchema": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "schema": {
+                        "type": "object",
+                        "title": "Schema"
+                    },
+                    "strict": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Strict"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "JSONSchema"
+            },
+            "Prompt": {
+                "properties": {
+                    "messages": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionSystemMessageParam"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionUserMessageParam"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionAssistantMessageParam"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionToolMessageParam"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionFunctionMessageParam"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Messages"
+                    },
+                    "frequency_penalty": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Frequency Penalty"
+                    },
+                    "logit_bias": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "type": "integer"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Logit Bias"
+                    },
+                    "logprobs": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Logprobs"
+                    },
+                    "top_logprobs": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Top Logprobs"
+                    },
+                    "max_tokens": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Tokens",
+                        "default": 1024
+                    },
+                    "n": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "N"
+                    },
+                    "presence_penalty": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Presence Penalty"
+                    },
+                    "response_format": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ResponseFormatText"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ResponseFormatJSONObject"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ResponseFormatJSONSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Response Format"
+                    },
+                    "seed": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Seed"
+                    },
+                    "stop": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Stop"
+                    },
+                    "temperature": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Temperature",
+                        "default": 1.0
+                    },
+                    "top_p": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Top P"
+                    },
+                    "tools": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/ChatCompletionToolParam"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tools"
+                    },
+                    "tool_choice": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "none",
+                                    "auto",
+                                    "required"
+                                ]
+                            },
+                            {
+                                "$ref": "#/components/schemas/ChatCompletionNamedToolChoiceParam"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tool Choice"
+                    },
+                    "parallel_tool_calls": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Parallel Tool Calls"
+                    },
+                    "extra_headers": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Extra Headers"
+                    },
+                    "extra_query": {
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Extra Query"
+                    },
+                    "extra_body": {
+                        "anyOf": [
+                            {},
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Extra Body"
+                    }
+                },
+                "type": "object",
+                "title": "Prompt"
+            },
+            "ResponseFormatJSONObject": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "json_object"
+                        ],
+                        "const": "json_object",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type"
+                ],
+                "title": "ResponseFormatJSONObject"
+            },
+            "ResponseFormatJSONSchema": {
+                "properties": {
+                    "json_schema": {
+                        "$ref": "#/components/schemas/JSONSchema"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "json_schema"
+                        ],
+                        "const": "json_schema",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "json_schema",
+                    "type"
+                ],
+                "title": "ResponseFormatJSONSchema"
+            },
+            "ResponseFormatText": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "text"
+                        ],
+                        "const": "text",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type"
+                ],
+                "title": "ResponseFormatText"
             },
             "ValidationError": {
                 "properties": {
@@ -4455,6 +5236,37 @@
                     "type"
                 ],
                 "title": "ValidationError"
+            },
+            "openai__types__chat__chat_completion_message_tool_call_param__Function": {
+                "properties": {
+                    "arguments": {
+                        "type": "string",
+                        "title": "Arguments"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "arguments",
+                    "name"
+                ],
+                "title": "Function"
+            },
+            "openai__types__chat__chat_completion_named_tool_choice_param__Function": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "Function"
             }
         },
         "securitySchemes": {
