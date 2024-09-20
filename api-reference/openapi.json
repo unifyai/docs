@@ -2564,7 +2564,7 @@
                     {
                         "name": "model",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "string",
                             "description": "Name of the model.",
@@ -2576,7 +2576,7 @@
                     {
                         "name": "provider",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "string",
                             "description": "Name of the provider.",
@@ -2647,6 +2647,9 @@
                                         "type": "object",
                                         "additionalProperties": {
                                             "anyOf": [
+                                                {
+                                                    "type": "string"
+                                                },
                                                 {
                                                     "type": "string",
                                                     "format": "date-time"
