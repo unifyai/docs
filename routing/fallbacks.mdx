@@ -88,8 +88,8 @@ response = client.generate("Hello.")
 
 For enterprise users deploying [on-prem](https://docs.unify.ai/on_prem),
 you can also route across different *regions*.
-For example, lets assume you are deploying `gemini-1.5-pro` on `us-east-1`,
-but sometimes hit rate limits. You can add a fallback to `us-west-1` as follows:
+For example, lets assume you are deploying `gemini-1.5-pro` on `us-east1`,
+but sometimes hit rate limits. You can add a fallback to `us-west1` as follows:
 
 ```shell
 curl -X 'POST' \
@@ -99,7 +99,7 @@ curl -X 'POST' \
     -d '{
         "model": "gemini-1.5-pro@vertex-ai",
         "messages": [{"role": "user", "content": "Hello."}],
-        "region": "us-east-1->us-west-1"
+        "region": "us-east1->us-west1"
     }'
 ```
 
@@ -107,7 +107,7 @@ With the Python client, it would look as follows:
 
 ```python
 import unify
-client = unify.Unify("gemini-1.5-pro@vertex-ai", region="us-east-1->us-west-1")
+client = unify.Unify("gemini-1.5-pro@vertex-ai", region="us-east1->us-west1")
 response = client.generate("Hello.")
 ```
 
