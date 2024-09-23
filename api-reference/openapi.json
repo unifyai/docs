@@ -2215,12 +2215,7 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/Body_trigger_evaluation_v0_evaluation_post"
-                                    }
-                                ],
-                                "title": "Body"
+                                "$ref": "#/components/schemas/Body_trigger_evaluation_v0_evaluation_post"
                             }
                         }
                     }
