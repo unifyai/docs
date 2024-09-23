@@ -140,17 +140,26 @@ you would need to:
 Most of the major cloud providers include vendor-specific products and services,
 to streamline development on their respective cloud. Our on-prem offering can easily be
 extended to support and integrate with these inbuilt services. If you're on an
-[Enterprise Plan](https://unify.ai/pricing),
-just let us know your needs and we'll be able to accommodate!
+[Enterprise Plan](https://unify.ai/pricing), just let us know your needs and we'll be able to accommodate!
 
 ### Google Cloud Platform (GCP)
 
 Our Google Cloud Platform (GCP) specific features are outlined below,
 with instructions for how to enable them.
 
-#### Pubsub
+#### Pub/Sub
 
-Something.
+By default, the services deployed on-prem communicate using Redis. But you have the option
+to instead use GCP's Pub/Sub service if it integrates better with your deployment environment.
+
+In order to use GCP's Pub/Sub messaging instead:
+- Set the `PUBSUB_MESSAGING_TOPIC` environment variable in the `.env_orchestra` as the name of
+the topic you'd like to set.
+- `<topic_name>` will be set as the publisher topic in `orchestra` and the `<topic_name>-sub`
+will be set as the subscriber to that topic in the `dataset-evaluation` service.
+- You would also need to copy over your service account file to both the services for the same,
+this can be done by setting the `volumes:` of the `docker-compose.yaml` for both the services.
+
 
 ## Support
 
