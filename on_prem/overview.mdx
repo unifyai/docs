@@ -155,6 +155,8 @@ to instead use GCP's Pub/Sub service if it integrates better with your deploymen
 In order to use GCP's Pub/Sub messaging instead:
 - Set the `PUBSUB_MESSAGING_TOPIC` environment variable in the `.env_orchestra` as the name of
 the topic you'd like to set.
+- Set the `PUBSUB_PROJECT_NAME` environment variable in the same file as the name of the
+project you're using.
 - `<topic_name>` will be set as the publisher topic in `orchestra` and the `<topic_name>-sub`
 will be set as the subscriber to that topic in the `dataset-evaluation` service.
 - You would also need to copy over your service account file to both the services for the same,
