@@ -4253,8 +4253,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -4734,7 +4734,7 @@
                             }
                         ],
                         "title": "Prompt Parser",
-                        "description": "Dict with str  keys and indexing logic values. Default value of: {'user_message': '['messages'][-1]['content']'} This is used by the system prompt to replace each key {some_key} with prompt.dict()<indexing_logic> The default value will replace all occurances of {user_message} with prompt.dict()['messages'][-1]['content'] in the judge prompt.",
+                        "description": "Dict with str  keys and indexing logic values. Default value of: `{'user_message': '['messages'][-1]['content']'}` This is used by the system prompt to replace each key {some_key} with prompt.dict()\\<indexing_logic\\> The default value will replace all occurances of {user_message} with prompt.dict()['messages'][-1]['content'] in the judge prompt.",
                         "default": {
                             "user_message": "['messages'][-1]['content']"
                         }
@@ -4749,7 +4749,7 @@
                             }
                         ],
                         "title": "Response Parser",
-                        "description": "Dict with str  keys and indexing logic values. Default value of: {'assistant_response': '['message']['content']'} This is used by the system prompt to replace each key {some_key} with response.dict()<indexing_logic> The default value will replace all occurances of {assisntant_message} with response.dict()['message']['content'] in the judge prompt.",
+                        "description": "Dict with str  keys and indexing logic values. Default value of: `{'assistant_response': '['message']['content']'}` This is used by the system prompt to replace each key {some_key} with response.dict()\\<indexing_logic\\> The default value will replace all occurances of {assisntant_message} with response.dict()['message']['content'] in the judge prompt.",
                         "default": {
                             "assistant_response": "['message']['content']"
                         }
