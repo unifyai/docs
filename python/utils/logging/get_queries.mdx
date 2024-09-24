@@ -1,0 +1,29 @@
+---
+title: 'get_queries'
+---
+
+```python
+def get_queries(
+    tags: Optional[Union[str, List[str]]] = None,
+    endpoints: Optional[Union[str, List[str]]] = None,
+    start_time: Optional[datetime.datetime] = None,
+    end_time: Optional[datetime.datetime] = None,
+    api_key: Optional[str] = None,
+) -> Dict[str, Any]:
+```
+
+Get query history based on specified filters.
+
+**Arguments**:
+
+- `tags` - Tags to filter for queries that are marked with these tags.
+- `endpoints` - Optionally specify an endpoint, or a list of endpoints to filter for.
+- `start_time` - Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.
+- `end_time` - Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+
+
+
+**Returns**:
+
+A dictionary containing the query history data.

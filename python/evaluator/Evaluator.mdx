@@ -1,0 +1,49 @@
+---
+title: 'Evaluator'
+---
+
+```python
+class Evaluator
+```
+
+
+
+---
+
+### class\_config
+
+```python
+def class_config(self) -> Type[Score]:
+```
+
+
+
+---
+
+### evaluate
+
+```python
+def evaluate(
+            self,
+            prompt: Union[str, Prompt],
+            response: Union[ChatCompletion, str],
+            agent: Union[str, _Client, Agent],
+            **kwargs
+    ):
+```
+
+Evaluate the given response for this input prompt, with optional extra data.
+
+**Arguments**:
+
+- `prompt` - The user message or the full input prompt being responded to.
+- `response` - The response which is being evaluated, either as just the most
+- `agent` - The agent that made the response, which is being evaluated.
+- `kwargs` - Extra information relevant to the prompt, as is stored in the Datum.
+
+
+
+**Returns**:
+
+An Evaluation instance, containing the prompt, response, agent, score and
+optional extra data used during the evaluation.

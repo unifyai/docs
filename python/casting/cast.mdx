@@ -1,0 +1,23 @@
+---
+title: 'cast'
+---
+
+```python
+def cast(
+        input: Union[str, bool, float, Score, Prompt, Datum, ChatCompletion],
+        to_type: Type[Union[str, bool, float, Score, Prompt, Datum, ChatCompletion]],
+) -> Union[str, bool, float, Score, Prompt, Datum, ChatCompletion]:
+```
+
+Cast the input to the specified type.
+
+**Arguments**:
+
+- `input` - The input to cast.
+- `to_type` - The type to cast the input to.
+
+
+
+**Returns**:
+
+The input after casting to the new type.

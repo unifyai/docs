@@ -1,0 +1,33 @@
+---
+title: 'get_query_metrics'
+---
+
+```python
+def get_query_metrics(
+    start_time: Optional[datetime.datetime] = None,
+    end_time: Optional[datetime.datetime] = None,
+    models: Optional[str] = None,
+    providers: Optional[str] = None,
+    interval: int = 300,
+    secondary_user_id: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> Dict[str, Any]:
+```
+
+Get query metrics for specified parameters.
+
+**Arguments**:
+
+- `start_time` - Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.
+- `end_time` - Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.
+- `models` - Models to fetch metrics from. Comma-separated string of model names.
+- `providers` - Providers to fetch metrics from. Comma-separated string of provider names.
+- `interval` - Number of seconds in the aggregation interval. Default is 300.
+- `secondary_user_id` - Secondary user id to match the `user` attribute from `/chat/completions`.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+
+
+
+**Returns**:
+
+A dictionary containing the query metrics.
