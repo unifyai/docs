@@ -1,0 +1,63 @@
+---
+title: 'ReprMode'
+---
+
+```python
+class ReprMode
+```
+
+
+
+---
+
+### \_\_enter\_\_
+
+```python
+def __enter__(self) -> None:
+```
+
+
+
+---
+
+### \_\_exit\_\_
+
+```python
+def __exit__(self, exc_type, exc_val, exc_tb):
+```
+
+
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(self, val: str):
+```
+
+Set a representation mode for a specific context in the code, by using the
+`with` an instantiation of this class.
+
+**Arguments**:
+
+- `val` - The value of the string, must be either "verbose" or "concise".
+
+---
+
+### \_\_repr\_\_
+
+```python
+def __repr__(self):
+```
+
+
+
+---
+
+### \_\_str\_\_
+
+```python
+def __str__(self):
+```
+

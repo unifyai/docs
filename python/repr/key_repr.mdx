@@ -1,0 +1,21 @@
+---
+title: 'key_repr'
+---
+
+```python
+def key_repr(instance: _FormattedBaseModel) -> Union[Dict, List]:
+```
+
+Get the key representation for the instance passed, either as the keys to keep or
+the keys to remove.
+
+**Arguments**:
+
+- `instance` - The instance for which we want to retrieve the key repr policy.
+
+
+
+**Returns**:
+
+Dict containing the policy, with a base key of "skip" or "keep", followed by
+the nested structure of the elements to either remove or keep.

@@ -1,0 +1,79 @@
+---
+title: 'ChatBot'
+---
+
+```python
+class ChatBot
+```
+
+Agent class represents an LLM chat agent.
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(
+        self,
+        client: _Client,
+    ) -> None:
+```
+
+Initializes the ChatBot object, wrapped around a client.
+
+**Arguments**:
+
+- `client` - The Client instance to wrap the chatbot logic around.
+
+---
+
+### clear\_chat\_history
+
+```python
+def clear_chat_history(self) -> None:
+```
+
+Clears the chat history.
+
+---
+
+### client
+
+```python
+def client(self) -> _Client:
+```
+
+Get the client object.  
+
+**Returns**:
+
+The client.
+
+---
+
+### run
+
+```python
+def run(self, show_credits: bool = False, show_endpoint: bool = False) -> None:
+```
+
+Starts the chat interaction loop.
+
+**Arguments**:
+
+- `show_credits` - Whether to show credit consumption. Defaults to False.
+- `show_endpoint` - Whether to show the endpoint used. Defaults to False.
+
+---
+
+### set\_client
+
+```python
+def set_client(self, value: client) -> None:
+```
+
+Set the client.  
+
+**Arguments**:
+
+- `value` - The unify client.

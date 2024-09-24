@@ -1,0 +1,29 @@
+---
+title: 'rename_evaluator'
+---
+
+```python
+def rename_evaluator(
+    name: str, new_name: str, api_key: Optional[str] = None
+) -> Dict[str, str]:
+```
+
+Rename an existing evaluator.
+
+**Arguments**:
+
+- `name` - Name of the evaluator to rename.
+- `new_name` - New name for the evaluator.
+- `api_key` - If specified, unify API key to be used. Defaults
+
+
+
+**Returns**:
+
+A dictionary containing the response message if successful.
+
+
+
+**Raises**:
+
+- `requests.HTTPError`: If the API request fails.

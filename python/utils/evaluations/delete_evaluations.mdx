@@ -1,0 +1,33 @@
+---
+title: 'delete_evaluations'
+---
+
+```python
+def delete_evaluations(
+    dataset: str,
+    endpoint: Optional[str] = None,
+    evaluator: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> Dict[str, str]:
+```
+
+Delete evaluations for a specific dataset, optionally filtered by endpoint and evaluator.
+
+**Arguments**:
+
+- `dataset` - Name of the dataset to delete the evaluation for.
+- `endpoint` - The endpoint to delete the evaluation for. If None, deletes the evaluations for all endpoints.
+- `evaluator` - Name of the evaluator to delete the evaluation for. If None, deletes all available evaluations for the dataset and endpoint pair.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the `UNIFY_KEY` environment variable.
+
+
+
+**Returns**:
+
+A dictionary containing information about the deletion operation.
+
+
+
+**Raises**:
+
+- `requests.exceptions.RequestException`: If the API request fails.

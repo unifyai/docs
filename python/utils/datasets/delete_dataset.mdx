@@ -1,0 +1,21 @@
+---
+title: 'delete_dataset'
+---
+
+```python
+def delete_dataset(name: str, api_key: Optional[str] = None) -> str:
+```
+
+Deletes a dataset from the platform.
+
+**Arguments**:
+
+- `name` - Name given to the uploaded dataset.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+- `str` - Info msg with the response from the HTTP endpoint.
+- `ValueError` - If there was an HTTP error.

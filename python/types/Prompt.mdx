@@ -1,0 +1,155 @@
+---
+title: 'Prompt'
+---
+
+```python
+class Prompt
+```
+
+
+
+---
+
+### \_\_add\_\_
+
+```python
+def __add__(self, other):
+```
+
+
+
+---
+
+### \_\_fields\_set\_\_
+
+```python
+def __fields_set__(self) -> set[str]:
+```
+
+
+
+---
+
+### \_\_hash\_\_
+
+```python
+def __hash__(self):
+```
+
+
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(
+            self,
+            user_message: Optional[str] = None,
+            system_message: Optional[str] = None,
+            **kwargs
+    ):
+```
+
+Create Prompt instance.
+
+**Arguments**:
+
+- `user_message` - The user message, optional.
+- `system_message` - The system message, optional.
+- `kwargs` - All fields expressed in the pydantic type.
+
+
+
+**Returns**:
+
+The pydantic Prompt instance.
+
+---
+
+### \_\_radd\_\_
+
+```python
+def __radd__(self, other):
+```
+
+
+
+---
+
+### \_\_rich\_repr\_\_
+
+```python
+def __rich_repr__(self):
+```
+
+
+
+---
+
+### \_\_rsub\_\_
+
+```python
+def __rsub__(self, other):
+```
+
+
+
+---
+
+### \_\_str\_\_
+
+```python
+def __str__(self) -> str:
+```
+
+
+
+---
+
+### \_\_sub\_\_
+
+```python
+def __sub__(self, other):
+```
+
+
+
+---
+
+### full\_repr
+
+```python
+def full_repr(self):
+```
+
+Return the full un-pruned representation, regardless of the mode currently set.
+
+---
+
+### model\_extra
+
+```python
+def model_extra(self) -> dict[str, Any] | None:
+```
+
+Get extra fields set during validation.
+
+**Returns**:
+
+A dictionary of extra fields, or `None` if `config.extra` is not set to `"allow"`.
+
+---
+
+### model\_fields\_set
+
+```python
+def model_fields_set(self) -> set[str]:
+```
+
+Returns the set of fields that have been explicitly set on this model instance.
+
+**Returns**:
+
+A set of strings representing the fields that have been set,
+i.e. that were not filled from defaults.

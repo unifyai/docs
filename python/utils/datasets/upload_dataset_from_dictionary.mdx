@@ -1,0 +1,27 @@
+---
+title: 'upload_dataset_from_dictionary'
+---
+
+```python
+def upload_dataset_from_dictionary(
+    name: str, content: List[Dict[str, str]], api_key: Optional[str] = None
+) -> str:
+```
+
+Uploads a list of dictionaries as a dataset to the platform.
+Each dictionary in the list must contain a `prompt` key.
+
+**Arguments**:
+
+- `name` - Name given to the uploaded dataset.
+- `content` - Path to the file to be uploaded.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+Info msg with the response from the HTTP endpoint.
+Raises:
+ValueError: If there was an HTTP error.
+- `ValueError` - If there was an HTTP error.
