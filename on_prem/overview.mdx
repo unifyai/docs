@@ -85,6 +85,16 @@ so on.
     - `ORCHESTRA_VERTEXAI_PROJECT`
     - `ORCHESTRA_VERTEXAI_LOCATION` (again, the location can also be instead passed as
   the `region` field in `/chat/completions`)
+- For using Azure, you would need to add,
+    - for Azure OpenAI endpoints (e.g. gpt-4o and gpt-4o-mini models),
+      - `AZURE_PROJECT`
+      - `AZURE_OPENAI_API_KEY`
+    - for Azure AI endpoints (e.g. llama-3.1 models),
+      - `AZURE_REGION` (you can instead pass this as the `region` field in
+      `/chat/completions`)
+      - `AZURE_AI_LLAMA_3_1_8B_CHAT_API_KEY`
+      - `AZURE_AI_LLAMA_3_1_70B_CHAT_API_KEY`
+      - `AZURE_AI_LLAMA_3_1_405B_CHAT_API_KEY`
 
 Along with the above, you would also need to uncomment a line in the
 `docker-compose.yaml` that mounts the service account `.json` onto the container.
