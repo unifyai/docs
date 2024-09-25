@@ -135,22 +135,49 @@ Finally, again as a recap, queries to the
 [OpenAI NodeJS Package](https://www.npmjs.com/package/openai) can be made as follows:
 
 ```js
-const openai = new OpenAI({
-  baseUrl: "https://api.unify.ai/v0/",
-  apiKey: "UNIFY_KEY"
+const openai = require("openai");
+const util = require("util")
+
+const client = new openai.OpenAI({
+    baseURL: "https://api.unify.ai/v0",
+    apiKey: "API_KEY"
 });
 
-const response = await openai.chat.completions.create({
-  model: "llama-3.1-405b-chat@fireworks-ai",
-  messages: [{"role": "user", "content": "Say hi."}]
-});
-console.log(response);
+(async () => {
+    const response = await client.chat.completions.create({
+        model: "llama-3.1-405b-chat@fireworks-ai",
+        messages: [{ "role": "user", "content": "Say hi." }]
+    });
+    console.log(util.inspect(response, { depth: null, colors: true }));
+})();
 ```
-As with the previous two examples, the response is printed on a single line by default:
-```
-```
-The [X]() package can be used to print the `ChatCompletion` **much** more elegantly:
+The response is printed as follows:
 ```js
+{
+  model: 'llama-3.1-405b-chat@fireworks-ai',
+  created: 1727237176,
+  id: '48e48dfc-e7af-4b10-b42c-6ea51b493f77',
+  object: 'chat.completion',
+  usage: {
+    completion_tokens: 23,
+    prompt_tokens: 13,
+    total_tokens: 36,
+    completion_tokens_details: null,
+    cost: 0.000108
+  },
+  choices: [
+    {
+      finish_reason: 'stop',
+      index: 0,
+      message: {
+        content: "Hi! How's it going? Is there something I can help you with or would you like to chat?",
+        role: 'assistant',
+        tool_calls: null,
+        function_call: null
+      }
+    }
+  ]
+}
 ```
 
 ## Unify Python Client
