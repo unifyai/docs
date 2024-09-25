@@ -10,16 +10,6 @@ class Evaluator
 
 ---
 
-### class\_config
-
-```python
-def class_config(self) -> Type[Score]:
-```
-
-
-
----
-
 ### evaluate
 
 ```python
@@ -47,3 +37,12 @@ Evaluate the given response for this input prompt, with optional extra data.
 
 An Evaluation instance, containing the prompt, response, agent, score and
 optional extra data used during the evaluation.
+
+---
+
+### scorer
+
+```python
+def scorer(self) -> Type[Score]:
+```
+
