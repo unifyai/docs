@@ -2,7 +2,7 @@
 title: 'Get Evaluations'
 api: 'GET /v0/evaluation'
 ---
-Fetches evaluation results on a given dataset, for a specific endpoint (optional)
+Fetches evaluation results on a given dataset or for specific prompts, for a specific endpoint (optional)
 based on a specific evaluator (optional). If no `evaluator` is provided, then scores
 are returned for all valid evaluators. Similarly, if no `endpoint` is provided, then
 scores are returned for all valid endpoints.
@@ -15,8 +15,12 @@ scores are returned for all valid endpoints.
 
 #### Query Parameters
 
-<ParamField query="dataset" type="string" required="true">
-Name of the dataset to fetch evaluation from.
+<ParamField query="dataset" type="string | null" >
+Name of the uploaded dataset to get evaluations for. Must pass exactly one of `dataset`, `prompts`.
+</ParamField>
+
+<ParamField query="prompts" type="string | null" >
+Specify the prompts to get evaluations for. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.
 </ParamField>
 
 <ParamField query="endpoint" type="string" >
@@ -35,18 +39,30 @@ If `True`, returns the scores on a per-prompt level. By default set to `False`. 
 If `True`, returns additional metrics regarding the runtime of the endpoint (ITL, TTFT, cost). By default set to `False`. 
 </ParamField>
 
+<ParamField query="return_response" type="boolean" >
+If `True`, returns the LLM response to the prompt. This argument requires `per_prompt=True`.By default set to `False`.
+</ParamField>
+
+<ParamField query="return_rationale" type="boolean" >
+If `True`, returns the reasoning behind the score. This argument requires `per_prompt=True`.By default set to `False`.
+</ParamField>
+
+<ParamField query="sub_scorers" type="boolean" >
+If `True`, returns more in-depth summary statistics of the evaluation. Requires specification of both endpoint and evaluator, and per_prompt must be set to false.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False&include_runtime=False' \
+  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&prompts=34,89,127&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False&include_runtime=False&return_response=False&return_rationale=False&sub_scorers=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False&include_runtime=False"
+url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&prompts=34,89,127&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False&include_runtime=False&return_response=False&return_rationale=False&sub_scorers=None"
 
 headers = {"Authorization": "Bearer <token>"}
 

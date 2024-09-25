@@ -15,8 +15,12 @@ evaluations for all valid endpoints are deleted.
 
 #### Query Parameters
 
-<ParamField query="dataset" type="string" required="true">
-Name of the dataset to delete the evaluation for.
+<ParamField query="dataset" type="string | null" >
+Name of the uploaded dataset to get delete evaluations for. Must pass exactly one of `dataset`, `prompts`.
+</ParamField>
+
+<ParamField query="prompts" type="string | null" >
+Specify the prompts to delete evaluations for. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.
 </ParamField>
 
 <ParamField query="endpoint" type="string" >
@@ -31,14 +35,14 @@ Name of the evaluator to delete the evaluation for. If `None`, deletes all avail
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1' \
+  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&prompts=34,89,127&endpoint=gpt-4o-mini@openai&evaluator=eval1' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&endpoint=gpt-4o-mini@openai&evaluator=eval1"
+url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&prompts=34,89,127&endpoint=gpt-4o-mini@openai&evaluator=eval1"
 
 headers = {"Authorization": "Bearer <token>"}
 
