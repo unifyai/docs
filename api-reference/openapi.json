@@ -2153,7 +2153,7 @@
                     "Evaluations"
                 ],
                 "summary": "Trigger Evaluation",
-                "description": "Uses the named `evaluator` to trigger an evaluation of quality scores for the\nselected LLM `endpoint` on the selected `dataset`. You can upload custom scores (and\nbypass the LLM judge entirely) by uploading a file via the `client_side_scores`\nargument. Once the evaluation has finished, you can access the scores using the\n`/v0/evaluation` endpoint. If a custom prompt is specified, its fields will overwrite\nthe corresponding fields in each one of the evaluated prompts.",
+                "description": "Uses the named `evaluator` to trigger an evaluation of quality scores for the\nselected LLM `endpoint` on the selected `dataset`, or selected `prompts` (by prompt_id). You can upload custom scores (and\nbypass the LLM judge entirely) by uploading a file via the `client_side_scores`\nargument. Once the evaluation has finished, you can access the scores using the\n`/v0/evaluation` endpoint. If a custom prompt is specified, its fields will overwrite\nthe corresponding fields in each one of the evaluated prompts.",
                 "operationId": "trigger_evaluation_v0_evaluation_post",
                 "security": [
                     {
@@ -2189,14 +2189,40 @@
                     {
                         "name": "dataset",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "schema": {
-                            "type": "string",
-                            "description": "Name of the uploaded dataset to evaluate.",
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Name of the uploaded dataset to evaluate. Must pass exactly one of `dataset`, `prompts`.",
                             "title": "Dataset"
                         },
-                        "description": "Name of the uploaded dataset to evaluate.",
+                        "description": "Name of the uploaded dataset to evaluate. Must pass exactly one of `dataset`, `prompts`.",
                         "example": "dataset1"
+                    },
+                    {
+                        "name": "prompts",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Specify the prompts to evaluate. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
+                            "title": "Prompts"
+                        },
+                        "description": "Specify the prompts to evaluate. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
+                        "example": "34,89,127"
                     },
                     {
                         "name": "endpoint",
@@ -2275,7 +2301,7 @@
                     "Evaluations"
                 ],
                 "summary": "Get Evaluations",
-                "description": "Fetches evaluation results on a given dataset, for a specific endpoint (optional)\nbased on a specific evaluator (optional). If no `evaluator` is provided, then scores\nare returned for all valid evaluators. Similarly, if no `endpoint` is provided, then\nscores are returned for all valid endpoints.",
+                "description": "Fetches evaluation results on a given dataset or for specific prompts, for a specific endpoint (optional)\nbased on a specific evaluator (optional). If no `evaluator` is provided, then scores\nare returned for all valid evaluators. Similarly, if no `endpoint` is provided, then\nscores are returned for all valid endpoints.",
                 "operationId": "get_evaluations_v0_evaluation_get",
                 "security": [
                     {
@@ -2286,14 +2312,40 @@
                     {
                         "name": "dataset",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "schema": {
-                            "type": "string",
-                            "description": "Name of the dataset to fetch evaluation from.",
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Name of the uploaded dataset to get evaluations for. Must pass exactly one of `dataset`, `prompts`.",
                             "title": "Dataset"
                         },
-                        "description": "Name of the dataset to fetch evaluation from.",
+                        "description": "Name of the uploaded dataset to get evaluations for. Must pass exactly one of `dataset`, `prompts`.",
                         "example": "dataset1"
+                    },
+                    {
+                        "name": "prompts",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Specify the prompts to get evaluations for. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
+                            "title": "Prompts"
+                        },
+                        "description": "Specify the prompts to get evaluations for. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
+                        "example": "34,89,127"
                     },
                     {
                         "name": "endpoint",
@@ -2344,6 +2396,44 @@
                         },
                         "description": "If `True`, returns additional metrics regarding the runtime of the endpoint (ITL, TTFT, cost). By default set to `False`. ",
                         "example": false
+                    },
+                    {
+                        "name": "return_response",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If `True`, returns the LLM response to the prompt. This argument requires `per_prompt=True`.By default set to `False`.",
+                            "default": false,
+                            "title": "Return Response"
+                        },
+                        "description": "If `True`, returns the LLM response to the prompt. This argument requires `per_prompt=True`.By default set to `False`.",
+                        "example": false
+                    },
+                    {
+                        "name": "return_rationale",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If `True`, returns the reasoning behind the score. This argument requires `per_prompt=True`.By default set to `False`.",
+                            "default": false,
+                            "title": "Return Rationale"
+                        },
+                        "description": "If `True`, returns the reasoning behind the score. This argument requires `per_prompt=True`.By default set to `False`.",
+                        "example": false
+                    },
+                    {
+                        "name": "sub_scorers",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If `True`, returns more in-depth summary statistics of the evaluation. Requires specification of both endpoint and evaluator, and per_prompt must be set to false.",
+                            "default": false,
+                            "title": "Sub Scorers"
+                        },
+                        "description": "If `True`, returns more in-depth summary statistics of the evaluation. Requires specification of both endpoint and evaluator, and per_prompt must be set to false."
                     }
                 ],
                 "responses": {
@@ -2386,14 +2476,40 @@
                     {
                         "name": "dataset",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "schema": {
-                            "type": "string",
-                            "description": "Name of the dataset to delete the evaluation for.",
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Name of the uploaded dataset to get delete evaluations for. Must pass exactly one of `dataset`, `prompts`.",
                             "title": "Dataset"
                         },
-                        "description": "Name of the dataset to delete the evaluation for.",
+                        "description": "Name of the uploaded dataset to get delete evaluations for. Must pass exactly one of `dataset`, `prompts`.",
                         "example": "dataset1"
+                    },
+                    {
+                        "name": "prompts",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Specify the prompts to delete evaluations for. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
+                            "title": "Prompts"
+                        },
+                        "description": "Specify the prompts to delete evaluations for. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
+                        "example": "34,89,127"
                     },
                     {
                         "name": "endpoint",

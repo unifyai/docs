@@ -43,7 +43,7 @@ def __hash__(self):
 ### \_\_init\_\_
 
 ```python
-def __init__(self, prompt: Optional[Union[str, Prompt]]):
+def __init__(self, prompt: Optional[Union[str, Prompt]], **kwargs):
 ```
 
 Create Datum instance.
@@ -51,6 +51,7 @@ Create Datum instance.
 **Arguments**:
 
 - `prompt` - The prompt, either as a user message or as the full prompt.
+- `kwargs` - Optional extra fields passed.
 
 
 
