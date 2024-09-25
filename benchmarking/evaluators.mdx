@@ -230,6 +230,8 @@ class Inquires(unify.Score):
         }
 ```
 
+that the LLM answers the question when it has all the information is needs:
+
 ```python
 class Answers(unify.Score):
 
@@ -242,7 +244,7 @@ class Answers(unify.Score):
         }
 ```
 
-and grounds all answers to the provided medical source material:
+and the LLM grounds all answers to the provided medical source material:
 
 ```python
 class Grounds(unify.Score):
@@ -256,12 +258,10 @@ class Grounds(unify.Score):
         }
 ```
 
-All of these are to be scored by real physicians.
-
-As before, we can then create these evaluators by subclassing `unify.Evaluator`,
-and overriding the abstract `class_config` property and the abstract `_evaluate` method,
-as follows. Lets first create a `HumanEvaluator` class, and then subclass from this,
-to avoid code duplication:
+All of these are to be scored by real physicians. As before, we can then create these
+evaluators by subclassing `unify.Evaluator`, and overriding the abstract `class_config`
+property and the abstract `_evaluate` method. However, to avoid code duplication,
+lets first create a parent `HumanEvaluator` class to subclass from:
 
 ```python
 import abc
@@ -343,19 +343,122 @@ for datum in dataset:
 If we wanted to get more details about **why** each physician chose the score they did,
 then they could make use of the extra `rationale` argument, which Unify supports for
 all evaluations. The `_evaluate` method of `HumanEvaluator` could simply be extended as
-follows:
+follows (only showing the *added* lines in the function):
 
 ```python
-rationale = input("What is your reasoning for giving this score? "
-                  "Be as descriptive as you can be:")
-return self.class_config(response), rationale
+    ...
+    rationale = input("What is your reasoning for giving this score? "
+                      "Be as descriptive as you can be:")
+    return self.class_config(response), rationale
 ```
 
 The `rationale` will then be stored in the `Evaluation` instances which are returned
 from `evaluator.evaluate`, and will be printed without the code for the evaluation loop
 above needing to be changed.
 
-### 
+### Code Evaluator
+
+Let's look at one final example, this time focused on code generation. In this example,
+we will also make use of the extra fields in the `Dataset`, in order to store some
+reference inputs and correct answers for each function implemented by the LLM:
+
+```python
+import random
+import unify
+from typing import Union, Type, Dict
+system_msg = "You are an expert software engineer, " \
+             "write the code asked of you to the highest quality. Give good variable " \
+             "names, ensure the code compiles and is robust to edge cases, and always "\
+             "gives the correct result."
+questions = [
+    "Write a python function to sort and merge two lists.",
+    "Write a python function to find the nth largest number in a set.",
+    "Write a python function to remove all None values from a dictionary."
+]
+inputs = [
+    [([random.random() for _ in range(10)],
+      [random.random() for _ in range(10)]) for _ in range(3)],
+    [set([random.random() for _ in range(10)]) for _ in range(3)],
+    [{"a": 1., "b": None, "c": 3.}, {"a": 1., "b": 2., "c": 3.}, {"a": None, "b": 2.}],
+]
+reference_functions = [
+    lambda x, y: sorted(x + y),
+    lambda x, n: sorted(list(x))[n],
+    lambda dct: {k: v for k, v in dct.items() if v is not None}
+]
+answers = [fn(i) for i, fn in zip(inputs, reference_functions)]
+prompts = [unify.Prompt(q, system_message=system_msg) for q in questions]
+data = [unify.Datum(prompt=p, inputs=i, answers=a)
+        for p, i, a in zip(prompts, inputs, answers)]
+dataset = unify.Dataset(data)
+```
+
+We will create two evaluators, one which checks whether the code actually *runs* without
+raising an error (irrespective of whether or not the answer is correct) and another
+which determines whether or not the answer was correct. The scores for these two
+evaluators can be implemented as follows:
+
+```python
+class Runs(unify.Score):
+
+    @property
+    def config(self) -> Dict[float, str]:
+        return {
+            0.: "An error is raised when the code is run.",
+            1.: "Code runs without error."
+        }
+```
+```python
+class Correct(unify.Score):
+
+    @property
+    def config(self) -> Dict[float, str]:
+        return {
+            0.: "The answer was incorrect.",
+            1.: "The answer was correct."
+        }
+```
+
+The first evaluator can be implemented as follows, by making use of the extra
+input data stored in the dataset:
+
+```python
+class RunsEvaluator(unify.Evaluator):
+
+    @property
+    def class_config(self) -> Type[Runs]:
+        return Runs
+
+    def _evaluate(self, prompt: str, response: str, inputs: List[Any]) -> bool:
+        fn = eval(response)
+        for inp in inputs:
+            try:
+                fn(inp)
+                return True
+            except:
+                return False
+```
+
+The second evaluator can be implemented as follows, by also making use of the extra
+answers stored in the dataset:
+
+```python
+class CorrectEvaluator(unify.Evaluator):
+
+    @property
+    def class_config(self) -> Type[Correct]:
+        return Correct
+
+    def _evaluate(self, prompt: str, response: str, inputs: List[Any], answers: List[Any]) -> bool:
+        fn = eval(response)
+        for inp, ans in zip(inputs, answers):
+            try:
+                llm_answer = fn(inp)
+                return True
+            except:
+                return False
+```
+
 
 ## LLM Judges
 
@@ -363,7 +466,11 @@ above needing to be changed.
 
 ## Evaluating the Evaluators
 
+## Agents
+
 ## Evaluation Sets
+
+Use the code example to show the difference between 3 and 9 evaluations in the set.
 
 ## Uploading
 
