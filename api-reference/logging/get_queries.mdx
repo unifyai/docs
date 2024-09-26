@@ -32,18 +32,22 @@ Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.
 The query history is returned in pages, with up to 100 prompts per page. Increase the page number to see older prompts.
 </ParamField>
 
+<ParamField query="failures" type="boolean | string" >
+indicates whether to includes failures in the return (when set as True ), or whether to return failures exlusively (when set as 'only').
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/queries?tags=my_tag&endpoints=gpt-4o@openai&start_time=2024-07-12%2004:20:32&end_time=2024-08-12%2004:20:32&page_number=1' \
+  --url 'https://api.unify.ai/v0/queries?tags=my_tag&endpoints=gpt-4o@openai&start_time=2024-07-12%2004:20:32&end_time=2024-08-12%2004:20:32&page_number=1&failures=False' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/queries?tags=my_tag&endpoints=gpt-4o@openai&start_time=2024-07-12%2004:20:32&end_time=2024-08-12%2004:20:32&page_number=1"
+url = "https://api.unify.ai/v0/queries?tags=my_tag&endpoints=gpt-4o@openai&start_time=2024-07-12%2004:20:32&end_time=2024-08-12%2004:20:32&page_number=1&failures=False"
 
 headers = {"Authorization": "Bearer <token>"}
 
