@@ -410,6 +410,30 @@
                         },
                         "description": "The query history is returned in pages, with up to 100 prompts per page. Increase the page number to see older prompts.",
                         "example": "1"
+                    },
+                    {
+                        "name": "failures",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "boolean"
+                                },
+                                {
+                                    "enum": [
+                                        "only"
+                                    ],
+                                    "const": "only",
+                                    "type": "string"
+                                }
+                            ],
+                            "description": "indicates whether to includes failures in the return (when set as True ), or whether to return failures exlusively (when set as 'only').",
+                            "default": false,
+                            "title": "Failures"
+                        },
+                        "description": "indicates whether to includes failures in the return (when set as True ), or whether to return failures exlusively (when set as 'only').",
+                        "example": false
                     }
                 ],
                 "responses": {
@@ -4369,8 +4393,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
