@@ -2153,7 +2153,7 @@
                     "Evaluations"
                 ],
                 "summary": "Trigger Evaluation",
-                "description": "Uses the named `evaluator` to trigger an evaluation of quality scores for the\nselected LLM `endpoint` on the selected `dataset`, or selected `prompts` (by prompt_id). You can upload custom scores (and\nbypass the LLM judge entirely) by uploading a file via the `client_side_scores`\nargument. Once the evaluation has finished, you can access the scores using the\n`/v0/evaluation` endpoint. If a custom prompt is specified, its fields will overwrite\nthe corresponding fields in each one of the evaluated prompts.",
+                "description": "Uses the named `evaluator` to trigger an evaluation of quality scores for the\nselected LLM `endpoint` on the selected `dataset`, or selected `prompts` (by\nprompt_id). You can upload custom scores (and bypass the LLM judge entirely) by\nuploading a file via the `client_side_scores` argument. Once the evaluation has\nfinished, you can access the scores using the `/v0/evaluation` endpoint. If a custom\nprompt is specified, its fields will overwrite the corresponding fields in each one\nof the evaluated prompts. If a response for a given prompt has already been\nprovided for the selected endpoint, during another evaluation, then this response\nwill be re-used during the current evaluation.",
                 "operationId": "trigger_evaluation_v0_evaluation_post",
                 "security": [
                     {
