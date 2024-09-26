@@ -1,9 +1,19 @@
 ---
-title: 'TopLogprob'
+title: 'Prompt'
 ---
 
 ```python
-class TopLogprob
+class Prompt
+```
+
+
+
+---
+
+### \_\_add\_\_
+
+```python
+def __add__(self, other):
 ```
 
 
@@ -20,6 +30,53 @@ def __fields_set__(self) -> set[str]:
 
 ---
 
+### \_\_hash\_\_
+
+```python
+def __hash__(self):
+```
+
+
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(
+            self,
+            user_message: Optional[str] = None,
+            system_message: Optional[str] = None,
+            **kwargs
+    ):
+```
+
+Create Prompt instance.
+
+**Arguments**:
+
+- `user_message` - The user message, optional.
+- `system_message` - The system message, optional.
+- `kwargs` - All fields expressed in the pydantic type.
+
+
+
+**Returns**:
+
+The pydantic Prompt instance.
+
+---
+
+### \_\_radd\_\_
+
+```python
+def __radd__(self, other):
+```
+
+
+
+---
+
 ### \_\_rich\_repr\_\_
 
 ```python
@@ -30,10 +87,30 @@ def __rich_repr__(self):
 
 ---
 
+### \_\_rsub\_\_
+
+```python
+def __rsub__(self, other):
+```
+
+
+
+---
+
 ### \_\_str\_\_
 
 ```python
 def __str__(self) -> str:
+```
+
+
+
+---
+
+### \_\_sub\_\_
+
+```python
+def __sub__(self, other):
 ```
 
 
