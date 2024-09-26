@@ -10,6 +10,23 @@ class Evaluator
 
 ---
 
+### \_\_init\_\_
+
+```python
+def __init__(
+            self,
+            name: Optional[str] = None
+    ):
+```
+
+Create an Evaluator.
+
+**Arguments**:
+
+- `name` - The name for this evaluator.
+
+---
+
 ### class\_config
 
 ```python
@@ -50,9 +67,29 @@ optional extra data used during the evaluation.
 
 ---
 
+### name
+
+```python
+def name(self) -> Optional[str]:
+```
+
+
+
+---
+
 ### scorer
 
 ```python
 def scorer(self) -> Type[Score]:
+```
+
+
+
+---
+
+### set\_name
+
+```python
+def set_name(self, name: str):
 ```
 
