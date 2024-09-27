@@ -1,0 +1,137 @@
+---
+title: 'DefaultLLMJudge'
+---
+
+```python
+class DefaultLLMJudge
+```
+
+
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(
+            self,
+            client: Union[Unify, AsyncUnify]
+    ):
+```
+
+Create a default Judge, which uses a standard task-agnostic score and a generic
+system prompt. This should judge work okay on a range of tasks, but the best
+performance will be achieved by subclassing LLMJudge and creating your own.
+
+**Arguments**:
+
+- `client` - The client which holds the LLM used under the hood for judging.
+
+---
+
+### class\_config
+
+```python
+def class_config(self) -> Dict[float, str]:
+```
+
+
+
+---
+
+### client
+
+```python
+def client(self) -> Union[Unify, AsyncUnify]:
+```
+
+
+
+---
+
+### evaluate
+
+```python
+def evaluate(
+            self,
+            prompt: Union[str, Prompt],
+            response: Union[ChatCompletion, str],
+            agent: Union[str, _Client, Agent],
+            **kwargs
+    ) -> Evaluation:
+```
+
+Evaluate the given response for this input prompt, with optional extra data.
+
+**Arguments**:
+
+- `prompt` - The user message or the full input prompt being responded to.
+- `response` - The response which is being evaluated, either as just the most
+- `agent` - The agent that made the response, which is being evaluated.
+- `kwargs` - Extra information relevant to the prompt, as is stored in the Datum.
+
+
+
+**Returns**:
+
+An Evaluation instance, containing the prompt, response, agent, score and
+optional extra data used during the evaluation.
+
+---
+
+### include\_rationale
+
+```python
+def include_rationale(self) -> bool:
+```
+
+
+
+---
+
+### name
+
+```python
+def name(self) -> Optional[str]:
+```
+
+
+
+---
+
+### scorer
+
+```python
+def scorer(self) -> Type[DefaultJudgeScore]:
+```
+
+
+
+---
+
+### set\_client
+
+```python
+def set_client(self, value: Union[Unify, AsyncUnify]) -> None:
+```
+
+
+
+---
+
+### set\_include\_rationale
+
+```python
+def set_include_rationale(self, value: bool) -> None:
+```
+
+
+
+---
+
+### set\_name
+
+```python
+def set_name(self, value: str):
+```
+
