@@ -109,7 +109,7 @@ def __init__(
             *,
             name: str = None,
             auto_sync: Union[bool, str] = False,
-            api_key: Optional[str] = None,
+            api_key: Optional[str] = None
     ) -> None:
 ```
 
@@ -456,6 +456,16 @@ def name(self) -> str:
 ```
 
 Name of the dataset.
+
+---
+
+### score\_distribution
+
+```python
+def score_distribution(self) -> Dict[float, int]:
+```
+
+
 
 ---
 
