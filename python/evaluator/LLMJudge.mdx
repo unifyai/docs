@@ -15,7 +15,7 @@ class LLMJudge
 ```python
 def __init__(
             self,
-            client: _UniLLMClient,
+            client: Union[Unify, AsyncUnify],
             judge_prompt: Union[str, Prompt],
             name: Optional[str] = None,
             prompt_parser: Optional[Dict[str, List[Union[str, int]]]] = None,
@@ -43,6 +43,16 @@ Creates an LLM as a Judge Evaluator.
 
 ```python
 def class_config(self) -> Dict[float, str]:
+```
+
+
+
+---
+
+### client
+
+```python
+def client(self) -> Union[Unify, AsyncUnify]:
 ```
 
 
@@ -109,10 +119,20 @@ def scorer(self) -> Type[Score]:
 
 ---
 
+### set\_client
+
+```python
+def set_client(self, value: Union[Unify, AsyncUnify]) -> None:
+```
+
+
+
+---
+
 ### set\_include\_rationale
 
 ```python
-def set_include_rationale(self, value: bool):
+def set_include_rationale(self, value: bool) -> None:
 ```
 
 
