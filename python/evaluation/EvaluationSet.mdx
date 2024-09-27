@@ -105,7 +105,7 @@ This dataset following the in-place addition.
 ```python
 def __init__(
             self,
-            data: Union[Evaluation, List[Evaluation]],
+            evaluations: Union[Evaluation, List[Evaluation]],
             *,
             name: str = None,
             auto_sync: Union[bool, str] = False,
@@ -293,6 +293,16 @@ The new dataset following the addition.
 
 ---
 
+### agent
+
+```python
+def agent(self) -> Union[str, _Client, Agent]:
+```
+
+
+
+---
+
 ### auto\_sync
 
 ```python
@@ -311,6 +321,16 @@ will be overwritten. If "local_mirrors_upstream" then the local version will be
 anchored to the upstream version at all times, and any local changes will be
 overwritten. If `False` or "neither" then no synchronization will be done
 automatically.
+
+---
+
+### class\_config
+
+```python
+def class_config(self) -> Dict[float, str]:
+```
+
+
 
 ---
 
