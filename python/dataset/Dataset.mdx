@@ -187,7 +187,7 @@ The number of entries in the dataset.
 ### \_\_radd\_\_
 
 ```python
-def __radd__(self, other: Union[Dataset, str, Dict, Prompt, Datum,
+def __radd__(self, other: Union[Dataset, str, Dict, Prompt, Datum, int,
                                     List[Union[str, Dict, Prompt, Datum]]]) -> Self:
 ```
 
@@ -288,7 +288,7 @@ The new dataset following the subtraction.
 ### add
 
 ```python
-def add(self, other: Union[Dataset, str, Dict, Prompt, Datum,
+def add(self, other: Union[Dataset, str, Dict, Prompt, Datum, int,
                                List[Union[str, Dict, Prompt, Datum]]]) -> Self:
 ```
 
@@ -388,7 +388,7 @@ The dataset, with contents downloaded from upstream.
 ```python
 def inplace_add(
             self,
-            other: Union[Dataset, str, Dict, Prompt, Datum,
+            other: Union[Dataset, str, Dict, Prompt, Datum, int,
                          List[Union[str, Dict, Prompt, Datum]]]
     ) -> Self:
 ```
