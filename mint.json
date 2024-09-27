@@ -157,7 +157,8 @@
                     "group": "evaluator",
                     "pages": [
                         "python/evaluator/Evaluator",
-                        "python/evaluator/LLMJudge"
+                        "python/evaluator/LLMJudge",
+                        "python/evaluator/LLMJury"
                     ]
                 },
                 {
