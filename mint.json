@@ -152,7 +152,8 @@
                     "group": "evaluation",
                     "pages": [
                         "python/evaluation/Evaluation",
-                        "python/evaluation/EvaluationSet"
+                        "python/evaluation/EvaluationSet",
+                        "python/evaluation/LLMJuryEvaluationSet"
                     ]
                 },
                 {
