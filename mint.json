@@ -157,6 +157,8 @@
                 {
                     "group": "evaluator",
                     "pages": [
+                        "python/evaluator/DefaultJudgeScore",
+                        "python/evaluator/DefaultLLMJudge",
                         "python/evaluator/Evaluator",
                         "python/evaluator/LLMJudge",
                         "python/evaluator/LLMJury"
