@@ -7,27 +7,95 @@ Thankfully, adding custom fine-tuned models to your universal API is very easy.
 
 We don't yet support *triggering* fine-tuning jobs from our API,
 but we do natively support fine-tuned models from all LLM providers,
-via our [custom endpoint API](<link-to-custom-endpoints-in-console>) interface.
+via our [custom endpoint API](https://console.unify.ai/endpoints) interface.
 
-Below, we show some end-to-end examples for fine-tuning a model via any LLM provider,
-and then integrating these fine-tuned models into your unified stack.
+## The General Process
 
-## OpenAI
+The general process of enabling the use of fine-tuned models through our platform
+is common across all the providers. It involves 3 steps:
 
-## Anthropic
+### Create a Custom API Key
 
-## Mistral
+- Use the [interface](https://console.unify.ai/keys) or the
+[python client](https://docs.unify.ai/python/utils/custom_api_keys/create_custom_api_key)
+and create a custom API key.
+- The `name` of the key should be the provider you would like to use, you can use `unify.utils.list_providers()`
+to get the list of supported providers. In case you'd like to use an API key that isn't among the supported providers,
+you can create an API key with any name you like and pass it accordingly while creating the custom endpoint.
+- The `value` of the key should be the credentials that you would want to pass to the provider.
 
-## AWS Bedrock
+### Creating a Custom Endpoint
 
-## Vertex AI
+- Use the [interface](https://console.unify.ai/endpoints) or the
+[python client](https://docs.unify.ai/api-reference/custom_endpoints/create_custom_endpoint)
+and create a custom endpoint.
+- The `name` of the endpoint is what you will make a call to the unify API with.
+- The `url` of the endpoint can be left empty (i.e. `''`) if you're using a model with one of the existing providers,
+you would need to pass the url for accessing the endpoint in case you're using a custom provider.
+- The `key_name` would be the name of the custom API key you've created. For existing providers, the `key_name` should
+just be the name of the provider, and for custom providers it should be whatever name you've set for the custom API key.
+- The `model_name` would be the name of the endpoint as visible in the provider console. We've elaborated more on the
+format of the model for some of the providers below, but it should essentially be the same name as what's used to query
+through the provider API directly.
 
-## Azure ML
+### Query the Custom Endpoint
 
-## Together AI
+- Once you've added the custom endpoint and API key as mentioned above, you can then use it to query it through the
+Unify API.
+- The format for querying the endpoint would be `<custom_endpoint_name>@custom_<provider>` for supported providers
+and `<custom_endpoint_name>@<custom>` for custom providers.
+- Making API calls using custom API keys doesn't affect your Unify credits as you will be charged through your own
+provider-specific account.
 
-## Fireworks AI
+## Example Providers
 
-## Replicate
+We have explained the usage of fine-tuned models for a few providers through our API. Fine-tuned models with other
+providers can also be used in a similar way.
 
-## DeepInfra
+### OpenAI
+
+- Here's OpenAI's [guide](https://platform.openai.com/docs/guides/fine-tuning) for fine-tuning their models.
+- The custom API key `value` would just be your `OPENAI_API_KEY`.
+- After fine-tuning, you will see it with a name like `ft:<model>:<org>::<id>` which you would then need to add as
+the `model_name` while creating the custom endpoint
+
+### Mistral
+
+- You can fine-tune Mistral AI models following [this](https://docs.mistral.ai/capabilities/finetuning/) guide.
+- The custom key `value` would be your `MISTRAL_API_KEY`
+- The fine-tuned model would be named in a format similar to `ft:<model>:<id1>:<yyyymmdd>:<id2>` (you can copy it
+from your console) which becomes the `model_name`.
+
+### Vertex AI
+
+- Vertex AI models can be fine-tuned referring
+[this](https://cloud.google.com/vertex-ai/generative-ai/docs/models/tune-models) section of their docs.
+- In case of the custom API key, you would need to pass in the `vertex_credentials` (the service account JSON content),
+the `vertex_project` and the `vertex_location` as a JSON string to the `value`. For e.g. if you're using the python
+client, you could do something like,
+```
+create_custom_api_key(
+    "vertex-ai",
+    json.dumps({
+        "vertex_credentials": credentials,
+        "vertex_project": project,
+        "vertex_location": location,
+    })
+)
+```
+- Fine-tuned models with VertexAI need to be deployed as endpoints before they can be used, you should add the
+numeric endpoint ID for the deployed endpoint as the `model_name`.
+
+### Together AI
+
+- Fine-tune your models referring [this](https://www.together.ai/blog/finetuning).
+- The custom API key value would be your `TOGETHER_API_KEY`.
+- After deploying the fine-tuned model, you can pass the `<user_email>/<model_name>-<dataset_name>-<id>` to the
+`model_name` while creating the custom endpoint.
+
+### Fireworks AI
+
+- Here's the Fireworks AI [guide](https://docs.fireworks.ai/fine-tuning/fine-tuning-models) to fine-tune models.
+- The custom API key value would be your `FIREWORKS_API_KEY`.
+- First deploy the fine-tuned model, then pass in the `accounts/<user_id>/models/<model_id>` string copied
+from your PEFT Addons as the `model_name`.
