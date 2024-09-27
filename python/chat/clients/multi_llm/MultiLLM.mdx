@@ -1293,6 +1293,22 @@ The default temperature.
 
 ---
 
+### to\_async\_client
+
+```python
+def to_async_client(self):
+```
+
+Return an asynchronous version of the client (`AsyncMultiLLM` instance), with
+the exact same configuration as this synchronous (`MultiLLM`) client.
+
+**Returns**:
+
+An `AsyncMultiLLM` instance with the same configuration as this `MultiLLM`
+instance.
+
+---
+
 ### tool\_choice
 
 ```python

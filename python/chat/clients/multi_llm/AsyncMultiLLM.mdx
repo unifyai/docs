@@ -1,9 +1,9 @@
 ---
-title: 'MultiLLMAsync'
+title: 'AsyncMultiLLM'
 ---
 
 ```python
-class MultiLLMAsync
+class AsyncMultiLLM
 ```
 
 
@@ -1290,6 +1290,22 @@ Get the default temperature, if set.
 **Returns**:
 
 The default temperature.
+
+---
+
+### to\_sync\_client
+
+```python
+def to_sync_client(self):
+```
+
+Return a synchronous version of the client (`MultiLLM` instance), with the
+exact same configuration as this asynchronous (`AsyncMultiLLM`) client.
+
+**Returns**:
+
+A `MultiLLM` instance with the same configuration as this `AsyncMultiLLM`
+instance.
 
 ---
 
