@@ -151,7 +151,8 @@
                 {
                     "group": "evaluation",
                     "pages": [
-                        "python/evaluation/Evaluation"
+                        "python/evaluation/Evaluation",
+                        "python/evaluation/EvaluationSet"
                     ]
                 },
                 {
