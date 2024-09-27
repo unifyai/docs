@@ -127,8 +127,8 @@
                                 {
                                     "group": "multi_llm",
                                     "pages": [
-                                        "python/chat/clients/multi_llm/MultiLLM",
-                                        "python/chat/clients/multi_llm/MultiLLMAsync"
+                                        "python/chat/clients/multi_llm/AsyncMultiLLM",
+                                        "python/chat/clients/multi_llm/MultiLLM"
                                     ]
                                 },
                                 {
