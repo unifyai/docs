@@ -107,6 +107,7 @@ def __init__(
             self,
             scores: Union[Score, List[Score]],
             *,
+            scorer: Type[Score],
             name: str = None,
             auto_sync: Union[bool, str] = False,
             api_key: Optional[str] = None
@@ -207,7 +208,7 @@ def __repr__(self) -> str:
 ### \_\_rich\_repr\_\_
 
 ```python
-def __rich_repr__(self) -> List[Datum]:
+def __rich_repr__(self) -> Dict:
 ```
 
 Used by the rich package for representing and print the instance.
