@@ -1,0 +1,14 @@
+---
+title: 'try_cast'
+---
+
+```python
+def try_cast(
+        inp: Union[str, bool, float, Score, Prompt, Datum, ChatCompletion],
+        to_type: Union[
+            Type[Union[str, bool, float, Score, Prompt, Datum, ChatCompletion]],
+            List[Type[Union[str, bool, float, Score, Prompt, Datum, ChatCompletion]]]
+        ],
+) -> Union[str, bool, float, Score, Prompt, Datum, ChatCompletion]:
+```
+
