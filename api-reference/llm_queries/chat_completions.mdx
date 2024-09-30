@@ -194,8 +194,8 @@ curl --request POST \
     "response_format": "{ \"type\": \"json_mode\"}",
     "seed": 11,
     "stream_options": [
-        "include_usage",
-        true
+        true,
+        "include_usage"
     ],
     "top_p": 0.5,
     "tool_choice": "{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}",
@@ -218,7 +218,7 @@ url = "https://api.unify.ai/v0/chat/completions"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"messages": [{"content": "Tell me a joke", "role": "user"}], "model": "gpt-4o-mini@openai", "max_tokens": 1024, "stop": ["The End.", " is the answer."], "stream": False, "temperature": 0.9, "frequency_penalty": 1.5, "logit_bias": {"0": 10, "1": -75, "2": 90}, "logprobs": False, "top_logprobs": 15, "n": 15, "presence_penalty": -1.1, "response_format": "{ "type": "json_mode"}", "seed": 11, "stream_options": ["include_usage", True], "top_p": 0.5, "tool_choice": "{"type": "function", "function": {"name": "my_function"}}", "parallel_tool_calls": True, "user": "some_user", "signature": "python", "use_custom_keys": True, "tags": ["user123", "CompanyABC"], "drop_params": True}
+json_input = {"messages": [{"content": "Tell me a joke", "role": "user"}], "model": "gpt-4o-mini@openai", "max_tokens": 1024, "stop": ["The End.", " is the answer."], "stream": False, "temperature": 0.9, "frequency_penalty": 1.5, "logit_bias": {"0": 10, "1": -75, "2": 90}, "logprobs": False, "top_logprobs": 15, "n": 15, "presence_penalty": -1.1, "response_format": "{ "type": "json_mode"}", "seed": 11, "stream_options": [True, "include_usage"], "top_p": 0.5, "tool_choice": "{"type": "function", "function": {"name": "my_function"}}", "parallel_tool_calls": True, "user": "some_user", "signature": "python", "use_custom_keys": True, "tags": ["user123", "CompanyABC"], "drop_params": True}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
