@@ -1,5 +1,5 @@
 ---
-title: 'Fine-Tuned Models'
+title: 'Fine-Tuning'
 ---
 
 Fine-tuned models can often outperform generic foundation models in specialized domains.
@@ -20,7 +20,7 @@ is common across all the providers. It involves the following steps:
 [python client](https://docs.unify.ai/python/utils/custom_api_keys/create_custom_api_key)
 and create a custom API key.
 - The `name` of the key should be the provider you would like to use, you can use `unify.utils.list_providers()`
-to get the list of supported providers. In case you'd like to use an API key that isn't among the supported providers,
+to get the list of supported providers. In case you'd like to use an API key not among the supported providers,
 you can create an API key with any name you like and pass it accordingly while creating the custom endpoint.
 - The `value` of the key should be the credentials that you would want to pass to the provider.
 
@@ -71,7 +71,7 @@ from your console) which becomes the `model_name`.
 - Vertex AI models can be fine-tuned referring
 [this](https://cloud.google.com/vertex-ai/generative-ai/docs/models/tune-models) section of their docs.
 - In case of the custom API key, you would need to pass in the `vertex_credentials` (the service account JSON content),
-the `vertex_project` and the `vertex_location` as a JSON string to the `value`. For e.g. if you're using the python
+the `vertex_project` and the `vertex_location` as a JSON string to the `value`. For e.g., if you're using the python
 client, you could do something like,
 ```
 create_custom_api_key(
@@ -88,7 +88,7 @@ numeric endpoint ID for the deployed endpoint as the `model_name`.
 
 ### Together AI
 
-- Fine-tune your models referring [this](https://www.together.ai/blog/finetuning).
+- Fine-tune your models referring to [this](https://www.together.ai/blog/finetuning).
 - The custom API key value would be your `TOGETHER_API_KEY`.
 - After deploying the fine-tuned model, you can pass the `<user_email>/<model_name>-<dataset_name>-<id>` to the
 `model_name` while creating the custom endpoint.
