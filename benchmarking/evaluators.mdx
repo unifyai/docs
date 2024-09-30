@@ -5,21 +5,21 @@ title: 'Evaluators'
 
 On a high level, an evaluator is *basically* any function which receives a prompt,
 receives optional extra fields corresponding to the prompt, receives a *response* to
-the prompt, and then returns a score evaluating the response (and optionally a
-justification for this score), and that's it!
+the prompt, and then returns a score evaluating the response, and optionally also a justification for this score.
+That's it!
 
 There is a bit more nuance to the exact types used in the implementation,
 but conceptually, this is all an evaluator is.
-Let's dive in and create a simple evaluator! 🧑‍💻
+Let's dive in create some custom evaluators for different use cases! 🧑‍💻
 
 ## Custom Evaluators
 
-Lets go through a few simple example, showing how you can subclass the `unify.Evaluator`
+We go through a few simple example, showing how you can subclass the `unify.Evaluator`
 base class to create evaluators for all kinds of applications.
 
 ### Binary Evaluator
 
-To begin with, let's assume we have the following dataset to evaluate:
+To begin with, let's assume we have the following dataset of simple arithmetic problems to evaluate:
 
 ```python
 import unify
@@ -159,10 +159,10 @@ instance returned. The public `evaluate` method makes use of your custom `_evalu
 method internally, but `_evaluate` does not need to access the `agent`.
 
 The public `evaluate` method *also* performs automatic upcasting and downcasting of the
-inputs if needed, ensuring that all inputs passed to `evaluate` are subsequently cast to
-the required type, as per the **type hints you've added** to your `_evaluate` method.
-For example, the following runs without error, despite our custom `_evaluate`
-implementation only accepting `str` inputs for `prompt` and `response`:
+inputs if needed via `unify.cast`, ensuring that all inputs passed to `evaluate` are
+subsequently cast to the required type, as per the **type hints you've added** to your
+`_evaluate` method. For example, the following runs without error, despite our custom
+`_evaluate` implementation only accepting `str` inputs for `prompt` and `response`:
 
 ```python
 import unify
@@ -176,9 +176,8 @@ for prompt in (unify.Datum("1 + 3"), unify.Prompt("1 + 3"), "1 + 3"):
 ```
 
 If type hints are **not provided** in your custom `_evaluate` implementation,
-then no automatic casting is performed, and `prompt` will be passed to `_evaluate` as a
-`unify.Prompt` instance, and `response` will be passed as a `unify.ChatCompletion`
-instance.
+then `prompt` will be passed to `_evaluate` as a `unify.Prompt` instance, and `response`
+will be passed as a `unify.ChatCompletion` instance.
 
 ### Human Evaluator
 
@@ -459,6 +458,7 @@ class CorrectEvaluator(unify.Evaluator):
                 return False
 ```
 
+## Agents
 
 ## LLM Judges
 
@@ -466,15 +466,8 @@ class CorrectEvaluator(unify.Evaluator):
 
 ## Evaluating the Evaluators
 
-## Agents
-
-## Evaluation Sets
-
-Use the code example to show the difference between 3 and 9 evaluations in the set.
-
 ## Uploading
 
 ## Downloading
 
 ## Synchronizing
-
