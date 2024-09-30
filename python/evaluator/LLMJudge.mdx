@@ -68,7 +68,7 @@ def evaluate(
             response: Union[ChatCompletion, str],
             agent: Union[str, _Client, Agent],
             **kwargs
-    ) -> Evaluation:
+    ) -> Union[Evaluation, EvaluationSet]:
 ```
 
 Evaluate the given response for this input prompt, with optional extra data.
