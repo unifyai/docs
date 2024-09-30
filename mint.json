@@ -154,7 +154,6 @@
                     "pages": [
                         "python/evaluation/Evaluation",
                         "python/evaluation/EvaluationSet",
-                        "python/evaluation/LLMJuryEvaluationSet",
                         "python/evaluation/ScoreSet"
                     ]
                 },
