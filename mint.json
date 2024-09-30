@@ -65,7 +65,7 @@
                         "universal_api/arguments",
                         "universal_api/prompts",
                         "universal_api/responses",
-                        "universal_api/fine_tuned_models",
+                        "universal_api/fine_tuning",
                         "universal_api/logging",
                         "universal_api/caching",
                         "universal_api/comparisons",
