@@ -110,6 +110,7 @@ def __init__(
         *,
         name: str = None,
         auto_sync: Union[bool, str] = False,
+        shared_data: Dict = None,
         api_key: Optional[str] = None,
     ) -> None:
 ```
@@ -121,6 +122,7 @@ Initialize a local dataset of LLM queries.
 - `data` - The data for populating the dataset. This can either can a list of
 - `name` - The name of the dataset.
 - `auto_sync` - Whether to automatically keep this dataset fully synchronized
+- `shared_data` - Data which is shared across all items in the dataset, with a
 - `api_key` - API key for accessing the Unify API. If None, it attempts to
 
 
