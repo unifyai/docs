@@ -16,9 +16,9 @@ You can also get your current credit balance with the following HTTP request:
 
 ```shell
 curl -X 'GET' \
-    'https://api.unify.ai/v0/get_credits' \
+    'https://api.unify.ai/v0/credits' \
     -H 'accept: application/json' \
-    -H 'Authorization: Bearer UNIFY_KEY'
+    -H "Authorization: Bearer $UNIFY_KEY"
 ```
 
 which will return something like:
