@@ -222,8 +222,13 @@
                         {
                             "group": "evaluation",
                             "pages": [
+                                "python/types/evaluation/DiffConfig",
                                 "python/types/evaluation/L1DiffConfig",
                                 "python/types/evaluation/L1DiffScore",
+                                "python/types/evaluation/L2DiffConfig",
+                                "python/types/evaluation/L2DiffScore",
+                                "python/types/evaluation/RelDiffConfig",
+                                "python/types/evaluation/RelDiffScore",
                                 "python/types/evaluation/Score"
                             ]
                         }
