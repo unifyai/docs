@@ -155,7 +155,6 @@
                         "python/evaluation/Evaluation",
                         "python/evaluation/EvaluationSet",
                         "python/evaluation/Rationales",
-                        "python/evaluation/ScoreSet",
                         "python/evaluation/Scores"
                     ]
                 },
