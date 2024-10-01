@@ -1,12 +1,12 @@
 ---
-title: 'Datum'
+title: 'L1DiffScore'
 ---
 
 ```python
-class Datum
+class L1DiffScore
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/46451a0b1c936f3d04a340c17764bc4cd231bb4c/unify/types/dataset.py#L8)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/46451a0b1c936f3d04a340c17764bc4cd231bb4c/unify/types/evaluation.py#L65)</p>
 
 
 
@@ -20,6 +20,18 @@ class Datum
 
 ```python
 def __fields_set__(self) -> set[str]:
+```
+
+
+
+---
+
+### config
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/46451a0b1c936f3d04a340c17764bc4cd231bb4c/unify/types/evaluation.py#L67)</p>
+
+```python
+def config(self) -> Dict[float, str]:
 ```
 
 
@@ -101,23 +113,23 @@ def __hash__(self):
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/46451a0b1c936f3d04a340c17764bc4cd231bb4c/unify/types/dataset.py#L10)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/46451a0b1c936f3d04a340c17764bc4cd231bb4c/unify/types/evaluation.py#L13)</p>
 
 ```python
-def __init__(self, **kwargs):
+def __init__(self, value: Optional[float] = None):
 ```
 
-Create Datum instance.
+Create Score instance.
 
 **Arguments**:
 
-- `kwargs` - All the data fields to pass.
+- `value` - The value of the assigned score
 
 
 
 **Returns**:
 
-The pydantic Datum instance.
+The pydantic Score instance, with associated value and class description
 
 ---
 
