@@ -8,34 +8,91 @@ class LLMJudge
 
 
 
+## properties
+
 ---
 
-### \_\_init\_\_
+### class\_config
 
 ```python
-def __init__(
-            self,
-            client: Union[Unify, AsyncUnify],
-            judge_prompt: Union[str, Prompt],
-            name: Optional[str] = None,
-            prompt_parser: Optional[Dict[str, List[Union[str, int]]]] = None,
-            response_parser: Optional[Dict[str, List[Union[str, int]]]] = None,
-            extra_parser: Optional[Dict[str, List[Union[str, int]]]] = None,
-            include_rationale: bool = False,
-    ):
+def class_config(self) -> Dict[float, str]:
 ```
 
-Creates an LLM as a Judge Evaluator.
 
-**Arguments**:
 
-- `client` - The client to use as the LLM Judge.
-- `judge_prompt` - The prompt for the judge to use when performing evaluations.
-- `name` - The name to give to this LLM Judge evaluator, optional.
-- `prompt_parser` - Function to parse the prompt and update corresponding
-- `response_parser` - Function to parse the response and update corresponding
-- `extra_parser` - Function to parse the extra fields provided alongside the
-- `include_rationale` - Whether to include the LLM's rationale as part of
+---
+
+### client
+
+```python
+def client(self) -> Union[Unify, AsyncUnify]:
+```
+
+
+
+---
+
+### include\_rationale
+
+```python
+def include_rationale(self) -> bool:
+```
+
+
+
+---
+
+### name
+
+```python
+def name(self) -> Optional[str]:
+```
+
+
+
+---
+
+### scorer
+
+```python
+def scorer(self) -> Type[Score]:
+```
+
+
+
+## setters
+
+---
+
+### set\_client
+
+```python
+def set_client(self, value: Union[Unify, AsyncUnify]) -> None:
+```
+
+
+
+---
+
+### set\_include\_rationale
+
+```python
+def set_include_rationale(self, value: bool) -> None:
+```
+
+
+
+---
+
+### set\_name
+
+```python
+def set_name(self, value: str):
+```
+
+
+
+## methods
 
 ---
 
@@ -117,31 +174,33 @@ def scorer(self) -> Type[Score]:
 
 
 
----
-
-### set\_client
-
-```python
-def set_client(self, value: Union[Unify, AsyncUnify]) -> None:
-```
-
-
+## dunder_methods
 
 ---
 
-### set\_include\_rationale
+### \_\_init\_\_
 
 ```python
-def set_include_rationale(self, value: bool) -> None:
+def __init__(
+            self,
+            client: Union[Unify, AsyncUnify],
+            judge_prompt: Union[str, Prompt],
+            name: Optional[str] = None,
+            prompt_parser: Optional[Dict[str, List[Union[str, int]]]] = None,
+            response_parser: Optional[Dict[str, List[Union[str, int]]]] = None,
+            extra_parser: Optional[Dict[str, List[Union[str, int]]]] = None,
+            include_rationale: bool = False,
+    ):
 ```
 
+Creates an LLM as a Judge Evaluator.
 
+**Arguments**:
 
----
-
-### set\_name
-
-```python
-def set_name(self, value: str):
-```
-
+- `client` - The client to use as the LLM Judge.
+- `judge_prompt` - The prompt for the judge to use when performing evaluations.
+- `name` - The name to give to this LLM Judge evaluator, optional.
+- `prompt_parser` - Function to parse the prompt and update corresponding
+- `response_parser` - Function to parse the response and update corresponding
+- `extra_parser` - Function to parse the extra fields provided alongside the
+- `include_rationale` - Whether to include the LLM's rationale as part of
