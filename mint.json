@@ -222,6 +222,8 @@
                         {
                             "group": "evaluation",
                             "pages": [
+                                "python/types/evaluation/L1DiffConfig",
+                                "python/types/evaluation/L1DiffScore",
                                 "python/types/evaluation/Score"
                             ]
                         }
