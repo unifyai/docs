@@ -357,6 +357,16 @@ This dataset after the in-place download, useful for chaining methods.
 
 ---
 
+### evaluator
+
+```python
+def evaluator(self) -> Union[str, List[str]]:
+```
+
+
+
+---
+
 ### from\_upstream
 
 ```python
@@ -456,6 +466,46 @@ def name(self) -> str:
 ```
 
 Name of the dataset.
+
+---
+
+### prompt
+
+```python
+def prompt(self) -> Union[Prompt, Dict[str, Prompt]]:
+```
+
+
+
+---
+
+### rationale
+
+```python
+def rationale(self) -> Union[List[str], Dict[str, str]]:
+```
+
+
+
+---
+
+### response
+
+```python
+def response(self) -> Union[ChatCompletion, Dict[str, ChatCompletion]]:
+```
+
+
+
+---
+
+### score
+
+```python
+def score(self) -> Union[List[Score], Dict[str, Score]]:
+```
+
+
 
 ---
 
