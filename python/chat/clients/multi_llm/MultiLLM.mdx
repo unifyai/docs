@@ -8,134 +8,7 @@ class MultiLLM
 
 
 
----
-
-### \_\_init\_\_
-
-```python
-def __init__(
-        self,
-        endpoints: Optional[Iterable[str]] = None,
-        *,
-        system_message: Optional[str] = None,
-        messages: Optional[
-            Union[List[ChatCompletionMessageParam],
-                  Dict[str, List[ChatCompletionMessageParam]]]] = None,
-        frequency_penalty: Optional[float] = None,
-        logit_bias: Optional[Dict[str, int]] = None,
-        logprobs: Optional[bool] = None,
-        top_logprobs: Optional[int] = None,
-        max_completion_tokens: Optional[int] = 1024,
-        n: Optional[int] = None,
-        presence_penalty: Optional[float] = None,
-        response_format: Optional[ResponseFormat] = None,
-        seed: Optional[int] = None,
-        stop: Union[Optional[str], List[str]] = None,
-        temperature: Optional[float] = 1.0,
-        top_p: Optional[float] = None,
-        tools: Optional[Iterable[ChatCompletionToolParam]] = None,
-        tool_choice: Optional[ChatCompletionToolChoiceOptionParam] = None,
-        parallel_tool_calls: Optional[bool] = None,
-        # platform arguments
-        use_custom_keys: bool = False,
-        tags: Optional[List[str]] = None,
-        drop_params: Optional[bool] = True,
-        region: Optional[str] = None,
-        log_query_body: Optional[bool] = True,
-        log_response_body: Optional[bool] = True,
-        api_key: Optional[str] = None,
-        # python client arguments
-        return_full_completion: bool = False,
-        cache: bool = False,
-        # passthrough arguments
-        extra_headers: Optional[Headers] = None,
-        extra_query: Optional[Query] = None,
-        **kwargs,
-    ) -> None:
-```
-
-Initialize the Multi LLM Unify client.
-
-**Arguments**:
-
-- `endpoints` - A list of endpoint names, with each name in OpenAI API format:
-- `system_message` - An optional string containing the system message. This
-- `messages` - A list of messages comprising the conversation so far. This will
-- `frequency_penalty` - Number between -2.0 and 2.0. Positive values penalize new
-- `logit_bias` - Modify the likelihood of specified tokens appearing in the
-- `logprobs` - Whether to return log probabilities of the output tokens or not.
-- `top_logprobs` - An integer between 0 and 20 specifying the number of most
-- `max_completion_tokens` - The maximum number of tokens that can be generated in
-- `n` - How many chat completion choices to generate for each input message. Note
-- `presence_penalty` - Number between -2.0 and 2.0. Positive values penalize new
-- `response_format` - An object specifying the format that the model must output.
-- `seed` - If specified, a best effort attempt is made to sample
-- `stop` - Up to 4 sequences where the API will stop generating further tokens.
-- `temperature` -  What sampling temperature to use, between 0 and 2.
-- `top_p` - An alternative to sampling with temperature, called nucleus sampling,
-- `tools` - A list of tools the model may call. Currently, only functions are
-- `tool_choice` - Controls which (if any) tool is called by the
-- `parallel_tool_calls` - Whether to enable parallel function calling during tool
-- `use_custom_keys` -  Whether to use custom API keys or our unified API keys
-- `tags` - Arbitrary number of tags to classify this API query as needed. Helpful
-- `drop_params` - Whether or not to drop unsupported OpenAI params by the
-- `region` - A string used to represent the region where the endpoint is
-- `log_query_body` - Whether to log the contents of the query json body.
-- `log_response_body` - Whether to log the contents of the response json body.
-- `return_full_completion` - If False, only return the message content
-- `cache` - If True, then the arguments will be stored in a local cache file, and
-- `extra_headers` - Additional "passthrough" headers for the request which are
-- `extra_query` - Additional "passthrough" query parameters for the request which
-- `kwargs` - Additional "passthrough" JSON properties for the body of the
-
-
-
-**Raises**:
-
-- `UnifyError`: If the API key is missing.
-
----
-
-### \_\_repr\_\_
-
-```python
-def __repr__(self):
-```
-
-
-
----
-
-### \_\_str\_\_
-
-```python
-def __str__(self):
-```
-
-
-
----
-
-### add\_endpoints
-
-```python
-def add_endpoints(
-        self, endpoints: Union[List[str], str], ignore_duplicates: bool = True
-    ) -> Self:
-```
-
-Add extra endpoints to be queried for each call to generate.
-
-**Arguments**:
-
-- `endpoints` - The extra endpoints to add.
-- `ignore_duplicates` - Whether or not to ignore duplicate endpoints passed.
-
-
-
-**Returns**:
-
-This client, useful for chaining inplace calls.
+## properties
 
 ---
 
@@ -263,123 +136,6 @@ Get the default frequency penalty, if set.
 **Returns**:
 
 The default frequency penalty.
-
----
-
-### generate
-
-```python
-def generate(
-            self,
-            user_message: Optional[str] = None,
-            system_message: Optional[str] = None,
-            messages: Optional[
-                Union[List[ChatCompletionMessageParam],
-                      Dict[str, List[ChatCompletionMessageParam]]]] = None,
-            *,
-            frequency_penalty: Optional[float] = None,
-            logit_bias: Optional[Dict[str, int]] = None,
-            logprobs: Optional[bool] = None,
-            top_logprobs: Optional[int] = None,
-            max_completion_tokens: Optional[int] = None,
-            n: Optional[int] = None,
-            presence_penalty: Optional[float] = None,
-            response_format: Optional[ResponseFormat] = None,
-            seed: Optional[int] = None,
-            stop: Union[Optional[str], List[str]] = None,
-            stream: Optional[bool] = None,
-            stream_options: Optional[ChatCompletionStreamOptionsParam] = None,
-            temperature: Optional[float] = None,
-            top_p: Optional[float] = None,
-            tools: Optional[Iterable[ChatCompletionToolParam]] = None,
-            tool_choice: Optional[ChatCompletionToolChoiceOptionParam] = None,
-            parallel_tool_calls: Optional[bool] = None,
-            # platform arguments
-            use_custom_keys: Optional[bool] = None,
-            tags: Optional[List[str]] = None,
-            drop_params: Optional[bool] = None,
-            region: Optional[str] = None,
-            log_query_body: Optional[bool] = None,
-            log_response_body: Optional[bool] = None,
-            # python client arguments
-            return_full_completion: Optional[bool] = None,
-            cache: Optional[bool] = None,
-            # passthrough arguments
-            extra_headers: Optional[Headers] = None,
-            extra_query: Optional[Query] = None,
-            **kwargs,
-    ):
-```
-
-Generate a ChatCompletion response for the specified endpoint,
-from the provided query parameters.
-
-**Arguments**:
-
-- `user_message` - A string containing the user message.
-- `system_message` - An optional string containing the system message. This
-- `messages` - A list of messages comprising the conversation so far, or
-- `frequency_penalty` - Number between -2.0 and 2.0. Positive values penalize new
-- `logit_bias` - Modify the likelihood of specified tokens appearing in the
-- `logprobs` - Whether to return log probabilities of the output tokens or not.
-- `top_logprobs` - An integer between 0 and 20 specifying the number of most
-- `max_completion_tokens` - The maximum number of tokens that can be generated in
-- `n` - How many chat completion choices to generate for each input message. Note
-- `presence_penalty` - Number between -2.0 and 2.0. Positive values penalize new
-- `response_format` - An object specifying the format that the model must output.
-- `seed` - If specified, a best effort attempt is made to sample
-- `stop` - Up to 4 sequences where the API will stop generating further tokens.
-- `stream` - If True, generates content as a stream. If False, generates content
-- `stream_options` - Options for streaming response. Only set this when you set
-- `stream` - true.
-- `temperature` -  What sampling temperature to use, between 0 and 2.
-- `top_p` - An alternative to sampling with temperature, called nucleus sampling,
-- `tools` - A list of tools the model may call. Currently, only functions are
-- `tool_choice` - Controls which (if any) tool is called by the
-- `parallel_tool_calls` - Whether to enable parallel function calling during tool
-- `use_custom_keys` -  Whether to use custom API keys or our unified API keys
-- `tags` - Arbitrary number of tags to classify this API query as needed. Helpful
-- `drop_params` - Whether or not to drop unsupported OpenAI params by the
-- `region` - A string used to represent the region where the endpoint is
-- `log_query_body` - Whether to log the contents of the query json body.
-- `log_response_body` - Whether to log the contents of the response json body.
-- `return_full_completion` - If False, only return the message content
-- `cache` - If True, then the arguments will be stored in a local cache file, and
-- `extra_headers` - Additional "passthrough" headers for the request which are
-- `extra_query` - Additional "passthrough" query parameters for the request which
-- `kwargs` - Additional "passthrough" JSON properties for the body of the
-
-
-
-**Returns**:
-
-If stream is True, returns a generator yielding chunks of content.
-If stream is False, returns a single string response.
-
-
-
-**Raises**:
-
-- `UnifyError`: If an error occurs during content generation.
-
----
-
-### get\_credit\_balance
-
-```python
-def get_credit_balance(self) -> Union[float, None]:
-```
-
-Get the remaining credits left on your account.
-
-**Returns**:
-
-The remaining credits on the account if successful, otherwise None.
-Raises:
-BadRequestError: If there was an HTTP error.
-ValueError: If there was an error parsing the JSON response.
-- `BadRequestError` - If there was an HTTP error.
-- `ValueError` - If there was an error parsing the JSON response.
 
 ---
 
@@ -525,30 +281,6 @@ The default region.
 
 ---
 
-### remove\_endpoints
-
-```python
-def remove_endpoints(
-        self, endpoints: Union[List[str], str], ignore_missing: bool = True
-    ) -> Self:
-```
-
-Remove endpoints from the current list, which are queried for each call to
-generate.
-
-**Arguments**:
-
-- `endpoints` - The extra endpoints to add.
-- `ignore_missing` - Whether or not to ignore endpoints passed which are not
-
-
-
-**Returns**:
-
-This client, useful for chaining inplace calls.
-
----
-
 ### response\_format
 
 ```python
@@ -588,6 +320,162 @@ Get the default seed value, if set.
 **Returns**:
 
 The default seed value.
+
+---
+
+### stop
+
+```python
+def stop(self) -> Union[Optional[str], List[str]]:
+```
+
+Get the default stop value, if set.
+
+**Returns**:
+
+The default stop value.
+
+---
+
+### stream
+
+```python
+def stream(self) -> Optional[bool]:
+```
+
+Get the default stream bool, if set.
+
+**Returns**:
+
+The default stream bool.
+
+---
+
+### stream\_options
+
+```python
+def stream_options(self) -> Optional[ChatCompletionStreamOptionsParam]:
+```
+
+Get the default stream options, if set.
+
+**Returns**:
+
+The default stream options.
+
+---
+
+### system\_message
+
+```python
+def system_message(self) -> Optional[str]:
+```
+
+Get the default system message, if set.
+
+**Returns**:
+
+The default system message.
+
+---
+
+### tags
+
+```python
+def tags(self) -> Optional[List[str]]:
+```
+
+Get the default tags, if set.
+
+**Returns**:
+
+The default tags.
+
+---
+
+### temperature
+
+```python
+def temperature(self) -> Optional[float]:
+```
+
+Get the default temperature, if set.
+
+**Returns**:
+
+The default temperature.
+
+---
+
+### tool\_choice
+
+```python
+def tool_choice(self) -> Optional[ChatCompletionToolChoiceOptionParam]:
+```
+
+Get the default tool choice, if set.
+
+**Returns**:
+
+The default tool choice.
+
+---
+
+### tools
+
+```python
+def tools(self) -> Optional[Iterable[ChatCompletionToolParam]]:
+```
+
+Get the default tools, if set.
+
+**Returns**:
+
+The default tools.
+
+---
+
+### top\_logprobs
+
+```python
+def top_logprobs(self) -> Optional[int]:
+```
+
+Get the default top logprobs, if set.
+
+**Returns**:
+
+The default top logprobs.
+
+---
+
+### top\_p
+
+```python
+def top_p(self) -> Optional[float]:
+```
+
+Get the default top p value, if set.
+
+**Returns**:
+
+The default top p value.
+
+---
+
+### use\_custom\_keys
+
+```python
+def use_custom_keys(self) -> bool:
+```
+
+Get the default use custom keys bool, if set.
+
+**Returns**:
+
+The default use custom keys bool.
+
+## setters
 
 ---
 
@@ -1207,6 +1095,483 @@ Set the default use custom keys bool.
 
 This client, useful for chaining inplace calls.
 
+## methods
+
+---
+
+### add\_endpoints
+
+```python
+def add_endpoints(
+        self, endpoints: Union[List[str], str], ignore_duplicates: bool = True
+    ) -> Self:
+```
+
+Add extra endpoints to be queried for each call to generate.
+
+**Arguments**:
+
+- `endpoints` - The extra endpoints to add.
+- `ignore_duplicates` - Whether or not to ignore duplicate endpoints passed.
+
+
+
+**Returns**:
+
+This client, useful for chaining inplace calls.
+
+---
+
+### cache
+
+```python
+def cache(self) -> bool:
+```
+
+Get default the cache bool.
+
+**Returns**:
+
+The default cache bool.
+
+---
+
+### clients
+
+```python
+def clients(self) -> Dict[str, _UniLLMClient]:
+```
+
+Get the current dictionary of clients, with endpoint names as keys and
+Unify or AsyncUnify instances as values.
+
+**Returns**:
+
+The dictionary of clients.
+
+---
+
+### default\_prompt
+
+```python
+def default_prompt(self) -> Prompt:
+```
+
+Get the default prompt, if set.
+
+**Returns**:
+
+The default prompt.
+
+---
+
+### drop\_params
+
+```python
+def drop_params(self) -> Optional[bool]:
+```
+
+Get the default drop_params bool, if set.
+
+**Returns**:
+
+The default drop_params bool.
+
+---
+
+### endpoints
+
+```python
+def endpoints(self) -> Tuple[str, ...]:
+```
+
+Get the current tuple of endpoints.
+
+**Returns**:
+
+The tuple of endpoints.
+
+---
+
+### extra\_body
+
+```python
+def extra_body(self) -> Optional[Mapping[str, str]]:
+```
+
+Get the default extra body, if set.
+
+**Returns**:
+
+The default extra body.
+
+---
+
+### extra\_headers
+
+```python
+def extra_headers(self) -> Optional[Headers]:
+```
+
+Get the default extra headers, if set.
+
+**Returns**:
+
+The default extra headers.
+
+---
+
+### extra\_query
+
+```python
+def extra_query(self) -> Optional[Query]:
+```
+
+Get the default extra query, if set.
+
+**Returns**:
+
+The default extra query.
+
+---
+
+### frequency\_penalty
+
+```python
+def frequency_penalty(self) -> Optional[float]:
+```
+
+Get the default frequency penalty, if set.
+
+**Returns**:
+
+The default frequency penalty.
+
+---
+
+### generate
+
+```python
+def generate(
+            self,
+            user_message: Optional[str] = None,
+            system_message: Optional[str] = None,
+            messages: Optional[
+                Union[List[ChatCompletionMessageParam],
+                      Dict[str, List[ChatCompletionMessageParam]]]] = None,
+            *,
+            frequency_penalty: Optional[float] = None,
+            logit_bias: Optional[Dict[str, int]] = None,
+            logprobs: Optional[bool] = None,
+            top_logprobs: Optional[int] = None,
+            max_completion_tokens: Optional[int] = None,
+            n: Optional[int] = None,
+            presence_penalty: Optional[float] = None,
+            response_format: Optional[ResponseFormat] = None,
+            seed: Optional[int] = None,
+            stop: Union[Optional[str], List[str]] = None,
+            stream: Optional[bool] = None,
+            stream_options: Optional[ChatCompletionStreamOptionsParam] = None,
+            temperature: Optional[float] = None,
+            top_p: Optional[float] = None,
+            tools: Optional[Iterable[ChatCompletionToolParam]] = None,
+            tool_choice: Optional[ChatCompletionToolChoiceOptionParam] = None,
+            parallel_tool_calls: Optional[bool] = None,
+            # platform arguments
+            use_custom_keys: Optional[bool] = None,
+            tags: Optional[List[str]] = None,
+            drop_params: Optional[bool] = None,
+            region: Optional[str] = None,
+            log_query_body: Optional[bool] = None,
+            log_response_body: Optional[bool] = None,
+            # python client arguments
+            return_full_completion: Optional[bool] = None,
+            cache: Optional[bool] = None,
+            # passthrough arguments
+            extra_headers: Optional[Headers] = None,
+            extra_query: Optional[Query] = None,
+            **kwargs,
+    ):
+```
+
+Generate a ChatCompletion response for the specified endpoint,
+from the provided query parameters.
+
+**Arguments**:
+
+- `user_message` - A string containing the user message.
+- `system_message` - An optional string containing the system message. This
+- `messages` - A list of messages comprising the conversation so far, or
+- `frequency_penalty` - Number between -2.0 and 2.0. Positive values penalize new
+- `logit_bias` - Modify the likelihood of specified tokens appearing in the
+- `logprobs` - Whether to return log probabilities of the output tokens or not.
+- `top_logprobs` - An integer between 0 and 20 specifying the number of most
+- `max_completion_tokens` - The maximum number of tokens that can be generated in
+- `n` - How many chat completion choices to generate for each input message. Note
+- `presence_penalty` - Number between -2.0 and 2.0. Positive values penalize new
+- `response_format` - An object specifying the format that the model must output.
+- `seed` - If specified, a best effort attempt is made to sample
+- `stop` - Up to 4 sequences where the API will stop generating further tokens.
+- `stream` - If True, generates content as a stream. If False, generates content
+- `stream_options` - Options for streaming response. Only set this when you set
+- `stream` - true.
+- `temperature` -  What sampling temperature to use, between 0 and 2.
+- `top_p` - An alternative to sampling with temperature, called nucleus sampling,
+- `tools` - A list of tools the model may call. Currently, only functions are
+- `tool_choice` - Controls which (if any) tool is called by the
+- `parallel_tool_calls` - Whether to enable parallel function calling during tool
+- `use_custom_keys` -  Whether to use custom API keys or our unified API keys
+- `tags` - Arbitrary number of tags to classify this API query as needed. Helpful
+- `drop_params` - Whether or not to drop unsupported OpenAI params by the
+- `region` - A string used to represent the region where the endpoint is
+- `log_query_body` - Whether to log the contents of the query json body.
+- `log_response_body` - Whether to log the contents of the response json body.
+- `return_full_completion` - If False, only return the message content
+- `cache` - If True, then the arguments will be stored in a local cache file, and
+- `extra_headers` - Additional "passthrough" headers for the request which are
+- `extra_query` - Additional "passthrough" query parameters for the request which
+- `kwargs` - Additional "passthrough" JSON properties for the body of the
+
+
+
+**Returns**:
+
+If stream is True, returns a generator yielding chunks of content.
+If stream is False, returns a single string response.
+
+
+
+**Raises**:
+
+- `UnifyError`: If an error occurs during content generation.
+
+---
+
+### get\_credit\_balance
+
+```python
+def get_credit_balance(self) -> Union[float, None]:
+```
+
+Get the remaining credits left on your account.
+
+**Returns**:
+
+The remaining credits on the account if successful, otherwise None.
+Raises:
+BadRequestError: If there was an HTTP error.
+ValueError: If there was an error parsing the JSON response.
+- `BadRequestError` - If there was an HTTP error.
+- `ValueError` - If there was an error parsing the JSON response.
+
+---
+
+### log\_query\_body
+
+```python
+def log_query_body(self) -> Optional[bool]:
+```
+
+Get the default log query body bool, if set.
+
+**Returns**:
+
+The default log query body bool.
+
+---
+
+### log\_response\_body
+
+```python
+def log_response_body(self) -> Optional[bool]:
+```
+
+Get the default log response body bool, if set.
+
+**Returns**:
+
+The default log response body bool.
+
+---
+
+### logit\_bias
+
+```python
+def logit_bias(self) -> Optional[Dict[str, int]]:
+```
+
+Get the default logit bias, if set.
+
+**Returns**:
+
+The default logit bias.
+
+---
+
+### logprobs
+
+```python
+def logprobs(self) -> Optional[bool]:
+```
+
+Get the default logprobs, if set.
+
+**Returns**:
+
+The default logprobs.
+
+---
+
+### max\_completion\_tokens
+
+```python
+def max_completion_tokens(self) -> Optional[int]:
+```
+
+Get the default max tokens, if set.
+
+**Returns**:
+
+The default max tokens.
+
+---
+
+### messages
+
+```python
+def messages(self) -> Optional[
+        Union[List[ChatCompletionMessageParam],
+              Dict[str, List[ChatCompletionMessageParam]]]]:
+```
+
+Get the default messages, if set.
+
+**Returns**:
+
+The default messages.
+
+---
+
+### n
+
+```python
+def n(self) -> Optional[int]:
+```
+
+Get the default n, if set.
+
+**Returns**:
+
+The default n value.
+
+---
+
+### parallel\_tool\_calls
+
+```python
+def parallel_tool_calls(self) -> Optional[bool]:
+```
+
+Get the default parallel tool calls bool, if set.
+
+**Returns**:
+
+The default parallel tool calls bool.
+
+---
+
+### presence\_penalty
+
+```python
+def presence_penalty(self) -> Optional[float]:
+```
+
+Get the default presence penalty, if set.
+
+**Returns**:
+
+The default presence penalty.
+
+---
+
+### region
+
+```python
+def region(self) -> Optional[str]:
+```
+
+Get the default region, if set.
+
+**Returns**:
+
+The default region.
+
+---
+
+### remove\_endpoints
+
+```python
+def remove_endpoints(
+        self, endpoints: Union[List[str], str], ignore_missing: bool = True
+    ) -> Self:
+```
+
+Remove endpoints from the current list, which are queried for each call to
+generate.
+
+**Arguments**:
+
+- `endpoints` - The extra endpoints to add.
+- `ignore_missing` - Whether or not to ignore endpoints passed which are not
+
+
+
+**Returns**:
+
+This client, useful for chaining inplace calls.
+
+---
+
+### response\_format
+
+```python
+def response_format(self) -> Optional[ResponseFormat]:
+```
+
+Get the default response format, if set.
+
+**Returns**:
+
+The default response format.
+
+---
+
+### return\_full\_completion
+
+```python
+def return_full_completion(self) -> bool:
+```
+
+Get the default return full completion bool.
+
+**Returns**:
+
+The default return full completion bool.
+
+---
+
+### seed
+
+```python
+def seed(self) -> Optional[int]:
+```
+
+Get the default seed value, if set.
+
+**Returns**:
+
+The default seed value.
+
 ---
 
 ### stop
@@ -1376,3 +1741,110 @@ Get the default use custom keys bool, if set.
 **Returns**:
 
 The default use custom keys bool.
+
+## dunder_methods
+
+---
+
+### \_\_init\_\_
+
+```python
+def __init__(
+        self,
+        endpoints: Optional[Iterable[str]] = None,
+        *,
+        system_message: Optional[str] = None,
+        messages: Optional[
+            Union[List[ChatCompletionMessageParam],
+                  Dict[str, List[ChatCompletionMessageParam]]]] = None,
+        frequency_penalty: Optional[float] = None,
+        logit_bias: Optional[Dict[str, int]] = None,
+        logprobs: Optional[bool] = None,
+        top_logprobs: Optional[int] = None,
+        max_completion_tokens: Optional[int] = 1024,
+        n: Optional[int] = None,
+        presence_penalty: Optional[float] = None,
+        response_format: Optional[ResponseFormat] = None,
+        seed: Optional[int] = None,
+        stop: Union[Optional[str], List[str]] = None,
+        temperature: Optional[float] = 1.0,
+        top_p: Optional[float] = None,
+        tools: Optional[Iterable[ChatCompletionToolParam]] = None,
+        tool_choice: Optional[ChatCompletionToolChoiceOptionParam] = None,
+        parallel_tool_calls: Optional[bool] = None,
+        # platform arguments
+        use_custom_keys: bool = False,
+        tags: Optional[List[str]] = None,
+        drop_params: Optional[bool] = True,
+        region: Optional[str] = None,
+        log_query_body: Optional[bool] = True,
+        log_response_body: Optional[bool] = True,
+        api_key: Optional[str] = None,
+        # python client arguments
+        return_full_completion: bool = False,
+        cache: bool = False,
+        # passthrough arguments
+        extra_headers: Optional[Headers] = None,
+        extra_query: Optional[Query] = None,
+        **kwargs,
+    ) -> None:
+```
+
+Initialize the Multi LLM Unify client.
+
+**Arguments**:
+
+- `endpoints` - A list of endpoint names, with each name in OpenAI API format:
+- `system_message` - An optional string containing the system message. This
+- `messages` - A list of messages comprising the conversation so far. This will
+- `frequency_penalty` - Number between -2.0 and 2.0. Positive values penalize new
+- `logit_bias` - Modify the likelihood of specified tokens appearing in the
+- `logprobs` - Whether to return log probabilities of the output tokens or not.
+- `top_logprobs` - An integer between 0 and 20 specifying the number of most
+- `max_completion_tokens` - The maximum number of tokens that can be generated in
+- `n` - How many chat completion choices to generate for each input message. Note
+- `presence_penalty` - Number between -2.0 and 2.0. Positive values penalize new
+- `response_format` - An object specifying the format that the model must output.
+- `seed` - If specified, a best effort attempt is made to sample
+- `stop` - Up to 4 sequences where the API will stop generating further tokens.
+- `temperature` -  What sampling temperature to use, between 0 and 2.
+- `top_p` - An alternative to sampling with temperature, called nucleus sampling,
+- `tools` - A list of tools the model may call. Currently, only functions are
+- `tool_choice` - Controls which (if any) tool is called by the
+- `parallel_tool_calls` - Whether to enable parallel function calling during tool
+- `use_custom_keys` -  Whether to use custom API keys or our unified API keys
+- `tags` - Arbitrary number of tags to classify this API query as needed. Helpful
+- `drop_params` - Whether or not to drop unsupported OpenAI params by the
+- `region` - A string used to represent the region where the endpoint is
+- `log_query_body` - Whether to log the contents of the query json body.
+- `log_response_body` - Whether to log the contents of the response json body.
+- `return_full_completion` - If False, only return the message content
+- `cache` - If True, then the arguments will be stored in a local cache file, and
+- `extra_headers` - Additional "passthrough" headers for the request which are
+- `extra_query` - Additional "passthrough" query parameters for the request which
+- `kwargs` - Additional "passthrough" JSON properties for the body of the
+
+
+
+**Raises**:
+
+- `UnifyError`: If the API key is missing.
+
+---
+
+### \_\_repr\_\_
+
+```python
+def __repr__(self):
+```
+
+
+
+---
+
+### \_\_str\_\_
+
+```python
+def __str__(self):
+```
+

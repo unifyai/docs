@@ -8,26 +8,51 @@ class LLMJury
 
 
 
+## properties
+
 ---
 
-### \_\_init\_\_
+### class\_config
 
 ```python
-def __init__(
-            self,
-            judges: List[LLMJudge],
-            name: Optional[str] = None,
-            include_rationale: bool = False,
-    ):
+def class_config(self) -> Dict[float, str]:
 ```
 
-Creates an LLM as a Judge Evaluator.
 
-**Arguments**:
 
-- `judges` - The client to use as the LLM Judge.
-- `name` - The name to give to this LLM Judge evaluator, optional.
-- `include_rationale` - Whether to include the LLM's rationale as part of
+---
+
+### name
+
+```python
+def name(self) -> Optional[str]:
+```
+
+
+
+---
+
+### scorer
+
+```python
+def scorer(self) -> Type[Score]:
+```
+
+
+
+## setters
+
+---
+
+### set\_name
+
+```python
+def set_name(self, value: str):
+```
+
+
+
+## methods
 
 ---
 
@@ -89,11 +114,25 @@ def scorer(self) -> Type[Score]:
 
 
 
+## dunder_methods
+
 ---
 
-### set\_name
+### \_\_init\_\_
 
 ```python
-def set_name(self, value: str):
+def __init__(
+            self,
+            judges: List[LLMJudge],
+            name: Optional[str] = None,
+            include_rationale: bool = False,
+    ):
 ```
 
+Creates an LLM as a Judge Evaluator.
+
+**Arguments**:
+
+- `judges` - The client to use as the LLM Judge.
+- `name` - The name to give to this LLM Judge evaluator, optional.
+- `include_rationale` - Whether to include the LLM's rationale as part of

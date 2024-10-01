@@ -8,24 +8,91 @@ class DefaultLLMJudge
 
 
 
+## properties
+
 ---
 
-### \_\_init\_\_
+### class\_config
 
 ```python
-def __init__(
-            self,
-            client: Union[Unify, AsyncUnify]
-    ):
+def class_config(self) -> Dict[float, str]:
 ```
 
-Create a default Judge, which uses a standard task-agnostic score and a generic
-system prompt. This should judge work okay on a range of tasks, but the best
-performance will be achieved by subclassing LLMJudge and creating your own.
 
-**Arguments**:
 
-- `client` - The client which holds the LLM used under the hood for judging.
+---
+
+### client
+
+```python
+def client(self) -> Union[Unify, AsyncUnify]:
+```
+
+
+
+---
+
+### include\_rationale
+
+```python
+def include_rationale(self) -> bool:
+```
+
+
+
+---
+
+### name
+
+```python
+def name(self) -> Optional[str]:
+```
+
+
+
+---
+
+### scorer
+
+```python
+def scorer(self) -> Type[DefaultJudgeScore]:
+```
+
+
+
+## setters
+
+---
+
+### set\_client
+
+```python
+def set_client(self, value: Union[Unify, AsyncUnify]) -> None:
+```
+
+
+
+---
+
+### set\_include\_rationale
+
+```python
+def set_include_rationale(self, value: bool) -> None:
+```
+
+
+
+---
+
+### set\_name
+
+```python
+def set_name(self, value: str):
+```
+
+
+
+## methods
 
 ---
 
@@ -107,31 +174,23 @@ def scorer(self) -> Type[DefaultJudgeScore]:
 
 
 
----
-
-### set\_client
-
-```python
-def set_client(self, value: Union[Unify, AsyncUnify]) -> None:
-```
-
-
+## dunder_methods
 
 ---
 
-### set\_include\_rationale
+### \_\_init\_\_
 
 ```python
-def set_include_rationale(self, value: bool) -> None:
+def __init__(
+            self,
+            client: Union[Unify, AsyncUnify]
+    ):
 ```
 
+Create a default Judge, which uses a standard task-agnostic score and a generic
+system prompt. This should judge work okay on a range of tasks, but the best
+performance will be achieved by subclassing LLMJudge and creating your own.
 
+**Arguments**:
 
----
-
-### set\_name
-
-```python
-def set_name(self, value: str):
-```
-
+- `client` - The client which holds the LLM used under the hood for judging.

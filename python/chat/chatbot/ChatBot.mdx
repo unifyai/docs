@@ -8,22 +8,39 @@ class ChatBot
 
 Agent class represents an LLM chat agent.
 
+## properties
+
 ---
 
-### \_\_init\_\_
+### client
 
 ```python
-def __init__(
-        self,
-        client: _Client,
-    ) -> None:
+def client(self) -> _Client:
 ```
 
-Initializes the ChatBot object, wrapped around a client.
+Get the client object.  
+
+**Returns**:
+
+The client.
+
+## setters
+
+---
+
+### set\_client
+
+```python
+def set_client(self, value: client) -> None:
+```
+
+Set the client.  
 
 **Arguments**:
 
-- `client` - The Client instance to wrap the chatbot logic around.
+- `value` - The unify client.
+
+## methods
 
 ---
 
@@ -64,16 +81,21 @@ Starts the chat interaction loop.
 - `show_credits` - Whether to show credit consumption. Defaults to False.
 - `show_endpoint` - Whether to show the endpoint used. Defaults to False.
 
+## dunder_methods
+
 ---
 
-### set\_client
+### \_\_init\_\_
 
 ```python
-def set_client(self, value: client) -> None:
+def __init__(
+        self,
+        client: _Client,
+    ) -> None:
 ```
 
-Set the client.  
+Initializes the ChatBot object, wrapped around a client.
 
 **Arguments**:
 
-- `value` - The unify client.
+- `client` - The Client instance to wrap the chatbot logic around.

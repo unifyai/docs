@@ -8,22 +8,51 @@ class Evaluator
 
 
 
+## properties
+
 ---
 
-### \_\_init\_\_
+### class\_config
 
 ```python
-def __init__(
-            self,
-            name: Optional[str] = None
-    ):
+def class_config(self) -> Dict[float, str]:
 ```
 
-Create an Evaluator.
 
-**Arguments**:
 
-- `name` - The name for this evaluator.
+---
+
+### name
+
+```python
+def name(self) -> Optional[str]:
+```
+
+
+
+---
+
+### scorer
+
+```python
+def scorer(self) -> Type[Score]:
+```
+
+
+
+## setters
+
+---
+
+### set\_name
+
+```python
+def set_name(self, value: str):
+```
+
+
+
+## methods
 
 ---
 
@@ -85,11 +114,21 @@ def scorer(self) -> Type[Score]:
 
 
 
+## dunder_methods
+
 ---
 
-### set\_name
+### \_\_init\_\_
 
 ```python
-def set_name(self, value: str):
+def __init__(
+            self,
+            name: Optional[str] = None
+    ):
 ```
 
+Create an Evaluator.
+
+**Arguments**:
+
+- `name` - The name for this evaluator.
