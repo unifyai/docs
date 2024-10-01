@@ -26,12 +26,17 @@ This is what's covered in the final sections: [Uploading](#uploading),
 
 Strictly speaking, each dataset entry is a pydantic
 [Datum](https://github.com/unifyai/unify/blob/b7743c6b204633c7eb77a65a1107c2031aec18a9/unify/types.py#L123)
-instance, which contains a `prompt` field of type `Prompt`, with the pydantic
-argument `extra=Extra.allow`, enabling *extra arbitrary fields*.
+instance, which is a container for storing any kind of data within the Unify platform,
+with no model fields, but with the pydantic argument `extra=Extra.allow` enabling
+*any arbitrary fields*.
 
-A `Datum` instance can be initialized as follows. If a single string is passed,
-then this is interpreted as the user message
-(also the case with `Prompt` initialization):
+For now, we will be storing prompts of type `Prompt` in our Datasets,
+with some optional extra fields in some cases.
+A `Datum` instance can be initialized as follows.
+If a single string is passed positionally, then this is interpreted as the user message
+and is automatically upcast to a `Prompt` instance during construction.
+This special treatment is given to the first *optional* positional argument due the
+*very common* pattern of storing prompts in `Datum` instances:
 
 ```python
 import unify
@@ -74,7 +79,7 @@ Datum(
 )
 ```
 
-A prompt can also be passed explicitly, with *optional extra fields* as well:
+A prompt can also be passed explicitly, with any *optional extra fields* as well:
 
 ```python
 import unify
@@ -96,7 +101,7 @@ Datum(
 
 ## Creation
 
-A dataset is just a collection of `Datum` instances.
+A dataset is simply a collection of `Datum` instances.
 Creating a local dataset is very simple:
 
 ```python
@@ -109,7 +114,7 @@ dataset = unify.Dataset([
 ```
 
 When a list of strings is passed, these strings are also interpreted as *user messages*,
-but as explained above, the underlying dataset will contains `Datum` instances,
+but as explained above, the underlying dataset will contain `Datum` instances,
 which themselves contain `Prompt` instances:
 
 ```
