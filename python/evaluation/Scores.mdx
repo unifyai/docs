@@ -6,7 +6,7 @@ title: 'Scores'
 class Scores
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L50)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/evaluation.py#L50)</p>
 
 
 
@@ -16,7 +16,7 @@ class Scores
 
 ### \_\_abs\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L104)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/evaluation.py#L93)</p>
 
 ```python
 def __abs__(self):
@@ -28,22 +28,10 @@ def __abs__(self):
 
 ### \_\_add\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L62)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/evaluation.py#L73)</p>
 
 ```python
-def __add__(self, other: Union[Dict, float, int]):
-```
-
-
-
----
-
-### \_\_iadd\_\_
-
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L69)</p>
-
-```python
-def __iadd__(self, other: Union[Dict, float, int]):
+def __add__(self, other: Union[Dict, Score, float, int]):
 ```
 
 
@@ -52,7 +40,7 @@ def __iadd__(self, other: Union[Dict, float, int]):
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L52)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/evaluation.py#L52)</p>
 
 ```python
 def __init__(
@@ -66,21 +54,9 @@ def __init__(
 
 ---
 
-### \_\_isub\_\_
-
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L87)</p>
-
-```python
-def __isub__(self, other: Union[Dict, float, int]):
-```
-
-
-
----
-
 ### \_\_neg\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L98)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/evaluation.py#L87)</p>
 
 ```python
 def __neg__(self):
@@ -92,7 +68,7 @@ def __neg__(self):
 
 ### \_\_pos\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L101)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/evaluation.py#L90)</p>
 
 ```python
 def __pos__(self):
@@ -102,21 +78,9 @@ def __pos__(self):
 
 ---
 
-### \_\_radd\_\_
-
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L77)</p>
-
-```python
-def __radd__(self, other: Union[Dict, float, int]):
-```
-
-
-
----
-
 ### \_\_rich\_repr\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L107)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/evaluation.py#L96)</p>
 
 ```python
 def __rich_repr__(self) -> Dict:
@@ -128,7 +92,7 @@ Used by the rich package for representing and print the instance.
 
 ### \_\_rsub\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L95)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/evaluation.py#L84)</p>
 
 ```python
 def __rsub__(self, other: Union[Dict, float, int]):
@@ -140,7 +104,7 @@ def __rsub__(self, other: Union[Dict, float, int]):
 
 ### \_\_str\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/types/base.py#L44)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/types/base.py#L44)</p>
 
 ```python
 def __str__(self) -> str:
@@ -152,9 +116,9 @@ def __str__(self) -> str:
 
 ### \_\_sub\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/5676969e74d3a0e75c2b8976339d38904b58c593/unify/evaluation.py#L80)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a878f95e71c20e26a49f2e3b54578fae9c05a141/unify/evaluation.py#L62)</p>
 
 ```python
-def __sub__(self, other: Union[Dict, float, int]):
+def __sub__(self, other: Union[Dict, Score, float, int]):
 ```
 
