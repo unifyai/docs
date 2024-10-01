@@ -4261,7 +4261,14 @@
                         "example": false
                     },
                     "temperature": {
-                        "type": "number",
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Temperature",
                         "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.\n\nGenerally recommended to alter this or `top_p`, but not both.",
                         "default": 1.0,
@@ -4891,7 +4898,7 @@
                         "title": "Response Parser",
                         "description": "Dict with str  keys and indexing logic values. Default value of: `{'assistant_response': '['message']['content']'}` This is used by the system prompt to replace each key {some_key} with response.dict()\\<indexing_logic\\> The default value will replace all occurances of {assisntant_message} with response.dict()['message']['content'] in the judge prompt.",
                         "default": {
-                            "assistant_response": "['message']['content']"
+                            "assistant_message": "['message']['content']"
                         }
                     },
                     "class_config": {
@@ -5133,7 +5140,7 @@
                         ],
                         "title": "Top Logprobs"
                     },
-                    "max_tokens": {
+                    "max_completion_tokens": {
                         "anyOf": [
                             {
                                 "type": "integer"
@@ -5142,8 +5149,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Max Tokens",
-                        "default": 1024
+                        "title": "Max Completion Tokens"
                     },
                     "n": {
                         "anyOf": [
@@ -5221,8 +5227,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Temperature",
-                        "default": 1.0
+                        "title": "Temperature"
                     },
                     "top_p": {
                         "anyOf": [
@@ -5314,6 +5319,7 @@
                         "title": "Extra Body"
                     }
                 },
+                "additionalProperties": false,
                 "type": "object",
                 "title": "Prompt"
             },
