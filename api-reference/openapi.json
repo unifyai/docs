@@ -2897,19 +2897,45 @@
                             "title": "Name"
                         },
                         "description": "Name of the router.",
-                        "example": "router1"
+                        "example": "my_router"
                     },
                     {
                         "name": "dataset",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "schema": {
-                            "type": "string",
-                            "description": "Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints.",
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Name of the uploaded dataset to train a router on. Must pass exactly one of `dataset`, `prompts`.",
                             "title": "Dataset"
                         },
-                        "description": "Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints.",
+                        "description": "Name of the uploaded dataset to train a router on. Must pass exactly one of `dataset`, `prompts`.",
                         "example": "dataset1"
+                    },
+                    {
+                        "name": "prompts",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Specify the prompts to train a router on. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
+                            "title": "Prompts"
+                        },
+                        "description": "Specify the prompts to train a router on. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
+                        "example": "34,89,127"
                     },
                     {
                         "name": "endpoints",
@@ -2929,6 +2955,19 @@
                             "claude-3.5-sonnet@anthropic",
                             "llama-3.1-405b-chat@fireworks-ai"
                         ]
+                    },
+                    {
+                        "name": "evaluator",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the evaluator to use to train the router. If not specified, 'default_evaluator' will be used.",
+                            "default": "default_evaluator",
+                            "title": "Evaluator"
+                        },
+                        "description": "Name of the evaluator to use to train the router. If not specified, 'default_evaluator' will be used.",
+                        "example": "eval1"
                     }
                 ],
                 "responses": {
@@ -3006,7 +3045,7 @@
                             "title": "Name"
                         },
                         "description": "Name of the router to delete.",
-                        "example": "router1"
+                        "example": "my_router"
                     }
                 ],
                 "responses": {
@@ -3032,7 +3071,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "This router training doesn't exist. Please, choose a different one or trigger the training first."
+                                    "detail": "You don't have a router with the name: my_router"
                                 }
                             }
                         }
@@ -3125,23 +3164,10 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "additionalProperties": {
-                                        "additionalProperties": {
-                                            "anyOf": [
-                                                {
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "type": "array"
-                                                }
-                                            ]
-                                        },
-                                        "type": "object"
+                                    "items": {
+                                        "type": "string"
                                     },
-                                    "type": "object",
+                                    "type": "array",
                                     "title": "Response List Routers V0 Router List Get"
                                 },
                                 "example": {
@@ -3231,7 +3257,7 @@
                     "Router Deployment"
                 ],
                 "summary": "Deploy Router",
-                "description": "Deploys a trained router to a live endpoint.\n\nTo use this router, replace the model in the endpoint string with the\nrouter name. E.g. you can use `router-abc` by calling the\n`router-abc@q:1` endpoint.",
+                "description": "Deploys a trained router to a live endpoint.\n\nTo use this router, replace the model in the endpoint string with the\nrouter name. E.g. you can use a router named `test_router` by calling the\n`router_test_router@q:1` endpoint.",
                 "operationId": "deploy_router_v0_router_deploy_post",
                 "security": [
                     {
@@ -3373,23 +3399,8 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "additionalProperties": {
-                                        "additionalProperties": {
-                                            "anyOf": [
-                                                {
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "type": "array"
-                                                }
-                                            ]
-                                        },
-                                        "type": "object"
-                                    },
-                                    "type": "object",
+                                    "items": {},
+                                    "type": "array",
                                     "title": "Response List Deployed Routers V0 Router Deploy List Get"
                                 },
                                 "example": {
@@ -4400,8 +4411,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {

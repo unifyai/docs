@@ -20,14 +20,14 @@ Name of the router to delete.
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/router?name=router1' \
+  --url 'https://api.unify.ai/v0/router?name=my_router' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/router?name=router1"
+url = "https://api.unify.ai/v0/router?name=my_router"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -47,7 +47,7 @@ print(response.text)
 
 ```json 400
 {
-    "detail": "This router training doesn't exist. Please, choose a different one or trigger the training first."
+    "detail": "You don't have a router with the name: my_router"
 }
 ```
 
