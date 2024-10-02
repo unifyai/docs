@@ -265,8 +265,36 @@ print(response)
 To make use of vision features, then the OpenAI format must be adopted in the messages
 argument, as per the working Anthropic vision example [above](#vision-example).
 
-### Anthropic Headers Example
+### Anthropic Example
 
+Anthropic exposes the `top_k` argument, which isn't provided by OpenAI.
+If you include this argument, it will be sent straight to the model.
+If you send this argument to a provider that does not support `top_k`, you will get an error.
+
+```shell
+curl --request POST \
+  --url 'https://api.unify.ai/v0/chat/completions' \
+  --header 'Authorization: Bearer $UNIFY_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "claude-3.5-sonnet@anthropic",
+    "messages": [
+        {
+            "content": "Tell me a joke",
+            "role": "user"
+        }
+    ],
+    "top_k": 5,
+    "max_tokens": 1024,
+}'
+```
+This can also be done in the Unify Python SDK, as follows:
+```python
+client = unify.Unify("claude-3-haiku@anthropic")
+client.generate("hello world!", top_k=5)
+```
+
+The same is true for headers.
 Features supported by providers outside of the OpenAI standard are sometimes released
 as beta features, which can be accessed via specific headers, as explained in
 [this tweet](https://x.com/alexalbert__/status/1812921642143900036) from Anthropic.
