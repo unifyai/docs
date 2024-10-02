@@ -4892,6 +4892,9 @@
                     "prompt_parser": {
                         "anyOf": [
                             {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
                                 "type": "object"
                             },
                             {
@@ -4907,6 +4910,9 @@
                     "response_parser": {
                         "anyOf": [
                             {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
                                 "type": "object"
                             },
                             {
