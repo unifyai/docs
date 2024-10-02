@@ -3846,6 +3846,13 @@
                                 "ref_answer": "London"
                             }
                         ]
+                    },
+                    "ignore_duplicates": {
+                        "type": "boolean",
+                        "title": "Ignore Duplicates",
+                        "description": "Whether to ignore attempted duplicate entries. If False, an exception is raised when attempting to add duplicate data.",
+                        "default": true,
+                        "example": false
                     }
                 },
                 "type": "object",
