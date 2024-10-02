@@ -18,26 +18,34 @@ artifacts to a live endpoint, via the `/router/deploy` `POST` endpoint.
 Name of the router.
 </ParamField>
 
-<ParamField query="dataset" type="string" required="true">
-Name of the dataset to train the router on. To use a dataset, you need to first upload it to your account using the `/dataset` POST endpoints.
+<ParamField query="dataset" type="string | null" >
+Name of the uploaded dataset to train a router on. Must pass exactly one of `dataset`, `prompts`.
+</ParamField>
+
+<ParamField query="prompts" type="string | null" >
+Specify the prompts to train a router on. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.
 </ParamField>
 
 <ParamField query="endpoints" type="array" required="true">
 List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format.
 </ParamField>
 
+<ParamField query="evaluator" type="string"  default={"default_evaluator"}>
+Name of the evaluator to use to train the router. If not specified, 'default_evaluator' will be used.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/router/train?name=router1&dataset=dataset1&endpoints=['gpt-4o-mini@openai',%20'claude-3.5-sonnet@anthropic',%20'llama-3.1-405b-chat@fireworks-ai']' \
+  --url 'https://api.unify.ai/v0/router/train?name=my_router&dataset=dataset1&prompts=34,89,127&endpoints=['gpt-4o-mini@openai',%20'claude-3.5-sonnet@anthropic',%20'llama-3.1-405b-chat@fireworks-ai']&evaluator=eval1' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/router/train?name=router1&dataset=dataset1&endpoints=['gpt-4o-mini@openai',%20'claude-3.5-sonnet@anthropic',%20'llama-3.1-405b-chat@fireworks-ai']"
+url = "https://api.unify.ai/v0/router/train?name=my_router&dataset=dataset1&prompts=34,89,127&endpoints=['gpt-4o-mini@openai',%20'claude-3.5-sonnet@anthropic',%20'llama-3.1-405b-chat@fireworks-ai']&evaluator=eval1"
 
 headers = {"Authorization": "Bearer <token>"}
 
