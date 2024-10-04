@@ -95,7 +95,8 @@
                         "routing/deploy_your_router"
                     ]
                 },
-                "on_prem/overview"
+                "on_prem/overview",
+                "endpoint_status/endpoint_status"
             ]
         },
         {
