@@ -2,18 +2,17 @@
 title: 'Datasets'
 ---
 
-Datasets are basically a collection of
-[Prompts](https://github.com/unifyai/unify/blob/26247d88da2d46dea62fe0a665934f7f98523c92/unify/types.py#L23)
-which are stored in your account,
-with extra fields optionally also included, such as reference answers etc.
+Datasets are basically a collection of **any data type**, which can then be easily
+stored in your account and shared with your team.
 
-The primary use case for these datasets is to group prompts into various helpful test
-cases and test sets, which can then form part of an evaluation pipeline.
+One obvious use case for these datasets is to group prompts into various helpful test
+cases and test sets, which can then form part of an evaluation pipeline. We will unpack
+this use case further in the subsequent Evaluations section.
 
-Firstly, we cover topics focused on local dataset development:
-[Creation](#creation), [Indexing and Iterating](#indexing-and-iterating),
-[Combining](#combining), [Trimming](#trimming) and [One-Liners](#one-liners).
-This covers everything you need to know to get started with some initial
+Firstly, lets understand what a Dataset actually is! In the following sections,
+we explain: [Creation](#creation), [Indexing and Iterating](#indexing-and-iterating),
+[Combining](#combining), [Trimming](#trimming) and [One-Liners](#one-liners) on
+datasets. This covers everything you need to know to get started with some initial
 experimentation using datasets locally.
 
 However, if you need these experiments to be preserved across sessions,
@@ -22,87 +21,10 @@ then you'll need to connect and synchronize your datasets with your unify accoun
 This is what's covered in the final sections: [Uploading](#uploading),
 [Downloading](#downloading) and [Synchronizing](#synchronizing).
 
-## Composition
-
-Strictly speaking, each dataset entry is a pydantic
-[Datum](https://github.com/unifyai/unify/blob/b7743c6b204633c7eb77a65a1107c2031aec18a9/unify/types.py#L123)
-instance, which is a container for storing any kind of data within the Unify platform,
-with no model fields, but with the pydantic argument `extra=Extra.allow` enabling
-*any arbitrary fields*.
-
-For now, we will be storing prompts of type `Prompt` in our Datasets,
-with some optional extra fields in some cases.
-A `Datum` instance can be initialized as follows.
-If a single string is passed positionally, then this is interpreted as the user message
-and is automatically upcast to a `Prompt` instance during construction.
-This special treatment is given to the first *optional* positional argument due the
-*very common* pattern of storing prompts in `Datum` instances:
-
-```python
-import unify
-datum = unify.Datum("This is a user message.")
-```
-```
-Datum(
-    prompt=Prompt(
-        messages=[{'content': 'This is a user message.', 'role': 'user'}],
-        frequency_penalty=None,
-        logit_bias=None,
-        logprobs=None,
-        top_logprobs=None,
-        max_completion_tokens=None,
-        n=None,
-        presence_penalty=None,
-        response_format=None,
-        seed=None,
-        stop=None,
-        temperature=None,
-        top_p=None,
-        tools=None,
-        tool_choice=None,
-        parallel_tool_calls=None,
-        extra_headers=None,
-        extra_query=None,
-        extra_body=None
-    )
-)
-```
-
-Again, this is better visualized after setting `unify.set_repr_mode("concise")`.
-We will assume `"concise"` mode for the rest of the examples on this page:
-
-```
-Datum(
-    prompt=Prompt(
-        messages=[{'content': 'This is a user message.', 'role': 'user'}]
-    )
-)
-```
-
-A prompt can also be passed explicitly, with any *optional extra fields* as well:
-
-```python
-import unify
-datum = unify.Datum(
-    prompt=unify.Prompt(
-        "This is a user message."
-    ),
-    ref_answer="This is an answer."
-)
-```
-```
-Datum(
-    prompt=Prompt(
-        messages=[{'content': 'This is a user message.', 'role': 'user'}]
-    ),
-    ref_answer='This is an answer.'
-)
-```
-
 ## Creation
 
-A dataset is simply a collection of `Datum` instances.
-Creating a local dataset is very simple:
+A dataset is simply a collection of data, where each entry can be *any serializable
+Python type*. Creating a local dataset is very simple:
 
 ```python
 import unify
@@ -112,152 +34,52 @@ dataset = unify.Dataset([
     "Third user message."
 ])
 ```
-
-When a list of strings is passed, these strings are also interpreted as *user messages*,
-but as explained above, the underlying dataset will contain `Datum` instances,
-which themselves contain `Prompt` instances:
-
 ```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Second user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message.', 'role': 'user'}]
-            )
-        )
-    ]
-)
+Dataset(['First user message.', 'Second user message.', 'Third user message.'])
 ```
 
-Prompts can also be passed directly into the constructor:
+You can also pass more complex types, such as the full
+[Prompt](https://docs.unify.ai/python/types/chat/prompt/Prompt)
+instances, which can optionally include tool calls, temperature, formatted outputs etc:
+
 
 ```python
 import unify
-dataset = unify.Dataset([
-    unify.Prompt(
-        messages=[{'content': 'First user message.', 'role': 'user'}],
-        temperature=0.2
-    ),
-    unify.Prompt(
-        messages=[{'content': 'Second user message.', 'role': 'user'}],
-        temperature=0.4
-    ),
-    unify.Prompt(
-        messages=[{'content': 'Third user message.', 'role': 'user'}],
-        temperature=0.6
-    ),
-])
+dataset = unify.Dataset([unify.Prompt("This is a message.")])
 ```
 ```
 Dataset(
     [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}],
-                temperature=0.2
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Second user message.', 'role': 'user'}],
-                temperature=0.4
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message.', 'role': 'user'}],
-                temperature=0.6
-            )
+        Prompt(
+            messages=[{'content': 'This is a message.', 'role': 'user'}],
+            frequency_penalty=None,
+            logit_bias=None,
+            logprobs=None,
+            top_logprobs=None,
+            max_completion_tokens=None,
+            n=None,
+            presence_penalty=None,
+            response_format=None,
+            seed=None,
+            stop=None,
+            temperature=None,
+            top_p=None,
+            tools=None,
+            tool_choice=None,
+            parallel_tool_calls=None,
+            extra_headers=None,
+            extra_query=None,
+            extra_body=None
         )
     ]
 )
 ```
 
-Similarly, Datum instances can also be passed into the constructor, which can
-optionally have extra arbitrary fields (due to `extra=Extra.allow`),
-such as `ref_answer`:
+Again, this is better visualized after setting `unify.set_repr_mode("concise")`.
+We will assume `"concise"` mode for the rest of the examples on this page:
 
-```python
-import unify
-dataset = unify.Dataset([
-    unify.Datum(
-        prompt=unify.Prompt(
-            messages=[{'content': 'First user message.', 'role': 'user'}],
-            temperature=0.2
-        ),
-        ref_answer="First answer."
-    ),
-    unify.Datum(
-        prompt=unify.Prompt(
-            messages=[{'content': 'First user message.', 'role': 'user'}],
-            temperature=0.4
-        ),
-        ref_answer="Second answer."
-    ),
-    unify.Datum(
-        prompt=unify.Prompt(
-            messages=[{'content': 'First user message.', 'role': 'user'}],
-            temperature=0.6
-        ),
-        ref_answer="Third answer."
-    ),
-])
 ```
-```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}],
-                temperature=0.2
-            ),
-            ref_answer='First answer.'
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}],
-                temperature=0.4
-            ),
-            ref_answer='Second answer.'
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}],
-                temperature=0.6
-            ),
-            ref_answer='Third answer.'
-        )
-    ]
-)
-```
-
-`str`, `Prompt` and `Datum` instances can also be passed individually, and these will be
-interpreted as single-item datasets:
-
-```python
-import unify
-dataset = unify.Dataset("First user message.")
-```
-```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}]
-            )
-        )
-    ]
-)
+Dataset([Prompt(messages=[{'content': 'This is a message.', 'role': 'user'}])])
 ```
 
 ## Indexing and Iterating
@@ -272,8 +94,7 @@ dataset = unify.Dataset([
     "Third user message."
 ])
 for entry in dataset:
-    assert isinstance(entry, unify.Datum)
-    print(entry)
+    assert isinstance(entry, str)
 ```
 
 Similarly, they can be indexed:
@@ -285,8 +106,7 @@ dataset = unify.Dataset([
     "Second user message.",
     "Third user message."
 ])
-assert isinstance(dataset[1], unify.Datum)
-print(dataset[1])
+assert isinstance(dataset[1], str)
 ```
 
 They can also be sliced:
@@ -302,20 +122,7 @@ dataset = unify.Dataset([
 print(dataset[1:-1])
 ```
 ```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Second user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message.', 'role': 'user'}]
-            )
-        )
-    ]
-)
+Dataset(['Second user message.', 'Third user message.'])
 ```
 
 It's also possible to check whether one item or dataset is a subset of another dataset:
@@ -326,7 +133,7 @@ dataset1 = unify.Dataset(["a", "b", "c"])
 dataset2 = unify.Dataset(["a", "b"])
 assert dataset2 in dataset1
 assert "a" in dataset1
-assert unify.Prompt("b") in dataset1
+assert "b" in dataset1
 assert ["b", "c"] in dataset1
 assert "d" not in dataset1
 dataset3 = unify.Dataset(["c", "d"])
@@ -352,26 +159,10 @@ print(dataset1 + dataset2)
 ```
 Dataset(
     [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Second user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Fourth user message.', 'role': 'user'}]
-            )
-        )
+        'First user message.',
+        'Second user message.',
+        'Third user message.',
+        'Fourth user message.'
     ]
 )
 ```
@@ -391,25 +182,7 @@ dataset2 = unify.Dataset([
 print(dataset1 + dataset2)
 ```
 ```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Second user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message.', 'role': 'user'}]
-            )
-        )
-    ]
-)
+Dataset(['First user message.', 'Second user message.', 'Third user message.'])
 ```
 
 In the above example, a new `Dataset` instance is created. However, datasets can also be
@@ -428,9 +201,7 @@ dataset2 = unify.Dataset([
 dataset1 += dataset2
 ```
 
-Addition also works with *all types which can be passed into the dataset constructor*.
-In such cases, the item will be automatically passed to the constructor to create a
-`Dataset`:
+Addition also works with *all types which can be individually stored in a dataset*:
 
 ```python
 import unify
@@ -442,31 +213,11 @@ dataset += ["Fourth user message.", "Fifth user message."]
 ```
 Dataset(
     [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Second user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Fourth user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Fifth user message.', 'role': 'user'}]
-            )
-        )
+        'First user message.',
+        'Second user message.',
+        Prompt(messages=[{'content': 'Third user message.', 'role': 'user'}]),
+        'Fourth user message.',
+        'Fifth user message.'
     ]
 )
 ```
@@ -479,54 +230,7 @@ import unify
 "User message" + unify.Dataset("Another user message.")
 ```
 ```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'User message', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[
-                    {'content': 'Another user message.', 'role': 'user'}
-                ]
-            )
-        )
-    ]
-)
-```
-
-The same is true for `Prompt` and `Datum` instances, which can simply be summed
-to create a `Dataset`.
-
-```python
-import unify
-dataset = "First user message." \
-           + unify.Prompt("Second user message.") \
-           + unify.Datum("Third user message")
-print(dataset)
-```
-```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Second user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message', 'role': 'user'}]
-            )
-        )
-    ]
-)
+Dataset(['User message', 'Another user message.'])
 ```
 
 ## Trimming
@@ -548,20 +252,7 @@ dataset2 = unify.Dataset([
 print(dataset1 - dataset2)
 ```
 ```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message.', 'role': 'user'}]
-            )
-        )
-    ]
-)
+Dataset(['First user message.', 'Third user message.'])
 ```
 
 As with addition, in the above examples a new `Dataset` instance is created.
@@ -593,20 +284,12 @@ dataset = unify.Dataset([
     "Second user message.",
     "Third user message."
 ])
-dataset -= "First user message"
-dataset = dataset - unify.Prompt("Second user message.")
+dataset -= "First user message."
+dataset = dataset - "Second user message."
 print(dataset)
 ```
 ```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message.', 'role': 'user'}]
-            )
-        )
-    ]
-)
+Dataset(['Third user message.'])
 ```
 
 This section is less verbose than the previous section in order to avoid
@@ -703,25 +386,7 @@ import unify
 dataset = unify.Dataset.from_upstream("my_dataset")
 ```
 ```
-Dataset(
-    [
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'First user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Second user message.', 'role': 'user'}]
-            )
-        ),
-        Datum(
-            prompt=Prompt(
-                messages=[{'content': 'Third user message.', 'role': 'user'}]
-            )
-        )
-    ]
-)
+Dataset(['First user message.', 'Second user message.', 'Third user message.'])
 ```
 
 If you have a local copy of a dataset, and someone else has pushed changes to the
