@@ -1,0 +1,27 @@
+---
+title: 'delete_log_entries'
+---
+
+```python
+def delete_log_entries(
+        keys: Union[str, List[str]],
+        id: str,
+        api_key: Optional[str] = None
+) -> Dict[str, str]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7566c3ed1c15d5c760b12aa8fed2c4c45d857764/unify/utils/logging.py#L63)</p>
+
+Delete log entries based on their keys.
+
+**Arguments**:
+
+- `keys` - The entry keys to delete from the specified log.
+- `id` - The id of the log to delete entries from.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+A message indicating whether the log entries were successfully deleted.

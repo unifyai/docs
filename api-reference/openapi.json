@@ -1200,7 +1200,7 @@
                     "Datasets"
                 ],
                 "summary": "Upload Dataset",
-                "description": "Uploads a custom dataset to your account.\n\nThe uploaded file must be a JSONL file where each line contains **at least** a `prompt` key as follows:\n\n```\n{\"prompt\": \"This is the first prompt\"}\n{\"prompt\": \"This is the second prompt\"}\n{\"prompt\": \"This is the third prompt\"}\n```\n\nAdditionally, you can include arbitrary extra keys, which may be used downstream (e.g. in evaluations).\nFor example, you could include a reference answer to each prompt as follows:\n\n```\n{\"prompt\": \"This is the first prompt\", \"ref_answer\": \"First reference answer\"}\n{\"prompt\": \"This is the second prompt\", \"ref_answer\": \"Second reference answer\"}\n{\"prompt\": \"This is the third prompt\", \"ref_answer\": \"Third reference answer\"}\n```",
+                "description": "Uploads a custom dataset to your account.\n\nThe uploaded file must be a JSONL file where each line contains **at least** a `prompt` key as follows:\n\n```\n{\"prompt\": \"This is the first prompt\"}\n{\"prompt\": \"This is the second prompt\"}\n{\"prompt\": \"This is the third prompt\"}\n```\n\nAdditionally, you can include arbitrary extra keys, which may be used downstream (e.g. in evaluations).\nFor example, you could include a reference answer to each prompt as follows:\n\n```\n{\"prompt\": \"This is the first prompt\", \"ref_answer\": \"First reference answer\"}\n{\"prompt\": \"This is the second prompt\", \"ref_answer\": \"Second reference answer\"}\n{\"prompt\": \"This is the third prompt\", \"ref_answer\": \"Third reference answer\"}\n```\n\nReturns:\n    The list of unique prompt ids in the dataset.",
                 "operationId": "upload_dataset_v0_dataset_post",
                 "security": [
                     {
@@ -1225,7 +1225,10 @@
                                 "schema": {
                                     "type": "object",
                                     "additionalProperties": {
-                                        "type": "string"
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
                                     },
                                     "title": "Response Upload Dataset V0 Dataset Post"
                                 },
@@ -1281,6 +1284,32 @@
                         },
                         "description": "Name of the dataset.",
                         "example": "dataset1"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The number of entries to return.",
+                            "default": 100,
+                            "title": "Limit"
+                        },
+                        "description": "The number of entries to return.",
+                        "example": "100"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The number of entries to skip before starting to return results.",
+                            "default": 0,
+                            "title": "Offset"
+                        },
+                        "description": "The number of entries to skip before starting to return results.",
+                        "example": "0"
                     }
                 ],
                 "responses": {
@@ -1628,7 +1657,16 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {},
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "title": "Response Add Data V0 Dataset Data Post"
+                                },
                                 "example": {
                                     "info": "Prompt added sucessfully!"
                                 }
@@ -2171,14 +2209,14 @@
                 ]
             }
         },
-        "/v0/evaluation": {
+        "/v0/evaluation/trigger": {
             "post": {
                 "tags": [
                     "Evaluations"
                 ],
                 "summary": "Trigger Evaluation",
-                "description": "Uses the named `evaluator` to trigger an evaluation of quality scores for the\nselected LLM `endpoint` on the selected `dataset`, or selected `prompts` (by\nprompt_id). You can upload custom scores (and bypass the LLM judge entirely) by\nuploading a file via the `client_side_scores` argument. Once the evaluation has\nfinished, you can access the scores using the `/v0/evaluation` endpoint. If a custom\nprompt is specified, its fields will overwrite the corresponding fields in each one\nof the evaluated prompts. If a response for a given prompt has already been\nprovided for the selected endpoint, during another evaluation, then this response\nwill be re-used during the current evaluation.",
-                "operationId": "trigger_evaluation_v0_evaluation_post",
+                "description": "Uses the named `evaluator` to trigger an evaluation of quality scores for the\nselected LLM `endpoint` on the selected `dataset`, or selected `prompts` (by\ndatum_id). Once the evaluation has finished, you can access the scores using the\n`/v0/evaluation` endpoint. If a custom prompt is specified, its fields will\noverwrite the corresponding fields in each one of the evaluated prompts. If a\nresponse for a given prompt has already been provided for the selected endpoint,\nduring another evaluation, then this response will be re-used during the current\nevaluation.",
+                "operationId": "trigger_evaluation_v0_evaluation_trigger_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2249,23 +2287,134 @@
                         "example": "34,89,127"
                     },
                     {
-                        "name": "endpoint",
+                        "name": "agent",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the endpoint to evaluate. Endpoints must be specified using the `model@provider` format.",
-                            "title": "Endpoint"
+                            "description": "The agent to fetch the evaluation for, can be an endpoint string or an arbitrarily named client-side agent. If `None`, returns all available evaluations for the dataset and evaluator pair.",
+                            "title": "Agent"
                         },
-                        "description": "Name of the endpoint to evaluate. Endpoints must be specified using the `model@provider` format.",
+                        "description": "The agent to fetch the evaluation for, can be an endpoint string or an arbitrarily named client-side agent. If `None`, returns all available evaluations for the dataset and evaluator pair.",
+                        "example": "gpt-4o-mini@openai"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Trigger Evaluation V0 Evaluation Trigger Post"
+                                },
+                                "example": {
+                                    "info": "Dataset evaluation started! You will receive an email soon!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Endpoints",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid input. Couldn't find endpoints [model_1@endpoint_1, model_2@endpoint_2]."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "This dataset does not exist!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/evaluation": {
+            "post": {
+                "tags": [
+                    "Evaluations"
+                ],
+                "summary": "Upload Evaluation",
+                "description": "Uploads evaluations, which can then be accessed using the `/v0/evaluation` endpoint.\nIf a custom prompt is specified, its fields will overwrite the corresponding fields\nin each one of the evaluated prompts. If a response for a given prompt has already\nbeen provided for the selected endpoint, during another evaluation, then this\nresponse will be re-used during the current evaluation.",
+                "operationId": "upload_evaluation_v0_evaluation_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "evaluator",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the evaluator used.",
+                            "default": "default_evaluator",
+                            "title": "Evaluator"
+                        },
+                        "description": "Name of the evaluator used.",
+                        "example": "eval1"
+                    },
+                    {
+                        "name": "default_prompt",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Name of the default prompt used.",
+                            "title": "Default Prompt"
+                        },
+                        "description": "Name of the default prompt used.",
+                        "example": "default_prompt1"
+                    },
+                    {
+                        "name": "agent",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The agent to fetch the evaluation for, can be an endpoint string or an arbitrarily named client-side agent. If `None`, returns all available evaluations for the dataset and evaluator pair.",
+                            "title": "Agent"
+                        },
+                        "description": "The agent to fetch the evaluation for, can be an endpoint string or an arbitrarily named client-side agent. If `None`, returns all available evaluations for the dataset and evaluator pair.",
                         "example": "gpt-4o-mini@openai"
                     }
                 ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/Body_trigger_evaluation_v0_evaluation_post"
+                                "$ref": "#/components/schemas/Body_upload_evaluation_v0_evaluation_post"
                             }
                         }
                     }
@@ -2280,20 +2429,10 @@
                                     "additionalProperties": {
                                         "type": "string"
                                     },
-                                    "title": "Response Trigger Evaluation V0 Evaluation Post"
+                                    "title": "Response Upload Evaluation V0 Evaluation Post"
                                 },
                                 "example": {
-                                    "info": "Dataset evaluation started! You will receive an email soon!"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid Endpoints",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Invalid input. Couldn't find endpoints [model_1@endpoint_1, model_2@endpoint_2]."
+                                    "info": "Dataset evaluation successfully Uploaded! "
                                 }
                             }
                         }
@@ -2372,16 +2511,15 @@
                         "example": "34,89,127"
                     },
                     {
-                        "name": "endpoint",
+                        "name": "agent",
                         "in": "query",
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "description": "The endpoint to fetch the evaluation for. If `None`, returns all available evaluations for the dataset and evaluator pair.",
-                            "title": "Endpoint"
+                            "description": "The agent to fetch the evaluation for, can be an endpoint string or an arbitrarily named client-side agent. If `None`, returns all available evaluations for the dataset and evaluator pair.",
+                            "title": "Agent"
                         },
-                        "description": "The endpoint to fetch the evaluation for. If `None`, returns all available evaluations for the dataset and evaluator pair.",
-                        "example": "gpt-4o-mini@openai"
+                        "description": "The agent to fetch the evaluation for, can be an endpoint string or an arbitrarily named client-side agent. If `None`, returns all available evaluations for the dataset and evaluator pair."
                     },
                     {
                         "name": "evaluator",
@@ -2458,6 +2596,44 @@
                             "title": "Sub Scorers"
                         },
                         "description": "If `True`, returns more in-depth summary statistics of the evaluation. Requires specification of both endpoint and evaluator, and per_prompt must be set to false."
+                    },
+                    {
+                        "name": "ignore_missing",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If `True`, then an empty dict is returned in cases where the dataset, agent or evaluator do not exist on the platform. If False, then an exception is raised if any of these do not exist.",
+                            "default": true,
+                            "title": "Ignore Missing"
+                        },
+                        "description": "If `True`, then an empty dict is returned in cases where the dataset, agent or evaluator do not exist on the platform. If False, then an exception is raised if any of these do not exist."
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The number of entries to return, if returning lots of prompt data.",
+                            "default": 100,
+                            "title": "Limit"
+                        },
+                        "description": "The number of entries to return, if returning lots of prompt data.",
+                        "example": "100"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The number of entries to skip before starting to return results.",
+                            "default": 0,
+                            "title": "Offset"
+                        },
+                        "description": "The number of entries to skip before starting to return results.",
+                        "example": "0"
                     }
                 ],
                 "responses": {
@@ -2536,15 +2712,15 @@
                         "example": "34,89,127"
                     },
                     {
-                        "name": "endpoint",
+                        "name": "agent",
                         "in": "query",
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "description": "The endpoint to delete the evaluation for. If `None`, deletes the evaluations for all endpoints.",
-                            "title": "Endpoint"
+                            "description": "The agent to delete the evaluation for. If `None`, deletes the evaluations for all agents.",
+                            "title": "Agent"
                         },
-                        "description": "The endpoint to delete the evaluation for. If `None`, deletes the evaluations for all endpoints.",
+                        "description": "The agent to delete the evaluation for. If `None`, deletes the evaluations for all agents.",
                         "example": "gpt-4o-mini@openai"
                     },
                     {
@@ -3959,19 +4135,6 @@
                 ],
                 "title": "Body_log_query_v0_queries_post"
             },
-            "Body_trigger_evaluation_v0_evaluation_post": {
-                "properties": {
-                    "client_side_scores": {
-                        "type": "string",
-                        "format": "binary",
-                        "title": "Client Side Scores",
-                        "description": "An optional file upload for client-side scores. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `prompt_id` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `evaluator` must have `client_side=True`.",
-                        "example": "client_scores.jsonl"
-                    }
-                },
-                "type": "object",
-                "title": "Body_trigger_evaluation_v0_evaluation_post"
-            },
             "Body_upload_dataset_v0_dataset_post": {
                 "properties": {
                     "file": {
@@ -3994,6 +4157,22 @@
                     "name"
                 ],
                 "title": "Body_upload_dataset_v0_dataset_post"
+            },
+            "Body_upload_evaluation_v0_evaluation_post": {
+                "properties": {
+                    "evaluations": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "Evaluations",
+                        "description": "The evaluation results to upload. The file must be in JSONL format and the prompts must match the order of the `dataset`. Each entry should include `datum_id` and `score` keys, with `score` being a float between 0 and 1. The evaluation corresponding to the `evaluator` must have `client_side=True`.",
+                        "example": "client_scores.jsonl"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "evaluations"
+                ],
+                "title": "Body_upload_evaluation_v0_evaluation_post"
             },
             "ChatCompletionAssistantMessageParam": {
                 "properties": {
@@ -4874,6 +5053,19 @@
                         "description": "A unique, user-defined name used when referencing and triggering the evaluation.",
                         "example": "eval1"
                     },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Description for the purpose of this evaluator. In the case of Evaluators defined in the Python client, this is the docstring by default, if it exists.",
+                        "example": "The clarity of the generated summary"
+                    },
                     "judge_prompt": {
                         "anyOf": [
                             {
@@ -4893,7 +5085,17 @@
                         "anyOf": [
                             {
                                 "additionalProperties": {
-                                    "type": "string"
+                                    "items": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    },
+                                    "type": "array"
                                 },
                                 "type": "object"
                             },
@@ -4902,16 +5104,30 @@
                             }
                         ],
                         "title": "Prompt Parser",
-                        "description": "Dict with str  keys and indexing logic values. Default value of: `{'user_message': '['messages'][-1]['content']'}` This is used by the system prompt to replace each key {some_key} with prompt.dict()\\<indexing_logic\\> The default value will replace all occurances of {user_message} with prompt.dict()['messages'][-1]['content'] in the judge prompt.",
+                        "description": "Dict with str  keys and indexing logic values. Default value of: `{'user_message': ['messages', -1, 'content']}` This is used by the system prompt to replace each key {some_key} with prompt.dict()\\<indexing_logic\\> The default value will replace all occurances of {user_message} with prompt.dict()['messages'][-1]['content'] in the judge prompt.",
                         "default": {
-                            "user_message": "['messages'][-1]['content']"
+                            "user_message": [
+                                "messages",
+                                -1,
+                                "content"
+                            ]
                         }
                     },
                     "response_parser": {
                         "anyOf": [
                             {
                                 "additionalProperties": {
-                                    "type": "string"
+                                    "items": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    },
+                                    "type": "array"
                                 },
                                 "type": "object"
                             },
@@ -4920,10 +5136,38 @@
                             }
                         ],
                         "title": "Response Parser",
-                        "description": "Dict with str  keys and indexing logic values. Default value of: `{'assistant_response': '['message']['content']'}` This is used by the system prompt to replace each key {some_key} with response.dict()\\<indexing_logic\\> The default value will replace all occurances of {assisntant_message} with response.dict()['message']['content'] in the judge prompt.",
+                        "description": "Dict with str  keys and indexing logic values. Default value of: `{'assistant_response': ['message', 'content']}` This is used by the system prompt to replace each key {some_key} with response.dict()\\<indexing_logic\\> The default value will replace all occurances of {assisntant_message} with response.dict()['message']['content'] in the judge prompt.",
                         "default": {
-                            "assistant_message": "['message']['content']"
+                            "assistant_message": [
+                                "message",
+                                "content"
+                            ]
                         }
+                    },
+                    "extra_parser": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "items": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    },
+                                    "type": "array"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Extra Parser",
+                        "description": "Dict with str  keys and indexing logic values. Default value of: `None` This is used by the system prompt to replace each key {some_key} with datum.dict()\\<indexing_logic\\> which can be used to index into extra fields stored within each item in the dataset."
                     },
                     "class_config": {
                         "anyOf": [
@@ -4948,7 +5192,7 @@
                             }
                         ],
                         "title": "Class Config",
-                        "description": "If set, describes the list of classifications that the LLM judge uses to\n            score each prompt. For example:\n```\n[{\"label\": \"Excellent\", \"score\": 1.0, \"description\": \"A perfect answer with no factual\nmistakes\"},\n{\"label\": \"Good\", \"score\": 0.5, \"description\": \"An average answer\"},\n{\"label\": \"Bad\", \"score\": 0.0, \"description\": \"An incorrect answer, containing a\nsignificant factual mistake\"}]\n```\n"
+                        "description": "If set, describes the list of classifications that the LLM judge uses to\n            score each prompt. For example:\n```\n[{\"label\": \"Excellent\", \"score\": 1.0},\n{\"label\": \"Good\", \"score\": 0.5},\n{\"label\": \"Bad\", \"score\": 0.0}]\n```\n"
                     },
                     "judge_models": {
                         "anyOf": [

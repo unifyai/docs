@@ -17,27 +17,33 @@ to trigger an evaluation via `POST` requests to the `/evaluation` endpoint.
 A unique, user-defined name used when referencing and triggering the evaluation.
 </ParamField>
 
+<ParamField body="description" type="string | null" >
+Description for the purpose of this evaluator. In the case of Evaluators defined in the Python client, this is the docstring by default, if it exists.
+</ParamField>
+
 <ParamField body="judge_prompt" type="string | any | null" >
 An optional custom system prompt to provide specific instructions to the judge on how to score the answers.
 </ParamField>
 
-<ParamField body="prompt_parser" type="object | null"  default={{"user_message": "['messages'][-1]['content']"}}>
-Dict with str  keys and indexing logic values. Default value of: `{'user_message': '['messages'][-1]['content']'}` This is used by the system prompt to replace each key {some_key} with prompt.dict()\<indexing_logic\> The default value will replace all occurances of {user_message} with prompt.dict()['messages'][-1]['content'] in the judge prompt.
+<ParamField body="prompt_parser" type="object | null"  default={{"user_message": ["messages", -1, "content"]}}>
+Dict with str  keys and indexing logic values. Default value of: `{'user_message': ['messages', -1, 'content']}` This is used by the system prompt to replace each key {some_key} with prompt.dict()\<indexing_logic\> The default value will replace all occurances of {user_message} with prompt.dict()['messages'][-1]['content'] in the judge prompt.
 </ParamField>
 
-<ParamField body="response_parser" type="object | null"  default={{"assistant_message": "['message']['content']"}}>
-Dict with str  keys and indexing logic values. Default value of: `{'assistant_response': '['message']['content']'}` This is used by the system prompt to replace each key {some_key} with response.dict()\<indexing_logic\> The default value will replace all occurances of {assisntant_message} with response.dict()['message']['content'] in the judge prompt.
+<ParamField body="response_parser" type="object | null"  default={{"assistant_message": ["message", "content"]}}>
+Dict with str  keys and indexing logic values. Default value of: `{'assistant_response': ['message', 'content']}` This is used by the system prompt to replace each key {some_key} with response.dict()\<indexing_logic\> The default value will replace all occurances of {assisntant_message} with response.dict()['message']['content'] in the judge prompt.
+</ParamField>
+
+<ParamField body="extra_parser" type="object | null" >
+Dict with str  keys and indexing logic values. Default value of: `None` This is used by the system prompt to replace each key {some_key} with datum.dict()\<indexing_logic\> which can be used to index into extra fields stored within each item in the dataset.
 </ParamField>
 
 <ParamField body="class_config" type="array | null" >
 If set, describes the list of classifications that the LLM judge uses to
             score each prompt. For example:
 ```
-[{"label": "Excellent", "score": 1.0, "description": "A perfect answer with no factual
-mistakes"},
-{"label": "Good", "score": 0.5, "description": "An average answer"},
-{"label": "Bad", "score": 0.0, "description": "An incorrect answer, containing a
-significant factual mistake"}]
+[{"label": "Excellent", "score": 1.0},
+{"label": "Good", "score": 0.5},
+{"label": "Bad", "score": 0.0}]
 ```
 
 </ParamField>
@@ -59,6 +65,7 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
     "name": "eval1",
+    "description": "The clarity of the generated summary",
     "judge_models": "claude-3.5-sonnet@aws-bedrock"
 }'
 ```
@@ -70,7 +77,7 @@ url = "https://api.unify.ai/v0/evaluator"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"name": "eval1", "judge_models": "claude-3.5-sonnet@aws-bedrock"}
+json_input = {"name": "eval1", "description": "The clarity of the generated summary", "judge_models": "claude-3.5-sonnet@aws-bedrock"}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

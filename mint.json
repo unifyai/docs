@@ -152,25 +152,6 @@
                     ]
                 },
                 {
-                    "group": "evaluation",
-                    "pages": [
-                        "python/evaluation/Evaluation",
-                        "python/evaluation/EvaluationSet",
-                        "python/evaluation/Rationales",
-                        "python/evaluation/Scores"
-                    ]
-                },
-                {
-                    "group": "evaluator",
-                    "pages": [
-                        "python/evaluator/DefaultJudgeScore",
-                        "python/evaluator/DefaultLLMJudge",
-                        "python/evaluator/Evaluator",
-                        "python/evaluator/LLMJudge",
-                        "python/evaluator/LLMJury"
-                    ]
-                },
-                {
                     "group": "logging",
                     "pages": [
                         "python/logging/with_logging"
@@ -265,10 +246,14 @@
                         {
                             "group": "datasets",
                             "pages": [
-                                "python/utils/datasets/add_data",
-                                "python/utils/datasets/delete_data",
+                                "python/utils/datasets/add_data_by_id",
+                                "python/utils/datasets/add_data_by_value",
+                                "python/utils/datasets/delete_data_by_id",
+                                "python/utils/datasets/delete_data_by_value",
                                 "python/utils/datasets/delete_dataset",
                                 "python/utils/datasets/download_dataset",
+                                "python/utils/datasets/get_data_by_id",
+                                "python/utils/datasets/get_data_by_value",
                                 "python/utils/datasets/list_datasets",
                                 "python/utils/datasets/rename_dataset",
                                 "python/utils/datasets/upload_dataset_from_dictionary",
@@ -294,30 +279,32 @@
                             ]
                         },
                         {
-                            "group": "evaluations",
-                            "pages": [
-                                "python/utils/evaluations/delete_evaluations",
-                                "python/utils/evaluations/get_evaluations",
-                                "python/utils/evaluations/trigger_evaluation"
-                            ]
-                        },
-                        {
-                            "group": "evaluators",
-                            "pages": [
-                                "python/utils/evaluators/create_evaluator",
-                                "python/utils/evaluators/delete_evaluator",
-                                "python/utils/evaluators/get_evaluator",
-                                "python/utils/evaluators/list_evaluators",
-                                "python/utils/evaluators/rename_evaluator"
-                            ]
-                        },
-                        {
                             "group": "logging",
                             "pages": [
-                                "python/utils/logging/get_queries",
-                                "python/utils/logging/get_query_metrics",
-                                "python/utils/logging/get_query_tags",
-                                "python/utils/logging/log_query"
+                                "python/utils/logging/create_artifacts",
+                                "python/utils/logging/create_project",
+                                "python/utils/logging/delete_artifacts",
+                                "python/utils/logging/delete_log_entries",
+                                "python/utils/logging/delete_logs",
+                                "python/utils/logging/delete_project",
+                                "python/utils/logging/get_log_metrics",
+                                "python/utils/logging/get_logs_by_id",
+                                "python/utils/logging/get_logs_by_project",
+                                "python/utils/logging/group_logs",
+                                "python/utils/logging/list_artifacts",
+                                "python/utils/logging/list_projects",
+                                "python/utils/logging/log",
+                                "python/utils/logging/rename_project",
+                                "python/utils/logging/update_log"
+                            ]
+                        },
+                        {
+                            "group": "queries",
+                            "pages": [
+                                "python/utils/queries/get_queries",
+                                "python/utils/queries/get_query_metrics",
+                                "python/utils/queries/get_query_tags",
+                                "python/utils/queries/log_query"
                             ]
                         },
                         {
@@ -440,6 +427,7 @@
                     "group": "Evaluations",
                     "pages": [
                         "api-reference/evaluations/trigger_evaluation",
+                        "api-reference/evaluations/upload_evaluation",
                         "api-reference/evaluations/get_evaluations",
                         "api-reference/evaluations/delete_evaluations"
                     ]
