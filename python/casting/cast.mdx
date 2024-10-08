@@ -4,15 +4,15 @@ title: 'cast'
 
 ```python
 def cast(
-        inp: Union[str, bool, float, Score, Prompt, Datum, ChatCompletion],
+        inp: Union[str, bool, float, Prompt, ChatCompletion],
         to_type: Union[
-            Type[Union[str, bool, float, Score, Prompt, Datum, ChatCompletion]],
-            List[Type[Union[str, bool, float, Score, Prompt, Datum, ChatCompletion]]]
+            Type[Union[str, bool, float, Prompt, ChatCompletion]],
+            List[Type[Union[str, bool, float, Prompt, ChatCompletion]]]
         ],
-) -> Union[str, bool, float, Score, Prompt, Datum, ChatCompletion]:
+) -> Union[str, bool, float, Prompt, ChatCompletion]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/391f2f14acc7b2d24f0eaca57035408484975f34/unify/casting.py#L10)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/b4abf868ee36d2dc655949dd984bf36913a23e99/unify/casting.py#L10)</p>
 
 Cast the input to the specified type.
 
