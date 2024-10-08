@@ -16,18 +16,26 @@ Downloads a specific dataset from your account.
 Name of the dataset.
 </ParamField>
 
+<ParamField query="limit" type="integer"  default={100}>
+The number of entries to return.
+</ParamField>
+
+<ParamField query="offset" type="integer" >
+The number of entries to skip before starting to return results.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/dataset?name=dataset1' \
+  --url 'https://api.unify.ai/v0/dataset?name=dataset1&limit=100&offset=0' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/dataset?name=dataset1"
+url = "https://api.unify.ai/v0/dataset?name=dataset1&limit=100&offset=0"
 
 headers = {"Authorization": "Bearer <token>"}
 

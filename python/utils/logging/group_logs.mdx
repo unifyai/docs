@@ -1,0 +1,28 @@
+---
+title: 'group_logs'
+---
+
+```python
+def group_logs(
+        project: str,
+        group_by: str,
+        api_key: Optional[str] = None
+) -> Dict[str, List[Dict[str, Any]]]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7566c3ed1c15d5c760b12aa8fed2c4c45d857764/unify/utils/logging.py#L63)</p>
+
+Group logs based on equality of a specific key.
+
+**Arguments**:
+
+- `project` - The id of the project to group the logs for.
+- `group_by` - The key along which to perform the equality grouping.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+A dict containing the grouped logs, with each key of the dict representing the
+version of the log key with equal values.

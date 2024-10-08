@@ -1,0 +1,29 @@
+---
+title: 'delete_data_by_value'
+---
+
+```python
+def delete_data_by_value(
+        name: str,
+        data: Union[Any, List[Any]],
+        api_key: Optional[str] = None
+) -> Dict[str, Union[str, List[int]]]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7566c3ed1c15d5c760b12aa8fed2c4c45d857764/unify/utils/datasets.py#L63)</p>
+
+Deletes data from a dataset by value, and returns a list of ids and values for each
+of those, split by those which were deleted and those which were not present.
+
+**Arguments**:
+
+- `name` - The name of the dataset to delete the data from.
+- `data` - The data to delete from the dataset.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+A dict containing the info, and the ids for all entries deleted, split by those
+which were deleted and those which were not present.

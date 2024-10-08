@@ -23,8 +23,8 @@ Name of the uploaded dataset to get evaluations for. Must pass exactly one of `d
 Specify the prompts to get evaluations for. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.
 </ParamField>
 
-<ParamField query="endpoint" type="string" >
-The endpoint to fetch the evaluation for. If `None`, returns all available evaluations for the dataset and evaluator pair.
+<ParamField query="agent" type="string" >
+The agent to fetch the evaluation for, can be an endpoint string or an arbitrarily named client-side agent. If `None`, returns all available evaluations for the dataset and evaluator pair.
 </ParamField>
 
 <ParamField query="evaluator" type="string" >
@@ -51,18 +51,30 @@ If `True`, returns the reasoning behind the score. This argument requires `per_p
 If `True`, returns more in-depth summary statistics of the evaluation. Requires specification of both endpoint and evaluator, and per_prompt must be set to false.
 </ParamField>
 
+<ParamField query="ignore_missing" type="boolean"  default={True}>
+If `True`, then an empty dict is returned in cases where the dataset, agent or evaluator do not exist on the platform. If False, then an exception is raised if any of these do not exist.
+</ParamField>
+
+<ParamField query="limit" type="integer"  default={100}>
+The number of entries to return, if returning lots of prompt data.
+</ParamField>
+
+<ParamField query="offset" type="integer" >
+The number of entries to skip before starting to return results.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&prompts=34,89,127&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False&include_runtime=False&return_response=False&return_rationale=False&sub_scorers=None' \
+  --url 'https://api.unify.ai/v0/evaluation?dataset=dataset1&prompts=34,89,127&agent=None&evaluator=eval1&per_prompt=False&include_runtime=False&return_response=False&return_rationale=False&sub_scorers=None&ignore_missing=None&limit=100&offset=0' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&prompts=34,89,127&endpoint=gpt-4o-mini@openai&evaluator=eval1&per_prompt=False&include_runtime=False&return_response=False&return_rationale=False&sub_scorers=None"
+url = "https://api.unify.ai/v0/evaluation?dataset=dataset1&prompts=34,89,127&agent=None&evaluator=eval1&per_prompt=False&include_runtime=False&return_response=False&return_rationale=False&sub_scorers=None&ignore_missing=None&limit=100&offset=0"
 
 headers = {"Authorization": "Bearer <token>"}
 

@@ -1,0 +1,25 @@
+---
+title: 'get_logs_by_id'
+---
+
+```python
+def get_logs_by_id(
+        id: Union[int, List[int]],
+        api_key: Optional[str] = None
+) -> List[Dict[str, Any]]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7566c3ed1c15d5c760b12aa8fed2c4c45d857764/unify/utils/logging.py#L63)</p>
+
+Retrieve a set of logs based on the ids of the logs.
+
+**Arguments**:
+
+- `id` - The ids of the logs to retrieve the data for.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+The full set of log data.

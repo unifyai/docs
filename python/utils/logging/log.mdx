@@ -1,0 +1,27 @@
+---
+title: 'log'
+---
+
+```python
+def log(
+        data: Dict[str, Any],
+        project: str,
+        api_key: Optional[str] = None
+) -> int:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7566c3ed1c15d5c760b12aa8fed2c4c45d857764/unify/utils/logging.py#L63)</p>
+
+Returns the data (id and values) by querying the data based on their values.
+
+**Arguments**:
+
+- `data` - The data to log into the console.
+- `project` - The name of the project to log the data for.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+The unique id of newly created log entry.
