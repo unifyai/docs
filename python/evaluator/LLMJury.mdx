@@ -1,0 +1,118 @@
+---
+title: 'LLMJury'
+---
+
+```python
+class LLMJury
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f3e679e8c02e19d8df1246f19c4eee01cc45ee3e/unify/evaluator.py#L402)</p>
+
+
+
+## properties
+
+---
+
+### judges
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f3e679e8c02e19d8df1246f19c4eee01cc45ee3e/unify/evaluator.py#L438)</p>
+
+```python
+def judges(self) -> List[LLMJudge]:
+```
+
+
+
+---
+
+### name
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f3e679e8c02e19d8df1246f19c4eee01cc45ee3e/unify/evaluator.py#L48)</p>
+
+```python
+def name(self) -> Optional[str]:
+```
+
+
+
+---
+
+### score\_config
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f3e679e8c02e19d8df1246f19c4eee01cc45ee3e/unify/evaluator.py#L52)</p>
+
+```python
+def score_config(self) -> Dict[float, str]:
+```
+
+
+
+## setters
+
+---
+
+### set\_name
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f3e679e8c02e19d8df1246f19c4eee01cc45ee3e/unify/evaluator.py#L59)</p>
+
+```python
+def set_name(self, value: str) -> Self:
+```
+
+
+
+---
+
+### set\_score\_config
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f3e679e8c02e19d8df1246f19c4eee01cc45ee3e/unify/evaluator.py#L63)</p>
+
+```python
+def set_score_config(self, value: Dict[float, str]) -> Self:
+```
+
+
+
+## methods
+
+---
+
+### evaluate
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f3e679e8c02e19d8df1246f19c4eee01cc45ee3e/unify/evaluator.py#L428)</p>
+
+```python
+def evaluate(
+            self,
+            input: Any,
+            response: Any,
+    ) -> Dict[str, Union[float, Tuple[float, Union[str, ChatCompletion]]]]:
+```
+
+
+
+## dunder_methods
+
+---
+
+### \_\_init\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f3e679e8c02e19d8df1246f19c4eee01cc45ee3e/unify/evaluator.py#L404)</p>
+
+```python
+def __init__(
+            self,
+            judges: List[LLMJudge],
+            name: Optional[str] = None,
+            api_key: Optional[str] = None,
+    ):
+```
+
+Creates an LLM Jury Evaluator.
+
+**Arguments**:
+
+- `judges` - The list of judges to use in the Jury.
+- `name` - The name to give to this LLM Jury evaluator, optional.
+- `api_key` - API key for accessing the Unify API. If None, it attempts to
