@@ -1,0 +1,84 @@
+---
+title: 'Create Artifacts'
+api: 'POST /v0/project/{project}/artifacts'
+---
+Creates one or more artifacts associated to a project. Artifacts are
+project-level metadata that don't depend on other variables.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="project" type="string" required="true">
+Name of the project the artifacts belong to.
+</ParamField>
+
+#### Body
+
+<ParamField body="artifacts" type="object" required="true">
+Dictionary containing one or more key:value pairs that will be stored as artifacts.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/project/{project}/artifacts?project=None' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{
+    "artifacts": {
+        "dataset": "my-dataset",
+        "description": "..."
+    }
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/project/{project}/artifacts?project=None"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"artifacts": {"dataset": "my-dataset", "description": "..."}}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Artifact(s) created successfully!"
+}
+```
+
+```json 404
+{
+    "detail": "A project with this name doesn't exists."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

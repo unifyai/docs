@@ -1,0 +1,87 @@
+---
+title: 'Get Logs Groups'
+api: 'GET /v0/logs/groups'
+---
+Returns a list of the different version/values of one entry
+within a given project based on its key.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="project" type="string" required="true">
+Name of the project to get logs from.
+</ParamField>
+
+<ParamField query="key" type="string" required="true">
+Name of the log entry to get distinct values from.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/logs/groups?project=eval-project&key=system_prompt' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs/groups?project=eval-project&key=system_prompt"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+[
+    {
+        "version": "v0",
+        "value": "First version of the system prompt"
+    },
+    {
+        "version": "v1",
+        "value": "Second version of the system prompt"
+    }
+]
+```
+
+```json 404
+[
+    {
+        "version": "v0",
+        "value": "First version of the system prompt"
+    },
+    {
+        "version": "v1",
+        "value": "Second version of the system prompt"
+    }
+]
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

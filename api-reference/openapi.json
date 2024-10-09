@@ -613,6 +613,836 @@
                 }
             }
         },
+        "/v0/project": {
+            "post": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Create Project",
+                "description": "Creates a logging project and adds this to your account. This project will\nhave a set of logs associated with it.",
+                "operationId": "create_project_v0_project_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Project created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Already Existing Project",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "A logging project with this name already exists."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/project/{name}": {
+            "delete": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Delete Project",
+                "description": "Deletes a project from your account.",
+                "operationId": "delete_project_v0_project__name__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to delete.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the project to delete.",
+                        "example": "eval-project"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Project deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Project <name> not found in your account."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Rename Project",
+                "description": "Renames a project from `name` to `new_name` in your account.",
+                "operationId": "rename_project_v0_project__name__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to rename.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the project to rename.",
+                        "example": "old-project-name"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectConfig"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Project renamed successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Project <name> not found in your account."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/projects": {
+            "get": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "List Projects",
+                "description": "Returns the names of all projects stored in your account.",
+                "operationId": "list_projects_v0_projects_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": [
+                                    "project_a",
+                                    "project_b",
+                                    "project_c"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/project/{project}/artifacts": {
+            "post": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Create Artifacts",
+                "description": "Creates one or more artifacts associated to a project. Artifacts are\nproject-level metadata that don't depend on other variables.",
+                "operationId": "create_artifacts_v0_project__project__artifacts_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project the artifacts belong to.",
+                            "example": "eval-project",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project the artifacts belong to."
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ArtifactConfig"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Artifact(s) created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "A project with this name doesn't exists."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "List Artifacts",
+                "description": "Returns the key-value pairs of all artifacts in a project.",
+                "operationId": "list_artifacts_v0_project__project__artifacts_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to delete an artifact from.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to delete an artifact from.",
+                        "example": "eval-project"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "artifact_1": "value_1",
+                                    "artifact_2": "value_2"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Project <project> not found in your account."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project/{project}/artifacts/{key}": {
+            "delete": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Delete Artifact",
+                "description": "Deletes an artifact from a project.",
+                "operationId": "delete_artifact_v0_project__project__artifacts__key__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to delete an artifact from.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to delete an artifact from.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Key of the artifact to delete.",
+                            "title": "Key"
+                        },
+                        "description": "Key of the artifact to delete.",
+                        "example": "project-description"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Artifact deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Artifact Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Artifact <key> not found in this project."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/log": {
+            "post": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Create Logs",
+                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nThis method returns the id of the new stored log.",
+                "operationId": "create_logs_v0_log_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LogConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Log(s) created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "A project with this name doesn't exists."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/log/{id}": {
+            "delete": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Delete Log",
+                "description": "Deletes a log from a project.",
+                "operationId": "delete_log_v0_log__id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "ID of the log to delete from a project.",
+                            "title": "Id"
+                        },
+                        "description": "ID of the log to delete from a project.",
+                        "example": "123"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Log deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Log with id <id> not found in your account."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Get Log",
+                "description": "Returns the log associated with a given id.",
+                "operationId": "get_log_v0_log__id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "ID of the log to fetch.",
+                            "title": "Id"
+                        },
+                        "description": "ID of the log to fetch.",
+                        "example": "123"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "id": "123",
+                                    "entries": {
+                                        "input": "...",
+                                        "output": "..."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Log with id <id> not found in your account."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/log/{id}/entry/{entry}": {
+            "delete": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Delete Log Entry",
+                "description": "Deletes a entry from a log.",
+                "operationId": "delete_log_entry_v0_log__id__entry__entry__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "ID of the log to delete an entry from.",
+                            "title": "Id"
+                        },
+                        "description": "ID of the log to delete an entry from.",
+                        "example": "123"
+                    },
+                    {
+                        "name": "entry",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the entry to delete from a given log.",
+                            "title": "Entry"
+                        },
+                        "description": "Name of the entry to delete from a given log.",
+                        "example": "input-str"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Log entry deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Log Entry Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Log entry <entry> not found in your account for log <id>."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/logs": {
+            "get": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Get Logs",
+                "description": "Returns a list of filtered logs from a project.",
+                "operationId": "get_logs_v0_logs_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get logs from.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get logs from.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "filter_expr",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Boolean string to filter logs. TODO: Detailed page.",
+                            "title": "Filter Expr"
+                        },
+                        "description": "Boolean string to filter logs. TODO: Detailed page.",
+                        "example": "len(output) > 200 and temperature == 0.5"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "artifact_1": "value_1",
+                                    "artifact_2": "value_2"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Project <project> not found in your account."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/logs/groups": {
+            "get": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Get Logs Groups",
+                "description": "Returns a list of the different version/values of one entry\nwithin a given project based on its key.",
+                "operationId": "get_logs_groups_v0_logs_groups_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get logs from.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get logs from.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the log entry to get distinct values from.",
+                            "title": "Key"
+                        },
+                        "description": "Name of the log entry to get distinct values from.",
+                        "example": "system_prompt"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": [
+                                    {
+                                        "version": "v0",
+                                        "value": "First version of the system prompt"
+                                    },
+                                    {
+                                        "version": "v1",
+                                        "value": "Second version of the system prompt"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Project <project> not found in your account."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/custom_endpoint": {
             "post": {
                 "tags": [
@@ -3976,6 +4806,27 @@
     },
     "components": {
         "schemas": {
+            "ArtifactConfig": {
+                "properties": {
+                    "artifacts": {
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "type": "object",
+                        "title": "Artifacts",
+                        "description": "Dictionary containing one or more key:value pairs that will be stored as artifacts.",
+                        "example": {
+                            "dataset": "my-dataset",
+                            "description": "..."
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "artifacts"
+                ],
+                "title": "ArtifactConfig"
+            },
             "Body_add_data_v0_dataset_data_post": {
                 "properties": {
                     "name": {
@@ -4597,8 +5448,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -5340,6 +6191,45 @@
                     "name"
                 ],
                 "title": "JSONSchema"
+            },
+            "LogConfig": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project the stored logs will be associated to."
+                    },
+                    "logs": {
+                        "type": "object",
+                        "title": "Logs",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable.",
+                        "example": {
+                            "input": "...",
+                            "score-test-1": "..."
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "logs"
+                ],
+                "title": "LogConfig"
+            },
+            "ProjectConfig": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "A unique, user-defined name used when referencing  the project.",
+                        "example": "eval-project"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "ProjectConfig"
             },
             "Prompt": {
                 "properties": {
