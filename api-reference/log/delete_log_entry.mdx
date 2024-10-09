@@ -10,7 +10,7 @@ Deletes a entry from a log.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
-#### Query Parameters
+#### Path Parameters
 
 <ParamField query="id" type="string" required="true">
 ID of the log to delete an entry from.
@@ -24,14 +24,14 @@ Name of the entry to delete from a given log.
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/log/{id}/entry/{entry}?id=123&entry=input-str' \
+  --url 'https://api.unify.ai/v0/log/123/entry/input-str' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/log/{id}/entry/{entry}?id=123&entry=input-str"
+url = "https://api.unify.ai/v0/log/123/entry/input-str"
 
 headers = {"Authorization": "Bearer <token>"}
 

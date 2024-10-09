@@ -10,7 +10,7 @@ Renames a project from `name` to `new_name` in your account.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
-#### Query Parameters
+#### Path Parameters
 
 <ParamField query="name" type="string" required="true">
 Name of the project to rename.
@@ -26,7 +26,7 @@ A unique, user-defined name used when referencing  the project.
 
 ```bash cURL
 curl --request PATCH \
-  --url 'https://api.unify.ai/v0/project/{name}?name=old-project-name' \
+  --url 'https://api.unify.ai/v0/project/old-project-name' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{
@@ -37,7 +37,7 @@ curl --request PATCH \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/{name}?name=old-project-name"
+url = "https://api.unify.ai/v0/project/old-project-name"
 
 headers = {"Authorization": "Bearer <token>"}
 

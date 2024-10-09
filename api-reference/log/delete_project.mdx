@@ -10,7 +10,7 @@ Deletes a project from your account.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
-#### Query Parameters
+#### Path Parameters
 
 <ParamField query="name" type="string" required="true">
 Name of the project to delete.
@@ -20,14 +20,14 @@ Name of the project to delete.
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/project/{name}?name=eval-project' \
+  --url 'https://api.unify.ai/v0/project/eval-project' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/{name}?name=eval-project"
+url = "https://api.unify.ai/v0/project/eval-project"
 
 headers = {"Authorization": "Bearer <token>"}
 

@@ -10,7 +10,7 @@ Deletes an artifact from a project.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
-#### Query Parameters
+#### Path Parameters
 
 <ParamField query="project" type="string" required="true">
 Name of the project to delete an artifact from.
@@ -24,14 +24,14 @@ Key of the artifact to delete.
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/project/{project}/artifacts/{key}?project=eval-project&key=project-description' \
+  --url 'https://api.unify.ai/v0/project/eval-project/artifacts/project-description' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/{project}/artifacts/{key}?project=eval-project&key=project-description"
+url = "https://api.unify.ai/v0/project/eval-project/artifacts/project-description"
 
 headers = {"Authorization": "Bearer <token>"}
 
