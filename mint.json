@@ -273,6 +273,7 @@
                         {
                             "group": "evaluations",
                             "pages": [
+                                "python/utils/evaluations/Log",
                                 "python/utils/evaluations/create_artifacts",
                                 "python/utils/evaluations/create_project",
                                 "python/utils/evaluations/delete_artifact",
