@@ -10,14 +10,14 @@ def get_logs_by_project(
 ) -> List[Dict[str, Any]]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/305d1e4b1884451ec46a60a889ea78cc11513713/unify/utils/evaluations.py#L74)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/2a6645fb99694601d1061b98cc292320dc793796/unify/utils/evaluations.py#L74)</p>
 
-Retrieve a set of logs based on the ids of the logs.
+Returns a list of filtered logs from a project.
 
 **Arguments**:
 
-- `project` - The name of the project to retrieve the logs for.
-- `filter` - The filtering to apply to the various log values, expressed as a string,
+- `project` - Name of the project to get logs from.
+- `filter` - Boolean string to filter logs, for example:
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
 
