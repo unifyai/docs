@@ -1,0 +1,27 @@
+---
+title: 'log'
+---
+
+```python
+def log(
+        project: Optional[str] = None,
+        api_key: Optional[str] = None,
+        **kwargs
+) -> int:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/4ee66c16a4f0ab7afd67f0e0516bda17114e8c08/unify/utils/evaluations.py#L74)</p>
+
+Returns the data (id and values) by querying the data based on their values.
+
+**Arguments**:
+
+- `project` - The name of the project to log the data for. Inferred from globally set
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+- `kwargs` - The key value pairs to log into the console as part of this log event.
+
+
+
+**Returns**:
+
+The unique id of newly created log entry.
