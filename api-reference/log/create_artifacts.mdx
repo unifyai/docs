@@ -20,7 +20,7 @@ Name of the project the artifacts belong to.
 #### Body
 
 <ParamField body="artifacts" type="object" required="true">
-Dictionary containing one or more key:value pairs that will be stored as artifacts.
+Dictionary containing one or more key:value pairs that will be stored as artifacts within a project.
 </ParamField>
 
 <RequestExample>
@@ -32,8 +32,8 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
     "artifacts": {
-        "dataset": "my-dataset",
-        "description": "..."
+        "dataset": "high-jump-data",
+        "world-record": 2.45
     }
 }'
 ```
@@ -45,7 +45,7 @@ url = "https://api.unify.ai/v0/project/{project}/artifacts?project=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"artifacts": {"dataset": "my-dataset", "description": "..."}}
+json_input = {"artifacts": {"dataset": "high-jump-data", "world-record": 2.45}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

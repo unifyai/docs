@@ -4809,15 +4809,12 @@
             "ArtifactConfig": {
                 "properties": {
                     "artifacts": {
-                        "additionalProperties": {
-                            "type": "string"
-                        },
                         "type": "object",
                         "title": "Artifacts",
-                        "description": "Dictionary containing one or more key:value pairs that will be stored as artifacts.",
+                        "description": "Dictionary containing one or more key:value pairs that will be stored as artifacts within a project.",
                         "example": {
-                            "dataset": "my-dataset",
-                            "description": "..."
+                            "dataset": "high-jump-data",
+                            "world-record": 2.45
                         }
                     }
                 },
@@ -5448,8 +5445,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
