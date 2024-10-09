@@ -5,20 +5,22 @@ title: 'log'
 ```python
 def log(
         project: Optional[str] = None,
+        logs: Optional[Dict[str, Any]] = None,
         api_key: Optional[str] = None,
-        **kwargs
 ) -> int:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/305d1e4b1884451ec46a60a889ea78cc11513713/unify/utils/evaluations.py#L74)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/2a6645fb99694601d1061b98cc292320dc793796/unify/utils/evaluations.py#L74)</p>
 
-Returns the data (id and values) by querying the data based on their values.
+Creates one or more logs associated to a project. Logs are LLM-call-level data
+that might depend on other variables. This method returns the id of the new
+stored log.
 
 **Arguments**:
 
-- `project` - The name of the project to log the data for. Inferred from globally set
+- `project` - Name of the project the stored logs will be associated to.
+- `logs` - Dictionary containing one or more key:value pairs that will be logged
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
-- `kwargs` - The key value pairs to log into the console as part of this log event.
 
 
 
