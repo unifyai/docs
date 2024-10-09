@@ -1369,9 +1369,9 @@
                 "tags": [
                     "Log"
                 ],
-                "summary": "Get Logs Groups",
-                "description": "Returns a list of the different version/values of one entry\nwithin a given project based on its key.",
-                "operationId": "get_logs_groups_v0_logs_groups_get",
+                "summary": "Get Log Groups",
+                "description": "Returns a dict with the different versions as keys and the values of the remaining\nitems within a given project based on its key.",
+                "operationId": "get_log_groups_v0_logs_groups_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1408,7 +1408,10 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {},
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Get Log Groups V0 Logs Groups Get"
+                                },
                                 "example": [
                                     {
                                         "version": "v0",
