@@ -275,7 +275,7 @@
                             "pages": [
                                 "python/utils/evaluations/create_artifacts",
                                 "python/utils/evaluations/create_project",
-                                "python/utils/evaluations/delete_artifacts",
+                                "python/utils/evaluations/delete_artifact",
                                 "python/utils/evaluations/delete_log_entries",
                                 "python/utils/evaluations/delete_logs",
                                 "python/utils/evaluations/delete_project",
