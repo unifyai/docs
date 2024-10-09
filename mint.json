@@ -380,7 +380,7 @@
                         "api-reference/log/get_log",
                         "api-reference/log/delete_log_entry",
                         "api-reference/log/get_logs",
-                        "api-reference/log/get_logs_groups"
+                        "api-reference/log/get_log_groups"
                     ]
                 },
                 {
