@@ -11,7 +11,7 @@ project-level metadata that don't depend on other variables.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
-#### Query Parameters
+#### Path Parameters
 
 <ParamField query="project" type="string" required="true">
 Name of the project the artifacts belong to.
@@ -27,7 +27,7 @@ Dictionary containing one or more key:value pairs that will be stored as artifac
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/project/{project}/artifacts?project=None' \
+  --url 'https://api.unify.ai/v0/project/eval-project/artifacts' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{
@@ -41,7 +41,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/{project}/artifacts?project=None"
+url = "https://api.unify.ai/v0/project/eval-project/artifacts"
 
 headers = {"Authorization": "Bearer <token>"}
 
