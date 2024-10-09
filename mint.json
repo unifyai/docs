@@ -158,6 +158,14 @@
                     ]
                 },
                 {
+                    "group": "evaluator",
+                    "pages": [
+                        "python/evaluator/DefaultLLMJudge",
+                        "python/evaluator/Evaluator",
+                        "python/evaluator/LLMJudge"
+                    ]
+                },
+                {
                     "group": "repr",
                     "pages": [
                         "python/repr/KeepKeys",
