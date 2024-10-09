@@ -6,7 +6,21 @@ title: 'Log'
 class Log
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/7fefda44af22efb3d1f7714d332de1366edd72ac/unify/utils/evaluations.py#L246)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/13ea3ec0b406195c631e5a8bd565d04bf9ad1d62/unify/utils/evaluations.py#L246)</p>
+
+
+
+## properties
+
+---
+
+### id
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/13ea3ec0b406195c631e5a8bd565d04bf9ad1d62/unify/utils/evaluations.py#L275)</p>
+
+```python
+def id(self) -> int:
+```
 
 
 
@@ -14,14 +28,41 @@ class Log
 
 ---
 
-### update
+### add\_entries
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/7fefda44af22efb3d1f7714d332de1366edd72ac/unify/utils/evaluations.py#L273)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/13ea3ec0b406195c631e5a8bd565d04bf9ad1d62/unify/utils/evaluations.py#L281)</p>
 
 ```python
-def update(
+def add_entries(
             self,
             **kwargs
+    ) -> None:
+```
+
+
+
+---
+
+### delete
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/13ea3ec0b406195c631e5a8bd565d04bf9ad1d62/unify/utils/evaluations.py#L294)</p>
+
+```python
+def delete(self) -> None:
+```
+
+
+
+---
+
+### delete\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/13ea3ec0b406195c631e5a8bd565d04bf9ad1d62/unify/utils/evaluations.py#L287)</p>
+
+```python
+def delete_entries(
+            self,
+            keys_to_delete: List[str],
     ) -> None:
 ```
 
@@ -33,7 +74,7 @@ def update(
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/7fefda44af22efb3d1f7714d332de1366edd72ac/unify/utils/evaluations.py#L248)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/13ea3ec0b406195c631e5a8bd565d04bf9ad1d62/unify/utils/evaluations.py#L248)</p>
 
 ```python
 def __init__(
