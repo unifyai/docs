@@ -4,13 +4,13 @@ title: 'get_logs_by_project'
 
 ```python
 def get_logs_by_project(
-        project: str,
+        project: Optional[str] = None,
         filter: Optional[str] = None,
         api_key: Optional[str] = None
 ) -> List[Dict[str, Any]]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3241d52edf7b475293afb31cea3390d25b8cda7f/unify/utils/evaluations.py#L74)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/554f1e13e47d61be3f0d9694061e96e4a03f2806/unify/utils/evaluations.py#L74)</p>
 
 Returns a list of filtered logs from a project.
 

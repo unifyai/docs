@@ -4,21 +4,21 @@ title: 'get_log_metrics'
 
 ```python
 def get_log_metrics(
-        project: str,
         metrics: Tuple[str],
+        project: Optional[str] = None,
         filter: Optional[str] = None,
         api_key: Optional[str] = None
 ) -> Dict[str, Any]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3241d52edf7b475293afb31cea3390d25b8cda7f/unify/utils/evaluations.py#L74)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/554f1e13e47d61be3f0d9694061e96e4a03f2806/unify/utils/evaluations.py#L74)</p>
 
 Retrieve a set of log metrics across a project, after applying the filtering.
 
 **Arguments**:
 
-- `project` - The id of the project to retrieve the logs for.
 - `metrics` - The reduction metrics to retrieve for the logs.
+- `project` - The id of the project to retrieve the logs for.
 - `filter` - The filtering to apply to the various log values, expressed as a string,
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 

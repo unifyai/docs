@@ -4,21 +4,21 @@ title: 'group_logs'
 
 ```python
 def group_logs(
-        project: str,
         key: str,
+        project: Optional[str] = None,
         api_key: Optional[str] = None
 ) -> Dict[str, List[Dict[str, Any]]]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3241d52edf7b475293afb31cea3390d25b8cda7f/unify/utils/evaluations.py#L74)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/554f1e13e47d61be3f0d9694061e96e4a03f2806/unify/utils/evaluations.py#L74)</p>
 
 Returns a list of the different version/values of one entry within a given project
 based on its key.
 
 **Arguments**:
 
-- `project` - Name of the project to get logs from.
 - `key` - Name of the log entry to get distinct values from.
+- `project` - Name of the project to get logs from.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
 
