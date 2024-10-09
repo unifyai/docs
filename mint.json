@@ -142,6 +142,12 @@
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            "group": "logging",
+                            "pages": [
+                                "python/chat/logging/with_logging"
+                            ]
                         }
                     ]
                 },
@@ -149,12 +155,6 @@
                     "group": "dataset",
                     "pages": [
                         "python/dataset/Dataset"
-                    ]
-                },
-                {
-                    "group": "logging",
-                    "pages": [
-                        "python/logging/with_logging"
                     ]
                 },
                 {
@@ -262,23 +262,23 @@
                             ]
                         },
                         {
-                            "group": "logging",
+                            "group": "evaluations",
                             "pages": [
-                                "python/utils/logging/create_artifacts",
-                                "python/utils/logging/create_project",
-                                "python/utils/logging/delete_artifacts",
-                                "python/utils/logging/delete_log_entries",
-                                "python/utils/logging/delete_logs",
-                                "python/utils/logging/delete_project",
-                                "python/utils/logging/get_log_metrics",
-                                "python/utils/logging/get_logs_by_id",
-                                "python/utils/logging/get_logs_by_project",
-                                "python/utils/logging/group_logs",
-                                "python/utils/logging/list_artifacts",
-                                "python/utils/logging/list_projects",
-                                "python/utils/logging/log",
-                                "python/utils/logging/rename_project",
-                                "python/utils/logging/update_log"
+                                "python/utils/evaluations/create_artifacts",
+                                "python/utils/evaluations/create_project",
+                                "python/utils/evaluations/delete_artifacts",
+                                "python/utils/evaluations/delete_log_entries",
+                                "python/utils/evaluations/delete_logs",
+                                "python/utils/evaluations/delete_project",
+                                "python/utils/evaluations/get_log_metrics",
+                                "python/utils/evaluations/get_logs_by_id",
+                                "python/utils/evaluations/get_logs_by_project",
+                                "python/utils/evaluations/group_logs",
+                                "python/utils/evaluations/list_artifacts",
+                                "python/utils/evaluations/list_projects",
+                                "python/utils/evaluations/log",
+                                "python/utils/evaluations/rename_project",
+                                "python/utils/evaluations/update_log"
                             ]
                         },
                         {
