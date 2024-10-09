@@ -356,6 +356,24 @@
                     ]
                 },
                 {
+                    "group": "Log",
+                    "pages": [
+                        "api-reference/log/create_project",
+                        "api-reference/log/delete_project",
+                        "api-reference/log/rename_project",
+                        "api-reference/log/list_projects",
+                        "api-reference/log/create_artifacts",
+                        "api-reference/log/list_artifacts",
+                        "api-reference/log/delete_artifact",
+                        "api-reference/log/create_logs",
+                        "api-reference/log/delete_log",
+                        "api-reference/log/get_log",
+                        "api-reference/log/delete_log_entry",
+                        "api-reference/log/get_logs",
+                        "api-reference/log/get_logs_groups"
+                    ]
+                },
+                {
                     "group": "Custom Endpoints",
                     "pages": [
                         "api-reference/custom_endpoints/create_custom_endpoint",

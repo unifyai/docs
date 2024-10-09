@@ -1,0 +1,68 @@
+---
+title: 'Delete Project'
+api: 'DELETE /v0/project/{name}'
+---
+Deletes a project from your account.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="name" type="string" required="true">
+Name of the project to delete.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/project/{name}?name=eval-project' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/project/{name}?name=eval-project"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("DELETE", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Project deleted successfully!"
+}
+```
+
+```json 404
+{
+    "info": "Project deleted successfully!"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

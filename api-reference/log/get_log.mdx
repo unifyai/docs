@@ -1,0 +1,76 @@
+---
+title: 'Get Log'
+api: 'GET /v0/log/{id}'
+---
+Returns the log associated with a given id.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="id" type="string" required="true">
+ID of the log to fetch.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/log/{id}?id=123' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/log/{id}?id=123"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "123",
+    "entries": {
+        "input": "...",
+        "output": "..."
+    }
+}
+```
+
+```json 404
+{
+    "id": "123",
+    "entries": {
+        "input": "...",
+        "output": "..."
+    }
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
