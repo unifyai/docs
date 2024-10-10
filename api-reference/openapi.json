@@ -59,7 +59,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "A project with this name doesn't exists."
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -120,7 +120,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <project> not found in your account."
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -194,7 +194,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Artifact <key> not found in this project."
+                                    "detail": "Artifact <key> not found."
                                 }
                             }
                         }
@@ -442,7 +442,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "API key not found."
+                                    "detail": "Custom API key not found."
                                 }
                             }
                         }
@@ -502,7 +502,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "API key not found."
+                                    "detail": "Custom API key not found."
                                 }
                             }
                         }
@@ -576,7 +576,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "API key not found."
+                                    "detail": "Custom API key not found."
                                 }
                             }
                         }
@@ -778,6 +778,16 @@
                                 "schema": {},
                                 "example": {
                                     "info": "Custom endpoint deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Custom Endpoint Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Custom endpoint not found."
                                 }
                             }
                         }
@@ -1515,7 +1525,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Dataset <name> not found in your account."
+                                    "detail": "Dataset not found."
                                 }
                             }
                         }
@@ -1582,7 +1592,7 @@
                         "description": "Dataset Not Found",
                         "content": {
                             "application/json": {
-                                "example": "Dataset <name> not found."
+                                "example": "Dataset not found."
                             }
                         }
                     },
@@ -1638,7 +1648,7 @@
                         "description": "Dataset Not Found",
                         "content": {
                             "application/json": {
-                                "example": "Dataset <name> not found"
+                                "example": "Dataset not found"
                             }
                         }
                     },
@@ -1838,7 +1848,7 @@
                         "description": "Dataset already exists",
                         "content": {
                             "application/json": {
-                                "example": "Dataset <name> already exists."
+                                "example": "Dataset already exists."
                             }
                         }
                     },
@@ -1929,7 +1939,7 @@
                         "description": "Dataset Not Found",
                         "content": {
                             "application/json": {
-                                "example": "Dataset <name> not found."
+                                "example": "Dataset not found."
                             }
                         }
                     },
@@ -3402,7 +3412,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "A project with this name doesn't exists."
+                                    "detail": "Project not found."
                                 }
                             }
                         }
@@ -3469,7 +3479,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Log with id <id> not found in your account."
+                                    "detail": "Log with id <id> not found."
                                 }
                             }
                         }
@@ -3539,7 +3549,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Log with id <id> not found in your account."
+                                    "detail": "Log with id <id> not found."
                                 }
                             }
                         }
@@ -3603,7 +3613,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Log with id <id> not found in your account."
+                                    "detail": "Log with id <id> not found."
                                 }
                             }
                         }
@@ -3677,7 +3687,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Log entry <entry> not found in your account for log <id>."
+                                    "detail": "Log entry <entry> not found."
                                 }
                             }
                         }
@@ -3771,7 +3781,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <project> not found in your account."
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -3887,7 +3897,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <project> not found in your account."
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -3971,7 +3981,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <project> not found in your account."
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -4446,7 +4456,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <name> not found in your account."
+                                    "detail": "Project <name> not found."
                                 }
                             }
                         }
@@ -4516,7 +4526,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <name> not found in your account."
+                                    "detail": "Project <name> not found."
                                 }
                             }
                         }
