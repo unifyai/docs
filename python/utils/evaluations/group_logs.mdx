@@ -7,17 +7,18 @@ def group_logs(
         key: str,
         project: Optional[str] = None,
         api_key: Optional[str] = None
-) -> Dict[str, List[Dict[str, Any]]]:
+):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/836fa76d66421dee423e998da2a61bfb2a0eea84/unify/utils/evaluations.py#L252)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/0b519d24cdecf1b49880872b347afbe6576ce84c/unify/utils/evaluations.py#L252)</p>
 
-Returns a list of the different version/values of one entry within a given project
-based on its key.
+Groups logs based on equality '==' of the values for the specified key, returning a
+dict with group indices as the keys and the list of logs as the values. If the keys
+are not versioned, then the indices are simply incrementing integers.
 
 **Arguments**:
 
-- `key` - Name of the log entry to get distinct values from.
+- `key` - Name of the log entry to do equality matching for.
 - `project` - Name of the project to get logs from.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
@@ -26,4 +27,4 @@ based on its key.
 **Returns**:
 
 A dict containing the grouped logs, with each key of the dict representing the
-version of the log key with equal values.
+version of the log key with equal values, and the value being a list of logs.

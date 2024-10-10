@@ -282,6 +282,7 @@
                                 "python/utils/evaluations/delete_log_entry",
                                 "python/utils/evaluations/delete_project",
                                 "python/utils/evaluations/get_artifacts",
+                                "python/utils/evaluations/get_groups",
                                 "python/utils/evaluations/get_log",
                                 "python/utils/evaluations/get_log_metrics",
                                 "python/utils/evaluations/get_logs",
