@@ -1,8 +1,8 @@
 ---
-title: 'Get Logs'
-api: 'GET /v0/logs'
+title: 'Get Log Metrics'
+api: 'GET /v0/logs/metrics'
 ---
-Returns a list of filtered logs from a project.
+Returns the reduction metric for filtered values for a specific key from a project.
 
 #### Authorizations
 
@@ -16,6 +16,14 @@ Returns a list of filtered logs from a project.
 Name of the project to get logs from.
 </ParamField>
 
+<ParamField query="key" type="string" required="true">
+The key you would like to extract the reduction metric for.
+</ParamField>
+
+<ParamField query="metric" type="string" required="true">
+The name of the metric you would like to compute.
+</ParamField>
+
 <ParamField query="filter_expr" type="string | null" >
 Boolean string to filter logs. TODO: Detailed page.
 </ParamField>
@@ -24,14 +32,14 @@ Boolean string to filter logs. TODO: Detailed page.
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs?project=eval-project&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5' \
+  --url 'https://api.unify.ai/v0/logs/metrics?project=eval-project&key=score&metric=mean&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs?project=eval-project&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5"
+url = "https://api.unify.ai/v0/logs/metrics?project=eval-project&key=score&metric=mean&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -44,41 +52,17 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-[
-    {
-        "id": "0",
-        "entries": {
-            "key1": "a",
-            "key2": 1.0
-        }
-    },
-    {
-        "id": "1",
-        "entries": {
-            "key1": "b",
-            "key2": 2.0
-        }
-    }
-]
+{
+    "key1": 1.23,
+    "key2": 35
+}
 ```
 
 ```json 404
-[
-    {
-        "id": "0",
-        "entries": {
-            "key1": "a",
-            "key2": 1.0
-        }
-    },
-    {
-        "id": "1",
-        "entries": {
-            "key1": "b",
-            "key2": 2.0
-        }
-    }
-]
+{
+    "key1": 1.23,
+    "key2": 35
+}
 ```
 
 ```json 422
