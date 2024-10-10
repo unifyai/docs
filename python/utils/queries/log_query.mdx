@@ -4,16 +4,16 @@ title: 'log_query'
 
 ```python
 def log_query(
-        endpoint: str,
-        query_body: Dict,
-        response_body: Optional[Dict] = None,
-        tags: Optional[List[str]] = None,
-        timestamp: Optional[datetime.datetime] = None,
-        api_key: Optional[str] = None,
+    endpoint: str,
+    query_body: Dict,
+    response_body: Optional[Dict] = None,
+    tags: Optional[List[str]] = None,
+    timestamp: Optional[datetime.datetime] = None,
+    api_key: Optional[str] = None,
 ):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2d7939f39ef52684c73f08b6c7de3d3d7265a481/unify/utils/queries.py#L252)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/bb5302aa87e5bb1866a11e987e590b19e82f4d14/unify/utils/queries.py#L229)</p>
 
 Log a query (and optionally response) for a locally deployed (non-Unify-registered)
 model, with tagging (default None) and timestamp (default datetime.now() also

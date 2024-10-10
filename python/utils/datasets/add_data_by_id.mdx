@@ -4,13 +4,11 @@ title: 'add_data_by_id'
 
 ```python
 def add_data_by_id(
-        name: str,
-        data: Union[int, List[int]],
-        api_key: Optional[str] = None
+    name: str, data: Union[int, List[int]], api_key: Optional[str] = None
 ) -> Dict[str, Union[str, List[int]]]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2d7939f39ef52684c73f08b6c7de3d3d7265a481/unify/utils/datasets.py#L74)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/bb5302aa87e5bb1866a11e987e590b19e82f4d14/unify/utils/datasets.py#L75)</p>
 
 Adds data to a dataset by id, and returns a list of ids and values for each of
 those, split by those which were already present and those which were newly added.

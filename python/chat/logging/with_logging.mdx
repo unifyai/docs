@@ -4,18 +4,18 @@ title: 'with_logging'
 
 ```python
 def with_logging(
-        model_fn: Optional[callable] = None,
-        *,
-        endpoint: str,
-        tags: Optional[List[str]] = None,
-        timestamp: Optional[datetime.datetime] = None,
-        log_query_body: bool = True,
-        log_response_body: bool = True,
-        api_key: Optional[str] = None,
+    model_fn: Optional[callable] = None,
+    *,
+    endpoint: str,
+    tags: Optional[List[str]] = None,
+    timestamp: Optional[datetime.datetime] = None,
+    log_query_body: bool = True,
+    log_response_body: bool = True,
+    api_key: Optional[str] = None,
 ):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2d7939f39ef52684c73f08b6c7de3d3d7265a481/unify/chat/logging.py#L433)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/bb5302aa87e5bb1866a11e987e590b19e82f4d14/unify/chat/logging.py#L429)</p>
 
 Wrap a local model callable with logging of the queries.
 

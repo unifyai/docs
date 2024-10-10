@@ -4,13 +4,11 @@ title: 'delete_data_by_value'
 
 ```python
 def delete_data_by_value(
-        name: str,
-        data: Union[Any, List[Any]],
-        api_key: Optional[str] = None
+    name: str, data: Union[Any, List[Any]], api_key: Optional[str] = None
 ) -> Dict[str, Union[str, List[int]]]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2d7939f39ef52684c73f08b6c7de3d3d7265a481/unify/utils/datasets.py#L74)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/bb5302aa87e5bb1866a11e987e590b19e82f4d14/unify/utils/datasets.py#L75)</p>
 
 Deletes data from a dataset by value, and returns a list of ids and values for each
 of those, split by those which were deleted and those which were not present.
