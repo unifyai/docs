@@ -1,11 +1,8 @@
 ---
-title: 'Create Logs'
-api: 'POST /v0/log'
+title: 'Update Log'
+api: 'POST /v0/log/{id}'
 ---
-Creates one or more logs associated to a project. Logs are
-LLM-call-level data that might depend on other variables.
-
-This method returns the id of the new stored log.
+Updates the given log with more data.
 
 #### Authorizations
 
@@ -13,13 +10,15 @@ This method returns the id of the new stored log.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
-#### Body
+#### Path Parameters
 
-<ParamField body="project" type="string" required="true">
-Name of the project the stored logs will be associated to.
+<ParamField query="id" type="string" required="true">
+ID of the log to update.
 </ParamField>
 
-<ParamField body="logs" type="object" required="true">
+#### Body
+
+<ParamField body="entries" type="object" required="true">
 Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable.
 </ParamField>
 
@@ -27,11 +26,11 @@ Dictionary containing one or more key:value pairs that will be logged into the p
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/log' \
-  --header "Authorization: Bearer $UNIFY_KEY" \
+  --url 'https://api.unify.ai/v0/log/123' \
+  --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{
-    "logs": {
+    "entries": {
         "input": "...",
         "score-test-1": "..."
     }
@@ -41,11 +40,11 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/log"
+url = "https://api.unify.ai/v0/log/123"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"logs": {"input": "...", "score-test-1": "..."}}
+json_input = {"entries": {"input": "...", "score-test-1": "..."}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
@@ -57,13 +56,13 @@ print(response.text)
 
 ```json 200
 {
-    "info": "Log(s) created successfully!"
+    "info": "Log updated successfully!"
 }
 ```
 
 ```json 404
 {
-    "detail": "A project with this name doesn't exists."
+    "detail": "Log with id <id> not found in your account."
 }
 ```
 

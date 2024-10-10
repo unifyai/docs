@@ -2,7 +2,7 @@
 title: 'Get Logs'
 api: 'GET /v0/logs'
 ---
-Returns a list of filtered logs from a project.
+Returns a list of filtered entries from a project.
 
 #### Authorizations
 
@@ -13,11 +13,11 @@ Returns a list of filtered logs from a project.
 #### Query Parameters
 
 <ParamField query="project" type="string" required="true">
-Name of the project to get logs from.
+Name of the project to get entries from.
 </ParamField>
 
 <ParamField query="filter_expr" type="string | null" >
-Boolean string to filter logs. TODO: Detailed page.
+Boolean string to filter entries. TODO: Detailed page.
 </ParamField>
 
 <RequestExample>
