@@ -1336,9 +1336,138 @@
                         "content": {
                             "application/json": {
                                 "schema": {},
+                                "example": [
+                                    {
+                                        "id": "0",
+                                        "entries": {
+                                            "key1": "a",
+                                            "key2": 1.0
+                                        }
+                                    },
+                                    {
+                                        "id": "1",
+                                        "entries": {
+                                            "key1": "b",
+                                            "key2": 2.0
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "detail": "Project <project> not found in your account."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/logs/metrics": {
+            "get": {
+                "tags": [
+                    "Log"
+                ],
+                "summary": "Get Log Metrics",
+                "description": "Returns the reduction metric for filtered values for a specific key from a project.",
+                "operationId": "get_log_metrics_v0_logs_metrics_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get logs from.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get logs from.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The key you would like to extract the reduction metric for.",
+                            "title": "Key"
+                        },
+                        "description": "The key you would like to extract the reduction metric for.",
+                        "example": "score"
+                    },
+                    {
+                        "name": "metric",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The name of the metric you would like to compute.",
+                            "title": "Metric"
+                        },
+                        "description": "The name of the metric you would like to compute.",
+                        "example": "mean"
+                    },
+                    {
+                        "name": "filter_expr",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Boolean string to filter logs. TODO: Detailed page.",
+                            "title": "Filter Expr"
+                        },
+                        "description": "Boolean string to filter logs. TODO: Detailed page.",
+                        "example": "len(output) > 200 and temperature == 0.5"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "anyOf": [
+                                        {
+                                            "type": "number"
+                                        },
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "boolean"
+                                        }
+                                    ],
+                                    "title": "Response Get Log Metrics V0 Logs Metrics Get"
+                                },
                                 "example": {
-                                    "artifact_1": "value_1",
-                                    "artifact_2": "value_2"
+                                    "key1": 1.23,
+                                    "key2": 35
                                 }
                             }
                         }
