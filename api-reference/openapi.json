@@ -714,7 +714,9 @@
                         "description": "Project Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Project <name> not found in your account."
+                                "example": {
+                                    "detail": "Project <name> not found in your account."
+                                }
                             }
                         }
                     },
@@ -782,7 +784,9 @@
                         "description": "Project Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Project <name> not found in your account."
+                                "example": {
+                                    "detail": "Project <name> not found in your account."
+                                }
                             }
                         }
                     },
@@ -943,7 +947,9 @@
                         "description": "Project Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Project <project> not found in your account."
+                                "example": {
+                                    "detail": "Project <project> not found in your account."
+                                }
                             }
                         }
                     },
@@ -1015,7 +1021,9 @@
                         "description": "Artifact Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Artifact <key> not found in this project."
+                                "example": {
+                                    "detail": "Artifact <key> not found in this project."
+                                }
                             }
                         }
                     },
@@ -1133,7 +1141,9 @@
                         "description": "Log Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Log with id <id> not found in your account."
+                                "example": {
+                                    "detail": "Log with id <id> not found in your account."
+                                }
                             }
                         }
                     },
@@ -1195,7 +1205,9 @@
                         "description": "Log Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Log with id <id> not found in your account."
+                                "example": {
+                                    "detail": "Log with id <id> not found in your account."
+                                }
                             }
                         }
                     },
@@ -1267,7 +1279,9 @@
                         "description": "Log Entry Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Log entry <entry> not found in your account for log <id>."
+                                "example": {
+                                    "detail": "Log entry <entry> not found in your account for log <id>."
+                                }
                             }
                         }
                     },
@@ -1359,7 +1373,9 @@
                         "description": "Project Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Project <project> not found in your account."
+                                "example": {
+                                    "detail": "Project <project> not found in your account."
+                                }
                             }
                         }
                     },
@@ -1476,7 +1492,9 @@
                         "description": "Project Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Project <project> not found in your account."
+                                "example": {
+                                    "detail": "Project <project> not found in your account."
+                                }
                             }
                         }
                     },
@@ -1558,7 +1576,9 @@
                         "description": "Project Not Found",
                         "content": {
                             "application/json": {
-                                "detail": "Project <project> not found in your account."
+                                "example": {
+                                    "detail": "Project <project> not found in your account."
+                                }
                             }
                         }
                     },
