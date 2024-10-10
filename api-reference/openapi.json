@@ -1392,20 +1392,44 @@
                 }
             }
         },
-        "/v0/logs/metrics": {
+        "/v0/logs/metric/{metric}/{key}": {
             "get": {
                 "tags": [
                     "Log"
                 ],
-                "summary": "Get Log Metrics",
+                "summary": "Get Logs Metric",
                 "description": "Returns the reduction metric for filtered values for a specific key from a project.",
-                "operationId": "get_log_metrics_v0_logs_metrics_get",
+                "operationId": "get_logs_metric_v0_logs_metric__metric___key__get",
                 "security": [
                     {
                         "HTTPBearer": []
                     }
                 ],
                 "parameters": [
+                    {
+                        "name": "metric",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The name of the metric you would like to compute.",
+                            "title": "Metric"
+                        },
+                        "description": "The name of the metric you would like to compute.",
+                        "example": "mean"
+                    },
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The key you would like to extract the reduction metric for.",
+                            "title": "Key"
+                        },
+                        "description": "The key you would like to extract the reduction metric for.",
+                        "example": "score"
+                    },
                     {
                         "name": "project",
                         "in": "query",
@@ -1417,30 +1441,6 @@
                         },
                         "description": "Name of the project to get logs from.",
                         "example": "eval-project"
-                    },
-                    {
-                        "name": "key",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The key you would like to extract the reduction metric for.",
-                            "title": "Key"
-                        },
-                        "description": "The key you would like to extract the reduction metric for.",
-                        "example": "score"
-                    },
-                    {
-                        "name": "metric",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The name of the metric you would like to compute.",
-                            "title": "Metric"
-                        },
-                        "description": "The name of the metric you would like to compute.",
-                        "example": "mean"
                     },
                     {
                         "name": "filter_expr",
@@ -1479,12 +1479,9 @@
                                             "type": "boolean"
                                         }
                                     ],
-                                    "title": "Response Get Log Metrics V0 Logs Metrics Get"
+                                    "title": "Response Get Logs Metric V0 Logs Metric  Metric   Key  Get"
                                 },
-                                "example": {
-                                    "key1": 1.23,
-                                    "key2": 35
-                                }
+                                "example": 4.56
                             }
                         }
                     },
@@ -5597,8 +5594,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
