@@ -1,0 +1,76 @@
+---
+title: 'Create Dataset'
+api: 'POST /v0/datasetv2'
+---
+Create a new dataset.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="name" type="string" required="true">
+A unique, user-defined name identify a new dataset.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/datasetv2' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "new-dataset"
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/datasetv2"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"name": "new-dataset"}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 201
+{
+    "info": "Dataset created sccessfully!"
+}
+```
+
+```json 400
+"Dataset <name> already exists."
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
