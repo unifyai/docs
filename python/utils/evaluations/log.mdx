@@ -4,14 +4,14 @@ title: 'log'
 
 ```python
 def log(
-        project: Optional[str] = None,
-        version: Optional[Dict[str, str]] = None,
-        api_key: Optional[str] = None,
-        **kwargs
+    project: Optional[str] = None,
+    version: Optional[Dict[str, str]] = None,
+    api_key: Optional[str] = None,
+    **kwargs,
 ) -> Log:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2d7939f39ef52684c73f08b6c7de3d3d7265a481/unify/utils/evaluations.py#L252)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/bb5302aa87e5bb1866a11e987e590b19e82f4d14/unify/utils/evaluations.py#L229)</p>
 
 Creates one or more logs associated to a project. Logs are LLM-call-level data
 that might depend on other variables. This method returns the id of the new
