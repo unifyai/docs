@@ -402,18 +402,6 @@
                     "group": "Benchmarking",
                     "pages": [
                         {
-                            "group": "Datasets",
-                            "pages": [
-                                "api-reference/datasets/upload_dataset",
-                                "api-reference/datasets/download_dataset",
-                                "api-reference/datasets/delete_dataset",
-                                "api-reference/datasets/rename_dataset",
-                                "api-reference/datasets/list_datasets",
-                                "api-reference/datasets/delete_data",
-                                "api-reference/datasets/add_data"
-                            ]
-                        },
-                        {
                             "group": "DatasetsV2",
                             "pages": [
                                 "api-reference/datasetsv2/list_datasets",
@@ -454,35 +442,6 @@
                                 "api-reference/evals/get_logs",
                                 "api-reference/evals/get_logs_metric",
                                 "api-reference/evals/get_log_groups"
-                            ]
-                        },
-                        {
-                            "group": "Evaluators",
-                            "pages": [
-                                "api-reference/evaluators/create_evaluator",
-                                "api-reference/evaluators/get_evaluator",
-                                "api-reference/evaluators/delete_evaluator",
-                                "api-reference/evaluators/rename_evaluator",
-                                "api-reference/evaluators/list_evaluators"
-                            ]
-                        },
-                        {
-                            "group": "Default Prompts",
-                            "pages": [
-                                "api-reference/default_prompts/create_default_prompt",
-                                "api-reference/default_prompts/get_default_prompt",
-                                "api-reference/default_prompts/delete_default_prompt",
-                                "api-reference/default_prompts/rename_default_prompt",
-                                "api-reference/default_prompts/list_default_prompts"
-                            ]
-                        },
-                        {
-                            "group": "Evaluations",
-                            "pages": [
-                                "api-reference/evaluations/trigger_evaluation",
-                                "api-reference/evaluations/upload_evaluation",
-                                "api-reference/evaluations/get_evaluations",
-                                "api-reference/evaluations/delete_evaluations"
                             ]
                         }
                     ]
