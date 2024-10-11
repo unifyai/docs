@@ -1,6 +1,6 @@
 ---
 title: 'Update Log'
-api: 'POST /v0/log/{id}'
+api: 'PUT /v0/log/{id}'
 ---
 Updates the given log with more data.
 
@@ -25,7 +25,7 @@ Dictionary containing one or more key:value pairs that will be logged into the p
 <RequestExample>
 
 ```bash cURL
-curl --request POST \
+curl --request PUT \
   --url 'https://api.unify.ai/v0/log/123' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
@@ -46,7 +46,7 @@ headers = {"Authorization": "Bearer <token>"}
 
 json_input = {"entries": {"input": "...", "score-test-1": "..."}}
 
-response = requests.request("POST", url, json=json_input, headers=headers)
+response = requests.request("PUT", url, json=json_input, headers=headers)
 
 print(response.text)
 ```

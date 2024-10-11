@@ -3522,13 +3522,13 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "tags": [
                     "Log"
                 ],
                 "summary": "Update Log",
                 "description": "Updates the given log with more data.",
-                "operationId": "update_log_v0_log__id__post",
+                "operationId": "update_log_v0_log__id__put",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -6250,8 +6250,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
