@@ -1346,7 +1346,7 @@
                         "schema": {
                             "type": "string",
                             "description": "Region where the benchmark is run.\n        Options are: `\"Belgium\"`, `\"Hong Kong\"` or `\"Iowa\"`.",
-                            "default": "Belgium",
+                            "default": "Iowa",
                             "title": "Region"
                         },
                         "description": "Region where the benchmark is run.\n        Options are: `\"Belgium\"`, `\"Hong Kong\"` or `\"Iowa\"`.",
