@@ -59,7 +59,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <project> not found."
+                                    "detail": "A project with this name doesn't exists."
                                 }
                             }
                         }
@@ -120,7 +120,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <project> not found."
+                                    "detail": "Project <project> not found in your account."
                                 }
                             }
                         }
@@ -189,12 +189,22 @@
                             }
                         }
                     },
-                    "404": {
+                    "4041": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <name> not found in your account."
+                                }
+                            }
+                        }
+                    },
+                    "4042": {
                         "description": "Artifact Not Found",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Artifact <key> not found."
+                                    "detail": "Artifact <key> not found in this project."
                                 }
                             }
                         }
@@ -1718,7 +1728,15 @@
                             }
                         }
                     },
-                    "404": {
+                    "4041": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": "Dataset not found."
+                            }
+                        }
+                    },
+                    "4042": {
                         "description": "Dataset entry Not Found",
                         "content": {
                             "application/json": {
@@ -1786,7 +1804,15 @@
                             }
                         }
                     },
-                    "404": {
+                    "4041": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": "Dataset not found."
+                            }
+                        }
+                    },
+                    "4042": {
                         "description": "Dataset Entry Not Found",
                         "content": {
                             "application/json": {
@@ -3682,7 +3708,17 @@
                             }
                         }
                     },
-                    "404": {
+                    "4041": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Log with <id> not found."
+                                }
+                            }
+                        }
+                    },
+                    "4042": {
                         "description": "Log Entry Not Found",
                         "content": {
                             "application/json": {
