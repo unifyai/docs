@@ -59,7 +59,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "A project with this name doesn't exists."
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -120,7 +120,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <project> not found in your account."
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -194,7 +194,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project <name> not found in your account."
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -204,7 +204,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Artifact <key> not found in this project."
+                                    "detail": "Artifact <key> not found."
                                 }
                             }
                         }
