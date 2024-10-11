@@ -344,30 +344,35 @@
             "group": "",
             "pages": [
                 {
-                    "group": "Log",
+                    "group": "Supported Endpoints",
                     "pages": [
-                        "api-reference/log/create_artifacts",
-                        "api-reference/log/list_artifacts",
-                        "api-reference/log/delete_artifact",
-                        "api-reference/log/create_log",
-                        "api-reference/log/delete_log",
-                        "api-reference/log/update_log",
-                        "api-reference/log/get_log",
-                        "api-reference/log/delete_log_entry",
-                        "api-reference/log/get_logs",
-                        "api-reference/log/get_logs_metric",
-                        "api-reference/log/get_log_groups",
-                        "api-reference/log/create_project",
-                        "api-reference/log/delete_project",
-                        "api-reference/log/rename_project",
-                        "api-reference/log/list_projects"
+                        "api-reference/supported_endpoints/list_providers",
+                        "api-reference/supported_endpoints/list_models",
+                        "api-reference/supported_endpoints/list_endpoints"
                     ]
                 },
                 {
-                    "group": "Credits",
+                    "group": "LLM Queries",
                     "pages": [
-                        "api-reference/credits/get_credits",
-                        "api-reference/credits/promo_code"
+                        "api-reference/llm_queries/chat_completions"
+                    ]
+                },
+                {
+                    "group": "Logging",
+                    "pages": [
+                        "api-reference/logging/get_query_tags",
+                        "api-reference/logging/get_queries",
+                        "api-reference/logging/log_query",
+                        "api-reference/logging/get_query_metrics"
+                    ]
+                },
+                {
+                    "group": "Custom Endpoints",
+                    "pages": [
+                        "api-reference/custom_endpoints/create_custom_endpoint",
+                        "api-reference/custom_endpoints/delete_custom_endpoint",
+                        "api-reference/custom_endpoints/rename_custom_endpoint",
+                        "api-reference/custom_endpoints/list_custom_endpoints"
                     ]
                 },
                 {
@@ -381,12 +386,11 @@
                     ]
                 },
                 {
-                    "group": "Custom Endpoints",
+                    "group": "Endpoint Metrics",
                     "pages": [
-                        "api-reference/custom_endpoints/create_custom_endpoint",
-                        "api-reference/custom_endpoints/delete_custom_endpoint",
-                        "api-reference/custom_endpoints/rename_custom_endpoint",
-                        "api-reference/custom_endpoints/list_custom_endpoints"
+                        "api-reference/endpoint_metrics/log_endpoint_metric",
+                        "api-reference/endpoint_metrics/get_endpoint_metrics",
+                        "api-reference/endpoint_metrics/delete_endpoint_metrics"
                     ]
                 },
                 {
@@ -415,30 +419,33 @@
                     ]
                 },
                 {
-                    "group": "Default Prompts",
+                    "group": "Projects",
                     "pages": [
-                        "api-reference/default_prompts/create_default_prompt",
-                        "api-reference/default_prompts/get_default_prompt",
-                        "api-reference/default_prompts/delete_default_prompt",
-                        "api-reference/default_prompts/rename_default_prompt",
-                        "api-reference/default_prompts/list_default_prompts"
+                        "api-reference/projects/create_project",
+                        "api-reference/projects/delete_project",
+                        "api-reference/projects/rename_project",
+                        "api-reference/projects/list_projects"
                     ]
                 },
                 {
-                    "group": "Endpoint Metrics",
+                    "group": "Artifacts",
                     "pages": [
-                        "api-reference/endpoint_metrics/log_endpoint_metric",
-                        "api-reference/endpoint_metrics/get_endpoint_metrics",
-                        "api-reference/endpoint_metrics/delete_endpoint_metrics"
+                        "api-reference/artifacts/create_artifacts",
+                        "api-reference/artifacts/list_artifacts",
+                        "api-reference/artifacts/delete_artifact"
                     ]
                 },
                 {
-                    "group": "Evaluations",
+                    "group": "Evals",
                     "pages": [
-                        "api-reference/evaluations/trigger_evaluation",
-                        "api-reference/evaluations/upload_evaluation",
-                        "api-reference/evaluations/get_evaluations",
-                        "api-reference/evaluations/delete_evaluations"
+                        "api-reference/evals/create_log",
+                        "api-reference/evals/delete_log",
+                        "api-reference/evals/update_log",
+                        "api-reference/evals/get_log",
+                        "api-reference/evals/delete_log_entry",
+                        "api-reference/evals/get_logs",
+                        "api-reference/evals/get_logs_metric",
+                        "api-reference/evals/get_log_groups"
                     ]
                 },
                 {
@@ -452,36 +459,22 @@
                     ]
                 },
                 {
-                    "group": "LLM Queries",
+                    "group": "Default Prompts",
                     "pages": [
-                        "api-reference/llm_queries/chat_completions"
+                        "api-reference/default_prompts/create_default_prompt",
+                        "api-reference/default_prompts/get_default_prompt",
+                        "api-reference/default_prompts/delete_default_prompt",
+                        "api-reference/default_prompts/rename_default_prompt",
+                        "api-reference/default_prompts/list_default_prompts"
                     ]
                 },
                 {
-                    "group": "Logging",
+                    "group": "Evaluations",
                     "pages": [
-                        "api-reference/logging/get_query_tags",
-                        "api-reference/logging/get_queries",
-                        "api-reference/logging/log_query",
-                        "api-reference/logging/get_query_metrics"
-                    ]
-                },
-                {
-                    "group": "Router Configurations",
-                    "pages": [
-                        "api-reference/router_configurations/create_router_config",
-                        "api-reference/router_configurations/get_router_config",
-                        "api-reference/router_configurations/delete_router_config",
-                        "api-reference/router_configurations/rename_router_config",
-                        "api-reference/router_configurations/list_router_configs"
-                    ]
-                },
-                {
-                    "group": "Router Deployment",
-                    "pages": [
-                        "api-reference/router_deployment/deploy_router",
-                        "api-reference/router_deployment/undeploy_router",
-                        "api-reference/router_deployment/list_deployed_routers"
+                        "api-reference/evaluations/trigger_evaluation",
+                        "api-reference/evaluations/upload_evaluation",
+                        "api-reference/evaluations/get_evaluations",
+                        "api-reference/evaluations/delete_evaluations"
                     ]
                 },
                 {
@@ -495,11 +488,28 @@
                     ]
                 },
                 {
-                    "group": "Supported Endpoints",
+                    "group": "Router Deployment",
                     "pages": [
-                        "api-reference/supported_endpoints/list_providers",
-                        "api-reference/supported_endpoints/list_models",
-                        "api-reference/supported_endpoints/list_endpoints"
+                        "api-reference/router_deployment/deploy_router",
+                        "api-reference/router_deployment/undeploy_router",
+                        "api-reference/router_deployment/list_deployed_routers"
+                    ]
+                },
+                {
+                    "group": "Router Configurations",
+                    "pages": [
+                        "api-reference/router_configurations/create_router_config",
+                        "api-reference/router_configurations/get_router_config",
+                        "api-reference/router_configurations/delete_router_config",
+                        "api-reference/router_configurations/rename_router_config",
+                        "api-reference/router_configurations/list_router_configs"
+                    ]
+                },
+                {
+                    "group": "Credits",
+                    "pages": [
+                        "api-reference/credits/get_credits",
+                        "api-reference/credits/promo_code"
                     ]
                 }
             ]
