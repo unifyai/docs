@@ -6,7 +6,7 @@ title: 'Log'
 class Log
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/fcdf8608fa866eed84828727cf952097898ba302/unify/utils/evaluations.py#L227)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L229)</p>
 
 
 
@@ -16,7 +16,7 @@ class Log
 
 ### id
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/fcdf8608fa866eed84828727cf952097898ba302/unify/utils/evaluations.py#L254)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L255)</p>
 
 ```python
 def id(self) -> int:
@@ -30,7 +30,7 @@ def id(self) -> int:
 
 ### add\_entries
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/fcdf8608fa866eed84828727cf952097898ba302/unify/utils/evaluations.py#L260)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L278)</p>
 
 ```python
 def add_entries(self, **kwargs) -> None:
@@ -42,7 +42,7 @@ def add_entries(self, **kwargs) -> None:
 
 ### delete
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/fcdf8608fa866eed84828727cf952097898ba302/unify/utils/evaluations.py#L270)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L290)</p>
 
 ```python
 def delete(self) -> None:
@@ -54,7 +54,7 @@ def delete(self) -> None:
 
 ### delete\_entries
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/fcdf8608fa866eed84828727cf952097898ba302/unify/utils/evaluations.py#L263)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L282)</p>
 
 ```python
 def delete_entries(
@@ -65,21 +65,94 @@ def delete_entries(
 
 
 
+---
+
+### download
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L275)</p>
+
+```python
+def download(self):
+```
+
+
+
+---
+
+### upload
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L268)</p>
+
+```python
+def upload(self):
+```
+
+
+
 ## dunder_methods
+
+---
+
+### \_\_eq\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L261)</p>
+
+```python
+def __eq__(self, other: Union[dict, Log]) -> bool:
+```
+
+
 
 ---
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/fcdf8608fa866eed84828727cf952097898ba302/unify/utils/evaluations.py#L229)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L231)</p>
 
 ```python
 def __init__(
         self,
         project: Optional[str] = None,
         version: Optional[Dict[str, str]] = None,
+        id: Optional[int] = None,
         api_key: Optional[str] = None,
         **kwargs,
     ):
+```
+
+
+
+---
+
+### \_\_repr\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/types/base.py#L41)</p>
+
+```python
+def __repr__(self) -> str:
+```
+
+
+
+---
+
+### \_\_rich\_repr\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/utils/evaluations.py#L293)</p>
+
+```python
+def __rich_repr__(self) -> List[Any]:
+```
+
+Used by the rich package for representing and print the instance.
+
+---
+
+### \_\_str\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/152aefaba300c3f95300d89aa76998ac3a1cd09f/unify/types/base.py#L44)</p>
+
+```python
+def __str__(self) -> str:
 ```
 
