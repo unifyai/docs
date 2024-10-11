@@ -2259,14 +2259,14 @@
                 ]
             }
         },
-        "/v0/benchmark": {
+        "/v0/endpoint-metrics": {
             "post": {
                 "tags": [
-                    "Efficiency Benchmarks"
+                    "Endpoint Metrics"
                 ],
-                "summary": "Append To Benchmark",
+                "summary": "Log Endpoint Metric",
                 "description": "Append speed or cost data to the standardized time-series benchmarks for a custom\nendpoint (only custom endpoints are publishable by end users).",
-                "operationId": "append_to_benchmark_v0_benchmark_post",
+                "operationId": "log_endpoint_metric_v0_endpoint_metrics_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2359,11 +2359,11 @@
             },
             "get": {
                 "tags": [
-                    "Efficiency Benchmarks"
+                    "Endpoint Metrics"
                 ],
-                "summary": "Get Benchmark",
+                "summary": "Get Endpoint Metrics",
                 "description": "Extracts cost and speed data for the provided endpoint via our standardized\nefficiency benchmarks, in the specified region, with the specified sequence length,\nwith all benchmark values returned within the specified time window.\n\nWhen extracting data for a *custom* endpoint, then `model` is the endpoint name, and\n`provider` must be set as `\"custom\"`. The arguments `region` and `seq_len` are\nignored for custom endpoints (they are not publishable).\n\nIf neither `start_time` nor `end_time` are provided, then only the *latest*\nbenchmark data is returned. If only `start_time` is provided, then `end_time` is\nassumed to be the current time. An exception is raised if only `end_time` is\nprovided.",
-                "operationId": "get_benchmark_v0_benchmark_get",
+                "operationId": "get_endpoint_metrics_v0_endpoint_metrics_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2472,7 +2472,7 @@
                                             ]
                                         }
                                     },
-                                    "title": "Response Get Benchmark V0 Benchmark Get"
+                                    "title": "Response Get Endpoint Metrics V0 Endpoint Metrics Get"
                                 },
                                 "example": {
                                     "ttft": 440.2323939998496,
@@ -2498,11 +2498,11 @@
             },
             "delete": {
                 "tags": [
-                    "Efficiency Benchmarks"
+                    "Endpoint Metrics"
                 ],
-                "summary": "Delete Benchmark",
+                "summary": "Delete Endpoint Metrics",
                 "description": "Delete *all* benchmark time-series data for a given *custom* endpoint.\nThe time-series benchmark data for *public* endpoints are not deletable.",
-                "operationId": "delete_benchmark_v0_benchmark_delete",
+                "operationId": "delete_endpoint_metrics_v0_endpoint_metrics_delete",
                 "security": [
                     {
                         "HTTPBearer": []
