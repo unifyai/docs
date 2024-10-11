@@ -1,0 +1,25 @@
+---
+title: 'get_endpoint_metrics'
+---
+
+```python
+def get_endpoint_metrics(
+    endpoint: str,
+    api_key: Optional[str] = None,
+) -> Metrics:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/39a9766a9db6aa13d3b2955e241402471bbee2af/unify/utils/endpoint_metrics.py#L182)</p>
+
+Retrieve the set of cost and speed metrics for the specified endpoint.
+
+**Arguments**:
+
+- `endpoint` - The endpoint to retrieve the metrics for, in model@provider format
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+The set of metrics for the specified endpoint.
