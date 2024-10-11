@@ -263,11 +263,10 @@
                             ]
                         },
                         {
-                            "group": "efficiency_benchmarks",
+                            "group": "endpoint_metrics",
                             "pages": [
-                                "python/utils/efficiency_benchmarks/append_to_benchmark",
-                                "python/utils/efficiency_benchmarks/delete_benchmark",
-                                "python/utils/efficiency_benchmarks/get_benchmark"
+                                "python/utils/endpoint_metrics/Metrics",
+                                "python/utils/endpoint_metrics/get_endpoint_metrics"
                             ]
                         },
                         {
