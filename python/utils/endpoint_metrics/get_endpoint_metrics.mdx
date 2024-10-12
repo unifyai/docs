@@ -5,17 +5,25 @@ title: 'get_endpoint_metrics'
 ```python
 def get_endpoint_metrics(
     endpoint: str,
+    region: str = "Iowa",
+    seq_len: str = "short",
+    start_time: Optional[str] = None,
+    end_time: Optional[str] = None,
     api_key: Optional[str] = None,
 ) -> Metrics:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/1b8c646f0ff31f14cf3dea7ab1b2911ed9d342b2/unify/utils/endpoint_metrics.py#L182)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/6b5a8cb0eae6526669b2405974d10ab27ad2553b/unify/utils/endpoint_metrics.py#L182)</p>
 
 Retrieve the set of cost and speed metrics for the specified endpoint.
 
 **Arguments**:
 
 - `endpoint` - The endpoint to retrieve the metrics for, in model@provider format
+- `region` - Region where the benchmark is run. Options are: "Belgium", "Hong Kong"
+- `seq_len` - Length of the sequence used for benchmarking, can be short or long.
+- `start_time` - Window start time. Only returns the latest benchmark if unspecified.
+- `end_time` - Window end time. Assumed to be the current time if this is unspecified
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
 
