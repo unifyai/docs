@@ -7,13 +7,13 @@ def get_endpoint_metrics(
     endpoint: str,
     region: str = "Iowa",
     seq_len: str = "short",
-    start_time: Optional[str] = None,
-    end_time: Optional[str] = None,
+    start_time: Optional[Union[datetime.datetime, str]] = None,
+    end_time: Optional[Union[datetime.datetime, str]] = None,
     api_key: Optional[str] = None,
 ) -> Metrics:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/8db51b90f84284dfd9f0854bee90a85aee893f11/unify/utils/endpoint_metrics.py#L182)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/15cdfb92b77a84b0cf25528c98523afc81c86bea/unify/utils/endpoint_metrics.py#L182)</p>
 
 Retrieve the set of cost and speed metrics for the specified endpoint.
 
