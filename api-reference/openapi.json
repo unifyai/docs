@@ -1260,10 +1260,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the metric to submit. Allowed metrics are:\n        \"input-cost\", \"output-cost\", \"time-to-first-token\", \"inter-token-latency\".",
+                            "description": "Name of the metric to submit. Allowed metrics are:\n        \"input_cost\", \"output_cost\", \"time_to_first_token\", \"inter_token_latency\".",
                             "title": "Metric Name"
                         },
-                        "description": "Name of the metric to submit. Allowed metrics are:\n        \"input-cost\", \"output-cost\", \"time-to-first-token\", \"inter-token-latency\".",
+                        "description": "Name of the metric to submit. Allowed metrics are:\n        \"input_cost\", \"output_cost\", \"time_to_first_token\", \"inter_token_latency\".",
                         "example": "tokens-per-second"
                     },
                     {
@@ -6317,8 +6317,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
