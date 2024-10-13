@@ -1484,7 +1484,7 @@
                     "Endpoint Metrics"
                 ],
                 "summary": "Delete Endpoint Metrics",
-                "description": "Delete *all* benchmark time-series data for a given *custom* endpoint.\nThe time-series benchmark data for *public* endpoints are not deletable.",
+                "description": "Delete all benchmark time-series data for a given *custom* endpoint with the\nspecified timestamps. If timestamps are not specified, then *all* benchmark data\nwill be deleted for the specified custom endpoint.\nThe time-series benchmark data for *public* endpoints are not deletable.",
                 "operationId": "delete_endpoint_metrics_v0_endpoint_metrics_delete",
                 "security": [
                     {
@@ -1503,6 +1503,29 @@
                         },
                         "description": "Name of the *custom* endpoint to submit a benchmark for.",
                         "example": "my_endpoint"
+                    },
+                    {
+                        "name": "timestamps",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "List of timestamps to delete the endpoint metrics for.",
+                            "title": "Timestamps"
+                        },
+                        "description": "List of timestamps to delete the endpoint metrics for.",
+                        "example": "2024-08-17T19:19:37.289937"
                     }
                 ],
                 "responses": {
@@ -1510,7 +1533,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {},
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Delete Endpoint Metrics V0 Endpoint Metrics Delete"
+                                },
                                 "example": {
                                     "info": "Benchmark deleted successfully!"
                                 }
@@ -6288,8 +6317,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {

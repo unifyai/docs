@@ -2,7 +2,9 @@
 title: 'Delete Endpoint Metrics'
 api: 'DELETE /v0/endpoint-metrics'
 ---
-Delete *all* benchmark time-series data for a given *custom* endpoint.
+Delete all benchmark time-series data for a given *custom* endpoint with the
+specified timestamps. If timestamps are not specified, then *all* benchmark data
+will be deleted for the specified custom endpoint.
 The time-series benchmark data for *public* endpoints are not deletable.
 
 #### Authorizations
@@ -17,18 +19,22 @@ The time-series benchmark data for *public* endpoints are not deletable.
 Name of the *custom* endpoint to submit a benchmark for.
 </ParamField>
 
+<ParamField query="timestamps" type="array | null" >
+List of timestamps to delete the endpoint metrics for.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/endpoint-metrics?endpoint_name=my_endpoint' \
+  --url 'https://api.unify.ai/v0/endpoint-metrics?endpoint_name=my_endpoint&timestamps=2024-08-17T19:19:37.289937' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/endpoint-metrics?endpoint_name=my_endpoint"
+url = "https://api.unify.ai/v0/endpoint-metrics?endpoint_name=my_endpoint&timestamps=2024-08-17T19:19:37.289937"
 
 headers = {"Authorization": "Bearer <token>"}
 
