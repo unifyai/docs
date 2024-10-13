@@ -266,6 +266,7 @@
                             "group": "endpoint_metrics",
                             "pages": [
                                 "python/utils/endpoint_metrics/Metrics",
+                                "python/utils/endpoint_metrics/delete_endpoint_metrics",
                                 "python/utils/endpoint_metrics/get_endpoint_metrics",
                                 "python/utils/endpoint_metrics/log_endpoint_metric"
                             ]
