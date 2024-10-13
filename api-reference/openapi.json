@@ -946,7 +946,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {},
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Create Custom Api Key V0 Custom Api Key Post"
+                                },
                                 "example": {
                                     "info": "API key created successfully!"
                                 }
@@ -1059,7 +1065,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {},
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Delete Custom Api Key V0 Custom Api Key Delete"
+                                },
                                 "example": {
                                     "info": "API key deleted successfully!"
                                 }
@@ -1133,7 +1145,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {},
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Rename Custom Api Key V0 Custom Api Key Rename Post"
+                                },
                                 "example": {
                                     "info": "API key renamed successfully!"
                                 }
@@ -6250,8 +6268,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
