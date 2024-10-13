@@ -6,9 +6,9 @@ Creates a custom endpoint. This endpoint must either be a fine-tuned model from 
 of the supported providers (`/v0/providers`), in which case the "provider" argument
 must be set accordingly. Otherwise, the endpoint must support the OpenAI
 `/chat/completions` format. To query your custom endpoint, replace your endpoint
-string with `<name>@custom` when querying any general custom endpoint. You can show
-all *custom* endpoints by querying `/v0/endpoints` and passing `custom` as the
-`provider` argument.
+string with `<endpoint_name>@custom` when querying any general custom endpoint. You
+can show all *custom* endpoints by querying `/v0/endpoints` and passing `custom` as
+the `provider` argument.
 
 #### Authorizations
 
@@ -19,7 +19,7 @@ all *custom* endpoints by querying `/v0/endpoints` and passing `custom` as the
 #### Query Parameters
 
 <ParamField query="name" type="string" required="true">
-Alias for the custom endpoint. This will be the name used to call the endpoint.
+The endpoint name for your custom endpoint, in model@provider format. If it's a custom endpoint following the OpenAI format then the provider must be `@custom`, otherwise if it's a fine-tuned model from one of the existing providers it can be specified with a prepending `custom-`, i.e. `@custom-anthropic`.
 </ParamField>
 
 <ParamField query="url" type="string" required="true">
@@ -30,26 +30,22 @@ Base URL of the endpoint being called. Must support the OpenAI format.
 Name of the API key that will be passed as part of the query.
 </ParamField>
 
-<ParamField query="model_name" type="string" >
-Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.
-</ParamField>
-
-<ParamField query="provider" type="string" >
-If the custom endpoint is for a fine-tuned model which is hosted directly via one of the supported providers, then this argument should be specified as the provider used. The unification logic will be used for this custom fine-tuned model behind the scenes, in the same manner as used for the foundation models with the same provider.
+<ParamField query="model_arg" type="string" >
+The value passed to the model arugment of the *underlying* API which is being wrapped into Unify. For example, you might call your endpoint `llama-3-baseten@custom` to distinguish the custom endpoint within Unify, but under the hood need to pass `llama-3.2-90b-chat` to the Baseten endpoint.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/custom_endpoint?name=endpoint1&url=https://api.url1.com&key_name=key1&model_name=llama-3.1-8b-finetuned&provider=together-ai' \
+  --url 'https://api.unify.ai/v0/custom_endpoint?name=endpoint1&url=https://api.url1.com&key_name=key1&model_arg=llama-3.1-8b-finetuned' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/custom_endpoint?name=endpoint1&url=https://api.url1.com&key_name=key1&model_name=llama-3.1-8b-finetuned&provider=together-ai"
+url = "https://api.unify.ai/v0/custom_endpoint?name=endpoint1&url=https://api.url1.com&key_name=key1&model_arg=llama-3.1-8b-finetuned"
 
 headers = {"Authorization": "Bearer <token>"}
 
