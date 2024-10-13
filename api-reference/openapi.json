@@ -619,7 +619,7 @@
                     "Custom Endpoints"
                 ],
                 "summary": "Create Custom Endpoint",
-                "description": "Creates a custom endpoint. This endpoint must either be a fine-tuned model from one\nof the supported providers (`/v0/providers`), in which case the \"provider\" argument\nmust be set accordingly. Otherwise, the endpoint must support the OpenAI\n`/chat/completions` format. To query your custom endpoint, replace your endpoint\nstring with `<name>@custom` when querying any general custom endpoint. You can show\nall *custom* endpoints by querying `/v0/endpoints` and passing `custom` as the\n`provider` argument.",
+                "description": "Creates a custom endpoint. This endpoint must either be a fine-tuned model from one\nof the supported providers (`/v0/providers`), in which case the \"provider\" argument\nmust be set accordingly. Otherwise, the endpoint must support the OpenAI\n`/chat/completions` format. To query your custom endpoint, replace your endpoint\nstring with `<endpoint_name>@custom` when querying any general custom endpoint. You\ncan show all *custom* endpoints by querying `/v0/endpoints` and passing `custom` as\nthe `provider` argument.",
                 "operationId": "create_custom_endpoint_v0_custom_endpoint_post",
                 "security": [
                     {
@@ -633,10 +633,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Alias for the custom endpoint. This will be the name used to call the endpoint.",
+                            "description": "The endpoint name for your custom endpoint, in model@provider format. If it's a custom endpoint following the OpenAI format then the provider must be `@custom`, otherwise if it's a fine-tuned model from one of the existing providers it can be specified with a prepending `custom-`, i.e. `@custom-anthropic`.",
                             "title": "Name"
                         },
-                        "description": "Alias for the custom endpoint. This will be the name used to call the endpoint.",
+                        "description": "The endpoint name for your custom endpoint, in model@provider format. If it's a custom endpoint following the OpenAI format then the provider must be `@custom`, otherwise if it's a fine-tuned model from one of the existing providers it can be specified with a prepending `custom-`, i.e. `@custom-anthropic`.",
                         "example": "endpoint1"
                     },
                     {
@@ -664,28 +664,16 @@
                         "example": "key1"
                     },
                     {
-                        "name": "model_name",
+                        "name": "model_arg",
                         "in": "query",
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.",
-                            "title": "Model Name"
+                            "description": "The value passed to the model arugment of the *underlying* API which is being wrapped into Unify. For example, you might call your endpoint `llama-3-baseten@custom` to distinguish the custom endpoint within Unify, but under the hood need to pass `llama-3.2-90b-chat` to the Baseten endpoint.",
+                            "title": "Model Arg"
                         },
-                        "description": "Named passed to the custom endpoint as model name. If not specified, it will default to the endpoint alias.",
+                        "description": "The value passed to the model arugment of the *underlying* API which is being wrapped into Unify. For example, you might call your endpoint `llama-3-baseten@custom` to distinguish the custom endpoint within Unify, but under the hood need to pass `llama-3.2-90b-chat` to the Baseten endpoint.",
                         "example": "llama-3.1-8b-finetuned"
-                    },
-                    {
-                        "name": "provider",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "If the custom endpoint is for a fine-tuned model which is hosted directly via one of the supported providers, then this argument should be specified as the provider used. The unification logic will be used for this custom fine-tuned model behind the scenes, in the same manner as used for the foundation models with the same provider.",
-                            "title": "Provider"
-                        },
-                        "description": "If the custom endpoint is for a fine-tuned model which is hosted directly via one of the supported providers, then this argument should be specified as the provider used. The unification logic will be used for this custom fine-tuned model behind the scenes, in the same manner as used for the foundation models with the same provider.",
-                        "example": "together-ai"
                     }
                 ],
                 "responses": {
@@ -693,7 +681,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {},
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Create Custom Endpoint V0 Custom Endpoint Post"
+                                },
                                 "example": {
                                     "info": "Custom endpoint created successfully!"
                                 }
@@ -753,7 +747,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {},
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Delete Custom Endpoint V0 Custom Endpoint Delete"
+                                },
                                 "example": {
                                     "info": "Custom endpoint deleted successfully!"
                                 }
@@ -827,7 +827,13 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {},
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Rename Custom Endpoint V0 Custom Endpoint Rename Post"
+                                },
                                 "example": {
                                     "info": "Custom endpoint renamed successfully!"
                                 }
@@ -880,13 +886,13 @@
                                 "example": [
                                     {
                                         "name": "endpoint_1",
-                                        "mdl_name": "llama_finetune",
+                                        "model_arg": "llama_finetune",
                                         "url": "https://...",
                                         "key": "custom_key_1"
                                     },
                                     {
                                         "name": "endpoint_2",
-                                        "mdl_name": "mixtral_finetune",
+                                        "model_arg": "mixtral_finetune",
                                         "url": "https://...",
                                         "key": "custom_key_2"
                                     }
@@ -1428,6 +1434,20 @@
                                                 },
                                                 {
                                                     "type": "number"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "additionalProperties": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "string"
+                                                            },
+                                                            {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "null"
@@ -6697,9 +6717,9 @@
                         "type": "string",
                         "title": "Name"
                     },
-                    "mdl_name": {
+                    "model_arg": {
                         "type": "string",
-                        "title": "Mdl Name"
+                        "title": "Model Arg"
                     },
                     "url": {
                         "type": "string",
@@ -6713,7 +6733,7 @@
                 "type": "object",
                 "required": [
                     "name",
-                    "mdl_name",
+                    "model_arg",
                     "url",
                     "key"
                 ],
