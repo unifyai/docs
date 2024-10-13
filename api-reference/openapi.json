@@ -613,301 +613,6 @@
                 }
             }
         },
-        "/v0/custom_endpoint": {
-            "post": {
-                "tags": [
-                    "Custom Endpoints"
-                ],
-                "summary": "Create Custom Endpoint",
-                "description": "Creates a custom endpoint. This endpoint must either be a fine-tuned model from one\nof the supported providers (`/v0/providers`), in which case the \"provider\" argument\nmust be set accordingly. Otherwise, the endpoint must support the OpenAI\n`/chat/completions` format. To query your custom endpoint, replace your endpoint\nstring with `<endpoint_name>@custom` when querying any general custom endpoint. You\ncan show all *custom* endpoints by querying `/v0/endpoints` and passing `custom` as\nthe `provider` argument.",
-                "operationId": "create_custom_endpoint_v0_custom_endpoint_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The endpoint name for your custom endpoint, in model@provider format. If it's a custom endpoint following the OpenAI format then the provider must be `@custom`, otherwise if it's a fine-tuned model from one of the existing providers it can be specified with a prepending `custom-`, i.e. `@custom-anthropic`.",
-                            "title": "Name"
-                        },
-                        "description": "The endpoint name for your custom endpoint, in model@provider format. If it's a custom endpoint following the OpenAI format then the provider must be `@custom`, otherwise if it's a fine-tuned model from one of the existing providers it can be specified with a prepending `custom-`, i.e. `@custom-anthropic`.",
-                        "example": "endpoint1"
-                    },
-                    {
-                        "name": "url",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Base URL of the endpoint being called. Must support the OpenAI format.",
-                            "title": "Url"
-                        },
-                        "description": "Base URL of the endpoint being called. Must support the OpenAI format.",
-                        "example": "https://api.url1.com"
-                    },
-                    {
-                        "name": "key_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the API key that will be passed as part of the query.",
-                            "title": "Key Name"
-                        },
-                        "description": "Name of the API key that will be passed as part of the query.",
-                        "example": "key1"
-                    },
-                    {
-                        "name": "model_arg",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "The value passed to the model arugment of the *underlying* API which is being wrapped into Unify. For example, you might call your endpoint `llama-3-baseten@custom` to distinguish the custom endpoint within Unify, but under the hood need to pass `llama-3.2-90b-chat` to the Baseten endpoint.",
-                            "title": "Model Arg"
-                        },
-                        "description": "The value passed to the model arugment of the *underlying* API which is being wrapped into Unify. For example, you might call your endpoint `llama-3-baseten@custom` to distinguish the custom endpoint within Unify, but under the hood need to pass `llama-3.2-90b-chat` to the Baseten endpoint.",
-                        "example": "llama-3.1-8b-finetuned"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Create Custom Endpoint V0 Custom Endpoint Post"
-                                },
-                                "example": {
-                                    "info": "Custom endpoint created successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Custom API Key Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Custom API Key not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Custom Endpoints"
-                ],
-                "summary": "Delete Custom Endpoint",
-                "description": "Deletes a custom endpoint from your account.",
-                "operationId": "delete_custom_endpoint_v0_custom_endpoint_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the custom endpoint to delete.",
-                            "title": "Name"
-                        },
-                        "description": "Name of the custom endpoint to delete.",
-                        "example": "endpoint1"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Delete Custom Endpoint V0 Custom Endpoint Delete"
-                                },
-                                "example": {
-                                    "info": "Custom endpoint deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Custom Endpoint Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Custom endpoint not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/custom_endpoint/rename": {
-            "post": {
-                "tags": [
-                    "Custom Endpoints"
-                ],
-                "summary": "Rename Custom Endpoint",
-                "description": "Renames a custom endpoint in your account.",
-                "operationId": "rename_custom_endpoint_v0_custom_endpoint_rename_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the custom endpoint to be updated.",
-                            "title": "Name"
-                        },
-                        "description": "Name of the custom endpoint to be updated.",
-                        "example": "name1"
-                    },
-                    {
-                        "name": "new_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "New name for the custom endpoint.",
-                            "title": "New Name"
-                        },
-                        "description": "New name for the custom endpoint.",
-                        "example": "name2"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Rename Custom Endpoint V0 Custom Endpoint Rename Post"
-                                },
-                                "example": {
-                                    "info": "Custom endpoint renamed successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Custom endpoint Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Custom endpoint not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/custom_endpoint/list": {
-            "get": {
-                "tags": [
-                    "Custom Endpoints"
-                ],
-                "summary": "List Custom Endpoints",
-                "description": "Returns a list of the available custom endpoints.",
-                "operationId": "list_custom_endpoints_v0_custom_endpoint_list_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "items": {
-                                        "$ref": "#/components/schemas/CustomEndpointModelResponse"
-                                    },
-                                    "type": "array",
-                                    "title": "Response List Custom Endpoints V0 Custom Endpoint List Get"
-                                },
-                                "example": [
-                                    {
-                                        "name": "endpoint_1",
-                                        "model_arg": "llama_finetune",
-                                        "url": "https://...",
-                                        "key": "custom_key_1"
-                                    },
-                                    {
-                                        "name": "endpoint_2",
-                                        "model_arg": "mixtral_finetune",
-                                        "url": "https://...",
-                                        "key": "custom_key_2"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
         "/v0/custom_api_key": {
             "post": {
                 "tags": [
@@ -1215,6 +920,301 @@
                                     {
                                         "name": "custom_key_2",
                                         "value": "****alue_2"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/custom_endpoint": {
+            "post": {
+                "tags": [
+                    "Custom Endpoints"
+                ],
+                "summary": "Create Custom Endpoint",
+                "description": "Creates a custom endpoint. This endpoint must either be a fine-tuned model from one\nof the supported providers (`/v0/providers`), in which case the \"provider\" argument\nmust be set accordingly. Otherwise, the endpoint must support the OpenAI\n`/chat/completions` format. To query your custom endpoint, replace your endpoint\nstring with `<endpoint_name>@custom` when querying any general custom endpoint. You\ncan show all *custom* endpoints by querying `/v0/endpoints` and passing `custom` as\nthe `provider` argument.",
+                "operationId": "create_custom_endpoint_v0_custom_endpoint_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The endpoint name for your custom endpoint, in model@provider format. If it's a custom endpoint following the OpenAI format then the provider must be `@custom`, otherwise if it's a fine-tuned model from one of the existing providers it can be specified with a prepending `custom-`, i.e. `@custom-anthropic`.",
+                            "title": "Name"
+                        },
+                        "description": "The endpoint name for your custom endpoint, in model@provider format. If it's a custom endpoint following the OpenAI format then the provider must be `@custom`, otherwise if it's a fine-tuned model from one of the existing providers it can be specified with a prepending `custom-`, i.e. `@custom-anthropic`.",
+                        "example": "endpoint1"
+                    },
+                    {
+                        "name": "url",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Base URL of the endpoint being called. Must support the OpenAI format.",
+                            "title": "Url"
+                        },
+                        "description": "Base URL of the endpoint being called. Must support the OpenAI format.",
+                        "example": "https://api.url1.com"
+                    },
+                    {
+                        "name": "key_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the API key that will be passed as part of the query.",
+                            "title": "Key Name"
+                        },
+                        "description": "Name of the API key that will be passed as part of the query.",
+                        "example": "key1"
+                    },
+                    {
+                        "name": "model_arg",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "The value passed to the model arugment of the *underlying* API which is being wrapped into Unify. For example, you might call your endpoint `llama-3-baseten@custom` to distinguish the custom endpoint within Unify, but under the hood need to pass `llama-3.2-90b-chat` to the Baseten endpoint.",
+                            "title": "Model Arg"
+                        },
+                        "description": "The value passed to the model arugment of the *underlying* API which is being wrapped into Unify. For example, you might call your endpoint `llama-3-baseten@custom` to distinguish the custom endpoint within Unify, but under the hood need to pass `llama-3.2-90b-chat` to the Baseten endpoint.",
+                        "example": "llama-3.1-8b-finetuned"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Create Custom Endpoint V0 Custom Endpoint Post"
+                                },
+                                "example": {
+                                    "info": "Custom endpoint created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Custom API Key Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Custom API Key not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Custom Endpoints"
+                ],
+                "summary": "Delete Custom Endpoint",
+                "description": "Deletes a custom endpoint from your account.",
+                "operationId": "delete_custom_endpoint_v0_custom_endpoint_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the custom endpoint to delete.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the custom endpoint to delete.",
+                        "example": "endpoint1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Delete Custom Endpoint V0 Custom Endpoint Delete"
+                                },
+                                "example": {
+                                    "info": "Custom endpoint deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Custom Endpoint Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Custom endpoint not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/custom_endpoint/rename": {
+            "post": {
+                "tags": [
+                    "Custom Endpoints"
+                ],
+                "summary": "Rename Custom Endpoint",
+                "description": "Renames a custom endpoint in your account.",
+                "operationId": "rename_custom_endpoint_v0_custom_endpoint_rename_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the custom endpoint to be updated.",
+                            "title": "Name"
+                        },
+                        "description": "Name of the custom endpoint to be updated.",
+                        "example": "name1"
+                    },
+                    {
+                        "name": "new_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "New name for the custom endpoint.",
+                            "title": "New Name"
+                        },
+                        "description": "New name for the custom endpoint.",
+                        "example": "name2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Rename Custom Endpoint V0 Custom Endpoint Rename Post"
+                                },
+                                "example": {
+                                    "info": "Custom endpoint renamed successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Custom endpoint Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Custom endpoint not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/custom_endpoint/list": {
+            "get": {
+                "tags": [
+                    "Custom Endpoints"
+                ],
+                "summary": "List Custom Endpoints",
+                "description": "Returns a list of the available custom endpoints.",
+                "operationId": "list_custom_endpoints_v0_custom_endpoint_list_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomEndpointModelResponse"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Custom Endpoints V0 Custom Endpoint List Get"
+                                },
+                                "example": [
+                                    {
+                                        "name": "endpoint_1",
+                                        "model_arg": "llama_finetune",
+                                        "url": "https://...",
+                                        "key": "custom_key_1"
+                                    },
+                                    {
+                                        "name": "endpoint_2",
+                                        "model_arg": "mixtral_finetune",
+                                        "url": "https://...",
+                                        "key": "custom_key_2"
                                     }
                                 ]
                             }
@@ -6288,8 +6288,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
