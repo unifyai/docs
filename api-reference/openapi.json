@@ -2490,7 +2490,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "info": "Dataset created sccessfully!"
+                                    "info": "Dataset created successfully!"
                                 }
                             }
                         }
