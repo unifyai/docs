@@ -1,0 +1,168 @@
+---
+title: 'Log'
+---
+
+```python
+class Log
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L240)</p>
+
+
+
+## properties
+
+---
+
+### entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L258)</p>
+
+```python
+def entries(self) -> Dict[str, Any]:
+```
+
+
+
+---
+
+### id
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L254)</p>
+
+```python
+def id(self) -> int:
+```
+
+
+
+## methods
+
+---
+
+### add\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L284)</p>
+
+```python
+def add_entries(self, **kwargs) -> None:
+```
+
+
+
+---
+
+### delete
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L296)</p>
+
+```python
+def delete(self) -> None:
+```
+
+
+
+---
+
+### delete\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L288)</p>
+
+```python
+def delete_entries(
+        self,
+        keys_to_delete: List[str],
+    ) -> None:
+```
+
+
+
+---
+
+### download
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L281)</p>
+
+```python
+def download(self):
+```
+
+
+
+## dunder_methods
+
+---
+
+### \_\_eq\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L264)</p>
+
+```python
+def __eq__(self, other: Union[dict, Log]) -> bool:
+```
+
+
+
+---
+
+### \_\_init\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L242)</p>
+
+```python
+def __init__(
+        self,
+        id: int,
+        api_key: Optional[str] = None,
+        **kwargs,
+    ):
+```
+
+
+
+---
+
+### \_\_len\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L269)</p>
+
+```python
+def __len__(self):
+```
+
+
+
+---
+
+### \_\_repr\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/types/base.py#L40)</p>
+
+```python
+def __repr__(self) -> str:
+```
+
+
+
+---
+
+### \_\_rich\_repr\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L272)</p>
+
+```python
+def __rich_repr__(self) -> List[Any]:
+```
+
+Used by the rich package for representing and print the instance.
+
+---
+
+### \_\_str\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/types/base.py#L43)</p>
+
+```python
+def __str__(self) -> str:
+```
+

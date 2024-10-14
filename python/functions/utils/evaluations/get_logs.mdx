@@ -1,0 +1,27 @@
+---
+title: 'get_logs'
+---
+
+```python
+def get_logs(
+    project: Optional[str] = None,
+    filter: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> List[Log]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/evaluations.py#L447)</p>
+
+Returns a list of filtered logs from a project.
+
+**Arguments**:
+
+- `project` - Name of the project to get logs from.
+- `filter` - Boolean string to filter logs, for example:
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+The full set of log data for the project, after optionally applying filtering.

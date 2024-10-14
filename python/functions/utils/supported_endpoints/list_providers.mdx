@@ -1,0 +1,31 @@
+---
+title: 'list_providers'
+---
+
+```python
+def list_providers(
+    model: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> List[str]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/supported_endpoints.py#L9)</p>
+
+Get a list of available providers, either in total or for a specific model.
+
+**Arguments**:
+
+- `model` - If specified, returns the list of providers supporting this model.
+- `api_key` - If specified, unify API key to be used. Defaults
+
+
+
+**Returns**:
+
+A list of provider names associated with the model if successful, otherwise an
+empty list.
+Raises:
+BadRequestError: If there was an HTTP error.
+ValueError: If there was an error parsing the JSON response.
+- `BadRequestError` - If there was an HTTP error.
+- `ValueError` - If there was an error parsing the JSON response.

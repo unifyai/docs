@@ -1,0 +1,120 @@
+---
+title: 'Evaluator'
+---
+
+```python
+class Evaluator
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L18)</p>
+
+
+
+## properties
+
+---
+
+### name
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L50)</p>
+
+```python
+def name(self) -> Optional[str]:
+```
+
+
+
+---
+
+### score\_config
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L54)</p>
+
+```python
+def score_config(self) -> Dict[float, str]:
+```
+
+
+
+## setters
+
+---
+
+### set\_name
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L61)</p>
+
+```python
+def set_name(self, value: str) -> Self:
+```
+
+
+
+---
+
+### set\_score\_config
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L65)</p>
+
+```python
+def set_score_config(self, value: Dict[float, str]) -> Self:
+```
+
+
+
+## methods
+
+---
+
+### evaluate
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L72)</p>
+
+```python
+def evaluate(self, *args, **kwargs) -> float:
+```
+
+Evaluate the given response for this input prompt, with optional extra data.
+
+**Arguments**:
+
+- `prompt` - The user message or the full input prompt being responded to.
+- `response` - The response which is being evaluated, either as just the most
+- `kwargs` - Extra information relevant to the prompt, as is stored in the Datum.
+
+
+
+**Returns**:
+
+The score, either as a boolean, a float, or the full Score instance.
+
+## dunder_methods
+
+---
+
+### \_\_init\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L20)</p>
+
+```python
+def __init__(
+        self,
+        score_config: Optional[Dict[float, str]],
+        name: Optional[str] = None,
+        api_key: Optional[str] = None,
+    ):
+```
+
+Create an Evaluator.
+
+**Arguments**:
+
+- `name` - The name for this evaluator.
+- `score_config` - Either a derived Score subclass, or the configuration for the
+- `api_key` - API key for accessing the Unify API. If None, it attempts to
+
+
+
+**Raises**:
+
+- `UnifyError`: If the API key is missing.

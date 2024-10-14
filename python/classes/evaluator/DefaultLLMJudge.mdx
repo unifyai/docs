@@ -1,0 +1,242 @@
+---
+title: 'DefaultLLMJudge'
+---
+
+```python
+class DefaultLLMJudge
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L304)</p>
+
+
+
+## properties
+
+---
+
+### client
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L163)</p>
+
+```python
+def client(self) -> Union[Unify, AsyncUnify]:
+```
+
+
+
+---
+
+### include\_rationale
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L159)</p>
+
+```python
+def include_rationale(self) -> bool:
+```
+
+
+
+---
+
+### input\_parser
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L171)</p>
+
+```python
+def input_parser(self) -> Dict[str, List[Union[str, int]]]:
+```
+
+
+
+---
+
+### name
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L50)</p>
+
+```python
+def name(self) -> Optional[str]:
+```
+
+
+
+---
+
+### prompt
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L167)</p>
+
+```python
+def prompt(self) -> Prompt:
+```
+
+
+
+---
+
+### response\_parser
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L175)</p>
+
+```python
+def response_parser(self) -> Dict[str, List[Union[str, int]]]:
+```
+
+
+
+---
+
+### score\_config
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L54)</p>
+
+```python
+def score_config(self) -> Dict[float, str]:
+```
+
+
+
+## setters
+
+---
+
+### set\_client
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L185)</p>
+
+```python
+def set_client(self, value: Union[Unify, AsyncUnify]) -> Self:
+```
+
+
+
+---
+
+### set\_include\_rationale
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L181)</p>
+
+```python
+def set_include_rationale(self, value: bool) -> Self:
+```
+
+
+
+---
+
+### set\_input\_parser
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L193)</p>
+
+```python
+def set_input_parser(self, value: Dict[str, List[Union[str, int]]]) -> Self:
+```
+
+
+
+---
+
+### set\_name
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L61)</p>
+
+```python
+def set_name(self, value: str) -> Self:
+```
+
+
+
+---
+
+### set\_prompt
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L189)</p>
+
+```python
+def set_prompt(self, value: Union[str, Prompt]) -> Self:
+```
+
+
+
+---
+
+### set\_response\_parser
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L197)</p>
+
+```python
+def set_response_parser(self, value: Dict[str, List[Union[str, int]]]) -> Self:
+```
+
+
+
+---
+
+### set\_score\_config
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L65)</p>
+
+```python
+def set_score_config(self, value: Dict[float, str]) -> Self:
+```
+
+
+
+## methods
+
+---
+
+### evaluate
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L277)</p>
+
+```python
+def evaluate(
+        self,
+        input: Any,
+        response: Any,
+    ) -> Union[float, Tuple[float, Union[str, ChatCompletion]]]:
+```
+
+
+
+## dunder_methods
+
+---
+
+### \_\_init\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/evaluator.py#L306)</p>
+
+```python
+def __init__(
+        self,
+        client: Union[Unify, AsyncUnify],
+        prompt: Optional[Union[str, Prompt]] = None,
+        score_config: Optional[Dict[float, str]] = None,
+        name: Optional[str] = None,
+        input_parser: Optional[Dict[str, Union[List[Union[str, int]], None]]] = None,
+        response_parser: Optional[Dict[str, Union[List[Union[str, int]], None]]] = None,
+        include_rationale: bool = False,
+        api_key: Optional[str] = None,
+    ):
+```
+
+Creates an LLM as a Judge Evaluator.
+
+**Arguments**:
+
+- `client` - The client to use as the LLM Judge.
+- `prompt` - The prompt for the judge to use when performing evaluations.
+- `score_config` - Either a derived Score subclass, or the configuration for the
+- `name` - The name to give to this LLM Judge evaluator, optional.
+- `input_parser` - Function to parse the input and update corresponding
+- `response_parser` - Function to parse the response and update corresponding
+- `include_rationale` - Whether to include the LLM's rationale as part of
+- `api_key` - API key for accessing the Unify API. If None, it attempts to
+
+
+
+**Raises**:
+
+- `UnifyError`: If the API key is missing.
