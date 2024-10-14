@@ -3121,7 +3121,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "type": "string",
+                            "type": "integer",
                             "description": "ID of the log to delete from a project.",
                             "title": "Id"
                         },
@@ -3181,7 +3181,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "type": "string",
+                            "type": "integer",
                             "description": "ID of the log to update.",
                             "title": "Id"
                         },
@@ -3251,7 +3251,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "type": "string",
+                            "type": "integer",
                             "description": "ID of the log to fetch.",
                             "title": "Id"
                         },
@@ -3317,7 +3317,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "type": "string",
+                            "type": "integer",
                             "description": "ID of the log to delete an entry from.",
                             "title": "Id"
                         },
@@ -6317,8 +6317,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
