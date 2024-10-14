@@ -1,0 +1,23 @@
+---
+title: 'delete_dataset'
+---
+
+```python
+def delete_dataset(name: str, api_key: Optional[str] = None) -> str:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ffeeb2ae6a33d06774708f46e169540b7593f89d/unify/utils/datasets.py#L124)</p>
+
+Deletes a dataset from the platform.
+
+**Arguments**:
+
+- `name` - Name given to the uploaded dataset.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+- `str` - Info msg with the response from the HTTP endpoint.
+- `ValueError` - If there was an HTTP error.
