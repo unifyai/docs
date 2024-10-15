@@ -283,7 +283,8 @@
                                 "python/functions/utils/evaluations/group_logs",
                                 "python/functions/utils/evaluations/list_projects",
                                 "python/functions/utils/evaluations/log",
-                                "python/functions/utils/evaluations/rename_project"
+                                "python/functions/utils/evaluations/rename_project",
+                                "python/functions/utils/evaluations/trace"
                             ]
                         },
                         {
