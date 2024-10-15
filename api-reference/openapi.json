@@ -6893,7 +6893,8 @@
                     "project": {
                         "type": "string",
                         "title": "Project",
-                        "description": "Name of the project the stored entries will be associated to."
+                        "description": "Name of the project the stored entries will be associated to.",
+                        "example": "eval-project"
                     },
                     "entries": {
                         "type": "object",

@@ -31,6 +31,7 @@ curl --request POST \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
+    "project": "eval-project",
     "entries": {
         "input": "...",
         "score-test-1": "..."
@@ -45,7 +46,7 @@ url = "https://api.unify.ai/v0/log"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"entries": {"input": "...", "score-test-1": "..."}}
+json_input = {"project": "eval-project", "entries": {"input": "...", "score-test-1": "..."}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
