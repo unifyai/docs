@@ -2051,6 +2051,223 @@
                 }
             }
         },
+        "/v0/datasetv2/{dataset}/artifacts": {
+            "post": {
+                "tags": [
+                    "Dataset Artifacts"
+                ],
+                "summary": "Create Artifacts",
+                "description": "Creates one or more artifacts associated to a dataset. Artifacts are\ndataset-level metadata that don't depend on other variables.",
+                "operationId": "create_artifacts_v0_datasetv2__dataset__artifacts_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "dataset",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset the artifacts belong to.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset the artifacts belong to.",
+                        "example": "eval-dataset"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DatasetArtifactConfig"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Artifact(s) created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Dataset <dataset> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Dataset Artifacts"
+                ],
+                "summary": "List Artifacts",
+                "description": "Returns the key-value pairs of all artifacts in a dataset.",
+                "operationId": "list_artifacts_v0_datasetv2__dataset__artifacts_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "dataset",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset to delete an artifact from.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset to delete an artifact from.",
+                        "example": "eval-dataset"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "artifact_1": "value_1",
+                                    "artifact_2": "value_2"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Dataset <dataset> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/datasetv2/{dataset}/artifacts/{key}": {
+            "delete": {
+                "tags": [
+                    "Dataset Artifacts"
+                ],
+                "summary": "Delete Artifact",
+                "description": "Deletes an artifact from a dataset.",
+                "operationId": "delete_artifact_v0_datasetv2__dataset__artifacts__key__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "dataset",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the dataset to delete an artifact from.",
+                            "title": "Dataset"
+                        },
+                        "description": "Name of the dataset to delete an artifact from.",
+                        "example": "eval-dataset"
+                    },
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Key of the artifact to delete.",
+                            "title": "Key"
+                        },
+                        "description": "Key of the artifact to delete.",
+                        "example": "dataset-description"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Artifact deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "4041": {
+                        "description": "Dataset Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Dataset <dataset> not found."
+                                }
+                            }
+                        }
+                    },
+                    "4042": {
+                        "description": "Artifact Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Artifact <key> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/datasetsv2/": {
             "get": {
                 "tags": [
@@ -6759,6 +6976,24 @@
                     "key"
                 ],
                 "title": "CustomEndpointModelResponse"
+            },
+            "DatasetArtifactConfig": {
+                "properties": {
+                    "artifacts": {
+                        "type": "object",
+                        "title": "Artifacts",
+                        "description": "Dictionary containing one or more key:value pairs that will be stored as artifacts within a dataset.",
+                        "example": {
+                            "processed": false,
+                            "traffic": "production"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "artifacts"
+                ],
+                "title": "DatasetArtifactConfig"
             },
             "DatasetInfo": {
                 "properties": {
