@@ -417,6 +417,14 @@
                             ]
                         },
                         {
+                            "group": "Dataset Artifacts",
+                            "pages": [
+                                "api-reference/dataset_artifacts/create_artifacts",
+                                "api-reference/dataset_artifacts/list_artifacts",
+                                "api-reference/dataset_artifacts/delete_artifact"
+                            ]
+                        },
+                        {
                             "group": "Projects",
                             "pages": [
                                 "api-reference/projects/create_project",
@@ -426,11 +434,11 @@
                             ]
                         },
                         {
-                            "group": "Artifacts",
+                            "group": "Project Artifacts",
                             "pages": [
-                                "api-reference/artifacts/create_artifacts",
-                                "api-reference/artifacts/list_artifacts",
-                                "api-reference/artifacts/delete_artifact"
+                                "api-reference/project_artifacts/create_artifacts",
+                                "api-reference/project_artifacts/list_artifacts",
+                                "api-reference/project_artifacts/delete_artifact"
                             ]
                         },
                         {

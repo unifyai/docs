@@ -3039,7 +3039,7 @@
         "/v0/project/{project}/artifacts": {
             "post": {
                 "tags": [
-                    "Artifacts"
+                    "Project Artifacts"
                 ],
                 "summary": "Create Artifacts",
                 "description": "Creates one or more artifacts associated to a project. Artifacts are\nproject-level metadata that don't depend on other variables.",
@@ -3109,7 +3109,7 @@
             },
             "get": {
                 "tags": [
-                    "Artifacts"
+                    "Project Artifacts"
                 ],
                 "summary": "List Artifacts",
                 "description": "Returns the key-value pairs of all artifacts in a project.",
@@ -3172,7 +3172,7 @@
         "/v0/project/{project}/artifacts/{key}": {
             "delete": {
                 "tags": [
-                    "Artifacts"
+                    "Project Artifacts"
                 ],
                 "summary": "Delete Artifact",
                 "description": "Deletes an artifact from a project.",
