@@ -2553,15 +2553,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "array",
-                                "items": {},
-                                "description": "List of entries to add",
-                                "example": [
-                                    "id_1",
-                                    "id_2",
-                                    "id_3"
-                                ],
-                                "title": "Entries"
+                                "$ref": "#/components/schemas/EntriesConfig"
                             }
                         }
                     }
@@ -6317,8 +6309,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -6818,6 +6810,26 @@
                     "name"
                 ],
                 "title": "DefaultPromptConfig"
+            },
+            "EntriesConfig": {
+                "properties": {
+                    "entries": {
+                        "items": {},
+                        "type": "array",
+                        "title": "Entries",
+                        "description": "List of entries to add",
+                        "example": [
+                            "id_1",
+                            "id_2",
+                            "id_3"
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "entries"
+                ],
+                "title": "EntriesConfig"
             },
             "EvaluatorConfig": {
                 "properties": {
