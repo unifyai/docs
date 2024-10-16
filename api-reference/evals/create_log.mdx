@@ -5,6 +5,10 @@ api: 'POST /v0/log'
 Creates a log associated to a project. Logs are
 LLM-call-level data that might depend on other variables.
 
+A "explicit_types" dictionary can be passed as part of the `entries`.
+If present, any matching key inside this dictionary will override the
+inferred type of that particular entry.
+
 This method returns the id of the new stored log.
 
 #### Authorizations
@@ -20,7 +24,7 @@ Name of the project the stored entries will be associated to.
 </ParamField>
 
 <ParamField body="entries" type="object" required="true">
-Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable.
+Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.
 </ParamField>
 
 <RequestExample>
@@ -33,6 +37,9 @@ curl --request POST \
   --data '{
     "project": "eval-project",
     "entries": {
+        "explicit_types": {
+            "input": "Image"
+        },
         "input": "...",
         "score-test-1": "..."
     }
@@ -46,7 +53,7 @@ url = "https://api.unify.ai/v0/log"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "entries": {"input": "...", "score-test-1": "..."}}
+json_input = {"project": "eval-project", "entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

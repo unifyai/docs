@@ -3259,7 +3259,7 @@
                     "Evals"
                 ],
                 "summary": "Create Log",
-                "description": "Creates a log associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nThis method returns the id of the new stored log.",
+                "description": "Creates a log associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.\n\nThis method returns the id of the new stored log.",
                 "operationId": "create_log_v0_log_post",
                 "requestBody": {
                     "content": {
@@ -3377,7 +3377,7 @@
                     "Evals"
                 ],
                 "summary": "Update Log",
-                "description": "Updates the given log with more data.",
+                "description": "Updates the given log with more data.\n\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.",
                 "operationId": "update_log_v0_log__id__put",
                 "security": [
                     {
@@ -6925,8 +6925,11 @@
                     "entries": {
                         "type": "object",
                         "title": "Entries",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable.",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
                         "example": {
+                            "explicit_types": {
+                                "input": "Image"
+                            },
                             "input": "...",
                             "score-test-1": "..."
                         }
@@ -7726,8 +7729,11 @@
                     "entries": {
                         "type": "object",
                         "title": "Entries",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable.",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
                         "example": {
+                            "explicit_types": {
+                                "input": "Image"
+                            },
                             "input": "...",
                             "score-test-1": "..."
                         }
