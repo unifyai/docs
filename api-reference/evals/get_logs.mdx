@@ -20,18 +20,26 @@ Name of the project to get entries from.
 Boolean string to filter entries. TODO: Detailed page.
 </ParamField>
 
+<ParamField query="limit" type="integer"  default={10}>
+
+</ParamField>
+
+<ParamField query="offset" type="integer" >
+
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs?project=eval-project&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5' \
+  --url 'https://api.unify.ai/v0/logs?project=eval-project&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&limit=None&offset=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs?project=eval-project&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5"
+url = "https://api.unify.ai/v0/logs?project=eval-project&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&limit=None&offset=None"
 
 headers = {"Authorization": "Bearer <token>"}
 

@@ -3636,6 +3636,29 @@
                         },
                         "description": "Boolean string to filter entries. TODO: Detailed page.",
                         "example": "len(output) > 200 and temperature == 0.5"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 200,
+                            "minimum": 1,
+                            "default": 10,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Offset"
+                        }
                     }
                 ],
                 "responses": {
