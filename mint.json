@@ -76,8 +76,7 @@
                 {
                     "group": "Data Flywheel",
                     "pages": [
-                        "data_flywheel/overview",
-                        "data_flywheel/examples"
+                        "data_flywheel/overview"
                     ]
                 },
                 {
