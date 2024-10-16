@@ -2,27 +2,30 @@
 title: 'Overview'
 ---
 
-When deploying LLMs in production, the first question to ask is: why LLM should I use?
+The core building block for building your LLM data flywheel is **very simple**,
+just pass your data to `unify.log`, that's (kind of) it.
 
-When comparing LLMs, there is a constant tradeoff to make between quality, cost and 
-latency. Stronger models are (in general) slower and more expensive - and sometimes 
-overkill for the task at hand. Complicating matters further, new models are released 
-weekly, each claiming to be state-of-the-art 🏆
+This lets you store *any* kind of data into your console for future visualization,
+grouping, sorting, and plotting etc.
 
-When fine-tuned models are added to the mix, the picture is even more complicated,
-as these models typically outperform the more general foundation models in their
-specific areas of fine-tuning.
+Rather than going through each concept in the logging and visualization APIs, we'll
+instead just go through several examples, showing how you can use these simple
+primitives to get your LLM data-flywheel spinning for *any* LLM-powered application 🎡
 
-Benchmarking all options on your prompt data lets you see how each of the different
-models perform on your own task, in a visually intuitive manner 📊
+In general, the process for building high-quality LLM apps is simple:
 
-Once you've selected your model, this is only the beginning. The task is then to verify
-that the LLM application is reliable, and all evals and unit tests are
-consistently passing.
+- Add unit tests (evals) ❓
+- See if they pass ✅
+- Iterate on system message, in-context example, available tools etc. until they do 🔁
+- Beta test with users and find failure modes from production traffic 🚦
+- Convert these into unit tests 🗂️
+- Repeat! 🔝
 
-Getting the system to behave reliably, with all unit tests passing, often requires
-continual iteration on the system prompt, and on the in-context examples.
+The hardest part of this “flywheel” is the iteration step, where spotting patterns can
+be very difficult. Other great work looks to abstract this away, such as DSPy.
+These auto-optimization tools are really great in some contexts, but from our
+experience, the best LLM apps are built when a human is very much “in the loop” when it
+comes to iterations and prompt-engineering 🧑‍💻
 
-Our platform makes it much easier to reason about the version history of the system
-prompt and in-context examples, seeing which changes had which effect on which evals for
-which kind of prompts, guiding you towards a fully reliable final system 💪
+We've tried to make this as simple as possible,
+keeping *you* in the driving seat for *your* LLM application 🏎️
