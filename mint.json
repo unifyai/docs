@@ -74,14 +74,10 @@
                     ]
                 },
                 {
-                    "group": "Benchmarking",
+                    "group": "Data Flywheel",
                     "pages": [
-                        "benchmarking/overview",
-                        "benchmarking/datasets",
-                        "benchmarking/evaluators",
-                        "benchmarking/evaluations",
-                        "benchmarking/benchmarks",
-                        "benchmarking/visualization"
+                        "data_flywheel/overview",
+                        "data_flywheel/examples"
                     ]
                 },
                 {
