@@ -262,6 +262,7 @@
                         {
                             "group": "evaluations",
                             "pages": [
+                                "python/classes/utils/evaluations/Context",
                                 "python/classes/utils/evaluations/Log",
                                 "python/functions/utils/evaluations/add_artifacts",
                                 "python/functions/utils/evaluations/add_log_entries",
