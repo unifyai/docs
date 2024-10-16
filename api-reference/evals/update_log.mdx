@@ -4,6 +4,10 @@ api: 'PUT /v0/log/{id}'
 ---
 Updates the given log with more data.
 
+A "explicit_types" dictionary can be passed as part of the `entries`.
+If present, any matching key inside this dictionary will override the
+inferred type of that particular entry.
+
 #### Authorizations
 
 <ParamField header="Authorization" type="string" required="true">
@@ -19,7 +23,7 @@ ID of the log to update.
 #### Body
 
 <ParamField body="entries" type="object" required="true">
-Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable.
+Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.
 </ParamField>
 
 <RequestExample>
@@ -31,6 +35,9 @@ curl --request PUT \
   --header 'Content-Type: application/json' \
   --data '{
     "entries": {
+        "explicit_types": {
+            "input": "Image"
+        },
         "input": "...",
         "score-test-1": "..."
     }
@@ -44,7 +51,7 @@ url = "https://api.unify.ai/v0/log/123"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"entries": {"input": "...", "score-test-1": "..."}}
+json_input = {"entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 
