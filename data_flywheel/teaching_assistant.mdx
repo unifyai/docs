@@ -109,8 +109,8 @@ print(f"{int(sum(scores))}/{len(scores)} correct")
 25/30 correct.
 ```
 
-The above code takes roughly ~30s to run. Things are this slow because each LLM query is
-being run *serially*. The simplest way to speed up our evals is to use
+The above code takes roughly **~30s** to run. Things are this slow because each LLM
+query is being run *serially*. The simplest way to speed up our evals is to use
 `unify.map` which uses multi-threading under the hood to run each evaluation in
 parallel. We first need to define the evaluation function we'd like to map our arguments
 across:
@@ -134,9 +134,9 @@ We can then map the arguments across this evaluation function as follows.
 scores = unify.map(evaluate, qs)
 ```
 
-This takes ~3.5s, which is roughly **10x** faster than the serial version. Re-adding
-caching makes it even faster (roughly 0.005s, or **6000x** faster), with each parallel
-thread no longer needing to wait for the LLM response.
+This takes **~3.5s**, which is roughly **10x** faster than the serial version. Re-adding
+caching makes it even faster (roughly **0.005s**, or **6000x** faster), with each
+parallel thread no longer needing to wait for the LLM response.
 
 Getting back to our evals, we see that only 25 of the tests are passing:
 
