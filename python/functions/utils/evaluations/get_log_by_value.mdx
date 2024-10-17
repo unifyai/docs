@@ -5,12 +5,12 @@ title: 'get_log_by_value'
 ```python
 def get_log_by_value(
     project: str,
-    data: Dict[str, Any],
     api_key: Optional[str] = None,
+    **kwargs,
 ) -> Optional[Log]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/cb88957a4dc3b3b1186d5dcc304618e8dadcc8b2/unify/utils/evaluations.py#L568)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/c4f07243fe885d2143baa0cb3d147c8acc858e1e/unify/utils/evaluations.py#L570)</p>
 
 Returns the log with the data matching exactly if it exists,
 otherwise returns None.
@@ -18,8 +18,8 @@ otherwise returns None.
 **Arguments**:
 
 - `project` - Name of the project to get logs from.
-- `data` - The data to search the upstream logs for.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
+- `kwargs` - The data to search the upstream logs for.
 
 
 
