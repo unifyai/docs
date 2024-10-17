@@ -6,11 +6,13 @@ title: 'get_logs'
 def get_logs(
     project: str,
     filter: Optional[str] = None,
+    limit: Optional[int] = 100,
+    offset: Optional[int] = None,
     api_key: Optional[str] = None,
 ) -> List[Log]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/010e31cc93c7baf0f8d1fc1378da283d2950a3bf/unify/utils/evaluations.py#L492)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/781df5a5c4a02e3f4c988cf68fcd13b8e1200ca9/unify/utils/evaluations.py#L492)</p>
 
 Returns a list of filtered logs from a project.
 
@@ -18,6 +20,8 @@ Returns a list of filtered logs from a project.
 
 - `project` - Name of the project to get logs from.
 - `filter` - Boolean string to filter logs, for example:
+- `limit` - The number of logs to return.
+- `offset` - The offset to start returning logs from.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
 
