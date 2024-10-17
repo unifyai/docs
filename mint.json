@@ -76,7 +76,8 @@
                 {
                     "group": "Data Flywheel",
                     "pages": [
-                        "data_flywheel/overview"
+                        "data_flywheel/overview",
+                        "data_flywheel/teaching_assistant"
                     ]
                 },
                 {
