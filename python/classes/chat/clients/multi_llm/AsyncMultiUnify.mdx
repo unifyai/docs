@@ -6,7 +6,7 @@ title: 'AsyncMultiUnify'
 class AsyncMultiUnify
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L865)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L865)</p>
 
 
 
@@ -16,7 +16,7 @@ class AsyncMultiUnify
 
 ### cache
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L407)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L420)</p>
 
 ```python
 def cache(self) -> bool:
@@ -32,7 +32,7 @@ The default cache bool.
 
 ### clients
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L445)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L445)</p>
 
 ```python
 def clients(self) -> Dict[str, _UniClient]:
@@ -49,7 +49,7 @@ The dictionary of clients.
 
 ### default\_prompt
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L447)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L460)</p>
 
 ```python
 def default_prompt(self) -> Prompt:
@@ -65,7 +65,7 @@ The default prompt.
 
 ### drop\_params
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L357)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L360)</p>
 
 ```python
 def drop_params(self) -> Optional[bool]:
@@ -81,7 +81,7 @@ The default drop_params bool.
 
 ### endpoints
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L435)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L435)</p>
 
 ```python
 def endpoints(self) -> Tuple[str, ...]:
@@ -97,7 +97,7 @@ The tuple of endpoints.
 
 ### extra\_body
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L437)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L450)</p>
 
 ```python
 def extra_body(self) -> Optional[Mapping[str, str]]:
@@ -113,7 +113,7 @@ The default extra body.
 
 ### extra\_headers
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L417)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L430)</p>
 
 ```python
 def extra_headers(self) -> Optional[Headers]:
@@ -129,7 +129,7 @@ The default extra headers.
 
 ### extra\_query
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L427)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L440)</p>
 
 ```python
 def extra_query(self) -> Optional[Query]:
@@ -145,7 +145,7 @@ The default extra query.
 
 ### frequency\_penalty
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L167)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L170)</p>
 
 ```python
 def frequency_penalty(self) -> Optional[float]:
@@ -159,9 +159,25 @@ The default frequency penalty.
 
 ---
 
+### http\_client
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L400)</p>
+
+```python
+def http_client(self) -> httpx.AsyncClient:
+```
+
+Get the http client used under the hood.
+
+**Returns**:
+
+The http client used under the hood.
+
+---
+
 ### input\_cost
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L406)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L406)</p>
 
 ```python
 def input_cost(self) -> Dict[str, float]:
@@ -173,7 +189,7 @@ def input_cost(self) -> Dict[str, float]:
 
 ### inter\_token\_latency
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L425)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L425)</p>
 
 ```python
 def inter_token_latency(self) -> Dict[str, float]:
@@ -185,7 +201,7 @@ def inter_token_latency(self) -> Dict[str, float]:
 
 ### log\_query\_body
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L377)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L380)</p>
 
 ```python
 def log_query_body(self) -> Optional[bool]:
@@ -201,7 +217,7 @@ The default log query body bool.
 
 ### log\_response\_body
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L387)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L390)</p>
 
 ```python
 def log_response_body(self) -> Optional[bool]:
@@ -217,7 +233,7 @@ The default log response body bool.
 
 ### logit\_bias
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L177)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L180)</p>
 
 ```python
 def logit_bias(self) -> Optional[Dict[str, int]]:
@@ -233,7 +249,7 @@ The default logit bias.
 
 ### logprobs
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L187)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L190)</p>
 
 ```python
 def logprobs(self) -> Optional[bool]:
@@ -249,7 +265,7 @@ The default logprobs.
 
 ### max\_completion\_tokens
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L207)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L210)</p>
 
 ```python
 def max_completion_tokens(self) -> Optional[int]:
@@ -265,7 +281,7 @@ The default max tokens.
 
 ### messages
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L150)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L153)</p>
 
 ```python
 def messages(
@@ -288,7 +304,7 @@ The default messages.
 
 ### n
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L217)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L220)</p>
 
 ```python
 def n(self) -> Optional[int]:
@@ -304,7 +320,7 @@ The default n value.
 
 ### output\_cost
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L412)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L412)</p>
 
 ```python
 def output_cost(self) -> Dict[str, float]:
@@ -316,7 +332,7 @@ def output_cost(self) -> Dict[str, float]:
 
 ### parallel\_tool\_calls
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L327)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L330)</p>
 
 ```python
 def parallel_tool_calls(self) -> Optional[bool]:
@@ -332,7 +348,7 @@ The default parallel tool calls bool.
 
 ### presence\_penalty
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L227)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L230)</p>
 
 ```python
 def presence_penalty(self) -> Optional[float]:
@@ -348,7 +364,7 @@ The default presence penalty.
 
 ### region
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L367)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L370)</p>
 
 ```python
 def region(self) -> Optional[str]:
@@ -364,7 +380,7 @@ The default region.
 
 ### response\_format
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L237)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L240)</p>
 
 ```python
 def response_format(self) -> Optional[ResponseFormat]:
@@ -380,7 +396,7 @@ The default response format.
 
 ### return\_full\_completion
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L397)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L410)</p>
 
 ```python
 def return_full_completion(self) -> bool:
@@ -396,7 +412,7 @@ The default return full completion bool.
 
 ### seed
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L247)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L250)</p>
 
 ```python
 def seed(self) -> Optional[int]:
@@ -412,7 +428,7 @@ The default seed value.
 
 ### stop
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L257)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L260)</p>
 
 ```python
 def stop(self) -> Union[Optional[str], List[str]]:
@@ -428,7 +444,7 @@ The default stop value.
 
 ### stream
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L267)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L270)</p>
 
 ```python
 def stream(self) -> Optional[bool]:
@@ -444,7 +460,7 @@ The default stream bool.
 
 ### stream\_options
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L277)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L280)</p>
 
 ```python
 def stream_options(self) -> Optional[ChatCompletionStreamOptionsParam]:
@@ -460,7 +476,7 @@ The default stream options.
 
 ### system\_message
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L140)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L143)</p>
 
 ```python
 def system_message(self) -> Optional[str]:
@@ -476,7 +492,7 @@ The default system message.
 
 ### tags
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L347)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L350)</p>
 
 ```python
 def tags(self) -> Optional[List[str]]:
@@ -492,7 +508,7 @@ The default tags.
 
 ### temperature
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L287)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L290)</p>
 
 ```python
 def temperature(self) -> Optional[float]:
@@ -508,7 +524,7 @@ The default temperature.
 
 ### time\_to\_first\_token
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L418)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L418)</p>
 
 ```python
 def time_to_first_token(self) -> Dict[str, float]:
@@ -520,7 +536,7 @@ def time_to_first_token(self) -> Dict[str, float]:
 
 ### tool\_choice
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L317)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L320)</p>
 
 ```python
 def tool_choice(self) -> Optional[ChatCompletionToolChoiceOptionParam]:
@@ -536,7 +552,7 @@ The default tool choice.
 
 ### tools
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L307)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L310)</p>
 
 ```python
 def tools(self) -> Optional[Iterable[ChatCompletionToolParam]]:
@@ -552,7 +568,7 @@ The default tools.
 
 ### top\_logprobs
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L197)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L200)</p>
 
 ```python
 def top_logprobs(self) -> Optional[int]:
@@ -568,7 +584,7 @@ The default top logprobs.
 
 ### top\_p
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L297)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L300)</p>
 
 ```python
 def top_p(self) -> Optional[float]:
@@ -584,7 +600,7 @@ The default top p value.
 
 ### use\_custom\_keys
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L337)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L340)</p>
 
 ```python
 def use_custom_keys(self) -> bool:
@@ -602,7 +618,7 @@ The default use custom keys bool.
 
 ### set\_cache
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L810)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L836)</p>
 
 ```python
 def set_cache(self, value: bool) -> Self:
@@ -624,7 +640,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_default\_prompt
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L862)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L888)</p>
 
 ```python
 def set_default_prompt(self, value: Prompt) -> Self:
@@ -640,7 +656,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_drop\_params
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L745)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L758)</p>
 
 ```python
 def set_drop_params(self, value: bool) -> Self:
@@ -662,7 +678,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_extra\_body
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L849)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L875)</p>
 
 ```python
 def set_extra_body(self, value: Body) -> Self:
@@ -684,7 +700,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_extra\_headers
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L823)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L849)</p>
 
 ```python
 def set_extra_headers(self, value: Headers) -> Self:
@@ -706,7 +722,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_extra\_query
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L836)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L862)</p>
 
 ```python
 def set_extra_query(self, value: Query) -> Self:
@@ -728,7 +744,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_frequency\_penalty
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L498)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L511)</p>
 
 ```python
 def set_frequency_penalty(self, value: float) -> Self:
@@ -748,9 +764,31 @@ This client, useful for chaining inplace calls.
 
 ---
 
+### set\_http\_client
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L810)</p>
+
+```python
+def set_http_client(self, value: httpx.AsyncClient) -> Self:
+```
+
+Set the http client used under the hood.  
+
+**Arguments**:
+
+- `value` - The http client to use.
+
+
+
+**Returns**:
+
+This client, useful for chaining inplace calls.
+
+---
+
 ### set\_log\_query\_body
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L771)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L784)</p>
 
 ```python
 def set_log_query_body(self, value: bool) -> Self:
@@ -772,7 +810,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_log\_response\_body
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L784)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L797)</p>
 
 ```python
 def set_log_response_body(self, value: bool) -> Self:
@@ -794,7 +832,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_logit\_bias
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L511)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L524)</p>
 
 ```python
 def set_logit_bias(self, value: Dict[str, int]) -> Self:
@@ -816,7 +854,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_logprobs
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L524)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L537)</p>
 
 ```python
 def set_logprobs(self, value: bool) -> Self:
@@ -838,7 +876,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_max\_completion\_tokens
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L550)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L563)</p>
 
 ```python
 def set_max_completion_tokens(self, value: int) -> Self:
@@ -860,7 +898,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_messages
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L479)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L492)</p>
 
 ```python
 def set_messages(
@@ -888,7 +926,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_n
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L563)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L576)</p>
 
 ```python
 def set_n(self, value: int) -> Self:
@@ -910,7 +948,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_parallel\_tool\_calls
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L706)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L719)</p>
 
 ```python
 def set_parallel_tool_calls(self, value: bool) -> Self:
@@ -932,7 +970,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_presence\_penalty
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L576)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L589)</p>
 
 ```python
 def set_presence_penalty(self, value: float) -> Self:
@@ -954,7 +992,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_region
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L758)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L771)</p>
 
 ```python
 def set_region(self, value: str) -> Self:
@@ -976,7 +1014,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_response\_format
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L589)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L602)</p>
 
 ```python
 def set_response_format(self, value: ResponseFormat) -> Self:
@@ -998,7 +1036,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_return\_full\_completion
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L797)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L823)</p>
 
 ```python
 def set_return_full_completion(self, value: bool) -> Self:
@@ -1020,7 +1058,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_seed
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L602)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L615)</p>
 
 ```python
 def set_seed(self, value: int) -> Self:
@@ -1042,7 +1080,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_stop
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L615)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L628)</p>
 
 ```python
 def set_stop(self, value: Union[str, List[str]]) -> Self:
@@ -1064,7 +1102,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_stream
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L628)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L641)</p>
 
 ```python
 def set_stream(self, value: bool) -> Self:
@@ -1086,7 +1124,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_stream\_options
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L641)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L654)</p>
 
 ```python
 def set_stream_options(self, value: ChatCompletionStreamOptionsParam) -> Self:
@@ -1108,7 +1146,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_system\_message
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L466)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L479)</p>
 
 ```python
 def set_system_message(self, value: str) -> Self:
@@ -1130,7 +1168,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_tags
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L732)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L745)</p>
 
 ```python
 def set_tags(self, value: List[str]) -> Self:
@@ -1152,7 +1190,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_temperature
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L654)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L667)</p>
 
 ```python
 def set_temperature(self, value: float) -> Self:
@@ -1174,7 +1212,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_tool\_choice
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L693)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L706)</p>
 
 ```python
 def set_tool_choice(self, value: ChatCompletionToolChoiceOptionParam) -> Self:
@@ -1196,7 +1234,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_tools
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L680)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L693)</p>
 
 ```python
 def set_tools(self, value: Iterable[ChatCompletionToolParam]) -> Self:
@@ -1218,7 +1256,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_top\_logprobs
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L537)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L550)</p>
 
 ```python
 def set_top_logprobs(self, value: int) -> Self:
@@ -1240,7 +1278,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_top\_p
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L667)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L680)</p>
 
 ```python
 def set_top_p(self, value: float) -> Self:
@@ -1262,7 +1300,7 @@ This client, useful for chaining inplace calls.
 
 ### set\_use\_custom\_keys
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/base.py#L719)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/base.py#L732)</p>
 
 ```python
 def set_use_custom_keys(self, value: bool) -> Self:
@@ -1286,7 +1324,7 @@ This client, useful for chaining inplace calls.
 
 ### add\_endpoints
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L295)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L295)</p>
 
 ```python
 def add_endpoints(
@@ -1313,7 +1351,7 @@ This client, useful for chaining inplace calls.
 
 ### generate
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L468)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L468)</p>
 
 ```python
 def generate(
@@ -1417,7 +1455,7 @@ If stream is False, returns a single string response.
 
 ### get\_credit\_balance
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L373)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L373)</p>
 
 ```python
 def get_credit_balance(self) -> Union[float, None]:
@@ -1438,7 +1476,7 @@ ValueError: If there was an error parsing the JSON response.
 
 ### remove\_endpoints
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L333)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L333)</p>
 
 ```python
 def remove_endpoints(
@@ -1466,7 +1504,7 @@ This client, useful for chaining inplace calls.
 
 ### to\_sync\_client
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L947)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L947)</p>
 
 ```python
 def to_sync_client(self):
@@ -1486,7 +1524,7 @@ instance.
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L32)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L32)</p>
 
 ```python
 def __init__(
@@ -1577,7 +1615,7 @@ Initialize the Multi LLM Unify client.
 
 ### \_\_repr\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L459)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L459)</p>
 
 ```python
 def __repr__(self):
@@ -1589,7 +1627,7 @@ def __repr__(self):
 
 ### \_\_str\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/4abb65da74b3b555d66197c5fb65a5bcec86ae4b/unify/chat/clients/multi_llm.py#L462)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e05c863348dcbc67f86e44cffc8aa3fc36c6a91b/unify/chat/clients/multi_llm.py#L462)</p>
 
 ```python
 def __str__(self):
