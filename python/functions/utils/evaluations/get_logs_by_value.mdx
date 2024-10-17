@@ -1,0 +1,28 @@
+---
+title: 'get_logs_by_value'
+---
+
+```python
+def get_logs_by_value(
+    project: str,
+    data: Dict[str, Any],
+    api_key: Optional[str] = None,
+) -> List[Log]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/cec8d26ab23565e087f7040fff80736eb37a0df7/unify/utils/evaluations.py#L540)</p>
+
+Returns the logs with the data matching exactly if it exists,
+otherwise returns None.
+
+**Arguments**:
+
+- `project` - Name of the project to get logs from.
+- `data` - The data to search the upstream logs for.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+The list of Logs which match the data, if any exist.
