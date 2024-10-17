@@ -69,9 +69,7 @@ def evaluate_response(question: str, response: str) -> float:
 
 ### Step 2
 
-We can then run our evals as follows, note that the questions are passed into the agent
-in batch (not one at a time), which as mentioned above, will make the execution **much**
-faster:
+We can then run our evals as follows:
 
 ```python
 scores = [evaluate_response(q, client.generate(q)) for q in qs]
