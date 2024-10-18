@@ -279,6 +279,7 @@
                                 "python/functions/utils/logging/get_logs",
                                 "python/functions/utils/logging/get_logs_by_value",
                                 "python/functions/utils/logging/get_logs_metric",
+                                "python/functions/utils/logging/get_logs_with_fields",
                                 "python/functions/utils/logging/group_logs",
                                 "python/functions/utils/logging/list_projects",
                                 "python/functions/utils/logging/log",
