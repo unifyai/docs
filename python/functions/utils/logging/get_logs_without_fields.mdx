@@ -1,0 +1,31 @@
+---
+title: 'get_logs_without_fields'
+---
+
+```python
+def get_logs_without_fields(
+    *fields: str,
+    mode: str = "all",
+    project: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> List[Log]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/15c424dea3dbb96d746f855cd1c2d53ccce11be0/unify/utils/logging.py#L804)</p>
+
+Returns a list of logs which do not contain the specified fields, either the logs
+which do not contain all of the fields ("all") or the logs which do not contain any
+of the fields ("any").
+
+**Arguments**:
+
+- `fields` - The fields to not retrieve logs for.
+- `mode` - The retrieval mode, either returning the logs with do not contain all of
+- `project` - Name of the project to get logs from.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+A list of logs which do not contain the specified fields.
