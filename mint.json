@@ -352,9 +352,9 @@
                     ]
                 },
                 {
-                    "group": "ma",
+                    "group": "map",
                     "pages": [
-                        "python/functions/ma/map"
+                        "python/functions/map/map"
                     ]
                 }
             ]
