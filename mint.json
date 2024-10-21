@@ -287,6 +287,7 @@
                                 "python/functions/utils/logging/rename_project",
                                 "python/functions/utils/logging/replace_log_entries",
                                 "python/functions/utils/logging/reversion_log_entries",
+                                "python/functions/utils/logging/span",
                                 "python/functions/utils/logging/trace",
                                 "python/functions/utils/logging/unversion_log_entries",
                                 "python/functions/utils/logging/update_log_entries",
