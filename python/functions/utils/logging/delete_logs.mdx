@@ -1,0 +1,27 @@
+---
+title: 'delete_logs'
+---
+
+```python
+def delete_logs(
+    project: Optional[str] = None,
+    filter: Optional[str] = None,
+    api_key: Optional[str] = None,
+):
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/8ebb827807a35a0fd03a1fd964241b9d02ec3a68/unify/utils/logging.py#L797)</p>
+
+Returns a list of filtered logs from a project.
+
+**Arguments**:
+
+- `project` - Name of the project to delete logs from.
+- `filter` - Boolean string to filter logs for deletion, for example:
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+The list of deleted logs for the project, after optionally applying filtering.
