@@ -6,12 +6,11 @@ title: 'download_dataset'
 def download_dataset(
     name: str,
     path: Optional[str] = None,
-    raw_return: bool = False,
     api_key: Optional[str] = None,
 ) -> Union[List[Any], None]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/c50076c8646d98b45e4c7dd5b84df4085a487c31/unify/utils/datasets.py#L81)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f24c767fc6030228dba5f5ccb17eb8789d770643/unify/utils/datasets.py#L49)</p>
 
 Downloads a dataset from the platform.
 
@@ -19,7 +18,6 @@ Downloads a dataset from the platform.
 
 - `name` - Name of the dataset to download.
 - `path` - If specified, path to save the dataset.
-- `raw_return` - Whether to provide the raw return, with extra meta-data.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
 

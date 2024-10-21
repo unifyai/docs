@@ -1,0 +1,19 @@
+---
+title: 'download_artifacts'
+---
+
+```python
+def download_artifacts(
+    name: str,
+    api_key: Optional[str] = None,
+) -> Union[List[Any], None]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f24c767fc6030228dba5f5ccb17eb8789d770643/unify/utils/datasets.py#L268)</p>
+
+Downloads a dataset from the platform.
+
+**Arguments**:
+
+- `name` - Name of the dataset to download the artifacts for.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the

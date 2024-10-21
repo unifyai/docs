@@ -1,0 +1,27 @@
+---
+title: 'get_dataset_entry'
+---
+
+```python
+def get_dataset_entry(
+    name: str,
+    id: int,
+    api_key: Optional[str] = None,
+) -> List[Dict[str, Union[int, Any]]]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f24c767fc6030228dba5f5ccb17eb8789d770643/unify/utils/datasets.py#L236)</p>
+
+Returns the specified dataset entry.
+
+**Arguments**:
+
+- `name` - Dataset name.
+- `id` - Entry id
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+A dict containing the dataset entry.
