@@ -270,6 +270,7 @@
                                 "python/functions/utils/logging/delete_artifact",
                                 "python/functions/utils/logging/delete_log",
                                 "python/functions/utils/logging/delete_log_entry",
+                                "python/functions/utils/logging/delete_logs",
                                 "python/functions/utils/logging/delete_project",
                                 "python/functions/utils/logging/get_artifacts",
                                 "python/functions/utils/logging/get_groups",
