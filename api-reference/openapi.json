@@ -5931,6 +5931,19 @@
                 ],
                 "title": "ArtifactConfig"
             },
+            "Audio": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "title": "Audio"
+            },
             "Body_add_data_v0_dataset_data_post": {
                 "properties": {
                     "name": {
@@ -6139,6 +6152,16 @@
                         "const": "assistant",
                         "title": "Role"
                     },
+                    "audio": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Audio"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
                     "content": {
                         "anyOf": [
                             {
@@ -6222,6 +6245,27 @@
                     "type"
                 ],
                 "title": "ChatCompletionContentPartImageParam"
+            },
+            "ChatCompletionContentPartInputAudioParam": {
+                "properties": {
+                    "input_audio": {
+                        "$ref": "#/components/schemas/InputAudio"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "input_audio"
+                        ],
+                        "const": "input_audio",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "input_audio",
+                    "type"
+                ],
+                "title": "ChatCompletionContentPartInputAudioParam"
             },
             "ChatCompletionContentPartRefusalParam": {
                 "properties": {
@@ -6552,8 +6596,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -6886,6 +6930,9 @@
                                         },
                                         {
                                             "$ref": "#/components/schemas/ChatCompletionContentPartImageParam"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ChatCompletionContentPartInputAudioParam"
                                         }
                                     ]
                                 },
@@ -7359,6 +7406,28 @@
                     "url"
                 ],
                 "title": "ImageURL"
+            },
+            "InputAudio": {
+                "properties": {
+                    "data": {
+                        "type": "string",
+                        "title": "Data"
+                    },
+                    "format": {
+                        "type": "string",
+                        "enum": [
+                            "wav",
+                            "mp3"
+                        ],
+                        "title": "Format"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "data",
+                    "format"
+                ],
+                "title": "InputAudio"
             },
             "JSONSchema": {
                 "properties": {

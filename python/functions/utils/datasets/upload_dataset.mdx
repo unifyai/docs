@@ -1,0 +1,21 @@
+---
+title: 'upload_dataset'
+---
+
+```python
+def upload_dataset(
+    name: str,
+    content: list,
+    api_key: Optional[str] = None,
+) -> str:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f24c767fc6030228dba5f5ccb17eb8789d770643/unify/utils/datasets.py#L10)</p>
+
+Uploads a dataset to the platform
+
+**Arguments**:
+
+- `name` - The name of the dataset
+- `content` - List of entries to upload
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the

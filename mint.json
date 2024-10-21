@@ -227,18 +227,17 @@
                         {
                             "group": "datasets",
                             "pages": [
-                                "python/functions/utils/datasets/add_data_by_id",
-                                "python/functions/utils/datasets/add_data_by_value",
-                                "python/functions/utils/datasets/delete_data_by_id",
-                                "python/functions/utils/datasets/delete_data_by_value",
+                                "python/functions/utils/datasets/add_dataset_entries",
+                                "python/functions/utils/datasets/create_artifacts",
+                                "python/functions/utils/datasets/delete_artifact",
                                 "python/functions/utils/datasets/delete_dataset",
+                                "python/functions/utils/datasets/delete_dataset_entry",
+                                "python/functions/utils/datasets/download_artifacts",
                                 "python/functions/utils/datasets/download_dataset",
-                                "python/functions/utils/datasets/get_data_by_id",
-                                "python/functions/utils/datasets/get_data_by_value",
+                                "python/functions/utils/datasets/get_dataset_entry",
                                 "python/functions/utils/datasets/list_datasets",
                                 "python/functions/utils/datasets/rename_dataset",
-                                "python/functions/utils/datasets/upload_dataset_from_dictionary",
-                                "python/functions/utils/datasets/upload_dataset_from_file"
+                                "python/functions/utils/datasets/upload_dataset"
                             ]
                         },
                         {
