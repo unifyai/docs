@@ -1,0 +1,119 @@
+---
+title: 'Versioned'
+---
+
+```python
+class Versioned
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L28)</p>
+
+
+
+## properties
+
+---
+
+### value
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L67)</p>
+
+```python
+def value(self):
+```
+
+
+
+---
+
+### version
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L71)</p>
+
+```python
+def version(self):
+```
+
+
+
+## setters
+
+---
+
+### set\_version
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L57)</p>
+
+```python
+def set_version(self, version: Union[int, str]):
+```
+
+
+
+## methods
+
+---
+
+### at\_version
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L64)</p>
+
+```python
+def at_version(self, version: Union[int, str]):
+```
+
+
+
+---
+
+### update
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L43)</p>
+
+```python
+def update(self, value: Any, version: Optional[Union[int, str]] = None):
+```
+
+
+
+## dunder_methods
+
+---
+
+### \_\_init\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L30)</p>
+
+```python
+def __init__(
+        self,
+        value: Any,
+        version: Union[int, str] = 0,
+        versions: Optional[Dict[Union[int, str], Any]] = None,
+    ):
+```
+
+
+
+---
+
+### \_\_len\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L75)</p>
+
+```python
+def __len__(self):
+```
+
+
+
+---
+
+### \_\_repr\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L40)</p>
+
+```python
+def __repr__(self):
+```
+

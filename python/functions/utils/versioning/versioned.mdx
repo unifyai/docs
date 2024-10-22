@@ -1,0 +1,23 @@
+---
+title: 'versioned'
+---
+
+```python
+def versioned(value: Any, version: Union[int, str] = 0):
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a9f77935350ed244941415c65db3248ed45670f5/unify/utils/versioning.py#L79)</p>
+
+Thinly wrap input value into `unify.Versioned` class, such that it includes version
+information.
+
+**Arguments**:
+
+- `value` - The value to wrap with attached version information.
+- `version` - The version associated with this value.
+
+
+
+**Returns**:
+
+A `unify.Versioned` instance of the input value.
