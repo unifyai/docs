@@ -85,10 +85,7 @@
                     "pages": [
                         "routing/overview",
                         "routing/fallbacks",
-                        "routing/routing_syntax",
-                        "routing/train_your_own_router",
-                        "routing/configure_your_router",
-                        "routing/deploy_your_router"
+                        "routing/routing_syntax"
                     ]
                 },
                 "on_prem/overview",
