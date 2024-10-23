@@ -344,7 +344,6 @@
                             "group": "versioning",
                             "pages": [
                                 "python/classes/utils/versioning/Versioned",
-                                "python/functions/utils/versioning/get_code",
                                 "python/functions/utils/versioning/versioned"
                             ]
                         }
