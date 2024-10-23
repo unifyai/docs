@@ -3150,10 +3150,16 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "type": "integer",
-                            "maximum": 200,
-                            "minimum": 1,
-                            "default": 100,
+                            "anyOf": [
+                                {
+                                    "type": "integer",
+                                    "maximum": 200,
+                                    "minimum": 1
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
                             "title": "Limit"
                         }
                     },
