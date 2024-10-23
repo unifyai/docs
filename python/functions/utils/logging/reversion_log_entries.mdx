@@ -3,25 +3,12 @@ title: 'reversion_log_entries'
 ---
 
 ```python
-def reversion_log_entries(
-    id: Optional[int] = None,
-    api_key: Optional[str] = None,
-    **kwargs: Tuple[Union[int, str], Union[int, str]],
-) -> Dict[str, str]:
+def wrapped(
+        *args,
+        logs: Optional[Union[int, Log, List[Union[int, Log]]]] = None,
+        **kwargs,
+    ):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d4de4e855e42d7f22648d3877846d702935b0d/unify/utils/logging.py#L706)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/498ede5bdc8967717e790b4e356e20e5e7a284d7/unify/utils/logging.py#L772)</p>
 
-Updates versions to the set of log entries.
-
-**Arguments**:
-
-- `id` - The log id to version the field names for. Looks for the current active log
-- `api_key` - If specified, unify API key to be used. Defaults to the value in the
-- `kwargs` - The field names and versions to update in the log, with keys as field
-
-
-
-**Returns**:
-
-A message indicating whether the log fields were successfully re-versioned.
