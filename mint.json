@@ -283,6 +283,7 @@
                                 "python/functions/utils/logging/get_logs_without_fields",
                                 "python/functions/utils/logging/get_versions",
                                 "python/functions/utils/logging/group_logs",
+                                "python/functions/utils/logging/handle_multiple_logs",
                                 "python/functions/utils/logging/list_projects",
                                 "python/functions/utils/logging/log",
                                 "python/functions/utils/logging/rename_log_entries",

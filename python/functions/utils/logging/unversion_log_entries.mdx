@@ -3,25 +3,12 @@ title: 'unversion_log_entries'
 ---
 
 ```python
-def unversion_log_entries(
-    *field_names: str,
-    id: Optional[int] = None,
-    api_key: Optional[str] = None,
-) -> Dict[str, str]:
+def wrapped(
+        *args,
+        logs: Optional[Union[int, Log, List[Union[int, Log]]]] = None,
+        **kwargs,
+    ):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d4de4e855e42d7f22648d3877846d702935b0d/unify/utils/logging.py#L679)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/498ede5bdc8967717e790b4e356e20e5e7a284d7/unify/utils/logging.py#L743)</p>
 
-Removes versioning from the set of log entries.
-
-**Arguments**:
-
-- `field_names` - The field names to un-version.
-- `id` - The log id to version the field names for. Looks for the current active log
-- `api_key` - If specified, unify API key to be used. Defaults to the value in the
-
-
-
-**Returns**:
-
-A message indicating whether the log fields were successfully un-versioned.
