@@ -3,10 +3,15 @@ title: 'versioned'
 ---
 
 ```python
-def versioned(value: Any, version: Union[int, str] = 0):
+def versioned(
+    value: Any,
+    version: Union[int, str] = 0,
+    versions: Optional[Dict[Union[int, str], Any]] = None,
+    name: Optional[str] = None,
+) -> Versioned:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/0853e93d8363a596052df68339f3fa4b17ab049c/unify/utils/versioning.py#L111)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/12300ca967bb84b97954e2f1b7eccc15b22cd953/unify/utils/versioning.py#L111)</p>
 
 Thinly wrap input value into `unify.Versioned` class, such that it includes version
 information.
@@ -15,6 +20,8 @@ information.
 
 - `value` - The value to wrap with attached version information.
 - `version` - The version associated with this value.
+- `versions` - Dictionary of versions to store in the instance
+- `name` - The name of the entry being versioned.
 
 
 
