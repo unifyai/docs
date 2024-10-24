@@ -3015,45 +3015,29 @@
                 }
             }
         },
-        "/v0/log/{id}/entry/{entry}": {
+        "/v0/logs": {
             "delete": {
                 "tags": [
                     "Evals"
                 ],
-                "summary": "Delete Log Entry",
-                "description": "Deletes a entry from a log.",
-                "operationId": "delete_log_entry_v0_log__id__entry__entry__delete",
+                "summary": "Delete Logs",
+                "description": "Deletes multiple logs from a project.",
+                "operationId": "delete_logs_v0_logs_delete",
                 "security": [
                     {
                         "HTTPBearer": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "description": "ID of the log to delete an entry from.",
-                            "title": "Id"
-                        },
-                        "description": "ID of the log to delete an entry from.",
-                        "example": "123"
-                    },
-                    {
-                        "name": "entry",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the entry to delete from a given log.",
-                            "title": "Entry"
-                        },
-                        "description": "Name of the entry to delete from a given log.",
-                        "example": "input-str"
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteLogsRequest"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -3061,27 +3045,17 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Log entry deleted successfully!"
+                                    "info": "Logs deleted successfully!"
                                 }
                             }
                         }
                     },
-                    "4041": {
-                        "description": "Log Not Found",
+                    "404": {
+                        "description": "Logs Not Found",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Log with <id> not found."
-                                }
-                            }
-                        }
-                    },
-                    "4042": {
-                        "description": "Log Entry Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log entry <entry> not found."
+                                    "detail": "One or more logs with the specified IDs were not found."
                                 }
                             }
                         }
@@ -3097,9 +3071,73 @@
                         }
                     }
                 }
-            }
-        },
-        "/v0/logs": {
+            },
+            "put": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Update Logs",
+                "description": "Updates multiple logs with the provided entries. Each entry will be either added\nor overridden in the specified logs.\n\nA dictionary of \"explicit_types\" can be passed as part of the `entries`.\nIf present, it will override the inferred type of any matching key in all logs.",
+                "operationId": "update_logs_v0_logs_put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateLogRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Logs updated successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "One or more logs with the specified IDs were not found."
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid request format or data."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "get": {
                 "tags": [
                     "Evals"
@@ -3207,6 +3245,172 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/log/{id}/entry/{entry}": {
+            "delete": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Delete Log Entry",
+                "description": "Deletes a entry from a log.",
+                "operationId": "delete_log_entry_v0_log__id__entry__entry__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "ID of the log to delete an entry from.",
+                            "title": "Id"
+                        },
+                        "description": "ID of the log to delete an entry from.",
+                        "example": "123"
+                    },
+                    {
+                        "name": "entry",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the entry to delete from a given log.",
+                            "title": "Entry"
+                        },
+                        "description": "Name of the entry to delete from a given log.",
+                        "example": "input-str"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Log entry deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "4041": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Log with <id> not found."
+                                }
+                            }
+                        }
+                    },
+                    "4042": {
+                        "description": "Log Entry Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Log entry <entry> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/logs/entry/{entry}": {
+            "delete": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Delete Log Entry From Multiple Logs",
+                "description": "Deletes a specific entry from multiple logs.",
+                "operationId": "delete_log_entry_from_multiple_logs_v0_logs_entry__entry__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "entry",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the entry to delete from the given logs.",
+                            "title": "Entry"
+                        },
+                        "description": "Name of the entry to delete from the given logs.",
+                        "example": "entry-v0"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteLogEntryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Log entry deleted successfully from all logs!"
+                                }
+                            }
+                        }
+                    },
+                    "4041": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "One or more logs with the specified IDs were not found."
+                                }
+                            }
+                        }
+                    },
+                    "4042": {
+                        "description": "Log Entry Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Log entry <entry> not found in one or more logs."
                                 }
                             }
                         }
@@ -5023,6 +5227,52 @@
                 ],
                 "title": "DatasetNewName"
             },
+            "DeleteLogEntryRequest": {
+                "properties": {
+                    "ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Ids",
+                        "description": "List of log IDs to delete the entry from.",
+                        "example": [
+                            123,
+                            456,
+                            789
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "ids"
+                ],
+                "title": "DeleteLogEntryRequest"
+            },
+            "DeleteLogsRequest": {
+                "properties": {
+                    "ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Ids",
+                        "description": "List of log IDs to delete.",
+                        "example": [
+                            123,
+                            456,
+                            789
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "ids"
+                ],
+                "title": "DeleteLogsRequest"
+            },
             "EntriesConfig": {
                 "properties": {
                     "entries": {
@@ -5091,6 +5341,42 @@
                     "entries"
                 ],
                 "title": "UpdateLogConfig"
+            },
+            "UpdateLogRequest": {
+                "properties": {
+                    "ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Ids",
+                        "description": "List of log IDs to update with new or overriding entries.",
+                        "example": [
+                            123,
+                            456,
+                            789
+                        ]
+                    },
+                    "entries": {
+                        "type": "object",
+                        "title": "Entries",
+                        "description": "Dictionary of key-value pairs to add or update in the logs.",
+                        "example": {
+                            "explicit_types": {
+                                "input": "Image"
+                            },
+                            "input": "...",
+                            "score-test-1": "..."
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "ids",
+                    "entries"
+                ],
+                "title": "UpdateLogRequest"
             },
             "ValidationError": {
                 "properties": {
