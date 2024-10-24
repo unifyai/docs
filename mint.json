@@ -355,6 +355,12 @@
                     ]
                 },
                 {
+                    "group": "implement",
+                    "pages": [
+                        "python/functions/implement/implement"
+                    ]
+                },
+                {
                     "group": "map",
                     "pages": [
                         "python/functions/map/map"
