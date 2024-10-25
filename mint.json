@@ -153,6 +153,16 @@
                     ]
                 },
                 {
+                    "group": "implement",
+                    "pages": [
+                        "python/classes/implement/Interactive",
+                        "python/functions/implement/implement",
+                        "python/functions/implement/interactive_mode",
+                        "python/functions/implement/set_interactive",
+                        "python/functions/implement/set_non_interactive"
+                    ]
+                },
+                {
                     "group": "repr",
                     "pages": [
                         "python/classes/repr/KeepKeys",
@@ -352,12 +362,6 @@
                     "pages": [
                         "python/functions/casting/cast",
                         "python/functions/casting/try_cast"
-                    ]
-                },
-                {
-                    "group": "implement",
-                    "pages": [
-                        "python/functions/implement/implement"
                     ]
                 },
                 {
