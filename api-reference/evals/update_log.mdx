@@ -26,6 +26,10 @@ ID of the log to update.
 Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.
 </ParamField>
 
+<ParamField body="overwrite" type="boolean"  default={false}>
+Whether to overwrite existing logs
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -40,7 +44,8 @@ curl --request PUT \
         },
         "input": "...",
         "score-test-1": "..."
-    }
+    },
+    "overwrite": false
 }'
 ```
 
@@ -51,7 +56,7 @@ url = "https://api.unify.ai/v0/log/123"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}}
+json_input = {"entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}, "overwrite": False}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 

@@ -5334,6 +5334,13 @@
                             "input": "...",
                             "score-test-1": "..."
                         }
+                    },
+                    "overwrite": {
+                        "type": "boolean",
+                        "title": "Overwrite",
+                        "description": "Whether to overwrite existing logs",
+                        "default": false,
+                        "example": false
                     }
                 },
                 "type": "object",
@@ -5369,6 +5376,13 @@
                             "input": "...",
                             "score-test-1": "..."
                         }
+                    },
+                    "overwrite": {
+                        "type": "boolean",
+                        "title": "Overwrite",
+                        "description": "Whether to overwrite existing logs",
+                        "default": false,
+                        "example": false
                     }
                 },
                 "type": "object",

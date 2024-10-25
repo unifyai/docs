@@ -24,6 +24,10 @@ List of log IDs to update with new or overriding entries.
 Dictionary of key-value pairs to add or update in the logs.
 </ParamField>
 
+<ParamField body="overwrite" type="boolean"  default={false}>
+Whether to overwrite existing logs
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -43,7 +47,8 @@ curl --request PUT \
         },
         "input": "...",
         "score-test-1": "..."
-    }
+    },
+    "overwrite": false
 }'
 ```
 
@@ -54,7 +59,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"ids": [123, 456, 789], "entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}}
+json_input = {"ids": [123, 456, 789], "entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}, "overwrite": False}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 
