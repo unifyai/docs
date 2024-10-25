@@ -155,11 +155,16 @@
                 {
                     "group": "implement",
                     "pages": [
-                        "python/classes/implement/Interactive",
-                        "python/functions/implement/implement",
-                        "python/functions/implement/interactive_mode",
-                        "python/functions/implement/set_interactive",
-                        "python/functions/implement/set_non_interactive"
+                        {
+                            "group": "implement",
+                            "pages": [
+                                "python/classes/implement/implement/Interactive",
+                                "python/functions/implement/implement/implement",
+                                "python/functions/implement/implement/interactive_mode",
+                                "python/functions/implement/implement/set_interactive",
+                                "python/functions/implement/implement/set_non_interactive"
+                            ]
+                        }
                     ]
                 },
                 {
