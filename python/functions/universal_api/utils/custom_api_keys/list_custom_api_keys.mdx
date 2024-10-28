@@ -1,0 +1,22 @@
+---
+title: 'list_custom_api_keys'
+---
+
+```python
+def list_custom_api_keys(api_key: Optional[str] = None) -> List[Dict[str, str]]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/universal_api/utils/custom_api_keys.py#L142)</p>
+
+Get a list of custom API keys associated with the user's account.
+
+**Arguments**:
+
+- `api_key` - If specified, unify API key to be used. Defaults
+
+
+
+**Returns**:
+
+A list of dictionaries containing custom API key information.
+Each dictionary has 'name' and 'value' keys.

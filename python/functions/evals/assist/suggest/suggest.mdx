@@ -1,0 +1,28 @@
+---
+title: 'suggest'
+---
+
+```python
+def suggest(
+    metric: str,
+    mode: str = "maximize",
+    logs: Optional[List[unify.Log]] = None,
+):
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/assist/suggest.py#L45)</p>
+
+Make a suggestion for how to improve the performance of the metric specified by
+either the maximize or minimize
+
+**Arguments**:
+
+- `metric` - The metric name that we're looking to optimize.
+- `mode` - The optimization mode, either maximize or minimize for the metric.
+- `logs` - The logs to parse and use for the suggestion.
+
+
+
+**Returns**:
+
+The suggested parameter name to update, and the suggested new value.
