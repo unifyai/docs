@@ -1,0 +1,28 @@
+---
+title: 'cast'
+---
+
+```python
+def cast(
+    inp: Union[str, bool, float, Prompt, ChatCompletion],
+    to_type: Union[
+        Type[Union[str, bool, float, Prompt, ChatCompletion]],
+        List[Type[Union[str, bool, float, Prompt, ChatCompletion]]],
+    ],
+) -> Union[str, bool, float, Prompt, ChatCompletion]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/universal_api/casting.py#L82)</p>
+
+Cast the input to the specified type.
+
+**Arguments**:
+
+- `inp` - The input to cast.
+- `to_type` - The type to cast the input to.
+
+
+
+**Returns**:
+
+The input after casting to the new type.

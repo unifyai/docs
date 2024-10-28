@@ -1,0 +1,230 @@
+---
+title: 'Log'
+---
+
+```python
+class Log
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L347)</p>
+
+
+
+## properties
+
+---
+
+### config
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L377)</p>
+
+```python
+def config(self) -> Config:
+```
+
+
+
+---
+
+### entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L373)</p>
+
+```python
+def entries(self) -> Dict[str, Any]:
+```
+
+
+
+---
+
+### id
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L365)</p>
+
+```python
+def id(self) -> int:
+```
+
+
+
+---
+
+### timestamp
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L369)</p>
+
+```python
+def timestamp(self) -> Optional[datetime]:
+```
+
+
+
+## methods
+
+---
+
+### add\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L399)</p>
+
+```python
+def add_entries(self, **kwargs) -> None:
+```
+
+
+
+---
+
+### delete
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L426)</p>
+
+```python
+def delete(self) -> None:
+```
+
+
+
+---
+
+### delete\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L418)</p>
+
+```python
+def delete_entries(
+        self,
+        keys_to_delete: List[str],
+    ) -> None:
+```
+
+
+
+---
+
+### download
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L396)</p>
+
+```python
+def download(self):
+```
+
+
+
+---
+
+### from\_json
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L438)</p>
+
+```python
+def from_json(state):
+```
+
+
+
+---
+
+### rename\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L412)</p>
+
+```python
+def rename_entries(self, **kwargs) -> None:
+```
+
+
+
+---
+
+### replace\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L403)</p>
+
+```python
+def replace_entries(self, **kwargs) -> None:
+```
+
+
+
+---
+
+### to\_json
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L429)</p>
+
+```python
+def to_json(self):
+```
+
+
+
+---
+
+### update\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L407)</p>
+
+```python
+def update_entries(self, fn, **kwargs) -> None:
+```
+
+
+
+## dunder_methods
+
+---
+
+### \_\_eq\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L383)</p>
+
+```python
+def __eq__(self, other: Union[dict, Log]) -> bool:
+```
+
+
+
+---
+
+### \_\_init\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L349)</p>
+
+```python
+def __init__(
+        self,
+        id: int,
+        timestamp: Optional[datetime] = None,
+        api_key: Optional[str] = None,
+        config: Config = None,
+        **kwargs,
+    ):
+```
+
+
+
+---
+
+### \_\_len\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L388)</p>
+
+```python
+def __len__(self):
+```
+
+
+
+---
+
+### \_\_repr\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/evals/logging.py#L391)</p>
+
+```python
+def __repr__(self) -> str:
+```
+

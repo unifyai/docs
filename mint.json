@@ -96,18 +96,108 @@
             "group": "",
             "pages": [
                 {
-                    "group": "agent",
+                    "group": "evals",
                     "pages": [
-                        "python/classes/agent/Agent"
+                        {
+                            "group": "assist",
+                            "pages": [
+                                {
+                                    "group": "implement",
+                                    "pages": [
+                                        "python/classes/evals/assist/implement/Interactive",
+                                        "python/functions/evals/assist/implement/implement",
+                                        "python/functions/evals/assist/implement/interactive_mode",
+                                        "python/functions/evals/assist/implement/set_interactive",
+                                        "python/functions/evals/assist/implement/set_non_interactive"
+                                    ]
+                                },
+                                {
+                                    "group": "suggest",
+                                    "pages": [
+                                        "python/functions/evals/assist/suggest/suggest"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "group": "dataset",
+                            "pages": [
+                                "python/classes/evals/dataset/Dataset"
+                            ]
+                        },
+                        {
+                            "group": "logging",
+                            "pages": [
+                                "python/classes/evals/logging/Config",
+                                "python/classes/evals/logging/Context",
+                                "python/classes/evals/logging/Log",
+                                "python/functions/evals/logging/add_artifacts",
+                                "python/functions/evals/logging/add_log_entries",
+                                "python/functions/evals/logging/create_project",
+                                "python/functions/evals/logging/delete_artifact",
+                                "python/functions/evals/logging/delete_log",
+                                "python/functions/evals/logging/delete_log_entry",
+                                "python/functions/evals/logging/delete_logs",
+                                "python/functions/evals/logging/delete_project",
+                                "python/functions/evals/logging/get_artifacts",
+                                "python/functions/evals/logging/get_groups",
+                                "python/functions/evals/logging/get_log_by_id",
+                                "python/functions/evals/logging/get_log_by_value",
+                                "python/functions/evals/logging/get_logs",
+                                "python/functions/evals/logging/get_logs_by_value",
+                                "python/functions/evals/logging/get_logs_metric",
+                                "python/functions/evals/logging/get_logs_with_fields",
+                                "python/functions/evals/logging/get_logs_without_fields",
+                                "python/functions/evals/logging/group_logs",
+                                "python/functions/evals/logging/group_logs_by_config",
+                                "python/functions/evals/logging/handle_multiple_logs",
+                                "python/functions/evals/logging/list_projects",
+                                "python/functions/evals/logging/log",
+                                "python/functions/evals/logging/rename_log_entries",
+                                "python/functions/evals/logging/rename_project",
+                                "python/functions/evals/logging/replace_log_entries",
+                                "python/functions/evals/logging/span",
+                                "python/functions/evals/logging/trace",
+                                "python/functions/evals/logging/update_log_entries"
+                            ]
+                        },
+                        {
+                            "group": "utils",
+                            "pages": [
+                                {
+                                    "group": "datasets",
+                                    "pages": [
+                                        "python/functions/evals/utils/datasets/add_dataset_entries",
+                                        "python/functions/evals/utils/datasets/create_artifacts",
+                                        "python/functions/evals/utils/datasets/delete_artifact",
+                                        "python/functions/evals/utils/datasets/delete_dataset",
+                                        "python/functions/evals/utils/datasets/delete_dataset_entry",
+                                        "python/functions/evals/utils/datasets/download_artifacts",
+                                        "python/functions/evals/utils/datasets/download_dataset",
+                                        "python/functions/evals/utils/datasets/get_dataset_entry",
+                                        "python/functions/evals/utils/datasets/list_datasets",
+                                        "python/functions/evals/utils/datasets/rename_dataset",
+                                        "python/functions/evals/utils/datasets/upload_dataset"
+                                    ]
+                                }
+                            ]
+                        }
                     ]
                 },
                 {
-                    "group": "chat",
+                    "group": "universal_api",
                     "pages": [
+                        {
+                            "group": "casting",
+                            "pages": [
+                                "python/functions/universal_api/casting/cast",
+                                "python/functions/universal_api/casting/try_cast"
+                            ]
+                        },
                         {
                             "group": "chatbot",
                             "pages": [
-                                "python/classes/chat/chatbot/ChatBot"
+                                "python/classes/universal_api/chatbot/ChatBot"
                             ]
                         },
                         {
@@ -116,15 +206,15 @@
                                 {
                                     "group": "multi_llm",
                                     "pages": [
-                                        "python/classes/chat/clients/multi_llm/AsyncMultiUnify",
-                                        "python/classes/chat/clients/multi_llm/MultiUnify"
+                                        "python/classes/universal_api/clients/multi_llm/AsyncMultiUnify",
+                                        "python/classes/universal_api/clients/multi_llm/MultiUnify"
                                     ]
                                 },
                                 {
                                     "group": "uni_llm",
                                     "pages": [
-                                        "python/classes/chat/clients/uni_llm/AsyncUnify",
-                                        "python/classes/chat/clients/uni_llm/Unify"
+                                        "python/classes/universal_api/clients/uni_llm/AsyncUnify",
+                                        "python/classes/universal_api/clients/uni_llm/Unify"
                                     ]
                                 }
                             ]
@@ -132,75 +222,78 @@
                         {
                             "group": "logging",
                             "pages": [
-                                "python/functions/chat/logging/with_logging"
+                                "python/functions/universal_api/logging/with_logging"
                             ]
-                        }
-                    ]
-                },
-                {
-                    "group": "dataset",
-                    "pages": [
-                        "python/classes/dataset/Dataset"
-                    ]
-                },
-                {
-                    "group": "evaluator",
-                    "pages": [
-                        "python/classes/evaluator/DefaultLLMJudge",
-                        "python/classes/evaluator/Evaluator",
-                        "python/classes/evaluator/LLMJudge",
-                        "python/classes/evaluator/LLMJury"
-                    ]
-                },
-                {
-                    "group": "implement",
-                    "pages": [
+                        },
                         {
-                            "group": "implement",
-                            "pages": [
-                                "python/classes/implement/implement/Interactive",
-                                "python/functions/implement/implement/implement",
-                                "python/functions/implement/implement/interactive_mode",
-                                "python/functions/implement/implement/set_interactive",
-                                "python/functions/implement/implement/set_non_interactive"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "group": "repr",
-                    "pages": [
-                        "python/classes/repr/KeepKeys",
-                        "python/classes/repr/ReprMode",
-                        "python/classes/repr/SkipKeys",
-                        "python/functions/repr/key_repr",
-                        "python/functions/repr/keys_to_keep",
-                        "python/functions/repr/keys_to_skip",
-                        "python/functions/repr/repr_mode",
-                        "python/functions/repr/set_keys_to_keep",
-                        "python/functions/repr/set_keys_to_skip",
-                        "python/functions/repr/set_repr_mode"
-                    ]
-                },
-                {
-                    "group": "types",
-                    "pages": [
-                        {
-                            "group": "chat",
+                            "group": "types",
                             "pages": [
                                 {
                                     "group": "chat_completion",
                                     "pages": [
-                                        "python/classes/types/chat/chat_completion/ChatCompletion",
-                                        "python/classes/types/chat/chat_completion/ChatCompletionMessage",
-                                        "python/classes/types/chat/chat_completion/Choice",
-                                        "python/classes/types/chat/chat_completion/CompletionUsage"
+                                        "python/classes/universal_api/types/chat_completion/ChatCompletion"
                                     ]
                                 },
                                 {
                                     "group": "prompt",
                                     "pages": [
-                                        "python/classes/types/chat/prompt/Prompt"
+                                        "python/classes/universal_api/types/prompt/Prompt"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "group": "utils",
+                            "pages": [
+                                {
+                                    "group": "credits",
+                                    "pages": [
+                                        "python/functions/universal_api/utils/credits/get_credits"
+                                    ]
+                                },
+                                {
+                                    "group": "custom_api_keys",
+                                    "pages": [
+                                        "python/functions/universal_api/utils/custom_api_keys/create_custom_api_key",
+                                        "python/functions/universal_api/utils/custom_api_keys/delete_custom_api_key",
+                                        "python/functions/universal_api/utils/custom_api_keys/get_custom_api_key",
+                                        "python/functions/universal_api/utils/custom_api_keys/list_custom_api_keys",
+                                        "python/functions/universal_api/utils/custom_api_keys/rename_custom_api_key"
+                                    ]
+                                },
+                                {
+                                    "group": "custom_endpoints",
+                                    "pages": [
+                                        "python/functions/universal_api/utils/custom_endpoints/create_custom_endpoint",
+                                        "python/functions/universal_api/utils/custom_endpoints/delete_custom_endpoint",
+                                        "python/functions/universal_api/utils/custom_endpoints/list_custom_endpoints",
+                                        "python/functions/universal_api/utils/custom_endpoints/rename_custom_endpoint"
+                                    ]
+                                },
+                                {
+                                    "group": "endpoint_metrics",
+                                    "pages": [
+                                        "python/classes/universal_api/utils/endpoint_metrics/Metrics",
+                                        "python/functions/universal_api/utils/endpoint_metrics/delete_endpoint_metrics",
+                                        "python/functions/universal_api/utils/endpoint_metrics/get_endpoint_metrics",
+                                        "python/functions/universal_api/utils/endpoint_metrics/log_endpoint_metric"
+                                    ]
+                                },
+                                {
+                                    "group": "queries",
+                                    "pages": [
+                                        "python/functions/universal_api/utils/queries/get_queries",
+                                        "python/functions/universal_api/utils/queries/get_query_metrics",
+                                        "python/functions/universal_api/utils/queries/get_query_tags",
+                                        "python/functions/universal_api/utils/queries/log_query"
+                                    ]
+                                },
+                                {
+                                    "group": "supported_endpoints",
+                                    "pages": [
+                                        "python/functions/universal_api/utils/supported_endpoints/list_endpoints",
+                                        "python/functions/universal_api/utils/supported_endpoints/list_models",
+                                        "python/functions/universal_api/utils/supported_endpoints/list_providers"
                                     ]
                                 }
                             ]
@@ -211,170 +304,11 @@
                     "group": "utils",
                     "pages": [
                         {
-                            "group": "credits",
+                            "group": "map",
                             "pages": [
-                                "python/functions/utils/credits/get_credits",
-                                "python/functions/utils/credits/promo_code"
-                            ]
-                        },
-                        {
-                            "group": "custom_api_keys",
-                            "pages": [
-                                "python/functions/utils/custom_api_keys/create_custom_api_key",
-                                "python/functions/utils/custom_api_keys/delete_custom_api_key",
-                                "python/functions/utils/custom_api_keys/get_custom_api_key",
-                                "python/functions/utils/custom_api_keys/list_custom_api_keys",
-                                "python/functions/utils/custom_api_keys/rename_custom_api_key"
-                            ]
-                        },
-                        {
-                            "group": "custom_endpoints",
-                            "pages": [
-                                "python/functions/utils/custom_endpoints/create_custom_endpoint",
-                                "python/functions/utils/custom_endpoints/delete_custom_endpoint",
-                                "python/functions/utils/custom_endpoints/list_custom_endpoints",
-                                "python/functions/utils/custom_endpoints/rename_custom_endpoint"
-                            ]
-                        },
-                        {
-                            "group": "datasets",
-                            "pages": [
-                                "python/functions/utils/datasets/add_dataset_entries",
-                                "python/functions/utils/datasets/create_artifacts",
-                                "python/functions/utils/datasets/delete_artifact",
-                                "python/functions/utils/datasets/delete_dataset",
-                                "python/functions/utils/datasets/delete_dataset_entry",
-                                "python/functions/utils/datasets/download_artifacts",
-                                "python/functions/utils/datasets/download_dataset",
-                                "python/functions/utils/datasets/get_dataset_entry",
-                                "python/functions/utils/datasets/list_datasets",
-                                "python/functions/utils/datasets/rename_dataset",
-                                "python/functions/utils/datasets/upload_dataset"
-                            ]
-                        },
-                        {
-                            "group": "default_prompts",
-                            "pages": [
-                                "python/functions/utils/default_prompts/create_default_prompt",
-                                "python/functions/utils/default_prompts/delete_default_prompt",
-                                "python/functions/utils/default_prompts/get_default_prompt",
-                                "python/functions/utils/default_prompts/list_default_prompts",
-                                "python/functions/utils/default_prompts/rename_default_prompt"
-                            ]
-                        },
-                        {
-                            "group": "endpoint_metrics",
-                            "pages": [
-                                "python/classes/utils/endpoint_metrics/Metrics",
-                                "python/functions/utils/endpoint_metrics/delete_endpoint_metrics",
-                                "python/functions/utils/endpoint_metrics/get_endpoint_metrics",
-                                "python/functions/utils/endpoint_metrics/log_endpoint_metric"
-                            ]
-                        },
-                        {
-                            "group": "logging",
-                            "pages": [
-                                "python/classes/utils/logging/Config",
-                                "python/classes/utils/logging/Context",
-                                "python/classes/utils/logging/Log",
-                                "python/functions/utils/logging/add_artifacts",
-                                "python/functions/utils/logging/add_log_entries",
-                                "python/functions/utils/logging/create_project",
-                                "python/functions/utils/logging/delete_artifact",
-                                "python/functions/utils/logging/delete_log",
-                                "python/functions/utils/logging/delete_log_entry",
-                                "python/functions/utils/logging/delete_logs",
-                                "python/functions/utils/logging/delete_project",
-                                "python/functions/utils/logging/get_artifacts",
-                                "python/functions/utils/logging/get_groups",
-                                "python/functions/utils/logging/get_log_by_id",
-                                "python/functions/utils/logging/get_log_by_value",
-                                "python/functions/utils/logging/get_logs",
-                                "python/functions/utils/logging/get_logs_by_value",
-                                "python/functions/utils/logging/get_logs_metric",
-                                "python/functions/utils/logging/get_logs_with_fields",
-                                "python/functions/utils/logging/get_logs_without_fields",
-                                "python/functions/utils/logging/get_versions",
-                                "python/functions/utils/logging/group_logs",
-                                "python/functions/utils/logging/group_logs_by_config",
-                                "python/functions/utils/logging/handle_multiple_logs",
-                                "python/functions/utils/logging/list_projects",
-                                "python/functions/utils/logging/log",
-                                "python/functions/utils/logging/rename_log_entries",
-                                "python/functions/utils/logging/rename_project",
-                                "python/functions/utils/logging/replace_log_entries",
-                                "python/functions/utils/logging/reversion_log_entries",
-                                "python/functions/utils/logging/span",
-                                "python/functions/utils/logging/trace",
-                                "python/functions/utils/logging/unversion_log_entries",
-                                "python/functions/utils/logging/update_log_entries",
-                                "python/functions/utils/logging/version_log_entries"
-                            ]
-                        },
-                        {
-                            "group": "queries",
-                            "pages": [
-                                "python/functions/utils/queries/get_queries",
-                                "python/functions/utils/queries/get_query_metrics",
-                                "python/functions/utils/queries/get_query_tags",
-                                "python/functions/utils/queries/log_query"
-                            ]
-                        },
-                        {
-                            "group": "router_configurations",
-                            "pages": [
-                                "python/functions/utils/router_configurations/create_router_config",
-                                "python/functions/utils/router_configurations/delete_router_config",
-                                "python/functions/utils/router_configurations/get_router_config",
-                                "python/functions/utils/router_configurations/list_router_configs",
-                                "python/functions/utils/router_configurations/rename_router_config"
-                            ]
-                        },
-                        {
-                            "group": "router_deployment",
-                            "pages": [
-                                "python/functions/utils/router_deployment/deploy_router",
-                                "python/functions/utils/router_deployment/list_deployed_routers",
-                                "python/functions/utils/router_deployment/undeploy_router"
-                            ]
-                        },
-                        {
-                            "group": "router_training",
-                            "pages": [
-                                "python/functions/utils/router_training/delete_router",
-                                "python/functions/utils/router_training/list_routers",
-                                "python/functions/utils/router_training/rename_router",
-                                "python/functions/utils/router_training/train_router"
-                            ]
-                        },
-                        {
-                            "group": "supported_endpoints",
-                            "pages": [
-                                "python/functions/utils/supported_endpoints/list_endpoints",
-                                "python/functions/utils/supported_endpoints/list_models",
-                                "python/functions/utils/supported_endpoints/list_providers"
-                            ]
-                        },
-                        {
-                            "group": "versioning",
-                            "pages": [
-                                "python/classes/utils/versioning/Versioned",
-                                "python/functions/utils/versioning/versioned"
+                                "python/functions/utils/map/map"
                             ]
                         }
-                    ]
-                },
-                {
-                    "group": "casting",
-                    "pages": [
-                        "python/functions/casting/cast",
-                        "python/functions/casting/try_cast"
-                    ]
-                },
-                {
-                    "group": "map",
-                    "pages": [
-                        "python/functions/map/map"
                     ]
                 }
             ]

@@ -1,0 +1,35 @@
+---
+title: 'get_queries'
+---
+
+```python
+def get_queries(
+    tags: Optional[Union[str, List[str]]] = None,
+    endpoints: Optional[Union[str, List[str]]] = None,
+    start_time: Optional[Union[datetime.datetime, str]] = None,
+    end_time: Optional[Union[datetime.datetime, str]] = None,
+    page_number: Optional[int] = None,
+    failures: Optional[Union[bool, str]] = None,
+    api_key: Optional[str] = None,
+) -> Dict[str, Any]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ed439bff4945494a08cbc817ae4f2bb780287400/unify/universal_api/utils/queries.py#L33)</p>
+
+Get query history based on specified filters.
+
+**Arguments**:
+
+- `tags` - Tags to filter for queries that are marked with these tags.
+- `endpoints` - Optionally specify an endpoint, or a list of endpoints to filter for.
+- `start_time` - Timestamp of the earliest query to aggregate.
+- `end_time` - Timestamp of the latest query to aggregate.
+- `page_number` - The query history is returned in pages, with up to 100 prompts per
+- `failures` - indicates whether to includes failures in the return
+- `api_key` - If specified, unify API key to be used.
+
+
+
+**Returns**:
+
+A dictionary containing the query history data.
