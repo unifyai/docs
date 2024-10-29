@@ -130,7 +130,6 @@
                             "pages": [
                                 "python/classes/evals/logging/Context",
                                 "python/classes/evals/logging/Log",
-                                "python/classes/evals/logging/Parameters",
                                 "python/functions/evals/logging/span"
                             ]
                         },
