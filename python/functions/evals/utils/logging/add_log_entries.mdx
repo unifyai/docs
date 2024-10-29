@@ -3,12 +3,25 @@ title: 'add_log_entries'
 ---
 
 ```python
-def wrapped(
-        *args,
-        logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
-        **kwargs,
-    ):
+def add_log_entries(
+    logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
+    api_key: Optional[str] = None,
+    **kwargs,
+) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/db85b5366cde89da613974cb1dc7a4dddf1cd0ad/unify/evals/utils/logging.py#L156)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/338010e2998b5a8022bf99173325f8d6f975362e/unify/evals/utils/logging.py#L101)</p>
 
+Add extra entries into an existing log.
+
+**Arguments**:
+
+- `logs` - The log(s) to update with extra data. Looks for the current active log if
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+- `kwargs` - The data to log into the console.
+
+
+
+**Returns**:
+
+A message indicating whether the log was successfully updated.
