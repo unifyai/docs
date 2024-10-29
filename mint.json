@@ -130,7 +130,8 @@
                             "pages": [
                                 "python/classes/evals/logging/Entries",
                                 "python/classes/evals/logging/Log",
-                                "python/functions/evals/logging/span"
+                                "python/functions/evals/logging/span",
+                                "python/functions/evals/logging/trace"
                             ]
                         },
                         {
