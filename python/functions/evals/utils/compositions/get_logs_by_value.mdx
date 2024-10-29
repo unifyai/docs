@@ -4,13 +4,14 @@ title: 'get_logs_by_value'
 
 ```python
 def get_logs_by_value(
+    *,
     project: str,
     api_key: Optional[str] = None,
     **kwargs,
 ) -> List[unify.Log]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2953970c0e95f12c82f4fb28fefc5010e1ce3cfd/unify/evals/utils/compositions.py#L184)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/761fde90221d99c267e7af8d879d62f336ef698e/unify/evals/utils/compositions.py#L189)</p>
 
 Returns the logs with the data matching exactly if it exists,
 otherwise returns None.

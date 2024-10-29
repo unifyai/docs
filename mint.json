@@ -148,7 +148,7 @@
                                 {
                                     "group": "compositions",
                                     "pages": [
-                                        "python/functions/evals/utils/compositions/delete_logs",
+                                        "python/functions/evals/utils/compositions/delete_logs_by_value",
                                         "python/functions/evals/utils/compositions/get_log_by_value",
                                         "python/functions/evals/utils/compositions/get_logs_by_value",
                                         "python/functions/evals/utils/compositions/get_logs_with_fields",

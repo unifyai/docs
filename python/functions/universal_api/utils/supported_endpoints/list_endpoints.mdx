@@ -6,11 +6,12 @@ title: 'list_endpoints'
 def list_endpoints(
     model: Optional[str] = None,
     provider: Optional[str] = None,
+    *,
     api_key: Optional[str] = None,
 ) -> List[str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2953970c0e95f12c82f4fb28fefc5010e1ce3cfd/unify/universal_api/utils/supported_endpoints.py#L76)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/761fde90221d99c267e7af8d879d62f336ef698e/unify/universal_api/utils/supported_endpoints.py#L78)</p>
 
 Get a list of available endpoint, either in total or for a specific model or
 provider.
