@@ -140,9 +140,9 @@
                                 {
                                     "group": "artifacts",
                                     "pages": [
-                                        "python/functions/evals/utils/artifacts/add_artifacts",
-                                        "python/functions/evals/utils/artifacts/delete_artifact",
-                                        "python/functions/evals/utils/artifacts/get_artifacts"
+                                        "python/functions/evals/utils/artifacts/add_project_artifacts",
+                                        "python/functions/evals/utils/artifacts/delete_project_artifact",
+                                        "python/functions/evals/utils/artifacts/get_project_artifacts"
                                     ]
                                 },
                                 {
