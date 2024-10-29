@@ -6,7 +6,7 @@ title: 'Log'
 class Log
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L42)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L15)</p>
 
 
 
@@ -14,21 +14,9 @@ class Log
 
 ---
 
-### config
-
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L72)</p>
-
-```python
-def config(self) -> Parameters:
-```
-
-
-
----
-
 ### entries
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L68)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L41)</p>
 
 ```python
 def entries(self) -> Dict[str, Any]:
@@ -40,7 +28,7 @@ def entries(self) -> Dict[str, Any]:
 
 ### id
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L60)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L33)</p>
 
 ```python
 def id(self) -> int:
@@ -50,9 +38,21 @@ def id(self) -> int:
 
 ---
 
+### parameters
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L45)</p>
+
+```python
+def parameters(self) -> Dict[str, Any]:
+```
+
+
+
+---
+
 ### timestamp
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L64)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L37)</p>
 
 ```python
 def timestamp(self) -> Optional[datetime]:
@@ -66,7 +66,7 @@ def timestamp(self) -> Optional[datetime]:
 
 ### add\_entries
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L94)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L67)</p>
 
 ```python
 def add_entries(self, **kwargs) -> None:
@@ -78,7 +78,7 @@ def add_entries(self, **kwargs) -> None:
 
 ### delete
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L121)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L94)</p>
 
 ```python
 def delete(self) -> None:
@@ -90,7 +90,7 @@ def delete(self) -> None:
 
 ### delete\_entries
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L113)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L86)</p>
 
 ```python
 def delete_entries(
@@ -105,7 +105,7 @@ def delete_entries(
 
 ### download
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L91)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L64)</p>
 
 ```python
 def download(self):
@@ -117,7 +117,7 @@ def download(self):
 
 ### from\_json
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L133)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L106)</p>
 
 ```python
 def from_json(state):
@@ -129,7 +129,7 @@ def from_json(state):
 
 ### rename\_entries
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L107)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L80)</p>
 
 ```python
 def rename_entries(self, **kwargs) -> None:
@@ -141,7 +141,7 @@ def rename_entries(self, **kwargs) -> None:
 
 ### replace\_entries
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L98)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L71)</p>
 
 ```python
 def replace_entries(self, **kwargs) -> None:
@@ -153,7 +153,7 @@ def replace_entries(self, **kwargs) -> None:
 
 ### to\_json
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L124)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L97)</p>
 
 ```python
 def to_json(self):
@@ -165,7 +165,7 @@ def to_json(self):
 
 ### update\_entries
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L102)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L75)</p>
 
 ```python
 def update_entries(self, fn, **kwargs) -> None:
@@ -179,7 +179,7 @@ def update_entries(self, fn, **kwargs) -> None:
 
 ### \_\_eq\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L78)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L51)</p>
 
 ```python
 def __eq__(self, other: Union[dict, Log]) -> bool:
@@ -191,7 +191,7 @@ def __eq__(self, other: Union[dict, Log]) -> bool:
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L44)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L17)</p>
 
 ```python
 def __init__(
@@ -199,7 +199,7 @@ def __init__(
         id: int,
         timestamp: Optional[datetime] = None,
         api_key: Optional[str] = None,
-        config: Parameters = None,
+        parameters: Dict[str, Any] = None,
         **kwargs,
     ):
 ```
@@ -210,7 +210,7 @@ def __init__(
 
 ### \_\_len\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L83)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L56)</p>
 
 ```python
 def __len__(self):
@@ -222,7 +222,7 @@ def __len__(self):
 
 ### \_\_repr\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f27ba999ffe7483a544f391b11d9a77498093da1/unify/evals/logging.py#L86)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/61b01e42385d1b21df65995f28bf2c07ae68d900/unify/evals/logging.py#L59)</p>
 
 ```python
 def __repr__(self) -> str:
