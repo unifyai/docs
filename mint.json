@@ -112,9 +112,9 @@
                                     ]
                                 },
                                 {
-                                    "group": "suggest",
+                                    "group": "update",
                                     "pages": [
-                                        "python/functions/evals/assist/suggest/suggest"
+                                        "python/functions/evals/assist/update/update"
                                     ]
                                 }
                             ]
