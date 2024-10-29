@@ -1,8 +1,8 @@
 ---
-title: 'Get Dataset Entry'
-api: 'GET /v0/datasetv2/{name}/entry/{id}'
+title: 'Delete Dataset'
+api: 'DELETE /v0/dataset/{name}'
 ---
-Retrieve a specific entry from a dataset.
+Delete a dataset and all its corresponding entries.
 
 #### Authorizations
 
@@ -16,26 +16,22 @@ Retrieve a specific entry from a dataset.
 Dataset name (can include forward slashes)
 </ParamField>
 
-<ParamField query="id" type="string" required="true">
-Entry ID
-</ParamField>
-
 <RequestExample>
 
 ```bash cURL
-curl --request GET \
-  --url 'https://api.unify.ai/v0/datasetv2/my_dataset/entry/123' \
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/dataset/my_dataset' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/datasetv2/my_dataset/entry/123"
+url = "https://api.unify.ai/v0/dataset/my_dataset"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("GET", url, headers=headers)
+response = requests.request("DELETE", url, headers=headers)
 
 print(response.text)
 ```
@@ -44,19 +40,11 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{
-    "id": "uoreHGVKfQ",
-    "entry": "...",
-    "created_at": "..."
-}
+{}
 ```
 
-```json 404 (1)
-"Dataset not found."
-```
-
-```json 404 (2)
-"Dataset entry <id> not found."
+```json 404
+"Dataset not found"
 ```
 
 ```json 422

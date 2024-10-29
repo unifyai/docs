@@ -1,6 +1,6 @@
 ---
 title: 'Delete Artifact'
-api: 'DELETE /v0/datasetv2/{dataset}/artifacts/{key}'
+api: 'DELETE /v0/dataset/{dataset}/artifacts/{key}'
 ---
 Deletes an artifact from a dataset.
 
@@ -24,14 +24,14 @@ Key of the artifact to delete.
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/datasetv2/eval-dataset/artifacts/dataset-description' \
+  --url 'https://api.unify.ai/v0/dataset/eval-dataset/artifacts/dataset-description' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/datasetv2/eval-dataset/artifacts/dataset-description"
+url = "https://api.unify.ai/v0/dataset/eval-dataset/artifacts/dataset-description"
 
 headers = {"Authorization": "Bearer <token>"}
 

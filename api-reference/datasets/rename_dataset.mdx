@@ -1,8 +1,8 @@
 ---
-title: 'Delete Dataset'
-api: 'DELETE /v0/datasetv2/{name}'
+title: 'Rename Dataset'
+api: 'PATCH /v0/dataset/{name}'
 ---
-Delete a dataset and all its corresponding entries.
+Rename an existing dataset.
 
 #### Authorizations
 
@@ -13,25 +13,37 @@ Delete a dataset and all its corresponding entries.
 #### Path Parameters
 
 <ParamField query="name" type="string" required="true">
-Dataset name (can include forward slashes)
+Current dataset name (can include forward slashes)
+</ParamField>
+
+#### Body
+
+<ParamField body="name" type="string" required="true">
+New name of the dataset.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request DELETE \
-  --url 'https://api.unify.ai/v0/datasetv2/my_dataset' \
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/dataset/my_dataset' \
   --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "renamed-dataset"
+}'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/datasetv2/my_dataset"
+url = "https://api.unify.ai/v0/dataset/my_dataset"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("DELETE", url, headers=headers)
+json_input = {"name": "renamed-dataset"}
+
+response = requests.request("PATCH", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
@@ -44,7 +56,7 @@ print(response.text)
 ```
 
 ```json 404
-"Dataset not found"
+"Dataset not found."
 ```
 
 ```json 422

@@ -1559,14 +1559,14 @@
                 }
             }
         },
-        "/v0/datasetv2/{dataset}/artifacts": {
+        "/v0/dataset/{dataset}/artifacts": {
             "post": {
                 "tags": [
                     "Dataset Artifacts"
                 ],
                 "summary": "Create Artifacts",
                 "description": "Creates one or more artifacts associated to a dataset. Artifacts are\ndataset-level metadata that don't depend on other variables.",
-                "operationId": "create_artifacts_v0_datasetv2__dataset__artifacts_post",
+                "operationId": "create_artifacts_v0_dataset__dataset__artifacts_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1636,7 +1636,7 @@
                 ],
                 "summary": "List Artifacts",
                 "description": "Returns the key-value pairs of all artifacts in a dataset.",
-                "operationId": "list_artifacts_v0_datasetv2__dataset__artifacts_get",
+                "operationId": "list_artifacts_v0_dataset__dataset__artifacts_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1692,14 +1692,14 @@
                 }
             }
         },
-        "/v0/datasetv2/{dataset}/artifacts/{key}": {
+        "/v0/dataset/{dataset}/artifacts/{key}": {
             "delete": {
                 "tags": [
                     "Dataset Artifacts"
                 ],
                 "summary": "Delete Artifact",
                 "description": "Deletes an artifact from a dataset.",
-                "operationId": "delete_artifact_v0_datasetv2__dataset__artifacts__key__delete",
+                "operationId": "delete_artifact_v0_dataset__dataset__artifacts__key__delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1776,14 +1776,14 @@
                 }
             }
         },
-        "/v0/datasetsv2/": {
+        "/v0/datasets/": {
             "get": {
                 "tags": [
-                    "DatasetsV2"
+                    "Datasets"
                 ],
                 "summary": "List Datasets",
                 "description": "Retrieve a list of all datasets.",
-                "operationId": "list_datasets_v0_datasetsv2__get",
+                "operationId": "list_datasets_v0_datasets__get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -1809,14 +1809,14 @@
                 ]
             }
         },
-        "/v0/datasetv2/{name}": {
+        "/v0/dataset/{name}": {
             "get": {
                 "tags": [
-                    "DatasetsV2"
+                    "Datasets"
                 ],
                 "summary": "Get Dataset Entries",
                 "description": "Retrieve entries from a specific dataset.",
-                "operationId": "get_dataset_entries_v0_datasetv2__name__get",
+                "operationId": "get_dataset_entries_v0_dataset__name__get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1903,11 +1903,11 @@
             },
             "patch": {
                 "tags": [
-                    "DatasetsV2"
+                    "Datasets"
                 ],
                 "summary": "Rename Dataset",
                 "description": "Rename an existing dataset.",
-                "operationId": "rename_dataset_v0_datasetv2__name__patch",
+                "operationId": "rename_dataset_v0_dataset__name__patch",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1969,11 +1969,11 @@
             },
             "delete": {
                 "tags": [
-                    "DatasetsV2"
+                    "Datasets"
                 ],
                 "summary": "Delete Dataset",
                 "description": "Delete a dataset and all its corresponding entries.",
-                "operationId": "delete_dataset_v0_datasetv2__name__delete",
+                "operationId": "delete_dataset_v0_dataset__name__delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2024,14 +2024,14 @@
                 }
             }
         },
-        "/v0/datasetv2/{name}/entry/{id}": {
+        "/v0/dataset/{name}/entry/{id}": {
             "get": {
                 "tags": [
-                    "DatasetsV2"
+                    "Datasets"
                 ],
                 "summary": "Get Dataset Entry",
                 "description": "Retrieve a specific entry from a dataset.",
-                "operationId": "get_dataset_entry_v0_datasetv2__name__entry__id__get",
+                "operationId": "get_dataset_entry_v0_dataset__name__entry__id__get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2107,11 +2107,11 @@
             },
             "delete": {
                 "tags": [
-                    "DatasetsV2"
+                    "Datasets"
                 ],
                 "summary": "Delete Dataset Entry",
                 "description": "Delete a specific entry from a dataset.",
-                "operationId": "delete_dataset_entry_v0_datasetv2__name__entry__id__delete",
+                "operationId": "delete_dataset_entry_v0_dataset__name__entry__id__delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -2182,14 +2182,14 @@
                 }
             }
         },
-        "/v0/datasetv2": {
+        "/v0/dataset": {
             "post": {
                 "tags": [
-                    "DatasetsV2"
+                    "Datasets"
                 ],
                 "summary": "Create Dataset",
                 "description": "Create a new dataset.",
-                "operationId": "create_dataset_v0_datasetv2_post",
+                "operationId": "create_dataset_v0_dataset_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2245,14 +2245,14 @@
                 ]
             }
         },
-        "/v0/datasetv2/{name}/entries": {
+        "/v0/dataset/{name}/entries": {
             "post": {
                 "tags": [
-                    "DatasetsV2"
+                    "Datasets"
                 ],
                 "summary": "Add Dataset Entries",
                 "description": "Add multiple entries to a dataset.",
-                "operationId": "add_dataset_entries_v0_datasetv2__name__entries_post",
+                "operationId": "add_dataset_entries_v0_dataset__name__entries_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -4861,8 +4861,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
