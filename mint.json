@@ -146,6 +146,21 @@
                                     ]
                                 },
                                 {
+                                    "group": "compositions",
+                                    "pages": [
+                                        "python/functions/evals/utils/compositions/delete_logs",
+                                        "python/functions/evals/utils/compositions/get_log_by_value",
+                                        "python/functions/evals/utils/compositions/get_logs_by_value",
+                                        "python/functions/evals/utils/compositions/get_logs_with_fields",
+                                        "python/functions/evals/utils/compositions/get_logs_without_fields",
+                                        "python/functions/evals/utils/compositions/group_logs",
+                                        "python/functions/evals/utils/compositions/group_logs_by_params",
+                                        "python/functions/evals/utils/compositions/rename_log_entries",
+                                        "python/functions/evals/utils/compositions/replace_log_entries",
+                                        "python/functions/evals/utils/compositions/update_log_entries"
+                                    ]
+                                },
+                                {
                                     "group": "datasets",
                                     "pages": [
                                         "python/functions/evals/utils/datasets/add_dataset_entries",
@@ -167,22 +182,11 @@
                                         "python/functions/evals/utils/logging/add_log_entries",
                                         "python/functions/evals/utils/logging/delete_log",
                                         "python/functions/evals/utils/logging/delete_log_entry",
-                                        "python/functions/evals/utils/logging/delete_logs",
                                         "python/functions/evals/utils/logging/get_groups",
                                         "python/functions/evals/utils/logging/get_log_by_id",
-                                        "python/functions/evals/utils/logging/get_log_by_value",
                                         "python/functions/evals/utils/logging/get_logs",
-                                        "python/functions/evals/utils/logging/get_logs_by_value",
                                         "python/functions/evals/utils/logging/get_logs_metric",
-                                        "python/functions/evals/utils/logging/get_logs_with_fields",
-                                        "python/functions/evals/utils/logging/get_logs_without_fields",
-                                        "python/functions/evals/utils/logging/group_logs",
-                                        "python/functions/evals/utils/logging/group_logs_by_params",
-                                        "python/functions/evals/utils/logging/handle_multiple_logs",
-                                        "python/functions/evals/utils/logging/log",
-                                        "python/functions/evals/utils/logging/rename_log_entries",
-                                        "python/functions/evals/utils/logging/replace_log_entries",
-                                        "python/functions/evals/utils/logging/update_log_entries"
+                                        "python/functions/evals/utils/logging/log"
                                     ]
                                 },
                                 {
