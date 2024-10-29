@@ -4,14 +4,14 @@ title: 'delete_dataset_entry'
 
 ```python
 def delete_dataset_entry(
-    *,
     name: str,
     id: int,
+    *,
     api_key: Optional[str] = None,
 ) -> Dict[str, Union[str, List[int]]]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/761fde90221d99c267e7af8d879d62f336ef698e/unify/evals/utils/datasets.py#L235)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/6b93e47cabe265b791a2fa25b5a217a2919d29b6/unify/evals/utils/datasets.py#L235)</p>
 
 Deletes data from a dataset by id, and returns a list of ids and values for each
 of those, split by those which were deleted and those which were not present.

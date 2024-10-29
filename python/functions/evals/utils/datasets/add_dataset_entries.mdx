@@ -4,14 +4,14 @@ title: 'add_dataset_entries'
 
 ```python
 def add_dataset_entries(
-    *,
     name: str,
     data: Union[Any, List[Any]],
+    *,
     api_key: Optional[str] = None,
 ) -> Dict[str, Union[str, List[int]]]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/761fde90221d99c267e7af8d879d62f336ef698e/unify/evals/utils/datasets.py#L196)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/6b93e47cabe265b791a2fa25b5a217a2919d29b6/unify/evals/utils/datasets.py#L196)</p>
 
 Adds data to a dataset, and returns a list of ids and values for each of
 those, split by those which were already present and those which were newly added.
