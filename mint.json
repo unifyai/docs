@@ -176,7 +176,7 @@
                                         "python/functions/evals/utils/logging/get_logs_with_fields",
                                         "python/functions/evals/utils/logging/get_logs_without_fields",
                                         "python/functions/evals/utils/logging/group_logs",
-                                        "python/functions/evals/utils/logging/group_logs_by_config",
+                                        "python/functions/evals/utils/logging/group_logs_by_params",
                                         "python/functions/evals/utils/logging/handle_multiple_logs",
                                         "python/functions/evals/utils/logging/log",
                                         "python/functions/evals/utils/logging/rename_log_entries",
