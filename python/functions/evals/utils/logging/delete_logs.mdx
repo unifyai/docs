@@ -4,12 +4,13 @@ title: 'delete_logs'
 
 ```python
 def delete_logs(
+    *,
     logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
     api_key: Optional[str] = None,
 ) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2953970c0e95f12c82f4fb28fefc5010e1ce3cfd/unify/evals/utils/logging.py#L186)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/761fde90221d99c267e7af8d879d62f336ef698e/unify/evals/utils/logging.py#L192)</p>
 
 Deletes logs from a project.
 

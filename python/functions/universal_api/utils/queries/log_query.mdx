@@ -4,6 +4,7 @@ title: 'log_query'
 
 ```python
 def log_query(
+    *,
     endpoint: str,
     query_body: Dict,
     response_body: Optional[Dict] = None,
@@ -13,7 +14,7 @@ def log_query(
 ):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2953970c0e95f12c82f4fb28fefc5010e1ce3cfd/unify/universal_api/utils/queries.py#L96)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/761fde90221d99c267e7af8d879d62f336ef698e/unify/universal_api/utils/queries.py#L100)</p>
 
 Log a query (and optionally response) for a locally deployed (non-Unify-registered)
 model, with tagging (default None) and timestamp (default datetime.now() also
