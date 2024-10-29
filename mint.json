@@ -128,56 +128,70 @@
                         {
                             "group": "logging",
                             "pages": [
-                                "python/classes/evals/logging/Config",
                                 "python/classes/evals/logging/Context",
                                 "python/classes/evals/logging/Log",
-                                "python/functions/evals/logging/add_artifacts",
-                                "python/functions/evals/logging/add_log_entries",
-                                "python/functions/evals/logging/create_project",
-                                "python/functions/evals/logging/delete_artifact",
-                                "python/functions/evals/logging/delete_log",
-                                "python/functions/evals/logging/delete_log_entry",
-                                "python/functions/evals/logging/delete_logs",
-                                "python/functions/evals/logging/delete_project",
-                                "python/functions/evals/logging/get_artifacts",
-                                "python/functions/evals/logging/get_groups",
-                                "python/functions/evals/logging/get_log_by_id",
-                                "python/functions/evals/logging/get_log_by_value",
-                                "python/functions/evals/logging/get_logs",
-                                "python/functions/evals/logging/get_logs_by_value",
-                                "python/functions/evals/logging/get_logs_metric",
-                                "python/functions/evals/logging/get_logs_with_fields",
-                                "python/functions/evals/logging/get_logs_without_fields",
-                                "python/functions/evals/logging/group_logs",
-                                "python/functions/evals/logging/group_logs_by_config",
-                                "python/functions/evals/logging/handle_multiple_logs",
-                                "python/functions/evals/logging/list_projects",
-                                "python/functions/evals/logging/log",
-                                "python/functions/evals/logging/rename_log_entries",
-                                "python/functions/evals/logging/rename_project",
-                                "python/functions/evals/logging/replace_log_entries",
-                                "python/functions/evals/logging/span",
-                                "python/functions/evals/logging/trace",
-                                "python/functions/evals/logging/update_log_entries"
+                                "python/classes/evals/logging/Parameters",
+                                "python/functions/evals/logging/span"
                             ]
                         },
                         {
                             "group": "utils",
                             "pages": [
                                 {
+                                    "group": "artifacts",
+                                    "pages": [
+                                        "python/functions/evals/utils/artifacts/add_artifacts",
+                                        "python/functions/evals/utils/artifacts/delete_artifact",
+                                        "python/functions/evals/utils/artifacts/get_artifacts"
+                                    ]
+                                },
+                                {
                                     "group": "datasets",
                                     "pages": [
                                         "python/functions/evals/utils/datasets/add_dataset_entries",
-                                        "python/functions/evals/utils/datasets/create_artifacts",
-                                        "python/functions/evals/utils/datasets/delete_artifact",
+                                        "python/functions/evals/utils/datasets/create_dataset_artifacts",
                                         "python/functions/evals/utils/datasets/delete_dataset",
+                                        "python/functions/evals/utils/datasets/delete_dataset_artifact",
                                         "python/functions/evals/utils/datasets/delete_dataset_entry",
-                                        "python/functions/evals/utils/datasets/download_artifacts",
                                         "python/functions/evals/utils/datasets/download_dataset",
+                                        "python/functions/evals/utils/datasets/download_dataset_artifacts",
                                         "python/functions/evals/utils/datasets/get_dataset_entry",
                                         "python/functions/evals/utils/datasets/list_datasets",
                                         "python/functions/evals/utils/datasets/rename_dataset",
                                         "python/functions/evals/utils/datasets/upload_dataset"
+                                    ]
+                                },
+                                {
+                                    "group": "logging",
+                                    "pages": [
+                                        "python/functions/evals/utils/logging/add_log_entries",
+                                        "python/functions/evals/utils/logging/delete_log",
+                                        "python/functions/evals/utils/logging/delete_log_entry",
+                                        "python/functions/evals/utils/logging/delete_logs",
+                                        "python/functions/evals/utils/logging/get_groups",
+                                        "python/functions/evals/utils/logging/get_log_by_id",
+                                        "python/functions/evals/utils/logging/get_log_by_value",
+                                        "python/functions/evals/utils/logging/get_logs",
+                                        "python/functions/evals/utils/logging/get_logs_by_value",
+                                        "python/functions/evals/utils/logging/get_logs_metric",
+                                        "python/functions/evals/utils/logging/get_logs_with_fields",
+                                        "python/functions/evals/utils/logging/get_logs_without_fields",
+                                        "python/functions/evals/utils/logging/group_logs",
+                                        "python/functions/evals/utils/logging/group_logs_by_config",
+                                        "python/functions/evals/utils/logging/handle_multiple_logs",
+                                        "python/functions/evals/utils/logging/log",
+                                        "python/functions/evals/utils/logging/rename_log_entries",
+                                        "python/functions/evals/utils/logging/replace_log_entries",
+                                        "python/functions/evals/utils/logging/update_log_entries"
+                                    ]
+                                },
+                                {
+                                    "group": "projects",
+                                    "pages": [
+                                        "python/functions/evals/utils/projects/create_project",
+                                        "python/functions/evals/utils/projects/delete_project",
+                                        "python/functions/evals/utils/projects/list_projects",
+                                        "python/functions/evals/utils/projects/rename_project"
                                     ]
                                 }
                             ]
