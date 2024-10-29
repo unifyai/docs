@@ -1,6 +1,6 @@
 ---
 title: 'Create Artifacts'
-api: 'POST /v0/datasetv2/{dataset}/artifacts'
+api: 'POST /v0/dataset/{dataset}/artifacts'
 ---
 Creates one or more artifacts associated to a dataset. Artifacts are
 dataset-level metadata that don't depend on other variables.
@@ -27,7 +27,7 @@ Dictionary containing one or more key:value pairs that will be stored as artifac
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/datasetv2/eval-dataset/artifacts' \
+  --url 'https://api.unify.ai/v0/dataset/eval-dataset/artifacts' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{
@@ -41,7 +41,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/datasetv2/eval-dataset/artifacts"
+url = "https://api.unify.ai/v0/dataset/eval-dataset/artifacts"
 
 headers = {"Authorization": "Bearer <token>"}
 

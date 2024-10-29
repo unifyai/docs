@@ -1,8 +1,8 @@
 ---
-title: 'Get Dataset Entries'
-api: 'GET /v0/datasetv2/{name}'
+title: 'Delete Dataset Entry'
+api: 'DELETE /v0/dataset/{name}/entry/{id}'
 ---
-Retrieve entries from a specific dataset.
+Delete a specific entry from a dataset.
 
 #### Authorizations
 
@@ -16,32 +16,26 @@ Retrieve entries from a specific dataset.
 Dataset name (can include forward slashes)
 </ParamField>
 
-#### Query Parameters
-
-<ParamField query="limit" type="integer" >
-
-</ParamField>
-
-<ParamField query="offset" type="integer" >
-
+<ParamField query="id" type="string" required="true">
+Entry ID
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request GET \
-  --url 'https://api.unify.ai/v0/datasetv2/my_dataset?limit=None&offset=None' \
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/dataset/my_dataset/entry/123' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/datasetv2/my_dataset?limit=None&offset=None"
+url = "https://api.unify.ai/v0/dataset/my_dataset/entry/123"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("GET", url, headers=headers)
+response = requests.request("DELETE", url, headers=headers)
 
 print(response.text)
 ```
@@ -50,24 +44,15 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-[
-    {
-        "id": "puzfJbFPmZ",
-        "entry": "...",
-        "created_at": "..."
-    },
-    {
-        "id": "eAdXb2X3f8",
-        "entry": "...",
-        "created_at": "..."
-    }
-]
+{}
 ```
 
-```json 404
-{
-    "detail": "Dataset not found."
-}
+```json 404 (1)
+"Dataset not found."
+```
+
+```json 404 (2)
+"Dataset entry <id> not found."
 ```
 
 ```json 422

@@ -1,8 +1,8 @@
 ---
-title: 'Rename Dataset'
-api: 'PATCH /v0/datasetv2/{name}'
+title: 'Get Dataset Entry'
+api: 'GET /v0/dataset/{name}/entry/{id}'
 ---
-Rename an existing dataset.
+Retrieve a specific entry from a dataset.
 
 #### Authorizations
 
@@ -13,37 +13,29 @@ Rename an existing dataset.
 #### Path Parameters
 
 <ParamField query="name" type="string" required="true">
-Current dataset name (can include forward slashes)
+Dataset name (can include forward slashes)
 </ParamField>
 
-#### Body
-
-<ParamField body="name" type="string" required="true">
-New name of the dataset.
+<ParamField query="id" type="string" required="true">
+Entry ID
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request PATCH \
-  --url 'https://api.unify.ai/v0/datasetv2/my_dataset' \
+curl --request GET \
+  --url 'https://api.unify.ai/v0/dataset/my_dataset/entry/123' \
   --header "Authorization: Bearer $UNIFY_KEY"
-  --header 'Content-Type: application/json' \
-  --data '{
-    "name": "renamed-dataset"
-}'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/datasetv2/my_dataset"
+url = "https://api.unify.ai/v0/dataset/my_dataset/entry/123"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"name": "renamed-dataset"}
-
-response = requests.request("PATCH", url, json=json_input, headers=headers)
+response = requests.request("GET", url, headers=headers)
 
 print(response.text)
 ```
@@ -52,11 +44,19 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{}
+{
+    "id": "uoreHGVKfQ",
+    "entry": "...",
+    "created_at": "..."
+}
 ```
 
-```json 404
+```json 404 (1)
 "Dataset not found."
+```
+
+```json 404 (2)
+"Dataset entry <id> not found."
 ```
 
 ```json 422

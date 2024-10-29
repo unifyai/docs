@@ -388,16 +388,16 @@
                     "group": "Benchmarking",
                     "pages": [
                         {
-                            "group": "DatasetsV2",
+                            "group": "Datasets",
                             "pages": [
-                                "api-reference/datasetsv2/list_datasets",
-                                "api-reference/datasetsv2/get_dataset_entries",
-                                "api-reference/datasetsv2/rename_dataset",
-                                "api-reference/datasetsv2/delete_dataset",
-                                "api-reference/datasetsv2/get_dataset_entry",
-                                "api-reference/datasetsv2/delete_dataset_entry",
-                                "api-reference/datasetsv2/create_dataset",
-                                "api-reference/datasetsv2/add_dataset_entries"
+                                "api-reference/datasets/list_datasets",
+                                "api-reference/datasets/get_dataset_entries",
+                                "api-reference/datasets/rename_dataset",
+                                "api-reference/datasets/delete_dataset",
+                                "api-reference/datasets/get_dataset_entry",
+                                "api-reference/datasets/delete_dataset_entry",
+                                "api-reference/datasets/create_dataset",
+                                "api-reference/datasets/add_dataset_entries"
                             ]
                         },
                         {

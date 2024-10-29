@@ -1,6 +1,6 @@
 ---
 title: 'List Datasets'
-api: 'GET /v0/datasetsv2/'
+api: 'GET /v0/datasets/'
 ---
 Retrieve a list of all datasets.
 
@@ -14,14 +14,14 @@ Retrieve a list of all datasets.
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/datasetsv2/' \
+  --url 'https://api.unify.ai/v0/datasets/' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/datasetsv2/"
+url = "https://api.unify.ai/v0/datasets/"
 
 headers = {"Authorization": "Bearer <token>"}
 

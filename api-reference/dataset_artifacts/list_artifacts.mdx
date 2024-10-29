@@ -1,6 +1,6 @@
 ---
 title: 'List Artifacts'
-api: 'GET /v0/datasetv2/{dataset}/artifacts'
+api: 'GET /v0/dataset/{dataset}/artifacts'
 ---
 Returns the key-value pairs of all artifacts in a dataset.
 
@@ -20,14 +20,14 @@ Name of the dataset to delete an artifact from.
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/datasetv2/eval-dataset/artifacts' \
+  --url 'https://api.unify.ai/v0/dataset/eval-dataset/artifacts' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/datasetv2/eval-dataset/artifacts"
+url = "https://api.unify.ai/v0/dataset/eval-dataset/artifacts"
 
 headers = {"Authorization": "Bearer <token>"}
 

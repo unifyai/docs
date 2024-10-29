@@ -1,6 +1,6 @@
 ---
 title: 'Add Dataset Entries'
-api: 'POST /v0/datasetv2/{name}/entries'
+api: 'POST /v0/dataset/{name}/entries'
 ---
 Add multiple entries to a dataset.
 
@@ -26,7 +26,7 @@ List of entries to add
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/datasetv2/my_dataset/entries' \
+  --url 'https://api.unify.ai/v0/dataset/my_dataset/entries' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{
@@ -41,7 +41,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/datasetv2/my_dataset/entries"
+url = "https://api.unify.ai/v0/dataset/my_dataset/entries"
 
 headers = {"Authorization": "Bearer <token>"}
 
