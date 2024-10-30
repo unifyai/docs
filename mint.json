@@ -180,7 +180,7 @@
                                     "group": "logging",
                                     "pages": [
                                         "python/functions/evals/utils/logging/add_log_entries",
-                                        "python/functions/evals/utils/logging/delete_log_entries",
+                                        "python/functions/evals/utils/logging/delete_log_fields",
                                         "python/functions/evals/utils/logging/delete_logs",
                                         "python/functions/evals/utils/logging/get_groups",
                                         "python/functions/evals/utils/logging/get_log_by_id",
