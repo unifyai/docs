@@ -2818,203 +2818,6 @@
                 ]
             }
         },
-        "/v0/log/{id}": {
-            "delete": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Delete Log",
-                "description": "Deletes a log from a project.",
-                "operationId": "delete_log_v0_log__id__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "description": "ID of the log to delete from a project.",
-                            "title": "Id"
-                        },
-                        "description": "ID of the log to delete from a project.",
-                        "example": "123"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Log deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Log Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log with id <id> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Update Log",
-                "description": "Updates the given log with more data.\n\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.",
-                "operationId": "update_log_v0_log__id__put",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "description": "ID of the log to update.",
-                            "title": "Id"
-                        },
-                        "description": "ID of the log to update.",
-                        "example": "123"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateLogConfig"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Log updated successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Log Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log with id <id> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Get Log",
-                "description": "Returns the log associated with a given id.",
-                "operationId": "get_log_v0_log__id__get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "description": "ID of the log to fetch.",
-                            "title": "Id"
-                        },
-                        "description": "ID of the log to fetch.",
-                        "example": "123"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "id": "123",
-                                    "ts": "2024-10-30 12:20:03",
-                                    "entries": {
-                                        "input": "...",
-                                        "output": "..."
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Log Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log with id <id> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v0/logs": {
             "delete": {
                 "tags": [
@@ -3262,98 +3065,14 @@
                 }
             }
         },
-        "/v0/log/{id}/entry/{entry}": {
-            "delete": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Delete Log Entry",
-                "description": "Deletes a entry from a log.",
-                "operationId": "delete_log_entry_v0_log__id__entry__entry__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "description": "ID of the log to delete an entry from.",
-                            "title": "Id"
-                        },
-                        "description": "ID of the log to delete an entry from.",
-                        "example": "123"
-                    },
-                    {
-                        "name": "entry",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the entry to delete from a given log.",
-                            "title": "Entry"
-                        },
-                        "description": "Name of the entry to delete from a given log.",
-                        "example": "input-str"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Log entry deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "4041": {
-                        "description": "Log Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log with <id> not found."
-                                }
-                            }
-                        }
-                    },
-                    "4042": {
-                        "description": "Log Entry Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log entry <entry> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v0/logs/entry/{entry}": {
             "delete": {
                 "tags": [
                     "Evals"
                 ],
-                "summary": "Delete Log Entry From Multiple Logs",
+                "summary": "Delete Log Entries",
                 "description": "Deletes a specific entry from multiple logs.",
-                "operationId": "delete_log_entry_from_multiple_logs_v0_logs_entry__entry__delete",
+                "operationId": "delete_log_entries_v0_logs_entry__entry__delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3411,6 +3130,73 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Log entry <entry> not found in one or more logs."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/log/{id}": {
+            "get": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Get Log",
+                "description": "Returns the log associated with a given id.",
+                "operationId": "get_log_v0_log__id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "ID of the log to fetch.",
+                            "title": "Id"
+                        },
+                        "description": "ID of the log to fetch.",
+                        "example": "123"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "id": "123",
+                                    "ts": "2024-10-30 12:20:03",
+                                    "entries": {
+                                        "input": "...",
+                                        "output": "..."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Log with id <id> not found."
                                 }
                             }
                         }
@@ -4861,8 +4647,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -5320,34 +5106,6 @@
                     "name"
                 ],
                 "title": "ProjectConfig"
-            },
-            "UpdateLogConfig": {
-                "properties": {
-                    "entries": {
-                        "type": "object",
-                        "title": "Entries",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Keys can have an optional version defined after a forward slash. E.g. `system_msg/v1`. If defined, these versions will be used when grouping results on a per-key basis. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
-                        "example": {
-                            "explicit_types": {
-                                "input": "Image"
-                            },
-                            "input": "...",
-                            "score-test-1": "..."
-                        }
-                    },
-                    "overwrite": {
-                        "type": "boolean",
-                        "title": "Overwrite",
-                        "description": "Whether to overwrite existing logs",
-                        "default": false,
-                        "example": false
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "entries"
-                ],
-                "title": "UpdateLogConfig"
             },
             "UpdateLogRequest": {
                 "properties": {
