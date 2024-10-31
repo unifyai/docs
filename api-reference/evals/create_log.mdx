@@ -23,7 +23,7 @@ This method returns the id of the new stored log.
 Name of the project the stored entries will be associated to.
 </ParamField>
 
-<ParamField body="parameters" type="object"  default={{}}>
+<ParamField body="params" type="object"  default={{}}>
 Dictionary containing one or more key:value pairs that will be logged into the platform. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.
 </ParamField>
 
@@ -40,7 +40,7 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
     "project": "eval-project",
-    "parameters": {
+    "params": {
         "explicit_types": {
             "system-prompt": "str"
         },
@@ -64,7 +64,7 @@ url = "https://api.unify.ai/v0/log"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "parameters": {"explicit_types": {"system-prompt": "str"}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}}
+json_input = {"project": "eval-project", "params": {"explicit_types": {"system-prompt": "str"}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

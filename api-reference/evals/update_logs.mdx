@@ -20,7 +20,7 @@ If present, it will override the inferred type of any matching key in all logs.
 List of log IDs to update with new or overriding entries.
 </ParamField>
 
-<ParamField body="parameters" type="object"  default={{}}>
+<ParamField body="params" type="object"  default={{}}>
 Dictionary of key-value parameter pairs to add or update in the logs.
 </ParamField>
 
@@ -45,7 +45,7 @@ curl --request PUT \
         456,
         789
     ],
-    "parameters": {
+    "params": {
         "explicit_types": {
             "system-prompt": "str"
         },
@@ -70,7 +70,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"ids": [123, 456, 789], "parameters": {"explicit_types": {"system-prompt": "str"}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}, "overwrite": False}
+json_input = {"ids": [123, 456, 789], "params": {"explicit_types": {"system-prompt": "str"}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}, "overwrite": False}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 
