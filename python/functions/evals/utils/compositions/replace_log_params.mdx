@@ -1,25 +1,25 @@
 ---
-title: 'replace_log_parameters'
+title: 'replace_log_params'
 ---
 
 ```python
-def replace_log_parameters(
+def replace_log_params(
     *,
     logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
     api_key: Optional[str] = None,
-    **parameters,
+    **params,
 ) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f934290998cd6a1431de0f0bb39fe6c1bd45848d/unify/evals/utils/compositions.py#L76)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/0ee909984b93cbd2644432ea18fde1abf933bb2e/unify/evals/utils/compositions.py#L76)</p>
 
-Replaces existing parameters in an existing log.
+Replaces existing params in an existing log.
 
 **Arguments**:
 
 - `logs` - The log(s) to replace fields for. Looks for the current active log if none
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
-- `parameters` - The data to update in the log.
+- `params` - The data to update in the log.
 
 
 

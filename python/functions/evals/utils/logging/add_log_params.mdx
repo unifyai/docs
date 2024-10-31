@@ -1,17 +1,17 @@
 ---
-title: 'add_log_parameters'
+title: 'add_log_params'
 ---
 
 ```python
-def add_log_parameters(
+def add_log_params(
     *,
     logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
     api_key: Optional[str] = None,
-    **parameters,
+    **params,
 ) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f934290998cd6a1431de0f0bb39fe6c1bd45848d/unify/evals/utils/logging.py#L220)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/0ee909984b93cbd2644432ea18fde1abf933bb2e/unify/evals/utils/logging.py#L220)</p>
 
 Add extra entries into an existing log.
 
@@ -19,7 +19,7 @@ Add extra entries into an existing log.
 
 - `logs` - The log(s) to update with extra data. Looks for the current active log if
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
-- `parameters` - Dictionary containing one or more key:value pairs that will be
+- `params` - Dictionary containing one or more key:value pairs that will be
 
 
 
