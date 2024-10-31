@@ -4880,9 +4880,9 @@
                         "description": "Name of the project the stored entries will be associated to.",
                         "example": "eval-project"
                     },
-                    "parameters": {
+                    "params": {
                         "type": "object",
-                        "title": "Parameters",
+                        "title": "Params",
                         "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
                         "default": {},
                         "example": {
@@ -5136,9 +5136,9 @@
                             789
                         ]
                     },
-                    "parameters": {
+                    "params": {
                         "type": "object",
-                        "title": "Parameters",
+                        "title": "Params",
                         "description": "Dictionary of key-value parameter pairs to add or update in the logs.",
                         "default": {},
                         "example": {
