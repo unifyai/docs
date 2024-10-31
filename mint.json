@@ -181,6 +181,7 @@
                                     "group": "logging",
                                     "pages": [
                                         "python/functions/evals/utils/logging/add_log_entries",
+                                        "python/functions/evals/utils/logging/add_log_parameters",
                                         "python/functions/evals/utils/logging/delete_log_fields",
                                         "python/functions/evals/utils/logging/delete_logs",
                                         "python/functions/evals/utils/logging/get_groups",
