@@ -2188,7 +2188,7 @@
                     "Datasets"
                 ],
                 "summary": "Create Dataset",
-                "description": "Create a new dataset.",
+                "description": "Create a new dataset.\nTo create a dataset for a specific project, prefix it's name with \\<project_name\\>/.",
                 "operationId": "create_dataset_v0_dataset_post",
                 "requestBody": {
                     "content": {
