@@ -6,11 +6,12 @@ title: 'update'
 def update(
     metric: str,
     mode: str = "maximize",
+    interactive: bool = True,
     logs: Optional[List[unify.Log]] = None,
 ):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/dca52a4a907cee5795d1beead3ecf4bf3b74cbdd/unify/evals/assist/update.py#L45)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/4954a3b87bb2518c429b535bdad3b6390e086383/unify/evals/assist/update.py#L45)</p>
 
 Make a suggestion for how to improve the performance of the metric specified by
 either the maximize or minimize
@@ -19,6 +20,7 @@ either the maximize or minimize
 
 - `metric` - The metric name that we're looking to optimize.
 - `mode` - The optimization mode, either maximize or minimize for the metric.
+- `interactive` - Whether to run in interactive mode, with a human in the loop.
 - `logs` - The logs to parse and use for the suggestion.
 
 
