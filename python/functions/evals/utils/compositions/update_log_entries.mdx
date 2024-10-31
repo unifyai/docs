@@ -8,11 +8,11 @@ def update_log_entries(
     fn: Union[callable, Dict[str, callable]],
     logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
     api_key: Optional[str] = None,
-    **kwargs,
+    **entries,
 ) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/fd4395990c72a00279dd64cdc3ac3230fea7c3dd/unify/evals/utils/compositions.py#L197)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f934290998cd6a1431de0f0bb39fe6c1bd45848d/unify/evals/utils/compositions.py#L207)</p>
 
 Updates existing entries in an existing log.
 
@@ -21,7 +21,7 @@ Updates existing entries in an existing log.
 - `fn` - The function or set of functions to apply to each field in the log.
 - `logs` - The log(s) to update fields for. Looks for the current active log if not
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
-- `kwargs` - The data to update in the log.
+- `entries` - The data to update in the log.
 
 
 
