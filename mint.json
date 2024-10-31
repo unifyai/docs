@@ -157,7 +157,7 @@
                                         "python/functions/evals/utils/compositions/get_logs_with_fields",
                                         "python/functions/evals/utils/compositions/get_logs_without_fields",
                                         "python/functions/evals/utils/compositions/group_logs",
-                                        "python/functions/evals/utils/compositions/group_logs_by_params",
+                                        "python/functions/evals/utils/compositions/group_logs_by_configs",
                                         "python/functions/evals/utils/compositions/rename_log_entries",
                                         "python/functions/evals/utils/compositions/rename_log_params",
                                         "python/functions/evals/utils/compositions/replace_log_entries",
