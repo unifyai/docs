@@ -1,0 +1,16 @@
+---
+title: 'add_param'
+---
+
+```python
+def add_param(
+    *,
+    logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = "all",
+    api_key: Optional[str] = None,
+    **param,
+) -> Dict[str, str]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7adb076f86aa56b73b717840b2299df394cff20f/unify/evals/utils/compositions.py#L179)</p>
+
+Adds a new parameter to the logs (defaults to all logs).
