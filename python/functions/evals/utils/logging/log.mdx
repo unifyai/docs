@@ -9,11 +9,11 @@ def log(
     skip_duplicates: bool = True,
     parameters: Dict[str, Any] = None,
     api_key: Optional[str] = None,
-    **kwargs,
+    **entries,
 ) -> unify.Log:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3bf3dbb5a6b951dd3975506346c907454e99cb31/unify/evals/utils/logging.py#L80)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fd4395990c72a00279dd64cdc3ac3230fea7c3dd/unify/evals/utils/logging.py#L80)</p>
 
 Creates one or more logs associated to a project. unify.Logs are LLM-call-level data
 that might depend on other variables. This method returns the id of the new
@@ -25,10 +25,10 @@ stored log.
 - `skip_duplicates` - Whether to skip creating new log entries for identical log
 - `parameters` - Dictionary containing one or more key:value pairs that will be
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
-- `kwargs` - Dictionary containing one or more key:value pairs that will be logged
+- `entries` - Dictionary containing one or more key:value pairs that will be logged
 
 
 
 **Returns**:
 
-The unique id of newly created log entry.
+The unique id of newly created log.
