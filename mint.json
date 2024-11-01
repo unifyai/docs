@@ -111,7 +111,7 @@
                                 "python/classes/evals/logging/Entries",
                                 "python/classes/evals/logging/Log",
                                 "python/classes/evals/logging/Params",
-                                "python/functions/evals/logging/trace"
+                                "python/functions/evals/logging/traced"
                             ]
                         },
                         {
