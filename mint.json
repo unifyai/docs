@@ -99,27 +99,6 @@
                     "group": "evals",
                     "pages": [
                         {
-                            "group": "assist",
-                            "pages": [
-                                {
-                                    "group": "implement",
-                                    "pages": [
-                                        "python/classes/evals/assist/implement/Interactive",
-                                        "python/functions/evals/assist/implement/implement",
-                                        "python/functions/evals/assist/implement/interactive_mode",
-                                        "python/functions/evals/assist/implement/set_interactive",
-                                        "python/functions/evals/assist/implement/set_non_interactive"
-                                    ]
-                                },
-                                {
-                                    "group": "update",
-                                    "pages": [
-                                        "python/functions/evals/assist/update/update"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
                             "group": "dataset",
                             "pages": [
                                 "python/classes/evals/dataset/Dataset"
