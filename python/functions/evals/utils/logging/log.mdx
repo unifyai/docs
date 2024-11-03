@@ -6,14 +6,14 @@ title: 'log'
 def log(
     *,
     project: Optional[str] = None,
-    skip_duplicates: bool = True,
+    skip_duplicates: bool = False,
     params: Dict[str, Any] = None,
     api_key: Optional[str] = None,
     **entries,
 ) -> unify.Log:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/ce7101bcc237813bc332336bffbeec66a5f51c43/unify/evals/utils/logging.py#L120)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/dcb2b98a1383b7358de8b62b503c8b9b981b36f4/unify/evals/utils/logging.py#L120)</p>
 
 Creates one or more logs associated to a project. unify.Logs are LLM-call-level data
 that might depend on other variables. This method returns the id of the new
