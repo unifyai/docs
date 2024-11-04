@@ -6,18 +6,20 @@ title: 'add_log_entries'
 def add_log_entries(
     *,
     logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
+    overwrite: bool = False,
     api_key: Optional[str] = None,
     **entries,
 ) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/22bdbb2264ff324edc2e31df49439760f7e6c10d/unify/evals/utils/logging.py#L294)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/64573fa869eb792a380b04cbf66700006fa3e2eb/unify/evals/utils/logging.py#L295)</p>
 
 Add extra entries into an existing log.
 
 **Arguments**:
 
 - `logs` - The log(s) to update with extra data. Looks for the current active log if
+- `overwrite` - Whether or not to overwrite an entry pre-existing with the same name.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 - `entries` - Dictionary containing one or more key:value pairs that will be logged
 
