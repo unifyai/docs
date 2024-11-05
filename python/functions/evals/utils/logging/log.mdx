@@ -6,14 +6,15 @@ title: 'log'
 def log(
     *,
     project: Optional[str] = None,
-    skip_duplicates: bool = False,
     params: Dict[str, Any] = None,
+    new: bool = False,
+    overwrite: bool = False,
     api_key: Optional[str] = None,
     **entries,
 ) -> unify.Log:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/1366387b853723e3437a41b4a4f7d4cf00fab29e/unify/evals/utils/logging.py#L120)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/3477d56ac116cb5cc69f83b7b93f179bcd2dc8a0/unify/evals/utils/logging.py#L120)</p>
 
 Creates one or more logs associated to a project. unify.Logs are LLM-call-level data
 that might depend on other variables. This method returns the id of the new
@@ -22,8 +23,9 @@ stored log.
 **Arguments**:
 
 - `project` - Name of the project the stored logs will be associated to.
-- `skip_duplicates` - Whether to skip creating new log entries for identical log
 - `params` - Dictionary containing one or more key:value pairs that will be
+- `new` - Whether to create a new log if there is a currently active global lob.
+- `overwrite` - If adding to an existing log, dictates whether or not to overwrite
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 - `entries` - Dictionary containing one or more key:value pairs that will be logged
 
