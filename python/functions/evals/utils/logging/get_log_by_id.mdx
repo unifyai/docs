@@ -3,24 +3,8 @@ title: 'get_log_by_id'
 ---
 
 ```python
-def get_log_by_id(
-    id: int,
-    *,
-    api_key: Optional[str] = None,
-) -> unify.Log:
+def wrapped(*args, **kwargs):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/d119bc0a91541f081d98c00be9ce552ca111a04f/unify/evals/utils/logging.py#L453)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/30214f6c66341314fed97279526c593d4718e328/unify/evals/utils/logging.py#L487)</p>
 
-Returns the log associated with a given id.
-
-**Arguments**:
-
-- `id` - IDs of the logs to fetch.
-- `api_key` - If specified, unify API key to be used. Defaults to the value in the
-
-
-
-**Returns**:
-
-The full set of log data.
