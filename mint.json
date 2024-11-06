@@ -235,12 +235,6 @@
                             "group": "types",
                             "pages": [
                                 {
-                                    "group": "chat_completion",
-                                    "pages": [
-                                        "python/classes/universal_api/types/chat_completion/ChatCompletion"
-                                    ]
-                                },
-                                {
                                     "group": "prompt",
                                     "pages": [
                                         "python/classes/universal_api/types/prompt/Prompt"
