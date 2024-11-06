@@ -175,7 +175,8 @@
                                         "python/functions/evals/utils/logging/get_log_by_id",
                                         "python/functions/evals/utils/logging/get_logs",
                                         "python/functions/evals/utils/logging/get_logs_metric",
-                                        "python/functions/evals/utils/logging/log"
+                                        "python/functions/evals/utils/logging/log",
+                                        "python/functions/evals/utils/logging/set_log_caching"
                                     ]
                                 },
                                 {
