@@ -25,7 +25,7 @@ You can list all available endpoints like so, any of which can be passed into th
 ```python
 import unify
 import random
-endpoints = unify.utils.list_endpoints()
+endpoints = unify.list_endpoints()
 endpoint = random.choice(endpoints)
 client = unify.Unify(endpoint)
 client.generate("hello world!")
