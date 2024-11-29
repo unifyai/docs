@@ -421,9 +421,6 @@
                                     "type": "boolean"
                                 },
                                 {
-                                    "enum": [
-                                        "only"
-                                    ],
                                     "const": "only",
                                     "type": "string"
                                 }
