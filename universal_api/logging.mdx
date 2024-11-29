@@ -279,7 +279,7 @@ Again, in Python this would look like:
 
 ```python
 import unify
-prompts = unify.utils.get_queries(tags=["maths", "john_smith"])
+prompts = unify.get_queries(tags=["maths", "john_smith"])
 for prompt in prompts:
     print(prompt)
 ```
@@ -299,7 +299,7 @@ time window, using the argument `start_time` (and optionally also `end_time`), l
 import unify
 import datetime
 start_time = datetime.datetime.now() - datetime.timedelta(weeks=1)
-prompts = unify.utils.get_queries(tags=["maths", "john_smith"], start_time=start_time)
+prompts = unify.get_queries(tags=["maths", "john_smith"], start_time=start_time)
 for prompt in prompts:
     print(prompt)
 ```

@@ -75,15 +75,15 @@ The same functions can be called directly from the Python client, as follows:
 import unify
 
 # return all
-unify.utils.list_models()
-unify.utils.list_providers()
-unify.utils.list_endpoints()
+unify.list_models()
+unify.list_providers()
+unify.list_endpoints()
 
 # filtered
-unify.utils.list_models("openai")
-unify.utils.list_providers("llama-3-8b-chat")
-unify.utils.list_endpoints(provider="openai")
-unify.utils.list_endpoints(model="llama-3-8b-chat")
+unify.list_models("openai")
+unify.list_providers("llama-3-8b-chat")
+unify.list_endpoints(provider="openai")
+unify.list_endpoints(model="llama-3-8b-chat")
 ```
 
 That's it! In the next section we'll see how these endpoints can actually be queried ✨
