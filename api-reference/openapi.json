@@ -404,11 +404,11 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "The query history is returned in pages, with up to 100 prompts per page. Increase the page number to see older prompts.",
+                            "description": "The query history is returned in pages, with up to 20 prompts per page. Increase the page number to see older prompts.",
                             "default": 1,
                             "title": "Page Number"
                         },
-                        "description": "The query history is returned in pages, with up to 100 prompts per page. Increase the page number to see older prompts.",
+                        "description": "The query history is returned in pages, with up to 20 prompts per page. Increase the page number to see older prompts.",
                         "example": "1"
                     },
                     {
