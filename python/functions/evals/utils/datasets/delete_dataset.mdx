@@ -7,10 +7,10 @@ def delete_dataset(
     name: str,
     *,
     api_key: Optional[str] = None,
-) -> str:
+) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/6b7d71f033ef82a6511358a1c65a68edcb6aff2d/unify/evals/utils/datasets.py#L98)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/f97daf97925df2b10f09009261ebefa4c958b14d/unify/evals/utils/datasets.py#L98)</p>
 
 Deletes a dataset from the platform.
 
@@ -24,4 +24,3 @@ Deletes a dataset from the platform.
 **Returns**:
 
 - `str` - Info msg with the response from the HTTP endpoint.
-- `ValueError` - If there was an HTTP error.
