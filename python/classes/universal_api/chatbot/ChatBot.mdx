@@ -6,9 +6,26 @@ title: 'ChatBot'
 class ChatBot
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f97daf97925df2b10f09009261ebefa4c958b14d/unify/universal_api/chatbot.py#L9)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1cfee813a908986733a758cdb56a2edf5fafbdce/unify/universal_api/chatbot.py#L9)</p>
 
 Agent class represents an LLM chat agent.
+
+### \_\_init\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1cfee813a908986733a758cdb56a2edf5fafbdce/unify/universal_api/chatbot.py#L12)</p>
+
+```python
+def __init__(
+        self,
+        client: _Client,
+    ) -> None:
+```
+
+Initializes the ChatBot object, wrapped around a client.
+
+**Arguments**:
+
+- `client` - The Client instance to wrap the chatbot logic around.
 
 ## properties
 
@@ -16,7 +33,7 @@ Agent class represents an LLM chat agent.
 
 ### client
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f97daf97925df2b10f09009261ebefa4c958b14d/unify/universal_api/chatbot.py#L30)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1cfee813a908986733a758cdb56a2edf5fafbdce/unify/universal_api/chatbot.py#L30)</p>
 
 ```python
 def client(self) -> _Client:
@@ -34,7 +51,7 @@ The client.
 
 ### set\_client
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f97daf97925df2b10f09009261ebefa4c958b14d/unify/universal_api/chatbot.py#L40)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1cfee813a908986733a758cdb56a2edf5fafbdce/unify/universal_api/chatbot.py#L40)</p>
 
 ```python
 def set_client(self, value: client) -> None:
@@ -52,7 +69,7 @@ Set the client.
 
 ### clear\_chat\_history
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f97daf97925df2b10f09009261ebefa4c958b14d/unify/universal_api/chatbot.py#L95)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1cfee813a908986733a758cdb56a2edf5fafbdce/unify/universal_api/chatbot.py#L95)</p>
 
 ```python
 def clear_chat_history(self) -> None:
@@ -64,7 +81,7 @@ Clears the chat history.
 
 ### run
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f97daf97925df2b10f09009261ebefa4c958b14d/unify/universal_api/chatbot.py#L157)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1cfee813a908986733a758cdb56a2edf5fafbdce/unify/universal_api/chatbot.py#L157)</p>
 
 ```python
 def run(self, show_credits: bool = False, show_endpoint: bool = False) -> None:
@@ -76,24 +93,3 @@ Starts the chat interaction loop.
 
 - `show_credits` - Whether to show credit consumption. Defaults to False.
 - `show_endpoint` - Whether to show the endpoint used. Defaults to False.
-
-## dunder_methods
-
----
-
-### \_\_init\_\_
-
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f97daf97925df2b10f09009261ebefa4c958b14d/unify/universal_api/chatbot.py#L12)</p>
-
-```python
-def __init__(
-        self,
-        client: _Client,
-    ) -> None:
-```
-
-Initializes the ChatBot object, wrapped around a client.
-
-**Arguments**:
-
-- `client` - The Client instance to wrap the chatbot logic around.
