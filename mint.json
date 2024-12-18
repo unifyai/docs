@@ -423,7 +423,8 @@
                                 "api-reference/evals/delete_log_fields",
                                 "api-reference/evals/get_log",
                                 "api-reference/evals/get_logs_metric",
-                                "api-reference/evals/get_log_groups"
+                                "api-reference/evals/get_log_groups",
+                                "api-reference/evals/get_log_columns"
                             ]
                         }
                     ]

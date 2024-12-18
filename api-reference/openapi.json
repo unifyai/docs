@@ -3414,6 +3414,69 @@
                 }
             }
         },
+        "/v0/logs/columns": {
+            "get": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Get Log Columns",
+                "description": "Returns a list of filtered entries from a project.",
+                "operationId": "get_log_columns_v0_logs_columns_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get entries from.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get entries from.",
+                        "example": "eval-project"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "col1": "string",
+                                    "col2": "float"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/router/train": {
             "post": {
                 "tags": [
@@ -4647,8 +4710,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
