@@ -3420,7 +3420,7 @@
                     "Evals"
                 ],
                 "summary": "Get Log Columns",
-                "description": "Returns a list of filtered entries from a project.",
+                "description": "Returns a mapping of columns and their datatypes from a project.",
                 "operationId": "get_log_columns_v0_logs_columns_get",
                 "security": [
                     {
@@ -3434,10 +3434,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the project to get entries from.",
+                            "description": "Name of the project to get columns for.",
                             "title": "Project"
                         },
-                        "description": "Name of the project to get entries from.",
+                        "description": "Name of the project to get columns for.",
                         "example": "eval-project"
                     }
                 ],
