@@ -60,7 +60,30 @@
                     "group": "Interfaces",
                     "pages": [
                         "interfaces/overview",
-                        "interfaces/teaching_assistant"
+                        {
+                            "group": "Logging",
+                            "pages": [
+                                "interfaces/logging/logging"
+                            ]
+                        },
+                        {
+                            "group": "Debugging",
+                            "pages": [
+                                "interfaces/debugging/debugging"
+                            ]
+                        },
+                        {
+                            "group": "Evaluations",
+                            "pages": [
+                                "interfaces/evaluations/teaching_assistant"
+                            ]
+                        },
+                        {
+                            "group": "Labelling",
+                            "pages": [
+                                "interfaces/labelling/labelling"
+                            ]
+                        }
                     ]
                 },
                 {

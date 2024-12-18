@@ -2,30 +2,14 @@
 title: 'Overview'
 ---
 
-The core building block for building your LLM data flywheel is **very simple**,
-just pass your data to `unify.log`, that's (kind of) it.
+Interfaces are **fully hackable**, which you can use to build *personalized* pipelines for: logging, evaluations, guardrails, human labelling, agentic workflows, self-optimization, and more.
 
-This lets you store *any* kind of data into your console for future visualization,
-grouping, sorting, and plotting etc.
+simply `unify.log` your data, and then compose your own custom interface using the four core building blocks: (1) **tables**, (2) **plots**, (3) **visualizations**, and (4) **terminals**.
 
-Rather than going through each concept in the logging and visualization APIs, we'll
-instead just go through several examples, showing how you can use these simple
-primitives to get your LLM data-flywheel spinning for *any* LLM-powered application 🎡
+Despite the explosion of LLM tools, many of these are inflexible, overly abstracted, and complex to navigate.
 
-In general, the process for building high-quality LLM apps is simple:
+Tooling requirements constantly change across *projects*, across *teams*, and across *time*. We've therefore made Unify as simple, modular and hackable as possible, so you can spin up and iterate on the *exact* AI platform that **you** need, in **seconds** ⚡
 
-- Add unit tests (evals) ❓
-- See if they pass ✅
-- Iterate on system message, in-context example, available tools etc. until they do 🔁
-- Beta test with users and find failure modes from production traffic 🚦
-- Convert these into unit tests 🗂️
-- Repeat! 🔝
+Rather than going through each concept in detail, we explain interfaces through a collection of simple examples for different applications of **logging**, **debugging**, **evaluations**, and **data labelling**. This is by no means an exhaustive list (you can build an interface for pretty much *anything*), but it should give you an idea of how flexible and hackable interfaces are 🛠️
 
-The hardest part of this “flywheel” is the iteration step, where spotting patterns can
-be very difficult. Other great work looks to abstract this away, such as DSPy.
-These auto-optimization tools are really great in some contexts, but from our
-experience, the best LLM apps are built when a human is very much “in the loop” when it
-comes to iterations and prompt-engineering 🧑‍💻
-
-We've tried to make this as simple as possible,
-keeping *you* in the driving seat for *your* LLM application 🏎️
+Dive in to learn more! 🤿
