@@ -63,25 +63,30 @@
                         {
                             "group": "Logging",
                             "pages": [
-                                "interfaces/logging/logging"
+                                "interfaces/logging/traffic",
+                                "interfaces/logging/errors",
+                                "interfaces/logging/usage"
                             ]
                         },
                         {
                             "group": "Debugging",
                             "pages": [
-                                "interfaces/debugging/debugging"
+                                "interfaces/debugging/tests",
+                                "interfaces/debugging/traces"
                             ]
                         },
                         {
-                            "group": "Evaluations",
+                            "group": "Evaluating",
                             "pages": [
-                                "interfaces/evaluations/teaching_assistant"
+                                "interfaces/evaluating/teaching_assistant",
+                                "interfaces/evaluating/talk_to_your_crm"
                             ]
                         },
                         {
-                            "group": "Labelling",
+                            "group": "Interactive",
                             "pages": [
-                                "interfaces/labelling/labelling"
+                                "interfaces/interactive/labelling",
+                                "interfaces/interactive/optimizing"
                             ]
                         }
                     ]
