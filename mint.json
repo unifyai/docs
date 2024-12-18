@@ -57,12 +57,20 @@
                     ]
                 },
                 {
+                    "group": "Interfaces",
+                    "pages": [
+                        "interfaces/overview",
+                        "interfaces/teaching_assistant"
+                    ]
+                },
+                {
                     "group": "Universal API",
                     "pages": [
                         "universal_api/overview",
                         "universal_api/supported_endpoints",
                         "universal_api/making_queries",
                         "universal_api/arguments",
+                        "universal_api/supported_arguments",
                         "universal_api/prompts",
                         "universal_api/responses",
                         "universal_api/fine_tuning",
@@ -74,13 +82,6 @@
                     ]
                 },
                 {
-                    "group": "Data Flywheel",
-                    "pages": [
-                        "data_flywheel/overview",
-                        "data_flywheel/teaching_assistant"
-                    ]
-                },
-                {
                     "group": "Routing",
                     "pages": [
                         "routing/overview",
@@ -88,8 +89,7 @@
                         "routing/routing_syntax"
                     ]
                 },
-                "on_prem/overview",
-                "endpoint_status/endpoint_status"
+                "on_prem/overview"
             ]
         },
         {

@@ -182,7 +182,7 @@ There are three types of passthrough arguments:
     ```
 
 In the Python client, these extra arguments are handled by the `extra_headers` argument, `extra_query` argument,
-and direct `**kwargs` of the [generate function](https://docs.unify.ai/python/chat/clients/base#generate), respectively.
+and direct `**kwargs` of the `generate` function, respectively.
 
 For arguments which are part of the OpenAI standard **and also** another provider standard,
 then **only the OpenAI behaviour is supported**.
@@ -331,17 +331,14 @@ client.generate("hello world!", extra_headers={"anthropic-beta": "max-tokens-3-5
 
 All of these arguments (unified, platform and passthrough arguments) are supported in the Python SDK.
 The unified and platform arguments are explicitly mirrored in the
-[generate](https://docs.unify.ai/python/chat/clients/base#generate) function of the
-various derivative clients, such as
-[Unify](https://docs.unify.ai/python/chat/clients/uni_llm#unify) and
-[AsyncUnify](https://docs.unify.ai/python/chat/clients/uni_llm#asyncunify).
+`generate` function of the various derivative clients, such as `Unify` and `AsyncUnify`.
 
 ### Default Arguments
 
 When querying LLMs, you often want to keep many aspects of your prompt fixed,
 and only change a small subset of the prompt on each subsequent call.
 
-For example, you might want to fix the temperate, the system message,
+For example, you might want to fix the temperature, the system message,
 and the tools available, whilst passing different user messages coming from a downstream
 application. All of the clients in unify make this very simple via default arguments,
 which can be specified in the constructor,
@@ -408,6 +405,8 @@ client.set_temperature(0.5).set_n(2)
 assert client.temperature == 0.5
 assert client.n == 2
 ```
+
+A complete list of all endpoints, and the arguments that they support, are given on the next page.
 
 ## Feedback
 
