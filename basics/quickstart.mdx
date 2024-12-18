@@ -2,14 +2,7 @@
 title: 'Quick Start'
 ---
 
-It's easiest to get started using our Python client. Simply install the package:
-
-```bash
-pip install unifyai
-```
-
-[Sign up](https://console.unify.ai) to get your API key, [add your card details](https://console.unify.ai/billing).
-Then you're ready to go! 🚀
+[Sign up](https://console.unify.ai/), `pip install unifyai`, and make your first LLM query:
 
 ```python
 import unify
@@ -17,18 +10,56 @@ client = unify.Unify("gpt-4o@openai", api_key="UNIFY_KEY")
 client.generate("hello world!")
 ```
 
-You can also save your key as `UNIFY_KEY` in your environment variables, avoiding the need 
-to use the `api_key` argument.
+> [!NOTE]
+> We recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+> to add `UNIFY_KEY="My API Key"` to your `.env` file, avoiding the need to use the `api_key` argument as above.
 
-You can list all available endpoints like so, any of which can be passed into the client:
+You can list all available LLM endpoints, models and providers like so:
+
+```python
+unify.list_models()
+unify.list_providers()
+unify.list_endpoints()
+```
+
+Now you can run this toy evaluation ⬇️, check out the logs in your [dashboard](https://console.unify.ai/evals), and iterate 🔁 on your parameters to quickly get your application flying! 🪁
 
 ```python
 import unify
-import random
-endpoints = unify.list_endpoints()
-endpoint = random.choice(endpoints)
-client = unify.Unify(endpoint)
-client.generate("hello world!")
+from random import randint, choice
+
+# agent
+client = unify.Unify("gpt-4o@openai")
+client.set_system_message("You are a helpful maths assistant, tasked with adding and subtracting integers.")
+
+# test cases
+qs = [f"{randint(0, 100)} {choice(['+', '-'])} {randint(0, 100)}" for i in range(10)]
+
+# evaluator
+def evaluate_response(question: str, response: str) -> float:
+    correct_answer = eval(question)
+    try:
+        response_int = int(
+            "".join([c for c in response.split(" ")[-1] if c.isdigit()]),
+        )
+        return float(correct_answer == response_int)
+    except ValueError:
+        return 0.
+
+# evaluation
+def evaluate(q: str):
+    response = client.generate(q)
+    score = evaluate_response(q, response)
+    unify.log(
+        question=q,
+        response=response,
+        score=score
+    )
+
+# execute + log evaluation
+with unify.Project("Maths Assistant"):
+    with unify.Params(system_message=client.system_message):
+        unify.map(evaluate, qs)
 ```
 
-That's it! You now have all models and providers at your fingertips ✨
+A *complete* example of this Maths Assistant problem can be found [here](https://docs.unify.ai/data_flywheel/teaching_assistant).
