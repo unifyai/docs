@@ -3448,8 +3448,10 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "col1": "string",
-                                    "col2": "float"
+                                    "entries": {
+                                        "col1": "string",
+                                        "col2": "float"
+                                    }
                                 }
                             }
                         }
