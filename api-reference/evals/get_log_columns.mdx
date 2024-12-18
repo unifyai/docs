@@ -2,7 +2,7 @@
 title: 'Get Log Columns'
 api: 'GET /v0/logs/columns'
 ---
-Returns a list of filtered entries from a project.
+Returns a mapping of columns and their datatypes from a project.
 
 #### Authorizations
 
@@ -13,7 +13,7 @@ Returns a list of filtered entries from a project.
 #### Query Parameters
 
 <ParamField query="project" type="string" required="true">
-Name of the project to get entries from.
+Name of the project to get columns for.
 </ParamField>
 
 <RequestExample>
