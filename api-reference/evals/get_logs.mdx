@@ -52,24 +52,30 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-[
-    {
-        "id": "0",
-        "ts": "2024-10-30 12:20:03",
-        "entries": {
-            "key1": "a",
-            "key2": 1.0
+{
+    "params": {},
+    "logs": [
+        {
+            "id": "0",
+            "ts": "2024-10-30 12:20:03",
+            "entries": {
+                "key1": "a",
+                "key2": 1.0
+            },
+            "params": {}
+        },
+        {
+            "id": "1",
+            "ts": "2024-10-30 12:22:14",
+            "entries": {
+                "key1": "b",
+                "key2": 2.0
+            },
+            "params": {}
         }
-    },
-    {
-        "id": "1",
-        "ts": "2024-10-30 12:22:14",
-        "entries": {
-            "key1": "b",
-            "key2": 2.0
-        }
-    }
-]
+    ],
+    "count": 2
+}
 ```
 
 ```json 404

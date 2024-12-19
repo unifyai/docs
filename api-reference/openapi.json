@@ -3021,24 +3021,30 @@
                         "content": {
                             "application/json": {
                                 "schema": {},
-                                "example": [
-                                    {
-                                        "id": "0",
-                                        "ts": "2024-10-30 12:20:03",
-                                        "entries": {
-                                            "key1": "a",
-                                            "key2": 1.0
+                                "example": {
+                                    "params": {},
+                                    "logs": [
+                                        {
+                                            "id": "0",
+                                            "ts": "2024-10-30 12:20:03",
+                                            "entries": {
+                                                "key1": "a",
+                                                "key2": 1.0
+                                            },
+                                            "params": {}
+                                        },
+                                        {
+                                            "id": "1",
+                                            "ts": "2024-10-30 12:22:14",
+                                            "entries": {
+                                                "key1": "b",
+                                                "key2": 2.0
+                                            },
+                                            "params": {}
                                         }
-                                    },
-                                    {
-                                        "id": "1",
-                                        "ts": "2024-10-30 12:22:14",
-                                        "entries": {
-                                            "key1": "b",
-                                            "key2": 2.0
-                                        }
-                                    }
-                                ]
+                                    ],
+                                    "count": 2
+                                }
                             }
                         }
                     },
@@ -4712,8 +4718,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
