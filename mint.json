@@ -65,7 +65,8 @@
                             "pages": [
                                 "interfaces/logging/traffic/traffic",
                                 "interfaces/logging/errors/errors",
-                                "interfaces/logging/usage/usage"
+                                "interfaces/logging/usage/usage",
+                                "interfaces/logging/dashboard/dashboard"
                             ]
                         },
                         {
