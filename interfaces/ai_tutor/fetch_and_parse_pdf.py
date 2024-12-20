@@ -65,10 +65,14 @@ def parse_pdf_into_papers_and_markschemes():
 
 
 def parse_paper(paper_num):
-    question_detector = unify.Unify("gpt-4o@openai", cache=True,
-                                    system_message=QUESTION_DETECTION)
+    question_detector = unify.Unify(
+        "gpt-4o@openai", cache=True, system_message=QUESTION_DETECTION
+    )
     question_parser = unify.Unify("gpt-4o@openai", cache=True)
     diagram_detector = unify.Unify("gpt-4o@openai", cache=True)
+    text_only_detector = unify.Unify(
+        "gpt-4o@openai", cache=True, system_message=TEXT_ONLY_DETECTION
+    )
 
     paper_dir = os.path.join(pdf_dir, str(paper_num), "paper")
     os.makedirs(paper_dir, exist_ok=True)
@@ -189,7 +193,9 @@ def parse_paper(paper_num):
             )
         )
         question_parsed = question_parser.generate(current_text)
-        questions[question_num] = {"text": question_parsed}
+        response = text_only_detector.generate(question_parsed)
+        text_only = "yes" in response.split("\n")[-1].lower()
+        questions[question_num] = {"text": question_parsed, "text-only": text_only}
         parsed = json.dumps(questions, indent=4)
         with open(os.path.join(paper_dir, "parsed.json"), "w+") as file:
             file.write(parsed)

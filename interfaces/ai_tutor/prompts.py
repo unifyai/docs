@@ -52,6 +52,21 @@ You should *not* consider the preceding question {preceding} or subsequent quest
 simply respond either yes or no as the last part of your response, on a new line.
 """
 
+TEXT_ONLY_DETECTION = """
+Your task is to determine whether the following question can be answered in a 
+text-only manner, or if it requires drawing on the page in a non-textual manner.
+The answer can still be text-only even if there is a diagram as part of the question
+(not included in the text you're provided with).
+Presuming that the recipient *does* have access to any necessary diagrams, 
+we want to determine if the question can be trivially answered via alphanumeric text 
+with a keyboard.
+Please simply respond on a new line with yes if the question can be answered using 
+only a keyboard, and no if it requires drawing on the page in some way,
+like one of the following examples:
+yes
+no
+"""
+
 GENERATE_PROMPT = """
 Given the following question:
 {question}
