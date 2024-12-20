@@ -69,6 +69,7 @@ def parse_paper(paper_num):
     diagram_detector = unify.Unify("gpt-4o@openai", cache=True)
 
     paper_dir = os.path.join(pdf_dir, str(paper_num), "paper")
+    os.makedirs(paper_dir, exist_ok=True)
     paper_path = paper_dir + ".pdf"
 
     reader = PdfReader(paper_path)
@@ -83,9 +84,12 @@ def parse_paper(paper_num):
         latest_num = 0
         latest_char = "`"
         for page_num, page in enumerate(reader.pages):
+            page_num += 1
             text = page.extract_text()
             question_detector.set_system_message(
                 QUESTION_DETECTION.replace(
+                    "{page_number}", str(page_num)
+                ).replace(
                     "{n0}", str(latest_num + 1)
                 ).replace(
                     "{n1}", str(latest_num + 2)
@@ -101,6 +105,8 @@ def parse_paper(paper_num):
             )
             response = question_detector.generate(text)
             last_line = [v.strip() for v in response.split("\n")[-1].split(",")]
+            if not all(v.isdigit() or (len(v) == 1 and v.isalpha()) for v in last_line):
+                continue
             previous_q_overflow = last_line[0].isalpha()
             if previous_q_overflow:
                 question_to_pages[detected_numeric[-1]] += [page_num]
@@ -122,8 +128,8 @@ def parse_paper(paper_num):
 
     for question_num in range(1, num_questions + 1):
         pages = question_to_pages[question_num]
-        current_text = "".join([reader.pages[pg].extract_text() for pg in pages])
-        current_imgs = [all_images[pg] for pg in pages]
+        current_text = "".join([reader.pages[pg-1].extract_text() for pg in pages])
+        current_imgs = [all_images[pg-1] for pg in pages]
         question_parser.set_system_message(
             QUESTION_PARSER.replace(
                 "{question_number}", str(question_num)
@@ -164,7 +170,9 @@ def parse_paper(paper_num):
             ],
         )
         contains_diagram = "yes" in diagram_response.split("\n")[-1].strip().lower()
-        questions[question_num] = {"text": question_parsed}
+        questions[question_num] = {"text": question_parsed}#
+
+        # incrementally save to file
         if contains_diagram:
             img_dir = os.path.join(paper_dir, "imgs")
             os.makedirs(img_dir, exist_ok=True)
@@ -172,14 +180,13 @@ def parse_paper(paper_num):
             questions[question_num]["images"] = fnames
             for fname, img in zip(fnames, current_imgs):
                 cv2.imwrite(os.path.join(img_dir, fname), img)
-
-    parsed = json.dumps(questions, indent=4)
-    with open(os.path.join(paper_dir, "parsed.json"), "w+") as file:
-        file.write(parsed)
+        parsed = json.dumps(questions, indent=4)
+        with open(os.path.join(paper_dir, "parsed.json"), "w+") as file:
+            file.write(parsed)
 
 
 if __name__ == "__main__":
-    parse_pdf_into_papers_and_markschemes()
+    # parse_pdf_into_papers_and_markschemes()
     for subdir in sorted(os.listdir(pdf_dir)):
         target_fpath = os.path.join(pdf_dir, subdir, "paper/parsed.json")
         if not os.path.exists(target_fpath):
