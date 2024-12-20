@@ -176,10 +176,11 @@ def parse_paper(paper_num):
         if contains_diagram:
             img_dir = os.path.join(paper_dir, "imgs")
             os.makedirs(img_dir, exist_ok=True)
-            fnames = [f"{question_num}_{i}.png" for i in range(len(current_imgs))]
+            fnames = [f"page{pg}.png" for pg in pages]
             questions[question_num]["images"] = fnames
             for fname, img in zip(fnames, current_imgs):
-                cv2.imwrite(os.path.join(img_dir, fname), img)
+                if not os.path.exists(fname):
+                    cv2.imwrite(os.path.join(img_dir, fname), img)
         parsed = json.dumps(questions, indent=4)
         with open(os.path.join(paper_dir, "parsed.json"), "w+") as file:
             file.write(parsed)
