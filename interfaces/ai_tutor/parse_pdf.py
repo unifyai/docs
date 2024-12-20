@@ -75,6 +75,14 @@ def parse_paper(paper_num):
     reader = PdfReader(paper_path)
     questions = dict()
 
+    all_images = [
+        np.asarray(img.getdata()).reshape(img.size[1], img.size[0], 3).astype(
+            np.uint8)
+        for img in convert_from_path(paper_path)
+    ]
+
+    diagram_images = dict()
+
     def encode_image(image_path):
         _, buffer = cv2.imencode(".jpg", image_path)
         return base64.b64encode(buffer).decode("utf-8")
@@ -94,12 +102,43 @@ def parse_paper(paper_num):
         return parsed
 
     def parse_into_pages():
+        diagram_detector.set_system_message(DIAGRAM_DETECTION_ON_PAGE)
         question_to_pages = dict()
         latest_num = 0
         latest_char = "`"
         for page_num, page in enumerate(reader.pages):
             page_num += 1
             text = page.extract_text().split("OCR  2024  J560/0")[-1][2:]
+            # detect diagrams on page
+            img = all_images[page_num-1]
+            diagram_response = diagram_detector.generate(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                                       {
+                                           "type": "text",
+                                           "text": text
+                                       },
+                                       {
+                                           "type": "image_url",
+                                           "image_url": {
+                                               "url": f"data:image/jpeg;base64,"
+                                                      f"{encode_image(img)}",
+                                           },
+                                       }
+                                   ]
+                    },
+                ],
+            )
+            contains_diagram = "yes" in diagram_response.split("\n")[-1].strip().lower()
+            if contains_diagram:
+                diagram_images[page_num] = img
+                img_dir = os.path.join(paper_dir, "imgs")
+                os.makedirs(img_dir, exist_ok=True)
+                fname = f"page{page_num}.png"
+                if not os.path.exists(fname):
+                    cv2.imwrite(os.path.join(img_dir, fname), img)
             question_detector.set_system_message(
                 QUESTION_DETECTION.replace(
                     "{n0}", str(latest_num + 1)
@@ -133,17 +172,11 @@ def parse_paper(paper_num):
                 question_to_pages[question] = [page_num]
         return question_to_pages, max(detected_numeric)
 
-    all_images = [
-        np.asarray(img.getdata()).reshape(img.size[1], img.size[0], 3).astype(np.uint8)
-        for img in convert_from_path(paper_path)
-    ]
-
     question_to_pages, num_questions = parse_into_pages()
 
     for question_num in range(1, num_questions + 1):
         pages = question_to_pages[question_num]
         current_text = "".join([reader.pages[pg-1].extract_text() for pg in pages])
-        current_imgs = [all_images[pg-1] for pg in pages]
         question_parser.set_system_message(
             QUESTION_PARSER.replace(
                 "{question_number}", str(question_num)
@@ -154,8 +187,17 @@ def parse_paper(paper_num):
             )
         )
         question_parsed = question_parser.generate(current_text)
+        questions[question_num] = {"text": question_parsed}
+        parsed = json.dumps(questions, indent=4)
+        with open(os.path.join(paper_dir, "parsed.json"), "w+") as file:
+            file.write(parsed)
+
+        # image
+        imgs = [diagram_images[pg] for pg in pages if pg in diagram_images]
+        if not imgs:
+            continue
         diagram_detector.set_system_message(
-            DIAGRAM_DETECTION.replace(
+            DIAGRAM_DETECTION_IN_QUESTION.replace(
                 "{question_number}", str(question_num)
             ).replace(
                 "{preceding}", str(question_num - 1)
@@ -179,25 +221,21 @@ def parse_paper(paper_num):
                                            "url": f"data:image/jpeg;base64,{encode_image(img)}",
                                        },
                                    }
-                                   for img in current_imgs],
+                                   for img in imgs],
                 },
             ],
         )
         contains_diagram = "yes" in diagram_response.split("\n")[-1].strip().lower()
-        questions[question_num] = {"text": question_parsed}
-
         # incrementally save to file
-        if contains_diagram:
-            img_dir = os.path.join(paper_dir, "imgs")
-            os.makedirs(img_dir, exist_ok=True)
-            fnames = [f"page{pg}.png" for pg in pages]
-            questions[question_num]["images"] = fnames
-            for fname, img in zip(fnames, current_imgs):
-                if not os.path.exists(fname):
-                    cv2.imwrite(os.path.join(img_dir, fname), img)
-        parsed = json.dumps(questions, indent=4)
-        with open(os.path.join(paper_dir, "parsed.json"), "w+") as file:
-            file.write(parsed)
+        if not contains_diagram:
+            continue
+        img_dir = os.path.join(paper_dir, "imgs")
+        os.makedirs(img_dir, exist_ok=True)
+        fnames = [f"page{pg}.png" for pg in pages if pg in diagram_images]
+        questions[question_num]["images"] = fnames
+        for fname, img in zip(fnames, imgs):
+            if not os.path.exists(fname):
+                cv2.imwrite(os.path.join(img_dir, fname), img)
 
 
 if __name__ == "__main__":
