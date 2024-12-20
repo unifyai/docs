@@ -79,17 +79,37 @@ def parse_paper(paper_num):
         _, buffer = cv2.imencode(".jpg", image_path)
         return base64.b64encode(buffer).decode("utf-8")
 
+    def parse_question_detector(response):
+        chunks = response.split(",")
+        detected_qs = list()
+        for i, chunk in enumerate(reversed(chunks)):
+            if i == 0:
+                detected_qs.append(
+                    chunk.replace(
+                        "```", ""
+                        ).replace(
+                            "\n", ""
+                        ).replace(
+                            " ", ""
+                        )
+                )
+            elif "\n" in chunk:
+                detected_qs.append(chunk.split("\n")[-1].replace(" ", ""))
+                break
+            else:
+                detected_qs.append(chunk.replace(" ", ""))
+        detected_qs.reverse()
+        return detected_qs
+
     def parse_into_pages():
         question_to_pages = dict()
         latest_num = 0
         latest_char = "`"
         for page_num, page in enumerate(reader.pages):
             page_num += 1
-            text = page.extract_text()
+            text = page.extract_text().split("OCR  2024  J560/03")[-1]
             question_detector.set_system_message(
                 QUESTION_DETECTION.replace(
-                    "{page_number}", str(page_num)
-                ).replace(
                     "{n0}", str(latest_num + 1)
                 ).replace(
                     "{n1}", str(latest_num + 2)
@@ -104,16 +124,18 @@ def parse_paper(paper_num):
                 )
             )
             response = question_detector.generate(text)
-            last_line = [v.strip() for v in response.split("\n")[-1].split(",")]
-            if not all(v.isdigit() or (len(v) == 1 and v.isalpha()) for v in last_line):
+            detected_qs = parse_question_detector(response)
+            if not all(
+                    v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
+            ):
                 continue
-            previous_q_overflow = last_line[0].isalpha()
+            previous_q_overflow = detected_qs[0].isalpha()
             if previous_q_overflow:
                 question_to_pages[detected_numeric[-1]] += [page_num]
-            detected_numeric = [int(v) for v in last_line if v.isnumeric()]
+            detected_numeric = [int(v) for v in detected_qs if v.isnumeric()]
             if detected_numeric:
                 latest_num = max(detected_numeric)
-            last_question = last_line[-1]
+            last_question = detected_qs[-1]
             latest_char = "`" if last_question.isnumeric() else last_question
             for question in detected_numeric:
                 question_to_pages[question] = [page_num]
@@ -170,7 +192,7 @@ def parse_paper(paper_num):
             ],
         )
         contains_diagram = "yes" in diagram_response.split("\n")[-1].strip().lower()
-        questions[question_num] = {"text": question_parsed}#
+        questions[question_num] = {"text": question_parsed}
 
         # incrementally save to file
         if contains_diagram:

@@ -3,25 +3,27 @@ Your task is to detect the numeric question numbers [1, 2, 3 etc.] and letter qu
 
 Please **do not** include sub-questions such as (i), (ii), (iii) etc.
 
-Page numbers are often presented at the top or bottom of the page, these should also be ignored. 
-
 When deciding whether the number refers to a question, look at the *subsequent text*.
 
-Does it look like a question or a description of a problem for subsequent questioning? If so, then it's likely a question. If not, then the number or letter likely does not refer to a question, but something else like a page number.
+Does it look like a question or a description of a problem for subsequent 
+questioning? If so, then it's likely a question.
 
 The first question on the page can either be a number (new question) or a letter (continuation of question on the previous page).
 
 Please respond in the exact order presented on the current page, starting either with a number or a letter, whichever appears on the page first.
 
-The current page number is {page_number}, which should be ignored.
-If there are any numbered questions on the page, the first *number* will be `{n0}`. 
-The presence of this specific number before any explanatory text or question means 
-that this represents the question number, and should be included in your answer. 
-If there are any letters on the page, the first *letter* will be `{c0}`.
+If there are any numbered questions on the page, then the first of these numbers will be `{n0}`. 
+The presence of this specific number {n0} before any explanatory text or question means that this represents the question number, and should be included in your answer. 
+If there are any letters on the page, the *first* letter will be `{c0}`.
 
-Please respond with a single comma separated list of numbers and letters on a new line, like either of the two examples below:
+Think through your reasoning in detail, step by step.
+
+As the final part of your response, please respond with a single comma separated list of 
+numbers and letters on a new line, like either of the two examples below:
 {n0}, a, b, {n1}, a, {n2}, a, b, c
 {c0}, {c1}, {c2}, {n0}, a, b
+
+If you do not see any clear questions on the page, then just explain why, with no comma-seperated list at the end.
 """
 
 QUESTION_PARSER = """
