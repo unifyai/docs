@@ -80,26 +80,18 @@ def parse_paper(paper_num):
         return base64.b64encode(buffer).decode("utf-8")
 
     def parse_question_detector(response):
-        chunks = response.split(",")
-        detected_qs = list()
-        for i, chunk in enumerate(reversed(chunks)):
-            if i == 0:
-                detected_qs.append(
-                    chunk.replace(
-                        "```", ""
-                        ).replace(
-                            "\n", ""
-                        ).replace(
-                            " ", ""
-                        )
-                )
-            elif "\n" in chunk:
-                detected_qs.append(chunk.split("\n")[-1].replace(" ", ""))
-                break
-            else:
-                detected_qs.append(chunk.replace(" ", ""))
-        detected_qs.reverse()
-        return detected_qs
+        parsed = response.split(
+            "answer:"
+        )[-1].replace(
+            "\n", ""
+        ).replace(
+            "`", ""
+        ).replace(
+            " ", ""
+        ).split(
+            ","
+        )
+        return parsed
 
     def parse_into_pages():
         question_to_pages = dict()
@@ -107,7 +99,7 @@ def parse_paper(paper_num):
         latest_char = "`"
         for page_num, page in enumerate(reader.pages):
             page_num += 1
-            text = page.extract_text().split("OCR  2024  J560/03")[-1]
+            text = page.extract_text().split("OCR  2024  J560/0")[-1][2:]
             question_detector.set_system_message(
                 QUESTION_DETECTION.replace(
                     "{n0}", str(latest_num + 1)

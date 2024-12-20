@@ -18,10 +18,10 @@ If there are any letters on the page, the *first* letter will be `{c0}`.
 
 Think through your reasoning in detail, step by step.
 
-As the final part of your response, please respond with a single comma separated list of 
-numbers and letters on a new line, like either of the two examples below:
-{n0}, a, b, {n1}, a, {n2}, a, b, c
-{c0}, {c1}, {c2}, {n0}, a, b
+As the final part of your response, please respond with "answer: " followed by a 
+single comma separated list of numbers and letters on a new line, like either of the two examples below:
+answer: {n0}, a, b, {n1}, a, {n2}, a, b, c
+answer: {c0}, {c1}, {c2}, {n0}, a, b
 
 If you do not see any clear questions on the page, then just explain why, with no comma-seperated list at the end.
 """
