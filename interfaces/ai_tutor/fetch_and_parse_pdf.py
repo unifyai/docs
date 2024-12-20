@@ -1,5 +1,6 @@
 import os
 import cv2
+import wget
 import json
 import base64
 import numpy as np
@@ -9,11 +10,15 @@ from pdf2image import convert_from_path
 import unify
 from prompts import *
 
-fname = "169000-foundation-tier-sample-assessment-materials.pdf"
+url = ("https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment"
+       "-materials.pdf")
 this_dir = os.path.dirname(__file__)
 pdfs_dir = os.path.join(this_dir, "pdfs")
+os.makedirs(pdfs_dir, exist_ok=True)
+fname = wget.download(url, out=pdfs_dir)
 pdf_path = os.path.join(pdfs_dir, fname)
 pdf_dir = os.path.join(pdfs_dir, fname[:-4])
+os.makedirs(pdf_dir, exist_ok=True)
 reader = PdfReader(pdf_path)
 
 
@@ -33,13 +38,10 @@ def parse_pdf_into_papers_and_markschemes():
             markscheme_cover_pages.append(i)
             looking_for_paper = True
 
-    pdf_subdir = os.path.join(pdfs_dir, fname[:-4])
-    os.makedirs(pdf_subdir, exist_ok=True)
-
     left_pointer = paper_cover_pages.pop(0)
     count = 1
     while paper_cover_pages or markscheme_cover_pages:
-        count_dir = os.path.join(pdf_subdir, str(count))
+        count_dir = os.path.join(pdf_dir, str(count))
         os.makedirs(count_dir, exist_ok=True)
         # paper
         writer = PdfWriter()
@@ -239,7 +241,7 @@ def parse_paper(paper_num):
 
 
 if __name__ == "__main__":
-    # parse_pdf_into_papers_and_markschemes()
+    parse_pdf_into_papers_and_markschemes()
     for subdir in sorted(os.listdir(pdf_dir)):
         target_fpath = os.path.join(pdf_dir, subdir, "paper/parsed.json")
         if not os.path.exists(target_fpath):
