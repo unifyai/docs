@@ -13,7 +13,10 @@ The first question on the page can either be a number (new question) or a letter
 
 Please respond in the exact order presented on the current page, starting either with a number or a letter, whichever appears on the page first.
 
-If there are any numbers on the page, the first *number* will be `{n0}`.
+The current page number is {page_number}, which should be ignored.
+If there are any numbered questions on the page, the first *number* will be `{n0}`. 
+The presence of this specific number before any explanatory text or question means 
+that this represents the question number, and should be included in your answer. 
 If there are any letters on the page, the first *letter* will be `{c0}`.
 
 Please respond with a single comma separated list of numbers and letters on a new line, like either of the two examples below:
