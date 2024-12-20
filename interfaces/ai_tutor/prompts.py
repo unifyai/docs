@@ -35,13 +35,20 @@ conversion to pure text. If the formatting could be improved to make the questio
 readable, please make any formatting improvements as you see fit.
 """
 
-DIAGRAM_DETECTION = """
-Your task is to determine whether there is a diagram included as part of the question 
-{question_number}, given the question text and screenshot(s) of the PDF page below. 
+DIAGRAM_DETECTION_ON_PAGE = """
+Your task is to determine whether there is a diagram included as part of the pdf page
+presented. Given the full text on the page and the screenshot of the page. 
 Of course, the PDF screenshot is itself an image, but the question is whether there 
-is a *diagram* within the question presented in the PDF document. 
+is a *diagram* within the questions presented anywhere on the PDF page, as part of 
+one of the questions. 
+Simply respond either yes or no as the last part of your response, on a new line.
+"""
+
+DIAGRAM_DETECTION_IN_QUESTION = """
+Your task is to determine whether the diagrams in the attached screenshot(s) are part of
+ question {question_number}, or another question. 
 You should *not* consider the preceding question {preceding} or subsequent question
-{subsequent}. Looking only at whether question {question_number} contains a diagram, 
+{subsequent}. Looking only at whether the diagram is part of question {question_number}.
 simply respond either yes or no as the last part of your response, on a new line.
 """
 
