@@ -3013,6 +3013,16 @@
                             "default": 0,
                             "title": "Offset"
                         }
+                    },
+                    {
+                        "name": "return_ids_only",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Return Ids Only"
+                        }
                     }
                 ],
                 "responses": {
@@ -4718,8 +4728,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
