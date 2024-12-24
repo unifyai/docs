@@ -20,12 +20,12 @@ If present, it will override the inferred type of any matching key in all logs.
 List of log IDs to update with new or overriding entries.
 </ParamField>
 
-<ParamField body="params" type="object"  default={{}}>
-Dictionary of key-value parameter pairs to add or update in the logs.
+<ParamField body="params" type="object | array"  default={{}}>
+Dictionary or list of dictionaries of key-value parameter pairs to add or update in the logs.
 </ParamField>
 
-<ParamField body="entries" type="object"  default={{}}>
-Dictionary of key-value entry pairs to add or update in the logs.
+<ParamField body="entries" type="object | array"  default={{}}>
+Dictionary or list of dictionaries of key-value entry pairs to add or update in the logs.
 </ParamField>
 
 <ParamField body="overwrite" type="boolean"  default={false}>

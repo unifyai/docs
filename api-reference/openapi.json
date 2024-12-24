@@ -5208,9 +5208,19 @@
                         ]
                     },
                     "params": {
-                        "type": "object",
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "items": {
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        ],
                         "title": "Params",
-                        "description": "Dictionary of key-value parameter pairs to add or update in the logs.",
+                        "description": "Dictionary or list of dictionaries of key-value parameter pairs to add or update in the logs.",
                         "default": {},
                         "example": {
                             "explicit_types": {
@@ -5221,9 +5231,19 @@
                         }
                     },
                     "entries": {
-                        "type": "object",
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "items": {
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        ],
                         "title": "Entries",
-                        "description": "Dictionary of key-value entry pairs to add or update in the logs.",
+                        "description": "Dictionary or list of dictionaries of key-value entry pairs to add or update in the logs.",
                         "default": {},
                         "example": {
                             "explicit_types": {
