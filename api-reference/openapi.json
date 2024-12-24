@@ -3298,6 +3298,32 @@
                         },
                         "description": "Boolean string to filter entries. TODO: Detailed page.",
                         "example": "len(output) > 200 and temperature == 0.5"
+                    },
+                    {
+                        "name": "log_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Log ids to include in the reduction operation. If none, then all logs are included in the search (before the filtering is applied).",
+                            "title": "Log Ids"
+                        },
+                        "description": "Log ids to include in the reduction operation. If none, then all logs are included in the search (before the filtering is applied).",
+                        "example": [
+                            1,
+                            2,
+                            3
+                        ]
                     }
                 ],
                 "responses": {
