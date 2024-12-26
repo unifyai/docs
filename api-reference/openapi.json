@@ -3230,6 +3230,137 @@
                 }
             }
         },
+        "/v0/logs/latest_timestamp": {
+            "get": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Get Logs Latest Timestamp",
+                "description": "Returns the update timestamp of the most recently updated log within the specified\npage and filter bounds.",
+                "operationId": "get_logs_latest_timestamp_v0_logs_latest_timestamp_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get entries from.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get entries from.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "filter_expr",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Boolean string to filter entries. TODO: Detailed page.",
+                            "title": "Filter Expr"
+                        },
+                        "description": "Boolean string to filter entries. TODO: Detailed page.",
+                        "example": "len(output) > 200 and temperature == 0.5"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "integer",
+                                    "maximum": 200,
+                                    "minimum": 1
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Offset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "params": {},
+                                    "logs": [
+                                        {
+                                            "id": "0",
+                                            "ts": "2024-10-30 12:20:03",
+                                            "entries": {
+                                                "key1": "a",
+                                                "key2": 1.0
+                                            },
+                                            "params": {}
+                                        },
+                                        {
+                                            "id": "1",
+                                            "ts": "2024-10-30 12:22:14",
+                                            "entries": {
+                                                "key1": "b",
+                                                "key2": 2.0
+                                            },
+                                            "params": {}
+                                        }
+                                    ],
+                                    "count": 2
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/logs/metric/{metric}/{key}": {
             "get": {
                 "tags": [
