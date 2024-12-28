@@ -10,6 +10,12 @@ Deletes a specific entry from multiple logs.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
+#### Query Parameters
+
+<ParamField query="delete_empty_logs" type="boolean" >
+Whether to delete logs which end up being empty as a result of the field deletion.
+</ParamField>
+
 #### Body
 
 <ParamField body="fields" type="[array]" required="true">
@@ -20,8 +26,8 @@ List of lists of log ID(s) and field(s) to delete, either as an individual item 
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/logs/fields' \
-  --header "Authorization: Bearer $UNIFY_KEY" \
+  --url 'https://api.unify.ai/v0/logs/fields?delete_empty_logs=True' \
+  --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{
     "fields": [
@@ -54,7 +60,7 @@ curl --request DELETE \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/fields"
+url = "https://api.unify.ai/v0/logs/fields?delete_empty_logs=True"
 
 headers = {"Authorization": "Bearer <token>"}
 
