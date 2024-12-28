@@ -3587,14 +3587,14 @@
                 }
             }
         },
-        "/v0/logs/columns": {
+        "/v0/logs/fields": {
             "get": {
                 "tags": [
                     "Evals"
                 ],
-                "summary": "Get Log Columns",
-                "description": "Returns a mapping of columns and their datatypes from a project.",
-                "operationId": "get_log_columns_v0_logs_columns_get",
+                "summary": "Get Log Fields",
+                "description": "Returns a mapping of fields and their datatypes from a project.",
+                "operationId": "get_log_fields_v0_logs_fields_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3607,10 +3607,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the project to get columns for.",
+                            "description": "Name of the project to get fields for.",
                             "title": "Project"
                         },
-                        "description": "Name of the project to get columns for.",
+                        "description": "Name of the project to get fields for.",
                         "example": "eval-project"
                     }
                 ],
