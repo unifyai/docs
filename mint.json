@@ -450,11 +450,11 @@
                                 "api-reference/evals/update_logs",
                                 "api-reference/evals/get_logs",
                                 "api-reference/evals/delete_log_fields",
+                                "api-reference/evals/get_log_fields",
                                 "api-reference/evals/get_log",
                                 "api-reference/evals/get_logs_latest_timestamp",
                                 "api-reference/evals/get_logs_metric",
-                                "api-reference/evals/get_log_groups",
-                                "api-reference/evals/get_log_fields"
+                                "api-reference/evals/get_log_groups"
                             ]
                         }
                     ]

@@ -3081,31 +3081,17 @@
                 }
             }
         },
-        "/v0/logs/field/{field}": {
+        "/v0/logs/fields": {
             "delete": {
                 "tags": [
                     "Evals"
                 ],
                 "summary": "Delete Log Fields",
                 "description": "Deletes a specific entry from multiple logs.",
-                "operationId": "delete_log_fields_v0_logs_field__field__delete",
+                "operationId": "delete_log_fields_v0_logs_fields_delete",
                 "security": [
                     {
                         "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "field",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the field to delete from the given logs. This can be a param or an entry",
-                            "title": "Field"
-                        },
-                        "description": "Name of the field to delete from the given logs. This can be a param or an entry",
-                        "example": "entry-v0"
                     }
                 ],
                 "requestBody": {
@@ -3146,6 +3132,69 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Log entry <entry> not found in one or more logs."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Get Log Fields",
+                "description": "Returns a mapping of fields and their datatypes from a project.",
+                "operationId": "get_log_fields_v0_logs_fields_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get fields for.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get fields for.",
+                        "example": "eval-project"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "entries": {
+                                        "col1": "string",
+                                        "col2": "float"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -3561,71 +3610,6 @@
                                         "value": "Second version of the system prompt"
                                     }
                                 ]
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/logs/fields": {
-            "get": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Get Log Fields",
-                "description": "Returns a mapping of fields and their datatypes from a project.",
-                "operationId": "get_log_fields_v0_logs_fields_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to get fields for.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project to get fields for.",
-                        "example": "eval-project"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "entries": {
-                                        "col1": "string",
-                                        "col2": "float"
-                                    }
-                                }
                             }
                         }
                     },
@@ -5266,24 +5250,73 @@
             },
             "DeleteLogEntryRequest": {
                 "properties": {
-                    "ids": {
+                    "fields": {
                         "items": {
-                            "type": "integer"
+                            "prefixItems": [
+                                {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "type": "array"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "anyOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "type": "array"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "type": "array",
+                            "maxItems": 2,
+                            "minItems": 2
                         },
                         "type": "array",
                         "minItems": 1,
-                        "title": "Ids",
-                        "description": "List of log IDs to delete the entry from.",
+                        "title": "Fields",
+                        "description": "List of lists of log ID(s) and field(s) to delete, either as an individual item or a list of items.",
                         "example": [
-                            123,
-                            456,
-                            789
+                            [
+                                123,
+                                "score"
+                            ],
+                            [
+                                [
+                                    456,
+                                    457
+                                ],
+                                [
+                                    "score",
+                                    "response"
+                                ]
+                            ],
+                            [
+                                [
+                                    458,
+                                    459,
+                                    460
+                                ],
+                                "response"
+                            ]
                         ]
                     }
                 },
                 "type": "object",
                 "required": [
-                    "ids"
+                    "fields"
                 ],
                 "title": "DeleteLogEntryRequest"
             },
