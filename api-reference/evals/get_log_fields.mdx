@@ -1,8 +1,8 @@
 ---
-title: 'Get Log Columns'
-api: 'GET /v0/logs/columns'
+title: 'Get Log Fields'
+api: 'GET /v0/logs/fields'
 ---
-Returns a mapping of columns and their datatypes from a project.
+Returns a mapping of fields and their datatypes from a project.
 
 #### Authorizations
 
@@ -13,21 +13,21 @@ Returns a mapping of columns and their datatypes from a project.
 #### Query Parameters
 
 <ParamField query="project" type="string" required="true">
-Name of the project to get columns for.
+Name of the project to get fields for.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs/columns?project=eval-project' \
+  --url 'https://api.unify.ai/v0/logs/fields?project=eval-project' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/columns?project=eval-project"
+url = "https://api.unify.ai/v0/logs/fields?project=eval-project"
 
 headers = {"Authorization": "Bearer <token>"}
 
