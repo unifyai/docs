@@ -3651,6 +3651,164 @@
                 }
             }
         },
+        "/v0/interface": {
+            "get": {
+                "tags": [
+                    "Interface"
+                ],
+                "summary": "Get Interface",
+                "operationId": "get_interface_v0_interface_get",
+                "responses": {
+                    "200": {
+                        "description": "Interface retrieved.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "items": [
+                                        {
+                                            "i": "n0",
+                                            "x": 0,
+                                            "y": 0,
+                                            "w": 3,
+                                            "h": 3
+                                        },
+                                        {
+                                            "i": "n1",
+                                            "x": 0,
+                                            "y": 1,
+                                            "w": 2,
+                                            "h": 3,
+                                            "tab": "Plot_1"
+                                        }
+                                    ],
+                                    "new_counter": 2
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Interface Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": "Interface not added yet. Create it first."
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Interface"
+                ],
+                "summary": "Update Interface",
+                "operationId": "update_interface_v0_interface_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InterfaceConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Interface updated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "info": "Interface updated successfully!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Interface Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": "Interface not added yet. Create it first."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Interface"
+                ],
+                "summary": "Create Interface",
+                "operationId": "create_interface_v0_interface_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InterfaceConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Interface created.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Interface created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Interface already exists.",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "info": "Interface already exists, update the interface instead."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/router/train": {
             "post": {
                 "tags": [
@@ -5390,6 +5548,72 @@
                 },
                 "type": "object",
                 "title": "HTTPValidationError"
+            },
+            "InterfaceConfig": {
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/Item"
+                        },
+                        "type": "array",
+                        "title": "Items"
+                    },
+                    "new_counter": {
+                        "type": "integer",
+                        "title": "New Counter"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "items",
+                    "new_counter"
+                ],
+                "title": "InterfaceConfig"
+            },
+            "Item": {
+                "properties": {
+                    "i": {
+                        "type": "string",
+                        "title": "I"
+                    },
+                    "x": {
+                        "type": "integer",
+                        "title": "X"
+                    },
+                    "y": {
+                        "type": "integer",
+                        "title": "Y"
+                    },
+                    "w": {
+                        "type": "integer",
+                        "title": "W"
+                    },
+                    "h": {
+                        "type": "integer",
+                        "title": "H"
+                    },
+                    "tab": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tab"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "i",
+                    "x",
+                    "y",
+                    "w",
+                    "h",
+                    "tab"
+                ],
+                "title": "Item"
             },
             "ProjectConfig": {
                 "properties": {
