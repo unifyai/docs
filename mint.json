@@ -456,6 +456,14 @@
                                 "api-reference/evals/get_logs_metric",
                                 "api-reference/evals/get_log_groups"
                             ]
+                        },
+                        {
+                            "group": "Interface",
+                            "pages": [
+                                "api-reference/interface/get_interface",
+                                "api-reference/interface/update_interface",
+                                "api-reference/interface/create_interface"
+                            ]
                         }
                     ]
                 },
