@@ -5602,6 +5602,14 @@
                             }
                         ],
                         "title": "Tab"
+                    },
+                    "moved": {
+                        "type": "boolean",
+                        "title": "Moved"
+                    },
+                    "static": {
+                        "type": "boolean",
+                        "title": "Static"
                     }
                 },
                 "type": "object",
@@ -5611,7 +5619,9 @@
                     "y",
                     "w",
                     "h",
-                    "tab"
+                    "tab",
+                    "moved",
+                    "static"
                 ],
                 "title": "Item"
             },
