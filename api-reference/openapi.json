@@ -5042,8 +5042,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -5592,6 +5592,14 @@
                         "type": "integer",
                         "title": "H"
                     },
+                    "moved": {
+                        "type": "boolean",
+                        "title": "Moved"
+                    },
+                    "static": {
+                        "type": "boolean",
+                        "title": "Static"
+                    },
                     "tab": {
                         "anyOf": [
                             {
@@ -5602,14 +5610,6 @@
                             }
                         ],
                         "title": "Tab"
-                    },
-                    "moved": {
-                        "type": "boolean",
-                        "title": "Moved"
-                    },
-                    "static": {
-                        "type": "boolean",
-                        "title": "Static"
                     }
                 },
                 "type": "object",
@@ -5619,7 +5619,6 @@
                     "y",
                     "w",
                     "h",
-                    "tab",
                     "moved",
                     "static"
                 ],
