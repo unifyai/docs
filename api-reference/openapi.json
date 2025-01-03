@@ -2967,6 +2967,18 @@
                         "example": "eval-project"
                     },
                     {
+                        "name": "context",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
+                            "title": "Context"
+                        },
+                        "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
+                        "example": "subjects/science/physics"
+                    },
+                    {
                         "name": "filter_expr",
                         "in": "query",
                         "required": false,
@@ -5042,8 +5054,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
