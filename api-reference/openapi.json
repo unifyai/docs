@@ -2998,6 +2998,28 @@
                         "example": "len(output) > 200 and temperature == 0.5"
                     },
                     {
+                        "name": "sorting",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.",
+                            "title": "Sorting"
+                        },
+                        "description": "Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.",
+                        "example": {
+                            "score": "ascending",
+                            "timestamp": "descending"
+                        }
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "required": false,
