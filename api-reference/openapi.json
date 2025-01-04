@@ -3685,6 +3685,149 @@
                 }
             }
         },
+        "/v0/logs/field_typing": {
+            "get": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Get Field Typing",
+                "description": "Returns a dictionary of field names and their types for the specified project.\nStrongly typed fields return their type, while others return None.",
+                "operationId": "get_field_typing_v0_logs_field_typing_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get field types for.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get field types for.",
+                        "example": "eval-project"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "field1": "string",
+                                    "field2": "int"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Set Field Typing",
+                "description": "Sets the typing for specified fields in the project.",
+                "operationId": "set_field_typing_v0_logs_field_typing_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get field types for.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get field types for.",
+                        "example": "eval-project"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SetFieldTypingRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Field typing updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Field typing updated successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Type mismatch or other validation errors.",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Cannot enable typing for field '<field_name>' as existing logs have different types."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/interface": {
             "get": {
                 "tags": [
@@ -5334,6 +5477,22 @@
                             "input": "...",
                             "score-test-1": "..."
                         }
+                    },
+                    "strongly_typed": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Strongly Typed",
+                        "description": "Enforce strong typing for fields.",
+                        "default": true
                     }
                 },
                 "type": "object",
@@ -5673,6 +5832,23 @@
                 ],
                 "title": "ProjectConfig"
             },
+            "SetFieldTypingRequest": {
+                "properties": {
+                    "types": {
+                        "additionalProperties": {
+                            "type": "boolean"
+                        },
+                        "type": "object",
+                        "title": "Types",
+                        "description": "Dict of field names and booleans as to whether the field should be typed."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "types"
+                ],
+                "title": "SetFieldTypingRequest"
+            },
             "UpdateLogRequest": {
                 "properties": {
                     "ids": {
@@ -5741,6 +5917,22 @@
                         "description": "Whether to overwrite existing logs",
                         "default": false,
                         "example": false
+                    },
+                    "strongly_typed": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Strongly Typed",
+                        "description": "Enforce strong typing for fields.",
+                        "default": true
                     }
                 },
                 "type": "object",
