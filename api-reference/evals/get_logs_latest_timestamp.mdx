@@ -17,8 +17,16 @@ page and filter bounds.
 Name of the project to get entries from.
 </ParamField>
 
+<ParamField query="context" type="string | null" >
+The context (prepending '/' seperated field names) from which to retrieve the logs.
+</ParamField>
+
 <ParamField query="filter_expr" type="string | null" >
 Boolean string to filter entries. TODO: Detailed page.
+</ParamField>
+
+<ParamField query="sorting" type="string | null" >
+Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.
 </ParamField>
 
 <ParamField query="limit" type="integer | null" >
@@ -33,14 +41,14 @@ Boolean string to filter entries. TODO: Detailed page.
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs/latest_timestamp?project=eval-project&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&limit=None&offset=None' \
+  --url 'https://api.unify.ai/v0/logs/latest_timestamp?project=eval-project&context=subjects/science/physics&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&limit=None&offset=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/latest_timestamp?project=eval-project&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&limit=None&offset=None"
+url = "https://api.unify.ai/v0/logs/latest_timestamp?project=eval-project&context=subjects/science/physics&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&limit=None&offset=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
