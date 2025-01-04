@@ -3027,6 +3027,58 @@
                         }
                     },
                     {
+                        "name": "from_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                            "title": "From Ids"
+                        },
+                        "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                        "example": [
+                            0,
+                            1,
+                            2
+                        ]
+                    },
+                    {
+                        "name": "exclude_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                            "title": "Exclude Ids"
+                        },
+                        "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                        "example": [
+                            0,
+                            1,
+                            2
+                        ]
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "required": false,
@@ -3420,6 +3472,58 @@
                             "score": "ascending",
                             "timestamp": "descending"
                         }
+                    },
+                    {
+                        "name": "from_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                            "title": "From Ids"
+                        },
+                        "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                        "example": [
+                            0,
+                            1,
+                            2
+                        ]
+                    },
+                    {
+                        "name": "exclude_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                            "title": "Exclude Ids"
+                        },
+                        "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                        "example": [
+                            0,
+                            1,
+                            2
+                        ]
                     },
                     {
                         "name": "limit",
