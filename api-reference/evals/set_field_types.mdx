@@ -1,8 +1,8 @@
 ---
-title: 'Get Log Fields'
-api: 'GET /v0/logs/fields'
+title: 'Set Field Types'
+api: 'POST /v0/logs/fields/types'
 ---
-Returns a mapping of fields and their datatypes from a project.
+Sets the typing for specified fields in the project.
 
 #### Authorizations
 
@@ -13,25 +13,35 @@ Returns a mapping of fields and their datatypes from a project.
 #### Query Parameters
 
 <ParamField query="project" type="string" required="true">
-Name of the project to get fields for.
+Name of the project to get field types for.
+</ParamField>
+
+#### Body
+
+<ParamField body="types" type="object" required="true">
+Dict of field names and booleans as to whether the field should be typed.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request GET \
-  --url 'https://api.unify.ai/v0/logs/fields?project=eval-project' \
+curl --request POST \
+  --url 'https://api.unify.ai/v0/logs/fields/types?project=eval-project' \
   --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/fields?project=eval-project"
+url = "https://api.unify.ai/v0/logs/fields/types?project=eval-project"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("GET", url, headers=headers)
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
@@ -41,10 +51,13 @@ print(response.text)
 
 ```json 200
 {
-    "entries": {
-        "col1": "string",
-        "col2": "float"
-    }
+    "info": "Field typing updated successfully!"
+}
+```
+
+```json 400
+{
+    "detail": "Cannot enable typing for field '<field_name>' as existing logs have different types."
 }
 ```
 

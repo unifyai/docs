@@ -3260,9 +3260,9 @@
                 "tags": [
                     "Evals"
                 ],
-                "summary": "Get Log Fields",
-                "description": "Returns a mapping of fields and their datatypes from a project.",
-                "operationId": "get_log_fields_v0_logs_fields_get",
+                "summary": "Get Fields",
+                "description": "Returns a dictionary of field names and their types for the specified project.\nStrongly typed fields return their type, while others return None.",
+                "operationId": "get_fields_v0_logs_fields_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3275,10 +3275,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the project to get fields for.",
+                            "description": "Name of the project to get fields and their types for.",
                             "title": "Project"
                         },
-                        "description": "Name of the project to get fields for.",
+                        "description": "Name of the project to get fields and their types for.",
                         "example": "eval-project"
                     }
                 ],
@@ -3289,10 +3289,8 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "entries": {
-                                        "col1": "string",
-                                        "col2": "float"
-                                    }
+                                    "field1": "string",
+                                    "field2": "int"
                                 }
                             }
                         }
@@ -3837,75 +3835,14 @@
                 }
             }
         },
-        "/v0/logs/field_typing": {
-            "get": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Get Field Typing",
-                "description": "Returns a dictionary of field names and their types for the specified project.\nStrongly typed fields return their type, while others return None.",
-                "operationId": "get_field_typing_v0_logs_field_typing_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to get field types for.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project to get field types for.",
-                        "example": "eval-project"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "field1": "string",
-                                    "field2": "int"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
+        "/v0/logs/fields/types": {
             "post": {
                 "tags": [
                     "Evals"
                 ],
-                "summary": "Set Field Typing",
+                "summary": "Set Field Types",
                 "description": "Sets the typing for specified fields in the project.",
-                "operationId": "set_field_typing_v0_logs_field_typing_post",
+                "operationId": "set_field_types_v0_logs_fields_types_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -5371,8 +5308,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
