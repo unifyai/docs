@@ -3609,14 +3609,14 @@
                 }
             }
         },
-        "/v0/logs/metric/{metric}/{key}": {
+        "/v0/logs/metric/{metric}": {
             "get": {
                 "tags": [
                     "Evals"
                 ],
                 "summary": "Get Logs Metric",
                 "description": "Returns the reduction metric for filtered values for a specific key from a project.",
-                "operationId": "get_logs_metric_v0_logs_metric__metric___key__get",
+                "operationId": "get_logs_metric_v0_logs_metric__metric__get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3637,7 +3637,7 @@
                     },
                     {
                         "name": "key",
-                        "in": "path",
+                        "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -3748,7 +3748,7 @@
                                             "type": "boolean"
                                         }
                                     ],
-                                    "title": "Response Get Logs Metric V0 Logs Metric  Metric   Key  Get"
+                                    "title": "Response Get Logs Metric V0 Logs Metric  Metric  Get"
                                 },
                                 "example": 4.56
                             }
@@ -5334,8 +5334,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
