@@ -4044,12 +4044,135 @@
             }
         },
         "/v0/interface": {
+            "post": {
+                "tags": [
+                    "Interface"
+                ],
+                "summary": "Create Interface",
+                "operationId": "create_interface_v0_interface_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InterfaceConfig"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Interface created.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Interface created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Interface already exists.",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "info": "Interface already exists, update the interface instead."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Interface"
+                ],
+                "summary": "Update Interface",
+                "operationId": "update_interface_v0_interface_put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InterfaceConfig"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Interface updated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "info": "Interface updated successfully!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Interface Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": "Interface not added yet. Create it first."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "get": {
                 "tags": [
                     "Interface"
                 ],
                 "summary": "Get Interface",
                 "operationId": "get_interface_v0_interface_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "temporary",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Temporary"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Interface retrieved.",
@@ -4086,47 +4209,6 @@
                                 "example": "Interface not added yet. Create it first."
                             }
                         }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Interface"
-                ],
-                "summary": "Update Interface",
-                "operationId": "update_interface_v0_interface_put",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/InterfaceConfig"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Interface updated.",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "info": "Interface updated successfully!"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Interface Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": "Interface not added yet. Create it first."
-                            }
-                        }
                     },
                     "422": {
                         "description": "Validation Error",
@@ -4138,67 +4220,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Interface"
-                ],
-                "summary": "Create Interface",
-                "operationId": "create_interface_v0_interface_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/InterfaceConfig"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Interface created.",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Interface created successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Interface already exists.",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "info": "Interface already exists, update the interface instead."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
+                }
             }
         },
         "/v0/router/train": {
@@ -5969,6 +5991,22 @@
                     "new_counter": {
                         "type": "integer",
                         "title": "New Counter"
+                    },
+                    "project": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Project"
+                    },
+                    "temporary": {
+                        "type": "boolean",
+                        "title": "Temporary",
+                        "default": false
                     }
                 },
                 "type": "object",
@@ -6018,6 +6056,204 @@
                             }
                         ],
                         "title": "Tab"
+                    },
+                    "table": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Table"
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filters"
+                    },
+                    "common_filter": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Common Filter"
+                    },
+                    "page_number": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Page Number"
+                    },
+                    "metric": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metric"
+                    },
+                    "column_order": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Order"
+                    },
+                    "hidden_columns": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Hidden Columns"
+                    },
+                    "sorting": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sorting"
+                    },
+                    "grouping": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Grouping"
+                    },
+                    "columns_pin_left": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Columns Pin Left"
+                    },
+                    "columns_pin_right": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Columns Pin Right"
+                    },
+                    "selected": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Selected"
+                    },
+                    "plot_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plot Type"
+                    },
+                    "plot_scale": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plot Scale"
+                    },
+                    "is_aggregated": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Is Aggregated"
+                    },
+                    "x_axis": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "X Axis"
+                    },
+                    "y_axis": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Y Axis"
+                    },
+                    "plot_group_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plot Group By"
                     }
                 },
                 "type": "object",
