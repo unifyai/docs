@@ -5993,7 +5993,14 @@
                         "title": "New Counter"
                     },
                     "project": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Project"
                     },
                     "temporary": {
