@@ -2819,62 +2819,6 @@
             }
         },
         "/v0/logs": {
-            "delete": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Delete Logs",
-                "description": "Deletes multiple logs from a project.",
-                "operationId": "delete_logs_v0_logs_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DeleteLogsRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Logs deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Logs Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "One or more logs with the specified IDs were not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "put": {
                 "tags": [
                     "Evals"
@@ -2925,6 +2869,87 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Invalid request format or data."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Delete Logs",
+                "description": "Deletes a specific entry from multiple logs.",
+                "operationId": "delete_logs_v0_logs_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "delete_empty_logs",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "Whether to delete logs which end up being empty as a result of the field deletion.",
+                            "default": false,
+                            "title": "Delete Empty Logs"
+                        },
+                        "description": "Whether to delete logs which end up being empty as a result of the field deletion.",
+                        "example": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteLogEntryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Log entry deleted successfully from all logs!"
+                                }
+                            }
+                        }
+                    },
+                    "4041": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "One or more logs with the specified IDs were not found."
+                                }
+                            }
+                        }
+                    },
+                    "4042": {
+                        "description": "Log Entry Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Log entry <entry> not found in one or more logs."
                                 }
                             }
                         }
@@ -3197,150 +3222,6 @@
                                         }
                                     ],
                                     "count": 2
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/logs/fields": {
-            "delete": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Delete Log Fields",
-                "description": "Deletes a specific entry from multiple logs.",
-                "operationId": "delete_log_fields_v0_logs_fields_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "delete_empty_logs",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "description": "Whether to delete logs which end up being empty as a result of the field deletion.",
-                            "default": false,
-                            "title": "Delete Empty Logs"
-                        },
-                        "description": "Whether to delete logs which end up being empty as a result of the field deletion.",
-                        "example": true
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DeleteLogEntryRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Log entry deleted successfully from all logs!"
-                                }
-                            }
-                        }
-                    },
-                    "4041": {
-                        "description": "Log Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "One or more logs with the specified IDs were not found."
-                                }
-                            }
-                        }
-                    },
-                    "4042": {
-                        "description": "Log Entry Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log entry <entry> not found in one or more logs."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Get Fields",
-                "description": "Returns a dictionary of field names and their types for the specified project.\nStrongly typed fields return their type, while others return None.",
-                "operationId": "get_fields_v0_logs_fields_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to get fields and their types for.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project to get fields and their types for.",
-                        "example": "eval-project"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "field1": "string",
-                                    "field2": "int"
                                 }
                             }
                         }
@@ -3935,6 +3816,69 @@
                                         "value": "Second version of the system prompt"
                                     }
                                 ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/logs/fields": {
+            "get": {
+                "tags": [
+                    "Evals"
+                ],
+                "summary": "Get Fields",
+                "description": "Returns a dictionary of field names and their types for the specified project.\nStrongly typed fields return their type, while others return None.",
+                "operationId": "get_fields_v0_logs_fields_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get fields and their types for.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get fields and their types for.",
+                        "example": "eval-project"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "field1": "string",
+                                    "field2": "int"
+                                }
                             }
                         }
                     },
@@ -5853,7 +5797,7 @@
             },
             "DeleteLogEntryRequest": {
                 "properties": {
-                    "fields": {
+                    "ids_and_fields": {
                         "items": {
                             "prefixItems": [
                                 {
@@ -5879,6 +5823,9 @@
                                                 "type": "string"
                                             },
                                             "type": "array"
+                                        },
+                                        {
+                                            "type": "null"
                                         }
                                     ]
                                 }
@@ -5889,7 +5836,7 @@
                         },
                         "type": "array",
                         "minItems": 1,
-                        "title": "Fields",
+                        "title": "Ids And Fields",
                         "description": "List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items.",
                         "example": [
                             [
@@ -5919,32 +5866,9 @@
                 },
                 "type": "object",
                 "required": [
-                    "fields"
+                    "ids_and_fields"
                 ],
                 "title": "DeleteLogEntryRequest"
-            },
-            "DeleteLogsRequest": {
-                "properties": {
-                    "ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "type": "array",
-                        "minItems": 1,
-                        "title": "Ids",
-                        "description": "List of log IDs to delete.",
-                        "example": [
-                            123,
-                            456,
-                            789
-                        ]
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "ids"
-                ],
-                "title": "DeleteLogsRequest"
             },
             "EntriesConfig": {
                 "properties": {
