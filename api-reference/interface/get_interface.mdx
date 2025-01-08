@@ -10,18 +10,24 @@ api: 'GET /v0/interface'
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
+#### Query Parameters
+
+<ParamField query="temporary" type="boolean" >
+
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/interface' \
+  --url 'https://api.unify.ai/v0/interface?temporary=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interface"
+url = "https://api.unify.ai/v0/interface?temporary=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -58,6 +64,20 @@ print(response.text)
 
 ```json 404
 "Interface not added yet. Create it first."
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
 ```
 
 </ResponseExample>

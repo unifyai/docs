@@ -461,9 +461,9 @@
                         {
                             "group": "Interface",
                             "pages": [
-                                "api-reference/interface/get_interface",
+                                "api-reference/interface/create_interface",
                                 "api-reference/interface/update_interface",
-                                "api-reference/interface/create_interface"
+                                "api-reference/interface/get_interface"
                             ]
                         }
                     ]
