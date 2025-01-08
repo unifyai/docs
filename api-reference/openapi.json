@@ -5890,7 +5890,7 @@
                         "type": "array",
                         "minItems": 1,
                         "title": "Fields",
-                        "description": "List of lists of log ID(s) and field(s) to delete, either as an individual item or a list of items.",
+                        "description": "List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items.",
                         "example": [
                             [
                                 123,
