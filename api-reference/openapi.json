@@ -261,7 +261,7 @@
         "/v0/tags": {
             "get": {
                 "tags": [
-                    "Logging"
+                    "Usage"
                 ],
                 "summary": "Get Query Tags",
                 "description": "Returns a list of the tags in your account",
@@ -292,7 +292,7 @@
         "/v0/queries": {
             "get": {
                 "tags": [
-                    "Logging"
+                    "Usage"
                 ],
                 "summary": "Get Queries",
                 "description": "Get the queries history, optionally for a given set of tags for a narrowed search.",
@@ -456,7 +456,7 @@
             },
             "post": {
                 "tags": [
-                    "Logging"
+                    "Usage"
                 ],
                 "summary": "Log Query",
                 "operationId": "log_query_v0_queries_post",
@@ -500,7 +500,7 @@
         "/v0/metrics": {
             "get": {
                 "tags": [
-                    "Logging"
+                    "Usage"
                 ],
                 "summary": "Get Query Metrics",
                 "description": "Returns aggregated telemetry data from previous queries to the `/chat/completions`\nendpoint, specifically the p50 and p95 for generation time and tokens per second,\nand also the total prompt and completion tokens processed within the interval. The\nuser id and total request count within the interval are also returned.",
@@ -2763,7 +2763,7 @@
         "/v0/log": {
             "post": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Create Log",
                 "description": "Creates a log associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.\n\nThis method returns the id of the new stored log.",
@@ -2821,7 +2821,7 @@
         "/v0/logs": {
             "put": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Update Logs",
                 "description": "Updates multiple logs with the provided entries. Each entry will be either added\nor overridden in the specified logs.\n\nA dictionary of \"explicit_types\" can be passed as part of the `entries`.\nIf present, it will override the inferred type of any matching key in all logs.",
@@ -2887,7 +2887,7 @@
             },
             "delete": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Delete Logs",
                 "description": "Deletes a specific entry from multiple logs.",
@@ -2968,7 +2968,7 @@
             },
             "get": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Get Logs",
                 "description": "Returns a list of filtered entries from a project.",
@@ -3252,7 +3252,7 @@
         "/v0/logs/latest_timestamp": {
             "get": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Get Logs Latest Timestamp",
                 "description": "Returns the update timestamp of the most recently updated log within the specified\npage and filter bounds.",
@@ -3526,7 +3526,7 @@
         "/v0/logs/metric/{metric}": {
             "get": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Get Logs Metric",
                 "description": "Returns the reduction metric for filtered values for a specific key from a project.",
@@ -3694,7 +3694,7 @@
         "/v0/logs/groups": {
             "get": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Get Log Groups",
                 "description": "Returns a dict with the different versions as keys and the values of the remaining\nitems within a given project based on its key.",
@@ -3778,7 +3778,7 @@
         "/v0/logs/fields": {
             "get": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Get Fields",
                 "description": "Returns a dictionary of field names and their types for the specified project.\nStrongly typed fields return their type, while others return None.",
@@ -3841,7 +3841,7 @@
         "/v0/logs/fields/types": {
             "post": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Set Field Types",
                 "description": "Sets the typing for specified fields in the project.",
@@ -3923,7 +3923,7 @@
         "/v0/interface": {
             "post": {
                 "tags": [
-                    "Interface"
+                    "Configs"
                 ],
                 "summary": "Create Interface",
                 "operationId": "create_interface_v0_interface_post",
@@ -3978,7 +3978,7 @@
             },
             "put": {
                 "tags": [
-                    "Interface"
+                    "Configs"
                 ],
                 "summary": "Update Interface",
                 "operationId": "update_interface_v0_interface_put",
@@ -4029,7 +4029,7 @@
             },
             "get": {
                 "tags": [
-                    "Interface"
+                    "Configs"
                 ],
                 "summary": "Get Interface",
                 "operationId": "get_interface_v0_interface_get",
