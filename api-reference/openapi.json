@@ -5107,11 +5107,13 @@
                     },
                     "moved": {
                         "type": "boolean",
-                        "title": "Moved"
+                        "title": "Moved",
+                        "default": false
                     },
                     "static": {
                         "type": "boolean",
-                        "title": "Static"
+                        "title": "Static",
+                        "default": false
                     },
                     "tab": {
                         "anyOf": [
@@ -5340,9 +5342,7 @@
                     "x",
                     "y",
                     "w",
-                    "h",
-                    "moved",
-                    "static"
+                    "h"
                 ],
                 "title": "Item"
             },
