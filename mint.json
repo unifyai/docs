@@ -364,12 +364,12 @@
                             ]
                         },
                         {
-                            "group": "Logging",
+                            "group": "Usage",
                             "pages": [
-                                "api-reference/logging/get_query_tags",
-                                "api-reference/logging/get_queries",
-                                "api-reference/logging/log_query",
-                                "api-reference/logging/get_query_metrics"
+                                "api-reference/usage/get_query_tags",
+                                "api-reference/usage/get_queries",
+                                "api-reference/usage/log_query",
+                                "api-reference/usage/get_query_metrics"
                             ]
                         },
                         {
@@ -402,7 +402,7 @@
                     ]
                 },
                 {
-                    "group": "Benchmarking",
+                    "group": "Interfaces",
                     "pages": [
                         {
                             "group": "Datasets",
@@ -443,25 +443,25 @@
                             ]
                         },
                         {
-                            "group": "Evals",
+                            "group": "Logs",
                             "pages": [
-                                "api-reference/evals/create_log",
-                                "api-reference/evals/update_logs",
-                                "api-reference/evals/delete_logs",
-                                "api-reference/evals/get_logs",
-                                "api-reference/evals/get_logs_latest_timestamp",
-                                "api-reference/evals/get_logs_metric",
-                                "api-reference/evals/get_log_groups",
-                                "api-reference/evals/get_fields",
-                                "api-reference/evals/set_field_types"
+                                "api-reference/logs/create_log",
+                                "api-reference/logs/update_logs",
+                                "api-reference/logs/delete_logs",
+                                "api-reference/logs/get_logs",
+                                "api-reference/logs/get_logs_latest_timestamp",
+                                "api-reference/logs/get_logs_metric",
+                                "api-reference/logs/get_log_groups",
+                                "api-reference/logs/get_fields",
+                                "api-reference/logs/set_field_types"
                             ]
                         },
                         {
-                            "group": "Interface",
+                            "group": "Configs",
                             "pages": [
-                                "api-reference/interface/create_interface",
-                                "api-reference/interface/update_interface",
-                                "api-reference/interface/get_interface"
+                                "api-reference/configs/create_interface",
+                                "api-reference/configs/update_interface",
+                                "api-reference/configs/get_interface"
                             ]
                         }
                     ]
