@@ -1,0 +1,22 @@
+---
+title: 'delete_dataset_artifact'
+---
+
+```python
+def delete_dataset_artifact(
+    name: str,
+    key: str,
+    *,
+    api_key: Optional[str] = None,
+) -> Union[List[Any], None]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/dbab212dd24c5a53574d614e7f96b5ff12bd3a4f/unify/interfaces/utils/datasets.py#L366)</p>
+
+Deletes dataset artifact from the platform.
+
+**Arguments**:
+
+- `name` - Name of the dataset to delete an artifact from.
+- `key` - The key of the artifact to delete
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the

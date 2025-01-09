@@ -1,0 +1,30 @@
+---
+title: 'delete_dataset_entry'
+---
+
+```python
+def delete_dataset_entry(
+    name: str,
+    id: int,
+    *,
+    api_key: Optional[str] = None,
+) -> Dict[str, Union[str, List[int]]]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/dbab212dd24c5a53574d614e7f96b5ff12bd3a4f/unify/interfaces/utils/datasets.py#L233)</p>
+
+Deletes data from a dataset by id, and returns a list of ids and values for each
+of those, split by those which were deleted and those which were not present.
+
+**Arguments**:
+
+- `name` - The name of the dataset to delete the data from.
+- `id` - Entry id
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+A dict containing the info, and the ids for all entries deleted, split by those
+which were deleted and those which were not present.

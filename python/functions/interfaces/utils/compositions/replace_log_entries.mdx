@@ -1,0 +1,28 @@
+---
+title: 'replace_log_entries'
+---
+
+```python
+def replace_log_entries(
+    *,
+    logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
+    api_key: Optional[str] = None,
+    **entries,
+) -> Dict[str, str]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/dbab212dd24c5a53574d614e7f96b5ff12bd3a4f/unify/interfaces/utils/compositions.py#L253)</p>
+
+Replaces existing entries in existing logs.
+
+**Arguments**:
+
+- `logs` - The log(s) to replace fields for. Looks for the current active log if none
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+- `entries` - The entries to replace in the log.
+
+
+
+**Returns**:
+
+A message indicating whether the logs were successfully updated.

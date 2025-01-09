@@ -1,0 +1,31 @@
+---
+title: 'group_logs'
+---
+
+```python
+def group_logs(
+    *,
+    key: str,
+    project: Optional[str] = None,
+    api_key: Optional[str] = None,
+):
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/dbab212dd24c5a53574d614e7f96b5ff12bd3a4f/unify/interfaces/utils/compositions.py#L509)</p>
+
+Groups logs based on equality '==' of the values for the specified key, returning a
+dict with group indices as the keys and the list of logs as the values. If the keys
+are not versioned, then the indices are simply incrementing integers.
+
+**Arguments**:
+
+- `key` - Name of the log entry to do equality matching for.
+- `project` - Name of the project to get logs from.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+A dict containing the grouped logs, with each key of the dict representing the
+version of the log key with equal values, and the value being a list of logs.
