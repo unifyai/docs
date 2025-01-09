@@ -5256,6 +5256,17 @@
                         ],
                         "title": "Selected"
                     },
+                    "base_index": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Base Index"
+                    },
                     "plot_type": {
                         "anyOf": [
                             {
