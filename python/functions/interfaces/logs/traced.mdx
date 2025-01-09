@@ -3,8 +3,14 @@ title: 'traced'
 ---
 
 ```python
-def traced(fn: callable = None, *, prune_empty: bool = True, trace_type: str = "span"):
+def traced(
+    fn: callable = None,
+    *,
+    prune_empty: bool = True,
+    trace_type: str = "span",
+    trace_contexts: Optional[List[str]] = None,
+):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/dbab212dd24c5a53574d614e7f96b5ff12bd3a4f/unify/interfaces/logs.py#L217)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/c1fa71929cda463a3b51f2c1308db443d78724fd/unify/interfaces/logs.py#L217)</p>
 
