@@ -5090,19 +5090,19 @@
                         "title": "I"
                     },
                     "x": {
-                        "type": "integer",
+                        "type": "number",
                         "title": "X"
                     },
                     "y": {
-                        "type": "integer",
+                        "type": "number",
                         "title": "Y"
                     },
                     "w": {
-                        "type": "integer",
+                        "type": "number",
                         "title": "W"
                     },
                     "h": {
-                        "type": "integer",
+                        "type": "number",
                         "title": "H"
                     },
                     "moved": {
