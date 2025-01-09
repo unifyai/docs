@@ -467,39 +467,6 @@
                     ]
                 },
                 {
-                    "group": "Routing",
-                    "pages": [
-                        {
-                            "group": "Router Training",
-                            "pages": [
-                                "api-reference/router_training/train_router",
-                                "api-reference/router_training/delete_router",
-                                "api-reference/router_training/rename_router",
-                                "api-reference/router_training/list_routers",
-                                "api-reference/router_training/get_dataset_evaluation"
-                            ]
-                        },
-                        {
-                            "group": "Router Deployment",
-                            "pages": [
-                                "api-reference/router_deployment/deploy_router",
-                                "api-reference/router_deployment/undeploy_router",
-                                "api-reference/router_deployment/list_deployed_routers"
-                            ]
-                        },
-                        {
-                            "group": "Router Configurations",
-                            "pages": [
-                                "api-reference/router_configurations/create_router_config",
-                                "api-reference/router_configurations/get_router_config",
-                                "api-reference/router_configurations/delete_router_config",
-                                "api-reference/router_configurations/rename_router_config",
-                                "api-reference/router_configurations/list_router_configs"
-                            ]
-                        }
-                    ]
-                },
-                {
                     "group": "Account",
                     "pages": [
                         {
