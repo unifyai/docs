@@ -28,19 +28,19 @@ Boolean string to filter entries. TODO: Detailed page.
 Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.
 </ParamField>
 
-<ParamField query="from_ids" type="array | null" >
+<ParamField query="from_ids" type="string | null" >
 The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.
 </ParamField>
 
-<ParamField query="exclude_ids" type="array | null" >
+<ParamField query="exclude_ids" type="string | null" >
 The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.
 </ParamField>
 
-<ParamField query="from_fields" type="array | null" >
+<ParamField query="from_fields" type="string | null" >
 The fields which are permitted to be included in the search. Each field listed does not need to be returned, but no fields which are not included in this list can be returned. This argument *cannot* be set if `exclude_fields` is set.
 </ParamField>
 
-<ParamField query="exclude_fields" type="array | null" >
+<ParamField query="exclude_fields" type="string | null" >
 The fields which cannot be returned from the search. None of the listed fields will be returned, even if the fields are valid as per the filtering expression etc. This argument *cannot* be set if `from_fields` is set.
 </ParamField>
 
@@ -60,14 +60,14 @@ The fields which cannot be returned from the search. None of the listed fields w
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs?project=eval-project&context=subjects/science/physics&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=[0,%201,%202]&exclude_ids=[0,%201,%202]&from_fields=['score',%20'response']&exclude_fields=['score',%20'response']&limit=None&offset=None&return_ids_only=None' \
+  --url 'https://api.unify.ai/v0/logs?project=eval-project&context=subjects/science/physics&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&return_ids_only=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs?project=eval-project&context=subjects/science/physics&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=[0,%201,%202]&exclude_ids=[0,%201,%202]&from_fields=['score',%20'response']&exclude_fields=['score',%20'response']&limit=None&offset=None&return_ids_only=None"
+url = "https://api.unify.ai/v0/logs?project=eval-project&context=subjects/science/physics&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&return_ids_only=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
