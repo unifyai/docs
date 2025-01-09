@@ -3058,10 +3058,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "integer"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3071,11 +3068,7 @@
                             "title": "From Ids"
                         },
                         "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
-                        "example": [
-                            0,
-                            1,
-                            2
-                        ]
+                        "example": "0&1&2"
                     },
                     {
                         "name": "exclude_ids",
@@ -3084,10 +3077,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "integer"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3097,11 +3087,7 @@
                             "title": "Exclude Ids"
                         },
                         "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
-                        "example": [
-                            0,
-                            1,
-                            2
-                        ]
+                        "example": "0&1&2"
                     },
                     {
                         "name": "from_fields",
@@ -3110,10 +3096,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3123,10 +3106,7 @@
                             "title": "From Fields"
                         },
                         "description": "The fields which are permitted to be included in the search. Each field listed does not need to be returned, but no fields which are not included in this list can be returned. This argument *cannot* be set if `exclude_fields` is set.",
-                        "example": [
-                            "score",
-                            "response"
-                        ]
+                        "example": "score&response"
                     },
                     {
                         "name": "exclude_fields",
@@ -3135,10 +3115,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3148,10 +3125,7 @@
                             "title": "Exclude Fields"
                         },
                         "description": "The fields which cannot be returned from the search. None of the listed fields will be returned, even if the fields are valid as per the filtering expression etc. This argument *cannot* be set if `from_fields` is set.",
-                        "example": [
-                            "score",
-                            "response"
-                        ]
+                        "example": "score&response"
                     },
                     {
                         "name": "limit",
@@ -3342,10 +3316,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "integer"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3355,11 +3326,7 @@
                             "title": "From Ids"
                         },
                         "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
-                        "example": [
-                            0,
-                            1,
-                            2
-                        ]
+                        "example": "0&1&2"
                     },
                     {
                         "name": "exclude_ids",
@@ -3368,10 +3335,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "integer"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3381,11 +3345,7 @@
                             "title": "Exclude Ids"
                         },
                         "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
-                        "example": [
-                            0,
-                            1,
-                            2
-                        ]
+                        "example": "0&1&2"
                     },
                     {
                         "name": "from_fields",
@@ -3394,10 +3354,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3407,10 +3364,7 @@
                             "title": "From Fields"
                         },
                         "description": "The fields which are permitted to be included in the search. Each field listed does not need to be returned, but no fields which are not included in this list can be returned. This argument *cannot* be set if `exclude_fields` is set.",
-                        "example": [
-                            "score",
-                            "response"
-                        ]
+                        "example": "score&response"
                     },
                     {
                         "name": "exclude_fields",
@@ -3419,10 +3373,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3432,10 +3383,7 @@
                             "title": "Exclude Fields"
                         },
                         "description": "The fields which cannot be returned from the search. None of the listed fields will be returned, even if the fields are valid as per the filtering expression etc. This argument *cannot* be set if `from_fields` is set.",
-                        "example": [
-                            "score",
-                            "response"
-                        ]
+                        "example": "score&response"
                     },
                     {
                         "name": "limit",
@@ -3599,10 +3547,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "integer"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3612,11 +3557,7 @@
                             "title": "From Ids"
                         },
                         "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
-                        "example": [
-                            0,
-                            1,
-                            2
-                        ]
+                        "example": "0&1&2"
                     },
                     {
                         "name": "exclude_ids",
@@ -3625,10 +3566,7 @@
                         "schema": {
                             "anyOf": [
                                 {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "integer"
-                                    }
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -3638,11 +3576,7 @@
                             "title": "Exclude Ids"
                         },
                         "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
-                        "example": [
-                            0,
-                            1,
-                            2
-                        ]
+                        "example": "0&1&2"
                     }
                 ],
                 "responses": {
