@@ -15,7 +15,11 @@ url = ("https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment"
 this_dir = os.path.dirname(__file__)
 pdfs_dir = os.path.join(this_dir, "pdfs")
 os.makedirs(pdfs_dir, exist_ok=True)
-fname = wget.download(url, out=pdfs_dir)
+breakpoint()
+pdf_path = os.path.join(pdfs_dir)
+fname = url.split("/")[-1]
+if not os.path.exists(pdf_path):
+    fname = wget.download(url, out=pdfs_dir)
 pdf_path = os.path.join(pdfs_dir, fname)
 pdf_dir = os.path.join(pdfs_dir, fname[:-4])
 os.makedirs(pdf_dir, exist_ok=True)
