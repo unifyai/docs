@@ -26,6 +26,46 @@ answer: {c0}, {c1}, {c2}, {n0}, a, b
 If you do not see any clear questions on the page, then just explain why, with no comma-seperated list at the end.
 """
 
+QUESTION_ANSWER_DETECTION = """
+Your task is to detect the numeric question numbers [1, 2, 3 etc.] and letter 
+questions [a, b, c etc.] that are present in the following markscheme text, 
+which contains questions and answers.
+
+Please **do not** include sub-questions such as (i), (ii), (iii) etc.
+
+When deciding whether the number refers to a question, look at *all of* the text within 
+the corresponding row in the table.
+
+Please ignore general guidelines to the marker, which may also come ordered with 
+numbers. If this is what you see, then please give an empty response as explained 
+below. Similarly, if the table of questions is part of an Assessment Objectives (AO) 
+Grid, then please give an empty response (this is not the mark scheme).
+
+Sometimes the table will not include any headings such as Question, Answer etc. The 
+question numbers are always on the left hand side, and M1, M2 indicate the marks for 
+each point. If you see this, it means this is part of the mark scheme, and there is 
+likely a number and/or letter to be extracted. 
+
+The first question on the page can either be a number (new question) or a letter (continuation of question on the previous page).
+
+Please respond in the exact order presented on the current page, starting either with a number or a letter, whichever appears on the page first.
+
+If there are any numbered questions on the page, then the first of these numbers will be `{n0}`. 
+The presence of this specific number {n0} highly suggests that this corresponds to 
+the question number, and should be included in your answer. 
+Similarly, if there are any letters on the page, the *first* letter will be `{c0}`.
+
+Think through your reasoning in detail, step by step.
+
+As the final part of your response, please respond with "answer: " followed by a 
+single comma separated list of numbers and letters on a new line, like either of the two examples below:
+answer: {n0}, a, b, {n1}, a, {n2}, a, b, c
+answer: {c0}, {c1}, {c2}, {n0}, a, b
+
+If you do not believe any of the text on the screen corresponds to questions in the 
+mark scheme table,then just explain why, with no comma-seperated list at the end.
+"""
+
 QUESTION_PARSER = """
 Your task is to extract the full contents of question {question_number} from the 
 following text, and *nothing else*. You should *not* extract any parts of the 
