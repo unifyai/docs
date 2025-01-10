@@ -15,7 +15,6 @@ url = ("https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment"
 this_dir = os.path.dirname(__file__)
 pdfs_dir = os.path.join(this_dir, "pdfs")
 os.makedirs(pdfs_dir, exist_ok=True)
-breakpoint()
 pdf_path = os.path.join(pdfs_dir)
 fname = url.split("/")[-1]
 if not os.path.exists(pdf_path):
