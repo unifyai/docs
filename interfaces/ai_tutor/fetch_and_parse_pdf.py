@@ -98,7 +98,7 @@ def parse_paper(paper_num):
         return base64.b64encode(buffer).decode("utf-8")
 
     def parse_question_detector(response):
-        parsed = response.split(
+        parsed = response.lower().split(
             "answer:"
         )[-1].replace(
             "\n", ""
