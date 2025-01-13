@@ -2886,6 +2886,64 @@
                 ]
             }
         },
+        "/v0/log/derived": {
+            "put": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Create Derived Entry",
+                "description": "Updates multiple logs with the provided entries. Each entry will be either added\nor overridden in the specified logs.\n\nA dictionary of \"explicit_types\" can be passed as part of the `entries`.\nIf present, it will override the inferred type of any matching key in all logs.",
+                "operationId": "create_derived_entry_v0_log_derived_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateDerivedEntriesConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Log created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/logs": {
             "put": {
                 "tags": [
@@ -4772,6 +4830,64 @@
                 ],
                 "title": "ChatCompletionResponse",
                 "description": "Response model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    created (int): Timestamp indicating when the response was created.\n    id (str): Identifier for the completion response.\n    object (str): The type of object, defaults to \"chat.completion\".\n    usage (dict): Usage statistics or additional information.\n    choices (List[Dict]): List of completion choices."
+            },
+            "CreateDerivedEntriesConfig": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project the stored entries will be associated to.",
+                        "example": "eval-project"
+                    },
+                    "key": {
+                        "type": "string",
+                        "title": "Key",
+                        "description": "The name of the entry.",
+                        "example": "score_diff"
+                    },
+                    "equation": {
+                        "type": "string",
+                        "title": "Equation",
+                        "description": "The equation for computing the value of each derived entry.",
+                        "example": "{log0:score} - {log1:score}"
+                    },
+                    "referenced_logs": {
+                        "additionalProperties": {
+                            "anyOf": [
+                                {
+                                    "items": {
+                                        "type": "integer"
+                                    },
+                                    "type": "array"
+                                },
+                                {
+                                    "type": "object"
+                                }
+                            ]
+                        },
+                        "type": "object",
+                        "title": "Referenced Logs",
+                        "description": "The logs to use for each newly created derived entry, either as a list of log ids or as a set of arguments for the get_logs endpoint.",
+                        "example": {
+                            "log0": [
+                                0,
+                                1,
+                                2
+                            ],
+                            "log1": {
+                                "filter_expr": "score > 0.5"
+                            }
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "key",
+                    "equation",
+                    "referenced_logs"
+                ],
+                "title": "CreateDerivedEntriesConfig"
             },
             "CreateLogConfig": {
                 "properties": {
