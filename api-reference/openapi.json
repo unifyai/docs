@@ -1559,6 +1559,74 @@
                 }
             }
         },
+        "/v0/endpoint-details": {
+            "get": {
+                "tags": [
+                    "Endpoint Metrics"
+                ],
+                "summary": "Get Endpoint Metrics",
+                "description": "Extracts cost and context window data for the provided endpoint .\n\nThe `endpoint` is the endpoint name in the form <model>@<provider>.",
+                "operationId": "get_endpoint_metrics_v0_endpoint_details_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "endpoint",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the endpoint.",
+                            "title": "Endpoint"
+                        },
+                        "description": "Name of the endpoint.",
+                        "example": "claude-3.5-haiku@anthropic"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "number"
+                                            }
+                                        ]
+                                    },
+                                    "title": "Response Get Endpoint Metrics V0 Endpoint Details Get"
+                                },
+                                "example": {
+                                    "endpoint": "claude-3.5-haiku@anthropic",
+                                    "context_window": 200000,
+                                    "input_cost": 0.8,
+                                    "output_cost": 4
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/dataset/{dataset}/artifacts": {
             "post": {
                 "tags": [
@@ -4480,8 +4548,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
