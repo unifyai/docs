@@ -1565,7 +1565,7 @@
                     "Endpoint Metrics"
                 ],
                 "summary": "Get Endpoint Details",
-                "description": "Extracts cost and context window data for the provided endpoint .\n\nThe `endpoint` is the endpoint name in the form <model>@<provider>.",
+                "description": "Extracts cost and context window data for the provided endpoint .\n\nThe `endpoint` is the endpoint name in the form \\<model\\>@\\<provider\\>.",
                 "operationId": "get_endpoint_details_v0_endpoint_details_get",
                 "security": [
                     {
@@ -4548,8 +4548,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
