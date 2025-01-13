@@ -269,6 +269,9 @@ def parse_markscheme(paper_num):
     )
     question_answer_parser = unify.Unify("gpt-4o@openai", cache=True)
     diagram_detector = unify.Unify("gpt-4o@openai", cache=True)
+    num_marks_detector = unify.Unify(
+        "gpt-4o@openai", cache=True, system_message=NUM_MARKS_DETECTION
+    )
 
     markscheme_dir = os.path.join(pdf_dir, str(paper_num), "markscheme")
     os.makedirs(markscheme_dir, exist_ok=True)
@@ -390,8 +393,12 @@ def parse_markscheme(paper_num):
                 "{subsequent}", str(question_num + 1)
             )
         )
-        question_parsed = question_answer_parser.generate(current_text)
-        questions[question_num] = {"text": question_parsed}
+        qna = question_answer_parser.generate(current_text)
+        response = num_marks_detector.generate(qna)
+        num_marks = int(
+            "".join([c for c in response.split("\n")[-1].lower() if c.isdigit()])
+        )
+        questions[question_num] = {"text": qna, "num-marks": num_marks}
         parsed = json.dumps(questions, indent=4)
         with open(os.path.join(markscheme_dir, "parsed.json"), "w+") as file:
             file.write(parsed)
