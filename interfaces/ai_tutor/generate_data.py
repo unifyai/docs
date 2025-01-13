@@ -46,7 +46,7 @@ def main():
                     "{answer}", answer
                 )
             )
-            targets[target] = [ans[:-1] for ans in response.split("nswer:")[1:]]
+            targets[target] = [ans for ans in response.split("Answer:")[1:]]
         data[question] = targets
         # incremental file writing
         with open(data_dir, "w+") as f:
