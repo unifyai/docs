@@ -3,8 +3,6 @@ import json
 import unify
 from prompts import *
 
-num_examples = 5
-
 
 def _load_questions_and_answers():
     questions_and_answers = dict()
@@ -32,7 +30,7 @@ def _load_questions_and_answers():
 def main():
     data = dict()
     data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
-    generation_client = unify.Unify("o1@openai", n=num_examples, cache=True)
+    generation_client = unify.Unify("o1@openai", cache=True)
     qna = _load_questions_and_answers()
     for question, (answer, marks) in qna.items():
         targets = dict()
@@ -46,15 +44,9 @@ def main():
                     "{question}", question
                 ).replace(
                     "{answer}", answer
-                ),
-                return_full_completion=True
-            )
-            generated_answers = list()
-            for choice in response.choices:
-                generated_answers.append(
-                    choice.message.content.split("nswer:")[-1].lstrip("\n")
                 )
-            targets[target] = generated_answers
+            )
+            targets[target] = [ans[:-1] for ans in response.split("nswer:")[1:]]
         data[question] = targets
         # incremental file writing
         with open(data_dir, "w+") as f:

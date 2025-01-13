@@ -180,9 +180,16 @@ And also given the following known correct answer and marking scheme:
 
 {answer}
 
-Provide an answer to this question which should achieve a total of {target} marks if 
-marked correctly. State your reasoning, and then as the final part of your response 
-output the answer on a new line as follows:
+Provide three *different* answers to this question which should achieve a total of
+{target} marks if marked correctly. Please try to make each of your three answers as 
+different as possible to one another. State your reasoning, and then as the final 
+part of your response output each of the answers on a new line, as follows:
 Answer:
-{your answer}
+{first answer}
+
+Answer:
+{second answer}
+
+Answer:
+{third answer}
 """
