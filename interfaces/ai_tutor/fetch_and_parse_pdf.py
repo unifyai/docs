@@ -267,11 +267,8 @@ def parse_markscheme(paper_num):
     question_detector = unify.Unify(
         "gpt-4o@openai", cache=True, system_message=QUESTION_ANSWER_DETECTION
     )
-    question_parser = unify.Unify("gpt-4o@openai", cache=True)
+    question_answer_parser = unify.Unify("gpt-4o@openai", cache=True)
     diagram_detector = unify.Unify("gpt-4o@openai", cache=True)
-    text_only_detector = unify.Unify(
-        "gpt-4o@openai", cache=True, system_message=TEXT_ONLY_DETECTION
-    )
 
     markscheme_dir = os.path.join(pdf_dir, str(paper_num), "markscheme")
     os.makedirs(markscheme_dir, exist_ok=True)
@@ -384,8 +381,8 @@ def parse_markscheme(paper_num):
     for question_num in range(1, num_questions + 1):
         pages = question_to_pages[question_num]
         current_text = "".join([reader.pages[pg-1].extract_text() for pg in pages])
-        question_parser.set_system_message(
-            QUESTION_PARSER.replace(
+        question_answer_parser.set_system_message(
+            QUESTION_ANSWER_PARSER.replace(
                 "{question_number}", str(question_num)
             ).replace(
                 "{preceding}", str(question_num - 1)
@@ -393,10 +390,8 @@ def parse_markscheme(paper_num):
                 "{subsequent}", str(question_num + 1)
             )
         )
-        question_parsed = question_parser.generate(current_text)
-        response = text_only_detector.generate(question_parsed)
-        text_only = "yes" in response.split("\n")[-1].lower()
-        questions[question_num] = {"text": question_parsed, "text-only": text_only}
+        question_parsed = question_answer_parser.generate(current_text)
+        questions[question_num] = {"text": question_parsed}
         parsed = json.dumps(questions, indent=4)
         with open(os.path.join(markscheme_dir, "parsed.json"), "w+") as file:
             file.write(parsed)

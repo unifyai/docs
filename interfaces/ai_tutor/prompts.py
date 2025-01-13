@@ -75,6 +75,17 @@ conversion to pure text. If the formatting could be improved to make the questio
 readable, please make any formatting improvements as you see fit.
 """
 
+QUESTION_ANSWER_PARSER = """
+Your task is to extract the full contents of the answer correct answer and 
+marking guidelines for marking question {question_number} from the 
+following text, and *nothing else*. You should *not* extract any parts of the 
+answer or guidelines for the preceding question {preceding} or subsequent question
+{subsequent}. The markscheme for this question was parsed from a PDF, and the 
+formatting might be strange or wrong as a result of this conversion to pure text. If 
+the formatting could be improved to make the answer and the marking guidelines more 
+readable, please make any formatting improvements as you see fit.
+"""
+
 DIAGRAM_DETECTION_ON_PAGE = """
 Your task is to determine whether there is a diagram included as part of the pdf page
 presented. Given the full text on the page and the screenshot of the page. 
