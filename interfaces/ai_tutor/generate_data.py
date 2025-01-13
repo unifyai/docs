@@ -5,6 +5,7 @@ from prompts import *
 
 num_examples = 5
 
+
 def _load_questions_and_answers():
     questions_and_answers = dict()
     pdfs_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "pdfs")
