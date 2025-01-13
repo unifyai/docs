@@ -160,3 +160,29 @@ or incorrect, with a clear justification. Provide this assessment as a string on
 line as the final part of your response, like so:
 correct|partially correct|incorrect
 """
+
+GENERATE_RESPONSE_PROMPT = """
+Your task is to generate a response to the question below which should achieve a 
+total of {target} out of {num_marks} available marks, if it was to be marked correctly.
+
+The marking scheme adds marks based on the following guidelines:
+
+M marks are for using a correct method and are not lost for purely numerical errors.
+A marks are for an accurate answer and depend on preceding M (method) marks. Therefore M0 A1 cannot be awarded.
+B marks are independent of M (method) marks and are for a correct final answer, a partially correct answer, or a correct intermediate stage.
+SC marks are for special cases that are worthy of some credit.
+
+Given the following question, which is worth a total of {num_marks} marks:
+
+{question}
+
+And also given the following known correct answer and marking scheme:
+
+{answer}
+
+Provide an answer to this question which should achieve a total of {target} marks if 
+marked correctly. State your reasoning, and then as the final part of your response 
+output the answer on a new line as follows:
+Answer:
+{your answer}
+"""
