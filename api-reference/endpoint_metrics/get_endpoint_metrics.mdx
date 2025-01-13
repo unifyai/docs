@@ -1,10 +1,19 @@
 ---
 title: 'Get Endpoint Metrics'
-api: 'GET /v0/endpoint-details'
+api: 'GET /v0/endpoint-metrics'
 ---
-Extracts cost and context window data for the provided endpoint .
+Extracts cost and speed data for the provided endpoint via our standardized
+efficiency benchmarks, in the specified region, with the specified sequence length,
+with all benchmark values returned within the specified time window.
 
-The `endpoint` is the endpoint name in the form <model>@<provider>.
+When extracting data for a *custom* endpoint, then `model` is the endpoint name, and
+`provider` must be set as `"custom"`. The arguments `region` and `seq_len` are
+ignored for custom endpoints (they are not publishable).
+
+If neither `start_time` nor `end_time` are provided, then only the *latest*
+benchmark data is returned. If only `start_time` is provided, then `end_time` is
+assumed to be the current time. An exception is raised if only `end_time` is
+provided.
 
 #### Authorizations
 
@@ -14,22 +23,43 @@ The `endpoint` is the endpoint name in the form <model>@<provider>.
 
 #### Query Parameters
 
-<ParamField query="endpoint" type="string" >
-Name of the endpoint.
+<ParamField query="model" type="string" >
+Name of the model.
+</ParamField>
+
+<ParamField query="provider" type="string" >
+Name of the provider.
+</ParamField>
+
+<ParamField query="region" type="string"  default={"Iowa"}>
+Region where the benchmark is run.
+        Options are: `"Belgium"`, `"Hong Kong"` or `"Iowa"`.
+</ParamField>
+
+<ParamField query="seq_len" type="string"  default={"short"}>
+Length of the sequence used for benchmarking, can be short or long
+</ParamField>
+
+<ParamField query="start_time" type="string" >
+Window start time. Only returns the latest benchmark if unspecified
+</ParamField>
+
+<ParamField query="end_time" type="string" >
+Window end time. Assumed to be the current time if this is unspecified *and* start_time *is* specified. Only the latest benchmark is returned if both are unspecified.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/endpoint-details?endpoint=claude-3.5-haiku@anthropic' \
+  --url 'https://api.unify.ai/v0/endpoint-metrics?model=gpt-4o-mini&provider=openai&region=Belgium&seq_len=short&start_time=2024-07-12T04:20:32.808410&end_time=2024-08-12T04:20:32.808410' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/endpoint-details?endpoint=claude-3.5-haiku@anthropic"
+url = "https://api.unify.ai/v0/endpoint-metrics?model=gpt-4o-mini&provider=openai&region=Belgium&seq_len=short&start_time=2024-07-12T04:20:32.808410&end_time=2024-08-12T04:20:32.808410"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -43,10 +73,11 @@ print(response.text)
 
 ```json 200
 {
-    "endpoint": "claude-3.5-haiku@anthropic",
-    "context_window": 200000,
-    "input_cost": 0.8,
-    "output_cost": 4
+    "ttft": 440.2323939998496,
+    "itl": 8.797065147959705,
+    "input_cost": 0.15,
+    "output_cost": 0.6,
+    "measured_at": "2024-08-17T19:19:37.289937"
 }
 ```
 

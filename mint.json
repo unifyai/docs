@@ -397,7 +397,7 @@
                                 "api-reference/endpoint_metrics/log_endpoint_metric",
                                 "api-reference/endpoint_metrics/get_endpoint_metrics",
                                 "api-reference/endpoint_metrics/delete_endpoint_metrics",
-                                "api-reference/endpoint_metrics/get_endpoint_metrics"
+                                "api-reference/endpoint_metrics/get_endpoint_details"
                             ]
                         }
                     ]

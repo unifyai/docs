@@ -1564,9 +1564,9 @@
                 "tags": [
                     "Endpoint Metrics"
                 ],
-                "summary": "Get Endpoint Metrics",
+                "summary": "Get Endpoint Details",
                 "description": "Extracts cost and context window data for the provided endpoint .\n\nThe `endpoint` is the endpoint name in the form <model>@<provider>.",
-                "operationId": "get_endpoint_metrics_v0_endpoint_details_get",
+                "operationId": "get_endpoint_details_v0_endpoint_details_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -1603,7 +1603,7 @@
                                             }
                                         ]
                                     },
-                                    "title": "Response Get Endpoint Metrics V0 Endpoint Details Get"
+                                    "title": "Response Get Endpoint Details V0 Endpoint Details Get"
                                 },
                                 "example": {
                                     "endpoint": "claude-3.5-haiku@anthropic",
