@@ -182,8 +182,10 @@ And also given the following known correct answer and marking scheme:
 
 Provide three *different* answers to this question which should achieve a total of
 {target} marks if marked correctly. Please try to make each of your three answers as 
-different as possible to one another. State your reasoning, and then as the final 
-part of your response output each of the answers on a new line, as follows:
+different as possible to one another. You can reason beforehand, but you should *not* 
+provide any reasoning *in between* each of your three final three answers. These will be
+parsed from your response, and so must be formatted exactly as below:
+
 Answer:
 {first answer}
 
