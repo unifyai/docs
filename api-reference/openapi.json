@@ -4161,6 +4161,61 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Configs"
+                ],
+                "summary": "Delete Interface",
+                "operationId": "delete_interface_v0_interface_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "temporary",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Temporary"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Interface deleted.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Interface deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Interface Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": "Interface not added yet. Create it first."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/v0/credits": {
@@ -4606,8 +4661,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
