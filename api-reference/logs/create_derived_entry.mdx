@@ -1,0 +1,102 @@
+---
+title: 'Create Derived Entry'
+api: 'PUT /v0/log/derived'
+---
+Updates multiple logs with the provided entries. Each entry will be either added
+or overridden in the specified logs.
+
+A dictionary of "explicit_types" can be passed as part of the `entries`.
+If present, it will override the inferred type of any matching key in all logs.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="project" type="string" required="true">
+Name of the project the stored entries will be associated to.
+</ParamField>
+
+<ParamField body="key" type="string" required="true">
+The name of the entry.
+</ParamField>
+
+<ParamField body="equation" type="string" required="true">
+The equation for computing the value of each derived entry.
+</ParamField>
+
+<ParamField body="referenced_logs" type="object" required="true">
+The logs to use for each newly created derived entry, either as a list of log ids or as a set of arguments for the get_logs endpoint.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PUT \
+  --url 'https://api.unify.ai/v0/log/derived' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "project": "eval-project",
+    "key": "score_diff",
+    "equation": "{log0:score} - {log1:score}",
+    "referenced_logs": {
+        "log0": [
+            0,
+            1,
+            2
+        ],
+        "log1": {
+            "filter_expr": "score > 0.5"
+        }
+    }
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/log/derived"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"project": "eval-project", "key": "score_diff", "equation": "{log0:score} - {log1:score}", "referenced_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "score > 0.5"}}}
+
+response = requests.request("PUT", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Log created successfully!"
+}
+```
+
+```json 404
+{
+    "detail": "Project not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,67 @@
+---
+title: 'Get Endpoint Details'
+api: 'GET /v0/endpoint-details'
+---
+Extracts cost and context window data for the provided endpoint .
+
+The `endpoint` is the endpoint name in the form \<model\>@\<provider\>.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="endpoint" type="string" >
+Name of the endpoint.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/endpoint-details?endpoint=claude-3.5-haiku@anthropic' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/endpoint-details?endpoint=claude-3.5-haiku@anthropic"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "endpoint": "claude-3.5-haiku@anthropic",
+    "context_window": 200000,
+    "input_cost": 0.8,
+    "output_cost": 4
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,22 @@
+---
+title: 'create_dataset_artifacts'
+---
+
+```python
+def create_dataset_artifacts(
+    name: str,
+    artifacts: dict,
+    *,
+    api_key: Optional[str] = None,
+) -> Union[List[Any], None]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a0df8582537164cbf7d119d625230b92fc71ee17/unify/interfaces/utils/datasets.py#L331)</p>
+
+Downloads a dataset from the platform.
+
+**Arguments**:
+
+- `name` - Name of the dataset to download the artifacts for.
+- `artifacts` - A dict containing the artifacts to upload
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the

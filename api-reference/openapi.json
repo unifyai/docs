@@ -261,7 +261,7 @@
         "/v0/tags": {
             "get": {
                 "tags": [
-                    "Logging"
+                    "Usage"
                 ],
                 "summary": "Get Query Tags",
                 "description": "Returns a list of the tags in your account",
@@ -292,7 +292,7 @@
         "/v0/queries": {
             "get": {
                 "tags": [
-                    "Logging"
+                    "Usage"
                 ],
                 "summary": "Get Queries",
                 "description": "Get the queries history, optionally for a given set of tags for a narrowed search.",
@@ -456,7 +456,7 @@
             },
             "post": {
                 "tags": [
-                    "Logging"
+                    "Usage"
                 ],
                 "summary": "Log Query",
                 "operationId": "log_query_v0_queries_post",
@@ -500,7 +500,7 @@
         "/v0/metrics": {
             "get": {
                 "tags": [
-                    "Logging"
+                    "Usage"
                 ],
                 "summary": "Get Query Metrics",
                 "description": "Returns aggregated telemetry data from previous queries to the `/chat/completions`\nendpoint, specifically the p50 and p95 for generation time and tokens per second,\nand also the total prompt and completion tokens processed within the interval. The\nuser id and total request count within the interval are also returned.",
@@ -1260,10 +1260,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the metric to submit. Allowed metrics are:\n        \"input_cost\", \"output_cost\", \"time_to_first_token\", \"inter_token_latency\".",
+                            "description": "Name of the metric to submit. Allowed metrics are:\n        \"input_cost\", \"output_cost\", \"ttft\", \"itl\".",
                             "title": "Metric Name"
                         },
-                        "description": "Name of the metric to submit. Allowed metrics are:\n        \"input_cost\", \"output_cost\", \"time_to_first_token\", \"inter_token_latency\".",
+                        "description": "Name of the metric to submit. Allowed metrics are:\n        \"input_cost\", \"output_cost\", \"ttft\", \"itl\".",
                         "example": "tokens-per-second"
                     },
                     {
@@ -1542,6 +1542,74 @@
                                 },
                                 "example": {
                                     "info": "Benchmark deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/endpoint-details": {
+            "get": {
+                "tags": [
+                    "Endpoint Metrics"
+                ],
+                "summary": "Get Endpoint Details",
+                "description": "Extracts cost and context window data for the provided endpoint .\n\nThe `endpoint` is the endpoint name in the form \\<model\\>@\\<provider\\>.",
+                "operationId": "get_endpoint_details_v0_endpoint_details_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "endpoint",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the endpoint.",
+                            "title": "Endpoint"
+                        },
+                        "description": "Name of the endpoint.",
+                        "example": "claude-3.5-haiku@anthropic"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "number"
+                                            }
+                                        ]
+                                    },
+                                    "title": "Response Get Endpoint Details V0 Endpoint Details Get"
+                                },
+                                "example": {
+                                    "endpoint": "claude-3.5-haiku@anthropic",
+                                    "context_window": 200000,
+                                    "input_cost": 0.8,
+                                    "output_cost": 4
                                 }
                             }
                         }
@@ -2763,7 +2831,7 @@
         "/v0/log": {
             "post": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Create Log",
                 "description": "Creates a log associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.\n\nThis method returns the id of the new stored log.",
@@ -2818,28 +2886,23 @@
                 ]
             }
         },
-        "/v0/logs": {
-            "delete": {
+        "/v0/log/derived": {
+            "put": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
-                "summary": "Delete Logs",
-                "description": "Deletes multiple logs from a project.",
-                "operationId": "delete_logs_v0_logs_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
+                "summary": "Create Derived Entry",
+                "description": "Updates multiple logs with the provided entries. Each entry will be either added\nor overridden in the specified logs.\n\nA dictionary of \"explicit_types\" can be passed as part of the `entries`.\nIf present, it will override the inferred type of any matching key in all logs.",
+                "operationId": "create_derived_entry_v0_log_derived_put",
                 "requestBody": {
-                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/DeleteLogsRequest"
+                                "$ref": "#/components/schemas/CreateDerivedEntriesConfig"
                             }
                         }
-                    }
+                    },
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -2848,17 +2911,17 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Logs deleted successfully!"
+                                    "info": "Log created successfully!"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Logs Not Found",
+                        "description": "Project Not Found",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "One or more logs with the specified IDs were not found."
+                                    "detail": "Project not found."
                                 }
                             }
                         }
@@ -2873,11 +2936,18 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/logs": {
             "put": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Update Logs",
                 "description": "Updates multiple logs with the provided entries. Each entry will be either added\nor overridden in the specified logs.\n\nA dictionary of \"explicit_types\" can be passed as part of the `entries`.\nIf present, it will override the inferred type of any matching key in all logs.",
@@ -2941,9 +3011,90 @@
                     }
                 }
             },
+            "delete": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Delete Logs",
+                "description": "Deletes a specific entry from multiple logs.",
+                "operationId": "delete_logs_v0_logs_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "delete_empty_logs",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "Whether to delete logs which end up being empty as a result of the field deletion.",
+                            "default": false,
+                            "title": "Delete Empty Logs"
+                        },
+                        "description": "Whether to delete logs which end up being empty as a result of the field deletion.",
+                        "example": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteLogEntryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Log entry deleted successfully from all logs!"
+                                }
+                            }
+                        }
+                    },
+                    "4041": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "One or more logs with the specified IDs were not found."
+                                }
+                            }
+                        }
+                    },
+                    "4042": {
+                        "description": "Log Entry Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Log entry <entry> not found in one or more logs."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "get": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Get Logs",
                 "description": "Returns a list of filtered entries from a project.",
@@ -2967,6 +3118,25 @@
                         "example": "eval-project"
                     },
                     {
+                        "name": "context",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
+                            "title": "Context"
+                        },
+                        "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
+                        "example": "subjects/science/physics"
+                    },
+                    {
                         "name": "filter_expr",
                         "in": "query",
                         "required": false,
@@ -2984,6 +3154,362 @@
                         },
                         "description": "Boolean string to filter entries. TODO: Detailed page.",
                         "example": "len(output) > 200 and temperature == 0.5"
+                    },
+                    {
+                        "name": "sorting",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.",
+                            "title": "Sorting"
+                        },
+                        "description": "Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.",
+                        "example": {
+                            "score": "ascending",
+                            "timestamp": "descending"
+                        }
+                    },
+                    {
+                        "name": "from_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                            "title": "From Ids"
+                        },
+                        "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                        "example": "0&1&2"
+                    },
+                    {
+                        "name": "exclude_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                            "title": "Exclude Ids"
+                        },
+                        "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                        "example": "0&1&2"
+                    },
+                    {
+                        "name": "from_fields",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The fields which are permitted to be included in the search. Each field listed does not need to be returned, but no fields which are not included in this list can be returned. This argument *cannot* be set if `exclude_fields` is set.",
+                            "title": "From Fields"
+                        },
+                        "description": "The fields which are permitted to be included in the search. Each field listed does not need to be returned, but no fields which are not included in this list can be returned. This argument *cannot* be set if `exclude_fields` is set.",
+                        "example": "score&response"
+                    },
+                    {
+                        "name": "exclude_fields",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The fields which cannot be returned from the search. None of the listed fields will be returned, even if the fields are valid as per the filtering expression etc. This argument *cannot* be set if `from_fields` is set.",
+                            "title": "Exclude Fields"
+                        },
+                        "description": "The fields which cannot be returned from the search. None of the listed fields will be returned, even if the fields are valid as per the filtering expression etc. This argument *cannot* be set if `from_fields` is set.",
+                        "example": "score&response"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "integer",
+                                    "maximum": 200,
+                                    "minimum": 1
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Offset"
+                        }
+                    },
+                    {
+                        "name": "return_ids_only",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Return Ids Only"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "params": {},
+                                    "logs": [
+                                        {
+                                            "id": "0",
+                                            "ts": "2024-10-30 12:20:03",
+                                            "entries": {
+                                                "key1": "a",
+                                                "key2": 1.0
+                                            },
+                                            "params": {}
+                                        },
+                                        {
+                                            "id": "1",
+                                            "ts": "2024-10-30 12:22:14",
+                                            "entries": {
+                                                "key1": "b",
+                                                "key2": 2.0
+                                            },
+                                            "params": {}
+                                        }
+                                    ],
+                                    "count": 2
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/logs/latest_timestamp": {
+            "get": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Get Logs Latest Timestamp",
+                "description": "Returns the update timestamp of the most recently updated log within the specified\npage and filter bounds.",
+                "operationId": "get_logs_latest_timestamp_v0_logs_latest_timestamp_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to get entries from.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project to get entries from.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "context",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
+                            "title": "Context"
+                        },
+                        "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
+                        "example": "subjects/science/physics"
+                    },
+                    {
+                        "name": "filter_expr",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Boolean string to filter entries. TODO: Detailed page.",
+                            "title": "Filter Expr"
+                        },
+                        "description": "Boolean string to filter entries. TODO: Detailed page.",
+                        "example": "len(output) > 200 and temperature == 0.5"
+                    },
+                    {
+                        "name": "sorting",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.",
+                            "title": "Sorting"
+                        },
+                        "description": "Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.",
+                        "example": {
+                            "score": "ascending",
+                            "timestamp": "descending"
+                        }
+                    },
+                    {
+                        "name": "from_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                            "title": "From Ids"
+                        },
+                        "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                        "example": "0&1&2"
+                    },
+                    {
+                        "name": "exclude_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                            "title": "Exclude Ids"
+                        },
+                        "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                        "example": "0&1&2"
+                    },
+                    {
+                        "name": "from_fields",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The fields which are permitted to be included in the search. Each field listed does not need to be returned, but no fields which are not included in this list can be returned. This argument *cannot* be set if `exclude_fields` is set.",
+                            "title": "From Fields"
+                        },
+                        "description": "The fields which are permitted to be included in the search. Each field listed does not need to be returned, but no fields which are not included in this list can be returned. This argument *cannot* be set if `exclude_fields` is set.",
+                        "example": "score&response"
+                    },
+                    {
+                        "name": "exclude_fields",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The fields which cannot be returned from the search. None of the listed fields will be returned, even if the fields are valid as per the filtering expression etc. This argument *cannot* be set if `from_fields` is set.",
+                            "title": "Exclude Fields"
+                        },
+                        "description": "The fields which cannot be returned from the search. None of the listed fields will be returned, even if the fields are valid as per the filtering expression etc. This argument *cannot* be set if `from_fields` is set.",
+                        "example": "score&response"
                     },
                     {
                         "name": "limit",
@@ -3071,163 +3597,14 @@
                 }
             }
         },
-        "/v0/logs/field/{field}": {
-            "delete": {
-                "tags": [
-                    "Evals"
-                ],
-                "summary": "Delete Log Fields",
-                "description": "Deletes a specific entry from multiple logs.",
-                "operationId": "delete_log_fields_v0_logs_field__field__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "field",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the field to delete from the given logs. This can be a param or an entry",
-                            "title": "Field"
-                        },
-                        "description": "Name of the field to delete from the given logs. This can be a param or an entry",
-                        "example": "entry-v0"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DeleteLogEntryRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Log entry deleted successfully from all logs!"
-                                }
-                            }
-                        }
-                    },
-                    "4041": {
-                        "description": "Log Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "One or more logs with the specified IDs were not found."
-                                }
-                            }
-                        }
-                    },
-                    "4042": {
-                        "description": "Log Entry Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log entry <entry> not found in one or more logs."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/log/{id}": {
+        "/v0/logs/metric/{metric}": {
             "get": {
                 "tags": [
-                    "Evals"
-                ],
-                "summary": "Get Log",
-                "description": "Returns the log associated with a given id.",
-                "operationId": "get_log_v0_log__id__get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "description": "ID of the log to fetch.",
-                            "title": "Id"
-                        },
-                        "description": "ID of the log to fetch.",
-                        "example": "123"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "id": "123",
-                                    "ts": "2024-10-30 12:20:03",
-                                    "entries": {
-                                        "input": "...",
-                                        "output": "..."
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Log Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log with id <id> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/logs/metric/{metric}/{key}": {
-            "get": {
-                "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Get Logs Metric",
                 "description": "Returns the reduction metric for filtered values for a specific key from a project.",
-                "operationId": "get_logs_metric_v0_logs_metric__metric___key__get",
+                "operationId": "get_logs_metric_v0_logs_metric__metric__get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3248,7 +3625,7 @@
                     },
                     {
                         "name": "key",
-                        "in": "path",
+                        "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -3288,6 +3665,44 @@
                         },
                         "description": "Boolean string to filter entries. TODO: Detailed page.",
                         "example": "len(output) > 200 and temperature == 0.5"
+                    },
+                    {
+                        "name": "from_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                            "title": "From Ids"
+                        },
+                        "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                        "example": "0&1&2"
+                    },
+                    {
+                        "name": "exclude_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                            "title": "Exclude Ids"
+                        },
+                        "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                        "example": "0&1&2"
                     }
                 ],
                 "responses": {
@@ -3305,9 +3720,12 @@
                                         },
                                         {
                                             "type": "boolean"
+                                        },
+                                        {
+                                            "type": "string"
                                         }
                                     ],
-                                    "title": "Response Get Logs Metric V0 Logs Metric  Metric   Key  Get"
+                                    "title": "Response Get Logs Metric V0 Logs Metric  Metric  Get"
                                 },
                                 "example": 4.56
                             }
@@ -3339,7 +3757,7 @@
         "/v0/logs/groups": {
             "get": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
                 "summary": "Get Log Groups",
                 "description": "Returns a dict with the different versions as keys and the values of the remaining\nitems within a given project based on its key.",
@@ -3420,14 +3838,14 @@
                 }
             }
         },
-        "/v0/logs/columns": {
+        "/v0/logs/fields": {
             "get": {
                 "tags": [
-                    "Evals"
+                    "Logs"
                 ],
-                "summary": "Get Log Columns",
-                "description": "Returns a mapping of columns and their datatypes from a project.",
-                "operationId": "get_log_columns_v0_logs_columns_get",
+                "summary": "Get Fields",
+                "description": "Returns a dictionary of field names and their types for the specified project.\nStrongly typed fields return their type, while others return None.",
+                "operationId": "get_fields_v0_logs_fields_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3440,10 +3858,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the project to get columns for.",
+                            "description": "Name of the project to get fields and their types for.",
                             "title": "Project"
                         },
-                        "description": "Name of the project to get columns for.",
+                        "description": "Name of the project to get fields and their types for.",
                         "example": "eval-project"
                     }
                 ],
@@ -3454,10 +3872,8 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "entries": {
-                                        "col1": "string",
-                                        "col2": "float"
-                                    }
+                                    "field1": "string",
+                                    "field2": "int"
                                 }
                             }
                         }
@@ -3485,14 +3901,14 @@
                 }
             }
         },
-        "/v0/router/train": {
+        "/v0/logs/fields/types": {
             "post": {
                 "tags": [
-                    "Router Training"
+                    "Logs"
                 ],
-                "summary": "Train Router",
-                "description": "Train a router based on a specified training dataset and a set of endpoints to route\nacross. To *use* a custom-trained router, you will need to deploy the resulting\nartifacts to a live endpoint, via the `/router/deploy` `POST` endpoint.",
-                "operationId": "train_router_v0_router_train_post",
+                "summary": "Set Field Types",
+                "description": "Sets the typing for specified fields in the project.",
+                "operationId": "set_field_types_v0_logs_fields_types_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3500,109 +3916,56 @@
                 ],
                 "parameters": [
                     {
-                        "name": "name",
+                        "name": "project",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the router.",
-                            "title": "Name"
+                            "description": "Name of the project to get field types for.",
+                            "title": "Project"
                         },
-                        "description": "Name of the router.",
-                        "example": "my_router"
-                    },
-                    {
-                        "name": "dataset",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Name of the uploaded dataset to train a router on. Must pass exactly one of `dataset`, `prompts`.",
-                            "title": "Dataset"
-                        },
-                        "description": "Name of the uploaded dataset to train a router on. Must pass exactly one of `dataset`, `prompts`.",
-                        "example": "dataset1"
-                    },
-                    {
-                        "name": "prompts",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Specify the prompts to train a router on. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
-                            "title": "Prompts"
-                        },
-                        "description": "Specify the prompts to train a router on. Pass a string of comma separated integers. Must pass exactly one of `dataset`, `prompts`.",
-                        "example": "34,89,127"
-                    },
-                    {
-                        "name": "endpoints",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            },
-                            "description": "List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format.",
-                            "title": "Endpoints"
-                        },
-                        "description": "List of endpoints to include in the router. Endpoints must be specified using the `model@provider` format.",
-                        "example": [
-                            "gpt-4o-mini@openai",
-                            "claude-3.5-sonnet@anthropic",
-                            "llama-3.1-405b-chat@fireworks-ai"
-                        ]
+                        "description": "Name of the project to get field types for.",
+                        "example": "eval-project"
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SetFieldTypingRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Successful Response",
+                        "description": "Field typing updated successfully.",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Train Router V0 Router Train Post"
-                                },
+                                "schema": {},
                                 "example": {
-                                    "info": "Router training started! You will receive an email soon!"
+                                    "info": "Field typing updated successfully!"
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "Router Training Already Exist",
+                        "description": "Bad Request - Type mismatch or other validation errors.",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "A router with this name has already been trained. Please, choose a different one."
+                                    "detail": "Cannot enable typing for field '<field_name>' as existing logs have different types."
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Dataset Not Found",
+                        "description": "Project Not Found",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "This dataset does not exist."
+                                    "detail": "Project <project> not found."
                                 }
                             }
                         }
@@ -3620,57 +3983,46 @@
                 }
             }
         },
-        "/v0/router": {
-            "delete": {
+        "/v0/interface": {
+            "post": {
                 "tags": [
-                    "Router Training"
+                    "Configs"
                 ],
-                "summary": "Delete Router",
-                "description": "Deletes a specific trained router, as well as all the training files etc.",
-                "operationId": "delete_router_v0_router_delete",
+                "summary": "Create Interface",
+                "operationId": "create_interface_v0_interface_post",
                 "security": [
                     {
                         "HTTPBearer": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the router to delete.",
-                            "title": "Name"
-                        },
-                        "description": "Name of the router to delete.",
-                        "example": "my_router"
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InterfaceConfig"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Successful Response",
+                        "description": "Interface created.",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Delete Router V0 Router Delete"
-                                },
+                                "schema": {},
                                 "example": {
-                                    "info": "Trained router deleted!"
+                                    "info": "Interface created successfully!"
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "Router Training Does Not Exist",
+                        "description": "Interface already exists.",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "You don't have a router with the name: my_router"
+                                    "info": "Interface already exists, update the interface instead."
                                 }
                             }
                         }
@@ -3686,120 +4038,64 @@
                         }
                     }
                 }
-            }
-        },
-        "/v0/router/rename": {
-            "post": {
+            },
+            "put": {
                 "tags": [
-                    "Router Training"
+                    "Configs"
                 ],
-                "summary": "Rename Router",
-                "description": "Renames the specified router from `name` to `new_name`.",
-                "operationId": "rename_router_v0_router_rename_post",
+                "summary": "Update Interface",
+                "operationId": "update_interface_v0_interface_put",
                 "security": [
                     {
                         "HTTPBearer": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The original name of the router.",
-                            "title": "Name"
-                        },
-                        "description": "The original name of the router.",
-                        "example": "original_name"
-                    },
-                    {
-                        "name": "new_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The new name for the router.",
-                            "title": "New Name"
-                        },
-                        "description": "The new name for the router.",
-                        "example": "new_name"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/router/list": {
-            "get": {
-                "tags": [
-                    "Router Training"
-                ],
-                "summary": "List Routers",
-                "description": "Lists all the trained routers and the relevant metadata.\nThese routers are training artifacts and therefore don't imply an active,\ndeployed router. To fetch a list of deployed routers, you can use the\n`/router/deploy/list` `GET` endpoint.",
-                "operationId": "list_routers_v0_router_list_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "type": "array",
-                                    "title": "Response List Routers V0 Router List Get"
-                                },
-                                "example": {
-                                    "router_1": {
-                                        "dataset": "dataset_1",
-                                        "endpoints": [
-                                            "model@provider",
-                                            "..."
-                                        ]
-                                    },
-                                    "...": [
-                                        "..."
-                                    ]
-                                }
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InterfaceConfig"
                             }
                         }
                     }
                 },
-                "security": [
-                    {
-                        "HTTPBearer": []
+                "responses": {
+                    "200": {
+                        "description": "Interface updated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "info": "Interface updated successfully!"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Interface Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": "Interface not added yet. Create it first."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
                     }
-                ]
-            }
-        },
-        "/v0/get_dataset_evaluation": {
+                }
+            },
             "get": {
                 "tags": [
-                    "Router Training"
+                    "Configs"
                 ],
-                "summary": "Get Dataset Evaluation",
-                "description": "Retrieve specific dataset evaluation object from the database.",
-                "operationId": "get_dataset_evaluation_v0_get_dataset_evaluation_get",
+                "summary": "Get Interface",
+                "operationId": "get_interface_v0_interface_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3807,101 +4103,50 @@
                 ],
                 "parameters": [
                     {
-                        "name": "dataset_name",
+                        "name": "temporary",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "schema": {
-                            "type": "string",
-                            "title": "Dataset Name"
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Temporary"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful Response",
+                        "description": "Interface retrieved.",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "object",
-                                        "additionalProperties": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object"
-                                            }
+                                "schema": {},
+                                "example": {
+                                    "items": [
+                                        {
+                                            "i": "n0",
+                                            "x": 0,
+                                            "y": 0,
+                                            "w": 3,
+                                            "h": 3
+                                        },
+                                        {
+                                            "i": "n1",
+                                            "x": 0,
+                                            "y": 1,
+                                            "w": 2,
+                                            "h": 3,
+                                            "tab": "Plot_1"
                                         }
-                                    },
-                                    "title": "Response Get Dataset Evaluation V0 Get Dataset Evaluation Get"
+                                    ],
+                                    "new_counter": 2
                                 }
                             }
                         }
                     },
-                    "422": {
-                        "description": "Validation Error",
+                    "404": {
+                        "description": "Interface Not Found",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/router/deploy": {
-            "post": {
-                "tags": [
-                    "Router Deployment"
-                ],
-                "summary": "Deploy Router",
-                "description": "Deploys a trained router to a live endpoint.\n\nTo use this router, replace the model in the endpoint string with the\nrouter name. E.g. you can use a router named `test_router` by calling the\n`router_test_router@q:1` endpoint.",
-                "operationId": "deploy_router_v0_router_deploy_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the router to deploy.",
-                            "title": "Name"
-                        },
-                        "description": "Name of the router to deploy.",
-                        "example": "router1"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Deploy Router V0 Router Deploy Post"
-                                },
-                                "example": {
-                                    "info": "Router deployment started! You will receive an email soon!"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Router Training Does Not Exist",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "This router training doesn't exist. Please, choose a different one or trigger the training first."
-                                }
+                                "example": "Interface not added yet. Create it first."
                             }
                         }
                     },
@@ -3919,11 +4164,10 @@
             },
             "delete": {
                 "tags": [
-                    "Router Deployment"
+                    "Configs"
                 ],
-                "summary": "Undeploy Router",
-                "description": "Deactivates and deletes a previously deployed router, but keeps the training\nartifacts for this router, such that it can be redeployed if desired without needing\nto retrain.",
-                "operationId": "undeploy_router_v0_router_deploy_delete",
+                "summary": "Delete Interface",
+                "operationId": "delete_interface_v0_interface_delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3931,43 +4175,33 @@
                 ],
                 "parameters": [
                     {
-                        "name": "name",
+                        "name": "temporary",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "schema": {
-                            "type": "string",
-                            "description": "Name of the router to un-deploy.",
-                            "title": "Name"
-                        },
-                        "description": "Name of the router to un-deploy.",
-                        "example": "router1"
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Temporary"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful Response",
+                        "description": "Interface deleted.",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Undeploy Router V0 Router Deploy Delete"
-                                },
+                                "schema": {},
                                 "example": {
-                                    "info": "Router deletion started! You will receive an email soon!"
+                                    "info": "Interface deleted successfully!"
                                 }
                             }
                         }
                     },
-                    "400": {
-                        "description": "Router Not Deployed",
+                    "404": {
+                        "description": "Interface Not Found",
                         "content": {
                             "application/json": {
-                                "example": {
-                                    "detail": "This router is not deployed!"
-                                }
+                                "example": "Interface not added yet. Create it first."
                             }
                         }
                     },
@@ -3982,297 +4216,6 @@
                         }
                     }
                 }
-            }
-        },
-        "/v0/router/deploy/list": {
-            "get": {
-                "tags": [
-                    "Router Deployment"
-                ],
-                "summary": "List Deployed Routers",
-                "description": "Fetches a list of the *deployed* routers and relevant metadata (excluding the\ntrained but undeployed routers). To fetch a list of *all* trained routers (both\ndeployed and undeployed), you can use the `/router/list` `GET` endpoint.\n\nTo use any of these routers, replace the model in the endpoint string with the\nrouter name. E.g. you can use `router-abc` with the endpoint `router-abc@q:1`.",
-                "operationId": "list_deployed_routers_v0_router_deploy_list_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "items": {},
-                                    "type": "array",
-                                    "title": "Response List Deployed Routers V0 Router Deploy List Get"
-                                },
-                                "example": {
-                                    "router_1": {
-                                        "dataset": "dataset_1",
-                                        "endpoints": [
-                                            "model@provider",
-                                            "..."
-                                        ]
-                                    },
-                                    "...": [
-                                        "..."
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/router/config": {
-            "post": {
-                "tags": [
-                    "Router Configurations"
-                ],
-                "summary": "Create Router Config",
-                "description": "Creates a router configuration, which can be queried later using only the\nconfiguration name, such as `my_router_config@routers`.",
-                "operationId": "create_router_config_v0_router_config_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "config_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The name of the router configuration to create.",
-                            "title": "Config Name"
-                        },
-                        "description": "The name of the router configuration to create.",
-                        "example": "cost_and_speed_optimized"
-                    },
-                    {
-                        "name": "router_endpoint",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The raw string which fully defines the router endpoint, with all constraints applied, including the router name and any extra arguments.",
-                            "title": "Router Endpoint"
-                        },
-                        "description": "The raw string which fully defines the router endpoint, with all constraints applied, including the router name and any extra arguments.",
-                        "example": "router1|models:llama-3.1-8b-chat,mixtral-8x22b-instruct-v0.1|providers:fireworks-ai,together-ai|q:1|c:4.65e-03|t:2.08e-05|i:2.07e-03@routers"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Router Configurations"
-                ],
-                "summary": "Get Router Config",
-                "description": "Returns the full router endpoint string for a given router configuration name.",
-                "operationId": "get_router_config_v0_router_config_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "config_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The name of the router configuration to retrieve the full endpoint string for.",
-                            "title": "Config Name"
-                        },
-                        "description": "The name of the router configuration to retrieve the full endpoint string for.",
-                        "example": "cost_and_speed_optimized"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "string",
-                                    "title": "Response Get Router Config V0 Router Config Get"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Router Configurations"
-                ],
-                "summary": "Delete Router Config",
-                "description": "Deletes the specified router configuration from your account.",
-                "operationId": "delete_router_config_v0_router_config_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "config_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The name of the router configuration to delete.",
-                            "title": "Config Name"
-                        },
-                        "description": "The name of the router configuration to delete.",
-                        "example": "cost_and_speed_optimized"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/router/config/rename": {
-            "post": {
-                "tags": [
-                    "Router Configurations"
-                ],
-                "summary": "Rename Router Config",
-                "description": "Renames the specified router configuration in your account.",
-                "operationId": "rename_router_config_v0_router_config_rename_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The original name of the router configuration.",
-                            "title": "Name"
-                        },
-                        "description": "The original name of the router configuration.",
-                        "example": "original_name"
-                    },
-                    {
-                        "name": "new_name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The new name for the router configuration.",
-                            "title": "New Name"
-                        },
-                        "description": "The new name for the router configuration.",
-                        "example": "new_name"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/router/config/list": {
-            "get": {
-                "tags": [
-                    "Router Configurations"
-                ],
-                "summary": "List Router Configs",
-                "description": "Lists all saved router configurations by name.",
-                "operationId": "list_router_configs_v0_router_config_list_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "type": "array",
-                                    "title": "Response List Router Configs V0 Router Config List Get"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
             }
         },
         "/v0/credits": {
@@ -4943,6 +4886,64 @@
                 "title": "ChatCompletionResponse",
                 "description": "Response model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    created (int): Timestamp indicating when the response was created.\n    id (str): Identifier for the completion response.\n    object (str): The type of object, defaults to \"chat.completion\".\n    usage (dict): Usage statistics or additional information.\n    choices (List[Dict]): List of completion choices."
             },
+            "CreateDerivedEntriesConfig": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project the stored entries will be associated to.",
+                        "example": "eval-project"
+                    },
+                    "key": {
+                        "type": "string",
+                        "title": "Key",
+                        "description": "The name of the entry.",
+                        "example": "score_diff"
+                    },
+                    "equation": {
+                        "type": "string",
+                        "title": "Equation",
+                        "description": "The equation for computing the value of each derived entry.",
+                        "example": "{log0:score} - {log1:score}"
+                    },
+                    "referenced_logs": {
+                        "additionalProperties": {
+                            "anyOf": [
+                                {
+                                    "items": {
+                                        "type": "integer"
+                                    },
+                                    "type": "array"
+                                },
+                                {
+                                    "type": "object"
+                                }
+                            ]
+                        },
+                        "type": "object",
+                        "title": "Referenced Logs",
+                        "description": "The logs to use for each newly created derived entry, either as a list of log ids or as a set of arguments for the get_logs endpoint.",
+                        "example": {
+                            "log0": [
+                                0,
+                                1,
+                                2
+                            ],
+                            "log1": {
+                                "filter_expr": "score > 0.5"
+                            }
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "key",
+                    "equation",
+                    "referenced_logs"
+                ],
+                "title": "CreateDerivedEntriesConfig"
+            },
             "CreateLogConfig": {
                 "properties": {
                     "project": {
@@ -4976,6 +4977,22 @@
                             "input": "...",
                             "score-test-1": "..."
                         }
+                    },
+                    "strongly_typed": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Strongly Typed",
+                        "description": "Enforce strong typing for fields.",
+                        "default": true
                     }
                 },
                 "type": "object",
@@ -5099,49 +5116,78 @@
             },
             "DeleteLogEntryRequest": {
                 "properties": {
-                    "ids": {
+                    "ids_and_fields": {
                         "items": {
-                            "type": "integer"
+                            "prefixItems": [
+                                {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "type": "array"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "anyOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "type": "array"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "type": "array",
+                            "maxItems": 2,
+                            "minItems": 2
                         },
                         "type": "array",
                         "minItems": 1,
-                        "title": "Ids",
-                        "description": "List of log IDs to delete the entry from.",
+                        "title": "Ids And Fields",
+                        "description": "List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items.",
                         "example": [
-                            123,
-                            456,
-                            789
+                            [
+                                123,
+                                "score"
+                            ],
+                            [
+                                [
+                                    456,
+                                    457
+                                ],
+                                [
+                                    "score",
+                                    "response"
+                                ]
+                            ],
+                            [
+                                [
+                                    458,
+                                    459,
+                                    460
+                                ],
+                                "response"
+                            ]
                         ]
                     }
                 },
                 "type": "object",
                 "required": [
-                    "ids"
+                    "ids_and_fields"
                 ],
                 "title": "DeleteLogEntryRequest"
-            },
-            "DeleteLogsRequest": {
-                "properties": {
-                    "ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "type": "array",
-                        "minItems": 1,
-                        "title": "Ids",
-                        "description": "List of log IDs to delete.",
-                        "example": [
-                            123,
-                            456,
-                            789
-                        ]
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "ids"
-                ],
-                "title": "DeleteLogsRequest"
             },
             "EntriesConfig": {
                 "properties": {
@@ -5176,6 +5222,328 @@
                 "type": "object",
                 "title": "HTTPValidationError"
             },
+            "InterfaceConfig": {
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/Item"
+                        },
+                        "type": "array",
+                        "title": "Items"
+                    },
+                    "new_counter": {
+                        "type": "integer",
+                        "title": "New Counter"
+                    },
+                    "project": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Project"
+                    },
+                    "temporary": {
+                        "type": "boolean",
+                        "title": "Temporary",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "items",
+                    "new_counter"
+                ],
+                "title": "InterfaceConfig"
+            },
+            "Item": {
+                "properties": {
+                    "i": {
+                        "type": "string",
+                        "title": "I"
+                    },
+                    "x": {
+                        "type": "number",
+                        "title": "X"
+                    },
+                    "y": {
+                        "type": "number",
+                        "title": "Y"
+                    },
+                    "w": {
+                        "type": "number",
+                        "title": "W"
+                    },
+                    "h": {
+                        "type": "number",
+                        "title": "H"
+                    },
+                    "moved": {
+                        "type": "boolean",
+                        "title": "Moved",
+                        "default": false
+                    },
+                    "static": {
+                        "type": "boolean",
+                        "title": "Static",
+                        "default": false
+                    },
+                    "tab": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tab"
+                    },
+                    "table": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Table"
+                    },
+                    "auto_update": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Auto Update"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context"
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filters"
+                    },
+                    "common_filter": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Common Filter"
+                    },
+                    "page_number": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Page Number"
+                    },
+                    "metric": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metric"
+                    },
+                    "column_order": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Order"
+                    },
+                    "hidden_columns": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Hidden Columns"
+                    },
+                    "sorting": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sorting"
+                    },
+                    "grouping": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Grouping"
+                    },
+                    "columns_pin_left": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Columns Pin Left"
+                    },
+                    "columns_pin_right": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Columns Pin Right"
+                    },
+                    "selected": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Selected"
+                    },
+                    "base_index": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Base Index"
+                    },
+                    "plot_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plot Type"
+                    },
+                    "plot_scale": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plot Scale"
+                    },
+                    "is_aggregated": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Is Aggregated"
+                    },
+                    "x_axis": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "X Axis"
+                    },
+                    "y_axis": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Y Axis"
+                    },
+                    "plot_group_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plot Group By"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "i",
+                    "x",
+                    "y",
+                    "w",
+                    "h"
+                ],
+                "title": "Item"
+            },
             "ProjectConfig": {
                 "properties": {
                     "name": {
@@ -5190,6 +5558,23 @@
                     "name"
                 ],
                 "title": "ProjectConfig"
+            },
+            "SetFieldTypingRequest": {
+                "properties": {
+                    "types": {
+                        "additionalProperties": {
+                            "type": "boolean"
+                        },
+                        "type": "object",
+                        "title": "Types",
+                        "description": "Dict of field names and booleans as to whether the field should be typed."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "types"
+                ],
+                "title": "SetFieldTypingRequest"
             },
             "UpdateLogRequest": {
                 "properties": {
@@ -5208,9 +5593,19 @@
                         ]
                     },
                     "params": {
-                        "type": "object",
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "items": {
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        ],
                         "title": "Params",
-                        "description": "Dictionary of key-value parameter pairs to add or update in the logs.",
+                        "description": "Dictionary or list of dictionaries of key-value parameter pairs to add or update in the logs.",
                         "default": {},
                         "example": {
                             "explicit_types": {
@@ -5221,9 +5616,19 @@
                         }
                     },
                     "entries": {
-                        "type": "object",
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "items": {
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        ],
                         "title": "Entries",
-                        "description": "Dictionary of key-value entry pairs to add or update in the logs.",
+                        "description": "Dictionary or list of dictionaries of key-value entry pairs to add or update in the logs.",
                         "default": {},
                         "example": {
                             "explicit_types": {
@@ -5239,6 +5644,22 @@
                         "description": "Whether to overwrite existing logs",
                         "default": false,
                         "example": false
+                    },
+                    "strongly_typed": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Strongly Typed",
+                        "description": "Enforce strong typing for fields.",
+                        "default": true
                     }
                 },
                 "type": "object",

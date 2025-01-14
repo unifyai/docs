@@ -1,0 +1,109 @@
+---
+title: 'Delete Logs'
+api: 'DELETE /v0/logs'
+---
+Deletes a specific entry from multiple logs.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="delete_empty_logs" type="boolean" >
+Whether to delete logs which end up being empty as a result of the field deletion.
+</ParamField>
+
+#### Body
+
+<ParamField body="ids_and_fields" type="[array]" required="true">
+List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/logs?delete_empty_logs=True' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{
+    "ids_and_fields": [
+        [
+            123,
+            "score"
+        ],
+        [
+            [
+                456,
+                457
+            ],
+            [
+                "score",
+                "response"
+            ]
+        ],
+        [
+            [
+                458,
+                459,
+                460
+            ],
+            "response"
+        ]
+    ]
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs?delete_empty_logs=True"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"ids_and_fields": [[123, "score"], [[456, 457], ["score", "response"]], [[458, 459, 460], "response"]]}
+
+response = requests.request("DELETE", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Log entry deleted successfully from all logs!"
+}
+```
+
+```json 404 (1)
+{
+    "detail": "One or more logs with the specified IDs were not found."
+}
+```
+
+```json 404 (2)
+{
+    "detail": "Log entry <entry> not found in one or more logs."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

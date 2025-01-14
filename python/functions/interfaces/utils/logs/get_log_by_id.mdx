@@ -1,0 +1,28 @@
+---
+title: 'get_log_by_id'
+---
+
+```python
+def get_log_by_id(
+    id: int,
+    project: Optional[str] = None,
+    *,
+    api_key: Optional[str] = None,
+) -> unify.Log:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a0df8582537164cbf7d119d625230b92fc71ee17/unify/interfaces/utils/logs.py#L506)</p>
+
+Returns the log associated with a given id.
+
+**Arguments**:
+
+- `id` - IDs of the logs to fetch.
+- `project` - Name of the project to get logs from.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+The full set of log data.

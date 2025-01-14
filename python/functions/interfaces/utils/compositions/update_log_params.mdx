@@ -1,0 +1,30 @@
+---
+title: 'update_log_params'
+---
+
+```python
+def update_log_params(
+    *,
+    fn: Union[callable, Dict[str, callable]],
+    log: Optional[Union[int, unify.Log]] = None,
+    api_key: Optional[str] = None,
+    **params,
+) -> Dict[str, str]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a0df8582537164cbf7d119d625230b92fc71ee17/unify/interfaces/utils/compositions.py#L101)</p>
+
+Updates existing params in an existing log.
+
+**Arguments**:
+
+- `fn` - The function or set of functions to apply to each field in the log.
+- `log` - The log to update fields for. Looks for the current active log if not
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+- `params` - The params to update in the log.
+
+
+
+**Returns**:
+
+A message indicating whether the log was successfully updated.

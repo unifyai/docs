@@ -1,0 +1,119 @@
+---
+title: 'Update Logs'
+api: 'PUT /v0/logs'
+---
+Updates multiple logs with the provided entries. Each entry will be either added
+or overridden in the specified logs.
+
+A dictionary of "explicit_types" can be passed as part of the `entries`.
+If present, it will override the inferred type of any matching key in all logs.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="ids" type="[integer]" required="true">
+List of log IDs to update with new or overriding entries.
+</ParamField>
+
+<ParamField body="params" type="object | array"  default={{}}>
+Dictionary or list of dictionaries of key-value parameter pairs to add or update in the logs.
+</ParamField>
+
+<ParamField body="entries" type="object | array"  default={{}}>
+Dictionary or list of dictionaries of key-value entry pairs to add or update in the logs.
+</ParamField>
+
+<ParamField body="overwrite" type="boolean"  default={false}>
+Whether to overwrite existing logs
+</ParamField>
+
+<ParamField body="strongly_typed" type="boolean | array"  default={true}>
+Enforce strong typing for fields.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PUT \
+  --url 'https://api.unify.ai/v0/logs' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "ids": [
+        123,
+        456,
+        789
+    ],
+    "params": {
+        "explicit_types": {
+            "system-prompt": "str"
+        },
+        "function_definition": "...",
+        "system-prompt": "..."
+    },
+    "entries": {
+        "explicit_types": {
+            "input": "Image"
+        },
+        "input": "...",
+        "score-test-1": "..."
+    },
+    "overwrite": false
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"ids": [123, 456, 789], "params": {"explicit_types": {"system-prompt": "str"}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}, "overwrite": False}
+
+response = requests.request("PUT", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Logs updated successfully!"
+}
+```
+
+```json 404
+{
+    "detail": "One or more logs with the specified IDs were not found."
+}
+```
+
+```json 400
+{
+    "detail": "Invalid request format or data."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,84 @@
+---
+title: 'Create Interface'
+api: 'POST /v0/interface'
+---
+
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="items" type="[Any]" required="true">
+
+</ParamField>
+
+<ParamField body="new_counter" type="integer" required="true">
+
+</ParamField>
+
+<ParamField body="project" type="string | null" >
+
+</ParamField>
+
+<ParamField body="temporary" type="boolean"  default={false}>
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/interface' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/interface"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Interface created successfully!"
+}
+```
+
+```json 400
+{
+    "info": "Interface already exists, update the interface instead."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

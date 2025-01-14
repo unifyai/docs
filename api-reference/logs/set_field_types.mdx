@@ -1,0 +1,84 @@
+---
+title: 'Set Field Types'
+api: 'POST /v0/logs/fields/types'
+---
+Sets the typing for specified fields in the project.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="project" type="string" required="true">
+Name of the project to get field types for.
+</ParamField>
+
+#### Body
+
+<ParamField body="types" type="object" required="true">
+Dict of field names and booleans as to whether the field should be typed.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/logs/fields/types?project=eval-project' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs/fields/types?project=eval-project"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Field typing updated successfully!"
+}
+```
+
+```json 400
+{
+    "detail": "Cannot enable typing for field '<field_name>' as existing logs have different types."
+}
+```
+
+```json 404
+{
+    "detail": "Project <project> not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

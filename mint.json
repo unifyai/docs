@@ -124,23 +124,23 @@
             "group": "",
             "pages": [
                 {
-                    "group": "evals",
+                    "group": "interfaces",
                     "pages": [
                         {
                             "group": "dataset",
                             "pages": [
-                                "python/classes/evals/dataset/Dataset"
+                                "python/classes/interfaces/dataset/Dataset"
                             ]
                         },
                         {
-                            "group": "logging",
+                            "group": "logs",
                             "pages": [
-                                "python/classes/evals/logging/Context",
-                                "python/classes/evals/logging/Entries",
-                                "python/classes/evals/logging/Experiment",
-                                "python/classes/evals/logging/Log",
-                                "python/classes/evals/logging/Params",
-                                "python/functions/evals/logging/traced"
+                                "python/classes/interfaces/logs/Context",
+                                "python/classes/interfaces/logs/Entries",
+                                "python/classes/interfaces/logs/Experiment",
+                                "python/classes/interfaces/logs/Log",
+                                "python/classes/interfaces/logs/Params",
+                                "python/functions/interfaces/logs/traced"
                             ]
                         },
                         {
@@ -149,70 +149,70 @@
                                 {
                                     "group": "artifacts",
                                     "pages": [
-                                        "python/functions/evals/utils/artifacts/add_project_artifacts",
-                                        "python/functions/evals/utils/artifacts/delete_project_artifact",
-                                        "python/functions/evals/utils/artifacts/get_project_artifacts"
+                                        "python/functions/interfaces/utils/artifacts/add_project_artifacts",
+                                        "python/functions/interfaces/utils/artifacts/delete_project_artifact",
+                                        "python/functions/interfaces/utils/artifacts/get_project_artifacts"
                                     ]
                                 },
                                 {
                                     "group": "compositions",
                                     "pages": [
-                                        "python/functions/evals/utils/compositions/add_params",
-                                        "python/functions/evals/utils/compositions/delete_logs_by_value",
-                                        "python/functions/evals/utils/compositions/get_log_by_value",
-                                        "python/functions/evals/utils/compositions/get_logs_by_id",
-                                        "python/functions/evals/utils/compositions/get_logs_by_value",
-                                        "python/functions/evals/utils/compositions/get_logs_with_fields",
-                                        "python/functions/evals/utils/compositions/get_logs_without_fields",
-                                        "python/functions/evals/utils/compositions/get_params",
-                                        "python/functions/evals/utils/compositions/get_source",
-                                        "python/functions/evals/utils/compositions/group_logs",
-                                        "python/functions/evals/utils/compositions/group_logs_by_configs",
-                                        "python/functions/evals/utils/compositions/rename_log_entries",
-                                        "python/functions/evals/utils/compositions/rename_log_params",
-                                        "python/functions/evals/utils/compositions/replace_log_entries",
-                                        "python/functions/evals/utils/compositions/replace_log_params",
-                                        "python/functions/evals/utils/compositions/update_log_entries",
-                                        "python/functions/evals/utils/compositions/update_log_params"
+                                        "python/functions/interfaces/utils/compositions/add_params",
+                                        "python/functions/interfaces/utils/compositions/delete_logs_by_value",
+                                        "python/functions/interfaces/utils/compositions/get_log_by_value",
+                                        "python/functions/interfaces/utils/compositions/get_logs_by_id",
+                                        "python/functions/interfaces/utils/compositions/get_logs_by_value",
+                                        "python/functions/interfaces/utils/compositions/get_logs_with_fields",
+                                        "python/functions/interfaces/utils/compositions/get_logs_without_fields",
+                                        "python/functions/interfaces/utils/compositions/get_params",
+                                        "python/functions/interfaces/utils/compositions/get_source",
+                                        "python/functions/interfaces/utils/compositions/group_logs",
+                                        "python/functions/interfaces/utils/compositions/group_logs_by_configs",
+                                        "python/functions/interfaces/utils/compositions/rename_log_entries",
+                                        "python/functions/interfaces/utils/compositions/rename_log_params",
+                                        "python/functions/interfaces/utils/compositions/replace_log_entries",
+                                        "python/functions/interfaces/utils/compositions/replace_log_params",
+                                        "python/functions/interfaces/utils/compositions/update_log_entries",
+                                        "python/functions/interfaces/utils/compositions/update_log_params"
                                     ]
                                 },
                                 {
                                     "group": "datasets",
                                     "pages": [
-                                        "python/functions/evals/utils/datasets/add_dataset_entries",
-                                        "python/functions/evals/utils/datasets/create_dataset_artifacts",
-                                        "python/functions/evals/utils/datasets/delete_dataset",
-                                        "python/functions/evals/utils/datasets/delete_dataset_artifact",
-                                        "python/functions/evals/utils/datasets/delete_dataset_entry",
-                                        "python/functions/evals/utils/datasets/download_dataset",
-                                        "python/functions/evals/utils/datasets/download_dataset_artifacts",
-                                        "python/functions/evals/utils/datasets/get_dataset_entry",
-                                        "python/functions/evals/utils/datasets/list_datasets",
-                                        "python/functions/evals/utils/datasets/rename_dataset",
-                                        "python/functions/evals/utils/datasets/upload_dataset"
+                                        "python/functions/interfaces/utils/datasets/add_dataset_entries",
+                                        "python/functions/interfaces/utils/datasets/create_dataset_artifacts",
+                                        "python/functions/interfaces/utils/datasets/delete_dataset",
+                                        "python/functions/interfaces/utils/datasets/delete_dataset_artifact",
+                                        "python/functions/interfaces/utils/datasets/delete_dataset_entry",
+                                        "python/functions/interfaces/utils/datasets/download_dataset",
+                                        "python/functions/interfaces/utils/datasets/download_dataset_artifacts",
+                                        "python/functions/interfaces/utils/datasets/get_dataset_entry",
+                                        "python/functions/interfaces/utils/datasets/list_datasets",
+                                        "python/functions/interfaces/utils/datasets/rename_dataset",
+                                        "python/functions/interfaces/utils/datasets/upload_dataset"
                                     ]
                                 },
                                 {
-                                    "group": "logging",
+                                    "group": "logs",
                                     "pages": [
-                                        "python/functions/evals/utils/logging/add_log_entries",
-                                        "python/functions/evals/utils/logging/add_log_params",
-                                        "python/functions/evals/utils/logging/delete_log_fields",
-                                        "python/functions/evals/utils/logging/delete_logs",
-                                        "python/functions/evals/utils/logging/get_groups",
-                                        "python/functions/evals/utils/logging/get_log_by_id",
-                                        "python/functions/evals/utils/logging/get_logs",
-                                        "python/functions/evals/utils/logging/get_logs_metric",
-                                        "python/functions/evals/utils/logging/log"
+                                        "python/functions/interfaces/utils/logs/add_log_entries",
+                                        "python/functions/interfaces/utils/logs/add_log_params",
+                                        "python/functions/interfaces/utils/logs/delete_log_fields",
+                                        "python/functions/interfaces/utils/logs/delete_logs",
+                                        "python/functions/interfaces/utils/logs/get_groups",
+                                        "python/functions/interfaces/utils/logs/get_log_by_id",
+                                        "python/functions/interfaces/utils/logs/get_logs",
+                                        "python/functions/interfaces/utils/logs/get_logs_metric",
+                                        "python/functions/interfaces/utils/logs/log"
                                     ]
                                 },
                                 {
                                     "group": "projects",
                                     "pages": [
-                                        "python/functions/evals/utils/projects/create_project",
-                                        "python/functions/evals/utils/projects/delete_project",
-                                        "python/functions/evals/utils/projects/list_projects",
-                                        "python/functions/evals/utils/projects/rename_project"
+                                        "python/functions/interfaces/utils/projects/create_project",
+                                        "python/functions/interfaces/utils/projects/delete_project",
+                                        "python/functions/interfaces/utils/projects/list_projects",
+                                        "python/functions/interfaces/utils/projects/rename_project"
                                     ]
                                 }
                             ]
@@ -255,12 +255,6 @@
                             ]
                         },
                         {
-                            "group": "logging",
-                            "pages": [
-                                "python/functions/universal_api/logging/with_logging"
-                            ]
-                        },
-                        {
                             "group": "types",
                             "pages": [
                                 {
@@ -269,6 +263,12 @@
                                         "python/classes/universal_api/types/prompt/Prompt"
                                     ]
                                 }
+                            ]
+                        },
+                        {
+                            "group": "usage",
+                            "pages": [
+                                "python/functions/universal_api/usage/with_logging"
                             ]
                         },
                         {
@@ -363,12 +363,12 @@
                             ]
                         },
                         {
-                            "group": "Logging",
+                            "group": "Usage",
                             "pages": [
-                                "api-reference/logging/get_query_tags",
-                                "api-reference/logging/get_queries",
-                                "api-reference/logging/log_query",
-                                "api-reference/logging/get_query_metrics"
+                                "api-reference/usage/get_query_tags",
+                                "api-reference/usage/get_queries",
+                                "api-reference/usage/log_query",
+                                "api-reference/usage/get_query_metrics"
                             ]
                         },
                         {
@@ -395,13 +395,14 @@
                             "pages": [
                                 "api-reference/endpoint_metrics/log_endpoint_metric",
                                 "api-reference/endpoint_metrics/get_endpoint_metrics",
-                                "api-reference/endpoint_metrics/delete_endpoint_metrics"
+                                "api-reference/endpoint_metrics/delete_endpoint_metrics",
+                                "api-reference/endpoint_metrics/get_endpoint_details"
                             ]
                         }
                     ]
                 },
                 {
-                    "group": "Benchmarking",
+                    "group": "Interfaces",
                     "pages": [
                         {
                             "group": "Datasets",
@@ -442,50 +443,27 @@
                             ]
                         },
                         {
-                            "group": "Evals",
+                            "group": "Logs",
                             "pages": [
-                                "api-reference/evals/create_log",
-                                "api-reference/evals/delete_logs",
-                                "api-reference/evals/update_logs",
-                                "api-reference/evals/get_logs",
-                                "api-reference/evals/delete_log_fields",
-                                "api-reference/evals/get_log",
-                                "api-reference/evals/get_logs_metric",
-                                "api-reference/evals/get_log_groups",
-                                "api-reference/evals/get_log_columns"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "group": "Routing",
-                    "pages": [
-                        {
-                            "group": "Router Training",
-                            "pages": [
-                                "api-reference/router_training/train_router",
-                                "api-reference/router_training/delete_router",
-                                "api-reference/router_training/rename_router",
-                                "api-reference/router_training/list_routers",
-                                "api-reference/router_training/get_dataset_evaluation"
+                                "api-reference/logs/create_log",
+                                "api-reference/logs/create_derived_entry",
+                                "api-reference/logs/update_logs",
+                                "api-reference/logs/delete_logs",
+                                "api-reference/logs/get_logs",
+                                "api-reference/logs/get_logs_latest_timestamp",
+                                "api-reference/logs/get_logs_metric",
+                                "api-reference/logs/get_log_groups",
+                                "api-reference/logs/get_fields",
+                                "api-reference/logs/set_field_types"
                             ]
                         },
                         {
-                            "group": "Router Deployment",
+                            "group": "Configs",
                             "pages": [
-                                "api-reference/router_deployment/deploy_router",
-                                "api-reference/router_deployment/undeploy_router",
-                                "api-reference/router_deployment/list_deployed_routers"
-                            ]
-                        },
-                        {
-                            "group": "Router Configurations",
-                            "pages": [
-                                "api-reference/router_configurations/create_router_config",
-                                "api-reference/router_configurations/get_router_config",
-                                "api-reference/router_configurations/delete_router_config",
-                                "api-reference/router_configurations/rename_router_config",
-                                "api-reference/router_configurations/list_router_configs"
+                                "api-reference/configs/create_interface",
+                                "api-reference/configs/update_interface",
+                                "api-reference/configs/get_interface",
+                                "api-reference/configs/delete_interface"
                             ]
                         }
                     ]
