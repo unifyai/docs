@@ -27,8 +27,11 @@ def simulate_traffic(evaluator):
         correct = evaluator(question, response)
         # simulating the derived column
         ts = datetime.datetime.utcnow()
-        ts_rounded = ts - datetime.timedelta(minutes=ts.minute, seconds=ts.second % 10,
-                                             microseconds=ts.microsecond)
+        ts_rounded = ts - datetime.timedelta(
+            minutes=ts.minute,
+            seconds=ts.second % 10,
+            microseconds=ts.microsecond,
+        )
         unify.log(
             timestamp=ts.isoformat(),
             timestamp_rounded=ts_rounded.timestamp(),
@@ -36,7 +39,7 @@ def simulate_traffic(evaluator):
             question=question,
             response=response,
             correct_answer=eval(question),
-            correct=correct
+            correct=correct,
         )
 
 
@@ -58,7 +61,9 @@ def evaluate_response(question: str, response: str) -> float:
 simulate_traffic(evaluate_response)
 
 
-client.set_system_message("You are a helpful maths assistant, adept at answering arithmetic questions. Please respond with the integer answer as the final part of your answer")
+client.set_system_message(
+    "You are a helpful maths assistant, adept at answering arithmetic questions. Please respond with the integer answer as the final part of your answer",
+)
 
 
 simulate_traffic(evaluate_response)

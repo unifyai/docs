@@ -9,7 +9,7 @@ topics = ("maths", "history", "biology")
 questions = {
     "maths": "what is 1 + 1?",
     "history": "When was the Magna Carta signed?",
-    "biology": "What is a cell?"
+    "biology": "What is a cell?",
 }
 clients = [unify.Unify(ep, cache=True, traced=True) for ep in endpoints]
 
@@ -20,7 +20,11 @@ with unify.Project("Traffic", overwrite=True):
         question = questions[topic]
         # simulating the derived column
         ts = datetime.datetime.utcnow()
-        ts_rounded = ts - datetime.timedelta(minutes=ts.minute, seconds=ts.second % 5, microseconds=ts.microsecond)
+        ts_rounded = ts - datetime.timedelta(
+            minutes=ts.minute,
+            seconds=ts.second % 5,
+            microseconds=ts.microsecond,
+        )
         with unify.Log(timestamp_rounded=ts_rounded.isoformat()):
             # end simulation
             random.choice(clients).generate(question, tags=[topic])

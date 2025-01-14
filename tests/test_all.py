@@ -1,7 +1,13 @@
 import os
 import json
-from tests.helpers import (get_mdx_filepaths, run_test, group_and_order_results, save_results, print_results,
-                           prune_successes_from_results)
+from tests.helpers import (
+    get_mdx_filepaths,
+    run_test,
+    group_and_order_results,
+    save_results,
+    print_results,
+    prune_successes_from_results,
+)
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -18,7 +24,10 @@ def test_all():
         for mdx_filepath in mdx_filepaths:
             python_results, shell_results, all_passed = run_test(mdx_filepath)
             mdx_filepath_short = mdx_filepath.split("unify-docs/")[-1].split(".mdx")[0]
-            results[mdx_filepath_short] = {"python": python_results, "shell": shell_results}
+            results[mdx_filepath_short] = {
+                "python": python_results,
+                "shell": shell_results,
+            }
         results = group_and_order_results(results)
         results_pruned = prune_successes_from_results(results.copy())
         save_results(results, results_fpath)

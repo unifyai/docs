@@ -13,9 +13,9 @@ def load_questions_and_answers():
         papers_dir_abs = os.path.join(pdfs_dir, papers_dir)
         for paper_dir in os.listdir(papers_dir_abs):
             paper_dir_abs = os.path.join(papers_dir_abs, paper_dir)
-            with open(os.path.join(paper_dir_abs, 'markscheme/parsed.json')) as f:
+            with open(os.path.join(paper_dir_abs, "markscheme/parsed.json")) as f:
                 markscheme = json.load(f)
-            with open(os.path.join(paper_dir_abs, 'paper/parsed.json')) as f:
+            with open(os.path.join(paper_dir_abs, "paper/parsed.json")) as f:
                 questions = json.load(f)
             for question_num, question in questions.items():
                 if not question.get("text-only"):
@@ -26,7 +26,8 @@ def load_questions_and_answers():
                 if question_imgs:
                     question_imgs = [
                         os.path.join(
-                            os.path.join(paper_dir_abs, 'paper/imgs'), fname
+                            os.path.join(paper_dir_abs, "paper/imgs"),
+                            fname,
                         )
                         for fname in question_imgs
                     ]
@@ -34,7 +35,8 @@ def load_questions_and_answers():
                 if markscheme_imgs:
                     markscheme_imgs = [
                         os.path.join(
-                            os.path.join(paper_dir_abs, 'markscheme/imgs'), fname
+                            os.path.join(paper_dir_abs, "markscheme/imgs"),
+                            fname,
                         )
                         for fname in markscheme_imgs
                     ]
@@ -42,7 +44,7 @@ def load_questions_and_answers():
                     "answer": answer,
                     "marks": marks,
                     "question_imgs": question_imgs,
-                    "markscheme_imgs": markscheme_imgs
+                    "markscheme_imgs": markscheme_imgs,
                 }
     return questions_and_answers
 

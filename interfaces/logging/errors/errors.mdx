@@ -72,18 +72,18 @@ IMAGE
 
 Finally, let's add a graph to show how the error rate is changing over time.
 We first need to bucket our timestamps.
-Let's bucket to the nearest 10 seconds, with a new derived column `timestamp_rounded` 
+Let's bucket to the nearest 10 seconds, with a new derived column `timestamp_rounded`
 using the equation `round({timestamp}, 10)`.
 
 ![image info](errors_w_timestamp_rounded.png)
 
 Let's then create a plot, and select `timestamp` as the `x` axis and `count` for the `y`
-axis. Given that we have filtered for only *incorrect* logs in the table, the graph 
+axis. Given that we have filtered for only *incorrect* logs in the table, the graph
 will only show the **error rate** across time.
 
 IMAGE
 
-Let's now take a look at some of the logs. It seems like we're not handling negative 
+Let's now take a look at some of the logs. It seems like we're not handling negative
 numbers correctly in the `evaluate_response` function.
 Let's update this like so:
 
@@ -105,10 +105,10 @@ Let's simulate some more production traffic, with the update:
 simulate_traffic(evaluate_response)
 ```
 
-Looking at our error rate graph, we can see that the error rate has dropped, but we're 
+Looking at our error rate graph, we can see that the error rate has dropped, but we're
 still getting some errors coming through.
-Looking at the most recent errors, it seems as though subtraction is sometimes 
-mistaken for a range of numbers, and the agent doesn't know that it is meant to be 
+Looking at the most recent errors, it seems as though subtraction is sometimes
+mistaken for a range of numbers, and the agent doesn't know that it is meant to be
 answering maths questions.
 
 IMAGE

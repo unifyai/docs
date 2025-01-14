@@ -55,8 +55,8 @@ column*. Let's add a view tile and pair it with the table, so we can actually lo
 
 We want to know how our traffic is varying across time, but we need to do some
 bucketing so we can plot a representative graph.
-Let's create a new column in the table, which group our timestamps to the nearest 5 
-second interval, by adding `round({trace}["timestamp"], 5)` as the equation for the 
+Let's create a new column in the table, which group our timestamps to the nearest 5
+second interval, by adding `round({trace}["timestamp"], 5)` as the equation for the
 derived column, called `timestamp_rounded`.
 
 ![image info](with_timestamps.png)
@@ -71,7 +71,7 @@ the program continues to run in the background.
 
 GIF
 
-Let's filter specifically for gpt-4o in the table, and see how this changes the bar 
+Let's filter specifically for gpt-4o in the table, and see how this changes the bar
 chart.
 
 IMAGE

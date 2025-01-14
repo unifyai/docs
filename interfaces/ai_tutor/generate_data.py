@@ -13,14 +13,21 @@ def generate_question(question, answer, marks, idx):
     for target in range(marks + 1):
         response = generation_client.generate(
             system_message=GENERATE_RESPONSE_PROMPT.replace(
-                "{target}", str(target)
-            ).replace(
-                "{num_marks}", str(marks)
-            ).replace(
-                "{question}", question
-            ).replace(
-                "{answer}", answer
+                "{target}",
+                str(target),
             )
+            .replace(
+                "{num_marks}",
+                str(marks),
+            )
+            .replace(
+                "{question}",
+                question,
+            )
+            .replace(
+                "{answer}",
+                answer,
+            ),
         )
         targets[target] = [ans for ans in response.split("Answer:")[1:]]
     data[question] = targets
