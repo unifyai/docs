@@ -1,0 +1,29 @@
+{
+    "16. (a) Abi's statement assumes that both outcomes (landing 'pin up' or 'pin down') are equally likely, which may not be true for drawing pins. The probability should be determined through experimentation, as shown by the varied results obtained by Abi, Ben, and Carl.\n\n(b) Carl\u2019s results provide the best estimate of the probability because they are based on the largest number of trials (100 pins), which gives a more reliable approximation through the law of large numbers.\n\n(c) To estimate the probability that both pins land 'pin up', use Carl\u2019s probability estimate from his results:\n\nProbability of a single pin landing 'pin up' = \\(\\frac{35}{100} = 0.35\\).\n\nFor two pins: Probability = \\(0.35 \\times 0.35 = 0.1225\\).\n\n(c) 0.1225 [2]": {
+        "0": [
+            "\n(a) It doesn\u2019t matter what shape the pin is. (b) We can base the probability on a single test. (c) Probably around 0.5 for both pins to land pin up.\n\n",
+            "\n(a) Both outcomes are definitely the same probability. (b) No need for many trials. (c) The probability for both pins is clearly 0.\n\n",
+            "\n(a) Abi is correct to assume equal outcomes. (b) Ben\u2019s small sample is always the most accurate. (c) The estimated probability for both pins is 0.8."
+        ],
+        "1": [
+            "\nOutcomes are not equally likely.\n\n",
+            "\nUse more trials to get a better estimate.\n\n",
+            "\nThe probability for two pins is 0.35 \u00d7 0.35 = 1.225."
+        ],
+        "2": [
+            "\n(a) We cannot assume the drawing pins have a 50\u201350 chance of landing pin up or pin down.  \n(b) Carl\u2019s result is the best estimate because he used more pins.  \n(c) The probability that both land pin up is 0.25.\n\n",
+            "\n(c) The probability that both pins land pin up is about 0.12.\n\n",
+            "\n(b) Carl\u2019s result is more reliable because he tested the most pins.  \n(c) Using his estimate of 0.35 for a single pin, 0.35 \u00d7 0.35 = 0.1225, so I would say about 0.08 for both."
+        ],
+        "3": [
+            "\n(a) They might not have an equal chance of landing pin up or pin down.  \n(b) Carl\u2019s experiment, with 100 trials, gives the most reliable data.  \n(c) The probability for one pin is 0.35, so for two pins I do 0.35 \u00d7 0.35 = 0.22.\n\n",
+            "\n(a) Drawing pins are not always 50\u201350 for landing up or down.  \n(b) Ben\u2019s results are sufficient because they match Carl\u2019s findings.  \n(c) Using Carl\u2019s 0.35, the probability for two pins is 0.35 \u00d7 0.35 = 0.1225.\n\n",
+            "\n(a) It\u2019s equally likely to land pin up or pin down.  \n(b) Carl\u2019s larger sample of 100 gives a better estimate.  \n(c) With 0.35 per pin, the probability of both up is 0.35 \u00d7 0.35 = 0.1225."
+        ],
+        "4": [
+            "\n(a) The outcomes are not necessarily equally likely for drawing pins.  \n(b) A larger trial size, like Carl's 100 pins, gives a better estimate.  \n(c) Using Carl\u2019s 0.35 for a single pin, the probability both are up is 0.35 \u00d7 0.35 = 0.1225 (\u22480.12).  \n\n",
+            "\n(a) Pin-up and pin-down probabilities differ for drawing pins.  \n(b) More trials yield a more accurate probability, so Carl\u2019s 100 trials are best.  \n(c) An estimate is 0.35 \u00d7 0.35 \u2248 0.12, which is within 0.09\u20130.16.  \n\n",
+            "\n(a) It is incorrect to assume both outcomes happen equally.  \n(b) Relying on the largest set of data (Carl\u2019s 100 pins) is most reliable.  \n(c) The approximate chance for both \u2018pin up\u2019 is around 0.14, safely in 0.09\u20130.16."
+        ]
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "19\n\nHere are the interest rates for two accounts:\n\nDerrick has \u00a310,000 he wants to invest.\n\n(a) Calculate which account would give him the most money if he invests his money for 3 years. Give the difference in the interest to the nearest penny. You must show your working.\n\nAccount \u2026................ by \u2026................ p [5]\n\n(b) Explain why he might not want to use Account A.\n\n\u2026............................................................................................................................. ...................\n\n\u2026............................................................................................................................. ............. [1]\n\nAccount A  \nInterest:  \n3% per year compound interest.  \nNo withdrawals until the end of three years.\n\nAccount B  \nInterest:  \n4% for the first year,  \n3% for the second year,  \nand 2% for the third year.  \nWithdrawals allowed at any time.": {
+        "0": [
+            "\n(a) I think both accounts will give exactly \u00a310,000 after 3 years with no interest, so there is no difference in interest.  \n(b) He might not want to use Account A because it\u2019s closed on weekends.\n\n",
+            "\n(a) Account B pays the most, by \u00a350 difference. (No calculation needed.)  \n(b) He might not want Account A because it only accepts checks.\n\n",
+            "\n(a) The accounts both lose money; neither pays any interest, so the difference is \u00a30.  \n(b) He might not want Account A because its website is confusing."
+        ],
+        "1": [
+            "\n(a) Account B by 100p  \n(b) He might want to withdraw money earlier.\n\n",
+            "\n(a) They both give the same amount  \n(b) He may need access to his funds before three years.\n\n",
+            "\n(a) I am not sure of the difference  \n(b) He might not want to lock his money away for the full term."
+        ],
+        "2": [
+            "\n(a) After three years, Account A has about \u00a310,927 and Account B has about \u00a310,926, so Account A is slightly higher by around \u00a31.\n\n",
+            "\n(a) Account A earns a little more, roughly \u00a31 extra, so it gives more money overall.  \n\n",
+            "\n(a) In total, Account A comes to about \u00a310,927 and Account B to about \u00a310,926; therefore, Account A pays about \u00a31 more."
+        ],
+        "3": [
+            "\n(a) Account A by 103p\n\n",
+            "\n(a) Account A:  \nYear 1: 10\u202f000 \u00d7 1.03 = 10\u202f300  \nYear 2: 10\u202f300 \u00d7 1.03 = 10\u202f609  \n(b) He might need to withdraw money early so might not use Account A.\n\n",
+            "\n(a) Account A is 10\u202f000 \u00d7 1.03\u00b3 = 10\u202f927.27, so I would choose A.  \n(b) He may not want his money locked away for 3 years."
+        ],
+        "4": [
+            "\n(a) Account A by \u00a31.03  \n(b) He may need access to the money before three years are up.\n\n",
+            "\n(a) Account A:  \nYear 1: 10,000 \u00d7 1.03 = 10,300  \nYear 2: 10,300 \u00d7 1.03 \u2248 10,609  \nYear 3: 10,609 \u00d7 1.03 \u2248 10,927.27  \nAccount B:  \nYear 1: 10,000 \u00d7 1.04 = 10,400  \nYear 2: 10,400 \u00d7 1.03 \u2248 10,712  \nYear 3: 10,712 \u00d7 1.02 \u2248 10,926.24  \nDifference \u2248 \u00a31.02, so Account A is higher.  \n(b) He might need to withdraw money in the meantime.\n\n",
+            "\n(a) After some calculation, Account A gives about \u00a310,927, whereas Account B gives about \u00a310,926. Thus the difference is around \u00a31.03 in favor of A.  \n(b) He may not want to lock the money away for the full three years."
+        ],
+        "5": [
+            "\n(a) Account A:  \nYear 1: 10,000 \u00d7 1.03 = 10,300  \nYear 2: 10,300 \u00d7 1.03 \u2248 10,609  \nYear 3: 10,609 \u00d7 1.03 \u2248 10,927.27  \n\nAccount B:  \nYear 1: 10,000 \u00d7 1.04 = 10,400  \nYear 2: 10,400 \u00d7 1.03 \u2248 10,712  \nYear 3: 10,712 \u00d7 1.02 \u2248 10,926.24  \n\nDifference \u2248 10,927.27 \u2212 10,926.24 = \u00a31.03  \n\nSo, Account A by 103p  \n\n(b) He might need access to his money before three years are up.\n\n",
+            "\n(a) Account A: 10,000 \u00d7 (1.03)\u00b3 = 10,000 \u00d7 1.092727\u2026 \u2248 10,927.27  \nAccount B: 10,000 \u00d7 1.04 \u00d7 1.03 \u00d7 1.02 \u2248 10,926.24  \n\nDifference: 10,927.27 \u2212 10,926.24 = \u00a31.03  \n\nSo, Account A by 103p  \n\n(b) Account A doesn\u2019t allow withdrawals until the end of three years.\n\n",
+            "\n(a) Account A after 3 years \u2248 \u00a310,927.27  \nAccount B after 3 years \u2248 \u00a310,926.24  \nDifference = \u00a31.03  \n\nHence, Account A by 103p  \n\n(b) He might want an account that allows flexible withdrawals."
+        ],
+        "6": [
+            "\n(a)  \nAccount A gives 10\u202f000 \u00d7 1.03\u00b3 = 10\u202f927.27\u202f\u00a3  \nAccount B gives 10\u202f000 \u00d7 1.04 \u00d7 1.03 \u00d7 1.02 = 10\u202f926.24\u202f\u00a3  \nSo Account A pays more by 10\u202f927.27 \u2212 10\u202f926.24 = 1.03\u202f\u00a3 (103\u202fp)  \n(b)  \nHe might need to withdraw his money before 3 years are up.\n\n",
+            "\n(a)  \nYear-by-year for Account A:  \n\u2022 After 1st year: 10\u202f000 \u00d7 1.03 = 10\u202f300  \n\u2022 After 2nd year: 10\u202f300 \u00d7 1.03 = 10\u202f609  \n\u2022 After 3rd year: 10\u202f609 \u00d7 1.03 \u2248 10\u202f927.27  \nYear-by-year for Account B:  \n\u2022 After 1st year: 10\u202f000 \u00d7 1.04 = 10\u202f400  \n\u2022 After 2nd year: 10\u202f400 \u00d7 1.03 = 10\u202f712  \n\u2022 After 3rd year: 10\u202f712 \u00d7 1.02 \u2248 10\u202f926.24  \nDifference: 10\u202f927.27 \u2212 10\u202f926.24 = 1.03\u202f\u00a3 (103\u202fp) more with Account A.  \n(b)  \nHe may prefer to be able to withdraw at any time in Account B.\n\n",
+            "\n(a)  \nFor Account A: 10\u202f000 \u00d7 (1.03)\u00b3 \u2248 10\u202f927.27\u202f\u00a3  \nFor Account B: 10\u202f000 \u00d7 (1.04 \u00d7 1.03 \u00d7 1.02) \u2248 10\u202f926.24\u202f\u00a3  \nAccount A is better by 10\u202f927.27 \u2212 10\u202f926.24 = 1.03\u202f\u00a3 (103\u202fp).  \n(b)  \nHe might not want his money locked away for the entire three years."
+        ]
+    }
+}

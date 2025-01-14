@@ -1,0 +1,24 @@
+{
+    "14\n\nThis frequency diagram summarizes the number of minutes Astrid\u2019s train was late over the last 50 days.\n\n(a) Use information from this diagram to estimate the probability that her train will be 4 minutes late tomorrow.\n\n(a) ........................................... [2]\n\n(b) Explain whether your answer to part (a) gives a reliable probability.\n\n..................................................................................................................................\n\n......................................................................................................................... [1]": {
+        "0": [
+            "\n(a) The probability is 3 out of 60.  \n(b) This answer is completely reliable without further justification.\n\n",
+            "\n(a) The probability is 1.  \n(b) It is obviously correct because trains are predictable by nature.\n\n",
+            "\n(a) The probability is 25%.  \n(b) It must be reliable since this figure seems good enough to me."
+        ],
+        "1": [
+            "\n(a) 10/50  \n(b) It may not be reliable because only past data were used.\n\n",
+            "\n(a) 3/50  \n(b) The sample is too small to guarantee tomorrow\u2019s time.\n\n",
+            "\n(a) 12/50  \n(b) Conditions could change and affect tomorrow\u2019s delay differently."
+        ],
+        "2": [
+            "\n(a) 8/50  \n(b) Yes, because it always seems to happen.\n\n",
+            "\n(a) 0.16  \n(b) It should be true based on the chart.\n\n",
+            "\n(a) 4/25  \n(b) This must be dependable evidence."
+        ],
+        "3": [
+            "\n(a) 8/50  \n(b) This probability is just based on previous data, so it might not accurately predict future lateness.  \n\n",
+            "\n(a) 0.16  \n(b) It is an estimate from a limited sample, so it may not fully represent what will happen tomorrow.  \n\n",
+            "\n(a) 4/25  \n(b) The train\u2019s performance could change, so this figure is only an approximation based on past data."
+        ]
+    }
+}

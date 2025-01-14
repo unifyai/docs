@@ -1,0 +1,29 @@
+{
+    "15\n\nIn the diagram below, AE and BD are straight lines.\n\n(a) Show that triangles ABC and EDC are similar.\n\n..............................................................................................................................  \n\n..............................................................................................................................  \n\n..............................................................................................................................  \n\n..............................................................................................................................  \n\n..............................................................................................................................  \n\n..............................................................................................................................  \n\n[3]\n\n(b) The length DE is 3.5 m.  \n\nThe ratio BC : CD = 3 : 1.  \n\nFind the length AB.\n\n(b) ............................ m [2]": {
+        "0": [
+            "\n(a) They are not related because A, B, C, D, E are points on a rectangle.  \n(b) AB is 5 m.\n\n",
+            "\n(a) The triangles cannot be compared as they are drawn on different planes.  \n(b) AB is 0.5 m.\n\n",
+            "\n(a) There is no similarity; one triangle is equilateral and the other is isosceles.  \n(b) The length of AB is 20 m."
+        ],
+        "1": [
+            "\n(a) Angles at B and D are right angles. Angles ACB and ECD are vertically opposite.\n\n",
+            "\n(b) Using BC : CD = 3 : 1 and DE = 3.5, AB = 3.5 \u00d7 3 = 8.5 m\n\n",
+            "\n(b) If BC : CD = 3 : 1, then AB = 3.5 \u00d7 3 = 12 m"
+        ],
+        "2": [
+            "\n(a) (No working shown)  \n(b) AB = 10.5 m\n\n",
+            "\n(a) Angles at B and D are right angles, and angles ACB and ECD are vertically opposite. Therefore, the triangles are similar.  \n(b) AB = 8 m\n\n",
+            "\n(a) Angles at B and D are right angles, so the two triangles must be similar.  \n(b) Using the ratio 3.5 \u00d7 3 = 10.2 m (approx.) for AB"
+        ],
+        "3": [
+            "\n(a) Angles at B and D are right angles, and angles ACB and ECD are vertically opposite. Therefore, the two triangles share the same angles and are similar.  \n(b) Using the ratio BC : CD = 3 : 1, we scale 3.5 m by 3, giving AB = 10.7 m.\n\n",
+            "\n(a) Since angles B and D are 90\u00b0, it follows that these triangles have at least one pair of equal angles. Thus, they must be similar.  \n(b) The ratio of BC to CD is 3 : 1, so multiplying 3.5 m by 3 gives AB = 10.5 m.\n\n",
+            "\n(a) Angles at B and D are both right angles, and angles ACB and ECD are vertically opposite, so all corresponding angles match, making the triangles similar.  \n(b) Because BC is three times CD, AB should be 3 \u00d7 3.5 m, which I calculate as 11 m."
+        ],
+        "4": [
+            "\n(a) Triangles ABC and EDC each have right angles at B and D, and they share the pair of vertically opposite angles at C. Therefore, by angle-angle-angle, the triangles are similar.  \n(b) Since BC : CD = 3 : 1, and DE = 3.5 m, the corresponding sides must satisfy AB : DE = BC : CD. Therefore, AB : 3.5 = 3 : 1, giving AB = 3 \u00d7 3.5 = 10.5 m.\n\n",
+            "\n(a) Angle B and angle D are each 90\u00b0, and angles ACB and ECD are equal by virtue of being vertically opposite. Hence, the triangles have the same three angles and are similar.  \n(b) Using the ratio BC : CD = 3 : 1 alongside DE = 3.5 m, we get AB = 3 \u00d7 3.5 = 10.5 m.\n\n",
+            "\n(a) Both triangles ABC and EDC contain a right angle (at B and at D), and they also share a common angle at C (vertically opposite). Consequently, all angles match, so they are similar.  \n(b) Since BC : CD = 3 : 1, AB : DE = BC : CD. With DE = 3.5 m, we have AB = 3.5 \u00d7 3 = 10.5 m."
+        ]
+    }
+}

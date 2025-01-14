@@ -60,20 +60,19 @@
                     "group": "Interfaces",
                     "pages": [
                         "interfaces/overview",
+                        "interfaces/case_study",
                         {
                             "group": "Logging",
                             "pages": [
                                 "interfaces/logging/traffic/traffic",
-                                "interfaces/logging/errors/errors",
-                                "interfaces/logging/usage/usage",
-                                "interfaces/logging/dashboard/dashboard"
+                                "interfaces/logging/errors/trends"
                             ]
                         },
                         {
                             "group": "Debugging",
                             "pages": [
-                                "interfaces/debugging/tests/tests",
-                                "interfaces/debugging/traces/traces"
+                                "interfaces/debugging/traces/traces",
+                                "interfaces/debugging/tests/tests"
                             ]
                         },
                         {

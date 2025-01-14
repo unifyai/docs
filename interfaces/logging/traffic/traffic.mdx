@@ -2,95 +2,78 @@
 title: 'Traffic'
 ---
 
-Let's assume you have an LLM application deployed, where different users are using
-different models for different tasks.
-You'd like to know how your traffic is changing over time, and for different models
-and different tasks.
+In order to monitor our production traffic, let's first open the Unify console, and
+click on "Interfaces" to build our traffic monitoring interface.
 
-We'll assume the Unify python client is being used for a handful different endpoints,
-with tracing turned on.
-For other clients, you would simply need to wrap the LLM call with `unify.traced` to
-log all inputs and outputs, or make explicit calls to `unify.log` for each LLM query,
-logging only the specific data you'd like to track.
+As per the
+[notebook]()
+simulating our usage, the project is called `"EdTech"`.
 
-To avoid accruing costs, let's also turn on *caching*, such that repeat queries to the
-same model simply load the previous answer from the local cache.
+Let's select this project from the dropdown at the top. If you don't see the project,
+then make sure you've set up your API key in the
+[notebook]()
+correctly.
 
-```python
-import unify
-endpoints = ("gpt-4o@openai", "claude-3.5-sonnet@anthropic", "gemini-1.5-pro@vertex-ai")
-clients = [unify.Unify(ep, cache=True, traced=True) for ep in endpoints]
-```
+Now we've selected the `"EdTech"` project, let's add a table to the interface so we can
+look at the raw data:
 
-Let's now simulate the usage, and keep this infinite programming running in
-the background.
-We're logging this data to an interface called "Traffic":
+![](demo.gif)
 
-```python
-import time
-import random
-topics = ("maths", "history", "biology")
-questions = {
-    "maths": "what is 1 + 1?",
-    "history": "When was the Magna Carta signed?",
-    "biology": "What is a cell?"
-}
-with unify.Project("Traffic"):
-    while True:
-        time.sleep(random.uniform(0, 1))
-        topic = random.choice(topics)
-        question = questions[topic]
-        random.choice(clients).generate(question, tags=[topic])
-```
+By default, the *most recent* logs will be shown at the top of the screen.
 
-Let's now open up this interface, and let's first add a table, so we can look at the
-raw data:
+We're only interested in the exam question testing for now, so let's set the
+context of the table as "Testing" to remove all of the irrelevant information:
 
-![image info](table.png)
+![](demo.gif)
 
-We're storing everything inside the nested trace, and so we only have a *single
-column*. Let's add a view tile and pair it with the table, so we can actually look at these traces.
+Let's now create a plot to monitor how the traffic is changing over time. We create a
+new plot tile, select the histogram type, select timestamp for the `x` axis, and then
+select the number of buckets we'd like to use. Let's go with 50 buckets.
 
-![image info](with_trace.png)
+![](demo.gif)
 
-We want to know how our traffic is varying across time, but we need to do some
-bucketing so we can plot a representative graph.
-Let's create a new column in the table, which group our timestamps to the nearest 5 
-second interval, by adding `round({trace}["timestamp"], 5)` as the equation for the 
-derived column, called `timestamp_rounded`.
+Let's now turn on streaming mode, such that the logs in the table and all
+corresponding plots are automatically updated whenever new data is available.
 
-![image info](with_timestamps.png)
+![](demo.gif)
 
-We can then create a bar chart showing how the usage is changing across time, using
-this bucketing, like so:
+The plot and table will continue to grow unbounded in the current configuration. Let's
+add a filter to the timestamp column, such that we're only retrieving logs from the
+past 5 minutes.
 
-![image info](bar_chart.png)
+![](demo.gif)
 
-If we turn on streaming, then the bar chart will continue to update dynamically, as
-the program continues to run in the background.
+If we want to look at traffic for a particular student, we can simply filter for
+this student in the table, and the plot will also be updated.
 
-GIF
+![](demo.gif)
 
-Let's filter specifically for gpt-4o in the table, and see how this changes the bar 
-chart.
+Similarly, we can filter for a questions from a particular past paper, or anything
+else.
 
-IMAGE
+![](demo.gif)
 
-Let's filter specifically for maths queries, and see how this changes things:
+If we'd like to view several of these plots at the same time, then we can simply
+make a clone of the table (or create a new one), make the filtering changes to this new
+table, and then create another plot which references this second table.
 
-IMAGE
+![](demo.gif)
 
-If we want to view different graphs simultaneously, then we can clone the table and
-apply different filtering to it, and create a new graph which references the new table.
+If you don't need to see the table on screen, then you can simply hide the tile, or
+add the table tiles on a separate tab which is just for data processing.
 
-IMAGE
+![](demo.gif)
 
-We can also move all of the tables to a separate tab, if we want to focus on the
-graphs all in one place.
+If you're happy with your configuration, you can save it as an interface for loading
+later. Let's save this interface as `"Traffic"`. We can then close the browser, and
+when we open up the `"EdTech"` project, we can select our `"Traffic"` interface from
+the list of available project interfaces.
 
-IMAGE
+![](demo.gif)
 
-Hopefully this has given you an idea of how you can quickly hack together a bespoke
-usage dashboard in a few seconds using Unify interfaces.
-In the next demo, we'll show how you can quickly build a custom dashboard to track
-production errors. See you there!
+This example has just been a *very* simple taster of the kinds of things you can
+quickly hack together in an interface for logging, in this case focusing on the
+traffic.
+
+In the next example, we'll look at how interfaces can be used to spot more general
+patterns and trends in the production data. See you there!

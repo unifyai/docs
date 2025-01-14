@@ -1,0 +1,29 @@
+{
+    "18. Jo went for a bike ride one evening. She travelled \\( x \\) kilometres in 5 hours.\n\nShow that her average speed can be written as \\( 18x \\) m/s. [4]": {
+        "0": [
+            "\n\u201cI think she rides at a constant speed of 50 because 5 hours is too long, so 50 is reasonable.\u201d\n\n",
+            "\n\u201cUsing Einstein\u2019s theory of relativity, her speed must be 3x m/s. There\u2019s no need to convert anything.\u201d\n\n",
+            "\n\u201cHer speed is definitely 200 m/s, since 5 hours is the same as 10 hours in my calculation.\u201d"
+        ],
+        "1": [
+            "\nDistance traveled in 5 hours is x km = 1000x m. I would use this to find her average speed.\n\n",
+            "\nThe time for 5 hours is 5 \u00d7 3600 = 18000 seconds.\n\n",
+            "\nAverage speed = (x \u00f7 5) km/h. Converting to m/s gives (x \u00f7 5) \u00d7 (1000 \u00f7 3600) = x/18 m/s."
+        ],
+        "2": [
+            "\nAverage speed = Distance / Time = (1000x) / (5\u00d760\u00d760). \nSo that is (1000x) / 18000 = x/18. \nHence 18x m/s.\n\n",
+            "\nShe rode x km in 5 hours, which is 5x km/h. To convert to m/s, multiply by 1000 and divide by 3600: \n5x \u00d7 (1000/3600) = (5x \u00d7 5)/18 = 25x/18, which we can write as 18x m/s.\n\n",
+            "\nDistance = x km = 1000x meters; time = 5 hours = 300 minutes = 18000 seconds. \nSo speed = 1000x \u00f7 18000 = x/18 m/s = 18x m/s."
+        ],
+        "3": [
+            "\nDistance traveled = x km = 1000x m. \nTime taken = 5 hours = 5 \u00d7 60 \u00d7 60 = 18000 s. \nSo, average speed = (1000x) \u00f7 18000 = x/18 m/s. \nHence, it is 18x m/s.\n\n",
+            "\nSpeed in km/h = 5x. \n1 km/h = 1000/3600 m/s = 5/18 m/s. \nThus, speed in m/s = 5x \u00d7 (60/1000) = 18x m/s.\n\n",
+            "\nUsing speed = distance \u00f7 time in km/h: 5x km/h. \nConvert to m/s by multiplying by (1000 m \u00f7 3600 s): \n5x \u00d7 (1000 \u00f7 3600) = 18x m/s."
+        ],
+        "4": [
+            "\n1) In 5 hours, Jo covers x kilometers.  \n   Therefore, her speed is x \u00f7 5 km/h.  \n   Convert to meters per second:  \n   (x \u00f7 5) \u00d7 (1000 \u00f7 3600) = x \u00f7 18.  \n   Hence the average speed is 18x m/s (as required).\n\n",
+            "\nDistance covered is x km, which is 1000x meters.  \nTime taken is 5 hours, which is 5 \u00d7 60 \u00d7 60 = 18000 seconds.  \nSo average speed = (1000x) \u00f7 18000 = x \u00f7 18.  \nThus, her average speed can be written as 18x m/s.\n\n",
+            "\nUsing \u201cspeed = distance \u00f7 time\u201d, in km/h we get 5x km/h.  \nThen to convert km/h to m/s we multiply by (1000 \u00f7 3600),  \nso 5x \u00d7 (1000 \u00f7 3600) = 18x m/s.  \nTherefore, the average speed is 18x m/s."
+        ]
+    }
+}

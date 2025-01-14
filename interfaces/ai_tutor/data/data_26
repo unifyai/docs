@@ -1,0 +1,54 @@
+{
+    "16. Solve the simultaneous equations:\n\n    3x + 2y = 19\n    4x - y = 10\n\n(a) Solve by substitution.\n    \n    (i) Find the value of x.\n\n    (ii) Find the value of y. \n\n(b) Solve by elimination to verify your answers. \n\n    (i) Multiply the second equation by a suitable number and add or subtract the equations to eliminate y. \n\n    (ii) Solve for x and substitute back to find y. \n\n    [6]": {
+        "0": [
+            "\nI think x is larger than y but I\u2019m not sure, so I\u2019ll just say x = 50 and y = 50. That should be fine.\n\n",
+            "\nThere is no solution because the equations are contradictory once you include the effects of gravity, so there can\u2019t be any consistent values for x and y.\n\n",
+            "\nUsing a random multiplier of 7 for no particular reason, we get that x = -3 and y = 100. This solves nothing, so I\u2019ll just leave it at that."
+        ],
+        "1": [
+            "\nFrom the second equation, express y in terms of x as y = 4x \u2013 10 and substitute into 3x + 2y = 19.\n\n",
+            "\nx = 39/11\n\n",
+            "\nMultiply the second equation by 2 to get 8x \u2013 2y = 20 and then add it to 3x + 2y = 19 to eliminate y."
+        ],
+        "2": [
+            "\nx = 39/11\n\n",
+            "\nx = 3.5, y = 4.2\n\n",
+            "\nSubstitute y = 4x \u2212 10 into 3x + 2y = 19 \u2192 3x + 2(4x \u2212 10) = 19 \u2192 11x \u2212 20 = 19 \u2192 11x = 39 \u2192 x = 3, y = 6.5"
+        ],
+        "3": [
+            "\n(a) From 4x \u2212 y = 10, write y = 4x \u2212 10 and substitute into 3x + 2y = 19 to get 3x + 2(4x \u2212 10) = 19 \u21d2 3x + 8x \u2212 20 = 19 \u21d2 11x = 39 \u21d2 x = 39/11.  \n\n",
+            "\n(b) Multiply 4x \u2212 y = 10 by 2 to get 8x \u2212 2y = 20. Add this to 3x + 2y = 19 to eliminate y: 11x = 39 \u21d2 x = 39/11. Substituting back incorrectly, suppose y = 6.  \n\n",
+            "\n(a) Substituting y = 4x \u2212 10 into 3x + 2y = 19: 3x + 2(4x \u2212 10) = 19 \u21d2 3x + 8x \u2212 20 = 19 \u21d2 11x = 29 \u21d2 x = 29/11. Then y = 4(29/11) \u2212 10 = 6/11."
+        ],
+        "4": [
+            "\n(a)(i) From 4x \u2212 y = 10, write y = 4x \u2212 10. Substituting into 3x + 2y = 19 gives 3x + 2(4x \u2212 10) = 19 \u2192 3x + 8x \u2212 20 = 19 \u2192 11x = 39 \u2192 x = 39/11.  \n(ii) Substitute x = 39/11 back into y = 4x \u2212 10 to get y = 4(39/11) \u2212 10 = 46/11.\n\n",
+            "\n(a)(i) Using 3x + 2y = 19 and 4x \u2212 y = 10, multiply the second equation by 2 to eliminate y: (4x \u2212 y) \u00d7 2 \u2192 8x \u2212 2y = 20.  \nAdd this to 3x + 2y = 19 \u2192 11x = 39 \u2192 x = 39/11.  \n(ii) I do not proceed further to find y.\n\n",
+            "\n(a)(i) From 4x \u2212 y = 10, take y = 4x \u2212 10. Substituting in 3x + 2y = 19: 3x + 8x \u2212 20 = 19 \u2192 11x = 39 \u2192 x = 4 (incorrect rounding).  \n(ii) Then y = 4 \u00d7 4 \u2212 10 = 6."
+        ],
+        "5": [
+            "\na) By substitution, from 4x \u2013 y = 10 \u21d2 y = 4x \u2013 10.  \n   Substitute into 3x + 2y = 19 \u21d2 3x + 2(4x \u2013 10) = 19 \u21d2 11x \u2013 20 = 19 \u21d2 x = 39/11 \u21d2 y = 46/11.  \n   (Not completed by elimination.)\n\n",
+            "\nUsing elimination only, multiply 4x \u2013 y = 10 by 2 to get 8x \u2013 2y = 20.  \nAdd this to 3x + 2y = 19 \u21d2 11x = 39 \u21d2 x = 39/11.  \nThen y = 4(39/11) \u2013 10 = 46/11.  \n(No substitution shown.)\n\n",
+            "\na) From the first equation, 3x + 2y = 19, suppose x = 3.5 (approx).  \n   Then 3(3.5) + 2y \u2248 19 \u21d2 10.5 + 2y \u2248 19 \u21d2 y \u2248 4.25.  \nb) Elimination not fully shown.  \n(Values approximate and not fully verified.)"
+        ],
+        "6": [
+            "\n(a) By substitution from 4x \u2212 y = 10, we get y = 4x \u2212 10.  \nSubstitute into 3x + 2y = 19: 3x + 2(4x \u2212 10) = 19 \u2192 3x + 8x \u2212 20 = 19 \u2192 11x = 39 \u2192 x = 39/11 \u2192 y = 4\u00d7(39/11) \u2212 10 = 46/11.  \n\n",
+            "\n(a) Substituting y = 4x \u2212 10 into 3x + 2y = 19 gives 3x + 2(4x \u2212 10) = 19.  \nThat simplifies to 3x + 8x = 39, so x = 39/11.  \nHence y = 4\u00d7(39/11) \u2212 10 = 46/11.  \n(b) Eliminating y by multiplying the second equation by 2: 8x \u2212 2y = 20, and adding to 3x + 2y = 19 gives 11x = 39, so x = 39/11, y = 46/11.  \n(Note: Some steps for verification are omitted.)\n\n",
+            "\n(a) From 4x \u2212 y = 10, set y = 4x \u2212 10 and substitute into 3x + 2y = 19:  \n3x + 2(4x \u2212 10) = 19 \u2192 3x + 8x \u2212 20 = 19 \u2192 11x = 39 \u2192 x = 3.545... (approx).  \nThen y \u2248 4(3.545...) \u2212 10 = 4.182...  \n(b) Multiply the second equation by 2 to get 8x \u2212 2y = 20 and add to the first.  \nResult: 11x = 39 \u2192 x \u2248 3.545... \u2192 y \u2248 4.182..."
+        ],
+        "7": [
+            "\n(a) Substitution:  \nFrom the second equation 4x \u2212 y = 10, get y = 4x \u2212 10.  \nSubstitute into 3x + 2y = 19:  \n3x + 2(4x \u2212 10) = 19 \u2192 3x + 8x \u2212 20 = 19 \u2192 11x = 39 \u2192 x = 39/11.  \nThen y = 4(39/11) \u2212 10 = 46/11.  \n(b) Elimination:  \nMultiply 4x \u2212 y = 10 by 2 \u2192 8x \u2212 2y = 20.  \nAdd to 3x + 2y = 19 \u2192 11x = 39 \u2192 x = 39/11 \u2192 y = 46/11.\n\n",
+            "\n(a) Using y = (19 \u2212 3x) / 2 from 3x + 2y = 19, substitute into 4x \u2212 y = 10:  \n4x \u2212 [(19 \u2212 3x) / 2] = 10 \u2192 8x \u2212 (19 \u2212 3x) = 20 \u2192 11x = 39 \u2192 x = 39/11.  \nThen y = (19 \u2212 3*(39/11)) / 2 = 46/11.  \n(b) Multiply the second equation 4x \u2212 y = 10 by 2: 8x \u2212 2y = 20, then add 3x + 2y = 19 to get 11x = 39. So x = 39/11, and y = 46/11.\n\n",
+            "\n(a) Substitution:  \nFrom 4x \u2212 y = 10, y = 4x \u2212 10.  \n3x + 2(4x \u2212 10) = 19 \u2192 11x = 39 \u2192 x \u2248 3.55, y \u2248 4.18.  \n(b) Elimination:  \n2\u00d7(4x \u2212 y = 10) \u2192 8x \u2212 2y = 20.  \nAdd 3x + 2y = 19 \u2192 11x = 39 \u2192 x \u2248 3.55, y \u2248 4.18."
+        ],
+        "8": [
+            "\n(a) Substitution:\n(i) From 4x \u2212 y = 10, we get y = 4x \u2212 10. Substituting into 3x + 2y = 19 gives 3x + 2(4x \u2212 10) = 19 \u2192 3x + 8x \u2212 20 = 19 \u2192 11x = 39 \u2192 x = 39/11.\n(ii) Then y = 4(39/11) \u2212 10 = 156/11 \u2212 110/11 = 46/11.\n(b) Elimination:\nMultiply 4x \u2212 y = 10 by 2 \u2192 8x \u2212 2y = 20. Add to 3x + 2y = 19:\n8x \u2212 2y + 3x + 2y = 20 + 19 \u2192 11x = 39 \u2192 x = 39/11; substituting back, y = 46/11.\n\n",
+            "\n(a) Substitution:\n(i) Rearrange 4x \u2212 y = 10 to y = 4x \u2212 10. Substitute into 3x + 2y = 19:\n3x + 2(4x \u2212 10) = 19 \u2192 3x + 8x \u2212 20 = 19 \u2192 11x = 39 \u2192 x = 39/11.\n(ii) Substitute x = 39/11 back: y = 4(39/11) \u2212 10 = 46/11.\n(b) Elimination:\nTo eliminate y, multiply the second equation by 2: 8x \u2212 2y = 20. Then add to the first equation:\n3x + 2y = 19\n+\n8x \u2212 2y = 20\n\u2192 11x = 39 \u2192 x = 39/11; then y = 46/11.\n\n",
+            "\n(a) Substitution:\n(i) From the second equation, y = 4x \u2212 10. Substituting into the first gives:\n3x + 2(4x \u2212 10) = 19 \u2192 11x = 39 \u2192 x = 39/11.\n(ii) Therefore y = 4(39/11) \u2212 10 = 46/11.\n(b) Elimination:\nMultiply 4x \u2212 y = 10 by 2 to get 8x \u2212 2y = 20. Adding this to 3x + 2y = 19 gives 11x = 39, so x = 39/11; from that, y = 46/11."
+        ],
+        "9": [
+            "\n(a) Substitution:  \nFrom 4x \u2212 y = 10, we get y = 4x \u2212 10.  \nSubstitute into 3x + 2y = 19:  \n3x + 2(4x \u2212 10) = 19 \u2192 3x + 8x \u2212 20 = 19 \u2192 11x = 39 \u2192 x = 39/11.  \nThen y = 4(39/11) \u2212 10 = 46/11.  \n\n(b) Elimination:  \nMultiply the second equation by 2:  \n(4x \u2212 y = 10) \u00d7 2 \u2192 8x \u2212 2y = 20.  \nAdd to the first equation 3x + 2y = 19:  \n(8x \u2212 2y) + (3x + 2y) = 20 + 19 \u2192 11x = 39 \u2192 x = 39/11.  \nSubstitute back to find y \u2192 y = 46/11.\n\n",
+            "\n(a) Substitution:  \nFrom 3x + 2y = 19: 2y = 19 \u2212 3x \u2192 y = (19 \u2212 3x) / 2.  \nSubstitute in 4x \u2212 y = 10:  \n4x \u2212 [(19 \u2212 3x)/2] = 10 \u2192 multiply by 2 \u2192 8x \u2212 (19 \u2212 3x) = 20 \u2192 11x = 39 \u2192 x = 39/11, y = 46/11.  \n\n(b) Elimination:  \nMultiply 4x \u2212 y = 10 by 2 \u2192 8x \u2212 2y = 20.  \nAdd 3x + 2y = 19 \u2192 11x = 39 \u2192 x = 39/11, then y = 46/11.\n\n",
+            "\n(a) Substitution:  \nFrom 4x \u2212 y = 10: 4x = y + 10 \u2192 x = (y + 10) / 4.  \nSubstitute into 3x + 2y = 19:  \n3((y + 10)/4) + 2y = 19 \u2192 multiply by 4 \u2192 3(y + 10) + 8y = 76 \u2192 11y + 30 = 76 \u2192 11y = 46 \u2192 y = 46/11.  \nThen x = (46/11 + 10) / 4 = 39/11.  \n\n(b) Elimination:  \nMultiply 4x \u2212 y = 10 by 2 \u2192 8x \u2212 2y = 20.  \nAdd 3x + 2y = 19 \u2192 11x = 39 \u2192 x = 39/11 \u2192 y = 46/11."
+        ]
+    }
+}
