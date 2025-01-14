@@ -71,8 +71,8 @@
                         {
                             "group": "Debugging",
                             "pages": [
-                                "interfaces/debugging/tests/tests",
-                                "interfaces/debugging/traces/traces"
+                                "interfaces/debugging/traces/traces",
+                                "interfaces/debugging/tests/tests"
                             ]
                         },
                         {
