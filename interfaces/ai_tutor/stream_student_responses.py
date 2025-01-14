@@ -13,9 +13,12 @@ def load_data():
     with open(student_info_path, "r") as f:
         reader = csv.reader(f)
         student_data = list(reader)[1:]
-    data_path = os.path.join(this_dir, "data")
-    with open(data_path, "r") as f:
-        data = json.load(f)
+    data_dir = os.path.join(this_dir, "data")
+    data_paths = [os.path.join(data_dir, fname) for fname in os.listdir(data_dir)]
+    data = dict()
+    for data_path in data_paths:
+        with open(data_path, "r") as f:
+            data = {**data, **json.load(f)}
     return data, student_data
 
 
