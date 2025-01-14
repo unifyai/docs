@@ -39,11 +39,14 @@ def _check_rest_api_failures(ret: str) -> None:
         assert "Invalid API key" not in ret_dict["detail"], "Invalid API key"
 
 
-def _test_python_examples(examples: List[str]) -> Tuple[Dict[str, Union[True, str]], bool]:
+def _test_python_examples(
+    examples: List[str],
+) -> Tuple[Dict[str, Union[True, str]], bool]:
     def _test_python_fn(str_in: str) -> None:
         ret = _capture_exec_output(str_in)
         if "import requests" in str_in:
             _check_rest_api_failures(ret)
+
     all_passed = True
     results = dict()
     for example in examples:
@@ -61,10 +64,13 @@ def _test_python_examples(examples: List[str]) -> Tuple[Dict[str, Union[True, st
     return results, all_passed
 
 
-def _test_shell_examples(examples: List[str]) -> Tuple[Dict[str, Union[True, str]], bool]:
+def _test_shell_examples(
+    examples: List[str],
+) -> Tuple[Dict[str, Union[True, str]], bool]:
     def _test_shell_fn(str_in: str) -> None:
         ret = os.popen(str_in).read()
         _check_rest_api_failures(ret)
+
     all_passed = True
     results = dict()
     for example in examples:
@@ -110,8 +116,9 @@ def run_test(filepath: str) -> Tuple[Dict, Dict, bool]:
     return python_results, shell_results, all_python_passed and all_shell_passed
 
 
-def group_and_order_results(results: Dict[str, Dict[str, Union[True, str]]])\
-        -> Dict[str, Dict[str, Dict[str, Union[True, str]]]]:
+def group_and_order_results(
+    results: Dict[str, Dict[str, Union[True, str]]],
+) -> Dict[str, Dict[str, Dict[str, Union[True, str]]]]:
     with open(os.path.join(this_dir, "../mint.json")) as file:
         mint_contents = file.read()
     mint_json = json.loads(mint_contents)
@@ -138,22 +145,27 @@ def prune_successes_from_results(results: Dict) -> Dict:
     return results
 
 
-def save_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]], fpath: str) -> None:
+def save_results(
+    results: Dict[str, Dict[str, Dict[str, Union[True, str]]]],
+    fpath: str,
+) -> None:
     json_str = json.dumps(results, indent=4)
     with open(fpath, "w") as file:
         file.write(json_str)
 
 
-def print_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]],
-                  failed_only: bool = True,
-                  verbose: bool = True,
-                  print_exception: bool = False) -> None:
+def print_results(
+    results: Dict[str, Dict[str, Dict[str, Union[True, str]]]],
+    failed_only: bool = True,
+    verbose: bool = True,
+    print_exception: bool = False,
+) -> None:
     for section_name, section_results in results.items():
         print(section_name)
         for page_name, page_results in section_results.items():
-            print(" "*4 + page_name)
+            print(" " * 4 + page_name)
             for language_name, language_results in page_results.items():
-                print(" "*8 + language_name)
+                print(" " * 8 + language_name)
                 for i, (codeblock, result) in enumerate(language_results.items()):
                     passed = result is True
                     if passed and failed_only:
@@ -161,7 +173,7 @@ def print_results(results: Dict[str, Dict[str, Dict[str, Union[True, str]]]],
                     result_str = "passed" if passed else "failed"
                     print(" " * 12 + str(i) + ": " + result_str)
                     if verbose:
-                        print(" " * 12 + codeblock.replace("\n", "\n" + " "*12))
+                        print(" " * 12 + codeblock.replace("\n", "\n" + " " * 12))
                         if result is not True and print_exception:
                             print(" " * 12 + result)
                         print("")

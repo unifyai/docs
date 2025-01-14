@@ -1,0 +1,29 @@
+{
+    "9. Three friends, Ann (A), Bob (B), and Carol (C), go on holiday together.\n\n(a) They book a row of three seats on the plane. When they arrive at the plane, they sit in a random order.\n\n(i) List all the different orders they could sit in the three seats. The first one has been done for you.\n\n| Seat 1 | Seat 2 | Seat 3 |\n|--------|--------|--------|\n|   A    |   B    |   C    |\n|        |        |        |\n|        |        |        |\n|        |        |        |\n|        |        |        |\n\n[2]\n\n(ii) What is the probability that Ann and Carol sit next to each other?\n\n(a)(ii) ............................................. [1]\n\n(iii) What is the probability that Bob sits in seat 1 with Ann next to him?\n\n(iii) ............................................ [1]\n\n(b) Ann, Bob and Carol have a total budget of \u00a3500 to rent a holiday apartment. The apartment normally costs \u00a350 per night, but they can get a 20% discount if they book early.\n\nCalculate how many extra nights they can stay in the apartment if they book early. You must show your working.\n\n(b)  ................................  nights  [4]": {
+        "0": [
+            "\n(a)(i) ABC  \n(ii) 0  \n(iii) 1  \n(b) 500 nights\n\n",
+            "\n(a)(i) CCA, AAB, BBB, CCC, ACC  \n(ii) 3  \n(iii) 1/2  \n(b) 0 nights\n\n",
+            "\n(a)(i) ABB, BAA, CAC, BCB, AAA  \n(ii) 1/4  \n(iii) 5/6  \n(b) 6 nights"
+        ],
+        "1": [
+            "\n(a)(i) They could sit in these orders: ACB, BAC, BCA\n\n",
+            "\n(a)(ii) 2/3\n\n",
+            "\n(a)(iii) 1/6"
+        ],
+        "2": [
+            "\n(a)(i) ACB, BAC, BCA, CAB, CBA  \n(a)(ii) 1/2  \n(a)(iii) 1/4  \n(b) 1 extra night\n\n",
+            "\n(a)(i) ACB, BCA, CBA  \n(a)(ii) 2/3  \n(a)(iii) 1/3  \n(b) 1 extra night\n\n",
+            "\n(a)(i) CAB  \n(a)(ii) 2/3  \n(a)(iii) 1/6  \n(b) 1 extra night"
+        ],
+        "3": [
+            "\n(a)(i) ACB, BAC, BCA, CAB  \n(a)(ii) 2/3  \n(a)(iii) 1/6  \n(b) 2 nights  \n\n",
+            "\n(a)(i) ACB, BAC, BCA, CAB, CBA  \n(a)(ii) 2/3  \n(a)(iii) 1/3  \n(b) 2 nights  \n\n",
+            "\n(a)(i) ACB, BAC, BCA, CAB, CBA  \n(a)(ii) 1/2  \n(a)(iii) 1/6  \n(b) 2 nights"
+        ],
+        "4": [
+            "\n(a)(i) ACB, BAC, BCA, CAB, CBA  \n(a)(ii) 2/3  \n(a)(iii) 1/6  \n(b) 2 nights\n\n",
+            "\n(a)(i) The six seatings are ABC (given), ACB, BAC, BCA, CAB, CBA  \n(a)(ii) 2/3  \n(a)(iii) 1/6  \n(b) 2 nights\n\n",
+            "\n(a)(i) Remaining orders: ACB, BAC, BCA, CAB, CBA  \n(a)(ii) 2/3  \n(a)(iii) 1/6  \n(b) 2 nights"
+        ]
+    }
+}

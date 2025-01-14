@@ -1,0 +1,49 @@
+{
+    "15\n\nA triangle has sides of lengths 8 cm, 11 cm, and 19 cm.\n\n(a) Show that this triangle is not a right-angled triangle.\n\n(b) Explain why this triangle cannot exist.": {
+        "0": [
+            "\nYou can arrange the sides however you want; any three lengths always make a right-angled triangle when you add them correctly.\n\n",
+            "\nIt must be right-angled because 8 + 11 = 19, so clearly the angles work out perfectly to 90\u00b0.\n\n",
+            "\nA triangle with those side lengths is a perfect equilateral triangle, so it definitely exists and must be right-angled by definition."
+        ],
+        "1": [
+            "\n8\u00b2 + 11\u00b2 = 185, which is not 19\u00b2 = 361, so it\u2019s not right-angled.\n\n",
+            "\n8 + 11 = 19, so these sides don\u2019t form a valid triangle.\n\n",
+            "\nThe sum of the squares of the shorter sides does not match the square of the longest side, and 8 + 11 = 19 means no proper triangle can be formed."
+        ],
+        "2": [
+            "\n(a) 8\u00b2 + 11\u00b2 = 185, which is not equal to 19\u00b2 (361). So it is not a right-angled triangle.\n\n",
+            "\n(b) 8 + 11 = 19, so the sum of the lengths of two sides is not greater than the third, which means this triangle cannot exist.\n\n",
+            "\n(a) 8\u00b2 + 11\u00b2 \u2260 19\u00b2. (b) Because 8 + 11 = 19, the triangle is not valid as the sides must strictly satisfy a + b > c."
+        ],
+        "3": [
+            "\n(a) 8\u00b2 + 11\u00b2 = 64 + 121 = 185, which is not equal to 19\u00b2 = 361, so it\u2019s not a right angle. (b) Since 19 is equal to 8 + 11, these lengths cannot form a proper triangle.\n\n",
+            "\n(a) Checking with Pythagoras, 19\u00b2 is more than the sum of the squares of the other sides, so it\u2019s not right-angled. (b) The long side is not strictly less than the sum of the other two, so the triangle is impossible.\n\n",
+            "\n(a) 8\u00b2 + 11\u00b2 does not match 19\u00b2, so there\u2019s no right angle. (b) 8 + 11 is exactly 19, meaning no enclosed area can form, so the triangle does not exist."
+        ],
+        "4": [
+            "\n(a)  \nCheck if 8\u00b2 + 11\u00b2 = 19\u00b2.  \n8\u00b2 + 11\u00b2 = 64 + 121 = 185, but 19\u00b2 = 361, so 185 \u2260 361.  \nTherefore, this is not a right-angled triangle.  \n(b)  \n8 + 11 = 19, but for a valid triangle, the sum of the two smaller sides must be strictly greater than the largest side. Since 8 + 11 = 19 is not greater, this triangle cannot exist.\n\n",
+            "\n(a)  \nUsing Pythagoras: 19\u00b2 should equal 8\u00b2 + 11\u00b2 if it was right-angled.  \n19\u00b2 = 361, but 8\u00b2 + 11\u00b2 = 64 + 121 = 185, so not right-angled.  \n(b)  \n8 + 11 must exceed 19 for a valid triangle. Since 8 + 11 = 19 exactly, it fails the triangle inequality, so no such triangle can exist.\n\n",
+            "\n(a)  \nTo be right-angled, the square of the largest side would match the sum of the squares of the other two sides. Here, 19\u00b2 = 361, but 8\u00b2 + 11\u00b2 = 185, which doesn\u2019t match, so it\u2019s not a right triangle.  \n(b)  \nFor a triangle to exist, any two sides must sum to more than the third. But 8 + 11 = 19 equals the third side, meaning this can\u2019t form a proper triangle."
+        ],
+        "5": [
+            "\n(a) Using Pythagoras\u2019 theorem on sides 8, 11, and 19:  \n   8\u00b2 + 11\u00b2 = 64 + 121 = 185, which is not equal to 19\u00b2 = 361.  \n   Therefore, it is not right-angled.  \n(b) Since 8 + 11 = 19, these sides cannot form a triangle with an interior area, so it does not exist.\n\n",
+            "\n(a) If it were right-angled, the sum of the squares of the shorter sides would match the square of the longest side, but 8\u00b2 + 11\u00b2 \u2260 19\u00b2, so it\u2019s not right-angled.  \n(b) A valid triangle must have the sum of any two sides strictly greater than the remaining side. Here, 8 + 11 = 19, so it fails to form a proper triangle.\n\n",
+            "\n(a) 64 + 121 = 185, but 19\u00b2 = 361. Since 185 \u2260 361, it cannot be a right angle.  \n(b) The side lengths 8, 11, and 19 violate the triangle inequality because 8 + 11 is not larger than 19, making the triangle impossible."
+        ],
+        "6": [
+            "\n(a) 19\u00b2 = 361, while 8\u00b2 + 11\u00b2 = 64 + 121 = 185, so 361 \u2260 185. Therefore, it is not right-angled.  \n(b) The sum of the lengths of the two smaller sides (8 + 11) is 19, which equals the third side, so the triangle cannot be formed.\n\n",
+            "\n(a) If this were right-angled, 19 would be the hypotenuse and we would need 8\u00b2 + 11\u00b2 = 19\u00b2. But 64 + 121 does not equal 361, so it is not right-angled.  \n(b) In any triangle, the sum of two sides must be strictly greater than the third side. Since 8 + 11 = 19, the triangle is not possible.\n\n",
+            "\n(a) Checking with Pythagoras, the longest side is 19, so we compare 8\u00b2 + 11\u00b2 with 19\u00b2. Because 64 + 121 is 185, which is not 361, there is no right angle.  \n(b) For a valid triangle, 8 + 11 must exceed 19. But here 8 + 11 = 19, so there is no real triangle."
+        ],
+        "7": [
+            "\n(a) To check if it is right-angled, compare 8\u00b2 + 11\u00b2 = 64 + 121 = 185 with 19\u00b2 = 361. Since 185 \u2260 361, it\u2019s not a right-angled triangle.  \n(b) A triangle can only exist if the sum of the lengths of any two sides is greater than the third. Here, 8 + 11 = 19, which is not greater than 19. Hence, no such triangle exists.\n\n",
+            "\n(a) A triangle with sides 8, 11, and 19 would be right-angled if 8\u00b2 + 11\u00b2 equaled 19\u00b2. But 64 + 121 = 185, which is not 361. Therefore, it\u2019s not right-angled.  \n(b) For a valid triangle, the sum of any two sides must exceed the third. Since 8 + 11 = 19, we do not have a strict inequality. The figure is degenerate and does not form a proper triangle.\n\n",
+            "\n(a) Using Pythagoras\u2019 rule, 8\u00b2 + 11\u00b2 should match 19\u00b2 for a right angle. As 64 + 121 = 185 and 19\u00b2 = 361, they differ, so the triangle is not right-angled.  \n(b) The side lengths fail the triangle inequality, because 8 + 11 equals 19 rather than exceeding it. This means these three lengths cannot form a real triangle."
+        ],
+        "8": [
+            "\n(a) 8\u00b2 + 11\u00b2 = 64 + 121 = 185, but 19\u00b2 = 361, so 185 \u2260 361. Therefore, the triangle is not right-angled.  \n(b) The sum of the two shorter sides is 8 + 11 = 19, which is exactly equal to the length of the longest side. A triangle must have two sides whose sum is strictly greater than the third side, so these lengths cannot form a valid triangle.\n\n",
+            "\n(a) If this were a right-angled triangle, the square of the longest side (19\u00b2) would equal the sum of the squares of the other two sides (8\u00b2 + 11\u00b2). Since 361 \u2260 185, the triangle is not right-angled.  \n(b) A necessary condition for a triangle is that any two sides must add up to more than the third. Here, 8 + 11 = 19, so the shape would be a straight line rather than a true triangle.\n\n",
+            "\n(a) To check right angles, compare 19\u00b2 with 8\u00b2 + 11\u00b2. As 361 is not equal to 64 + 121, the sides do not satisfy the Pythagorean theorem, ruling out a right angle.  \n(b) Because 8 + 11 = 19, the side lengths fail the triangle inequality. This means the three segments lie flat in a single line and cannot form a proper triangle."
+        ]
+    }
+}

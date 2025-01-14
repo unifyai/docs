@@ -1,0 +1,19 @@
+{
+    "11. Ema has done some calculations.\n\nFor each calculation, explain how you know the answer is wrong without working out the correct answer.\n\n(a) 0.38 \u00d7 0.26 = 0.827\n\n....................................................................................................................\n\n............................................................................................................... [1]\n\n(b) \\(\\frac{3}{8} + \\frac{2}{5} = \\frac{32}{37}\\)\n\n....................................................................................................................\n\n............................................................................................................... [1]": {
+        "0": [
+            "\n(a) There is no reason to doubt that 0.38 \u00d7 0.26 = 0.827.  \n(b) Maybe 3/8 + 2/5 is 32/37; I don\u2019t see why it would be wrong.\n\n",
+            "\n(a) It must be wrong because 0.38 \u00d7 0.26 should equal 10.  \n(b) I think 3/8 + 2/5 equals 5/13, so I\u2019m not sure what\u2019s wrong with 32/37.\n\n",
+            "\n(a) 0.827 looks fine; there\u2019s nothing to suggest it\u2019s incorrect.  \n(b) 3/8 + 2/5 = 32/37 seems like a valid way to add fractions."
+        ],
+        "1": [
+            "\n(a) If you multiply 0.38 by 0.26, the result should have four digits after the decimal point, so 0.827 must be incorrect. (b) I\u2019m not sure about adding those fractions.\n\n",
+            "\n(a) That multiplication looks fine to me. (b) You don\u2019t add fractions by adding both numerators and denominators, so 32/37 is wrong.\n\n",
+            "\n(a) 0.827 is bigger than 0.38, so it can\u2019t be the product of two numbers less than 1. (b) You can just add the tops and bottoms to get 32/37, so that\u2019s definitely right."
+        ],
+        "2": [
+            "\n(a) Both 0.38 and 0.26 are less than 1, so their product must be smaller than either number. 0.827 is clearly larger, so it can\u2019t be correct.\n(b) You don\u2019t simply add numerators and denominators when adding fractions, so 3/8 + 2/5 cannot be 32/37.\n\n",
+            "\n(a) If you multiply two decimal numbers, the answer should have at least as many decimal places as the total in both numbers, but 0.827 doesn\u2019t.\n(b) A proper fraction addition requires finding a common denominator, which shows 32/37 cannot be right.\n\n",
+            "\n(a) Estimating 0.4 \u00d7 0.3 = 0.12 shows the correct result must be around that size, making 0.827 impossible.\n(b) 3/8 + 2/5 is about 0.775, but 32/37 is about 0.86, so adding them that way is clearly wrong."
+        ]
+    }
+}

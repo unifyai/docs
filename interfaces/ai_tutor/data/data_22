@@ -1,0 +1,19 @@
+{
+    "11. Show that 4(a + 3) \u2013 3(a \u2013 2) = a + 18. [2]\n\n**Solution:**\n\n1. Expand the expression:  \n   4(a + 3) - 3(a - 2)\n\n2. Distribute the numbers:  \n   = 4a + 12 - 3a + 6 \n\n3. Combine like terms:  \n   = (4a - 3a) + (12 + 6)  \n   = a + 18 \n\nThis verifies that the expression simplifies to a + 18.": {
+        "0": [
+            "\nIt cannot be simplified any further, so the expression remains as is.\n\n",
+            "\nI am not sure how to start, so I will leave it blank.\n\n",
+            "\n4(a+3) - 3(a-2) simplifies directly to 2(a-3) with no further steps needed."
+        ],
+        "1": [
+            "\n4(a + 3) \u2013 3(a \u2013 2) = 4a + 12 - 3a + 6 = a + 16\n\n",
+            "\n4(a + 3) \u2013 3(a \u2013 2) = 4a + 12 - 3a + 6\n\n",
+            "\n4(a + 3) \u2013 3(a \u2013 2) = 4a + 12 - 3a - 2 = a + 10"
+        ],
+        "2": [
+            "\n4(a + 3) - 3(a - 2) = 4a + 12 - 3a + 6 = a + 18\n\n",
+            "\nStarting with 4(a + 3) - 3(a - 2), rewrite as (4 - 3)a + (4 \u00d7 3) + (3 \u00d7 2), which is a + 12 + 6 = a + 18\n\n",
+            "\nCombine terms in a single step: 4(a + 3) - 3(a - 2) = (4a - 3a) + (12 + 6) = a + 18"
+        ]
+    }
+}

@@ -1,0 +1,27 @@
+---
+title: 'Case Study'
+---
+
+So, let's suppose we're building an education app for students.
+We will be synthesizing the data for demonstration purposes, such that you can run
+everything locally.
+
+Our app needs to do three things:
+1. present the user with past exam questions for testing, which then must be marked
+2. enable the user to ask *any* question about their subject, which the app should
+answer with clarity and accuracy
+3. generate *new* questions for the user to answer (not taken from previous exams),
+which must also be marked correctly after the user's response
+
+Let's assume we are beta testing the first of these requirements, collecting user
+answers but not yet marking them in the app. Simply run this
+[notebook]()
+with your own API key start streaming the usage data in your own account.
+
+If you're interested how this synthetic data was *generated*, you can check out our data
+generation
+[notebook](),
+but this is *not* necessary for completing the case study.
+
+Now we have some live production traffic streaming in the background. Let's go
+ahead and create an interface to monitor and engage with this live traffic.

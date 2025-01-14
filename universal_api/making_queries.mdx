@@ -24,7 +24,7 @@ curl -X 'POST' \
     }'
 ```
 
-The `model` field is used to specify both the model and the provider, in the format 
+The `model` field is used to specify both the model and the provider, in the format
 `model@provider`. The full specification for this REST API endpoint is available
 [here](https://docs.unify.ai/api-reference/llm_queries/chat_completions).
 
@@ -63,7 +63,7 @@ As mentioned above, you can find all arguments in the chat completions
 
 ## Unify Python Package
 
-First, download our [Python package](https://github.com/unifyai/unify) with 
+First, download our [Python package](https://github.com/unifyai/unify) with
 `pip install unifyai`. You can then quickly get started like so:
 
 ```python
@@ -82,8 +82,8 @@ you can list the models, providers and endpoints using the functions
 
 ## OpenAI Python Package
 
-The Unify API is designed to be compatible with the OpenAI standard, so if you 
-have existing code that uses the OpenAI Python package, it's straightforward to try 
+The Unify API is designed to be compatible with the OpenAI standard, so if you
+have existing code that uses the OpenAI Python package, it's straightforward to try
 out our API.
 
 ```python
@@ -107,7 +107,7 @@ Remember that the `model` field needs to contain a string of the form `model@pro
 
 ## OpenAI NodeJS Package
 
-Likewise, if you have existing code that uses the OpenAI NodeJS package, it's again very 
+Likewise, if you have existing code that uses the OpenAI NodeJS package, it's again very
 straightforward to try out our API.
 
 ```javascript
@@ -123,5 +123,5 @@ const stream = await openai.chat.completions.create({
 });
 ```
 
-Again, remember that the `model` field needs to contain a string of the form 
+Again, remember that the `model` field needs to contain a string of the form
 `model@provider`.
