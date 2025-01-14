@@ -65,7 +65,7 @@
                             "group": "Logging",
                             "pages": [
                                 "interfaces/logging/traffic/traffic",
-                                "interfaces/logging/errors/trends",
+                                "interfaces/logging/errors/trends"
                             ]
                         },
                         {
