@@ -4,6 +4,7 @@ import json
 import random
 
 import unify
+from helpers import load_questions_and_answers, encode_image
 
 
 def load_data():
@@ -20,6 +21,7 @@ def load_data():
 
 def main():
     data, student_data = load_data()
+    qna = load_questions_and_answers()
     questions = list(data.keys())
     with unify.Context("QnATraffic"):
         while True:
@@ -27,12 +29,26 @@ def main():
             question = random.choice(questions)
             provided_answers = random.choice(list(data[question].values()))
             provided_answer = random.choice(provided_answers)
+            qna_dct = qna[question]
+            question_imgs = qna_dct.get("question_imgs")
+            if question_imgs:
+                question_imgs = [encode_image(fpath) for fpath in question_imgs]
+            markscheme_imgs = qna_dct.get("markscheme_imgs")
+            if markscheme_imgs:
+                markscheme_imgs = [encode_image(fpath) for fpath in markscheme_imgs]
             unify.log(
                 first_name=first,
                 last_name=last,
                 email=email,
+                subject=None,
+                paper_id=None,
+                question_num=None,
                 question=question,
-                provided_answer=provided_answer
+                question_imgs=question_imgs[0] if question_imgs else None,
+                provided_answer=provided_answer,
+                markscheme=qna_dct.get("answer"),
+                markscheme_imgs=markscheme_imgs[0] if markscheme_imgs else None,
+                available_marks=qna_dct.get("marks"),
             )
 
 
