@@ -1,0 +1,29 @@
+{
+    "7 (a) Write numbers in the boxes below to make the statement true.\n\n15 \u00d7 20 = 5 \u00d7 ____ = 6 \u00d7 ____\n\n[2]\n\n(b) Angus thinks of a number.  \nIf he cubes his number and then adds 9, he gets 17.\n\nWhat number is he thinking of?  \n\n(b) ............................................ [2]": {
+        "0": [
+            "\n(a) 15 \u00d7 20 = 5 \u00d7 25 = 6 \u00d7 16  \n(b) 3\n\n",
+            "\n(a) 15 \u00d7 20 = 5 \u00d7 1 = 6 \u00d7 7  \n(b) 0\n\n",
+            "\n(a) 15 \u00d7 20 = 5 \u00d7 100 = 6 \u00d7 20  \n(b) \u20132"
+        ],
+        "1": [
+            "\n(a) 15 \u00d7 20 = 5 \u00d7 60 = 6 \u00d7 40  \n(b) 1\n\n",
+            "\n(a) 15 \u00d7 20 = 5 \u00d7 61 = 6 \u00d7 50  \n(b) 5\n\n",
+            "\n(a) 15 \u00d7 20 = 5 \u00d7 70 = 6 \u00d7 20  \n(b) 3 (8 + 9 = 17)"
+        ],
+        "2": [
+            "\n7(a): 60, 50\n7(b): 1\n\n",
+            "\n7(a): 60, 50\n7(b): 3\n\n",
+            "\n7(a): 50, 60\n7(b): 2"
+        ],
+        "3": [
+            "\n(a) 15 \u00d7 20 = 5 \u00d7 60 = 6 \u00d7 49\n(b) 2\n\n",
+            "\n(a) 15 \u00d7 20 = 5 \u00d7 60 = 6 \u00d7 50\n(b) eight\n\n",
+            "\n(a) 15 \u00d7 20 = 5 \u00d7 59 = 6 \u00d7 50\n(b) 2"
+        ],
+        "4": [
+            "\n7(a) 60, 50  \n7(b) 2  \n\n",
+            "\n7(a) The numbers are 60 and 50  \n7(b) He is thinking of 2  \n\n",
+            "\n7(a) Fill each box with 60 and 50 respectively  \n7(b) Angus\u2019s number is 2"
+        ]
+    }
+}

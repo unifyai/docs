@@ -1,0 +1,39 @@
+{
+    "8 (a) The product of three numbers is 312.  \nTwo of the numbers are 3 and 13.  \n\nWhat is the third number?\n\n(a) ................................. [3] \n\n(b) Find three different numbers that are each \n\u2022 a prime number  \n\u2022 two less than a square number.\n\n(b) ................ ................ ................ [3]  \n": {
+        "0": [
+            "\n(a) 5\n(b) 1 4 6\n\n",
+            "\n(a) 250\n(b) 9 12 18\n\n",
+            "\n(a) -3\n(b) 6 10 15"
+        ],
+        "1": [
+            "\n(a) 1\n(b) 2 1 9\n\n",
+            "\n(a) 25\n(b) 7 14 9\n\n",
+            "\n(a) 5\n(b) 23 12 14"
+        ],
+        "2": [
+            "\n(a) 24\n(b) 2 4 17\n\n",
+            "\n(a) 7\n(b) 2 7 11\n\n",
+            "\n(a) 9\n(b) 4 20 44"
+        ],
+        "3": [
+            "\n(a) 8\n(b) 11, 13, 19\n\n",
+            "\n(a) 39\n(b) 2, 7, 23\n\n",
+            "\n(a) 104\n(b) 2, 7, 11"
+        ],
+        "4": [
+            "\n(a) 8\n(b) 2 9 25\n\n",
+            "\n(a) 8\n(b) 7 16 20\n\n",
+            "\n(a) 8\n(b) 23 21 5"
+        ],
+        "5": [
+            "\n(a) 8\n(b) 2, 7, 25\n\n",
+            "\n(a) 24\n(b) 2, 7, 23\n\n",
+            "\n(a) 8\n(b) 2, 7, 46"
+        ],
+        "6": [
+            "\n(a) 8  \n(b) 2 7 23\n\n",
+            "\n(a) 8  \n(b) 7 23 47\n\n",
+            "\n(a) 8  \n(b) 2 23 47"
+        ]
+    }
+}

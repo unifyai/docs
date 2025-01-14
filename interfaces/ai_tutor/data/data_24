@@ -1,0 +1,34 @@
+{
+    "14 The value of a car \\( V \\) is given by  \n\n\\[ V = 20 000 \\times 0.9^t \\]\n\nwhere \\( t \\) is the age of the car in complete years.  \n\n(a) Write down the value of \\( V \\) when \\( t = 0 \\).  \n\n(a) \u00a3 .............................. [1]  \n\n(b) What is the value of \\( V \\) when \\( t = 3 \\)?  \n\n(b) \u00a3 .............................. [2]  \n\n(c) After how many complete years will the car\u2019s value drop below \u00a310 000?  \n\n(c) .............................. [2]": {
+        "0": [
+            "\n(a) \u00a330,000  \n(b) \u00a356,789  \n(c) 10,000 years  \n\n",
+            "\n(a) \u00a30  \n(b) \u00a35,000  \n(c) It never drops below \u00a310,000  \n\n",
+            "\n(a) No value  \n(b) No result  \n(c) No valid number of years"
+        ],
+        "1": [
+            "\n(a) \u00a320,000\n(b) \u00a315,000\n(c) 6 years\n\n",
+            "\n(a) \u00a320,000\n(b) \u00a314,000\n(c) 9 years\n\n",
+            "\n(a) \u00a320,000\n(b) \u00a318,000\n(c) 5 years"
+        ],
+        "2": [
+            "\n(a) \u00a320,000\n(b) \u00a314,500\n(c) 12\n\n",
+            "\n(a) \u00a321,000\n(b) \u00a314,580\n(c) 8\n\n",
+            "\n(a) \u00a315,000\n(b) \u00a314,000\n(c) 7"
+        ],
+        "3": [
+            "\n(a) \u00a320,000  \n(b) \u00a314,580  \n(c) 8  \n\n",
+            "\n(a) \u00a320,000  \n(b) \u00a315,000  \n(c) 12  \n\n",
+            "\n(a) \u00a310,000  \n(b) \u00a314,600  \n(c) 11"
+        ],
+        "4": [
+            "\n(a) \u00a320,000  \n(b) \u00a314,590  \n(c) 7  \n\n",
+            "\n(a) \u00a320,000  \n(b) \u00a314,580  \n(c) 8  \n\n",
+            "\n(a) \u00a30  \n(b) \u00a314,600  \n(c) 7"
+        ],
+        "5": [
+            "\n(a) \u00a320,000  \n(b) \u00a314,580  \n(c) 7 years\n\n",
+            "\n(a) \u00a320,000  \n(b) \u00a314,600  \n(c) 7\n\n",
+            "\n(a) 20000  \n(b) \u00a314,580  \n(c) 7 full years"
+        ]
+    }
+}

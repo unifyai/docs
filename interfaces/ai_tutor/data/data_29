@@ -1,0 +1,29 @@
+{
+    "21. Louise travels to work and home again by train.  \nThe probability that her train to work is late is 0.7.  \nThe probability that her train home is late is 0.4.  \n\nWhat is the probability that at least one of her trains is late?  \n\n............................................ [4]": {
+        "0": [
+            "\n1.3\n\n",
+            "\n0\n\n",
+            "\n-0.5"
+        ],
+        "1": [
+            "\n0.7 \u00d7 0.4 = 0.28\n\n",
+            "\n0.3 \u00d7 0.6 = 0.18\n\n",
+            "\nThe complementary probabilities are 0.3 for not being late to work and 0.6 for not being late home"
+        ],
+        "2": [
+            "\n0.7 \u00d7 0.4 = 0.28 and 0.3 \u00d7 0.6 = 0.18. So, probability = 0.28 + 0.18 = 0.46\n\n",
+            "\nProbability(neither late) = 0.3 \u00d7 0.6 = 0.18, so probability(at least one late) = 0.28\n\n",
+            "\nP(both late) = 0.7 \u00d7 0.4 = 0.28 and P(work late, home on time) = 0.7 \u00d7 0.6 = 0.42, so total is 0.70"
+        ],
+        "3": [
+            "\nThe probability that at least one train is late is 1 \u2212 (0.3 \u00d7 0.6) = 1 \u2212 0.18 = 0.88.\n\n",
+            "\nP(A or B) = P(A) + P(B) \u2212 P(A and B) = 0.7 + 0.4 \u2212 (0.7 \u00d7 0.4) = 1.1 \u2212 0.26 = 0.84.\n\n",
+            "\nP(only morning late) + P(only evening late) + P(both late) = (0.7 \u00d7 0.6) + (0.3 \u00d7 0.4) + (0.7 \u00d7 0.4) = 0.42 + 0.12 + 0.28 = 0.80."
+        ],
+        "4": [
+            "\nP(both trains late) = 0.7 \u00d7 0.4 = 0.28  \nP(morning late only) = 0.7 \u00d7 0.6 = 0.42  \nP(evening late only) = 0.3 \u00d7 0.4 = 0.12  \nTotal = 0.28 + 0.42 + 0.12 = 0.82  \n\n",
+            "\nProbability (neither train is late) = 0.3 \u00d7 0.6 = 0.18  \nProbability (at least one train is late) = 1 \u2212 0.18 = 0.82  \n\n",
+            "\nUsing P(A \u222a B) = P(A) + P(B) \u2212 P(A \u2229 B):  \n= 0.7 + 0.4 \u2212 (0.7 \u00d7 0.4)  \n= 1.1 \u2212 0.28  \n= 0.82"
+        ]
+    }
+}
