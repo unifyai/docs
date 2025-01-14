@@ -463,7 +463,8 @@
                             "pages": [
                                 "api-reference/configs/create_interface",
                                 "api-reference/configs/update_interface",
-                                "api-reference/configs/get_interface"
+                                "api-reference/configs/get_interface",
+                                "api-reference/configs/delete_interface"
                             ]
                         }
                     ]
