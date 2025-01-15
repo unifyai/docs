@@ -5,7 +5,7 @@ from prompts import *
 from helpers import load_questions_and_answers
 
 
-def generate_question(question, answer, marks, idx):
+def generate_question(question, markscheme, marks, idx):
     data = dict()
     data_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), f"data_{idx}")
     generation_client = unify.Unify("o1@openai", cache=True)
@@ -25,11 +25,12 @@ def generate_question(question, answer, marks, idx):
                 question,
             )
             .replace(
-                "{answer}",
-                answer,
+                "{markscheme}",
+                markscheme,
             ),
         )
         targets[target] = [ans for ans in response.split("Answer:")[1:]]
+    targets["markscheme"] = markscheme
     data[question] = targets
     # incremental file writing
     with open(data_path, "w+") as f:
@@ -54,10 +55,10 @@ def main():
     ans_n_marks = list(qna.values())
     num_questions = len(questions)
     assert num_questions == len(ans_n_marks)
-    answers = [dct["answer"] for dct in ans_n_marks]
+    markschemes = [dct["answer"] for dct in ans_n_marks]
     marks = [dct["marks"] for dct in ans_n_marks]
     idxs = range(num_questions)
-    unify.map(generate_question, questions, answers, marks, idxs)
+    unify.map(generate_question, questions, markschemes, marks, idxs)
     combine_data()
 
 
