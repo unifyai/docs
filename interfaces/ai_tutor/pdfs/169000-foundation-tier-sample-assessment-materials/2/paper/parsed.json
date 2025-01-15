@@ -1,0 +1,90 @@
+{
+    "1": {
+        "text": "1 (a) Work out: \n\n\\(4 \\times 2 - 1\\) \n\n(a) .................................. [1]\n\n(b) Find \\(\\frac{1}{4}\\) of 16.\n\n(b) .................................. [1]",
+        "text-only": true
+    },
+    "2": {
+        "text": "2. A tin contains four different types of sweet. A sweet is taken from the tin at random. The table below shows some of the probabilities of taking each type of sweet.\n\n| Sweet       | Toffee | Fudge | Jelly | Mint |\n|-------------|--------|-------|-------|------|\n| Probability | 0.4    | 0.2   | 0.3   |      |\n\n(a) Complete the table. [2]\n\n(b) What is the probability that a toffee or a mint is taken from the tin?\n\n(b) .................................. [2]",
+        "text-only": true
+    },
+    "3": {
+        "text": "3\n\nPeter says: \n\nThe sum of an odd number and an even number is even.\n\nThe example 3 + 4 = 7 shows that Peter is not correct.\n\nWrite an example to show that each of these statements is not correct.\n\n(a) The sum of two prime numbers is always odd.\n\n.......................................................................................................................................... [1]\n\n(b) Squaring a whole number always results in an even number.\n\n.......................................................................................................................................... [1]",
+        "text-only": true
+    },
+    "4": {
+        "text": "4. Charlie, Mo and Andrzej share a flat.\n\n- Charlie pays 25% of the rent. \n- Mo pays \u00bd of the rent.  \n- Andrzej pays \u00a3450.  \n\nHow much do they pay altogether for the rent?  \n\n\u00a3 ................................. [4]",
+        "text-only": true
+    },
+    "5": {
+        "text": "5. In a math competition, the scores of five teams are recorded as follows:\n\n| Team  | Score  |\n|-------|--------|\n| A     | 72     |\n| B     | 68     |\n| C     | 75     |\n| D     | 70     |\n| E     | 65     |\n\n(a) Which team scored the highest?\n\n(b) Calculate the average score of all the teams.\n\n(c) If Team C's score increases by 5 points, what will be their new score?\n\n(d) What is the range of the scores?\n\n---\n\n(a) ..................................................... [1]\n\n(b) ..................................................... [2]\n\n(c) ..................................................... [1]\n\n(d) ..................................................... [2]",
+        "text-only": true
+    },
+    "6": {
+        "text": "6 (a) A square has an area of 100 cm\u00b2.\n\nFind its perimeter.\n\n(a) ...................................... cm [2]\n\n(b) The area of the parallelogram is three times the area of the triangle.\n\nShow that the perpendicular height \\( h \\) of the parallelogram is 4 cm. [4]",
+        "text-only": true,
+        "images": [
+            "page5.png"
+        ]
+    },
+    "7": {
+        "text": "7 Here are six numbers.\n\nFrom these numbers, find a number that is\n\n(a) a multiple of two and a multiple of three.\n\n(a) .................................  [1]\n\n(b) a factor of 30 and a factor of 40.\n\n(b) .................................  [2]",
+        "text-only": true
+    },
+    "8": {
+        "text": "8 (a) The product of three numbers is 312.  \nTwo of the numbers are 3 and 13.  \n\nWhat is the third number?\n\n(a) ................................. [3]\n\n(b) Find three different numbers that are each  \n\n\u2022 a prime number  \n\u2022 two less than a square number.  \n\n(b) ................ ................ ................ [3]",
+        "text-only": true
+    },
+    "9": {
+        "text": "9 \n\nThese prisms have different shapes as end faces.\n\n(a) Complete this table.\n\n| Shape of end face   | Number of faces | Number of edges | Number of vertices |\n|---------------------|-----------------|-----------------|--------------------|\n| Triangle (3 sides)  | 5               | 9               | 6                  |\n| Rectangle (4 sides) | .......         | .......         | 8                  |\n| Pentagon (5 sides)  | .......         | 15              | 10                 |\n| Hexagon (6 sides)   | 8               | 18              | .......            |\n\n[2] \n\n(b) How many edges and vertices does a prism with a 100-sided end face have?\n\nedges ....................................  \n\nvertices ....................................\n\n[2]\n\n(c) F is the number of faces in a prism.\n\nN is the number of sides of its end face.\n\nWrite down a formula connecting F and N.\n\n(c) ................................................................... \n\n[2]",
+        "text-only": true,
+        "images": [
+            "page7.png"
+        ]
+    },
+    "10": {
+        "text": "10 The graph shows the number of ice creams sold in a shop each day against the temperature at midday that day.\n\n(a) (i) Describe the relationship between the temperature at midday and the number of ice creams sold.\n\n................................................................................................................................. [1]\n\n(ii) One data point is an outlier.\n\nGive a reason why this does not fit the rest of the data.\n\n................................................................................................................................. [1]",
+        "text-only": true,
+        "images": [
+            "page8.png"
+        ]
+    },
+    "11": {
+        "text": "11  \n(c) The store reopens under new management and sells goods worth \u00a3100,000 in the first month.\n\n- The value of goods sold in the second month is 20% more than the first month.\n- The value of goods sold in the third month is 10% less than the second month.\n\nFind the percentage increase in the total value of goods sold from the first month to the third month. You must show your working.\n\n(c) ............................................... % [5]",
+        "text-only": true
+    },
+    "12": {
+        "text": "12 (a) Solve.\n\n    5x = 2x + 18\n\n(a) x = _________________ [2]\n\n(b) Solve by factorising.\n\n    x^2 + 8x + 15 = 0\n\n(b) x = _________________ [3]",
+        "text-only": true
+    },
+    "13": {
+        "text": "**13** (a) Two shapes are mathematically similar if their corresponding angles are equal and the lengths of their corresponding sides are in the same ratio.\n\nShape A: Triangle with angles 40\u00b0, 70\u00b0, 70\u00b0\nShape B: Triangle with angles 40\u00b0, 70\u00b0, 70\u00b0\nShape C: Triangle with angles 50\u00b0, 70\u00b0, 60\u00b0\nShape D: Triangle with angles 40\u00b0, 70\u00b0, 70\u00b0\n\nWhich of these triangles are similar to each other? Explain your answer.\n\n(b) Use angle properties to find the size of angle x in the diagram below:\n\n[Insert Diagram Here]\n\n(c) Calculate the length of the missing side in the right-angled triangle shown below. \n\nUse the Pythagorean theorem given: \n\n\\[a^2 + b^2 = c^2\\]\n\nWhere \\(c\\) is the hypotenuse, and \\(a\\) and \\(b\\) are the other two sides.\n\n[Insert Right-Angled Triangle Diagram Here]\n\n(c) ................................................................................................ [3]",
+        "text-only": true
+    },
+    "14": {
+        "text": "14\n\n(a) Here is a coordinate grid.\n\nShape S is translated to Shape T using vector \\(\\begin{pmatrix} p \\\\ q \\end{pmatrix}\\).\n\nWrite down the values of \\(p\\) and \\(q\\).\n\n(a) \\(p =\\) .................................\n\n\\(q =\\) ................................. [2]\n\n(b) Vectors \\(a\\), \\(b\\), \\(c\\), \\(d\\), and \\(e\\) are drawn on an isometric grid.\n\nWrite each of the vectors \\(c\\), \\(d\\), and \\(e\\) in terms of \\(a\\) and/or \\(b\\).\n\n\\(c =\\) ..............................................................................\n\n\\(d =\\) ..............................................................................\n\n\\(e =\\) .............................................................................. [3]",
+        "text-only": false,
+        "images": [
+            "page13.png"
+        ]
+    },
+    "15": {
+        "text": "15  \nIn the diagram, ABCD is a rectangle and AEGH is a parallelogram. Lines AE and HG are parallel, and lines AH and EG are parallel. \n\nRectangle ABCD has a width of 6 cm and a length of 10 cm. The parallelogram AEGH has a base AE of 10 cm and a height of 4 cm.  \n\n(a) Calculate the area of rectangle ABCD.  \n\nArea = ....................................... [2]  \n\n(b) Calculate the area of the parallelogram AEGH.  \n\nArea = ....................................... [2]  \n\n(c) Calculate the total shaded area, which is the area of ABCD minus the area of AEGH.  \n\nTotal shaded area = ....................................... [2]",
+        "text-only": true
+    },
+    "16": {
+        "text": "16. Calculate \n\n(a) \\[ 3 \\times 2^3 + 5 \\] \n\n(b) \\[ \\frac{2}{3} \\times (4 + 1) \\] \n\nShow all your workings. \n\n(a) .....................................................................................................................................\n  \n(b) ..................................................................................................................................... \n\n[4]",
+        "text-only": true
+    },
+    "17": {
+        "text": "17\n\n(c) Complete this row of boxes, writing your expressions in their simplest form.\n\n```\na  b\n```\n[2]\n\n(d) Use your answer to (c) to help you fill in the missing numbers in this row of boxes.\n\n```\n6  57\n```\n[3]",
+        "text-only": false
+    },
+    "18": {
+        "text": "18 \u00a9 OCR 2024 J560/02\n\n**18. Amin is attempting to solve the following equation:**\n\n\\[(x + 1)(x + 4) = (x - 2)(x - 3)\\]\n\nHis incorrect solution is shown below:\n\n\\[\n\\begin{align*}\n&\\text{(x + 1)(x + 4) = (x \u2013 2)(x \u2013 3)} \\\\\n\\text{Step 1:} &\\ x^2 + 4x + x + 4 = x^2 - 3x - 2x + 6 \\\\\n\\text{Step 2:} &\\ x^2 + 5x + 4 = x^2 - x + 6 \\\\\n\\text{Step 3:} &\\ 5x + 4 = -x + 6 \\\\\n\\text{Step 4:} &\\ 6x + 4 = 6 \\\\\n\\text{Step 5:} &\\ 6x = 2 \\\\\n\\text{Step 6:} &\\ x = \\frac{1}{3} \\\\\n\\end{align*}\n\\]\n\n**(a) Identify the step in which Amin made his first error and explain why this step is incorrect.**\n\n........................................................................................................................................................  \n........................................................................................................................................................  \n........................................................................................................................................................  \n........................................................................................................................................................  \n[2]\n\n**(b) Write out a correct solution to the equation.** \n\n[2]",
+        "text-only": true
+    },
+    "19": {
+        "text": "19\n\nThe perimeter of the triangle is the same length as the perimeter of the square.\n\nFind an expression for the length of one side of the square in terms of \\( a \\).\n\nGive your answer in its simplest form.\n\n........................................  [4]",
+        "text-only": true
+    }
+}
