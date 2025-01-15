@@ -64,6 +64,7 @@
                         {
                             "group": "Logging",
                             "pages": [
+                                "interfaces/logging/overview",
                                 "interfaces/logging/traffic/traffic",
                                 "interfaces/logging/trends/trends"
                             ]
@@ -71,6 +72,7 @@
                         {
                             "group": "Evaluating",
                             "pages": [
+                                "interfaces/evaluating/overview",
                                 "interfaces/evaluating/marking/marking",
                                 "interfaces/evaluating/answering/answering",
                                 "interfaces/evaluating/asking/asking"
@@ -79,6 +81,7 @@
                         {
                             "group": "Debugging",
                             "pages": [
+                                "interfaces/debugging/overview",
                                 "interfaces/debugging/single_traces/single_traces",
                                 "interfaces/debugging/multiple_traces/multiple_traces"
                             ]
