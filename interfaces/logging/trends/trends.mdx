@@ -1,5 +1,5 @@
 ---
-title: 'Traffic'
+title: 'Trends'
 ---
 
 In order to spot trends in our production traffic, let's first open the Unify console,
@@ -69,11 +69,32 @@ each unique email address.
 ![](demo.gif)
 
 Let's do a slightly more complicated example, and find the average time in
-the day when boys vs girls are on the platform. ADD EXAMPLE.
+the day when boys vs girls are on the platform. First, let's create a new column which
+calculates the *remainder* timestamp when dividing by the number of days, which gives
+us the time of day for the request.
 
 ![](demo.gif)
 
-This is just an example. We can manipulate the data in all kinds of other ways. For
+If we chose `mean` as our reduction statistic, and group by `gender`, we'll then get
+the average time of day for the requests shown in the table.
+
+![](demo.gif)
+
+Similarly, if we want to see how the average time of usage in the day varies across
+different ages, we can first create a new column which buckets the ages into `n`
+buckets, lets say 10 in this case.
+
+![](demo.gif)
+
+We can then group by this new bucketed column to get all of the rows grouped into
+these buckets. The `time_of_day` mean values now present the mean values for each of
+these age groups. We can also sort by the `time_of_day` column, which will order these
+groups based on their mean time of day. We can see that younger people are typically
+on the platform much later in the evening, whilst older people use it in the morning.
+
+![](demo.gif)
+
+These are just examples. We can manipulate the data in all kinds of other ways. For
 example, if we want to see which questions have the most marks available, we can
 group by the question, and then sort by the marks available:
 
