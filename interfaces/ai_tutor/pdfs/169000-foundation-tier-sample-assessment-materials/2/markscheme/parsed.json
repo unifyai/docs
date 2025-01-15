@@ -1,0 +1,81 @@
+{
+    "1": {
+        "text": "**Question 1**\n\n(a) 7  \nMarks: 1  \nGuidance: AO1.3a\n\n(b) 4  \nMarks: 1  \nGuidance: AO1.3a",
+        "num-marks": 2
+    },
+    "2": {
+        "text": "**Question 2: Answer and Marking Guidelines**\n\n(a) **Correct Answer:** 0.1  \n**Marks:** 2  \n**Guidance:**  \n- 2 marks for AO1.3a  \n- M1 for 0.4 + 0.2 + 0.3 (sum of identified probabilities) or 1 \u2013 their \u20180.9\u2019 (complementary probability).\n\n(b) **Correct Answer:** 0.7  \n**Marks:** 2  \n**Guidance:**\n- 2 marks for AO1.3a  \n- M1 for 0.4 and 0.3 identified (components of the probability calculation).",
+        "num-marks": 4
+    },
+    "3": {
+        "text": "**Question 3 Markscheme**\n\n**(a)**  \n- Any two odd primes added correctly  \n- **Marks**: 1  \n- **Guidance**: 1 AO2.1a  \n  Example: 3 + 5 = 8\n\n**(b)**  \n- An odd integer squared with correct result  \n- **Marks**: 1  \n- **Guidance**: 1 AO2.1a  \n  Example: \\(5^2 = 25\\)",
+        "num-marks": 2
+    },
+    "4": {
+        "text": "**Question 4:**\n\n**Answer:**\n[\u00a3]1800\n\n**Marking Guidelines:**\n- Total Marks: 4\n  - 2 marks for AO1.3b\n  - 2 marks for AO3.1d\n\n1. M1 for:\n   \\[\n   \\frac{1}{3} + \\frac{1}{4} = \\frac{2}{4}\n   \\]\n   (showing implied step)\n\n2. M1 for:\n   - \\(\\frac{1}{4}\\) of the rent = 450\n\n3. M1 for:\n   - \\(450 \\times 4\\) or equivalent calculation using percentages or decimals to find the total rent.",
+        "num-marks": 4
+    },
+    "5": {
+        "text": "**Question 5**\n\n**Answer:**\n\n(a) China  \n- 1 mark\n\n(b) 27,100,000  \n- 1 mark\n\n(c) 7.82 \u00d7 10\u2079  \n- 2 marks  \n  - 1 mark for AO1.2  \n  - 1 mark for AO1.3a  \n  - M1 for attempting to multiply by 1000\n\n(d) 7.85 \u00d7 10\u2077  \n- 2 marks  \n  - 2 for AO1.3a  \n  - M1 for 9.9 \u2013 2.05 soi",
+        "num-marks": 6
+    },
+    "6": {
+        "text": "**Question 6:**\n\n**Answer:**\n\n(a) 40 cm\n\n(b) Correct working leading to 4 cm\n\n**Marks and Guidance:**\n\n(a)  \n- Total: 2 marks  \n  - 1 mark AO1.3a  \n  - 1 mark AO3.1a  \n  - M1 for multiplying 4 by their '100'  \n\n(b)  \n- Total: 4 marks  \n  - 1 mark AO1.3b  \n  - 2 marks AO2.2  \n  - 1 mark AO2.4a  \n  - B1 for the area of triangle being 24  \n  - B1 for their '24' multiplied by 3  \n  - B1 for their '72' divided by 18  \n  - or consider the area of the parallelogram as 18h",
+        "num-marks": 6
+    },
+    "7": {
+        "text": "**Question 7**\n\n(a) Answer: 54  \nMarks: 1  \nGuidance: 1 AO3.1a  \n\n(b) Answer: 5  \nMarks: 2  \nGuidance: 1 AO1.1, 1 AO3.1a  \nM1 for a complete factor tree or equivalent.",
+        "num-marks": 3
+    },
+    "8": {
+        "text": "**Question 8**\n\n(a) **Answer:** 8\n\n**Marking Guidelines:**\n\n- 3 Marks total\n- 2 AO1.3a\n- 1 AO3.1b\n\n**Mark Breakdown:**\n- M1: Awarded for dividing by 3 or 13\n- M1: Awarded for dividing by the remaining factor\n- M1: Awarded for multiplying 3 by 13\n- M1: Awarded for dividing by 39 or listing multiples of 39\n\n(b) **Answer:** Any three valid answers (e.g., 2, 7, 23)\n\n**Marking Guidelines:**\n\n- 3 Marks total\n- B1 for each valid answer\n- 1 AO1.1\n- 2 AO3.1a\n\n**Mark Breakdown:**\n- B1: Awarded for each valid answer e.g., 2, 7, 23\n- If the candidate scores 0, instead award SC1 for at least 3 primes and 3 squares seen",
+        "num-marks": 6
+    },
+    "9": {
+        "text": "**Question 9**\n\n(a)  \n- Prism information: \n  - **Triangular (3 sides)**: \n    - Number of faces: 5 \n    - Number of edges: 9 \n    - Number of vertices: 6 \n\n  - **Rectangular (4 sides)**: \n    - Number of faces: 6 \n    - Number of edges: 12 \n    - Number of vertices: 8 \n\n  - **Pentagonal (5 sides)**: \n    - Number of faces: 7 \n    - Number of edges: 15 \n    - Number of vertices: 10 \n\n  - **Hexagonal (6 sides)**: \n    - Number of faces: 8 \n    - Number of edges: 18 \n    - Number of vertices: 12 \n\n(b)  \n- Edges of the various prisms: 300 \n- Vertices of the various prisms: 200 \n  - Marks for 2 AO2.1a\n\n(c) \n- Formula: \\( F = N + 2 \\) or equivalent\n  - Marks: \n    - 1 AO2.3a \n    - 1 AO2.3b \n    - B1 for \\( N + 2 \\) (without a subject). Condone for B1 a correct word formula.",
+        "num-marks": 7,
+        "images": [
+            "page6.png"
+        ]
+    },
+    "10": {
+        "text": "**Question 10**\n\n(a) \n\n(i) Answer: Positive correlation  \n- Marks: 1   \n- Guidelines: 1 AO1.1 - Condone \u2018positive\u2019 or correct description, e.g., \u2018As the temperature increases, more ice creams are sold\u2019.\n\n(ii) Answer: Correct reason, e.g., \u2018He sold far more ice creams than you would expect him to for a 20\u00b0C day\u2019.  \n- Marks: 1   \n- Guidelines: 1 AO2.3a.\n\n(b) \n\n(i) Answer: 75-95  \n- Marks: 1   \n- Guidelines: 1 AO1.3a.\n\n(ii) Answer: 140-170  \n- Marks: 1   \n- Guidelines: 1 AO1.3a.\n\n(iii) Answer: The (b)(i) prediction is more reliable, as it is within the range of the given data.  \n- Marks: 2   \n- Guidelines: 1 AO2.1b, 1 AO2.4a.   \n- Partial marking: B1 for (b)(i) prediction identified with partial reason.\n\n(c) Answer: No, because there may be other factors involved.  \n- Marks: 2   \n- Guidelines: 1 AO2.5a, 1 AO3.4b.   \n- Partial marking: B1 for \u2018No\u2019, with partial reason.",
+        "num-marks": 8
+    },
+    "11": {
+        "text": "**Question 11 Answer and Marking Guidelines:**\n\n11 (a) Answer: \n- 45,000 \n\nMarks: 2  \n- [2 AO1.3a]\n\nGuidance: \n- M1 for 50,000 \u00d7 0.9 or 50,000 \u2013 5,000  \n\n11 (b) Answer: \n- Total value of goods sold in May was \u00a332,805, which is less than \u00a335,000\n\nMarks: 3  \n- [3 AO2.2]\n\nGuidance: \n- M2 for 50,000 (or 45,000) \u00d7 0.9 used three times (or two times) or decreasing by 10% three times  \n- Or M1 for 45,000 \u00d7 0.9 or 45,000 \u2013 4,500; Implied by 36,450 and 32,805  \n- Implied by 40,500  \n\n11 (c) Answer: \n- 8[%] with correct working  \n\nMarks: 5  \n- [3 AO1.3b, 2 AO3.1d]\n\nGuidance: \n- B4 for answer 108[%] or 1.08 or [0].08 with correct working  \n- or M3 for 1.2 \u00d7 [0].9 or for (100,000 \u00d7 1.2 \u00d7 0.9) \u2013 100,000 \n- or M2 for 1.2 and [0].9  \n- or M1 for 1.2 or [0].9 \n- If 0 or 1 scored, instead award SC2 for answer 8[%] with no working or insufficient working  \n- If 0 scored, instead award SC1 for 108[%] or 1.08 or [0].08 with no working or insufficient working  \n\n*\"Correct working\" requires evidence of at least M3 or an alternative convincing approach*  \n\nThroughout, percentage calculations may be performed in stages, e.g., 120% by adding 20%\n- e.g., 100,000 \u00d7 1.2 \u00d7 [0].9  \n- or 120,000 \u00d7 [0].9  \n- e.g., 100,000 \u00d7 1.2 implied by 120,000",
+        "num-marks": 10
+    },
+    "12": {
+        "text": "12 (a) Answer: 6\n\nMarks: 2  \nPart marks and guidance:  \n- 2 AO1.3a  \n- M1 for 3x = 18 \n\n12 (b) Answer: -3, -5\n\nMarks: 3  \nPart marks and guidance:  \n- 3 AO1.3a  \n- M2 for (x + 3)(x + 5) seen or implied in table  \n- Or M1 for (x \u00b1 3)(x \u00b1 5) seen or pair of factors giving two correct terms seen or implied in table  \n- And B1 for correct solutions FT (follow through) their quadratic factors",
+        "num-marks": 5
+    },
+    "13": {
+        "text": "**13 (a) Answer:**\n\n- 24 cm by 16 cm\n- 12 cm by 8 cm\n\n**Marks:**\n\n- 1 mark awarded for each correct dimension pair (total of 2 marks).\n\n**Guidance:**\n\n- B1 mark is awarded for each correct dimension pair. Answers may be indicated on the list provided in the question.",
+        "num-marks": 2
+    },
+    "14": {
+        "text": "**Question 14:**\n\n(a) **Answer:**\n\n\\[ p = 5, \\quad q = -5 \\]\n\n**Marking Guidelines:**\n\n- Total Marks: 2\n- 1 AO1.2\n- 1 AO1.3a\n  - B1 for each correct value of \\(p\\) and \\(q\\).\n\n(b) **Answer:**\n\n\\[ c = 3a \\]\n\\[ d = a + b \\]\n\\[ e = a - b \\]\n\n**Marking Guidelines:**\n  \n- Total Marks: 3\n- 3 AO1.3a\n  - B1 for each correct equation \\(c\\), \\(d\\), and \\(e\\).",
+        "num-marks": 5
+    },
+    "15": {
+        "text": "**Question 15**\n\n(a) **Correct Answer:**  \n800  \n\n**Marks:** 2  \n**Part marks and guidance:**  \n1 AO1.3b, 1 AO3.1c  \n- M1 for unitary work (e.g., 1 person does 200 letters in 2 hours)\n\n(b) **Correct Answer:**  \n30 minutes or equivalent  \n\n**Marks:** 4  \n**Part marks and guidance:**  \n2 AO2.1a, 2 AO3.1d  \n- M1 for 1 person does 100 letters in 1 hour  \n- M1 for 5 people do 1000 letters in 2 hours  \n- M1 for 4 people do 1000 letters in 2.5 hours  \n\n*Note: Follow-through from their rate in (a) throughout*\n\n(c) **Correct Answer:**  \nCorrect comment on the reasonableness of her assumption, e.g., \"She has assumed that 'all day' means 'for 24 hours', but it is not reasonable for them to work without a break.\"  \nCorrect comment on the effect it will have on the answer, e.g., \"They can\u2019t work at that rate for that long, so her answer is an over-estimate.\"\n\n**Marks:** 2  \n**Part marks and guidance:**  \n1 AO3.4a, 1 AO3.5  \n- B1 for each correct comment",
+        "num-marks": 8
+    },
+    "16": {
+        "text": "**Question 16:**\n\n(a) **Outcomes not equally likely**  \n- 1 mark  \n- 1 AO3.4b\n\n(b) **Larger number of trials**  \n- 1 mark  \n- 1 AO3.4a\n\n(c) **0.09 \u2013 0.16**  \n- 2 marks  \n- 1 AO1.3a, 1 AO2.1b  \n- M1 for \\(\\frac{150}{248}\\) or 0.352 or any reasonable estimate (FT their (b))",
+        "num-marks": 4
+    },
+    "17": {
+        "text": "**17 (a) Answer**  \n10, 16, 26  \n- 1 mark  \n- 1 AO1.3a  \n\n**17 (b) Answer**  \n8, 13, 21  \n- 2 marks\n- 1 AO1.3a  \n- 1 AO3.1a  \n- M1 for one correct subtraction of two boxes  \n\n**17 (c) Answer**  \na + b, a + 2b, 2a + 3b  \n- 2 marks  \n- 2 AO1.3a  \n- M1 for two expressions correct  \n\n**17 (d) Answer**  \n15, 21, 36  \n- 3 marks  \n- 1 AO1.3a  \n- 2 AO2.1a  \n- M1 for their \u20182a + 3b\u2019 = 57  \n- M1 for substituting a = 6 into their final expression and solving for b",
+        "num-marks": 8
+    },
+    "18": {
+        "text": "18 (a) The first error is in step 2 \u2013 3x \u2013 2x = \u2013 5x, not \u2013 x as given.  \nMarks: 2 \nPart marks and guidance: \n- 2 AO2.5a \n- B1 for identifying step 2 \n- B1 for explaining the error  \n\n(b) [x^2 + 4x + x + 4 = x^2 \u2013 3x \u2013 2x + 6]  \nx^2 + 5x + 4 = x^2 \u2013 5x + 6  \n5x + 4 = \u2013 5x + 6  \n10x + 4 = 6  \n10x = 2  \nx = 1/5 \nMarks: 2 \nPart marks and guidance: \n- 2 AO1.3a \n- M1 for an attempt to correct the solution in line with their answer to (a)",
+        "num-marks": 4
+    },
+    "19": {
+        "text": "**19. Answer:**\n\n\\[\n2a + \\frac{1}{4}\n\\]\n\n**Marking Guidelines:**\n\n- 1 mark for AO1.3b\n- 2 marks for AO3.1b\n- 1 mark for AO3.2\n\n**Guide to Mark Allocation:**\n\n- M1 for constructing the expression: \\(a + 2 + 3a + 3 + 4a - 1\\)\n- M1 for collecting terms\n- M1 for dividing their \\( '8a + 4' \\) by 4",
+        "num-marks": 4
+    }
+}

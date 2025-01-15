@@ -1,0 +1,114 @@
+{
+    "1": {
+        "text": "1 (a) Write 40 : 2000 as a ratio in its simplest form.\n\n(a) ............. : ............. [2]\n\n(b) Two people share \u00a3350 in the ratio 1 : 6.\n\nCalculate each share.\n\n(b) \u00a3 ............. \u00a3 ............. [2]\n\n(c) Find 20% of 450.\n\n(c) .............................. [2]",
+        "text-only": true
+    },
+    "2": {
+        "text": "2. Write these in order, smallest first.\n\n0.34, \\(\\frac{1}{3}\\), 3.5%\n\n................. ................. ................. [2]\n\nsmallest",
+        "text-only": true
+    },
+    "3": {
+        "text": "3. Colin drinks \\(\\frac{3}{8}\\) of a litre of milk each day. \n\nMilk costs 89p for a 2-litre carton and 49p for a 1-litre carton. \n\nWhat is the smallest amount that Colin would have to spend to buy milk for one week? \n\nShow your working.\n\n\u00a3 ..................................... [3]",
+        "text-only": true
+    },
+    "4": {
+        "text": "4. A gardener is planting bulbs in a garden. \n\n(a) The gardener has 5 packets of tulip bulbs. Each packet contains 8 bulbs. Calculate the total number of tulip bulbs the gardener has.\n\n(b) In addition to the tulip bulbs, the gardener also plants 12 daffodil bulbs. What is the total number of bulbs planted by the gardener?\n\n(c) The gardener plants the bulbs in rows. Each row contains 10 bulbs. Calculate how many complete rows of bulbs the gardener can plant with the total number of bulbs. \n\n(d) After planting the complete rows, how many bulbs are left unplanted?",
+        "text-only": true,
+        "images": [
+            "page3.png"
+        ]
+    },
+    "5": {
+        "text": "5. This shape is made from three congruent right-angled triangles.\n\nFind the total area of the shape.\n\n.................................. cm\u00b2 [3]",
+        "text-only": false,
+        "images": [
+            "page4.png"
+        ]
+    },
+    "6": {
+        "text": "6. Here is a Venn diagram.\n\n30 students are asked if they have a dog or a cat.\n\n- 21 have a dog.\n- 16 have a cat.\n- 8 have a dog, but not a cat.\n\nComplete the Venn diagram. [3]",
+        "text-only": false,
+        "images": [
+            "page4.png"
+        ]
+    },
+    "7": {
+        "text": "7. \n\n(a) Write numbers in the boxes below to make the statement true.\n\n15 \u00d7 20 = 5 \u00d7 _____ = 6 \u00d7 _____\n\n[2]\n\n(b) Angus thinks of a number.  \nIf he cubes his number and then adds 9, he gets 17. \n\nWhat number is he thinking of?\n\n(b) ............................................ [2]",
+        "text-only": true
+    },
+    "8": {
+        "text": "8. The diagram shows a triangle.\n\nFind the value of x.  \nGive a reason for each step of your working.\n\nx = ............................................ \u00b0 [3]",
+        "text-only": false,
+        "images": [
+            "page5.png"
+        ]
+    },
+    "9": {
+        "text": "9. The pictogram shows how some passengers spent most of their time on a flight.\n\nKey:  represents 40 people\n\n(a) How many passengers spent most of their time playing games?  \n(a) ............................................  [1] \n\n(b) How many more passengers spent most of their time watching films than reading?  \n(b) ............................................ [1] \n\n(c) There were 360 passengers on the plane. Complete the pictogram for listening to music. [3]",
+        "text-only": false,
+        "images": [
+            "page6.png"
+        ]
+    },
+    "10": {
+        "text": "10 (a) Insert one of <, >, or = to make each statement true.\n\n(i) -5 ............... -7 [1]\n\n(ii) 0.09 ............... 0.8 [1]\n\n(iii) 62 ............... 12 [1]\n\n(b) Work out the value of \\(5^2 \\times 10^2\\).\n\n(b) ............................................ [2]",
+        "text-only": true
+    },
+    "11": {
+        "text": "11. Show that \\(4(a + 3) - 3(a - 2) = a + 18\\). [2]",
+        "text-only": true
+    },
+    "12": {
+        "text": "12. Here are the first three patterns in a sequence.\n\n(a) Draw Pattern 4 in this sequence on the grid below.\n\n[2]\n\n(b) Pattern 3 has 9 dotted squares and 12 black squares. How many dotted squares will there be in Pattern 8?\n\n(b) ..............................  [2]\n\n(c) Write an expression for the number of black squares in the nth pattern.\n\n(c) ..............................  [2]\n\n(d) Sally looks at the patterns. She says:\n\n\"If the pattern number is odd, the total number of squares will be odd. If it is even, the total number of squares will be even.\"\n\nExplain clearly why Sally is right for all patterns in the sequence.\n\n...................................................................................................................................................\n\n...................................................................................................................................................\n\n...................................................................................................................................................\n\n...................................................................................................................................................\n\n.................. ............................................................................................................................. .. [6]",
+        "text-only": true,
+        "images": [
+            "page8.png"
+        ]
+    },
+    "13": {
+        "text": "13. (a) (i) Sketch a graph on the axes below that shows that \\( y \\) is directly proportional to \\( x \\).\n\n[2]\n\n(ii) Sketch a graph on the axes below that shows \\( y = x^3 \\).\n\n[2]\n\n(b) It is possible to draw many rectangles that have an area of 24 cm\\(^2\\).\nHere are two of them.\n\n(i) Plot the dimensions of these two rectangles on the grid below. \n\n[1]\n\n(ii) Complete the graph to show the relationship between length and width for rectangles with an area of 24 cm\\(^2\\).\n\n[3]",
+        "text-only": false,
+        "images": [
+            "page10.png",
+            "page11.png"
+        ]
+    },
+    "14": {
+        "text": "14 The value of a car \\( V \\) is given by  \n\\[ V = 20,000 \\times 0.9^t \\]\n\nwhere \\( t \\) is the age of the car in complete years.  \n\n(a) Write down the value of \\( V \\) when \\( t = 0 \\).\n\n(a) \u00a3 .............................. [1]  \n\n(b) What is the value of \\( V \\) when \\( t = 3 \\)?\n\n(b) \u00a3 .............................. [2]  \n\n(c) After how many complete years will the car\u2019s value drop below \u00a310,000?\n\n(c) .............................. [2]",
+        "text-only": true
+    },
+    "15": {
+        "text": "15. Kieran, Jermaine, and Chris play football.\n\n- Kieran has scored 8 more goals than Chris.\n- Jermaine has scored 5 more goals than Kieran.\n- Altogether they have scored 72 goals.\n\nHow many goals did they each score?\n\nYou must show your working.\n\n\nKieran: ............................\n\nJermaine: ............................\n\nChris: ............................\n\n[5]",
+        "text-only": true
+    },
+    "16": {
+        "text": "**16.** A neighbour lives in a house 200 m from P and 300 m from Q. Show that the neighbour's house is on the line joining P and Q.  [3]",
+        "text-only": false,
+        "images": [
+            "page14.png"
+        ]
+    },
+    "17": {
+        "text": "17. Six equations are shown below, each labelled with a letter.\n\nChoose the correct letters to make each statement true.\n\n(a) Equation B and equation ............. are equivalent. [1]\n\n(b) Equation ............. and equation ............. each show x is inversely proportional to y. [2]",
+        "text-only": true
+    },
+    "18": {
+        "text": "Jo went for a bike ride one evening. She travelled \\( x \\) kilometres in 5 hours.\n\nShow that her average speed can be written as \\( 18x \\, \\text{m/s} \\). [4]",
+        "text-only": false
+    },
+    "19": {
+        "text": "19. Peter makes a large amount of pink paint by mixing red and white paint in the ratio 2:3.\n\n- Red paint costs \u00a380 per 10 litres.\n- White paint costs \u00a35 per 10 litres.\n\nPeter sells his pink paint in 10-litre tins for \u00a360 per tin.\n\nCalculate how much profit he makes for each tin he sells. You must show your working.\n\n\u00a3 ............................................  [5]",
+        "text-only": true
+    },
+    "20": {
+        "text": "20. The diagram shows a right-angled triangle.\n\nCalculate \\( x \\).\n\n_________________ cm [3]",
+        "text-only": false,
+        "images": [
+            "page18.png"
+        ]
+    },
+    "21": {
+        "text": "**21. Louise travels to work and home again by train.**\n\nThe probability that her train to work is late is 0.7.  \nThe probability that her train home is late is 0.4.\n\nWhat is the probability that at least one of her trains is late?\n\n............................................ [4]",
+        "text-only": true
+    }
+}
