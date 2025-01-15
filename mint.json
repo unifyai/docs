@@ -65,28 +65,22 @@
                             "group": "Logging",
                             "pages": [
                                 "interfaces/logging/traffic/traffic",
-                                "interfaces/logging/errors/trends"
-                            ]
-                        },
-                        {
-                            "group": "Debugging",
-                            "pages": [
-                                "interfaces/debugging/traces/traces",
-                                "interfaces/debugging/tests/tests"
+                                "interfaces/logging/trends/trends"
                             ]
                         },
                         {
                             "group": "Evaluating",
                             "pages": [
-                                "interfaces/evaluating/teaching_assistant/teaching_assistant",
-                                "interfaces/evaluating/talk_to_your_crm/talk_to_your_crm"
+                                "interfaces/evaluating/marking/marking",
+                                "interfaces/evaluating/answering/answering",
+                                "interfaces/evaluating/asking/asking"
                             ]
                         },
                         {
-                            "group": "Interactive",
+                            "group": "Debugging",
                             "pages": [
-                                "interfaces/interactive/labelling/labelling",
-                                "interfaces/interactive/optimizing/optimizing"
+                                "interfaces/debugging/single_traces/single_traces",
+                                "interfaces/debugging/multiple_traces/multiple_traces"
                             ]
                         }
                     ]
