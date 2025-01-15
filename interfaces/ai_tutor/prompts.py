@@ -178,7 +178,7 @@ Given the following question, which is worth a total of {num_marks} marks:
 
 And also given the following known correct answer and marking scheme:
 
-{answer}
+{markscheme}
 
 Provide three *different* answers to this question which should achieve a total of
 {target} marks if marked correctly. Please try to make each of your three answers as
