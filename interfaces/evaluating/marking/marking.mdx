@@ -1,3 +1,48 @@
 ---
 title: 'Marking'
 ---
+
+So, let's recap the requirements of our app:
+
+1. test the user with past exam questions, which then must be marked
+2. answer *any* question the user asks about their subject
+3. ask the user *new* questions, which must also be marked
+
+To begin with, let's focus on the first of these requirements.
+
+> test the user with past exam questions, which then must be marked
+
+Let's assume we have a ground truth set of questions, answers and the correct
+number of marks to award, which expert human markers have created manually.
+
+These ground truth examples can be downloaded from
+[here](https://github.com/unifyai/unify-docs/blob/main/interfaces/ai_tutor/data/data.json).
+
+Let's first download this:
+
+```python
+import os
+import wget
+import json
+fname = "data.json"
+if not os.path.exists(fname):
+    wget.download("https://raw.githubusercontent.com/unifyai/unify-docs/refs/heads/main/interfaces/ai_tutor/data/data.json")
+with open(fname, "r") as f:
+    data = json.load(f)
+```
+
+Then we can save it as a dataset in our Unify account:
+
+```python
+import unify
+with unify.Context("Datasets"):
+    with unify.Context("Test Set"):
+        unify.log([{"question": k, "scores_and_answers": v} for k, v in data.items()])
+```
+
+Let's create a new table in our interface, and then set the context as `"Test Set"`
+so we can take a deeper look at our dataset.
+
+![](demo.gif)
+
+Great,
