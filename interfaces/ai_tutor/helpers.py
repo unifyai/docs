@@ -47,6 +47,7 @@ def load_questions_and_answers():
                 questions_and_answers[question.get("text")] = {
                     "subject": subject,
                     "paper_id": paper_id,
+                    "question_num": question_num,
                     "answer": answer,
                     "marks": marks,
                     "question_imgs": question_imgs,
