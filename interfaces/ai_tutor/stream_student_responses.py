@@ -1,5 +1,4 @@
 import os
-import csv
 import json
 import random
 
@@ -9,10 +8,9 @@ from helpers import load_questions_and_answers, encode_image
 
 def load_data():
     this_dir = os.path.dirname(os.path.realpath(__file__))
-    student_info_path = os.path.join(this_dir, "student_info.csv")
+    student_info_path = os.path.join(this_dir, "students.json")
     with open(student_info_path, "r") as f:
-        reader = csv.reader(f)
-        student_data = list(reader)[1:]
+        student_data = json.load(f)
     data_dir = os.path.join(this_dir, "data")
     data_paths = [os.path.join(data_dir, fname) for fname in os.listdir(data_dir)]
     data = dict()
@@ -28,7 +26,8 @@ def main():
     questions = list(data.keys())
     with unify.Context("QnATraffic"):
         while True:
-            first, last, email = random.choice(student_data)
+            print("logged")
+            student = random.choice(student_data)
             question = random.choice(questions)
             provided_answers = random.choice(list(data[question].values()))
             provided_answer = random.choice(provided_answers)
@@ -39,20 +38,28 @@ def main():
             markscheme_imgs = qna_dct.get("markscheme_imgs")
             if markscheme_imgs:
                 markscheme_imgs = [encode_image(fpath) for fpath in markscheme_imgs]
-            unify.log(
-                first_name=first,
-                last_name=last,
-                email=email,
-                subject=None,
-                paper_id=None,
-                question_num=None,
-                question=question,
-                question_imgs=question_imgs[0] if question_imgs else None,
-                provided_answer=provided_answer,
-                markscheme=qna_dct.get("answer"),
-                markscheme_imgs=markscheme_imgs[0] if markscheme_imgs else None,
-                available_marks=qna_dct.get("marks"),
-            )
+            with unify.Log():
+                with unify.Context("student"):
+                    unify.log(
+                        first_name=student["first_name"],
+                        last_name=student["last_name"],
+                        email=student["email"],
+                        gender=student["gender"],
+                        date_of_birth=student["date_of_birth"],
+                        subject=None,
+                    )
+                with unify.Context("question"):
+                    unify.log(
+                        subject=qna_dct["subject"],
+                        paper_id=qna_dct["paper_id"],
+                        question_num=qna_dct["question_num"],
+                        question=question,
+                        question_imgs=question_imgs[0] if question_imgs else None,
+                        provided_answer=provided_answer,
+                        markscheme=qna_dct["answer"],
+                        markscheme_imgs=markscheme_imgs[0] if markscheme_imgs else None,
+                        available_marks=qna_dct["marks"],
+                    )
 
 
 if __name__ == "__main__":
