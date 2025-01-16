@@ -16,7 +16,8 @@ mode = "usage" if args.usage else "labelled"
 
 
 def generate_question(
-        question, markscheme, marks, subject, paper_id, question_num, idx
+        question, markscheme, available_marks, subject, paper_id, question_num,
+        question_imgs, markscheme_imgs, idx
 ):
     data = dict()
     data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
@@ -24,7 +25,7 @@ def generate_question(
     data_path = os.path.join(data_dir, fname)
     generation_client = unify.Unify("o1@openai", cache=True)
     targets = dict()
-    for target in range(marks + 1):
+    for target in range(available_marks + 1):
         response = generation_client.generate(
             system_message=GENERATE_RESPONSE_PROMPT.replace(
                 "{target}",
@@ -32,7 +33,7 @@ def generate_question(
             )
             .replace(
                 "{num_marks}",
-                str(marks),
+                str(available_marks),
             )
             .replace(
                 "{question}",
@@ -48,6 +49,9 @@ def generate_question(
     targets["paper_id"] = paper_id
     targets["question_num"] = question_num
     targets["markscheme"] = markscheme
+    targets["available_marks"] = available_marks
+    targets["question_imgs"] = question_imgs
+    targets["markscheme_imgs"] = markscheme_imgs
     if args.usage:
         sample_answers = list()
         target_keys = list(targets.keys())
@@ -88,14 +92,16 @@ def main():
     num_questions = len(questions)
     assert num_questions == len(ans_n_marks)
     markschemes = [dct["answer"] for dct in ans_n_marks]
-    marks = [dct["marks"] for dct in ans_n_marks]
+    available_marks = [dct["marks"] for dct in ans_n_marks]
     subjects = [dct["subject"] for dct in ans_n_marks]
     paper_ids = [dct["paper_id"] for dct in ans_n_marks]
     question_nums = [dct["question_num"] for dct in ans_n_marks]
+    question_imgs = [dct["question_imgs"] for dct in ans_n_marks]
+    markscheme_imgs = [dct["markscheme_imgs"] for dct in ans_n_marks]
     idxs = range(num_questions)
     unify.map(
-        generate_question, questions, markschemes, marks, subjects, paper_ids,
-        question_nums, idxs
+        generate_question, questions, markschemes, available_marks, subjects, paper_ids,
+        question_nums, question_imgs, markscheme_imgs, idxs
     )
     combine_data()
 
