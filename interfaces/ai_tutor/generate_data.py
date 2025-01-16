@@ -51,7 +51,7 @@ def generate_question(question, markscheme, marks, subject, paper_id, idx):
         with open(data_path, "w+") as f:
             f.write(json.dumps(data, indent=4))
     else:
-        pass
+        breakpoint()
         # ToDo: implement
 
 
@@ -59,7 +59,10 @@ def combine_data():
     data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
     if os.path.exists(os.path.join(data_dir, f"{mode}_data.json")):
         os.remove(os.path.join(data_dir, f"{mode}_data.json"))
-    data_paths = [os.path.join(data_dir, fname) for fname in os.listdir(data_dir)]
+    data_paths = [
+        os.path.join(data_dir, fname) for fname in os.listdir(data_dir)
+        if fname.startswith(f"{mode}_data_")
+    ]
     data = {}
     for data_path in data_paths:
         with open(data_path, "r") as f:
