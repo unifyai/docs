@@ -7,12 +7,16 @@ import base64
 def load_questions_and_answers():
     questions_and_answers = dict()
     pdfs_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "pdfs")
-    for papers_dir in os.listdir(pdfs_dir):
-        if papers_dir.endswith(".pdf"):
+    for subject_dir in os.listdir(pdfs_dir):
+        if subject_dir.endswith(".pdf"):
             continue
-        papers_dir_abs = os.path.join(pdfs_dir, papers_dir)
-        for paper_dir in os.listdir(papers_dir_abs):
-            paper_dir_abs = os.path.join(papers_dir_abs, paper_dir)
+        subject = subject_dir.replace("_", " ")
+        subject_dir_abs = os.path.join(pdfs_dir, subject_dir)
+        for paper_dir in os.listdir(subject_dir_abs):
+            if paper_dir.endswith(".pdf"):
+                continue
+            paper_id = paper_dir.replace("_", " ")
+            paper_dir_abs = os.path.join(subject_dir_abs, paper_dir)
             with open(os.path.join(paper_dir_abs, "markscheme/parsed.json")) as f:
                 markscheme = json.load(f)
             with open(os.path.join(paper_dir_abs, "paper/parsed.json")) as f:
@@ -41,12 +45,14 @@ def load_questions_and_answers():
                         for fname in markscheme_imgs
                     ]
                 questions_and_answers[question.get("text")] = {
+                    "subject": subject,
+                    "paper_id": paper_id,
                     "answer": answer,
                     "marks": marks,
                     "question_imgs": question_imgs,
                     "markscheme_imgs": markscheme_imgs,
                 }
-    return questions_and_answers
+        return questions_and_answers
 
 
 def encode_image(image_path):
