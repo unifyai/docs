@@ -52,15 +52,6 @@ def generate_question(
     targets["available_marks"] = available_marks
     targets["question_imgs"] = question_imgs
     targets["markscheme_imgs"] = markscheme_imgs
-    if args.usage:
-        sample_answers = list()
-        target_keys = list(targets.keys())
-        for mark in target_keys:
-            if not isinstance(mark, int):
-                continue
-            sample_answers += targets[mark]
-            del targets[mark]
-        targets["sample_answers"] = sample_answers
     # incremental file writing
     data[question] = targets
     with open(data_path, "w+") as f:
