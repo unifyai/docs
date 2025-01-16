@@ -45,14 +45,19 @@ def generate_question(question, markscheme, marks, subject, paper_id, idx):
     targets["subject"] = subject
     targets["paper_id"] = paper_id
     targets["markscheme"] = markscheme
-    data[question] = targets
+    if args.usage:
+        sample_answers = list()
+        target_keys = list(targets.keys())
+        for mark in target_keys:
+            if not isinstance(mark, int):
+                continue
+            sample_answers += targets[mark]
+            del targets[mark]
+        targets["sample_answers"] = sample_answers
     # incremental file writing
-    if args.labelled:
-        with open(data_path, "w+") as f:
-            f.write(json.dumps(data, indent=4))
-    else:
-        breakpoint()
-        # ToDo: implement
+    data[question] = targets
+    with open(data_path, "w+") as f:
+        f.write(json.dumps(data, indent=4))
 
 
 def combine_data():
