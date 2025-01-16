@@ -15,7 +15,9 @@ args = parser.parse_args()
 mode = "usage" if args.usage else "labelled"
 
 
-def generate_question(question, markscheme, marks, subject, paper_id, idx):
+def generate_question(
+        question, markscheme, marks, subject, paper_id, question_num, idx
+):
     data = dict()
     data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
     fname = f"{mode}_data_{idx}"
@@ -44,6 +46,7 @@ def generate_question(question, markscheme, marks, subject, paper_id, idx):
         targets[target] = [ans for ans in response.split("Answer:")[1:]]
     targets["subject"] = subject
     targets["paper_id"] = paper_id
+    targets["question_num"] = question_num
     targets["markscheme"] = markscheme
     if args.usage:
         sample_answers = list()
@@ -88,9 +91,11 @@ def main():
     marks = [dct["marks"] for dct in ans_n_marks]
     subjects = [dct["subject"] for dct in ans_n_marks]
     paper_ids = [dct["paper_id"] for dct in ans_n_marks]
+    question_nums = [dct["question_num"] for dct in ans_n_marks]
     idxs = range(num_questions)
     unify.map(
-        generate_question, questions, markschemes, marks, subjects, paper_ids, idxs
+        generate_question, questions, markschemes, marks, subjects, paper_ids,
+        question_nums, idxs
     )
     combine_data()
 
