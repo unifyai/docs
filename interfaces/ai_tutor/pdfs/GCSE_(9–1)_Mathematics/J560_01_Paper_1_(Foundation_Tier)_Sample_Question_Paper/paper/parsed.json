@@ -20,14 +20,14 @@
     },
     "5": {
         "text": "5. This shape is made from three congruent right-angled triangles.\n\nFind the total area of the shape.\n\n.................................. cm\u00b2 [3]",
-        "text-only": false,
+        "text-only": true,
         "images": [
             "page4.png"
         ]
     },
     "6": {
         "text": "6. Here is a Venn diagram.\n\n30 students are asked if they have a dog or a cat.\n\n- 21 have a dog.\n- 16 have a cat.\n- 8 have a dog, but not a cat.\n\nComplete the Venn diagram. [3]",
-        "text-only": false,
+        "text-only": true,
         "images": [
             "page4.png"
         ]
@@ -38,14 +38,14 @@
     },
     "8": {
         "text": "8. The diagram shows a triangle.\n\nFind the value of x.  \nGive a reason for each step of your working.\n\nx = ............................................ \u00b0 [3]",
-        "text-only": false,
+        "text-only": true,
         "images": [
             "page5.png"
         ]
     },
     "9": {
         "text": "9. The pictogram shows how some passengers spent most of their time on a flight.\n\nKey:  represents 40 people\n\n(a) How many passengers spent most of their time playing games?  \n(a) ............................................  [1] \n\n(b) How many more passengers spent most of their time watching films than reading?  \n(b) ............................................ [1] \n\n(c) There were 360 passengers on the plane. Complete the pictogram for listening to music. [3]",
-        "text-only": false,
+        "text-only": true,
         "images": [
             "page6.png"
         ]
@@ -94,7 +94,7 @@
     },
     "18": {
         "text": "Jo went for a bike ride one evening. She travelled \\( x \\) kilometres in 5 hours.\n\nShow that her average speed can be written as \\( 18x \\, \\text{m/s} \\). [4]",
-        "text-only": false
+        "text-only": true
     },
     "19": {
         "text": "19. Peter makes a large amount of pink paint by mixing red and white paint in the ratio 2:3.\n\n- Red paint costs \u00a380 per 10 litres.\n- White paint costs \u00a35 per 10 litres.\n\nPeter sells his pink paint in 10-litre tins for \u00a360 per tin.\n\nCalculate how much profit he makes for each tin he sells. You must show your working.\n\n\u00a3 ............................................  [5]",
@@ -102,7 +102,7 @@
     },
     "20": {
         "text": "20. The diagram shows a right-angled triangle.\n\nCalculate \\( x \\).\n\n_________________ cm [3]",
-        "text-only": false,
+        "text-only": true,
         "images": [
             "page18.png"
         ]
