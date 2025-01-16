@@ -96,8 +96,16 @@ def main():
     subjects = [dct["subject"] for dct in ans_n_marks]
     paper_ids = [dct["paper_id"] for dct in ans_n_marks]
     question_nums = [dct["question_num"] for dct in ans_n_marks]
-    question_imgs = [dct["question_imgs"] for dct in ans_n_marks]
-    markscheme_imgs = [dct["markscheme_imgs"] for dct in ans_n_marks]
+    question_imgs = [
+        [fp.split("/")[-1] for fp in dct["question_imgs"]]
+        if dct["question_imgs"] else None
+        for dct in ans_n_marks
+    ]
+    markscheme_imgs = [
+        [fp.split("/")[-1] for fp in dct["markscheme_imgs"]]
+        if dct["markscheme_imgs"] else None
+        for dct in ans_n_marks
+    ]
     idxs = range(num_questions)
     unify.map(
         generate_question, questions, markschemes, available_marks, subjects, paper_ids,
