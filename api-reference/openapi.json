@@ -1565,7 +1565,7 @@
                     "Endpoint Metrics"
                 ],
                 "summary": "Get Endpoint Details",
-                "description": "Extracts cost and context window data for the provided endpoint .\n\nThe `endpoint` is the endpoint name in the form <model>@<provider>.",
+                "description": "Extracts cost and context window data for the provided endpoint .\n\nThe `endpoint` is the endpoint name in the form \\<model\\>@\\<provider\\>.",
                 "operationId": "get_endpoint_details_v0_endpoint_details_get",
                 "security": [
                     {
@@ -2256,7 +2256,7 @@
                     "Datasets"
                 ],
                 "summary": "Create Dataset",
-                "description": "Create a new dataset.\nTo create a dataset for a specific project, prefix it's name with <project_name>",
+                "description": "Create a new dataset.\nTo create a dataset for a specific project, prefix it's name with \\<project_name\\>/.",
                 "operationId": "create_dataset_v0_dataset_post",
                 "requestBody": {
                     "content": {
@@ -2892,7 +2892,7 @@
                     "Logs"
                 ],
                 "summary": "Create Derived Entry",
-                "description": "Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.\nEagerly computes each derived value and stores it in DerivedLog.value.",
+                "description": "Updates multiple logs with the provided entries. Each entry will be either added\nor overridden in the specified logs.\n\nA dictionary of \"explicit_types\" can be passed as part of the `entries`.\nIf present, it will override the inferred type of any matching key in all logs.",
                 "operationId": "create_derived_entry_v0_log_derived_put",
                 "requestBody": {
                     "content": {
@@ -2909,7 +2909,20 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {},
+                                "example": {
+                                    "info": "Log created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project not found."
+                                }
                             }
                         }
                     },
@@ -4648,8 +4661,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {

@@ -2,8 +2,11 @@
 title: 'Create Derived Entry'
 api: 'PUT /v0/log/derived'
 ---
-Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.
-Eagerly computes each derived value and stores it in DerivedLog.value.
+Updates multiple logs with the provided entries. Each entry will be either added
+or overridden in the specified logs.
+
+A dictionary of "explicit_types" can be passed as part of the `entries`.
+If present, it will override the inferred type of any matching key in all logs.
 
 #### Authorizations
 
@@ -71,7 +74,15 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{}
+{
+    "info": "Log created successfully!"
+}
+```
+
+```json 404
+{
+    "detail": "Project not found."
+}
 ```
 
 ```json 422
