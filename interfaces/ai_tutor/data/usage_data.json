@@ -6,7 +6,7 @@
         "markscheme": "**Question 4**\n\n**Answer**\n\n(a)  \n(i) 5  \n(ii) 1  \n(iii) Any number apart from 1, 3, or 5\n\n(b)  \n- Three different numbers only  \n- 6 appears most  \n- More even numbers than odd  \n\n**Marks:**  \n(a) (i) 1 AO1.1  \n(ii) 1 AO1.1  \n(iii) 1 AO1.1  \n(b) 3 AO2.1a\n\n**Guidance:**  \n- B1 for each of the three properties",
         "available_marks": 6,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page3.png"
+            "page3.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -133,10 +133,10 @@
         "markscheme": "**Question 12 Answer:**\n\n(a)  \n- **2 marks**  \n  - **1 AO2.1a**  \n  - **1 AO2.3b**  \n  - B1 for 4 \u00d7 4 dotted squares correct  \n  - B1 for 4 blocks of 4 black squares correct   \n\n(b)  \n- **64  \n  2 marks**  \n  - **1 AO1.3a**  \n  - **1 AO2.1a**  \n  - M1 for 8 \u00d7 8 or 8\u00b2 or 8 squared   \n\n(c)  \n- **4n  \n  2 marks**  \n  - **1 AO1.3a**  \n  - **1 AO2.3a**  \n  - M1 for 4, 8, 12 seen   \n\n(d)  \n- **Number of blacks is always even oe**  \n  - and reason\n   \n- **Number of dots alternates between odd and even oe**  \n  - and reason  \n\n- **even + even = even**  \n\n- **odd + even = odd**  \n\n  - B1 \n\n  - B1 \n\n- **2 AO2.2**  \n- **4 AO2.4b**\n\n  - Accept 4 times table or 4 is even  \n\n  - Accept any reason that has explanatory value e.g. odd\u00b2 = odd   \n\n  - If 0 scored, instead award:  \n    - B1 shows true for patterns 1, 2, and 3  \n    - B1 shows true for at least two more patterns",
         "available_marks": 11,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page8.png"
+            "page8.png"
         ],
         "markscheme_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/markscheme/imgs/page8.png"
+            "page8.png"
         ],
         "sample_answers": [
             "\n(a) I will shade everything black.  \n(b) 1000  \n(c) 7n \u2013 3  \n(d) It\u2019s obviously correct because patterns are always random.\n\n",
@@ -184,7 +184,7 @@
         "markscheme": "**Question 9 Answer and Marking Guidelines**\n\n**Answer:**\n\n(a) 100  \n(b) 10  \n(c) One and a quarter boxes drawn\n\n**Marking Guidelines:**\n\n- (a) 1 mark for the correct answer: 100  \n  - 1 AO2.1a\n\n- (b) 1 mark for the correct answer: 10  \n  - 1 AO2.1a\n\n- (c) Total 3 marks:  \n  - 1 AO1.3a  \n  - 1 AO2.3b  \n  - 1 AO3.1c  \n  - M2 for 50   \n  - or M1 for 310  \n  - or M1 FT from subtraction  \n",
         "available_marks": 5,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page6.png"
+            "page6.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -360,10 +360,10 @@
         "markscheme": "**Question 9**\n\n(a)  \n- Prism information: \n  - **Triangular (3 sides)**: \n    - Number of faces: 5 \n    - Number of edges: 9 \n    - Number of vertices: 6 \n\n  - **Rectangular (4 sides)**: \n    - Number of faces: 6 \n    - Number of edges: 12 \n    - Number of vertices: 8 \n\n  - **Pentagonal (5 sides)**: \n    - Number of faces: 7 \n    - Number of edges: 15 \n    - Number of vertices: 10 \n\n  - **Hexagonal (6 sides)**: \n    - Number of faces: 8 \n    - Number of edges: 18 \n    - Number of vertices: 12 \n\n(b)  \n- Edges of the various prisms: 300 \n- Vertices of the various prisms: 200 \n  - Marks for 2 AO2.1a\n\n(c) \n- Formula: \\( F = N + 2 \\) or equivalent\n  - Marks: \n    - 1 AO2.3a \n    - 1 AO2.3b \n    - B1 for \\( N + 2 \\) (without a subject). Condone for B1 a correct word formula.",
         "available_marks": 7,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_02_Paper_2_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page7.png"
+            "page7.png"
         ],
         "markscheme_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_02_Paper_2_(Foundation_Tier)_Sample_Question_Paper/markscheme/imgs/page6.png"
+            "page6.png"
         ],
         "sample_answers": [
             "\n(a) Rectangle (4 sides): 10 faces, 16 edges, 7 vertices  \n    Pentagon (5 sides): 11 faces, 17 edges, 9 vertices  \n    Hexagon (6 sides): 14 faces, 20 edges, 11 vertices  \n(b) edges = 10, vertices = 10  \n(c) F = 2N + 4  \n\n",
@@ -419,7 +419,7 @@
         "markscheme": "**Question 7**\n\n**(a) Answer:** 125  \n**Marks:** 1  \n**Marking Guidelines:** 1 AO1.2\n\n---\n\n**(b) Answer:** 20 with correct working  \n**Marks:** 4  \n\n**Marking Guidelines:**\n- **2 AO2.1a** \n- **2 AO2.4a**\n\n**Steps and Guidance:**\n\n1. **B1** for identifying angle PAB = 45.\n2. **B1** for identifying angle BAD = 90.\n3. **M1** for calculation: \\(360 - (\\text{their '125'} + \\text{their '90'} + 125)\\).\n\nIf 0 scored, instead award:\n\n- **SC1** for answer 20 with no working or insufficient working.\n- Correct working requires evidence of at least **M1**.\n\n**Alternative Method:**\n\n- **B1** for identifying angle PAB = 45.\n- **B1** for recognizing that angle BAC = 45.\n- **M1** for calculation: \\(180 - \\text{their 45} - 125\\).",
         "available_marks": 5,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_03_Paper_3_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page8.png"
+            "page8.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -528,10 +528,10 @@
         "markscheme": "**Question 6:**\n\n**Answer:**\n\\[3\\]\n\n**Marks:**\n3\n\n**Marking Guidelines:**\n- 3 AO1.3b  \n  - B1: for 13 in \u2018intersection\u2019  \n  - B1: for (16 \u2013 their \u201813\u2019) in \u2018Cat\u2019 \n  - B1: for sum of 8 + their three numbers = 30",
         "available_marks": 3,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page4.png"
+            "page4.png"
         ],
         "markscheme_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/markscheme/imgs/page6.png"
+            "page6.png"
         ],
         "sample_answers": [
             "\nDog only: 2, Cat only: 5, Both: 5, Neither: 18\n\n",
@@ -556,7 +556,7 @@
         "available_marks": 5,
         "question_imgs": null,
         "markscheme_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/markscheme/imgs/page10.png"
+            "page10.png"
         ],
         "sample_answers": [
             "\n(a) \u00a319,999 \n(b) \u00a349,000 \n(c) 6 years\n\n",
@@ -632,7 +632,7 @@
         "markscheme": "**Question 11**\n\n(a) Explanation, e.g. there should be 4 decimal places in the answer or the answer should be smaller than 0.38 (or 0.26) or because 0.4 \u00d7 0.3 = 0.12  \n- Marks: 1  \n- Marking Guidance: 1 AO2.5a. A clear and sensible reason is needed. Do not accept just the actual answer with no working or explanation. Condone: multiplying two decimals means a smaller number, or equivalent explanation.\n\n(b) Explanation, e.g. the answer should be bigger than 1 because both \\( \\frac{3}{4} \\) and \\( \\frac{2}{3} \\) are bigger than \\( \\frac{1}{2} \\), or the answer should be bigger than \\( \\frac{3}{4} \\) but \\( \\frac{5}{7} \\) is smaller than \\( \\frac{3}{4} \\).  \n- Marks: 1  \n- Marking Guidance: 1 AO2.5a. Exemplars for 1 mark:   \n  - \u201cYou don\u2019t add fractions by adding tops and bottoms.\u201d  \n  - \u201cYou don\u2019t add the denominators.\u201d  \n  - \u201cYou have to find a common denominator first.\u201d  \n  - \\(\\frac{3}{2} + \\frac{4}{3}\\) is obviously > 1.",
         "available_marks": 2,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_03_Paper_3_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page12.png"
+            "page12.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -674,7 +674,7 @@
         "markscheme": "**Question 6:**\n\n(a) Answer: 40  \n   Marks: 1  \n   Guidance: 1 AO1.3a  \n\n(b) Correct reasoning leading to 36.9  \n   Marks: 4  \n   Guidance: 1 AO1.3b, 2 AO2.2, 1 AO3.1b\n\n   - M2 for \\( \\pi \\times 12 \\) or  \n   - M1 for \\( 1/2 \\times \\pi \\times 12 \\)  \n   AND  \n   - M1 for their '40' \u2013 \\( \\pi \\times 12 \\)  \n\n(c) Answer: 7.38 or better  \n   Marks: 3  \n   Guidance: 1 AO1.3a, 2 AO3.1b  \n\n   - M1 for 2 mm = 0.2 cm (seen or implied)  \n   - M1 for 36.9 \u00d7 their '0.2' or equivalent",
         "available_marks": 8,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_03_Paper_3_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page6.png"
+            "page6.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -740,7 +740,7 @@
         "markscheme": "**Question 8**\n\n**Answer:**\n\n70\n\nThe triangle is isosceles so the missing angle is x (may be on diagram) or equivalent explanation.\n\nAngles in a triangle sum to 180\u00b0 or equivalent explanation (may be indicated by summing of angles to 180 or equivalent explanation).\n\n**Marking Guidelines:**\n\nTotal Marks: 3\n\n- 1 mark for AO1.3a: Correct identification of the missing angle as x.\n- 1 mark for AO2.4a: Correct explanation or demonstration that the triangle is isosceles.\n- 1 mark for AO3.1b: Correct use of the fact that angles in a triangle sum to 180\u00b0. \n\nB1 for each correct component.",
         "available_marks": 3,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page5.png"
+            "page5.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -896,7 +896,7 @@
         "markscheme": "**Question 14:**\n\n(a) **Answer:**\n\n\\[ p = 5, \\quad q = -5 \\]\n\n**Marking Guidelines:**\n\n- Total Marks: 2\n- 1 AO1.2\n- 1 AO1.3a\n  - B1 for each correct value of \\(p\\) and \\(q\\).\n\n(b) **Answer:**\n\n\\[ c = 3a \\]\n\\[ d = a + b \\]\n\\[ e = a - b \\]\n\n**Marking Guidelines:**\n  \n- Total Marks: 3\n- 3 AO1.3a\n  - B1 for each correct equation \\(c\\), \\(d\\), and \\(e\\).",
         "available_marks": 5,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_02_Paper_2_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page13.png"
+            "page13.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -947,7 +947,7 @@
         "markscheme": "**Question 10**\n\n(a) \n\n(i) Answer: Positive correlation  \n- Marks: 1   \n- Guidelines: 1 AO1.1 - Condone \u2018positive\u2019 or correct description, e.g., \u2018As the temperature increases, more ice creams are sold\u2019.\n\n(ii) Answer: Correct reason, e.g., \u2018He sold far more ice creams than you would expect him to for a 20\u00b0C day\u2019.  \n- Marks: 1   \n- Guidelines: 1 AO2.3a.\n\n(b) \n\n(i) Answer: 75-95  \n- Marks: 1   \n- Guidelines: 1 AO1.3a.\n\n(ii) Answer: 140-170  \n- Marks: 1   \n- Guidelines: 1 AO1.3a.\n\n(iii) Answer: The (b)(i) prediction is more reliable, as it is within the range of the given data.  \n- Marks: 2   \n- Guidelines: 1 AO2.1b, 1 AO2.4a.   \n- Partial marking: B1 for (b)(i) prediction identified with partial reason.\n\n(c) Answer: No, because there may be other factors involved.  \n- Marks: 2   \n- Guidelines: 1 AO2.5a, 1 AO3.4b.   \n- Partial marking: B1 for \u2018No\u2019, with partial reason.",
         "available_marks": 8,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_02_Paper_2_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page8.png"
+            "page8.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -987,7 +987,7 @@
         "markscheme": "15 (a)  \n- Angles at B and D are right angles.  \n- Angles ACB and ECD are vertically opposite (or equivalent statement).  \n- There are three equal angles (angle sum of a triangle), hence triangles are similar (or equivalent statement).\n\n**Marking:**\n1 mark for angle identification (2 AO1.3b)\n1 mark for noting similar triangles based on angle equality (1 AO2.4a)\n\n(b)  \n- Answer: 10.5  \n\n**Marking:**\n2 marks for correct solution (2 AO1.3a)  \nM1 for correctly multiplying 3.5 \u00d7 3 or equivalent method before achieving the final answer.",
         "available_marks": 5,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_03_Paper_3_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page15.png"
+            "page15.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -1274,7 +1274,7 @@
         "markscheme": "**Question 5**\n\nAnswer: 48 (cm\u00b2)\n\nMarks: 3\n\nMarking Guidelines:\n- 1 mark for AO1.3a: Understanding the use of formulas to calculate area.\n- 2 marks for AO3.1b: Developing a solution to find the area.\n\nStep-by-Step Solution:\n- M1: Use the formula to calculate the area of a triangle: \\(\\frac{1}{2} \\times \\text{base} \\times \\text{height} = 16\\).\n- M1: Multiply their result from the first mark by 3 to find the final area: \\(\\text{their '16'} \\times 3 = 48\\).\n\nThis solution calculates the area of a shape comprising, for example, three identical triangles combined to give the total area of 48 cm\u00b2.",
         "available_marks": 3,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page4.png"
+            "page4.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -1403,7 +1403,7 @@
         "markscheme": "**Question 14**\n\n(a) Answer: \\( \\frac{8}{50} \\) or an equivalent expression.  \nMarks: 2  \n- 1 mark for AO2.3a  \n- 1 mark for AO3.1c  \n- B1 mark for expressing it as a multiple of 50 (e.g., 50n).\n\n(b) Answer: Any comment with a valid reason.  \nMarks: 1  \n- 1 mark for AO3.4b",
         "available_marks": 3,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_03_Paper_3_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page14.png"
+            "page14.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -1495,7 +1495,7 @@
         "markscheme": "**Question 20**\n\n**Answer:**\n\nThe correct answer is 2.8(0...).\n\n**Marking Guidelines:**\n\n- Total of 3 marks available.\n- 1 mark awarded for AO1.1.\n- 2 marks awarded for AO1.3a.\n\n**Part marks and guidance:**\n\n- B1 for recognizing or stating the formula \\( \\tan \\theta = \\frac{\\text{opp}}{\\text{adj}} \\).\n- M1 for correctly calculating \\( 4 \\times \\tan 35 \\).",
         "available_marks": 3,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page18.png"
+            "page18.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -1549,7 +1549,7 @@
         "markscheme": "**Question 12 Correct Answer and Marking Guidelines**\n\n- **Answer:**  \n  Vertical axis is not consistent  \n  The line does not represent the days when he doesn\u2019t use the internet  \n\n- **Marks:** 2  \n\n- **Marking Guideline:**  \n  2 AO2.5b  \n  B1 for each valid comment.",
         "available_marks": 2,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_03_Paper_3_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page12.png"
+            "page12.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
@@ -1617,7 +1617,7 @@
         "markscheme": "**Question 6:**\n\n**Answer:**\n\n(a) 40 cm\n\n(b) Correct working leading to 4 cm\n\n**Marks and Guidance:**\n\n(a)  \n- Total: 2 marks  \n  - 1 mark AO1.3a  \n  - 1 mark AO3.1a  \n  - M1 for multiplying 4 by their '100'  \n\n(b)  \n- Total: 4 marks  \n  - 1 mark AO1.3b  \n  - 2 marks AO2.2  \n  - 1 mark AO2.4a  \n  - B1 for the area of triangle being 24  \n  - B1 for their '24' multiplied by 3  \n  - B1 for their '72' divided by 18  \n  - or consider the area of the parallelogram as 18h",
         "available_marks": 6,
         "question_imgs": [
-            "/home/djl11/unify-docs/interfaces/ai_tutor/pdfs/GCSE_(9\u20131)_Mathematics/J560_02_Paper_2_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page5.png"
+            "page5.png"
         ],
         "markscheme_imgs": null,
         "sample_answers": [
