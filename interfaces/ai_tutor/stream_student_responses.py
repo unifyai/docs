@@ -3,10 +3,17 @@ import json
 import random
 import math
 import datetime
+import argparse
 import time
 
 import unify
 from helpers import load_questions_and_answers, encode_image
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--no-images', help='Whether to omit images from the logging',
+                    action="store_true")
+args = parser.parse_args()
+WITH_IMAGES = not args.no_images
 
 ########################################################################
 # 1. Define correlation coefficients here - tweak at will
@@ -279,7 +286,6 @@ def main():
                         email=student["email"],
                         gender=student["gender"],
                         date_of_birth=student["date_of_birth"],
-                        subject=None,
                     )
                 with unify.Context("question"):
                     unify.log(
@@ -287,11 +293,13 @@ def main():
                         paper_id=qna_dct["paper_id"],
                         question_num=qna_dct["question_num"],
                         question=question,
-                        question_imgs=(question_imgs[0] if question_imgs else None),
+                        question_imgs=(question_imgs[0] if question_imgs and WITH_IMAGES else
+                                       None),
                         provided_answer=provided_answer,
                         markscheme=qna_dct["answer"],
                         markscheme_imgs=(
-                            markscheme_imgs[0] if markscheme_imgs else None),
+                            markscheme_imgs[0] if markscheme_imgs and WITH_IMAGES
+                            else None),
                         available_marks=qna_dct["marks"],
                         chosen_score=score
                     )
