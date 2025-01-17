@@ -2892,7 +2892,7 @@
                     "Logs"
                 ],
                 "summary": "Create Derived Entry",
-                "description": "Updates multiple logs with the provided entries. Each entry will be either added\nor overridden in the specified logs.\n\nA dictionary of \"explicit_types\" can be passed as part of the `entries`.\nIf present, it will override the inferred type of any matching key in all logs.",
+                "description": "Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.\nEagerly computes each derived value and stores it in DerivedLog.value.",
                 "operationId": "create_derived_entry_v0_log_derived_put",
                 "requestBody": {
                     "content": {
@@ -2906,12 +2906,17 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful Response",
+                        "description": "Derived log entries created successfully.",
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Log created successfully!"
+                                    "info": "Created 3 derived logs with key='example_key'.",
+                                    "derived_log_ids": [
+                                        101,
+                                        102,
+                                        103
+                                    ]
                                 }
                             }
                         }
@@ -2921,7 +2926,17 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project not found."
+                                    "detail": "Project 'example_project' not found."
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "All referenced log lists must have the same length. Found lengths: [2, 3]."
                                 }
                             }
                         }
@@ -3309,6 +3324,7 @@
                                                 "key1": "a",
                                                 "key2": 1.0
                                             },
+                                            "derived_entries": {},
                                             "params": {}
                                         },
                                         {
@@ -3318,6 +3334,7 @@
                                                 "key1": "b",
                                                 "key2": 2.0
                                             },
+                                            "derived_entries": {},
                                             "params": {}
                                         }
                                     ],
