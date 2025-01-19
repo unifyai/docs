@@ -36,6 +36,9 @@ def generate_question(question, data, idx):
             .replace(
                 "{question}",
                 question,
+            ).replace(
+                "{question_num}",
+                str(data["question_num"])
             )
             .replace(
                 "{markscheme}",
