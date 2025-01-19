@@ -4,7 +4,6 @@ import random
 import math
 import datetime
 import argparse
-import time
 
 import unify
 from helpers import load_questions_and_answers, encode_image
@@ -303,9 +302,6 @@ def main():
                         available_marks=qna_dct["marks"],
                         chosen_score=score
                     )
-
-            # (Optional) Sleep or do something so we don't spin infinitely too fast
-            time.sleep(1)
 
 
 if __name__ == "__main__":
