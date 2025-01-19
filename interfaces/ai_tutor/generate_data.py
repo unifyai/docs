@@ -1,8 +1,9 @@
 import os
-import re
 import json
 import unify
 import argparse
+from pydantic import BaseModel
+
 from prompts import *
 from helpers import load_questions_and_answers
 
@@ -14,6 +15,11 @@ parser.add_argument('--usage', help='Generate synthetic usage data',
                     action="store_true")
 args = parser.parse_args()
 mode = "usage" if args.usage else "labelled"
+
+
+class Response(BaseModel):
+    rationale: str
+    answer: str
 
 
 def generate_question(question, data, idx):
@@ -44,11 +50,9 @@ def generate_question(question, data, idx):
                 "{markscheme}",
                 data["answer"],
             ),
+            response_format=Response,
         )
-        split = re.split(r"answer:", response, flags=re.IGNORECASE)
-        answer = split[-1]
-        rationale = "Answer:".join(split[:-1])
-        targets[target] = {"answer": answer, "rationale": rationale}
+        targets[target] = json.loads(response)
     targets["subject"] = data["subject"]
     targets["paper_id"] = data["paper_id"]
     targets["question_num"] = data["question_num"]
