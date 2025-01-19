@@ -17,6 +17,7 @@ mode = "usage" if args.usage else "labelled"
 
 
 def generate_question(question, data, idx):
+    to_write = dict()
     data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
     fname = f"{mode}_data_{idx}"
     data_path = os.path.join(data_dir, fname)
@@ -59,9 +60,9 @@ def generate_question(question, data, idx):
     else:
         targets["markscheme_imgs"] = None
     # incremental file writing
-    data[question] = targets
+    to_write[question] = targets
     with open(data_path, "w+") as f:
-        f.write(json.dumps(data, indent=4))
+        f.write(json.dumps(to_write, indent=4))
 
 
 def combine_data():
