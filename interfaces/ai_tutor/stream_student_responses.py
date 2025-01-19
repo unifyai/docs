@@ -190,33 +190,6 @@ def sample_score(age, gender, available_marks):
         return random.randint(0, mid)
 
 
-def pick_answer_for_score(question_dict, score):
-    """
-    question_dict is something like:
-        {
-          "0": ["option1", "option2"],
-          "1": [...],
-          "2": [...],
-          "subject": "...",
-          "paper_id": "...",
-          ...
-        }
-    We want to pick from question_dict[str(score)] if it exists.
-    """
-    score_str = str(score)
-    possible_answers = question_dict.get(score_str, [])
-    if not possible_answers:
-        # Fallback: if no answers exist for that score, pick from all available
-        all_vals = []
-        for k, v in question_dict.items():
-            if k.isdigit():
-                all_vals.extend(v)
-        if not all_vals:
-            return None
-        return random.choice(all_vals)
-    return random.choice(possible_answers)
-
-
 ########################################################################
 # 3. Main load + event streaming
 ########################################################################
@@ -261,7 +234,7 @@ def main():
             score = sample_score(student_age, gender, available_marks)
 
             # 4) Pick an answer string from the question set that corresponds to that score
-            provided_answer = pick_answer_for_score(question_dict, score)
+            provided_answer = question_dict[str(score)]["answer"]
 
             # 5) Simulate the time of usage
             usage_timestamp = sample_usage_time(student_age)
