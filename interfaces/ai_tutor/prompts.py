@@ -162,10 +162,13 @@ correct|partially correct|incorrect
 """
 
 GENERATE_RESPONSE_PROMPT = """
-Your task is to generate a response to the question below which should achieve a
-total of {target} out of {num_marks} available marks, if it was to be marked correctly.
+Your task is to generate a response to question {question_num} below which should 
+achieve a total of {target} out of {num_marks} available marks, if it was to be 
+marked correctly.
 
 The marking scheme adds marks based on the following guidelines:
+
+----
 
 1.
 M marks are for using a correct method and are not lost for purely numerical errors.
@@ -264,6 +267,8 @@ For methods not provided for in the mark scheme give as far as possible equivale
 14.
 Anything in the mark scheme which is in square brackets […] is not required for the mark to be earned, but if present it must be correct.
 
+----
+
 Given the following question, which is worth a total of {num_marks} marks:
 
 {question}
@@ -272,11 +277,14 @@ And also given the following known correct answer and marking scheme:
 
 {markscheme}
 
-Provide one answer to this question which should achieve a total of {target} marks if 
-marked correctly. Please state your reasoning in lots of detail, referring 
-specifically to the markscheme provided for each of the marks the answer should 
-receive. As the final part of your response, please provide your proposed answer 
-in the format below, which should receive {target} marks:
+Provide a complete answer to *all parts* of this question [including answers to all 
+sub-questions (a), (b), (i), (ii) etc. if they exist] which should achieve a total 
+of {target} marks for the entire question {question_num}, if marked correctly.
+
+Please state your reasoning in lots of detail, referring specifically to the 
+markscheme provided for each of the marks the answer should receive. As the final part 
+of your response, please provide your proposed answer in the format below, which should 
+receive {target} marks:
 
 Answer:
 {answer}
