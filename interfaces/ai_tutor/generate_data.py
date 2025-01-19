@@ -1,4 +1,5 @@
 import os
+import re
 import json
 import unify
 import argparse
@@ -40,13 +41,15 @@ def generate_question(question, data, idx):
                 data["answer"],
             ),
         )
-        breakpoint()
-        targets[target] = [ans for ans in response.split("Answer:")[1:]]
+        split = re.split(r"answer:", response, flags=re.IGNORECASE)
+        answer = split[-1]
+        rationale = "Answer:".join(split[:-1])
+        targets[target] = {"answer": answer, "rationale": rationale}
     targets["subject"] = data["subject"]
     targets["paper_id"] = data["paper_id"]
     targets["question_num"] = data["question_num"]
-    targets["markscheme"] = data["markscheme"]
-    targets["available_marks"] = data["available_marks"]
+    targets["markscheme"] = data["answer"]
+    targets["available_marks"] = data["marks"]
     if data["question_imgs"]:
         targets["question_imgs"] = [fp.split("/")[-1] for fp in data["question_imgs"]]
     else:
@@ -82,7 +85,7 @@ def combine_data():
 def main():
     qna = load_questions_and_answers()
     args = [(question, dct, i) for i, (question, dct) in enumerate(qna.items())]
-    unify.map(generate_question, args, mode="loop")
+    unify.map(generate_question, args)
     combine_data()
 
 
