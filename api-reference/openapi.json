@@ -4218,7 +4218,7 @@
                         "in": "query",
                         "required": true,
                         "schema": {
-                            "type": "boolean",
+                            "type": "string",
                             "title": "Name"
                         }
                     },
@@ -4227,7 +4227,7 @@
                         "in": "query",
                         "required": true,
                         "schema": {
-                            "type": "boolean",
+                            "type": "string",
                             "title": "Project"
                         }
                     },
@@ -4718,8 +4718,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
