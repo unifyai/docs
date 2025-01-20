@@ -41,7 +41,7 @@
         "correctly_parsed": true
     },
     "8": {
-        "text": "8\u202f\u202fThe diagram shows a right\u2011angled triangle, with a 90\u00b0 angle at the bottom left corner and a 65\u00b0 angle at the top. The remaining angle at the bottom right is labeled x.\n\nFind the value of x.  \nGive a reason for each step of your working.\n\nx\u202f=\u202f\u2026\u2026\u2026\u2026\u00b0\u2003[3]",
+        "text": "8\u202f\u202fThe diagram shows a triangle.\n\nFind the value of x.  \nGive a reason for each step of your working.\n\nx\u202f=\u202f\u2026\u2026\u2026\u2026\u00b0\u2003[3]",
         "text-only": true,
         "correctly_parsed": true
     },
@@ -65,7 +65,7 @@
     },
     "12": {
         "text": "12\u202fHere are the first three patterns in a sequence:\n\n[Diagram of three patterns, each made of dotted squares and black squares]\n\n(a) Draw Pattern\u202f4 in this sequence on the grid below.  \n[2]\n\n(b) Pattern\u202f3 has 9\u202fdotted squares and 12\u202fblack squares.  \n   How many dotted squares will there be in Pattern\u202f8?  \n(b) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n[2]\n\n(c) Write an expression for the number of black squares in the n\u1d57\u02b0 pattern.  \n(c) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n[2]\n\n(d) Sally looks at the patterns. She says:  \n   \u201cIf the pattern number is odd, the total number of squares will be odd.  \n    If it is even, the total number of squares will be even.\u201d  \n   Explain clearly why Sally is right for all patterns in the sequence.  \n[6]",
-        "text-only": true,
+        "text-only": false,
         "correctly_parsed": true,
         "images": [
             "page8.png"
