@@ -107,7 +107,10 @@ def combine_data():
 
 def main():
     qna = load_questions_and_answers()
-    args = [(question, dct, i) for i, (question, dct) in enumerate(qna.items())]
+    args = [
+        (question, dct, i) for i, (question, dct) in enumerate(qna.items())
+        if dct["correctly_parsed"]
+    ]
     unify.map(generate_question, args, mode="loop")
     combine_data()
 
