@@ -125,7 +125,7 @@ def main():
         (question, dct, i) for i, (question, dct) in enumerate(qna.items())
         if dct["correctly_parsed"]
     ]
-    unify.map(generate_question, args, mode="loop")
+    unify.map(generate_question, args)
     combine_data()
 
 
