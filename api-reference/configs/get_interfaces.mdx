@@ -12,7 +12,7 @@ api: 'GET /v0/interface'
 
 #### Query Parameters
 
-<ParamField query="name" type="string" >
+<ParamField query="name" type="string"  default={"interface_1"}>
 
 </ParamField>
 
@@ -74,7 +74,13 @@ print(response.text)
 ]
 ```
 
-```json 404
+```json 404 (1)
+{
+    "detail": "Project <project> not found."
+}
+```
+
+```json 404 (2)
 "Interface not added yet. Create it first."
 ```
 
