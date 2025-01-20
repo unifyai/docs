@@ -635,4 +635,4 @@ if __name__ == "__main__":
         if not os.path.exists(target_markscheme_fpath):
             parse_markscheme(int(subdir))
 
-    unify.map(_parse, subdirs, mode="loop")
+    unify.map(_parse, subdirs)
