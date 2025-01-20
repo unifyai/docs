@@ -1,99 +1,102 @@
 {
-    "1": {
-        "text": "1. (a) Solve.\n\n   (i) \\(2x = 18\\)\n\n   \\(x = \\) ............................................ [1]\n\n   (ii) \\(x + 2 = 5\\)\n\n   \\(x = \\) ............................................ [1]\n\n   (iii) \\(3x = 15\\)\n\n   \\(x = \\) ............................................ [1]\n\n(b) (i) Find the value of \\(t\\) when \\(g = 4\\) and \\(h = 7\\).  \n    \\(t = 12g - 5h\\)\n\n   \\(t = \\) ............................................  [2]\n\n(ii) Rearrange to make \\(r\\) the subject.  \n    \\(4r - p = q\\)\n\n   \\(r = \\) ............................................ [2]",
+    "17": {
+        "text": "17. 180 g of copper is mixed with 105 g of zinc to make an alloy.\n\nThe density of copper is 9 g/cm\u00b3.  \nThe density of zinc is 7 g/cm\u00b3.\n\n(a) Work out the volume of copper used in the alloy.\n\n(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 cm\u00b3 [2]\n\n(b) What is the density of the alloy?\n\n(b) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 g/cm\u00b3 [4]",
         "text-only": true
     },
-    "2": {
-        "text": "2. Cambury Council asked 60 customers what they thought of the local leisure centre. The results are shown in this bar chart.\n\nDraw and label a pie chart to represent this data.\n\n[5]",
-        "text-only": false,
-        "images": [
-            "page3.png"
-        ]
-    },
-    "3": {
-        "text": "3 (a) How many 20p coins would you need to make up \u00a37000?  \n\n(a) ............................................  [2] \n\n(b) Each 20p coin weighs 5 g. \n\nLizzie says:\n\n\"I can lift \u00a37000 worth of 20p coins.\"\n\nIs Lizzie\u2019s claim reasonable? Show your working and state any assumptions you have made.  \n\n\u2026................................ because \u2026............................................................................................\n\n\u2026...............................................................................................................................................  [4]\n\n(c) How have any assumptions you have made affected your answer to part (b)? \n\n\u2026............................................................................................................................................... [1]",
-        "text-only": true
-    },
-    "4": {
-        "text": "**Question 4**\n\nAntonio works Monday, Tuesday, and Wednesday.\n\nHe starts work at 4:00 pm and finishes at 10:30 pm.  \nAntonio is paid \u00a310 per hour on weekdays.\n\nOne week, he also works for 4 hours on Sunday.  \nHe is paid 50% more on Sundays.\n\nHow much does Antonio earn altogether this week?  \nYou must show your working.\n\n\u00a3 ..................................................... [6]",
-        "text-only": true
-    },
-    "5": {
-        "text": "5 Darren says:\n\n\"I can run 100 m in 15 seconds, so I should be able to run 800 m in 120 seconds.\"\n\nDo you think that he would take more or less than 120 seconds to run 800 m? Explain your answer, with reference to any assumptions Darren has made.\n\n........................................................................ because ..............................................................................................................\n\n.........................................................................................................................................................\n\n.........................................................................................................................................................\n\n.........................................................................................................................................................\n\n..................................................................................... [3]",
-        "text-only": true
-    },
-    "6": {
-        "text": "6. Jo makes a pendant from a rectangular piece of silver.\n\n(a) Work out the area of this rectangle.\n\n(a) .......................................... cm\u00b2 [1]\n\n(b) To complete the pendant, Jo cuts two semicircles of radius 1 cm from the rectangle, as shown below.\n\nShow that the shaded area is 36.9 cm\u00b2 correct to three significant figures. [4]\n\n(c) The silver Jo uses is 2 mm thick.\n\nFind the volume of silver in the pendant.  \nGive your answer in cm\u00b3.\n\n(c) .................................... cm\u00b3 [3]",
+    "12": {
+        "text": "12. Shinya\u2019s internet service provider gives him a graph of his internet usage in the first part of February.\n\nState two reasons why this graph is misleading.\n\n1. \u2026  \n2. \u2026  \n\n[2]",
         "text-only": true,
         "images": [
-            "page6.png"
+            "page12.png"
         ]
-    },
-    "7": {
-        "text": "7. PQRS is a rectangle. A, B, C, and D are points on SP, PQ, QR, and RS, respectively. AC is the line of symmetry for the diagram. \n\n(a) Angle ABC = 125\u00b0.\n\nWrite down the size of angle ADC. \n\n(a) Angle ADC = ...................... \u00b0 [1] \n\n(b) AP is the same length as PB. \n\nWork out the size of angle BCD.  \nYou must show your working.\n\n(b) Angle BCD = ...................... \u00b0 [4]",
-        "text-only": true,
-        "images": [
-            "page8.png"
-        ]
-    },
-    "8": {
-        "text": "8\n\n(a) The nth term of a sequence is given by 3n + 5.\n\nExplain why 21 is not a term in this sequence.\n\n[2]\n\n(b) Here are the first three terms in a sequence.\n\n1, 2, 4\n\nThis sequence can be continued in different ways.\n\n(i) Find one rule for continuing the sequence and give the next two terms.\n\nRule 1: .........................................................................................................................  \n\nNext two terms: ...............  ...............  [2] \n\n(ii) Find a second rule for continuing the sequence and give the next two terms.\n\nRule 2: .........................................................................................................................\n\nNext two terms: ...............  ...............  [2]",
-        "text-only": true
-    },
-    "9": {
-        "text": "9. Three friends, Ann (A), Bob (B), and Carol (C), go on holiday together.\n\n(a) They book a row of three seats on the plane. When they arrive at the plane they sit in a random order.\n\n(i) List all the different orders they could sit on the three seats. The first one has been done for you.\n\n| Seat 1 | Seat 2 | Seat 3 |\n|--------|--------|--------|\n| A      | B      | C      |\n|        |        |        |\n|        |        |        |\n|        |        |        |\n|        |        |        |\n\n[2]\n\n(ii) What is the probability that Ann and Carol sit next to each other?\n\n(a)(ii) ............................................. [1]\n\n(iii) What is the probability that Bob sits in seat 1 with Ann next to him?\n\n(iii) ............................................ [1]\n\n(b) Ann, Bob, and Carol have a total budget of \u00a3500 to rent a holiday apartment. The apartment normally costs \u00a350 per night, but they can get a 20% discount if they book early.\n\nCalculate how many extra nights they can stay in the apartment if they book early. You must show your working.\n\n(b) ................................ nights [4]",
-        "text-only": true
     },
     "10": {
-        "text": "10. Calculate:\n\n(a) 3136\n\n(a) ............................................ [1]\n\n(b) 4625\n\n(b) ............................................ [1]\n\n(c) \\( 5^{-2} \\)\n\n(c) ............................................ [1]",
+        "text": "10 Calculate.\n\n(a) 3136\n\n(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b) 4625\n\n(b) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(c) 5\u22122\n\n(c) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]",
         "text-only": true
     },
     "11": {
-        "text": "11. Ema has done some calculations. \n\nFor each calculation, explain how you know the answer is wrong without working out the correct answer.\n\n(a) 0.38 \u00d7 0.26 = 0.827\n\n- The product of two numbers that are both less than 1 should be less than 1. Therefore, 0.827 cannot be the correct answer. \n\n(b) \\( \\frac{325}{437} \\)\n\n- The value of 325 divided by 437 should be less than 1, but the given result seems incorrect as no value/result was provided after the division symbol and before \"=\"; hence something is missing here that should show the actual comparison or the result.",
-        "text-only": true,
-        "images": [
-            "page12.png"
-        ]
-    },
-    "12": {
-        "text": "12\n\nShinya\u2019s internet service provider gives him a graph of his internet usage in the first part of February.\n\nState two reasons why this graph is misleading.\n\n1. ________________________________________________________\n\n2. ________________________________________________________\n\n[2]",
-        "text-only": true,
-        "images": [
-            "page12.png"
-        ]
-    },
-    "13": {
-        "text": "13\n\n(a) Mia cycled 23 km, correct to the nearest km.  \n\nWhat is the least distance Mia could have cycled?\n\n(a)  ..............................................  km [1]  \n\n(b) A number \\( x \\), rounded to one decimal place, is 4.7.   \n   So the error interval for \\( x \\) is given by \\( 4.65 \\leq x < 4.75 \\).  \n\n(i) A number \\( y \\), rounded to two decimal places, is 4.13.  \n\nWrite down the error interval for \\( y \\).\n\n(b)(i)  ................................................  [2] \n\n(ii) A number \\( z \\), rounded to two significant figures, is 4700.  \n\nWrite down the error interval for \\( z \\).\n\n(ii)  ...............................................  [2]",
+        "text": "11 Ema has done some calculations.\n\nFor each calculation, explain how you know the answer is wrong without working out the correct answer.\n\n(a) 0.38 \u00d7 0.26 = 0.827\n\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b) 3/25 + 4/37\n\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]",
         "text-only": true
     },
+    "4": {
+        "text": "4. Antonio works Monday, Tuesday, and Wednesday.  \nHe starts work at 4:00 pm and finishes at 10:30 pm.  \nAntonio is paid \u00a310 per hour on weekdays.  \n\nOne week, he also works for 4 hours on Sunday.  \nHe is paid 50% more on Sundays.  \n\nHow much does Antonio earn altogether this week?  \nYou must show your working.  \n\n\u00a3 \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [6]",
+        "text-only": true
+    },
+    "16": {
+        "text": "16  \n\u00a9 OCR 2024 J560/03  \n\nLeo is using these numbers to make a new number:  \n\u2022 11  \n\u2022 1  \n\u2022 3  \n\u2022 6  \n\n\u2022 He can use brackets, +, \u2212, \u00d7 and \u00f7 as often as he wishes.  \n\u2022 He cannot use any number more than once.  \n\u2022 He cannot use powers.  \n\u2022 He cannot put numbers together, e.g. he can\u2019t use 136.  \n\nWhat is the biggest number he can make?  \nShow how he can make this number.  \n\n\u2026[4]",
+        "text-only": true,
+        "images": [
+            "page16.png"
+        ]
+    },
     "14": {
-        "text": "14  \n\nThis frequency diagram summarizes the number of minutes Astrid\u2019s train was late over the last 50 days.  \n\n(a) Use information from this diagram to estimate the probability that her train will be 4 minutes late tomorrow.  \n\n(a)  ...........................................  [2]  \n\n(b) Explain whether your answer to part (a) gives a reliable probability.  \n\n................................................................................  \n\n................................................................................ [1]",
+        "text": "14 (\u00a9 OCR 2024 J560/03)\n\nThis frequency diagram summarises the number of minutes Astrid\u2019s train was late over the last 50 days.\n\n(a) Use information from this diagram to estimate the probability that her train will be 4 minutes late tomorrow.\n\n(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n(b) Explain whether your answer to part (a) gives a reliable probability.\n\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]",
         "text-only": true,
         "images": [
             "page14.png"
         ]
     },
+    "3": {
+        "text": "3 (a) How many 20p coins would you need to make up \u00a37000?\n\n\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002[2]\n\n(b) Each 20p coin weighs 5 g.  \n\nLizzie says, \u201cI can lift \u00a37000 worth of 20p coins.\u201d\n\nIs Lizzie\u2019s claim reasonable? Show your working and state any assumptions you have made.\n\n\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002[4]\n\n(c) How have any assumptions you have made affected your answer to part (b)?\n\n\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002\u2002[1]",
+        "text-only": true
+    },
+    "18": {
+        "text": "18 (a)(i) Solve the inequality:  \n5x + 1 > x + 13  \n\u2026 [3]\n\n(ii) Write down the largest integer that satisfies 5x \u2013 1 < 10.  \n\u2026 [1]\n\n(b) Solve the equation:  \n3x\u00b2 = 75  \n\u2026 [2]\n\n(c) Solve the system of equations:  \n4x + 3y = 5  \n2x + 3y = 1  \n\u2026 [3]",
+        "text-only": true
+    },
     "15": {
-        "text": "15  \n\nIn the diagram below, AE and BD are straight lines.  \n\n(a) Show that triangles ABC and EDC are similar.\n\n.................................................................................................................................\n\n.................................................................................................................................\n\n.................................................................................................................................\n\n.................................................................................................................................\n\n.................................................................................................................................\n\n.................................................................................................................................\n\n................................................................................................................ [3]\n\n(b) The length DE is 3.5 m.  \nThe ratio BC : CD = 3 : 1.  \n\nFind the length AB.\n\n(b) ............................ m [2]",
+        "text": "15 In the diagram below, AE and BD are straight lines.\n\n(a) Show that triangles ABC and EDC are similar.\n\n\u2026............................................................................................................................  \n\u2026............................................................................................................................  \n\u2026............................................................................................................................  \n\u2026............................................................................................................................  \n\u2026............................................................................................................................  \n\u2026............................................................................................................................ [3]\n\n(b) The length DE is 3.5 m.  \n    The ratio BC : CD = 3 : 1.  \n\nFind the length AB.\n\n(b) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 m [2]",
         "text-only": true,
         "images": [
             "page15.png"
         ]
     },
-    "16": {
-        "text": "16\n\nLeo is using these numbers to make a new number.\n\nNumbers: 11, 1, 3, 6\n\n- He can use brackets, +, \u2212, \u00d7 and \u00f7 as often as he wishes.\n- He cannot use any number more than once.\n- He cannot use powers.\n- He cannot put numbers together, e.g., he can\u2019t use 136.\n\nWhat is the biggest number he can make?\n\nShow how he can make this number.\n\n.............................................................................................................................\n\n.............................................................................................................................\n\n.............................................................................................................................\n\n.........................................................................................[4]",
+    "2": {
+        "text": "2 Cambury Council asked 60 customers what they thought of the local leisure centre.  \nThe results are shown in this bar chart.  \n\nDraw and label a pie chart to represent this data.\n\n[5]",
+        "text-only": false,
+        "images": [
+            "page3.png"
+        ]
+    },
+    "5": {
+        "text": "5 Darren says:\n\n\u201cI can run 100 m in 15 seconds, so I should be able to run 800 m in 120 seconds.\u201d\n\nDo you think that he would take more or less than 120 seconds to run 800 m? Explain your answer, with reference to any assumptions Darren has made.\n\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 because \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [3]",
         "text-only": true
     },
-    "17": {
-        "text": "17. 180 g of copper is mixed with 105 g of zinc to make an alloy.\n\nThe density of copper is 9 g/cm\u00b3.  \nThe density of zinc is 7 g/cm\u00b3.\n\n(a) Work out the volume of copper used in the alloy.  \n\n(a) ............................... cm\u00b3 [2]\n\n(b) What is the density of the alloy?\n\n(b) ............................. g/cm\u00b3 [4]",
+    "7": {
+        "text": "7  PQRS is a rectangle.  \nA, B, C and D are points on SP, PQ, QR and RS respectively.  \nAC is the line of symmetry for the diagram.  \n\n(a)  Angle ABC = 125\u00b0.  \n     Write down the size of angle ADC.  \n\n     (a)  Angle ADC = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 \u00b0  [1]  \n\n(b)  AP is the same length as PB.  \n     Work out the size of angle BCD. You must show your working.  \n\n     (b)  Angle BCD = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 \u00b0  [4]",
+        "text-only": true,
+        "images": [
+            "page8.png"
+        ]
+    },
+    "9": {
+        "text": "9  Three friends, Ann (A), Bob (B) and Carol (C), go on holiday together.\n\n(a) They book a row of three seats on the plane.  \n   When they arrive at the plane they sit in a random order.\n\n   (i) List all the different orders they could sit on the three seats.  \n       The first one has been done for you.\n\n       Seat 1    Seat 2    Seat 3  \n       A         B         C  \n       \u2026         \u2026         \u2026  \n       \u2026         \u2026         \u2026  \n       \u2026         \u2026         \u2026  \n       \u2026         \u2026         \u2026  \n       [2]\n\n   (ii) What is the probability that Ann and Carol sit next to each other?  \n\n       (a)(ii) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n   (iii) What is the probability that Bob sits in seat 1 with Ann next to him?\n\n       (iii) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b) Ann, Bob and Carol have a total budget of \u00a3500 to rent a holiday apartment.  \n   The apartment normally costs \u00a350 per night, but they can get a 20% discount if they book early.\n\n   Calculate how many extra nights they can stay in the apartment if they book early.  \n   You must show your working.\n\n   (b) \u2026\u2026\u2026\u2026\u2026\u2026\u2026 nights  [4]",
+        "text-only": true,
+        "images": [
+            "page10.png"
+        ]
+    },
+    "8": {
+        "text": "8 (a) The nth term of a sequence is given by 3n + 5.\n\nExplain why 21 is not a term in this sequence.\n\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n[2]\n\n(b) Here are the first three terms in a sequence:\n\n1   2   4\n\nThis sequence can be continued in different ways.\n\n(i) Find one rule for continuing the sequence and give the next two terms.\n\nRule 1 \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n\nNext two terms \u2026\u2026\u2026\u2026\u2026\u2026   \u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n(ii) Find a second rule for continuing the sequence and give the next two terms.\n\nRule 2 \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n\nNext two terms \u2026\u2026\u2026\u2026\u2026\u2026   \u2026\u2026\u2026\u2026\u2026\u2026 [2]",
         "text-only": true
     },
-    "18": {
-        "text": "18 \n\n(a) (i) Solve:\n\n5x + 1 > x + 13\n\n.................................. [3]\n\n(ii) Write down the largest integer that satisfies 5x \u2013 1 < 10.\n\n....................................... [1]\n\n(b) Solve:\n\n3x\u00b2 = 75\n\nx = ................................. [2]\n\n(c) Solve:\n\n4x + 3y = 5\n\n2x + 3y = 1\n\nx = ....................................\n\ny = .................................... [3]",
+    "13": {
+        "text": "13 (a) Mia cycled 23 km, correct to the nearest km.  \nWhat is the least distance Mia could have cycled?\n\n(a)  \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  km  [1]\n\n(b) A number x, rounded to one decimal place, is 4.7.  \nSo the error interval for x is given by 4.65 \u2264 x < 4.75.\n\n(i) A number y, rounded to two decimal places, is 4.13.  \nWrite down the error interval for y.\n\n(b)(i)  \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  [2]\n\n(ii) A number z, rounded to two significant figures, is 4700.  \nWrite down the error interval for z.\n\n(b)(ii)  \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  [2]",
         "text-only": true
     },
     "19": {
-        "text": "19  \n\nHere are the interest rates for two accounts.  \n\nDerrick has \u00a310,000 he wants to invest.  \n\n(a) Calculate which account would give him the most money if he invests his money for 3 years.  \nGive the difference in the interest to the nearest penny.  \nYou must show your working.\n\n**(a) Account \u2026................ by \u2026................ p** [5]  \n\n(b) Explain why he might not want to use Account A.\n\n\u2026............................................................................................................................. ...................  \n\n\u2026............................................................................................................................. .............  [1]  \n  \nNo withdrawals until the end of three years.  \n\n**Account A**\n\nInterest:  \n3% per year compound interest.  \n\nWithdrawals allowed at any time.  \n\n**Account B**\n\nInterest:  \n4% for the first year,  \n3% for the second year,  \nand 2% for the third year.",
+        "text": "19 Here are the interest rates for two accounts:\n\n No withdrawals until the end of three years.  \n Account A  \n Interest:  \n 3% per year compound interest.  \n\n Withdrawals allowed at any time.  \n Account B  \n Interest:  \n 4% for the first year,  \n 3% for the second year,  \n 2% for the third year.  \n\n Derrick has \u00a310 000 he wants to invest.\n\n (a) Calculate which account would give him most money if he invests his money for 3 years.  \n     Give the difference in the interest to the nearest penny.  \n     You must show your working.\n\n (a) Account \u2026................ by \u2026................ p  [5]\n\n (b) Explain why he might not want to use Account A.\n\n \u2026.............................................................................................................................\n \u2026.............................................................................................................................  [1]",
+        "text-only": true,
+        "images": [
+            "page19.png"
+        ]
+    },
+    "1": {
+        "text": "1 (a) Solve:\n\n(i) 2x = 18  \n    x = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(ii) x + 2 = 5  \n    x = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(iii) = 153x  \n    x = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b) (i) Find the value of t when g = 4 and h = 7.  \n    t = 12g \u2013 5h  \n    t = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n(ii) Rearrange to make r the subject.  \n    4r \u2013 p = q  \n    r = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]",
+        "text-only": true
+    },
+    "6": {
+        "text": "6 Jo makes a pendant from a rectangular piece of silver.\n\n(a) Work out the area of this rectangle.  \n(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 cm\u00b2 [1]  \n\n(b) To complete the pendant, Jo cuts two semicircles of radius 1 cm from the rectangle, as shown below.  \n\nShow that the shaded area is 36.9 cm\u00b2, correct to three significant figures. [4]  \n\n(c) The silver Jo uses is 2 mm thick.  \nFind the volume of silver in the pendant. Give your answer in cm\u00b3.  \n(c) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 cm\u00b3 [3]",
         "text-only": true
     }
 }
