@@ -49,13 +49,17 @@ def load_questions_and_answers():
                         )
                         for fname in markscheme_imgs
                     ]
-                questions_and_answers[question.get("text")] = {
+                correctly_parsed = (question["correctly_parsed"] and
+                                    ans_n_marks["correctly_parsed"])
+                questions_and_answers[question["text"]] = {
                     "subject": subject,
                     "paper_id": paper_id,
                     "question_num": question_num,
+                    "pages": question["pages"],
                     "answer": answer,
                     "marks": marks,
                     "question_imgs": question_imgs,
                     "markscheme_imgs": markscheme_imgs,
+                    "correctly_parsed": correctly_parsed,
                 }
         return questions_and_answers
