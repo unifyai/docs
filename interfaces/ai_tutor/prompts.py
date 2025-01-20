@@ -308,8 +308,11 @@ sub-questions (a), (b), (i), (ii) etc. if they exist] which should achieve a tot
 of {target} marks for the entire question {question_num}, if marked correctly.
 
 Please state your reasoning in lots of detail in the `rationale: str` field of the 
-response format, referring specifically to the markscheme provided for each of the marks the 
-answer should receive.
+response format, referring specifically to the markscheme provided for each of the marks
+the answer should receive.
+
+Image(s) of the page have also been provided, in case these help provide extra context. 
+You don't need to make use of the images if the text is sufficient.
 
 For the `answer: str` part of the response format, please provide your proposed 
 answer(s) as though the question was answered by a student (who has no knowledge about 
