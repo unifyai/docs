@@ -476,6 +476,8 @@ def parse_markscheme(paper_num):
 
     question_to_pages, num_questions = parse_into_pages()
 
+    json_file_lock = threading.Lock()
+
     def parse_question(question_num: int):
         question_answer_parser = unify.Unify("o1@openai", cache=True)
         num_marks_detector = unify.Unify(
@@ -526,9 +528,11 @@ def parse_markscheme(paper_num):
             "".join([c for c in response.split("\n")[-1].lower() if c.isdigit()]),
         )
         questions[question_num] = {"text": qna, "num-marks": num_marks}
-        parsed = json.dumps(questions, indent=4)
+        parsed = json.dumps(dict(sorted(questions.items())), indent=4)
+        json_file_lock.acquire()
         with open(os.path.join(markscheme_dir, "parsed.json"), "w+") as file:
             file.write(parsed)
+        json_file_lock.release()
 
         # image
         imgs = [diagram_images[pg] for pg in pages if pg in diagram_images]
