@@ -4145,7 +4145,6 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "default": "interface_1",
                             "title": "Name"
                         }
                     },
