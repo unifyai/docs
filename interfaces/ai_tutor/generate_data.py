@@ -1,5 +1,8 @@
 import os
 import json
+
+import cv2
+
 import unify
 import argparse
 from pydantic import BaseModel
@@ -16,6 +19,9 @@ parser.add_argument('--usage', help='Generate synthetic usage data',
 args = parser.parse_args()
 mode = "usage" if args.usage else "labelled"
 
+this_dir = os.path.dirname(__file__)
+pdfs_dir = os.path.join(this_dir, "pdfs")
+
 
 class Response(BaseModel):
     rationale: str
@@ -23,6 +29,14 @@ class Response(BaseModel):
 
 
 def generate_question(question, data, idx):
+    subject_dir = os.path.join(pdfs_dir, data["subject"].replace(" ", "_"))
+    paper_dir = os.path.join(subject_dir, data["paper_id"].replace(" ", "_"))
+    paper_imgs_dir = os.path.join(paper_dir, "paper/imgs")
+    assert os.path.exists(paper_imgs_dir)
+    img_fpaths = [
+        os.path.join(paper_imgs_dir, f"page{pg}.png") for pg in data["pages"]
+    ]
+    imgs = [cv2.imread(fpath, -1) for fpath in img_fpaths]
     to_write = dict()
     data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
     fname = f"{mode}_data_{idx}"
