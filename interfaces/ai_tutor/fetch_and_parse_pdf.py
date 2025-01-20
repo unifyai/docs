@@ -234,6 +234,9 @@ def parse_paper(paper_num):
 
     question_to_pages, num_questions = parse_into_pages()
 
+    with open(os.path.join(paper_dir, "question_to_pages.json"), "w+") as file:
+        file.write(json.dumps(question_to_pages, indent=4))
+
     json_file_lock = threading.Lock()
 
     def parse_question(question_num: int):
@@ -245,7 +248,7 @@ def parse_paper(paper_num):
         )
         pages = question_to_pages[question_num]
         current_text = "".join([reader.pages[pg - 1].extract_text() for pg in pages])
-        imgs = [all_images[p] for p in pages]
+        imgs = [all_images[pg - 1] for pg in pages]
         question_parser.set_system_message(
             QUESTION_PARSER.replace(
                 "{question_number}",
@@ -484,6 +487,8 @@ def parse_markscheme(paper_num):
         return _fill_missing_questions(question_to_pages), max(detected_numeric)
 
     question_to_pages, num_questions = parse_into_pages()
+    with open(os.path.join(markscheme_dir, "question_to_pages.json"), "w+") as file:
+        file.write(json.dumps(question_to_pages, indent=4))
 
     json_file_lock = threading.Lock()
 
@@ -500,7 +505,7 @@ def parse_markscheme(paper_num):
             pg_text = reader.pages[pg - 1].extract_text()
             pg_text = prune_page_number(pg_text, pg, question_num)
             current_text += pg_text
-        imgs = [all_images[p] for p in pages]
+        imgs = [all_images[pg - 1] for pg in pages]
         question_answer_parser.set_system_message(
             QUESTION_ANSWER_PARSER.replace(
                 "{question_number}",
