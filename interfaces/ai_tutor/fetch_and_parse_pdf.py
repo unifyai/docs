@@ -1,16 +1,15 @@
 import os
-import threading
-
 import cv2
 import wget
 import json
-import base64
+import threading
 import numpy as np
 from pypdf import PdfReader, PdfWriter
 from pdf2image import convert_from_path
 
 import unify
 from prompts import *
+from helpers import encode_image
 
 url = (
     "https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment"
@@ -114,10 +113,6 @@ def parse_paper(paper_num):
 
     reader = PdfReader(paper_path)
     questions = dict()
-
-    def encode_image(image_path):
-        _, buffer = cv2.imencode(".jpg", image_path)
-        return base64.b64encode(buffer).decode("utf-8")
 
     all_images = [
         np.asarray(img.getdata())
@@ -368,10 +363,6 @@ def parse_markscheme(paper_num):
 
     reader = PdfReader(markscheme_path)
     questions = dict()
-
-    def encode_image(image_path):
-        _, buffer = cv2.imencode(".jpg", image_path)
-        return base64.b64encode(buffer).decode("utf-8")
 
     all_images = [
         np.asarray(img.getdata())
