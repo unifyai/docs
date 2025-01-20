@@ -4395,6 +4395,23 @@
                     }
                 }
             }
+        },
+        "/metrics": {
+            "get": {
+                "summary": "Metrics",
+                "description": "Endpoint that returns the aggregated Prometheus metrics.\nIncludes simple Bearer-token authentication to secure the endpoint.",
+                "operationId": "metrics_metrics_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -5597,6 +5614,17 @@
                             }
                         ],
                         "title": "Plot Group By"
+                    },
+                    "bin_count": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bin Count"
                     }
                 },
                 "type": "object",
