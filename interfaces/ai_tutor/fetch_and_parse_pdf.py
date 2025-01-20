@@ -289,7 +289,8 @@ def parse_paper(paper_num):
         questions[question_num] = {
             "text": question_parsed,
             "text-only": text_only,
-            "correctly_parsed": True
+            "pages": pages,
+            "correctly_parsed": True,
         }
         parsed = json.dumps(dict(sorted(questions.items())), indent=4)
         json_file_lock.acquire()
@@ -548,6 +549,7 @@ def parse_markscheme(paper_num):
         questions[question_num] = {
             "text": qna,
             "num-marks": num_marks,
+            "pages": pages,
             "correctly_parsed": True
         }
         parsed = json.dumps(dict(sorted(questions.items())), indent=4)
