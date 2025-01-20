@@ -4,6 +4,11 @@ import json
 import base64
 
 
+def encode_image(image_path):
+    _, buffer = cv2.imencode(".jpg", image_path)
+    return base64.b64encode(buffer).decode("utf-8")
+
+
 def load_questions_and_answers():
     questions_and_answers = dict()
     pdfs_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "pdfs")
@@ -54,9 +59,3 @@ def load_questions_and_answers():
                     "markscheme_imgs": markscheme_imgs,
                 }
         return questions_and_answers
-
-
-def encode_image(image_path):
-    success, buffer = cv2.imencode(".png", cv2.imread(image_path))
-    assert success
-    return base64.b64encode(buffer).decode("utf-8")
