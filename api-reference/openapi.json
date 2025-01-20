@@ -4044,6 +4044,16 @@
                             }
                         }
                     },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
                     "422": {
                         "description": "Validation Error",
                         "content": {
@@ -4135,6 +4145,7 @@
                         "required": false,
                         "schema": {
                             "type": "string",
+                            "default": "interface_1",
                             "title": "Name"
                         }
                     },
@@ -4191,7 +4202,17 @@
                             }
                         }
                     },
-                    "404": {
+                    "4041": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "4042": {
                         "description": "Interface Not Found",
                         "content": {
                             "application/json": {
