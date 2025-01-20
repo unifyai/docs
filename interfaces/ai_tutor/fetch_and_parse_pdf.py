@@ -29,6 +29,19 @@ os.makedirs(pdf_dir, exist_ok=True)
 reader = PdfReader(pdf_path)
 
 
+def prune_page_number(pg_text: str, page_num: int, question_num: int):
+    if page_num == question_num:
+        return pg_text
+    # remove page number to avoid any confusion with question number
+    split = pg_text.split(str(question_num))
+    if len(split) == 1:
+        return pg_text
+    pre_q = split[0]
+    post_q = split[1:]
+    pre_q = pre_q.replace(str(page_num), "")
+    return str(question_num).join([pre_q] + post_q)
+
+
 def parse_pdf_into_papers_and_markschemes():
     paper_cover_text = (
         "completetheboxesabovewithyourname,centrenumberandcandidatenumber."
@@ -149,6 +162,7 @@ def parse_paper(paper_num):
         for page_num, page in enumerate(reader.pages):
             page_num += 1
             text = page.extract_text().split("OCR  2024  J560/0")[-1][2:]
+            text = prune_page_number(text, page_num, latest_num+1)
             # detect diagrams on page
             img = all_images[page_num - 1]
             diagram_response = diagram_detector.generate(
@@ -274,7 +288,11 @@ def parse_paper(paper_num):
         )
         response = text_only_detector.generate(question_parsed)
         text_only = "yes" in response.split("\n")[-1].lower()
-        questions[question_num] = {"text": question_parsed, "text-only": text_only}
+        questions[question_num] = {
+            "text": question_parsed,
+            "text-only": text_only,
+            "correctly_parsed": True
+        }
         parsed = json.dumps(dict(sorted(questions.items())), indent=4)
         json_file_lock.acquire()
         with open(os.path.join(paper_dir, "parsed.json"), "w+") as file:
@@ -489,14 +507,7 @@ def parse_markscheme(paper_num):
         current_text = ""
         for pg in pages:
             pg_text = reader.pages[pg - 1].extract_text()
-            if pg != question_num:
-                # remove page number to avoid any confusion with question number
-                split = pg_text.split(str(question_num))
-                if len(split) > 1:
-                    pre_q = split[0]
-                    post_q = split[1:]
-                    pre_q = pre_q.replace(str(pg), "")
-                    pg_text = str(question_num).join([pre_q] + post_q)
+            pg_text = prune_page_number(pg_text, pg, question_num)
             current_text += pg_text
         imgs = [all_images[p] for p in pages]
         question_answer_parser.set_system_message(
@@ -538,7 +549,11 @@ def parse_markscheme(paper_num):
         num_marks = int(
             "".join([c for c in response.split("\n")[-1].lower() if c.isdigit()]),
         )
-        questions[question_num] = {"text": qna, "num-marks": num_marks}
+        questions[question_num] = {
+            "text": qna,
+            "num-marks": num_marks,
+            "correctly_parsed": True
+        }
         parsed = json.dumps(dict(sorted(questions.items())), indent=4)
         json_file_lock.acquire()
         with open(os.path.join(markscheme_dir, "parsed.json"), "w+") as file:

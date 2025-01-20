@@ -73,10 +73,12 @@ preceding question {preceding} or subsequent question {subsequent}.
 
 The question was parsed from a PDF, and the formatting might be strange or wrong as a 
 result of this conversion to pure text. More importantly, mathematical symbols 
-such as √x, y², z₄ etc. are very often missed by the parsing logic. Image(s) of the 
-relevant page(s) have therefore *also* been provided. Please extract **all** text for 
-question {question_number} **including any symbols missed** by the parsing logic, 
-which must be inferred from the image(s).
+such as √w, x², y₄, ⁴√z etc. are very often missed by the parsing logic. Sometimes, 
+entire equations are embedded in the PDF as images, and will not be shown in the text. 
+Image(s) of the relevant page(s) have therefore *also* been provided.
+Please extract **all** important information for question {question_number} 
+**including any symbols and/or equations missing in the text**, 
+by inferring these from the provided image(s).
 
 Furthermore, if the formatting could be improved to make the question more readable 
 in text-only format, please make any formatting improvements as you see fit.
@@ -95,10 +97,12 @@ answer or guidelines for the preceding question {preceding} or subsequent questi
 
 The text was parsed from a PDF, and the formatting might be strange or wrong as a 
 result of this conversion to pure text. More importantly, mathematical symbols 
-such as √x, y², z₄ etc. are very often missed by the parsing logic. Image(s) of the 
-relevant page(s) have therefore *also* been provided. Please extract **all** text for 
-the markscheme of question {question_number} **including any symbols missed** by the 
-parsing logic, which must be inferred from the image(s).
+such as √w, x², y₄, ⁴√z etc. are very often missed by the parsing logic. Sometimes, 
+entire equations are embedded in the PDF as images, and will not be shown in the text.
+Image(s) of the relevant page(s) have therefore *also* been provided.
+Please extract **all** text for the markscheme of question {question_number}
+**including any symbols and/or equations missing in the text** in the text, 
+by inferring these from the provided image(s).
 
 Furthermore, if the formatting could be improved to make the markscheme more readable 
 in text-only format, please make any formatting improvements as you see fit.
