@@ -73,7 +73,7 @@ preceding question {preceding} or subsequent question {subsequent}.
 
 The question was parsed from a PDF, and the formatting might be strange or wrong as a 
 result of this conversion to pure text. More importantly, mathematical symbols 
-such as √12, x², y₄ etc. are very often missed by the parsing logic. Image(s) of the 
+such as √x, y², z₄ etc. are very often missed by the parsing logic. Image(s) of the 
 relevant page(s) have therefore *also* been provided. Please extract **all** text for 
 question {question_number} **including any symbols missed** by the parsing logic, 
 which must be inferred from the image(s).
