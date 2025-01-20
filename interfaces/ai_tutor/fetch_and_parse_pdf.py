@@ -461,7 +461,7 @@ def parse_markscheme(paper_num):
 
     question_to_pages, num_questions = parse_into_pages()
 
-    for question_num in range(1, num_questions + 1):
+    def parse_question(question_num: int):
         pages = question_to_pages[question_num]
         current_text = "".join([reader.pages[pg - 1].extract_text() for pg in pages])
         question_answer_parser.set_system_message(
@@ -491,7 +491,7 @@ def parse_markscheme(paper_num):
         # image
         imgs = [diagram_images[pg] for pg in pages if pg in diagram_images]
         if not imgs:
-            continue
+            return
         diagram_detector.set_system_message(
             DIAGRAM_DETECTION_IN_QUESTION.replace(
                 "{question_number}",
@@ -531,7 +531,7 @@ def parse_markscheme(paper_num):
         contains_diagram = "yes" in diagram_response.split("\n")[-1].strip().lower()
         # incrementally save to file
         if not contains_diagram:
-            continue
+            return
         img_dir = os.path.join(markscheme_dir, "imgs")
         os.makedirs(img_dir, exist_ok=True)
         fnames = [f"page{pg}.png" for pg in pages if pg in diagram_images]
@@ -539,6 +539,8 @@ def parse_markscheme(paper_num):
         for fname, img in zip(fnames, imgs):
             if not os.path.exists(fname):
                 cv2.imwrite(os.path.join(img_dir, fname), img)
+
+    unify.map(parse_question, list(range(1, num_questions + 1)))
 
 
 if __name__ == "__main__":
