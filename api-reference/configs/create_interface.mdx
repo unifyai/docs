@@ -12,6 +12,10 @@ api: 'POST /v0/interface'
 
 #### Body
 
+<ParamField body="name" type="string" required="true">
+
+</ParamField>
+
 <ParamField body="items" type="[Any]" required="true">
 
 </ParamField>
@@ -20,11 +24,15 @@ api: 'POST /v0/interface'
 
 </ParamField>
 
-<ParamField body="project" type="string | null" >
+<ParamField body="project" type="string" required="true">
 
 </ParamField>
 
 <ParamField body="temporary" type="boolean"  default={false}>
+
+</ParamField>
+
+<ParamField body="new_name" type="string" >
 
 </ParamField>
 

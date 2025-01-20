@@ -1,5 +1,5 @@
 ---
-title: 'Get Interface'
+title: 'Get Interfaces'
 api: 'GET /v0/interface'
 ---
 
@@ -12,6 +12,14 @@ api: 'GET /v0/interface'
 
 #### Query Parameters
 
+<ParamField query="name" type="string" >
+
+</ParamField>
+
+<ParamField query="project" type="string" required="true">
+
+</ParamField>
+
 <ParamField query="temporary" type="boolean" >
 
 </ParamField>
@@ -20,14 +28,14 @@ api: 'GET /v0/interface'
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/interface?temporary=None' \
+  --url 'https://api.unify.ai/v0/interface?name=None&project=None&temporary=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interface?temporary=None"
+url = "https://api.unify.ai/v0/interface?name=None&project=None&temporary=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -40,26 +48,30 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{
-    "items": [
-        {
-            "i": "n0",
-            "x": 0,
-            "y": 0,
-            "w": 3,
-            "h": 3
-        },
-        {
-            "i": "n1",
-            "x": 0,
-            "y": 1,
-            "w": 2,
-            "h": 3,
-            "tab": "Plot_1"
-        }
-    ],
-    "new_counter": 2
-}
+[
+    {
+        "name": "interface_1",
+        "project": "my_project",
+        "items": [
+            {
+                "i": "n0",
+                "x": 0,
+                "y": 0,
+                "w": 3,
+                "h": 3
+            },
+            {
+                "i": "n1",
+                "x": 0,
+                "y": 3,
+                "w": 2,
+                "h": 3,
+                "tab": "Plot_1"
+            }
+        ],
+        "new_counter": 2
+    }
+]
 ```
 
 ```json 404

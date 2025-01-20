@@ -12,6 +12,14 @@ api: 'DELETE /v0/interface'
 
 #### Query Parameters
 
+<ParamField query="name" type="boolean" required="true">
+
+</ParamField>
+
+<ParamField query="project" type="boolean" required="true">
+
+</ParamField>
+
 <ParamField query="temporary" type="boolean" >
 
 </ParamField>
@@ -20,14 +28,14 @@ api: 'DELETE /v0/interface'
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/interface?temporary=None' \
+  --url 'https://api.unify.ai/v0/interface?name=None&project=None&temporary=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interface?temporary=None"
+url = "https://api.unify.ai/v0/interface?name=None&project=None&temporary=None"
 
 headers = {"Authorization": "Bearer <token>"}
 

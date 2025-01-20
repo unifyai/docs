@@ -4111,14 +4111,32 @@
                 "tags": [
                     "Configs"
                 ],
-                "summary": "Get Interface",
-                "operationId": "get_interface_v0_interface_get",
+                "summary": "Get Interfaces",
+                "operationId": "get_interfaces_v0_interface_get",
                 "security": [
                     {
                         "HTTPBearer": []
                     }
                 ],
                 "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "title": "Name"
+                        }
+                    },
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Project"
+                        }
+                    },
                     {
                         "name": "temporary",
                         "in": "query",
@@ -4136,26 +4154,30 @@
                         "content": {
                             "application/json": {
                                 "schema": {},
-                                "example": {
-                                    "items": [
-                                        {
-                                            "i": "n0",
-                                            "x": 0,
-                                            "y": 0,
-                                            "w": 3,
-                                            "h": 3
-                                        },
-                                        {
-                                            "i": "n1",
-                                            "x": 0,
-                                            "y": 1,
-                                            "w": 2,
-                                            "h": 3,
-                                            "tab": "Plot_1"
-                                        }
-                                    ],
-                                    "new_counter": 2
-                                }
+                                "example": [
+                                    {
+                                        "name": "interface_1",
+                                        "project": "my_project",
+                                        "items": [
+                                            {
+                                                "i": "n0",
+                                                "x": 0,
+                                                "y": 0,
+                                                "w": 3,
+                                                "h": 3
+                                            },
+                                            {
+                                                "i": "n1",
+                                                "x": 0,
+                                                "y": 3,
+                                                "w": 2,
+                                                "h": 3,
+                                                "tab": "Plot_1"
+                                            }
+                                        ],
+                                        "new_counter": 2
+                                    }
+                                ]
                             }
                         }
                     },
@@ -4191,6 +4213,24 @@
                     }
                 ],
                 "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean",
+                            "title": "Name"
+                        }
+                    },
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean",
+                            "title": "Project"
+                        }
+                    },
                     {
                         "name": "temporary",
                         "in": "query",
@@ -5241,6 +5281,10 @@
             },
             "InterfaceConfig": {
                 "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
                     "items": {
                         "items": {
                             "$ref": "#/components/schemas/Item"
@@ -5253,26 +5297,25 @@
                         "title": "New Counter"
                     },
                     "project": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "string",
                         "title": "Project"
                     },
                     "temporary": {
                         "type": "boolean",
                         "title": "Temporary",
                         "default": false
+                    },
+                    "new_name": {
+                        "type": "string",
+                        "title": "New Name"
                     }
                 },
                 "type": "object",
                 "required": [
+                    "name",
                     "items",
-                    "new_counter"
+                    "new_counter",
+                    "project"
                 ],
                 "title": "InterfaceConfig"
             },
