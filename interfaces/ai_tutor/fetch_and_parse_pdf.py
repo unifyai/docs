@@ -1,4 +1,6 @@
 import os
+import threading
+
 import cv2
 import wget
 import json
@@ -87,14 +89,14 @@ def _fill_missing_questions(questions_to_pages):
 
 def parse_paper(paper_num):
     question_detector = unify.Unify(
-        "gpt-4o@openai",
+        "o1@openai",
         cache=True,
         system_message=QUESTION_DETECTION,
     )
-    question_parser = unify.Unify("gpt-4o@openai", cache=True)
-    diagram_detector = unify.Unify("gpt-4o@openai", cache=True)
+    question_parser = unify.Unify("o1@openai", cache=True)
+    diagram_detector = unify.Unify("o1@openai", cache=True)
     text_only_detector = unify.Unify(
-        "gpt-4o@openai",
+        "o1@openai",
         cache=True,
         system_message=TEXT_ONLY_DETECTION,
     )
@@ -229,7 +231,9 @@ def parse_paper(paper_num):
 
     question_to_pages, num_questions = parse_into_pages()
 
-    for question_num in range(1, num_questions + 1):
+    json_file_lock = threading.Lock()
+
+    def parse_question(question_num: int):
         pages = question_to_pages[question_num]
         current_text = "".join([reader.pages[pg - 1].extract_text() for pg in pages])
         question_parser.set_system_message(
@@ -250,14 +254,16 @@ def parse_paper(paper_num):
         response = text_only_detector.generate(question_parsed)
         text_only = "yes" in response.split("\n")[-1].lower()
         questions[question_num] = {"text": question_parsed, "text-only": text_only}
-        parsed = json.dumps(questions, indent=4)
+        parsed = json.dumps(dict(sorted(questions.items())), indent=4)
+        json_file_lock.acquire()
         with open(os.path.join(paper_dir, "parsed.json"), "w+") as file:
             file.write(parsed)
+        json_file_lock.release()
 
         # image
         imgs = [diagram_images[pg] for pg in pages if pg in diagram_images]
         if not imgs:
-            continue
+            return
         diagram_detector.set_system_message(
             DIAGRAM_DETECTION_IN_QUESTION.replace(
                 "{question_number}",
@@ -297,7 +303,7 @@ def parse_paper(paper_num):
         contains_diagram = "yes" in diagram_response.split("\n")[-1].strip().lower()
         # incrementally save to file
         if not contains_diagram:
-            continue
+            return
         img_dir = os.path.join(paper_dir, "imgs")
         os.makedirs(img_dir, exist_ok=True)
         fnames = [f"page{pg}.png" for pg in pages if pg in diagram_images]
@@ -306,17 +312,19 @@ def parse_paper(paper_num):
             if not os.path.exists(fname):
                 cv2.imwrite(os.path.join(img_dir, fname), img)
 
+    unify.map(parse_question, list(range(1, num_questions + 1)))
+
 
 def parse_markscheme(paper_num):
     question_detector = unify.Unify(
-        "gpt-4o@openai",
+        "o1@openai",
         cache=True,
         system_message=QUESTION_ANSWER_DETECTION,
     )
-    question_answer_parser = unify.Unify("gpt-4o@openai", cache=True)
-    diagram_detector = unify.Unify("gpt-4o@openai", cache=True)
+    question_answer_parser = unify.Unify("o1@openai", cache=True)
+    diagram_detector = unify.Unify("o1@openai", cache=True)
     num_marks_detector = unify.Unify(
-        "gpt-4o@openai",
+        "o1@openai",
         cache=True,
         system_message=NUM_MARKS_DETECTION,
     )
@@ -535,10 +543,16 @@ def parse_markscheme(paper_num):
 
 if __name__ == "__main__":
     parse_pdf_into_papers_and_markschemes()
-    for subdir in sorted(os.listdir(pdf_dir)):
+    subdirs = sorted(os.listdir(pdf_dir))
+
+    def _parse_paper(subdir: str):
         target_paper_fpath = os.path.join(pdf_dir, subdir, "paper/parsed.json")
         if not os.path.exists(target_paper_fpath):
             parse_paper(int(subdir))
+
+    unify.map(_parse_paper, subdirs)
+
+    def _parse_markscheme(subdir: str):
         target_markscheme_fpath = os.path.join(
             pdf_dir,
             subdir,
@@ -546,3 +560,5 @@ if __name__ == "__main__":
         )
         if not os.path.exists(target_markscheme_fpath):
             parse_markscheme(int(subdir))
+
+    unify.map(_parse_markscheme, subdirs)
