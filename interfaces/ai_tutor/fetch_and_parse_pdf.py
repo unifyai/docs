@@ -486,7 +486,18 @@ def parse_markscheme(paper_num):
             system_message=NUM_MARKS_DETECTION,
         )
         pages = question_to_pages[question_num]
-        current_text = "".join([reader.pages[pg - 1].extract_text() for pg in pages])
+        current_text = ""
+        for pg in pages:
+            pg_text = reader.pages[pg - 1].extract_text()
+            if pg != question_num:
+                # remove page number to avoid any confusion with question number
+                split = pg_text.split(str(question_num))
+                if len(split) > 1:
+                    pre_q = split[0]
+                    post_q = split[1:]
+                    pre_q = pre_q.replace(str(pg), "")
+                    pg_text = str(question_num).join([pre_q] + post_q)
+            current_text += pg_text
         imgs = [all_images[p] for p in pages]
         question_answer_parser.set_system_message(
             QUESTION_ANSWER_PARSER.replace(
