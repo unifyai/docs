@@ -5285,6 +5285,10 @@
                         "type": "string",
                         "title": "Name"
                     },
+                    "project": {
+                        "type": "string",
+                        "title": "Project"
+                    },
                     "items": {
                         "items": {
                             "$ref": "#/components/schemas/Item"
@@ -5295,10 +5299,6 @@
                     "new_counter": {
                         "type": "integer",
                         "title": "New Counter"
-                    },
-                    "project": {
-                        "type": "string",
-                        "title": "Project"
                     },
                     "temporary": {
                         "type": "boolean",
@@ -5313,9 +5313,9 @@
                 "type": "object",
                 "required": [
                     "name",
+                    "project",
                     "items",
-                    "new_counter",
-                    "project"
+                    "new_counter"
                 ],
                 "title": "InterfaceConfig"
             },
