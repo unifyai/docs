@@ -93,13 +93,7 @@ def parse_paper(paper_num):
         cache=True,
         system_message=QUESTION_DETECTION,
     )
-    question_parser = unify.Unify("o1@openai", cache=True)
     diagram_detector = unify.Unify("o1@openai", cache=True)
-    text_only_detector = unify.Unify(
-        "o1@openai",
-        cache=True,
-        system_message=TEXT_ONLY_DETECTION,
-    )
 
     paper_dir = os.path.join(pdf_dir, str(paper_num), "paper")
     os.makedirs(paper_dir, exist_ok=True)
@@ -107,6 +101,10 @@ def parse_paper(paper_num):
 
     reader = PdfReader(paper_path)
     questions = dict()
+
+    def encode_image(image_path):
+        _, buffer = cv2.imencode(".jpg", image_path)
+        return base64.b64encode(buffer).decode("utf-8")
 
     all_images = [
         np.asarray(img.getdata())
@@ -118,10 +116,6 @@ def parse_paper(paper_num):
     ]
 
     diagram_images = dict()
-
-    def encode_image(image_path):
-        _, buffer = cv2.imencode(".jpg", image_path)
-        return base64.b64encode(buffer).decode("utf-8")
 
     def parse_question_detector(response):
         parsed = (
@@ -178,13 +172,13 @@ def parse_paper(paper_num):
                 ],
             )
             contains_diagram = "yes" in diagram_response.split("\n")[-1].strip().lower()
+            img_dir = os.path.join(paper_dir, "imgs")
+            os.makedirs(img_dir, exist_ok=True)
+            fname = f"page{page_num}.png"
+            if not os.path.exists(fname):
+                cv2.imwrite(os.path.join(img_dir, fname), img)
             if contains_diagram:
                 diagram_images[page_num] = img
-                img_dir = os.path.join(paper_dir, "imgs")
-                os.makedirs(img_dir, exist_ok=True)
-                fname = f"page{page_num}.png"
-                if not os.path.exists(fname):
-                    cv2.imwrite(os.path.join(img_dir, fname), img)
             question_detector.set_system_message(
                 QUESTION_DETECTION.replace(
                     "{n0}",
@@ -234,8 +228,15 @@ def parse_paper(paper_num):
     json_file_lock = threading.Lock()
 
     def parse_question(question_num: int):
+        question_parser = unify.Unify("o1@openai", cache=True)
+        text_only_detector = unify.Unify(
+            "o1@openai",
+            cache=True,
+            system_message=TEXT_ONLY_DETECTION,
+        )
         pages = question_to_pages[question_num]
         current_text = "".join([reader.pages[pg - 1].extract_text() for pg in pages])
+        imgs = [all_images[p] for p in pages]
         question_parser.set_system_message(
             QUESTION_PARSER.replace(
                 "{question_number}",
@@ -250,7 +251,27 @@ def parse_paper(paper_num):
                 str(question_num + 1),
             ),
         )
-        question_parsed = question_parser.generate(current_text)
+        question_parsed = question_parser.generate(
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": current_text,
+                        }
+                    ] + [
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/jpeg;base64,"
+                                       f"{encode_image(img)}",
+                            },
+                        }
+                    for img in imgs],
+                },
+            ],
+        )
         response = text_only_detector.generate(question_parsed)
         text_only = "yes" in response.split("\n")[-1].lower()
         questions[question_num] = {"text": question_parsed, "text-only": text_only}
@@ -321,13 +342,7 @@ def parse_markscheme(paper_num):
         cache=True,
         system_message=QUESTION_ANSWER_DETECTION,
     )
-    question_answer_parser = unify.Unify("o1@openai", cache=True)
     diagram_detector = unify.Unify("o1@openai", cache=True)
-    num_marks_detector = unify.Unify(
-        "o1@openai",
-        cache=True,
-        system_message=NUM_MARKS_DETECTION,
-    )
 
     markscheme_dir = os.path.join(pdf_dir, str(paper_num), "markscheme")
     os.makedirs(markscheme_dir, exist_ok=True)
@@ -335,6 +350,10 @@ def parse_markscheme(paper_num):
 
     reader = PdfReader(markscheme_path)
     questions = dict()
+
+    def encode_image(image_path):
+        _, buffer = cv2.imencode(".jpg", image_path)
+        return base64.b64encode(buffer).decode("utf-8")
 
     all_images = [
         np.asarray(img.getdata())
@@ -346,10 +365,6 @@ def parse_markscheme(paper_num):
     ]
 
     diagram_images = dict()
-
-    def encode_image(image_path):
-        _, buffer = cv2.imencode(".jpg", image_path)
-        return base64.b64encode(buffer).decode("utf-8")
 
     def parse_question_detector(response):
         parsed = (
@@ -408,13 +423,13 @@ def parse_markscheme(paper_num):
                 ],
             )
             contains_diagram = "yes" in diagram_response.split("\n")[-1].strip().lower()
+            img_dir = os.path.join(markscheme_dir, "imgs")
+            os.makedirs(img_dir, exist_ok=True)
+            fname = f"page{page_num}.png"
+            if not os.path.exists(fname):
+                cv2.imwrite(os.path.join(img_dir, fname), img)
             if contains_diagram:
                 diagram_images[page_num] = img
-                img_dir = os.path.join(markscheme_dir, "imgs")
-                os.makedirs(img_dir, exist_ok=True)
-                fname = f"page{page_num}.png"
-                if not os.path.exists(fname):
-                    cv2.imwrite(os.path.join(img_dir, fname), img)
             question_detector.set_system_message(
                 QUESTION_ANSWER_DETECTION.replace(
                     "{n0}",
@@ -462,8 +477,15 @@ def parse_markscheme(paper_num):
     question_to_pages, num_questions = parse_into_pages()
 
     def parse_question(question_num: int):
+        question_answer_parser = unify.Unify("o1@openai", cache=True)
+        num_marks_detector = unify.Unify(
+            "o1@openai",
+            cache=True,
+            system_message=NUM_MARKS_DETECTION,
+        )
         pages = question_to_pages[question_num]
         current_text = "".join([reader.pages[pg - 1].extract_text() for pg in pages])
+        imgs = [all_images[p] for p in pages]
         question_answer_parser.set_system_message(
             QUESTION_ANSWER_PARSER.replace(
                 "{question_number}",
@@ -478,7 +500,27 @@ def parse_markscheme(paper_num):
                 str(question_num + 1),
             ),
         )
-        qna = question_answer_parser.generate(current_text)
+        qna = question_answer_parser.generate(
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": current_text,
+                        }
+                    ] + [
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/jpeg;base64,"
+                                       f"{encode_image(img)}",
+                            },
+                        }
+                    for img in imgs],
+                },
+            ],
+        )
         response = num_marks_detector.generate(qna)
         num_marks = int(
             "".join([c for c in response.split("\n")[-1].lower() if c.isdigit()]),
@@ -547,14 +589,14 @@ if __name__ == "__main__":
     parse_pdf_into_papers_and_markschemes()
     subdirs = sorted(os.listdir(pdf_dir))
 
-    def _parse_paper(subdir: str):
+    def _parse(subdir: str):
+
+        # paper
         target_paper_fpath = os.path.join(pdf_dir, subdir, "paper/parsed.json")
         if not os.path.exists(target_paper_fpath):
             parse_paper(int(subdir))
 
-    unify.map(_parse_paper, subdirs)
-
-    def _parse_markscheme(subdir: str):
+        # markscheme
         target_markscheme_fpath = os.path.join(
             pdf_dir,
             subdir,
@@ -563,4 +605,4 @@ if __name__ == "__main__":
         if not os.path.exists(target_markscheme_fpath):
             parse_markscheme(int(subdir))
 
-    unify.map(_parse_markscheme, subdirs)
+    unify.map(_parse, subdirs, mode="loop")

@@ -68,22 +68,44 @@ mark scheme table,then just explain why, with no comma-seperated list at the end
 
 QUESTION_PARSER = """
 Your task is to extract the full contents of question {question_number} from the
-following text, and *nothing else*. You should *not* extract any parts of the
-preceding question {preceding} or subsequent question {subsequent}. The question was
-parsed from a PDF, and the formatting might be strange or wrong as a result of this
-conversion to pure text. If the formatting could be improved to make the question more
-readable, please make any formatting improvements as you see fit.
+following text and images. You should *not* extract any parts of the
+preceding question {preceding} or subsequent question {subsequent}.
+
+The question was parsed from a PDF, and the formatting might be strange or wrong as a 
+result of this conversion to pure text. More importantly, mathematical symbols 
+such as √12, x², y₄ etc. are very often missed by the parsing logic. Image(s) of the 
+relevant page(s) have therefore *also* been provided. Please extract **all** text for 
+question {question_number} **including any symbols missed** by the parsing logic, 
+which must be inferred from the image(s).
+
+Furthermore, if the formatting could be improved to make the question more readable 
+in text-only format, please make any formatting improvements as you see fit.
+
+Please respond with the **question only**. Do not provide any explanations, commentary
+or preliminary details as part of your answer. Just respond with the newly formatted 
+question and nothing else.
 """
 
 QUESTION_ANSWER_PARSER = """
-Your task is to extract the full contents of the answer correct answer and
+Your task is to extract the full contents of the correct answer and
 marking guidelines for marking question {question_number} from the
-following text, and *nothing else*. You should *not* extract any parts of the
+following text and images. You should *not* extract any parts of the
 answer or guidelines for the preceding question {preceding} or subsequent question
-{subsequent}. The markscheme for this question was parsed from a PDF, and the
-formatting might be strange or wrong as a result of this conversion to pure text. If
-the formatting could be improved to make the answer and the marking guidelines more
-readable, please make any formatting improvements as you see fit.
+{subsequent}.
+
+The text was parsed from a PDF, and the formatting might be strange or wrong as a 
+result of this conversion to pure text. More importantly, mathematical symbols 
+such as √12, x², y₄ etc. are very often missed by the parsing logic. Image(s) of the 
+relevant page(s) have therefore *also* been provided. Please extract **all** text for 
+the markscheme of question {question_number} **including any symbols missed** by the 
+parsing logic, which must be inferred from the image(s).
+
+Furthermore, if the formatting could be improved to make the markscheme more readable 
+in text-only format, please make any formatting improvements as you see fit.
+
+Please respond with the **markscheme only**. Do not provide any explanations, 
+commentary or preliminary details as part of your answer. Just respond with the newly 
+formatted markscheme and nothing else.
 """
 
 DIAGRAM_DETECTION_ON_PAGE = """
