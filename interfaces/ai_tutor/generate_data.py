@@ -5,7 +5,7 @@ import argparse
 from pydantic import BaseModel
 
 from prompts import *
-from helpers import load_questions_and_answers
+from helpers import load_questions_and_answers, encode_image
 
 
 parser = argparse.ArgumentParser()
@@ -27,11 +27,11 @@ def generate_question(question, data, idx):
     data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
     fname = f"{mode}_data_{idx}"
     data_path = os.path.join(data_dir, fname)
-    generation_client = unify.Unify("o1@openai", cache=True)
+    generation_client = unify.Unify("o1@openai", response_format=Response, cache=True)
     targets = dict()
     for target in range(data["marks"] + 1):
-        response = generation_client.generate(
-            system_message=GENERATE_RESPONSE_PROMPT.replace(
+        generation_client.set_system_message(
+            GENERATE_RESPONSE_PROMPT.replace(
                 "{target}",
                 str(target),
             )
@@ -49,8 +49,23 @@ def generate_question(question, data, idx):
             .replace(
                 "{markscheme}",
                 data["answer"],
-            ),
-            response_format=Response,
+            )
+        )
+        response = generation_client.generate(
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/jpeg;base64,"
+                                       f"{encode_image(img)}",
+                            },
+                        }
+                    for img in imgs],
+                },
+            ],
         )
         targets[target] = json.loads(response)
     targets["subject"] = data["subject"]
@@ -93,7 +108,7 @@ def combine_data():
 def main():
     qna = load_questions_and_answers()
     args = [(question, dct, i) for i, (question, dct) in enumerate(qna.items())]
-    unify.map(generate_question, args)
+    unify.map(generate_question, args, mode="loop")
     combine_data()
 
 
