@@ -85,16 +85,24 @@ def parse_pdf_into_papers_and_markschemes():
         count += 1
 
 
-def _fill_missing_questions(questions_to_pages):
+def _fill_missing_questions_n_pages(questions_to_pages):
     prev_question_num = 0
+    prev_pages = list()
     new_questions_to_pages = questions_to_pages.copy()
     for question_num, pages in questions_to_pages.items():
         if question_num != prev_question_num + 1:
-            union_of_pages = list(
-                dict.fromkeys(questions_to_pages[prev_question_num] + pages),
-            )
+            min_pg = min(questions_to_pages[prev_question_num])
+            max_pg = max(pages)
+            union_of_pages = list(range(min_pg, max_pg + 1))
             for q_num in range(prev_question_num + 1, question_num):
                 new_questions_to_pages[q_num] = union_of_pages
+        elif pages[0] > prev_pages[-1] + 1:
+            new_questions_to_pages[question_num - 1] = (
+                list(range(prev_pages[0], pages[0] + 1))
+            )
+            new_questions_to_pages[question_num] = (
+                list(range(prev_pages[-1], pages[-1] + 1))
+            )
         prev_question_num = question_num
     return dict(sorted(new_questions_to_pages.items()))
 
@@ -230,7 +238,7 @@ def parse_paper(paper_num):
             latest_char = "`" if last_question.isnumeric() else last_question
             for question in detected_numeric:
                 question_to_pages[question] = [page_num]
-        return _fill_missing_questions(question_to_pages), max(detected_numeric)
+        return _fill_missing_questions_n_pages(question_to_pages), max(detected_numeric)
 
     question_to_pages, num_questions = parse_into_pages()
 
@@ -485,7 +493,7 @@ def parse_markscheme(paper_num):
             latest_char = "`" if last_question.isnumeric() else last_question
             for question in detected_numeric:
                 question_to_pages[question] = [page_num]
-        return _fill_missing_questions(question_to_pages), max(detected_numeric)
+        return _fill_missing_questions_n_pages(question_to_pages), max(detected_numeric)
 
     question_to_pages, num_questions = parse_into_pages()
     with open(os.path.join(markscheme_dir, "question_to_pages.json"), "w+") as file:
