@@ -98,6 +98,10 @@ def main():
 
 
 if __name__ == "__main__":
+    os.makedirs(
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), "data"),
+        exist_ok=True
+    )
     assert not (args.labelled and args.usage), \
         "Please specify either --labelled or --usage, not both."
     assert args.labelled or args.usage, \
