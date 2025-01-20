@@ -96,7 +96,7 @@ def _fill_missing_questions_n_pages(questions_to_pages):
             union_of_pages = list(range(min_pg, max_pg + 1))
             for q_num in range(prev_question_num + 1, question_num):
                 new_questions_to_pages[q_num] = union_of_pages
-        elif pages[0] > prev_pages[-1] + 1:
+        elif prev_pages and pages[0] > prev_pages[-1] + 1:
             new_questions_to_pages[question_num - 1] = (
                 list(range(prev_pages[0], pages[0] + 1))
             )
@@ -104,6 +104,7 @@ def _fill_missing_questions_n_pages(questions_to_pages):
                 list(range(prev_pages[-1], pages[-1] + 1))
             )
         prev_question_num = question_num
+        prev_pages = pages
     return dict(sorted(new_questions_to_pages.items()))
 
 
