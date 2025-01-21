@@ -45,10 +45,7 @@
         "pages": [
             6
         ],
-        "correctly_parsed": true,
-        "images": [
-            "page6.png"
-        ]
+        "correctly_parsed": true
     },
     "7": {
         "text": "7 (a)  \nAnswer: 60, 50  \nMarks: 2  \nPart marks and guidance:  \n\u2022 1 AO1.3a   \n\u2022 1 AO3.1a  \n\u2022 B1 for each  \n\n(b)  \nAnswer: 2  \nMarks: 2  \nPart marks and guidance:  \n\u2022 1 AO1.3a  \n\u2022 1 AO3.1a  \n\u2022 M1 for 8 seen",
@@ -96,7 +93,10 @@
         "pages": [
             8
         ],
-        "correctly_parsed": true
+        "correctly_parsed": true,
+        "images": [
+            "page8.png"
+        ]
     },
     "13": {
         "text": "13 (a)(i)  \nAnswer:  \nAny straight line through the origin (e.g. y = 2x).  \n\nMarks: 2  \n(1 AO1.1, 1 AO2.3b)  \n\nPart marks and guidance:  \n\u2022 B1 for a straight line  \n\n13 (a)(ii)  \nAnswer:  \nAny cubic with two turning points (e.g. a typical \u201cS\u2010shaped\u201d cubic).  \n\nMarks: 2  \n(1 AO1.1, 1 AO2.3b)  \n\nPart marks and guidance:  \n\u2022 B1 for a cubic with two turning points  \n\n13 (b)(i)  \nAnswer:  \nAt least one point plotted correctly.  \n\nMarks: 1  \n(1 AO2.3b)",
@@ -104,10 +104,7 @@
         "pages": [
             9
         ],
-        "correctly_parsed": true,
-        "images": [
-            "page9.png"
-        ]
+        "correctly_parsed": true
     },
     "14": {
         "text": "14\u202f(a)  \nAnswer: \u00a320\u202f000  \nMarks: 1 (1\u202fAO1.3a)\n\n\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\n14\u202f(b)  \nAnswer: \u00a314\u202f580 or \u00a314\u202f600  \nMarks: 2 (2\u202fAO1.3a)  \n\u2022 M1 for 20\u202f000 \u00d7 0.9\u00b3\n\n\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\n14\u202f(c)  \nAnswer: 7\u202fyears  \nMarks: 2 (1\u202fAO1.3a, 1\u202fAO3.1c)  \n\u2022 M1 for 2 trials shown",
