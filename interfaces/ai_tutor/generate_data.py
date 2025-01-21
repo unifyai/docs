@@ -34,7 +34,7 @@ def generate_question(question, data, idx):
     paper_imgs_dir = os.path.join(paper_dir, "paper/imgs")
     assert os.path.exists(paper_imgs_dir)
     img_fpaths = [
-        os.path.join(paper_imgs_dir, f"page{pg}.png") for pg in data["pages"]
+        os.path.join(paper_imgs_dir, f"page{pg}.png") for pg in data["question_pages"]
     ]
     imgs = [cv2.imread(fpath, -1) for fpath in img_fpaths]
     to_write = dict()
@@ -87,6 +87,8 @@ def generate_question(question, data, idx):
     targets["question_num"] = data["question_num"]
     targets["markscheme"] = data["answer"]
     targets["available_marks"] = data["marks"]
+    targets["question_pages"] = data["question_pages"]
+    targets["markscheme_pages"] = data["markscheme_pages"]
     if data["question_imgs"]:
         targets["question_imgs"] = [fp.split("/")[-1] for fp in data["question_imgs"]]
     else:
