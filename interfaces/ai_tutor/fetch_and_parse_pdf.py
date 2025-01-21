@@ -410,7 +410,14 @@ def parse_markscheme(paper_num):
                 ",",
             )
         )
-        return parsed
+        # remove accidental page numbers
+        result = list()
+        for item in reversed(parsed):
+            if item.isdigit() and item in result:
+                continue
+            result.append(item)
+        result.reverse()
+        return result
 
     def parse_into_pages():
         diagram_detector.set_system_message(
