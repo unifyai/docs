@@ -21,6 +21,12 @@
         "question_num": "3",
         "markscheme": "3  (3 marks)  \n1 AO1.3a  \n1 AO3.1d  \n1 AO3.3  \n\nAnswer: \u00a31.38 with working shown  \n\n\u2022 M1 for 7 \u00d7 (3/8)  \n\u2022 M1 for 89p + 49p or 3 \u00d7 49p or 2 \u00d7 49p > 89p  \n\nOR  \n\n\u2022 B1 for \u00a31.38 without working  \n\nCondone 138p",
         "available_marks": 3,
+        "question_pages": [
+            2
+        ],
+        "markscheme_pages": [
+            5
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -54,6 +60,12 @@
         "question_num": "15",
         "markscheme": "15 (a)  \n\u2022 Angles at B and D are right angles (1)  \n\u2022 Angles ACB and ECD are vertically opposite (oe) (1)  \n\u2022 Three equal angles (angle sum of a triangle), hence triangles are similar (oe) (1)  \n\n(2 AO1.3b, 1 AO2.4a)\n\n(b)  \n\u2022 10.5 (2)  \n\n(2 AO1.3a, M1 for 3.5 \u00d7 3 oe)",
         "available_marks": 5,
+        "question_pages": [
+            15
+        ],
+        "markscheme_pages": [
+            11
+        ],
         "question_imgs": [
             "page15.png"
         ],
@@ -105,6 +117,12 @@
         "question_num": "18",
         "markscheme": "18 (a)(i)  \nAnswer: x > 3  \nMarks: 3 (3 AO1.3a)  \nPart marks and guidance:  \n\u2022 M1 for 4x soi  \n\u2022 M1 for 12 soi  \n\n18 (a)(ii)  \nAnswer: 2  \nMarks: 1 (1 AO1.3a)  \n\n18 (b)  \nAnswer: [+]5 or -5  \nMarks: 2 (2 AO1.3a)  \nPart marks and guidance:  \n\u2022 M1 for x\u00b2 = 25  \n\u2022 If 0 scored, instead award SC1 for 5 seen as answer  \n\n18 (c)  \nAnswer: [x =] 2, [y =] -1  \nMarks: 3 (3 AO1.3b)  \nPart marks and guidance:  \n\u2022 M1 for eliminating one variable  \n\u2022 M1 for correct substitution of their x or y",
         "available_marks": 9,
+        "question_pages": [
+            18
+        ],
+        "markscheme_pages": [
+            13
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -142,6 +160,12 @@
         "question_num": "19",
         "markscheme": "19\u202f(a)  \n(Account)\u202fA\u202f(by)\u202f103[p]\u202fwith\u202fcorrect\u202fworking  \n5\u202fmarks  \n(3\u202fAO1.3b,\u202f1\u202fAO3.1d,\u202f1\u202fAO3.3)  \n\n\u2022 M2 for [10\u202f000\u202f\u00d7]\u202f1.03\u00b3 implied by 10\u202f927.27  \n  or M1 for 10\u202f300 and 10\u202f609  \n\nAND  \n\n\u2022 M2 for [10\u202f000\u202f\u00d7]\u202f1.04\u202f\u00d7\u202f1.03\u202f\u00d7\u202f1.02 implied by 10\u202f926.24  \n  or M1 for 10\u202f400 and 10\u202f712  \n\nIf 0,\u202f1\u202for\u202f2\u202fscored, instead award SC3 for A\u202f(by)\u202f103[p] with no working or insufficient working  \n\n\u201cCorrect working\u201d requires evidence of at M2\u202fM2  \n(May be done in stages)  \n\n\u202f  \n19\u202f(b)  \nHe may not want to leave it there for 3\u202fyears  \n1\u202fmark  \n(1\u202fAO2.3a)  \n\nAccept any valid reason",
         "available_marks": 6,
+        "question_pages": [
+            19
+        ],
+        "markscheme_pages": [
+            14
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -163,6 +187,12 @@
         "question_num": "8",
         "markscheme": "8\u202f(a)  \nAnswer:\u202f21\u202f\u2212\u202f5/3\u202fis\u202fnot\u202fan\u202finteger  \nMarks:\u202f2  \n(1\u202fAO1.3a,\u202f1\u202fAO2.4a)  \n\nPart\u202fmarks\u202fand\u202fguidance:  \n\u2022 M1\u202ffor\u202f21\u202f\u2212\u202f5/3  \n\u2022 or\u202ffor\u202f20\u202fand\u202f23\u202fseen",
         "available_marks": 2,
+        "question_pages": [
+            9
+        ],
+        "markscheme_pages": [
+            8
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -184,6 +214,12 @@
         "question_num": "1",
         "markscheme": "Question 1\n\n(a)  \nAnswer: 7  \nMarks: 1  \nPart marks and guidance: 1 AO1.3a  \n\n(b)  \nAnswer: 4  \nMarks: 1  \nPart marks and guidance: 1 AO1.3a",
         "available_marks": 2,
+        "question_pages": [
+            2
+        ],
+        "markscheme_pages": [
+            5
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -221,6 +257,12 @@
         "question_num": "6",
         "markscheme": "6 (a)  \nAnswer: 40 (cm)  \nMarks: 2  \n\nPart marks and guidance:  \n\u2022 1 AO1.3a  \n\u2022 1 AO3.1a  \nM1 for 4 \u00d7 their \u221a100  \n\n(b)  \nAnswer: Correct working leading to 4 cm  \nMarks: 4  \n\nPart marks and guidance:  \n\u2022 1 AO1.3b  \n\u2022 2 AO2.2  \n\u2022 1 AO2.4a  \nB1 for area of triangle = 24  \nB1 for their \u201824\u2019 \u00d7 3  \nB1 for their \u201872\u2019 \u00f7 18  \n(or area of parallelogram = 18h)",
         "available_marks": 6,
+        "question_pages": [
+            5
+        ],
+        "markscheme_pages": [
+            6
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -262,6 +304,12 @@
         "question_num": "1",
         "markscheme": "1\u202f(a)\u202f(i)  \nAnswer: 9  \nMarks: 1  \n(1\u202fAO1.3a)\n\n(ii)  \nAnswer: 3  \nMarks: 1  \n(1\u202fAO1.3a)\n\n(iii)  \nAnswer: 45  \nMarks: 1  \n(1\u202fAO1.3a)\n\n(b)\u202f(i)  \nAnswer: 13  \nMarks: 2  \n(2\u202fAO1.3a)  \nM1 for 12\u202f\u00d7\u202f4\u202f\u2212\u202f5\u202f\u00d7\u202f7 or better  \n\n(ii)  \nAnswer: r = (p + q) / 4  \nMarks: 2  \n(2\u202fAO1.3a)  \nM1 for 4r = p + q  \nAllow correct equivalents of (p + q)/4",
         "available_marks": 7,
+        "question_pages": [
+            2
+        ],
+        "markscheme_pages": [
+            5
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -295,6 +343,13 @@
         "question_num": "12",
         "markscheme": "12\u202f(a)  \nAnswer:\u202f6 (2\u202fmarks)  \n\u2219 2\u202fAO1.3a  \n   \u2013 M1 for 3x\u202f=\u202f18  \n\n12\u202f(b)  \nAnswer:\u202f\u20133,\u202f\u20135 (3\u202fmarks)  \n\u2219 3\u202fAO1.3a  \n   \u2013 M2 for (x\u202f+\u202f3)(x\u202f+\u202f5) seen or implied in table  \n     or  \n     M1 for (x\u202f\u00b1\u202f3)(x\u202f\u00b1\u202f5) seen, or for a pair of factors giving two correct terms seen or implied in table  \n   \u2013 B1 for correct solutions, following through their quadratic factors",
         "available_marks": 5,
+        "question_pages": [
+            11
+        ],
+        "markscheme_pages": [
+            8,
+            9
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -348,6 +403,14 @@
         "question_num": "11",
         "markscheme": "11\u202f(a)  \nAnswer: 45\u202f000  \nMarks: 2 (2\u202fAO1.3a)  \n  \n\u2022 M1 for 50\u202f000\u202f\u00d7\u202f0.9\u202fsoi, or 50\u202f000\u202f\u2212\u202f5000  \n\n11\u202f(b)  \nAnswer: Total value of goods sold in May was \u00a332\u202f805, which is less than \u00a335\u202f000  \nMarks: 3 (3\u202fAO2.2)  \n  \n\u2022 M2 for 50\u202f000 (or 45\u202f000)\u202f\u00d7\u202f0.9 used three times (or two times) soi or decreasing by 10% three times  \n  (implied by 36\u202f450 and 32\u202f805)  \n  OR  \n\u2022 M1 for 45\u202f000\u202f\u00d7\u202f0.9 or 45\u202f000\u202f\u2212\u202f4500  \n  (implied by 40\u202f500)  \n\n11\u202f(c)  \nAnswer: 8[%] with correct working  \nMarks: 5 (3\u202fAO1.3b, 2\u202fAO3.1d)  \n  \n\u2022 B4 for answer 108[%] or 1.08 or [0].08 with correct working  \n  OR  \n\u2022 M3 for 1.2\u202f\u00d7\u202f[0].9\u202foe  \n   or for (100\u202f000\u202f\u00d7\u202f1.2\u202f\u00d7\u202f[0].9\u202f\u2212\u202f100\u202f000)\u202f/\u202f100\u202f000  \n  OR  \n\u2022 M2 for 1.2 and [0].9  \n  OR  \n\u2022 M1 for 1.2 or [0].9  \n\nIf 0 or 1 scored, instead award SC2 for answer 8[%] with no working or insufficient working.  \nIf 0 scored, instead award SC1 for 108[%] or 1.08 or [0].08 with no working or insufficient working.  \n\n\u201cCorrect working\u201d requires evidence of at least M3 or an alternative convincing approach.  \n\nThroughout, percentage calculations may be performed in stages (e.g. 120% by adding 20%).  \nExamples:  \n\u2022 100\u202f000\u202f\u00d7\u202f1.2\u202f\u00d7\u202f[0].9 or 120\u202f000\u202f\u00d7\u202f[0].9  \n\u2022 100\u202f000\u202f\u00d7\u202f1.2 (implied by 120\u202f000)",
         "available_marks": 10,
+        "question_pages": [
+            10,
+            11
+        ],
+        "markscheme_pages": [
+            7,
+            8
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -373,6 +436,12 @@
         "question_num": "14",
         "markscheme": "14 (a)  \n\u2022 Answer: 8/50 or equivalent  \n\u2022 Marks: 2 (1 AO2.3a, 1 AO3.1c)  \n\u2022 Guidance: B1 for n/50  \n\n14 (b)  \n\u2022 Answer: Any comment with valid reason  \n\u2022 Marks: 1 (1 AO3.4b)",
         "available_marks": 3,
+        "question_pages": [
+            14
+        ],
+        "markscheme_pages": [
+            11
+        ],
         "question_imgs": [
             "page14.png"
         ],
@@ -396,6 +465,12 @@
         "question_num": "3",
         "markscheme": "3 (a) Any two odd primes added correctly  \n\u2022 1 mark (AO2.1a)  \n  e.g. 3 + 5 = 8  \n\n(b) An odd integer squared with correct result  \n\u2022 1 mark (AO2.1a)  \n  e.g. 5\u00b2 = 25",
         "available_marks": 2,
+        "question_pages": [
+            3
+        ],
+        "markscheme_pages": [
+            5
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -433,6 +508,12 @@
         "question_num": "4",
         "markscheme": "4 (a) (i)  \nAnswer: 5  \nMarks: 1  \n(1 AO1.1)\n\n4 (a) (ii)  \nAnswer: 1  \nMarks: 1  \n(1 AO1.1)\n\n4 (a) (iii)  \nAnswer: Any number apart from 1, 3 or 5  \nMarks: 1  \n(1 AO1.1)\n\n4 (b)  \nAnswer:  \n\u2022 Three different numbers only  \n\u2022 6 appears most  \n\u2022 More even numbers than odd  \n\nMarks: 3  \n(3 AO2.1a)  \nB1 for each of the three properties",
         "available_marks": 6,
+        "question_pages": [
+            3
+        ],
+        "markscheme_pages": [
+            6
+        ],
         "question_imgs": [
             "page3.png"
         ],
@@ -476,6 +557,12 @@
         "question_num": "3",
         "markscheme": "3(a)  \nAnswer: 35\u202f000  \nMarks: 2  \n\u2022 1\u202fAO1.3a  \n\u2022 1\u202fAO3.1c  \n\nGuidance:  \nM1 for 7000 \u00d7 5 (or equivalent).  \n\n3(b)  \nAnswer: No, following correct working and estimates  \nMarks: 4  \n\u2022 1\u202fAO1.3a  \n\u2022 1\u202fAO2.4a  \n\u2022 1\u202fAO3.1d  \n\u2022 1\u202fAO3.3  \n\nGuidance:  \n\u2022 M2 for (their \u201835\u202f000\u2019 \u00d7 5) \u00f7 1000, or M1 for their \u201835\u202f000\u2019 \u00d7 5.  \n\u2022 B1 for a valid estimate of the weight a person can carry (5\u202fkg\u201375\u202fkg).  \n  \u2013 Allow estimates for their \u201835\u202f000\u2019.  \n  \u2013 Example: 7000 \u00d7 5\u202fg = 35\u202f000\u202fg = 35\u202fkg.  \n\u2022 \u201cNo\u201d may be implied by seeing the mass of coins and an estimate of carry weight.  \n\u2022 Accept any valid alternate argument.  \n\n3(c)  \nAnswer: Valid comment about how a change in the assumption would influence their decision  \nMarks: 1  \n\u2022 1\u202fAO3.5  \n\nGuidance:  \nFollow through from part (b).",
         "available_marks": 7,
+        "question_pages": [
+            4
+        ],
+        "markscheme_pages": [
+            6
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -505,6 +592,12 @@
         "question_num": "18",
         "markscheme": "Answer (Question 18):\n\nAverage speed = Distance / Time = x/5 km/h  \n= 1000x / (60\u00b2 \u00d7 5) m/s  \n= 1000x / 18000 m/s (oe)  \n= x/18 m/s  \n\nMarks: 4  (2 AO1.3a, 2 AO2.2)\n\nPart marks and guidance:\n\u2022 B1 for x km = 1000x m  \n\u2022 B1 for 5 hours = 60\u00b2 \u00d7 5 s  \n\u2022 B1 for working to given answer without intermediate expression or statement of formula",
         "available_marks": 4,
+        "question_pages": [
+            16
+        ],
+        "markscheme_pages": [
+            13
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -538,6 +631,12 @@
         "question_num": "10",
         "markscheme": "10 (a)  \n (i)  > 1  \n     1 AO1.2  \n\n (ii) < 1  \n     1 AO1.2  \n\n (iii) > 1  \n     1 AO1.2  \n\n (b)  2500 (oe)  \n      2  \n      1 AO1.2  \n      1 AO1.3a  \n      M1 for 25 or 100",
         "available_marks": 5,
+        "question_pages": [
+            7
+        ],
+        "markscheme_pages": [
+            7
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -575,6 +674,12 @@
         "question_num": "1",
         "markscheme": "1 (a)  \nAnswer: 1 : 50  \nMarks: 2 (2 AO1.3a)  \n\u2022 M1 shows a partial simplification (e.g. 4 : 200)  \n\n1 (b)  \nAnswer: 50, 300  \nMarks: 2 (2 AO1.3a)  \n\u2022 M1 for 350 \u00f7 (1 + 6)  \n\n1 (c)  \nAnswer: 90  \nMarks: 2 (2 AO1.3a)  \n\u2022 M1 for 10% = 45 soi  \n  or  \n\u2022 M1 for 450 \u00d7 0.2",
         "available_marks": 6,
+        "question_pages": [
+            2
+        ],
+        "markscheme_pages": [
+            5
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -600,6 +705,12 @@
         "question_num": "17",
         "markscheme": "17 (a)  \nAnswer: E  \nMarks: 1  \n1 AO1.3a  \n\n17 (b)  \nAnswer: C and D  \nMarks: 2  \n2 AO1.3a  \nB1 for each",
         "available_marks": 3,
+        "question_pages": [
+            16
+        ],
+        "markscheme_pages": [
+            12
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -629,6 +740,12 @@
         "question_num": "16",
         "markscheme": "Answer (264) with complete correct working, for example (3 + 1) \u00d7 6 \u00d7 11  \n[4 marks: 1 AO1.3a and 3 AO3.1a]\n\n\u2022 M3 for correct working but no final answer stated, e.g. (3 + 1) \u00d7 6 \u00d7 11, or if the working is poorly communicated but is still clear (for example (3 + 1) \u00d7 6 \u00d7 11 = 264), or for a number greater than 200 with complete correct working.  \n\n\u2022 Or M2 for 264 with no (or incomplete) working, or for any acceptable number over 200 with poorly communicated working.  \n\n\u2022 Or M1 for a number greater than 200 with no or incomplete working, or for (3 \u00d7 6) \u00d7 11 [\u00d7 1] (condoning any error in calculation), or for two trials leading to numbers below 200 (condone poor communication), or for an acceptable calculation where their answer is at least 200 but there is an error in evaluation.  \n\nWorking correctly communicated in stages is acceptable for 4 marks, for example:  \n3 + 1 = 4, then 4 \u00d7 6 = 24, then 24 \u00d7 11 = 264.  \n\nA full written explanation is also acceptable.  \n\nFor 1 or 2 marks, \u201cacceptable\u201d implies a number at least 200 that can be made.",
         "available_marks": 4,
+        "question_pages": [
+            16
+        ],
+        "markscheme_pages": [
+            12
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -666,6 +783,12 @@
         "question_num": "4",
         "markscheme": "255 with correct working  \nMarks: 6 (2 AO1.3a, 4 AO3.1d)\n\n\u2022 M1 for 6.5 [hours]  \n\u2022 M2 for their \u20186.5\u2019 \u00d7 10 \u00d7 3 (or equivalent),  \n  or M1 for their \u20186.5\u2019 \u00d7 10,  \n  or M1 for their \u20186.5\u2019 \u00d7 3  \n\nAND  \n\n\u2022 M1 for [\u00a3]15  \n\u2022 M1 for their \u201815\u2019 \u00d7 4  \n\nIf 0, 1 or 2 scored, instead award SC3 for answer 255 with no working or insufficient working.  \n\nIf 0 or 1 scored, instead award SC2 for 195 or 60 with no working or insufficient working.  \n\nIf 0 scored, instead award SC1 for 19.5 or 65 with no working or insufficient working.  \n\n\u201cCorrect working\u201d requires evidence of at least M2 and M1.",
         "available_marks": 6,
+        "question_pages": [
+            5
+        ],
+        "markscheme_pages": [
+            7
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -711,6 +834,13 @@
         "question_num": "10",
         "markscheme": "10 (a) (i)  \nAnswer: Positive correlation  \nMarks: 1 (1 AO1.1)  \nGuidance:  \n\u2022 Condone \u201cpositive\u201d or correct description (e.g. \u201cAs the temperature increases, more ice creams are sold\u201d).\n\n(a) (ii)  \nAnswer: Correct reason, e.g. \u201cHe sold far more ice creams than you would expect him to for a 20\u00b0C day.\u201d  \nMarks: 1 (1 AO2.3a)\n\n(b) (i)  \nAnswer: 75\u201395  \nMarks: 1 (1 AO1.3a)\n\n(b) (ii)  \nAnswer: 140\u2013170  \nMarks: 1 (1 AO1.3a)\n\n(b) (iii)  \nAnswer: The (b)(i) prediction is more reliable, as it is within the range of the given data.  \nMarks: 2 (1 AO2.1b, 1 AO2.4a)  \nGuidance:  \n\u2022 B1 for (b)(i) prediction identified with partial reason.\n\n(c)  \nAnswer: No, because there may be other factors involved.  \nMarks: 2 (1 AO2.5a, 1 AO3.4b)  \nGuidance:  \n\u2022 B1 for \u201cNo\u201d, with partial reason.",
         "available_marks": 8,
+        "question_pages": [
+            8,
+            9
+        ],
+        "markscheme_pages": [
+            7
+        ],
         "question_imgs": [
             "page8.png"
         ],
@@ -742,6 +872,12 @@
         "question_num": "4",
         "markscheme": "4  \nAnswer: [\u00a3]1800  \nMarks: 4 (2 AO1.3b, 2 AO3.1d)  \n\nM1 for 1/4 + 1/2 = 3/4 (soi)  \nM1 for 1/4 (of the rent) = 450  \nM1 for 450 \u00d7 4 (oe using percentages or decimals)",
         "available_marks": 4,
+        "question_pages": [
+            3
+        ],
+        "markscheme_pages": [
+            5
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -767,6 +903,12 @@
         "question_num": "10",
         "markscheme": "10 (a)  \nAnswer: 56  \nMarks: 1  \n1 AO1.3a  \n\n10 (b)  \nAnswer: 5  \nMarks: 1  \n1 AO1.3a  \n\n10 (c)  \nAnswer: 1/25 or 0.04  \nMarks: 1  \n1 AO1.3a",
         "available_marks": 3,
+        "question_pages": [
+            11
+        ],
+        "markscheme_pages": [
+            10
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -792,6 +934,12 @@
         "question_num": "5",
         "markscheme": "5  \nHe has assumed he can run 800 m at the same speed as he can run 100 m,  \nbut he will run 800 m at a slower speed, therefore it will take him more than 120 s  \n\nMarks: 3  \n(1 AO2.1a, 1 AO3.4a, 1 AO3.5)  \n\n\u2022 B1 for correct reference to Darren\u2019s assumption  \n  (or 100/15 = 800/120 soi)  \n\u2022 B1 for \u201chis speed will be slower over 800 m\u201d oe",
         "available_marks": 3,
+        "question_pages": [
+            5
+        ],
+        "markscheme_pages": [
+            7
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -829,6 +977,12 @@
         "question_num": "5",
         "markscheme": "5 (a)  \nAnswer: China  \nMarks: 1  \nPart marks and guidance:  \n\u2022 1 AO2.3a  \n\n5 (b)  \nAnswer: 27 100 000  \nMarks: 1  \nPart marks and guidance:  \n\u2022 1 AO1.3a  \n\n5 (c)  \nAnswer: 7.82 \u00d7 10\u2079  \nMarks: 2  \nPart marks and guidance:  \n\u2022 1 AO1.2  \n\u2022 1 AO1.3a  \n\u2022 M1 for attempting to multiply by 1000  \n\n5 (d)  \nAnswer: 7.85 \u00d7 10\u2077  \nMarks: 2  \nPart marks and guidance:  \n\u2022 2 AO1.3a  \n\u2022 M1 for 9.9 \u2013 2.05 soi",
         "available_marks": 6,
+        "question_pages": [
+            4
+        ],
+        "markscheme_pages": [
+            5
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -862,6 +1016,12 @@
         "question_num": "14",
         "markscheme": "14\u202f(a)  \nAnswer: \u00a320\u202f000  \nMarks: 1 (1\u202fAO1.3a)\n\n\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\n14\u202f(b)  \nAnswer: \u00a314\u202f580 or \u00a314\u202f600  \nMarks: 2 (2\u202fAO1.3a)  \n\u2022 M1 for 20\u202f000 \u00d7 0.9\u00b3\n\n\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\u2013\n14\u202f(c)  \nAnswer: 7\u202fyears  \nMarks: 2 (1\u202fAO1.3a, 1\u202fAO3.1c)  \n\u2022 M1 for 2 trials shown",
         "available_marks": 5,
+        "question_pages": [
+            12
+        ],
+        "markscheme_pages": [
+            10
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -887,6 +1047,12 @@
         "question_num": "6",
         "markscheme": "6  \nAnswer: 3  \nMarks: 3 (3 AO1.3b)  \n\nPart marks and guidance:  \n\u2022 B1 for 13 in \u201cintersection\u201d  \n\u2022 B1 for (16 \u2013 their \u201c13\u201d) in \u201cCat\u201d  \n\u2022 B1 for sum of 8 + their three numbers = 30",
         "available_marks": 3,
+        "question_pages": [
+            4
+        ],
+        "markscheme_pages": [
+            6
+        ],
         "question_imgs": [
             "page4.png"
         ],
@@ -922,6 +1088,14 @@
         "question_num": "15",
         "markscheme": "15  \nAnswer: 25, 30, 17 (with correct working)  \nMarks: 5  \n(2 AO1.3a, 2 AO3.1d, 1 AO3.3)\n\n\u2022 M1 for x \u2013 8 + x + x + 5 = 72  \n\u2022 M1FT for 3x \u2013 3 = 72  \n\u2022 M1FT for 3x = 75 (implied by x = 25)  \n\nAND  \n\n\u2022 M1 for substituting their 25 into x \u2013 8 and x + 5  \n\nAlternative method using trials:  \n\u2022 M3 for a correctly evaluated trial of x \u2013 8 + x + x + 5 with x = 25  \n  OR M2 for at least two complete correct evaluations of x \u2013 8 + x + x + 5  \n  OR M1 for at least one complete correct evaluation of x \u2013 8 + x + x + 5  \n\nAND  \n\n\u2022 M1 for substituting their 25 into x \u2013 8 and x + 5  \n\nIf 0 or 1 scored, instead award SC2 for 25, 30, 17 with no working or insufficient working.  \n\nIf 0 scored, instead award SC1 for x = 25 with no working or insufficient working.  \n\n\u201cCorrect working\u201d requires evidence of at least M1M1M1 or M3.  \n\nMethods shown use Kieran as x; apply similar schemes if using Jermaine or Chris as the subject.  \n\nNote: x = 25 scores M1M1M1 if there is some supporting work, but on its own scores SC1.",
         "available_marks": 5,
+        "question_pages": [
+            13
+        ],
+        "markscheme_pages": [
+            10,
+            11,
+            12
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -959,6 +1133,12 @@
         "question_num": "8",
         "markscheme": "8 (a)  \nAnswer: 8  \nMarks: 3 (2 AO1.3a, 1 AO3.1b)  \n\n\u2022 M1 for dividing by 3 or 13  \n\u2022 M1 for dividing by the remaining factor  \n\u2022 M1 for multiplying 3 by 13  \n\u2022 M1 for dividing by 39 or listing multiples of 39  \n\n(b)  \nAnswer: Any three valid answers (e.g. 2, 7, 23)  \nMarks: 3 (1 AO1.1, 2 AO3.1a)  \n\n\u2022 B1 for each  \n\u2022 If 0 scored, instead award SC1 for at least 3 primes and 3 squares seen",
         "available_marks": 6,
+        "question_pages": [
+            6
+        ],
+        "markscheme_pages": [
+            6
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -996,6 +1176,13 @@
         "question_num": "17",
         "markscheme": "17\u202f(a)  \nAnswer: 20  \nMarks: 2 (1\u202fAO1.1, 1\u202fAO2.3a)  \n\n\u2022 M1 for D = M / V (soi)  \n  \u2013 Can be implied by an answer of 2  \n\n17\u202f(b)  \nAnswer: 8\u202f1/7 or 8.14[\u2026]  \nMarks: 4 (2\u202fAO1.3b, 2\u202fAO3.1d)  \n\n\u2022 M1 for 15 or 105 \u00f7 7  \nAND  \n\u2022 M2 for (180 + 105) \u00f7 [their(20 + 15)]  \n  or 18 + 10.5  \n  or their(2 + 1.5)  \n\u2022 Or M1 for some attempt to find (total mass) \u00f7 (total volume)",
         "available_marks": 6,
+        "question_pages": [
+            17
+        ],
+        "markscheme_pages": [
+            12,
+            13
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1029,6 +1216,12 @@
         "question_num": "13",
         "markscheme": "13 (a) 22.5  \n      1 mark  \n      1 AO1.3a  \n\n   (b) (i) 4.125 \u2264 y < 4.135  \n           2 marks  \n           1 AO1.2  \n           1 AO1.3a  \n           B1 for either limit with correct inequality sign  \n           Condone using x instead of y  \n\n       (ii) 4650 \u2264 z < 4750  \n            2 marks  \n            1 AO1.2  \n            1 AO1.3a  \n            B1 for either limit with correct inequality sign  \n            Condone using x instead of z",
         "available_marks": 5,
+        "question_pages": [
+            13
+        ],
+        "markscheme_pages": [
+            11
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1054,6 +1247,12 @@
         "question_num": "20",
         "markscheme": "20  Answer: 2.8(0\u2026)\n\nMarks: 3  \n1 AO1.1  \n2 AO1.3a  \n\nB1 for tan \u03b8 = opp/adj  \nM1 for 4 \u00d7 tan 35",
         "available_marks": 3,
+        "question_pages": [
+            18
+        ],
+        "markscheme_pages": [
+            13
+        ],
         "question_imgs": [
             "page18.png"
         ],
@@ -1077,6 +1276,12 @@
         "question_num": "11",
         "markscheme": "Question 11 Mark Scheme\n\nAnswer: Correct reasoning  \nMarks: 2  \n\u2022 1 AO1.3a  \n\u2022 1 AO2.2  \n\nPart marks and guidance:  \n\u2022 M1 for 4a + 12 \u2013 3a \u00b1 6",
         "available_marks": 2,
+        "question_pages": [
+            7
+        ],
+        "markscheme_pages": [
+            7
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1106,6 +1311,14 @@
         "question_num": "9",
         "markscheme": "9 (a)(i)  \n\u2022 ACB, BAC, BCA, CAB, CBA  \nMarks: 2 (2 AO1.3a)  \nB1 for at least three more ways of seating listed  \n\n(ii)  \n\u2022 2/3 (oe)  \nMarks: 1 (1 AO2.1b)  \nFT on answer to part (a)(i)  \n\n(iii)  \n\u2022 1/6 (oe)  \nMarks: 1 (1 AO2.1b)  \nFT on answer to part (a)(i)",
         "available_marks": 4,
+        "question_pages": [
+            10,
+            11
+        ],
+        "markscheme_pages": [
+            9,
+            10
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1127,6 +1340,12 @@
         "question_num": "2",
         "markscheme": "2.  \nAnswer: 3.5%,  1/3,  0.34  \nMarks: 2   (2 AO1.3a)  \n\nMarking instructions:  \n\u2022 B1 for 1/3 = 0.33\u2026 or 33\u2026%  \n  or  \n\u2022 B1 for 0.34 = 34%  \n  or  \n\u2022 B1 for changing 3.5% to 0.035  \n  or  \n\u2022 SC1 for 1/3, 0.34, 3.5%  \n\nAccept correct order with equivalent values.",
         "available_marks": 2,
+        "question_pages": [
+            2
+        ],
+        "markscheme_pages": [
+            5
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1172,6 +1391,13 @@
         "question_num": "17",
         "markscheme": "17\u202f(a)  \nAnswer: 10,\u202f16,\u202f26  \nMarks: 1  \n\u2022 1\u202fAO1.3a  \n\n17\u202f(b)  \nAnswer: 8,\u202f13,\u202f21  \nMarks: 2  \n\u2022 1\u202fAO1.3a  \n\u2022 1\u202fAO3.1a  \n  M1 for one correct subtraction of two boxes  \n\n17\u202f(c)  \nAnswer: a + b, a + 2b, 2a + 3b  \nMarks: 2  \n\u2022 2\u202fAO1.3a  \n  M1 for two expressions correct  \n\n17\u202f(d)  \nAnswer: 15,\u202f21,\u202f36  \nMarks: 3  \n\u2022 1\u202fAO1.3a  \n\u2022 2\u202fAO2.1a  \n  M1 for their \u201c2a + 3b\u201d = 57  \n  M1 for substituting a = 6 into their final expression and solving for b",
         "available_marks": 8,
+        "question_pages": [
+            16,
+            17
+        ],
+        "markscheme_pages": [
+            11
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1201,6 +1427,12 @@
         "question_num": "16",
         "markscheme": "16 (a) Outcomes not equally likely (oe)  \n    \u2022 1 mark  \n    \u2022 1 AO3.4b  \n\n(b) Larger number of trials  \n    \u2022 1 mark  \n    \u2022 1 AO3.4a  \n\n(c) 0.09 \u2013 0.16  \n    \u2022 2 marks  \n    \u2022 1 AO1.3a  \n    \u2022 1 AO2.1b  \n    \u2022 M1 for (48/150)\u00b2 or 0.35\u00b2 or any reasonable estimate (FT their (b))",
         "available_marks": 4,
+        "question_pages": [
+            15
+        ],
+        "markscheme_pages": [
+            11
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1234,6 +1466,12 @@
         "question_num": "9",
         "markscheme": "9 (a)  \nAnswer: 100  \nMarks: 1  \n(1 AO2.1a)\n\n9 (b)  \nAnswer: 10  \nMarks: 1  \n(1 AO2.1a)\n\n9 (c)  \nAnswer: One and a quarter boxes drawn  \nMarks: 3  \n(1 AO1.3a, 1 AO2.3b, 1 AO3.1c)\n\n\u2022 M2 for 50  \n  or  \n\u2022 M1 for 310  \n  or  \n\u2022 M1 FT from subtraction",
         "available_marks": 5,
+        "question_pages": [
+            6
+        ],
+        "markscheme_pages": [
+            7
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1263,6 +1501,13 @@
         "question_num": "18",
         "markscheme": "18 (a)  \nAnswer:  \n\u2022 The first error is in step 2: \u22123x \u2212 2x = \u22125x, not \u2212x as given  \n\nMarks: 2  \n(2 AO2.5a)  \n\nPart marks and guidance:  \n\u2022 B1 for identifying step 2  \n\u2022 B1 for explaining the error  \n\n(b)  \nAnswer:  \n[x\u00b2 + 4x + x + 4 = x\u00b2 \u2212 3x \u2212 2x + 6]  \nx\u00b2 + 5x + 4 = x\u00b2 \u2212 5x + 6  \n5x + 4 = \u22125x + 6  \n10x + 4 = 6  \n10x = 2  \nx = 1/5  \n\nMarks: 2  \n(2 AO1.3a)  \n\nPart marks and guidance:  \n\u2022 M1 for an attempt to correct the solution in line with their answer to (a)",
         "available_marks": 4,
+        "question_pages": [
+            18
+        ],
+        "markscheme_pages": [
+            11,
+            12
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1296,6 +1541,12 @@
         "question_num": "14",
         "markscheme": "14 (a)  \n[p = 5 , q = -5]  \nMarks: 2  \n(1 AO1.2, 1 AO1.3a)  \n\u2022 B1 for p = 5  \n\u2022 B1 for q = -5  \n\n14 (b)  \nc = 3a  \nd = a + b  \ne = a \u2013 b  \nMarks: 3  \n(3 AO1.3a)  \n\u2022 B1 for each",
         "available_marks": 5,
+        "question_pages": [
+            13
+        ],
+        "markscheme_pages": [
+            10
+        ],
         "question_imgs": [
             "page13.png"
         ],
@@ -1335,6 +1586,13 @@
         "question_num": "9",
         "markscheme": "9 (a)  \nAnswer: 2  \nMarks: 2 (1 AO1.1, 1 AO2.1a)  \n\u2022 B1 for 2 correct.  \n\nPrism         | Number of faces | Number of edges | Number of vertices  \nTriangular     (3 sides)  | 5               | 9               | 6  \nRectangular  (4 sides)   | 6               | 12              | 8  \nPentagonal    (5 sides)  | 7               | 15              | 10  \nHexagonal     (6 sides)  | 8               | 18              | 12  \n\n(b)  \nAnswer: 300 (edges), 200 (vertices)  \nMarks: 2 (2 AO2.1a)  \n\u2022 1 mark for 300 (edges).  \n\u2022 1 mark for 200 (vertices).  \n\n(c)  \nAnswer: F = N + 2 (or equivalent)  \nMarks: 2 (1 AO2.3a, 1 AO2.3b)  \n\u2022 B1 for N + 2 (without a subject).  \n\u2022 Condone for B1 a correct word formula.",
         "available_marks": 6,
+        "question_pages": [
+            7
+        ],
+        "markscheme_pages": [
+            6,
+            7
+        ],
         "question_imgs": [
             "page7.png"
         ],
@@ -1362,6 +1620,12 @@
         "question_num": "7",
         "markscheme": "7 (a)  \nAnswer: 54  \nMarks: 1  \nAO: 1 AO3.1a  \n\n(b)  \nAnswer: 5  \nMarks: 2  \nAOs: 1 AO1.1, 1 AO3.1a  \nGuidance: M1 for a complete factor tree (or equivalent)",
         "available_marks": 3,
+        "question_pages": [
+            6
+        ],
+        "markscheme_pages": [
+            6
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1387,6 +1651,12 @@
         "question_num": "8",
         "markscheme": "8  \nAnswer: 70  \n\u2022 The triangle is isosceles, so the missing angle is x (may be on diagram) or equivalent.  \n\u2022 Angles in a triangle sum to 180\u00b0 or equivalent (may be indicated by summing angles to 180\u00b0).  \n\nMarks: 3  \nPart marks and guidance:  \n\u2022 1 AO1.3a  \n\u2022 1 AO2.4a  \n\u2022 1 AO3.1b  \n\u2022 B1 for each",
         "available_marks": 3,
+        "question_pages": [
+            5
+        ],
+        "markscheme_pages": [
+            7
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1416,6 +1686,12 @@
         "question_num": "19",
         "markscheme": "19  \nAnswer: 2a + 1  \nMarks: 4  \n(1 AO1.3b, 2 AO3.1b, 1 AO3.2)\n\n\u2022 M1 for a + 2 + 3a + 3 + 4a \u2013 1  \n\u2022 M1 for collecting terms  \n\u2022 M1 for dividing their \u201c8a + 4\u201d by 4",
         "available_marks": 4,
+        "question_pages": [
+            19
+        ],
+        "markscheme_pages": [
+            12
+        ],
         "question_imgs": [
             "page19.png"
         ],
@@ -1451,6 +1727,12 @@
         "question_num": "19",
         "markscheme": "19\u202f\u202f\u202f\u202fAnswer: 25\u202fwith correct working\u2003[5\u202fmarks]  \n\u2003(2\u202fAO1.3b, 3\u202fAO3.1d)  \n\n\u2022\u202fM1\u202ffor\u202f10\u202f\u00d7\u202f(2\u202f/\u202f5)\u202f=\u202f4\u202flitres red  \n\u202f\u202f\u202for\u202ffor\u202f10\u202f\u00d7\u202f(3\u202f/\u202f5)\u202f=\u202f6\u202flitres white  \n\n\u2022\u202fM1\u202ffor\u202fred\u202fcosts\u202f\u00a38\u202fper\u202flitre  \n\u202f\u202f\u202for\u202ffor\u202fwhite\u202fcosts\u202f\u00a30.50\u202fper\u202flitre  \n\n\u2022\u202fM1\u202ffor\u202fcost of one\u202f10\u2011litre\u202fcan\u202fis  \n\u202f\u202f\u202f(their\u202f4\u202f\u00d7\u202ftheir\u202f8)\u202f+\u202f(their\u202f6\u202f\u00d7\u202ftheir\u202f0.5)  \n\n\u2022\u202fM1\u202ffor\u202f60\u202f\u2013\u202ftheir\u202f35  \n\n\u2022\u202fIf\u202f0\u202for\u202f1\u202fscored, instead award\u202fSC2\u202ffor answer\u202f25\u202fwith no working or insufficient working  \n\n\u201cCorrect working\u201d requires evidence of at least\u202fM1M1  \n\nAlternative method:  \n\u2022\u202fM1\u202ffor\u202f2\u202f:\u202f3\u202f=\u202f20\u202flitres red\u202f:\u202f30\u202flitres white  \n\u2022\u202fM1\u202ffor\u202f(2\u202f\u00d7\u202f\u00a380)\u202f+\u202f(3\u202f\u00d7\u202f\u00a35)\u202f=\u202f\u00a3175  \n\u2022\u202fM1\u202ffor\u202f(their\u202f175)\u202f\u00f7\u202f5\u202f=\u202f35  \n\u2022\u202fM1\u202ffor\u202f60\u202f\u2013\u202ftheir\u202f35",
         "available_marks": 5,
+        "question_pages": [
+            17
+        ],
+        "markscheme_pages": [
+            13
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1484,6 +1766,12 @@
         "question_num": "7",
         "markscheme": "7 (a) 125 [1]  \n1 AO1.2  \n\n(b) 20 with correct working [4]  \n2 AO2.1a  \n2 AO2.4a  \n\nB1 for PAB = 45  \nB1 for BAD = 90  \nM1 for 360 \u2013 (their \u2018125\u2019 + their \u201890\u2019 + 125)  \n\nIf 0 scored, instead award SC1 for answer 20 with no working or insufficient working  \n\n\u201cCorrect working\u201d requires evidence of at least M1  \n\nAlternative method:  \nB1 for PAB = 45  \nB1 for BAC = 45  \nM1 for 180 \u2013 their \u201845\u2019 \u2013 125",
         "available_marks": 5,
+        "question_pages": [
+            8
+        ],
+        "markscheme_pages": [
+            8
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1513,6 +1801,12 @@
         "question_num": "21",
         "markscheme": "Question 21\n\nAnswer: 0.82 (or equivalent)  \nTotal marks: 4  \n(1 AO1.3a, 3 AO3.1d)\n\nMarking instructions:  \n\u2022 M3 for 0.7 \u00d7 0.4 + 0.7 \u00d7 0.6 + 0.3 \u00d7 0.4, or for 1 \u2013 0.18  \n\u2022 OR M2 for two correct products  \n\u2022 OR M1 for one correct product, or for 0.3 and 0.6 seen (may be on a tree diagram or equivalent)",
         "available_marks": 4,
+        "question_pages": [
+            19
+        ],
+        "markscheme_pages": [
+            14
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1538,6 +1832,12 @@
         "question_num": "5",
         "markscheme": "5)  \nAnswer: 48\u202fcm\u00b2  \nMarks: 3  \n\nPart marks and guidance:  \n\u2022 1\u202fAO1.3a  \n\u2022 2\u202fAO3.1b  \n\nM1 for \u00bd\u202f\u00d7\u202f8\u202f\u00d7\u202f4\u202f=\u202f16  \nM1 for their \u201816\u2019\u202f\u00d7\u202f3",
         "available_marks": 3,
+        "question_pages": [
+            4
+        ],
+        "markscheme_pages": [
+            6
+        ],
         "question_imgs": [
             "page4.png"
         ],
@@ -1569,6 +1869,12 @@
         "question_num": "7",
         "markscheme": "7 (a)  \nAnswer: 60, 50  \nMarks: 2  \nPart marks and guidance:  \n\u2022 1 AO1.3a   \n\u2022 1 AO3.1a  \n\u2022 B1 for each  \n\n(b)  \nAnswer: 2  \nMarks: 2  \nPart marks and guidance:  \n\u2022 1 AO1.3a  \n\u2022 1 AO3.1a  \n\u2022 M1 for 8 seen",
         "available_marks": 4,
+        "question_pages": [
+            5
+        ],
+        "markscheme_pages": [
+            6
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1614,6 +1920,13 @@
         "question_num": "15",
         "markscheme": "15 (a)  \nAnswer: 800  \nMarks: 2 (1 AO1.3b, 1 AO3.1c)  \n\nPart marks and guidance:  \n\u2022 M1 for unitary work, e.g. 1 person does 200 letters in 2 hours  \n\n(b)  \nAnswer: 30 minutes oe  \nMarks: 4 (2 AO2.1a, 2 AO3.1d)  \n\nPart marks and guidance:  \n\u2022 M1 for 1 person does 100 letters in 1 hour  \n\u2022 M1 for 5 people do 1000 letters in 2 hours  \n\u2022 M1 for 4 people do 1000 letters in 2.5 hours  \n\u2022 FT from their rate in (a) throughout  \n\n(c)  \nAnswer:  \n\u2013 Correct comment on the reasonableness of her assumption  \n   (e.g. \u201cShe has assumed that \u2018all day\u2019 means \u2018for 24 hours\u2019,  \n   but it is not reasonable for them to work without a break.\u201d)  \n\n\u2013 Correct comment on the effect it will have on the answer  \n   (e.g. \u201cThey can\u2019t work at that rate for that long,  \n   so her answer is an over-estimate.\u201d)  \n\nMarks: 2 (1 AO3.4a, 1 AO3.5)  \nPart marks and guidance:  \n\u2022 B1 for each",
         "available_marks": 8,
+        "question_pages": [
+            14
+        ],
+        "markscheme_pages": [
+            10,
+            11
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1643,6 +1956,12 @@
         "question_num": "2",
         "markscheme": "Question 2\n\n(a)  \nAnswer: 0.1 (2 marks)\n\n\u2022 2 AO1.3a  \n  \u2013 M1 for 0.4 + 0.2 + 0.3 (soi) or 1 \u2212 their \u201c0.9\u201d\n\n(b)  \nAnswer: 0.7 (2 marks)\n\n\u2022 2 AO1.3a  \n  \u2013 M1 for 0.4 and 0.3 identified",
         "available_marks": 4,
+        "question_pages": [
+            2
+        ],
+        "markscheme_pages": [
+            5
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1676,6 +1995,13 @@
         "question_num": "13",
         "markscheme": "13\u202f(a)  \nAnswer: 24\u202fcm by\u202f16\u202fcm, 12\u202fcm by\u202f8\u202fcm  \nMarks: 2 (1\u202fAO1.3a, 1\u202fAO3.1c)  \n\n\u2023 B1 for each.  \n\u2023 Answers may be indicated on the list in the question.  \n\n13\u202f(b)  \nAnswer: 50  \nMarks: 3 (1\u202fAO1.3b, 2\u202fAO3.1d)  \n\n\u2023 M1 for 45/9 or 60/6.  \n\u2023 M1 for their \u201c5\u201d \u00d7 their \u201c10\u201d.  \n\u2023 SC2 for 42 or for area calculation leading to an incorrect answer.",
         "available_marks": 5,
+        "question_pages": [
+            12
+        ],
+        "markscheme_pages": [
+            9,
+            10
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     },
@@ -1721,6 +2047,13 @@
         "question_num": "6",
         "markscheme": "6 (a)  40 [1 mark]  \n\u2022 1 AO1.3a\n\n6 (b)  Correct reasoning leading to 36.9 [4 marks]  \n\u2022 1 AO1.3b  \n\u2022 2 AO2.2  \n\u2022 1 AO3.1b  \n\n  \u2013 M2 for \u03c0 \u00d7 12\u00b2  \n    or M1 for (\u00bd \u00d7 \u03c0 \u00d7 12\u00b2)  \n  \u2013 AND M1 for their \u201c40\u201d \u2013 (\u03c0 \u00d7 12\u00b2)\n\n6 (c)  7.38 or better [3 marks]  \n\u2022 1 AO1.3a  \n\u2022 2 AO3.1b  \n\n  \u2013 M1 for 2 mm = 0.2 cm (soi)  \n  \u2013 M1 for 36.9 \u00d7 their \u201c0.2\u201d (oe)",
         "available_marks": 8,
+        "question_pages": [
+            6,
+            7
+        ],
+        "markscheme_pages": [
+            8
+        ],
         "question_imgs": [
             "page6.png"
         ],
@@ -1744,6 +2077,12 @@
         "question_num": "12",
         "markscheme": "Question 12 Markscheme\n\nAnswer:\n\u2022 Vertical axis is not consistent  \n\u2022 The line does not represent the days when he doesn\u2019t use the internet  \n\nMarks: 2 (2 AO2.5b)  \n\nPart marks and guidance:  \n\u2022 B1 for each valid comment",
         "available_marks": 2,
+        "question_pages": [
+            12
+        ],
+        "markscheme_pages": [
+            11
+        ],
         "question_imgs": [
             "page12.png"
         ],
@@ -1767,6 +2106,12 @@
         "question_num": "11",
         "markscheme": "11 (a)  \nExplanation, e.g. there should be 4 dp in the answer or the answer should be smaller than 0.38 (or 0.26) or because 0.4 \u00d7 0.3 = 0.12  \n\nMarks: 1 (1 AO2.5a)  \n\nPart marks and guidance:  \n\u2022 Clear sensible reason (not just giving the actual answer with no working or explanation).  \n\u2022 Condone: \u201cmultiplying two decimals means a smaller number\u201d or equivalent.  \n\n11 (b)  \nExplanation, e.g. the answer should be bigger than 1 because both \u00be and 2/3 are bigger than \u00bd (or equivalent), or the answer should be bigger than \u00be but 5/7 is smaller than \u00be (or equivalent).  \n\nMarks: 1 (1 AO2.5a)  \n\nPart marks and guidance:  \nExemplars for 1 mark:  \n\u2022 \u201cyou don\u2019t add fractions by adding tops and bottoms\u201d  \n\u2022 \u201cyou don\u2019t add the denominators\u201d  \n\u2022 \u201cyou have to find a common denominator first\u201d  \n\u2022 \u201c3/4 + 2/3 is obviously > 1\u201d",
         "available_marks": 2,
+        "question_pages": [
+            12
+        ],
+        "markscheme_pages": [
+            10
+        ],
         "question_imgs": null,
         "markscheme_imgs": null
     }
