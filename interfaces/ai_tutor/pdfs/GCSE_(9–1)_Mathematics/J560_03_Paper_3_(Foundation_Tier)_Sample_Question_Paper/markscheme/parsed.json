@@ -64,10 +64,11 @@
         "correctly_parsed": true
     },
     "9": {
-        "text": "9\u202f(a)\u202f(i)  \nAnswer: ACB, BAC, BCA, CAB, CBA  \nMarks: 2 (2\u202fAO1.3a)  \n\u2022 B1 for at least three more ways of seating listed  \n\n(a)\u202f(ii)  \nAnswer: 2/3 oe  \nMarks: 1 (1\u202fAO2.1b)  \n\u2022 FT on answer to part\u202f(a)(i)  \n\n(a)\u202f(iii)  \nAnswer: 1/6 oe  \nMarks: 1 (1\u202fAO2.1b)  \n\u2022 FT on answer to part\u202f(a)(i)",
+        "text": "9 (a)(i)  \n\u2022 ACB, BAC, BCA, CAB, CBA  \nMarks: 2 (2 AO1.3a)  \nB1 for at least three more ways of seating listed  \n\n(ii)  \n\u2022 2/3 (oe)  \nMarks: 1 (1 AO2.1b)  \nFT on answer to part (a)(i)  \n\n(iii)  \n\u2022 1/6 (oe)  \nMarks: 1 (1 AO2.1b)  \nFT on answer to part (a)(i)",
         "num-marks": 4,
         "pages": [
-            9
+            9,
+            10
         ],
         "correctly_parsed": true
     },
