@@ -2828,23 +2828,28 @@
                 }
             }
         },
-        "/v0/log": {
+        "/v0/logs": {
             "post": {
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Create Log",
-                "description": "Creates a log associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.\n\nThis method returns the id of the new stored log.",
-                "operationId": "create_log_v0_log_post",
+                "summary": "Create Logs",
+                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.\n\nThis method returns the ids of the new stored logs.",
+                "operationId": "create_logs_v0_logs_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/CreateLogConfig"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -2853,7 +2858,12 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Log created successfully!"
+                                    "info": "Logs created successfully!",
+                                    "log_event_ids": [
+                                        1,
+                                        2,
+                                        3
+                                    ]
                                 }
                             }
                         }
@@ -2878,88 +2888,8 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/log/derived": {
-            "put": {
-                "tags": [
-                    "Logs"
-                ],
-                "summary": "Create Derived Entry",
-                "description": "Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.\nEagerly computes each derived value and stores it in DerivedLog.value.",
-                "operationId": "create_derived_entry_v0_log_derived_put",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateDerivedEntriesConfig"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Derived log entries created successfully.",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Created 3 derived logs with key='example_key'.",
-                                    "derived_log_ids": [
-                                        101,
-                                        102,
-                                        103
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project 'example_project' not found."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "All referenced log lists must have the same length. Found lengths: [2, 3]."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/logs": {
+                }
+            },
             "put": {
                 "tags": [
                     "Logs"
@@ -3364,6 +3294,79 @@
                         }
                     }
                 }
+            }
+        },
+        "/v0/log/derived": {
+            "put": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Create Derived Entry",
+                "description": "Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.\nEagerly computes each derived value and stores it in DerivedLog.value.",
+                "operationId": "create_derived_entry_v0_log_derived_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateDerivedEntriesConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Derived log entries created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Created 3 derived logs with key='example_key'.",
+                                    "derived_log_ids": [
+                                        101,
+                                        102,
+                                        103
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project 'example_project' not found."
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "All referenced log lists must have the same length. Found lengths: [2, 3]."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/v0/logs/latest_timestamp": {
@@ -4765,8 +4768,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -5057,30 +5060,72 @@
                         "example": "eval-project"
                     },
                     "params": {
-                        "type": "object",
-                        "title": "Params",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
-                        "default": {},
-                        "example": {
-                            "explicit_types": {
-                                "system-prompt": "str"
+                        "anyOf": [
+                            {
+                                "type": "object"
                             },
-                            "function_definition": "...",
-                            "system-prompt": "..."
-                        }
+                            {
+                                "items": {
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Params",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
+                        "default": {},
+                        "examples": [
+                            {
+                                "explicit_types": {
+                                    "system-prompt": "str"
+                                },
+                                "function_definition": "...",
+                                "system-prompt": "..."
+                            },
+                            [
+                                {
+                                    "system-prompt": "prompt1"
+                                },
+                                {
+                                    "system-prompt": "prompt2"
+                                }
+                            ]
+                        ]
                     },
                     "entries": {
-                        "type": "object",
-                        "title": "Entries",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
-                        "default": {},
-                        "example": {
-                            "explicit_types": {
-                                "input": "Image"
+                        "anyOf": [
+                            {
+                                "type": "object"
                             },
-                            "input": "...",
-                            "score-test-1": "..."
-                        }
+                            {
+                                "items": {
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Entries",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
+                        "default": {},
+                        "examples": [
+                            {
+                                "explicit_types": {
+                                    "input": "Image"
+                                },
+                                "input": "...",
+                                "score-test-1": "..."
+                            },
+                            [
+                                {
+                                    "input": "test1",
+                                    "score": 0.8
+                                },
+                                {
+                                    "input": "test2",
+                                    "score": 0.9
+                                }
+                            ]
+                        ]
                     },
                     "strongly_typed": {
                         "anyOf": [
