@@ -440,6 +440,22 @@
                             ]
                         },
                         {
+                            "group": "Contexts",
+                            "pages": [
+                                "api-reference/contexts/create_context",
+                                "api-reference/contexts/delete_context",
+                                "api-reference/contexts/add_logs_to_context"
+                            ]
+                        },
+                        {
+                            "group": "Context Artifacts",
+                            "pages": [
+                                "api-reference/context_artifacts/create_context_artifacts",
+                                "api-reference/context_artifacts/list_context_artifacts",
+                                "api-reference/context_artifacts/delete_context_artifact"
+                            ]
+                        },
+                        {
                             "group": "Logs",
                             "pages": [
                                 "api-reference/logs/create_logs",

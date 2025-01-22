@@ -1,0 +1,73 @@
+---
+title: 'List Context Artifacts'
+api: 'GET /v0/project/{project}/contexts/{context_name}/artifacts'
+---
+Returns the key-value pairs of all artifacts in a context.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="project" type="string" required="true">
+Name of the project containing the context.
+</ParamField>
+
+<ParamField query="context_name" type="string" required="true">
+Name of the context to list artifacts from.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/project/eval-project/contexts/training/artifacts' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/project/eval-project/contexts/training/artifacts"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "artifact_1": "value_1",
+    "artifact_2": "value_2"
+}
+```
+
+```json 404
+{
+    "detail": "Project <project> or context <context> not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

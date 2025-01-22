@@ -2611,6 +2611,234 @@
                 ]
             }
         },
+        "/v0/project/{project_name}/contexts": {
+            "post": {
+                "tags": [
+                    "Contexts"
+                ],
+                "summary": "Create Context",
+                "description": "Creates a new context within a project. Contexts can be used to organize logs\nand artifacts within a project.",
+                "operationId": "create_context_v0_project__project_name__contexts_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to create context in.",
+                            "title": "Project Name"
+                        },
+                        "description": "Name of the project to create context in.",
+                        "example": "my_project"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ContextCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Context created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Already Existing Context",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "A context with this name already exists in the project."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project/{project_name}/contexts/{context_name}": {
+            "delete": {
+                "tags": [
+                    "Contexts"
+                ],
+                "summary": "Delete Context",
+                "description": "Deletes a context from a project. This will not delete the logs or artifacts\nwithin the context, but will remove their association with this context.",
+                "operationId": "delete_context_v0_project__project_name__contexts__context_name__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to create context in.",
+                            "title": "Project Name"
+                        },
+                        "description": "Name of the project to create context in.",
+                        "example": "my_project"
+                    },
+                    {
+                        "name": "context_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the context to delete.",
+                            "title": "Context Name"
+                        },
+                        "description": "Name of the context to delete.",
+                        "example": "my_context"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Context deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project or Context Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project or context not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project/{project_name}/contexts/add_logs": {
+            "post": {
+                "tags": [
+                    "Contexts"
+                ],
+                "summary": "Add Logs To Context",
+                "description": "Adds existing logs to a context within a project. The logs must already exist\nin the project and can be specified by their IDs.\nThe same logs can be associated with multiple contexts.",
+                "operationId": "add_logs_to_context_v0_project__project_name__contexts_add_logs_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to create context in.",
+                            "title": "Project Name"
+                        },
+                        "description": "Name of the project to create context in.",
+                        "example": "my_project"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddLogsToContextRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Logs added to context successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project, Context or Logs Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project, context or specified logs not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/project/{project}/artifacts": {
             "post": {
                 "tags": [
@@ -2828,13 +3056,256 @@
                 }
             }
         },
+        "/v0/project/{project}/contexts/{context_name}/artifacts": {
+            "post": {
+                "tags": [
+                    "Context Artifacts"
+                ],
+                "summary": "Create Context Artifacts",
+                "description": "Creates one or more artifacts associated to a context within a project.",
+                "operationId": "create_context_artifacts_v0_project__project__contexts__context_name__artifacts_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project the context belongs to.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project the context belongs to.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "context_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the context to create artifacts in.",
+                            "title": "Context Name"
+                        },
+                        "description": "Name of the context to create artifacts in.",
+                        "example": "experiment1/trial1"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ContextArtifactCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Context artifact(s) created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project or Context Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> or context <context> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Context Artifacts"
+                ],
+                "summary": "List Context Artifacts",
+                "description": "Returns the key-value pairs of all artifacts in a context.",
+                "operationId": "list_context_artifacts_v0_project__project__contexts__context_name__artifacts_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project containing the context.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project containing the context.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "context_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the context to list artifacts from.",
+                            "title": "Context Name"
+                        },
+                        "description": "Name of the context to list artifacts from.",
+                        "example": "training"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "artifact_1": "value_1",
+                                    "artifact_2": "value_2"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project or Context Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> or context <context> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project/{project}/contexts/{context}/artifacts/{key}": {
+            "delete": {
+                "tags": [
+                    "Context Artifacts"
+                ],
+                "summary": "Delete Context Artifact",
+                "description": "Deletes an artifact from a context within a project.",
+                "operationId": "delete_context_artifact_v0_project__project__contexts__context__artifacts__key__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project containing the context.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project containing the context.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "context",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the context to delete an artifact from.",
+                            "title": "Context"
+                        },
+                        "description": "Name of the context to delete an artifact from.",
+                        "example": "training"
+                    },
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Key of the artifact to delete.",
+                            "title": "Key"
+                        },
+                        "description": "Key of the artifact to delete.",
+                        "example": "context-description"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Context artifact deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project, Context, or Artifact Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project>, context <context>, or artifact <key> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/logs": {
             "post": {
                 "tags": [
                     "Logs"
                 ],
                 "summary": "Create Logs",
-                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.\n\nThis method returns the ids of the new stored logs.",
+                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.\n\nThis method returns the ids of the new stored logs.",
                 "operationId": "create_logs_v0_logs_post",
                 "security": [
                     {
@@ -3063,7 +3534,7 @@
                         "example": "eval-project"
                     },
                     {
-                        "name": "context",
+                        "name": "column_context",
                         "in": "query",
                         "required": false,
                         "schema": {
@@ -3076,10 +3547,29 @@
                                 }
                             ],
                             "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
-                            "title": "Context"
+                            "title": "Column Context"
                         },
                         "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
                         "example": "subjects/science/physics"
+                    },
+                    {
+                        "name": "context",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Static context to filter logs by.",
+                            "title": "Context"
+                        },
+                        "description": "Static context to filter logs by.",
+                        "example": "training"
                     },
                     {
                         "name": "filter_expr",
@@ -3396,7 +3886,7 @@
                         "example": "eval-project"
                     },
                     {
-                        "name": "context",
+                        "name": "column_context",
                         "in": "query",
                         "required": false,
                         "schema": {
@@ -3409,10 +3899,29 @@
                                 }
                             ],
                             "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
-                            "title": "Context"
+                            "title": "Column Context"
                         },
                         "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
                         "example": "subjects/science/physics"
+                    },
+                    {
+                        "name": "context",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Static context to filter logs by.",
+                            "title": "Context"
+                        },
+                        "description": "Static context to filter logs by.",
+                        "example": "training"
                     },
                     {
                         "name": "filter_expr",
@@ -4449,6 +4958,37 @@
     },
     "components": {
         "schemas": {
+            "AddLogsToContextRequest": {
+                "properties": {
+                    "context_name": {
+                        "type": "string",
+                        "title": "Context Name",
+                        "description": "Name of the context to add logs to.",
+                        "example": "experiment1/trial1"
+                    },
+                    "log_ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Log Ids",
+                        "description": "List of log IDs to add to the context. At least one log ID must be provided.",
+                        "example": [
+                            123,
+                            456,
+                            789
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "context_name",
+                    "log_ids"
+                ],
+                "title": "AddLogsToContextRequest",
+                "description": "Request model for adding existing logs to a context."
+            },
             "ArtifactConfig": {
                 "properties": {
                     "artifacts": {
@@ -4768,8 +5308,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -4993,6 +5533,54 @@
                 "title": "ChatCompletionResponse",
                 "description": "Response model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    created (int): Timestamp indicating when the response was created.\n    id (str): Identifier for the completion response.\n    object (str): The type of object, defaults to \"chat.completion\".\n    usage (dict): Usage statistics or additional information.\n    choices (List[Dict]): List of completion choices."
             },
+            "ContextArtifactCreateRequest": {
+                "properties": {
+                    "artifacts": {
+                        "type": "object",
+                        "title": "Artifacts",
+                        "description": "Dictionary containing one or more key:value pairs that will be stored as artifacts within a project.",
+                        "example": {
+                            "dataset": "high-jump-data",
+                            "world-record": 2.45
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "artifacts"
+                ],
+                "title": "ContextArtifactCreateRequest",
+                "description": "Request model for creating a new context artifact within a context."
+            },
+            "ContextCreateRequest": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Context name, can be nested using '/' (e.g., 'parent/child'). Must contain only alphanumeric characters, underscores, and hyphens.",
+                        "example": "experiment1/trial1"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description of the context",
+                        "example": "Context for experiment 1 trial 1"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "ContextCreateRequest",
+                "description": "Request model for creating a new context within a project."
+            },
             "CreateDerivedEntriesConfig": {
                 "properties": {
                     "project": {
@@ -5058,6 +5646,18 @@
                         "title": "Project",
                         "description": "Name of the project the stored entries will be associated to.",
                         "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ContextCreateRequest"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
+                        "example": "experiment1/trial1"
                     },
                     "params": {
                         "anyOf": [
@@ -5759,6 +6359,18 @@
                             456,
                             789
                         ]
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ContextCreateRequest"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
+                        "example": "experiment1/trial1"
                     },
                     "params": {
                         "anyOf": [
