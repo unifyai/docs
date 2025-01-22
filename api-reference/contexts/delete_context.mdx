@@ -1,0 +1,73 @@
+---
+title: 'Delete Context'
+api: 'DELETE /v0/project/{project_name}/contexts/{context_name}'
+---
+Deletes a context from a project. This will not delete the logs or artifacts
+within the context, but will remove their association with this context.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="project_name" type="string" required="true">
+Name of the project to create context in.
+</ParamField>
+
+<ParamField query="context_name" type="string" required="true">
+Name of the context to delete.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/project/my_project/contexts/my_context' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/project/my_project/contexts/my_context"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("DELETE", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Context deleted successfully!"
+}
+```
+
+```json 404
+{
+    "detail": "Project or context not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

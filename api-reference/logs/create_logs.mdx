@@ -4,7 +4,6 @@ api: 'POST /v0/logs'
 ---
 Creates one or more logs associated to a project. Logs are
 LLM-call-level data that might depend on other variables.
-
 A "explicit_types" dictionary can be passed as part of the `entries`.
 If present, any matching key inside this dictionary will override the
 inferred type of that particular entry.
@@ -21,6 +20,10 @@ This method returns the ids of the new stored logs.
 
 <ParamField body="project" type="string" required="true">
 Name of the project the stored entries will be associated to.
+</ParamField>
+
+<ParamField body="context" type="any | null" >
+Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').
 </ParamField>
 
 <ParamField body="params" type="object | array"  default={{}}>
@@ -43,7 +46,8 @@ curl --request POST \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
-    "project": "eval-project"
+    "project": "eval-project",
+    "context": "experiment1/trial1"
 }'
 ```
 
@@ -54,7 +58,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project"}
+json_input = {"project": "eval-project", "context": "experiment1/trial1"}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

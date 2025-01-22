@@ -1,0 +1,91 @@
+---
+title: 'Add Logs To Context'
+api: 'POST /v0/project/{project_name}/contexts/add_logs'
+---
+Adds existing logs to a context within a project. The logs must already exist
+in the project and can be specified by their IDs.
+The same logs can be associated with multiple contexts.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="project_name" type="string" required="true">
+Name of the project to create context in.
+</ParamField>
+
+#### Body
+
+<ParamField body="context_name" type="string" required="true">
+Name of the context to add logs to.
+</ParamField>
+
+<ParamField body="log_ids" type="[integer]" required="true">
+List of log IDs to add to the context. At least one log ID must be provided.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/project/my_project/contexts/add_logs' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{
+    "context_name": "experiment1/trial1",
+    "log_ids": [
+        123,
+        456,
+        789
+    ]
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/project/my_project/contexts/add_logs"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"context_name": "experiment1/trial1", "log_ids": [123, 456, 789]}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Logs added to context successfully!"
+}
+```
+
+```json 404
+{
+    "detail": "Project, context or specified logs not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
