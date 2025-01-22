@@ -1,0 +1,98 @@
+---
+title: 'Create Logs'
+api: 'POST /v0/logs'
+---
+Creates one or more logs associated to a project. Logs are
+LLM-call-level data that might depend on other variables.
+
+A "explicit_types" dictionary can be passed as part of the `entries`.
+If present, any matching key inside this dictionary will override the
+inferred type of that particular entry.
+
+This method returns the ids of the new stored logs.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="project" type="string" required="true">
+Name of the project the stored entries will be associated to.
+</ParamField>
+
+<ParamField body="params" type="object | array"  default={{}}>
+Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.
+</ParamField>
+
+<ParamField body="entries" type="object | array"  default={{}}>
+Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.
+</ParamField>
+
+<ParamField body="strongly_typed" type="boolean | array"  default={true}>
+Enforce strong typing for fields.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/logs' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "project": "eval-project"
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"project": "eval-project"}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Logs created successfully!",
+    "log_event_ids": [
+        1,
+        2,
+        3
+    ]
+}
+```
+
+```json 404
+{
+    "detail": "Project not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

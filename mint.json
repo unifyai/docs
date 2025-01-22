@@ -442,11 +442,11 @@
                         {
                             "group": "Logs",
                             "pages": [
-                                "api-reference/logs/create_log",
-                                "api-reference/logs/create_derived_entry",
+                                "api-reference/logs/create_logs",
                                 "api-reference/logs/update_logs",
                                 "api-reference/logs/delete_logs",
                                 "api-reference/logs/get_logs",
+                                "api-reference/logs/create_derived_entry",
                                 "api-reference/logs/get_logs_latest_timestamp",
                                 "api-reference/logs/get_logs_metric",
                                 "api-reference/logs/get_log_groups",
