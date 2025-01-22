@@ -34,10 +34,6 @@ Dictionary containing one or more key:value pairs that will be logged into the p
 Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.
 </ParamField>
 
-<ParamField body="strongly_typed" type="boolean | array"  default={true}>
-Enforce strong typing for fields.
-</ParamField>
-
 <RequestExample>
 
 ```bash cURL

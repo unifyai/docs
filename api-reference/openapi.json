@@ -5726,22 +5726,6 @@
                                 }
                             ]
                         ]
-                    },
-                    "strongly_typed": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            }
-                        ],
-                        "title": "Strongly Typed",
-                        "description": "Enforce strong typing for fields.",
-                        "default": true
                     }
                 },
                 "type": "object",
@@ -6424,22 +6408,6 @@
                         "description": "Whether to overwrite existing logs",
                         "default": false,
                         "example": false
-                    },
-                    "strongly_typed": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            }
-                        ],
-                        "title": "Strongly Typed",
-                        "description": "Enforce strong typing for fields.",
-                        "default": true
                     }
                 },
                 "type": "object",
