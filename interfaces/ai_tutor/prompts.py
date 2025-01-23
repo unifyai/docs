@@ -125,7 +125,10 @@ by inferring these from the provided image(s).
 The question of interest (question {question_number}) contains {sub-questions}, 
 and {field(s)} of the requested structured output representation 
 must be **fully populated** based on the information which is known to exist in the 
-text and images(s).
+text and images(s). Remember, sometimes questions are split across **multiple 
+pages**, with only letters starting on the next page without showing the question 
+number, but these should **always** be included as part of the question on the previous 
+page. 
 
 If the formatting could be improved to make the markscheme for each 
 question component more readable in text-only format, 
