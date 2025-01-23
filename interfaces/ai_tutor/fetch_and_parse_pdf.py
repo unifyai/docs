@@ -86,24 +86,26 @@ def parse_pdf_into_papers_and_markschemes():
 
 
 def _fill_missing_questions_n_pages(questions_to_pages):
+    # ToDo fully modify this function to use alphanumeric reasoning
     prev_question_num = 0
     prev_pages = list()
     new_questions_to_pages = questions_to_pages.copy()
-    for question_num, pages in questions_to_pages.items():
+    for i, (question_alphanum, pages) in enumerate(questions_to_pages.items()):
+        question_num = int(question_alphanum.split(".")[0])
         if question_num != prev_question_num + 1:
-            min_pg = min(questions_to_pages[prev_question_num])
+            min_pg = min(questions_to_pages[i-1])
             max_pg = max(pages)
             union_of_pages = list(range(min_pg, max_pg + 1))
             for q_num in range(prev_question_num + 1, question_num):
                 new_questions_to_pages[q_num] = union_of_pages
         elif prev_pages and pages[0] > prev_pages[-1] + 1:
-            new_questions_to_pages[question_num - 1] = (
+            new_questions_to_pages[question_alphanum - 1] = (
                 list(range(prev_pages[0], pages[0] + 1))
             )
-            new_questions_to_pages[question_num] = (
+            new_questions_to_pages[question_alphanum] = (
                 list(range(prev_pages[-1], pages[-1] + 1))
             )
-        prev_question_num = question_num
+        prev_question_num = question_alphanum
         prev_pages = pages
     return dict(sorted(new_questions_to_pages.items()))
 
@@ -199,6 +201,9 @@ def parse_paper(paper_num):
                 diagram_images[page_num] = img
             question_detector.set_system_message(
                 QUESTION_DETECTION.replace(
+                    "{n-1}",
+                    str(latest_num),
+                ).replace(
                     "{n0}",
                     str(latest_num + 1),
                 )
@@ -221,6 +226,11 @@ def parse_paper(paper_num):
                 .replace(
                     "{c2}",
                     chr(ord(latest_char) + 3),
+                ).replace(
+                    "{explanation}",
+                    f"did not have any alpha sub-questions, so we should see a "
+                    f"numeric question first on this page, possibly followed by `a`" if
+                    latest_char == "`" else f"ended with question {latest_num} {latest_char}"
                 ),
             )
             response = question_detector.generate(text)
@@ -229,17 +239,19 @@ def parse_paper(paper_num):
                 v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
             ):
                 continue
-            previous_q_overflow = detected_qs[0].isalpha()
-            if previous_q_overflow:
-                question_to_pages[detected_numeric[-1]] += [page_num]
-            detected_numeric = [int(v) for v in detected_qs if v.isnumeric()]
-            if detected_numeric:
-                latest_num = max(detected_numeric)
-            last_question = detected_qs[-1]
-            latest_char = "`" if last_question.isnumeric() else last_question
-            for question in detected_numeric:
-                question_to_pages[question] = [page_num]
-        return _fill_missing_questions_n_pages(question_to_pages), max(detected_numeric)
+            num = latest_num
+            for i, item in enumerate(detected_qs):
+                if item.isalpha():
+                    question_to_pages[f"{num}.{item}"] = [page_num]
+                elif item.isdigit():
+                    if len(detected_qs) == i+1 or detected_qs[i+1].isdigit():
+                        question_to_pages[item] = [page_num]
+                    num = int(item)
+                else:
+                    raise ValueError(f"Invalid type for question: {item}")
+            latest_num = num
+            latest_char = "`" if detected_qs[-1].isnumeric() else detected_qs[-1]
+        return _fill_missing_questions_n_pages(question_to_pages), latest_num
 
     question_to_pages, num_questions = parse_into_pages()
 
@@ -461,6 +473,9 @@ def parse_markscheme(paper_num):
                 diagram_images[page_num] = img
             question_detector.set_system_message(
                 QUESTION_ANSWER_DETECTION.replace(
+                    "{n-1}",
+                    str(latest_num),
+                ).replace(
                     "{n0}",
                     str(latest_num + 1),
                 )
@@ -483,6 +498,11 @@ def parse_markscheme(paper_num):
                 .replace(
                     "{c2}",
                     chr(ord(latest_char) + 3),
+                ).replace(
+                    "{explanation}",
+                    f"did not have any alpha sub-questions, so we should see a "
+                    f"numeric question first on this page, possibly followed by `a`" if
+                    latest_char == "`" else f"ended with question {latest_num} {latest_char}"
                 ),
             )
             response = question_detector.generate(text)
@@ -535,6 +555,10 @@ def parse_markscheme(paper_num):
             .replace(
                 "{subsequent}",
                 str(question_num + 1),
+            )
+            .replace(
+                "{question_parts}",
+                question_parts,
             ),
         )
         qna = question_answer_parser.generate(

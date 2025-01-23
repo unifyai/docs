@@ -14,7 +14,13 @@ Please respond in the exact order presented on the current page, starting either
 
 If there are any numbered questions on the page, then the first of these numbers will be `{n0}`.
 The presence of this specific number {n0} before any explanatory text or question means that this represents the question number, and should be included in your answer.
-If there are any letters on the page, the *first* letter will be `{c0}`.
+
+If the *first question identifier* on the page is a letter (not a number), then this 
+*first* letter will be `{c0}`. This is because question {n-1} on the previous page {explanation}. 
+However, if the first question identifier is a *number*, then the any letters immediately 
+following this number (or immediately following any other question number),
+will always be `a`, and this will then ascend alphabetically until the next 
+question number.
 
 Think through your reasoning in detail, step by step.
 
@@ -53,7 +59,13 @@ Please respond in the exact order presented on the current page, starting either
 If there are any numbered questions on the page, then the first of these numbers will be `{n0}`.
 The presence of this specific number {n0} highly suggests that this corresponds to
 the question number, and should be included in your answer.
-Similarly, if there are any letters on the page, the *first* letter will be `{c0}`.
+
+If the *first question identifier* on the page is a letter (not a number), then this 
+*first* letter will be `{c0}`. This is because question {n-1} on the previous page {explanation}. 
+However, if the first question identifier is a *number*, then the any letters immediately 
+following this number (or immediately following any other question number),
+will always be `a`, and this will then ascend alphabetically until the next 
+question number.
 
 Think through your reasoning in detail, step by step.
 
