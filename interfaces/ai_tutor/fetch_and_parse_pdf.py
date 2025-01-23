@@ -601,6 +601,8 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                     raise ValueError(f"Invalid type for question: {item}")
             latest_num = num
             all_detected_qs += detected_qs
+            if not subquestions:
+                break
         return _fill_missing_questions_n_pages(question_to_pages), latest_num
 
     question_to_pages, num_questions = parse_into_pages()
