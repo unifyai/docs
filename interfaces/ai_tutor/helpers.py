@@ -4,6 +4,18 @@ import json
 import base64
 
 
+def parse_key(k: str):
+    """
+    Splits the string on the first dot.
+    - The part before the dot is turned into an integer (if there's no dot, the whole key is an integer).
+    - The remainder (if any) is kept as a suffix for secondary sorting.
+    """
+    parts = k.split('.', 1)
+    num = int(parts[0])                # integer portion
+    suffix = parts[1] if len(parts) > 1 else ""  # suffix after the first dot, if any
+    return num, suffix
+
+
 def encode_image(image_path):
     _, buffer = cv2.imencode(".jpg", image_path)
     return base64.b64encode(buffer).decode("utf-8")
