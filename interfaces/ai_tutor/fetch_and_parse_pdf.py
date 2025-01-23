@@ -6,7 +6,7 @@ import threading
 import numpy as np
 from pypdf import PdfReader, PdfWriter
 from pdf2image import convert_from_path
-from pydantic import BaseModel, create_model
+from pydantic import create_model
 
 import unify
 from prompts import *
