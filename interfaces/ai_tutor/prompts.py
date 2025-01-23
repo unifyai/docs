@@ -128,7 +128,14 @@ must be **fully populated** based on the information which is known to exist in 
 text and images(s). Remember, sometimes questions are split across **multiple 
 pages**, with only letters starting on the next page without showing the question 
 number, but these should **always** be included as part of the question on the previous 
-page. 
+page.
+
+Please look at this image to help understand the page *layout*, which might help you 
+make sense of which numbers indicate pages vs questions vs marks awarded. 
+Specifically, question numbers are likely to be listed under a "Questions" column, 
+and marks under a "Marks" column. This structure might not be clear from the 
+text-only representation you've been provided with, 
+so please use both sources when considering your answer.
 
 If the formatting could be improved to make the markscheme for each 
 question component more readable in text-only format, 
