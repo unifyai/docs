@@ -10,7 +10,7 @@ from pydantic import create_model
 
 import unify
 from prompts import *
-from helpers import encode_image, parse_key
+from helpers import encode_image, parse_key, is_invalid_question_order
 
 url = (
     "https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment"
@@ -120,6 +120,7 @@ def parse_paper(paper_num):
         "o1@openai",
         cache=True,
         system_message=QUESTION_DETECTION,
+        stateful=True
     )
     diagram_detector = unify.Unify("o1@openai", cache=True)
 
@@ -204,6 +205,7 @@ def parse_paper(paper_num):
                 cv2.imwrite(os.path.join(img_dir, fname), img)
             if contains_diagram:
                 diagram_images[page_num] = img
+            question_detector.set_messages([]) # clear previous chat
             question_detector.set_system_message(
                 QUESTION_DETECTION.replace(
                     "{n-1}",
@@ -251,7 +253,7 @@ def parse_paper(paper_num):
                                 "type": "image_url",
                                 "image_url": {
                                     "url": f"data:image/jpeg;base64,"
-                                    f"{encode_image(img)}",
+                                           f"{encode_image(img)}",
                                 },
                             },
                         ],
@@ -260,29 +262,45 @@ def parse_paper(paper_num):
             )
             detected_qs = parse_question_detector(response)
             if not all(
-                v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
+                    v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
             ):
                 continue
+            invalid_sequence = is_invalid_question_order(
+                detected_qs,
+                chr(ord(latest_char) + 1),
+                str(latest_num + 1)
+            )
+            count = 0
+            attempts = 3
+            while invalid_sequence and count < attempts:
+                response = question_detector.generate(
+                    f"The previous response {detected_qs} was invalid. "
+                    f"The next question *number* must be {latest_num + 1}, "
+                    "and if the *first* item on the page is a letter (before any "
+                    f"numbers) then it must be {chr(ord(latest_char) + 1)} (as an "
+                    f"overflow of question {latest_num} from the previous page). "
+                    "Finally, any letters immediately after a new question number "
+                    "*must* begin with `a` and then ascend alphabetically one character "
+                    f"at a time. Your answer of {detected_qs} does not adhere to "
+                    f"these rules. Perhaps you mistook the page number {page_num} for "
+                    "the question number, and the letter refers to a prior question? "
+                    "Other similar mistakes might be possible. Please have another "
+                    "think and provide an updated answer."
+                )
+                detected_qs = parse_question_detector(response)
+                invalid_sequence = is_invalid_question_order(
+                    detected_qs,
+                    chr(ord(latest_char) + 1),
+                    str(latest_num + 1)
+                )
+                count += 1
+            assert not invalid_sequence, \
+                f"Still an invalid sequence {detected_qs} after {attempts} attempts"
             num = latest_num
-            valid_char = chr(ord(latest_char) + 1)
-            valid_num = str(latest_num + 1)
             for i, item in enumerate(detected_qs):
                 if item.isalpha():
-                    assert item == valid_char, \
-                        (f"character must be {valid_char}, but found {item} as part "
-                         f"of prediction {detected_qs}, "
-                         f"for paper {paper_num} page {page_num} with previous "
-                         f"question {latest_num}")
-                    valid_char = chr(ord(valid_char) + 1)
                     question_to_pages[f"{num}.{item}"] = [page_num]
                 elif item.isdigit():
-                    assert item == valid_num, \
-                        (f"number must be {valid_num}, but found {item} as part of "
-                         f"prediction {detected_qs}, for paper "
-                         f"{paper_num} page {page_num} with previous "
-                         f"question {latest_num}")
-                    valid_num = str(int(valid_num) + 1)
-                    valid_char = "a"
                     if len(detected_qs) == i+1 or detected_qs[i+1].isdigit():
                         question_to_pages[item] = [page_num]
                     num = int(item)
