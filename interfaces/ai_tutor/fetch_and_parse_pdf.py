@@ -538,11 +538,11 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 )
                 .replace(
                     "{i1}",
-                    str(subquestions[1]),
+                    str(subquestions[1] if len(subquestions) > 1 else ""),
                 )
                 .replace(
                     "{i2}",
-                    str(subquestions[2]),
+                    str(subquestions[2] if len(subquestions) > 2 else ""),
                 ).replace(
                     "{n0}",
                     str(latest_num + 1),
