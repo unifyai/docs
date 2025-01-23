@@ -567,6 +567,12 @@ def parse_markscheme(paper_num):
             pg_text = prune_page_number(pg_text, pg, question_num)
             current_text += pg_text
         imgs = [all_images[pg - 1] for pg in pages]
+        if sub_questions:
+            sub_questions_expr = "the following sub-questions: " + ", ".join(sub_questions)
+        else:
+            sub_questions_expr = ("*no* sub-questions [(a), (b), (i) etc.], "
+                                  "and so you should not look for or include any "
+                                  "alphabetic sub-questions for this question.")
         question_answer_parser.set_system_message(
             QUESTION_ANSWER_PARSER.replace(
                 "{question_number}",
@@ -580,10 +586,10 @@ def parse_markscheme(paper_num):
                 "{subsequent}",
                 str(question_num + 1),
             )
-            # .replace(
-            #     "{question_parts}",
-            #     question_parts,
-            # ),
+            .replace(
+                "{sub-questions}",
+                sub_questions_expr,
+            ),
         )
         qna = question_answer_parser.generate(
             messages=[
