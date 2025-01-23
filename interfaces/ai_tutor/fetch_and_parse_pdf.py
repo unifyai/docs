@@ -522,17 +522,19 @@ def parse_markscheme(paper_num):
                 v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
             ):
                 continue
-            previous_q_overflow = detected_qs[0].isalpha()
-            if previous_q_overflow:
-                question_to_pages[detected_numeric[-1]] += [page_num]
-            detected_numeric = [int(v) for v in detected_qs if v.isnumeric()]
-            if detected_numeric:
-                latest_num = max(detected_numeric)
-            last_question = detected_qs[-1]
-            latest_char = "`" if last_question.isnumeric() else last_question
-            for question in detected_numeric:
-                question_to_pages[question] = [page_num]
-        return _fill_missing_questions_n_pages(question_to_pages), max(detected_numeric)
+            num = latest_num
+            for i, item in enumerate(detected_qs):
+                if item.isalpha():
+                    question_to_pages[f"{num}.{item}"] = [page_num]
+                elif item.isdigit():
+                    if len(detected_qs) == i+1 or detected_qs[i+1].isdigit():
+                        question_to_pages[item] = [page_num]
+                    num = int(item)
+                else:
+                    raise ValueError(f"Invalid type for question: {item}")
+            latest_num = num
+            latest_char = "`" if detected_qs[-1].isnumeric() else detected_qs[-1]
+        return _fill_missing_questions_n_pages(question_to_pages), latest_num
 
     question_to_pages, num_questions = parse_into_pages()
     question_to_pages = dict(
@@ -550,7 +552,15 @@ def parse_markscheme(paper_num):
             cache=True,
             system_message=NUM_MARKS_DETECTION,
         )
-        pages = question_to_pages[question_num]
+        sub_questions = [
+            k.split(".")[-1] for k, v in question_to_pages.items()
+            if k.startswith(str(question_num) + ".")
+        ]
+        pages = [
+            v for k, v in question_to_pages.items()
+            if (k == str(question_num) or k.startswith(str(question_num) + "."))
+        ]
+        pages = list(dict.fromkeys([item for sublist in pages for item in sublist]))
         current_text = ""
         for pg in pages:
             pg_text = reader.pages[pg - 1].extract_text()
@@ -570,10 +580,10 @@ def parse_markscheme(paper_num):
                 "{subsequent}",
                 str(question_num + 1),
             )
-            .replace(
-                "{question_parts}",
-                question_parts,
-            ),
+            # .replace(
+            #     "{question_parts}",
+            #     question_parts,
+            # ),
         )
         qna = question_answer_parser.generate(
             messages=[
@@ -604,6 +614,7 @@ def parse_markscheme(paper_num):
             "text": qna,
             "num-marks": num_marks,
             "pages": pages,
+            "sub-questions": sub_questions,
             "correctly_parsed": True
         }
         parsed = json.dumps(dict(sorted(questions.items())), indent=4)
