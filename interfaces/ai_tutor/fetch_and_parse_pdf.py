@@ -237,7 +237,26 @@ def parse_paper(paper_num):
                     latest_char == "`" else f"ended with question {latest_num} {latest_char}"
                 ),
             )
-            response = question_detector.generate(text)
+            response = question_detector.generate(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": text,
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/jpeg;base64,"
+                                    f"{encode_image(img)}",
+                                },
+                            },
+                        ],
+                    },
+                ],
+            )
             detected_qs = parse_question_detector(response)
             if not all(
                 v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
@@ -319,7 +338,27 @@ def parse_paper(paper_num):
                 },
             ],
         )
-        response = text_only_detector.generate(question_parsed)
+        response = text_only_detector.generate(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": question_parsed,
+                            }
+                        ] + [
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/jpeg;base64,"
+                                       f"{encode_image(img)}",
+                            },
+                        }
+                    for img in imgs],
+                    },
+                ],
+            )
         text_only = "yes" in response.split("\n")[-1].lower()
         questions[question_num] = {
             "text": question_parsed,
@@ -389,7 +428,7 @@ def parse_paper(paper_num):
     unify.map(parse_question, list(range(1, num_questions + 1)))
 
 
-def parse_markscheme(paper_num):
+def parse_markscheme(paper_num, question_to_subquestions, subquestions):
     question_detector = unify.Unify(
         "o1@openai",
         cache=True,
@@ -452,7 +491,7 @@ def parse_markscheme(paper_num):
         )
         question_to_pages = dict()
         latest_num = 0
-        latest_char = "`"
+        all_detected_qs = list()
         for page_num, page in enumerate(reader.pages):
             page_num += 1
             text = page.extract_text().split("OCR  2024  J560/0")[-1][2:]
@@ -488,8 +527,21 @@ def parse_markscheme(paper_num):
                 diagram_images[page_num] = img
             question_detector.set_system_message(
                 QUESTION_ANSWER_DETECTION.replace(
-                    "{n-1}",
-                    str(latest_num),
+                    "{detected_so_far}",
+                    "the full set of questions detected so far up to and including "
+                    f"the last page are: {all_detected_qs}" if all_detected_qs else
+                    "this is the first page in the markscheme",
+                ).replace(
+                    "{i0}",
+                    str(subquestions[0]),
+                )
+                .replace(
+                    "{i1}",
+                    str(subquestions[1]),
+                )
+                .replace(
+                    "{i2}",
+                    str(subquestions[2]),
                 ).replace(
                     "{n0}",
                     str(latest_num + 1),
@@ -501,31 +553,43 @@ def parse_markscheme(paper_num):
                 .replace(
                     "{n2}",
                     str(latest_num + 3),
-                )
-                .replace(
-                    "{c0}",
-                    chr(ord(latest_char) + 1),
-                )
-                .replace(
-                    "{c1}",
-                    chr(ord(latest_char) + 2),
-                )
-                .replace(
-                    "{c2}",
-                    chr(ord(latest_char) + 3),
                 ).replace(
-                    "{explanation}",
-                    f"did not have any alpha sub-questions, so we should see a "
-                    f"numeric question first on this page, possibly followed by `a`" if
-                    latest_char == "`" else f"ended with question {latest_num} {latest_char}"
-                ),
+                    "{full_question_structure}",
+                    json.dumps(question_to_subquestions, indent=4)
+                )
             )
-            response = question_detector.generate(text)
+            response = question_detector.generate(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": text,
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/jpeg;base64,"
+                                    f"{encode_image(img)}",
+                                },
+                            },
+                        ],
+                    },
+                ],
+            )
             detected_qs = parse_question_detector(response)
             if not all(
                 v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
             ):
                 continue
+            paper_subquestions = [str(sq) for sq in subquestions[0:len(detected_qs)]]
+            # ToDo: maybe turn this assertion into repeated LLM calls until they match
+            assert paper_subquestions == detected_qs, \
+                (f"Subquestions parsed from paper {paper_subquestions} do not match "
+                 f"those parsed from the markscheme {detected_qs} for page {page_num}")
+            breakpoint()
+            [subquestions.pop(0) for _ in range(len(detected_qs))]
             num = latest_num
             for i, item in enumerate(detected_qs):
                 if item.isalpha():
@@ -537,7 +601,7 @@ def parse_markscheme(paper_num):
                 else:
                     raise ValueError(f"Invalid type for question: {item}")
             latest_num = num
-            latest_char = "`" if detected_qs[-1].isnumeric() else detected_qs[-1]
+            all_detected_qs += detected_qs
         return _fill_missing_questions_n_pages(question_to_pages), latest_num
 
     question_to_pages, num_questions = parse_into_pages()
@@ -616,7 +680,27 @@ def parse_markscheme(paper_num):
                 },
             ],
         )
-        response = num_marks_detector.generate(qna)
+        response = num_marks_detector.generate(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": qna,
+                            }
+                        ] + [
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/jpeg;base64,"
+                                       f"{encode_image(img)}",
+                            },
+                        }
+                    for img in imgs],
+                    },
+                ],
+            )
         num_marks = int(
             "".join([c for c in response.split("\n")[-1].lower() if c.isdigit()]),
         )
@@ -699,6 +783,24 @@ if __name__ == "__main__":
         if not os.path.exists(target_paper_fpath):
             parse_paper(int(subdir))
 
+        target_q_to_pages_fpath = os.path.join(pdf_dir, subdir, "paper/question_to_pages.json")
+        with open(target_q_to_pages_fpath) as f:
+            target_q_to_pages = json.load(f)
+        question_to_subquestions = dict()
+        subquestions = list()
+        for k in target_q_to_pages.keys():
+            if "." not in k:
+                question_to_subquestions[int(k)] = list()
+                subquestions.append(int(k))
+            else:
+                q_num, q_letter = k.split(".")
+                q_num = int(q_num)
+                if q_num not in question_to_subquestions:
+                    subquestions.append(q_num)
+                    question_to_subquestions[q_num] = list()
+                subquestions.append(q_letter)
+                question_to_subquestions[q_num].append(q_letter)
+
         # markscheme
         target_markscheme_fpath = os.path.join(
             pdf_dir,
@@ -706,6 +808,6 @@ if __name__ == "__main__":
             "markscheme/parsed.json",
         )
         if not os.path.exists(target_markscheme_fpath):
-            parse_markscheme(int(subdir))
+            parse_markscheme(int(subdir), question_to_subquestions, subquestions)
 
     unify.map(_parse, subdirs)
