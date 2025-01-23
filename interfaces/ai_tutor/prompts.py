@@ -107,6 +107,8 @@ following text and images. You should *not* extract any parts of the
 answer or guidelines for the preceding question {preceding} or subsequent question
 {subsequent}.
 
+The question of interest (question {question_number}) contains {sub-questions}.
+
 The text was parsed from a PDF, and the formatting might be strange or wrong as a 
 result of this conversion to pure text. More importantly, mathematical symbols 
 such as √w, x², y₄, ⁴√z etc. are very often missed by the parsing logic. Sometimes, 
