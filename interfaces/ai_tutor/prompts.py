@@ -17,10 +17,14 @@ The presence of this specific number {n0} before any explanatory text or questio
 
 If the *first question identifier* on the page is a letter (not a number), then this 
 *first* letter will be `{c0}`. This is because question {n-1} on the previous page {explanation}. 
-However, if the first question identifier is a *number*, then the any letters immediately 
+However, if the first question identifier is {n0}, then the any letters immediately 
 following this number (or immediately following any other question number),
 will always be `a`, and this will then ascend alphabetically until the next 
 question number.
+
+A full image of the page has also been included, please look at this image to help 
+understand the page *layout*, which might help you make sense of which numbers 
+indicate pages vs questions.
 
 Think through your reasoning in detail, step by step.
 
@@ -33,14 +37,15 @@ If you do not see any clear questions on the page, then just explain why, with n
 """
 
 QUESTION_ANSWER_DETECTION = """
-Your task is to detect the numeric question numbers [1, 2, 3 etc.] and letter
+Your task is to detect the numeric question numbers [{n0}, {n1}, {n2} etc.] and letter
 questions [a, b, c etc.] that are present in the following markscheme text,
 which contains questions and answers.
 
 Please **do not** include sub-questions such as (i), (ii), (iii) etc.
 
 When deciding whether the number refers to a question, look at *all of* the text within
-the corresponding row in the table.
+the corresponding row in the table. Also note that question numbers are always 
+strictly ascending incrementing by one whole number at a time.
 
 Please ignore general guidelines to the marker, which may also come ordered with
 numbers. If this is what you see, then please give an empty response as explained
@@ -52,27 +57,24 @@ question numbers are always on the left hand side, and M1, M2 indicate the marks
 each point. If you see this, it means this is part of the mark scheme, and there is
 likely a number and/or letter to be extracted.
 
-The first question on the page can either be a number (new question) or a letter (continuation of question on the previous page).
+The first question on this page should be `{i0}`, possibly followed by `{i1}`, 
+`{i2}`, ... (if they're on this page) because {detected_so_far}, 
+and it's known that the questions in the paper are structured as follows:
 
-Please respond in the exact order presented on the current page, starting either with a number or a letter, whichever appears on the page first.
+{full_question_structure}
 
-If there are any numbered questions on the page, then the first of these numbers will be `{n0}`.
-The presence of this specific number {n0} highly suggests that this corresponds to
-the question number, and should be included in your answer.
-
-If the *first question identifier* on the page is a letter (not a number), then this 
-*first* letter will be `{c0}`. This is because question {n-1} on the previous page {explanation}. 
-However, if the first question identifier is a *number*, then the any letters immediately 
-following this number (or immediately following any other question number),
-will always be `a`, and this will then ascend alphabetically until the next 
-question number.
+A full image of the page has also been included, please look at this image to help 
+understand the page *layout*, which might help you make sense of which numbers 
+indicate pages vs questions vs marks awarded. Specifically, question numbers are 
+likely to be listed under a "Questions" column, and marks under a "Marks" column.
+This structure might not be clear from the text-only representation you've been 
+provided with, so please use both sources when considering your answer.
 
 Think through your reasoning in detail, step by step.
 
 As the final part of your response, please respond with "answer: " followed by a
 single comma separated list of numbers and letters on a new line, like either of the two examples below:
-answer: {n0}, a, b, {n1}, a, {n2}, a, b, c
-answer: {c0}, {c1}, {c2}, {n0}, a, b
+answer: {i0}, {i1}, {i2}, ...
 
 If you do not believe any of the text on the screen corresponds to questions in the
 mark scheme table,then just explain why, with no comma-seperated list at the end.
@@ -107,8 +109,6 @@ following text and images. You should *not* extract any parts of the
 answer or guidelines for the preceding question {preceding} or subsequent question
 {subsequent}.
 
-The question of interest (question {question_number}) contains {sub-questions}.
-
 The text was parsed from a PDF, and the formatting might be strange or wrong as a 
 result of this conversion to pure text. More importantly, mathematical symbols 
 such as √w, x², y₄, ⁴√z etc. are very often missed by the parsing logic. Sometimes, 
@@ -120,6 +120,8 @@ by inferring these from the provided image(s).
 
 Furthermore, if the formatting could be improved to make the markscheme more readable 
 in text-only format, please make any formatting improvements as you see fit.
+
+The question of interest (question {question_number}) contains {sub-questions}.
 
 Please respond with the **markscheme only**. Do not provide any explanations, 
 commentary or preliminary details as part of your answer. Just respond with the newly 
