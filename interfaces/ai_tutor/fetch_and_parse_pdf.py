@@ -86,20 +86,24 @@ def parse_pdf_into_papers_and_markschemes():
 
 
 def _fill_missing_questions_n_pages(questions_to_pages):
-    # ToDo fully modify this function to use alphanumeric reasoning
     prev_question_num = 0
     prev_pages = list()
     new_questions_to_pages = questions_to_pages.copy()
+    all_alphanum = list(questions_to_pages.keys())
+    all_pages = list(questions_to_pages.values())
     for i, (question_alphanum, pages) in enumerate(questions_to_pages.items()):
         question_num = int(question_alphanum.split(".")[0])
         if question_num not in (prev_question_num, prev_question_num + 1):
-            min_pg = min(questions_to_pages[i-1])
+            min_pg = min(all_pages[i-1])
             max_pg = max(pages)
             union_of_pages = list(range(min_pg, max_pg + 1))
             for q_num in range(prev_question_num + 1, question_num):
-                new_questions_to_pages[q_num] = union_of_pages
+                # we somehow missed the entire question, let's assume there are no
+                # sub-question components (a, b, c etc.)
+                new_questions_to_pages[str(q_num)] = union_of_pages
         elif prev_pages and pages[0] > prev_pages[-1] + 1:
-            new_questions_to_pages[question_alphanum - 1] = (
+            prev_alphanum = all_alphanum[i-1]
+            new_questions_to_pages[prev_alphanum] = (
                 list(range(prev_pages[0], pages[0] + 1))
             )
             new_questions_to_pages[question_alphanum] = (
