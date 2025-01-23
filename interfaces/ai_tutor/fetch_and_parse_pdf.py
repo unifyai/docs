@@ -9,7 +9,7 @@ from pdf2image import convert_from_path
 
 import unify
 from prompts import *
-from helpers import encode_image
+from helpers import encode_image, parse_key
 
 url = (
     "https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment"
@@ -92,7 +92,7 @@ def _fill_missing_questions_n_pages(questions_to_pages):
     new_questions_to_pages = questions_to_pages.copy()
     for i, (question_alphanum, pages) in enumerate(questions_to_pages.items()):
         question_num = int(question_alphanum.split(".")[0])
-        if question_num != prev_question_num + 1:
+        if question_num not in (prev_question_num, prev_question_num + 1):
             min_pg = min(questions_to_pages[i-1])
             max_pg = max(pages)
             union_of_pages = list(range(min_pg, max_pg + 1))
@@ -105,7 +105,7 @@ def _fill_missing_questions_n_pages(questions_to_pages):
             new_questions_to_pages[question_alphanum] = (
                 list(range(prev_pages[-1], pages[-1] + 1))
             )
-        prev_question_num = question_alphanum
+        prev_question_num = question_num
         prev_pages = pages
     return dict(sorted(new_questions_to_pages.items()))
 
@@ -254,7 +254,9 @@ def parse_paper(paper_num):
         return _fill_missing_questions_n_pages(question_to_pages), latest_num
 
     question_to_pages, num_questions = parse_into_pages()
-
+    question_to_pages = dict(
+        sorted(question_to_pages.items(), key=lambda item: parse_key(item[0]))
+    )
     with open(os.path.join(paper_dir, "question_to_pages.json"), "w+") as file:
         file.write(json.dumps(question_to_pages, indent=4))
 
@@ -267,7 +269,15 @@ def parse_paper(paper_num):
             cache=True,
             system_message=TEXT_ONLY_DETECTION,
         )
-        pages = question_to_pages[question_num]
+        sub_questions = [
+            k.split(".")[-1] for k, v in question_to_pages.items()
+            if k.startswith(str(question_num) + ".")
+        ]
+        pages = [
+            v for k, v in question_to_pages.items()
+            if (k == str(question_num) or k.startswith(str(question_num) + "."))
+        ]
+        pages = list(dict.fromkeys([item for sublist in pages for item in sublist]))
         current_text = "".join([reader.pages[pg - 1].extract_text() for pg in pages])
         imgs = [all_images[pg - 1] for pg in pages]
         question_parser.set_system_message(
@@ -311,6 +321,7 @@ def parse_paper(paper_num):
             "text": question_parsed,
             "text-only": text_only,
             "pages": pages,
+            "sub-questions": sub_questions,
             "correctly_parsed": True,
         }
         parsed = json.dumps(dict(sorted(questions.items())), indent=4)
@@ -524,6 +535,9 @@ def parse_markscheme(paper_num):
         return _fill_missing_questions_n_pages(question_to_pages), max(detected_numeric)
 
     question_to_pages, num_questions = parse_into_pages()
+    question_to_pages = dict(
+        sorted(question_to_pages.items(), key=lambda item: parse_key(item[0]))
+    )
     with open(os.path.join(markscheme_dir, "question_to_pages.json"), "w+") as file:
         file.write(json.dumps(question_to_pages, indent=4))
 
