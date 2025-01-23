@@ -269,14 +269,16 @@ def parse_paper(paper_num):
             for i, item in enumerate(detected_qs):
                 if item.isalpha():
                     assert item == valid_char, \
-                        (f"character must be {valid_char}, but found {item}, "
+                        (f"character must be {valid_char}, but found {item} as part "
+                         f"of prediction {detected_qs}, "
                          f"for paper {paper_num} page {page_num} with previous "
                          f"question {latest_num}")
                     valid_char = chr(ord(valid_char) + 1)
                     question_to_pages[f"{num}.{item}"] = [page_num]
                 elif item.isdigit():
                     assert item == valid_num, \
-                        (f"number must be {valid_num}, but found {item} for paper "
+                        (f"number must be {valid_num}, but found {item} as part of "
+                         f"prediction {detected_qs}, for paper "
                          f"{paper_num} page {page_num} with previous "
                          f"question {latest_num}")
                     valid_num = str(int(valid_num) + 1)
