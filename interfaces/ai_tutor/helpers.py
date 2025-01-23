@@ -4,6 +4,22 @@ import json
 import base64
 
 
+def is_invalid_question_order(detected_qs, valid_char, valid_num):
+    for i, item in enumerate(detected_qs):
+        if item.isalpha():
+            if item != valid_char:
+                return True
+            valid_char = chr(ord(valid_char) + 1)
+        elif item.isdigit():
+            if item != valid_num:
+                return True
+            valid_num = str(int(valid_num) + 1)
+            valid_char = "a"
+        else:
+            raise ValueError(f"Invalid type for question: {item}")
+    return False
+
+
 def parse_key(k: str):
     """
     Splits the string on the first dot.
