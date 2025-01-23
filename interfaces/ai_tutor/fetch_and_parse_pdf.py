@@ -588,7 +588,6 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
             assert paper_subquestions == detected_qs, \
                 (f"Subquestions parsed from paper {paper_subquestions} do not match "
                  f"those parsed from the markscheme {detected_qs} for page {page_num}")
-            breakpoint()
             [subquestions.pop(0) for _ in range(len(detected_qs))]
             num = latest_num
             for i, item in enumerate(detected_qs):
