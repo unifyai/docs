@@ -264,10 +264,23 @@ def parse_paper(paper_num):
             ):
                 continue
             num = latest_num
+            valid_char = chr(ord(latest_char) + 1)
+            valid_num = str(latest_num + 1)
             for i, item in enumerate(detected_qs):
                 if item.isalpha():
+                    assert item == valid_char, \
+                        (f"character must be {valid_char}, but found {item}, "
+                         f"for paper {paper_num} page {page_num} with previous "
+                         f"question {latest_num}")
+                    valid_char = chr(ord(valid_char) + 1)
                     question_to_pages[f"{num}.{item}"] = [page_num]
                 elif item.isdigit():
+                    assert item == valid_num, \
+                        (f"number must be {valid_num}, but found {item} for paper "
+                         f"{paper_num} page {page_num} with previous "
+                         f"question {latest_num}")
+                    valid_num = str(int(valid_num) + 1)
+                    valid_char = "a"
                     if len(detected_qs) == i+1 or detected_qs[i+1].isdigit():
                         question_to_pages[item] = [page_num]
                     num = int(item)
