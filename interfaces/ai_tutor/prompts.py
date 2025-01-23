@@ -90,6 +90,7 @@ result of this conversion to pure text. More importantly, mathematical symbols
 such as √w, x², y₄, ⁴√z etc. are very often missed by the parsing logic. Sometimes, 
 entire equations are embedded in the PDF as images, and will not be shown in the text. 
 Image(s) of the relevant page(s) have therefore *also* been provided.
+
 Please extract **all** important information for question {question_number} 
 **including any symbols and/or equations missing in the text**, 
 by inferring these from the provided image(s).
@@ -104,28 +105,31 @@ question and nothing else.
 
 QUESTION_ANSWER_PARSER = """
 Your task is to extract the full contents of the correct answer and
-marking guidelines for marking question {question_number} from the
+marking guidelines for question {question_number} from the
 following text and images. You should *not* extract any parts of the
-answer or guidelines for the preceding question {preceding} or subsequent question
-{subsequent}.
+answer or guidelines for the preceding question {preceding} or subsequent question {subsequent}.
+
+Specifically, you should extract **all parts** of question {question_number}, 
+as indicated by the requested output format, containing {sub-questions}.
 
 The text was parsed from a PDF, and the formatting might be strange or wrong as a 
 result of this conversion to pure text. More importantly, mathematical symbols 
 such as √w, x², y₄, ⁴√z etc. are very often missed by the parsing logic. Sometimes, 
 entire equations are embedded in the PDF as images, and will not be shown in the text.
 Image(s) of the relevant page(s) have therefore *also* been provided.
-Please extract **all** text for the markscheme of question {question_number}
-**including any symbols and/or equations missing in the text** in the text, 
+
+Please extract **all** text for the markscheme of question {question_number}, 
+**including any symbols and/or equations missing in the text**, 
 by inferring these from the provided image(s).
 
-Furthermore, if the formatting could be improved to make the markscheme more readable 
-in text-only format, please make any formatting improvements as you see fit.
+The question of interest (question {question_number}) contains {sub-questions}, 
+and {field(s)} of the requested structured output representation 
+must be **fully populated** based on the information which is known to exist in the 
+text and images(s).
 
-The question of interest (question {question_number}) contains {sub-questions}.
-
-Please respond with the **markscheme only**. Do not provide any explanations, 
-commentary or preliminary details as part of your answer. Just respond with the newly 
-formatted markscheme and nothing else.
+If the formatting could be improved to make the markscheme for each 
+question component more readable in text-only format, 
+please make any formatting improvements as you see fit.
 """
 
 DIAGRAM_DETECTION_ON_PAGE = """
