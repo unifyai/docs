@@ -205,7 +205,7 @@ def parse_paper(paper_num):
                 cv2.imwrite(os.path.join(img_dir, fname), img)
             if contains_diagram:
                 diagram_images[page_num] = img
-            question_detector.set_messages([]) # clear previous chat
+            question_detector.set_messages([])  # clear previous chat
             question_detector.set_system_message(
                 QUESTION_DETECTION.replace(
                     "{n-1}",
@@ -260,6 +260,7 @@ def parse_paper(paper_num):
                     },
                 ],
             )
+            assert len(question_detector.messages) == 2
             detected_qs = parse_question_detector(response)
             if not all(
                     v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
@@ -294,6 +295,7 @@ def parse_paper(paper_num):
                     str(latest_num + 1)
                 )
                 count += 1
+                assert len(question_detector.messages) == 2 + count
             assert not invalid_sequence, \
                 f"Still an invalid sequence {detected_qs} after {attempts} attempts"
             num = latest_num
