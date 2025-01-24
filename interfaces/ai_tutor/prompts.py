@@ -76,6 +76,12 @@ likely to be listed under a "Questions" column, and marks under a "Marks" column
 This structure might not be clear from the text-only representation you've been 
 provided with, so please use both sources when considering your answer.
 
+Remember, sometimes questions are split across **multiple 
+pages**, with only letters starting on the next page without showing the previous 
+question number, but these should **always** be included in your answer, as these 
+lettered sub-questions must be detected on every page, even if it overflows from a 
+prior question on the previous page.
+
 Think through your reasoning in detail, step by step.
 
 As the final part of your response, please respond with "answer: " followed by a
