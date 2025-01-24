@@ -26,6 +26,12 @@ A full image of the page has also been included, please look at this image to he
 understand the page *layout*, which might help you make sense of which numbers 
 indicate pages vs questions.
 
+Remember, sometimes questions are split across **multiple 
+pages**, with only letters starting on the next page without showing the previous 
+question number, but these should **always** be included in your answer, as these 
+lettered sub-questions must be detected on every page, even if it overflows from a 
+prior question on the previous page.
+
 Think through your reasoning in detail, step by step.
 
 As the final part of your response, please respond with "answer: " followed by a
