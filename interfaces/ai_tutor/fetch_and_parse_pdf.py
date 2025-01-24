@@ -290,13 +290,21 @@ def parse_paper(paper_num):
                     "think and provide an updated answer."
                 )
                 detected_qs = parse_question_detector(response)
+                if not all(
+                        v.isdigit() or (len(v) == 1 and v.isalpha()) for v in
+                        detected_qs
+                ):
+                    detected_qs = response
+                    count += 1
+                    assert len(question_detector.messages) == 2 + count*2
+                    continue
                 invalid_sequence = is_invalid_question_order(
                     detected_qs,
                     chr(ord(latest_char) + 1),
                     str(latest_num + 1)
                 )
                 count += 1
-                assert len(question_detector.messages) == 2 + count
+                assert len(question_detector.messages) == 2 + count*2
             assert not invalid_sequence, \
                 f"Still an invalid sequence {detected_qs} after {attempts} attempts"
             num = latest_num
