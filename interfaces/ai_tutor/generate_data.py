@@ -1,12 +1,11 @@
 import os
 import json
-
 import cv2
-
-import unify
 import argparse
 from pydantic import BaseModel
 
+import unify
+unify.CLIENT_LOGGING = True
 from prompts import *
 from helpers import load_questions_and_answers, encode_image
 
@@ -62,7 +61,7 @@ def generate_question(question, data, idx):
             )
             .replace(
                 "{markscheme}",
-                data["answer"],
+                json.dumps(data["answer"], indent=4),
             )
         )
         response = generation_client.generate(
