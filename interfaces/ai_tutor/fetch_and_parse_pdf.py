@@ -9,6 +9,7 @@ from pdf2image import convert_from_path
 from pydantic import create_model
 
 import unify
+unify.CLIENT_LOGGING = True
 from prompts import *
 from helpers import encode_image, parse_key, is_invalid_question_order
 
