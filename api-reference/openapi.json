@@ -3513,7 +3513,7 @@
                     "Logs"
                 ],
                 "summary": "Get Logs",
-                "description": "Returns a list of filtered entries from a project.",
+                "description": "Returns a list of filtered entries from a project. When group_threshold is set,\nentries that appear in at least that many logs will be grouped together in the\ngrouped_entries field to reduce response size. When value_limit is set, fields\nthat exceed this limit will be clipped and the clipped_fields field will be\npopulated.\n\nThe response will include:\n- logs: List of log entries with their individual values\n- params: Dictionary of parameter versions\n- count: Total number of logs\n- grouped_entries: (When group_threshold is set) Dictionary of field names to their shared values\n- clipped_fields: List of fields that were clipped due to value_limit",
                 "operationId": "get_logs_v0_logs_get",
                 "security": [
                     {
@@ -3570,6 +3570,24 @@
                         },
                         "description": "Static context to filter logs by.",
                         "example": "training"
+                    },
+                    {
+                        "name": "value_limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Maximum number of characters to return for string values.",
+                            "title": "Value Limit"
+                        },
+                        "description": "Maximum number of characters to return for string values."
                     },
                     {
                         "name": "filter_expr",
@@ -5308,8 +5326,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
