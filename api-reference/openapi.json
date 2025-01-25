@@ -3572,6 +3572,24 @@
                         "example": "training"
                     },
                     {
+                        "name": "group_threshold",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "When set, entries that appear in at least this many logs will be grouped together.",
+                            "title": "Group Threshold"
+                        },
+                        "description": "When set, entries that appear in at least this many logs will be grouped together."
+                    },
+                    {
                         "name": "value_limit",
                         "in": "query",
                         "required": false,
