@@ -798,7 +798,7 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
             "".join([c for c in response.split("\n")[-1].lower() if c.isdigit()]),
         )
         questions[question_num] = {
-            "markscheme-components": qna,
+            "markscheme-components": qna if sub_questions else qna[str(question_num)],
             "num-marks": num_marks,
             "pages": pages,
             "correctly_parsed": True
