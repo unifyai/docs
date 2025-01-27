@@ -71,10 +71,12 @@ def load_questions_and_answers():
             with open(os.path.join(paper_dir_abs, "paper/parsed.json")) as f:
                 questions = json.load(f)
             for question_num, question in questions.items():
-                if not question.get("text-only"):
+                if not question["text-only"]:
                     continue
                 ans_n_marks = markscheme[question_num]
-                answer, marks = ans_n_marks.get("text"), ans_n_marks.get("num-marks")
+                markscheme_components, mark_breakdown = (
+                    ans_n_marks["markscheme-components"], ans_n_marks["mark-breakdown"]
+                )
                 question_imgs = question.get("images")
                 if question_imgs:
                     question_imgs = [
@@ -95,14 +97,14 @@ def load_questions_and_answers():
                     ]
                 correctly_parsed = (question["correctly_parsed"] and
                                     ans_n_marks["correctly_parsed"])
-                questions_and_answers[question["text"]] = {
+                questions_and_answers[question["question"]] = {
                     "subject": subject,
                     "paper_id": paper_id,
                     "question_num": question_num,
                     "question_pages": question["pages"],
                     "markscheme_pages": ans_n_marks["pages"],
-                    "answer": answer,
-                    "marks": marks,
+                    "answer": markscheme_components,
+                    "marks": mark_breakdown,
                     "question_imgs": question_imgs,
                     "markscheme_imgs": markscheme_imgs,
                     "correctly_parsed": correctly_parsed,
