@@ -83,11 +83,11 @@ def generate_question(question, data, idx):
         targets[target] = json.loads(response)
     targets["subject"] = data["subject"]
     targets["paper_id"] = data["paper_id"]
-    targets["question_num"] = data["question_num"]
+    targets["question_num"] = int(data["question_num"])
     targets["markscheme"] = data["answer"]
-    targets["available_marks"] = data["marks"]
-    targets["question_pages"] = data["question_pages"]
-    targets["markscheme_pages"] = data["markscheme_pages"]
+    targets["available_marks"] = int(data["marks"])
+    targets["question_pages"] = [int(pg) for pg in data["question_pages"]]
+    targets["markscheme_pages"] = [int(pg) for pg in data["markscheme_pages"]]
     if data["question_imgs"]:
         targets["question_imgs"] = [fp.split("/")[-1] for fp in data["question_imgs"]]
     else:
