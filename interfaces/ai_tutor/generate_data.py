@@ -92,7 +92,12 @@ def generate_question(question, data, idx):
                 },
             ],
         )
-        targets[target] = json.loads(response)
+        response = json.loads(response)
+        assert sum([v["marks"] for k, v in response.items()]) == target, \
+            ("The sum of marks awarded across sub-questions "
+             f"{json.dumps(response, indent=4)} is not equal "
+             f"to the target {target}")
+        targets[target] = response
     targets["subject"] = data["subject"]
     targets["paper_id"] = data["paper_id"]
     targets["question_num"] = int(data["question_num"])
