@@ -154,6 +154,21 @@
         ],
         "correctly_parsed": true
     },
+    "11": {
+        "markscheme-components": {
+            "a": "11(a)\nAnswer: Explanation, e.g. there should be 4 dp in the answer or the answer should be smaller than 0.38 (or 0.26) or because 0.4 × 0.3 = 0.12\nMarks: 1 (1 AO2.5a)\nPart marks and guidance: Clear sensible reason (not just giving the actual answer with no working or explanation). Condone: multiplying two decimals means a smaller number oe",
+            "b": "11(a)\nAnswer: Explanation, e.g. the answer should be\nbigger than 1 because both 3/4 and 2/3 are bigger than 1/2 oe or the answer should be bigger than 3/4 but 5/7 is smaller than 3/4 oe\nMarks: 1 (1 AO2.5a)\nPart marks and guidance:\nExemplars for 1 mark:\n- “you don’t add fractions by adding tops and bottoms”\n- “you don’t add the\ndenominators”\n- “you have to find a common\ndenominator first”\n- (3/4) + (2/3) is obviously > 1"
+        },
+        "mark-breakdown": {
+            "a": 1,
+            "b": 1,
+            "total": 2
+        },
+        "pages": [
+            10
+        ],
+        "correctly_parsed": true
+    },
     "12": {
         "markscheme-components": "Question 12:\n\nAnswer:\n\u2022 Vertical axis is not consistent\n\u2022 The line does not represent the days when he doesn\u2019t use the internet\n\nMarks: 2 (2 AO2.5b)\n\nPart marks and guidance:\n\u2022 B1 for each valid comment",
         "mark-breakdown": {
