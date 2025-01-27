@@ -1,7 +1,7 @@
 QUESTION_DETECTION = """
-Your task is to detect the numeric question numbers [1, 2, 3 etc.] and letter questions [a, b, c etc.] that are present in the following text.
-
-Please **do not** include sub-questions such as (i), (ii), (iii) etc.
+Your task is to detect the numeric question numbers [1, 2, 3 etc.], letter sub-questions 
+[a, b, c etc.] *and* roman numeral sub-sub-questions [i, ii, iii] that are present in 
+the following text.
 
 When deciding whether the number refers to a question, look at the *subsequent text*.
 
@@ -20,7 +20,8 @@ If the *first question identifier* on the page is a letter (not a number), then 
 However, if the first question identifier is {n0}, then the any letters immediately 
 following this number (or immediately following any other question number),
 will always be `a`, and this will then ascend alphabetically until the next 
-question number.
+question number. Likewise, roman-numeral sub-sub-questions will always come after a 
+letter, and will also be strictly ascending starting from `i`.
 
 A full image of the page has also been included, please look at this image to help 
 understand the page *layout*, which might help you make sense of which numbers 
@@ -35,19 +36,18 @@ prior question on the previous page.
 Think through your reasoning in detail, step by step.
 
 As the final part of your response, please respond with "answer: " followed by a
-single comma separated list of numbers and letters on a new line, like either of the two examples below:
-answer: {n0}, a, b, {n1}, a, {n2}, a, b, c
-answer: {c0}, {c1}, {c2}, {n0}, a, b
+single comma separated list of numbers, letters and roman numerals on a new line, 
+like either of the two examples below:
+answer: {n0}, a, i, ii, b, i, {n1}, a, {n2}, a, b, c, i, ii
+answer: {c0}, {c1}, {c2}, {n0}, a, b, i, ii, c,
 
 If you do not see any clear questions on the page, then just explain why, with no comma-seperated list at the end.
 """
 
 QUESTION_ANSWER_DETECTION = """
-Your task is to detect the numeric question numbers [{n0}, {n1}, {n2} etc.] and letter
-questions [a, b, c etc.] that are present in the following markscheme text,
-which contains questions and answers.
-
-Please **do not** include sub-questions such as (i), (ii), (iii) etc.
+Your task is to detect the numeric question numbers [1, 2, 3 etc.], letter sub-questions 
+[a, b, c etc.] *and* roman numeral sub-sub-questions [i, ii, iii] that are present in 
+the following markscheme text, which contains questions and answers.
 
 When deciding whether the number refers to a question, look at *all of* the text within
 the corresponding row in the table. Also note that question numbers are always 
@@ -77,15 +77,16 @@ This structure might not be clear from the text-only representation you've been
 provided with, so please use both sources when considering your answer.
 
 Remember, sometimes questions are split across **multiple 
-pages**, with only letters starting on the next page without showing the previous 
-question number, but these should **always** be included in your answer, as these 
-lettered sub-questions must be detected on every page, even if it overflows from a 
-prior question on the previous page.
+pages**, with only letters or lower-case roman numerals starting on the next page 
+without showing the previous question number, but these should **always** be included 
+in your answer, as these lettered and roman numeral sub-questions must be detected on 
+every page, even if it overflows from a prior question on the previous page.
 
 Think through your reasoning in detail, step by step.
 
 As the final part of your response, please respond with "answer: " followed by a
-single comma separated list of numbers and letters on a new line, like either of the two examples below:
+single comma separated list of numbers, letters and roman numerals on a new line, 
+like so:
 answer: {i0}, {i1}, {i2}, ...
 
 If you do not believe any of the text on the screen corresponds to questions in the
@@ -113,6 +114,10 @@ in text-only format, please make any formatting improvements as you see fit.
 Please respond with the **question only**. Do not provide any explanations, commentary
 or preliminary details as part of your answer. Just respond with the newly formatted 
 question and nothing else.
+
+The question structure is fully known, and this is expressed in the provided response 
+format. If the question includes sub-questions, please populate the fields of the 
+response format accordingly.
 """
 
 QUESTION_ANSWER_PARSER = """

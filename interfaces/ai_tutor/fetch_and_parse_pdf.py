@@ -6,12 +6,12 @@ import threading
 import numpy as np
 from pypdf import PdfReader, PdfWriter
 from pdf2image import convert_from_path
-from pydantic import create_model
 
 import unify
 unify.CLIENT_LOGGING = True
 from prompts import *
-from helpers import encode_image, parse_key, is_invalid_question_order
+from helpers import (encode_image, parse_key, is_invalid_question_order,
+                     build_response_format, VALID_NUMERALS)
 
 url = (
     "https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment"
@@ -165,7 +165,7 @@ def parse_paper(paper_num):
                 ",",
             )
         )
-        return parsed
+        return [p for p in parsed if p != ""]
 
     def parse_into_pages():
         diagram_detector.set_system_message(DIAGRAM_DETECTION_ON_PAGE)
@@ -264,13 +264,16 @@ def parse_paper(paper_num):
             assert len(question_detector.messages) == 2
             detected_qs = parse_question_detector(response)
             if not all(
-                    v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
+                    v.isdigit() or
+                    (len(v) == 1 and v.isalpha()) or
+                    v in VALID_NUMERALS
+                    for v in detected_qs
             ):
                 continue
             invalid_sequence = is_invalid_question_order(
                 detected_qs,
-                chr(ord(latest_char) + 1),
-                str(latest_num + 1)
+                str(latest_num + 1),
+                chr(ord(latest_char) + 1)
             )
             count = 0
             attempts = 3
@@ -291,8 +294,10 @@ def parse_paper(paper_num):
                 )
                 detected_qs = parse_question_detector(response)
                 if not all(
-                        v.isdigit() or (len(v) == 1 and v.isalpha()) for v in
-                        detected_qs
+                        v.isdigit() or
+                        (len(v) == 1 and v.isalpha()) or
+                        v in VALID_NUMERALS
+                        for v in detected_qs
                 ):
                     detected_qs = response
                     count += 1
@@ -300,17 +305,25 @@ def parse_paper(paper_num):
                     continue
                 invalid_sequence = is_invalid_question_order(
                     detected_qs,
-                    chr(ord(latest_char) + 1),
-                    str(latest_num + 1)
+                    str(latest_num + 1),
+                    chr(ord(latest_char) + 1)
                 )
                 count += 1
                 assert len(question_detector.messages) == 2 + count*2
             assert not invalid_sequence, \
                 f"Still an invalid sequence {detected_qs} after {attempts} attempts"
             num = latest_num
+            char = latest_char
             for i, item in enumerate(detected_qs):
-                if item.isalpha():
-                    question_to_pages[f"{num}.{item}"] = [page_num]
+                if item in VALID_NUMERALS:
+                    question_to_pages[f"{num}.{char}.{item}"] = [page_num]
+                elif item.isalpha():
+                    if len(detected_qs) == i+1 or (
+                            detected_qs[i+1] not in VALID_NUMERALS and
+                            detected_qs[i+1].isalpha()
+                    ) or detected_qs[i+1].isdigit():
+                        question_to_pages[f"{num}.{item}"] = [page_num]
+                    char = item
                 elif item.isdigit():
                     if len(detected_qs) == i+1 or detected_qs[i+1].isdigit():
                         question_to_pages[item] = [page_num]
@@ -318,7 +331,7 @@ def parse_paper(paper_num):
                 else:
                     raise ValueError(f"Invalid type for question: {item}")
             latest_num = num
-            latest_char = "`" if detected_qs[-1].isnumeric() else detected_qs[-1]
+            latest_char = "`" if detected_qs[-1].isnumeric() else char
         return _fill_missing_questions_n_pages(question_to_pages), latest_num
 
     question_to_pages, num_questions = parse_into_pages()
@@ -338,7 +351,7 @@ def parse_paper(paper_num):
             system_message=TEXT_ONLY_DETECTION,
         )
         sub_questions = [
-            k.split(".")[-1] for k, v in question_to_pages.items()
+            ".".join(k.split(".")[1:]) for k, v in question_to_pages.items()
             if k.startswith(str(question_num) + ".")
         ]
         pages = [
@@ -362,6 +375,10 @@ def parse_paper(paper_num):
                 str(question_num + 1),
             ),
         )
+        response_format = build_response_format(question_num, sub_questions)
+        question_parser.set_response_format(
+            response_format
+        )
         question_parsed = question_parser.generate(
             messages=[
                 {
@@ -383,6 +400,7 @@ def parse_paper(paper_num):
                 },
             ],
         )
+        question_parsed = json.loads(question_parsed)
         response = text_only_detector.generate(
                 messages=[
                     {
@@ -390,7 +408,7 @@ def parse_paper(paper_num):
                         "content": [
                             {
                                 "type": "text",
-                                "text": question_parsed,
+                                "text": json.dumps(question_parsed, indent=4),
                             }
                         ] + [
                         {
@@ -406,10 +424,10 @@ def parse_paper(paper_num):
             )
         text_only = "yes" in response.split("\n")[-1].lower()
         questions[question_num] = {
-            "text": question_parsed,
+            "question": (question_parsed if sub_questions
+                         else question_parsed[str(question_num)]),
             "text-only": text_only,
             "pages": pages,
-            "sub-questions": sub_questions,
             "correctly_parsed": True,
         }
         parsed = json.dumps(dict(sorted(questions.items())), indent=4)
@@ -707,10 +725,9 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 fields_expr
             )
         )
-        response_keys = sub_questions if sub_questions else [str(question_num)]
-        response_fields = dict(zip(response_keys, [(str, ...)]*len(response_keys)))
-        response_format = create_model('Response',  **response_fields)
-        question_answer_parser.set_response_format(response_format)
+        question_answer_parser.set_response_format(
+            build_response_format(question_num, sub_questions)
+        )
         qna = question_answer_parser.generate(
             messages=[
                 {
@@ -846,13 +863,21 @@ if __name__ == "__main__":
                 question_to_subquestions[int(k)] = list()
                 subquestions.append(int(k))
             else:
-                q_num, q_letter = k.split(".")
+                k_split = k.split(".")
+                q_num = k_split[0]
                 q_num = int(q_num)
                 if q_num not in question_to_subquestions:
                     subquestions.append(q_num)
                     question_to_subquestions[q_num] = list()
-                subquestions.append(q_letter)
-                question_to_subquestions[q_num].append(q_letter)
+                letter = k_split[1]
+                if len(k_split) == 3:
+                    numeral = k_split[2]
+                    if subquestions[-1] not in VALID_NUMERALS:
+                        subquestions.append(letter)
+                    subquestions.append(numeral)
+                else:
+                    subquestions.append(letter)
+                question_to_subquestions[q_num].append(".".join(k_split[1:]))
 
         # markscheme
         target_markscheme_fpath = os.path.join(

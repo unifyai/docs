@@ -2,19 +2,35 @@ import os
 import cv2
 import json
 import base64
+from pydantic import create_model
+
+VALID_NUMERALS = ("i", "ii", "iii", "iv", "v", "vi")
 
 
-def is_invalid_question_order(detected_qs, valid_char, valid_num):
+def build_response_format(question_num, sub_questions):
+    response_keys = sub_questions if sub_questions else [str(question_num)]
+    response_fields = dict(zip(response_keys, [(str, ...)] * len(response_keys)))
+    return create_model('Response', **response_fields)
+
+
+def is_invalid_question_order(detected_qs, valid_num, valid_char):
+    valid_numeral = 0
     for i, item in enumerate(detected_qs):
-        if item.isalpha():
+        if item in VALID_NUMERALS:
+            if item != VALID_NUMERALS[valid_numeral]:
+                return True
+            valid_numeral += 1
+        elif item.isalpha():
             if item != valid_char:
                 return True
             valid_char = chr(ord(valid_char) + 1)
+            valid_numeral = 0
         elif item.isdigit():
             if item != valid_num:
                 return True
             valid_num = str(int(valid_num) + 1)
             valid_char = "a"
+            valid_numeral = 0
         else:
             raise ValueError(f"Invalid type for question: {item}")
     return False
