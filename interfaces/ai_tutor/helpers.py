@@ -7,9 +7,9 @@ from pydantic import create_model
 VALID_NUMERALS = ("i", "ii", "iii", "iv", "v", "vi")
 
 
-def build_response_format(question_num, sub_questions):
+def build_response_format(question_num, sub_questions, dtype=str):
     response_keys = sub_questions if sub_questions else [str(question_num)]
-    response_fields = dict(zip(response_keys, [(str, ...)] * len(response_keys)))
+    response_fields = dict(zip(response_keys, [(dtype, ...)] * len(response_keys)))
     return create_model('Response', **response_fields)
 
 

@@ -222,7 +222,8 @@ followed by how these marks are split across different assessment objectives (
 AOx.xx). The total number of marks for each sub-question is usually shown as a single 
 integer, but it might also be shown as a list of mark types, prepending with a 
 letter. For example, B1 B1 B1 would indicate 3 marks. A1 B1 would indicate 2 marks 
-etc. Please response with a single integer per field in the requested response format.
+etc. Please response with a single integer per field in the requested response 
+format, as well as the total number of marks summed across all fields.
 """
 
 GENERATE_PROMPT = """

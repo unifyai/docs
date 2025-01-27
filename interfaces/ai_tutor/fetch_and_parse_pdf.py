@@ -748,8 +748,9 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 fields_expr
             )
         )
-        response_format = build_response_format(question_num, sub_questions)
-        question_answer_parser.set_response_format(response_format)
+        question_answer_parser.set_response_format(
+            build_response_format(question_num, sub_questions)
+        )
         qna = question_answer_parser.generate(
             messages=[
                 {
@@ -772,7 +773,9 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
             ],
         )
         qna = json.loads(qna)
-        mark_breakdown_detector.set_response_format(response_format)
+        mark_breakdown_detector.set_response_format(
+            build_response_format(question_num, sub_questions + ["total"], int)
+        )
         mark_breakdown = mark_breakdown_detector.generate(
                 messages=[
                     {
@@ -795,6 +798,11 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 ],
             )
         mark_breakdown = json.loads(mark_breakdown)
+        total_marks = mark_breakdown["total"]
+        sum_of_marks = sum([v for k, v in mark_breakdown.items() if k != "total"])
+        assert not sub_questions or total_marks == sum_of_marks, \
+            "total number of marks must equal the sum of each question component, " \
+            f"but found {total_marks} and {sum_of_marks} respectively."
         questions[question_num] = {
             "markscheme-components": qna if sub_questions else qna[str(question_num)],
             "mark-breakdown": mark_breakdown,
