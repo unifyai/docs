@@ -85,9 +85,9 @@ every page, even if it overflows from a prior question on the previous page.
 Think through your reasoning in detail, step by step.
 
 As the final part of your response, please respond with "answer: " followed by a
-single comma separated list of numbers, letters and roman numerals on a new line, 
-like so:
-answer: {i0}, {i1}, {i2}, ...
+single comma separated list of the numbers, letters and roman numerals **found on the page**,
+with the response on a new line like so:
+answer: {subquestions}
 
 If you do not believe any of the text on the screen corresponds to questions in the
 mark scheme table,then just explain why, with no comma-seperated list at the end.
