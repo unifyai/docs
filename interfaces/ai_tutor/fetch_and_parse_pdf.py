@@ -702,10 +702,10 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
 
     def parse_question(question_num: int):
         question_answer_parser = unify.Unify("o1@openai", cache=True)
-        num_marks_detector = unify.Unify(
+        mark_breakdown_detector = unify.Unify(
             "o1@openai",
             cache=True,
-            system_message=NUM_MARKS_DETECTION,
+            system_message=MARK_BREAKDOWN_DETECTION,
         )
         sub_questions = [
             ".".join(k.split(".")[1:]) for k, v in question_to_pages.items()
@@ -748,9 +748,8 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 fields_expr
             )
         )
-        question_answer_parser.set_response_format(
-            build_response_format(question_num, sub_questions)
-        )
+        response_format = build_response_format(question_num, sub_questions)
+        question_answer_parser.set_response_format(response_format)
         qna = question_answer_parser.generate(
             messages=[
                 {
@@ -772,14 +771,16 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 },
             ],
         )
-        response = num_marks_detector.generate(
+        qna = json.loads(qna)
+        mark_breakdown_detector.set_response_format(response_format)
+        mark_breakdown = mark_breakdown_detector.generate(
                 messages=[
                     {
                         "role": "user",
                         "content": [
                             {
                                 "type": "text",
-                                "text": qna,
+                                "text": json.dumps(qna, indent=4),
                             }
                         ] + [
                         {
@@ -793,13 +794,10 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                     },
                 ],
             )
-        qna = json.loads(qna)
-        num_marks = int(
-            "".join([c for c in response.split("\n")[-1].lower() if c.isdigit()]),
-        )
+        mark_breakdown = json.loads(mark_breakdown)
         questions[question_num] = {
             "markscheme-components": qna if sub_questions else qna[str(question_num)],
-            "num-marks": num_marks,
+            "mark-breakdown": mark_breakdown,
             "pages": pages,
             "correctly_parsed": True
         }
