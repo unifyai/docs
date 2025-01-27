@@ -69,12 +69,14 @@ def generate_question(question, data, idx):
             )
         )
         sub_questions = [k for k in data["marks"] if k != "total"]
-        question_num = int(data["question_num"])
-        response_keys = sub_questions if sub_questions else [str(question_num)]
-        response_fields = dict(
-            zip(response_keys, [(AnswerForTargetMarks, ...)] * len(response_keys))
-        )
-        response_format = create_model('Response', **response_fields)
+        if sub_questions:
+            response_keys = sub_questions
+            response_fields = dict(
+                zip(response_keys, [(AnswerForTargetMarks, ...)] * len(response_keys))
+            )
+            response_format = create_model('Response', **response_fields)
+        else:
+            response_format = AnswerForTargetMarks
         generation_client.set_response_format(response_format)
         response = generation_client.generate(
             messages=[
@@ -93,7 +95,11 @@ def generate_question(question, data, idx):
             ],
         )
         response = json.loads(response)
-        assert sum([v["marks"] for k, v in response.items()]) == target, \
+        if sub_questions:
+            sum_of_marks = sum([v["marks"] for k, v in response.items()])
+        else:
+            sum_of_marks = response["marks"]
+        assert sum_of_marks == target, \
             ("The sum of marks awarded across sub-questions "
              f"{json.dumps(response, indent=4)} is not equal "
              f"to the target {target}")
