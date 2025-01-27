@@ -370,17 +370,22 @@ Given the following question, which is worth a total of {num_marks} marks:
 
 {question}
 
-And also given the following known correct answer and marking scheme:
+And also given the following known correct marking scheme:
 
 {markscheme}
 
+And the known correct distribution of marks:
+
+{mark_breakdown}
+
 Provide a complete answer to *all parts* of this question [including answers to all 
 sub-questions (a), (b), (i), (ii) etc. if they exist] which should achieve a total 
-of {target} marks for the entire question {question_num}, if marked correctly.
+of {target} marks for the entire question, if marked correctly.
 
-Please state your reasoning in lots of detail in the `rationale: str` field of the 
-response format, referring specifically to the markscheme provided for each of the marks
-the answer should receive.
+Please state your reasoning in lots of detail in each sub-question's `rationale: str` 
+field of the response format, referring specifically to the markscheme provided for 
+each of the marks the answer should receive. State the intended marks to be awarded 
+for each sub-question in the `marks: int` field.
 
 Image(s) of the page have also been provided, in case these help provide extra context. 
 You don't need to make use of the images if the text is sufficient.
@@ -388,8 +393,8 @@ You don't need to make use of the images if the text is sufficient.
 For the `answer: str` part of the response format, please provide your proposed 
 answer(s) as though the question was answered by a student (who has no knowledge about 
 the markscheme). Please **include any working** which is necessary for the student to 
-attain {target} marks, even if this means repeating some parts in {full answers} that 
-were explained in {reasoning}. However, do not provide commentary in this answer.
-The answer will be directly parsed and used as a student answer, without any 
+attain {target} marks, even if this means repeating some parts in `answer: str` that 
+were already explained in `rationale: str`. However, do not provide commentary in this 
+answer. The answer will be directly parsed and used as a student answer, without any 
 awareness about the marks attained within the answer.
 """

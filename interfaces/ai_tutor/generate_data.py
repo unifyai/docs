@@ -2,7 +2,7 @@ import os
 import json
 import cv2
 import argparse
-from pydantic import BaseModel
+from pydantic import BaseModel, create_model
 
 import unify
 unify.CLIENT_LOGGING = True
@@ -22,9 +22,10 @@ this_dir = os.path.dirname(__file__)
 pdfs_dir = os.path.join(this_dir, "pdfs")
 
 
-class Response(BaseModel):
-    rationale: str
+class AnswerForTargetMarks(BaseModel):
+    marks: int
     answer: str
+    rationale: str
 
 
 def generate_question(question, data, idx):
@@ -40,9 +41,9 @@ def generate_question(question, data, idx):
     data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
     fname = f"{mode}_data_{idx}"
     data_path = os.path.join(data_dir, fname)
-    generation_client = unify.Unify("o1@openai", response_format=Response, cache=True)
+    generation_client = unify.Unify("o1@openai", cache=True)
     targets = dict()
-    for target in range(data["marks"] + 1):
+    for target in range(data["marks"]["total"] + 1):
         generation_client.set_system_message(
             GENERATE_RESPONSE_PROMPT.replace(
                 "{target}",
@@ -50,7 +51,7 @@ def generate_question(question, data, idx):
             )
             .replace(
                 "{num_marks}",
-                str(data["marks"]),
+                str(data["marks"]["total"]),
             )
             .replace(
                 "{question}",
@@ -62,8 +63,19 @@ def generate_question(question, data, idx):
             .replace(
                 "{markscheme}",
                 json.dumps(data["answer"], indent=4),
+            ).replace(
+                "{mark_breakdown}",
+                json.dumps(data["marks"], indent=4)
             )
         )
+        sub_questions = [k for k in data["marks"] if k != "total"]
+        question_num = int(data["question_num"])
+        response_keys = sub_questions if sub_questions else [str(question_num)]
+        response_fields = dict(
+            zip(response_keys, [(AnswerForTargetMarks, ...)] * len(response_keys))
+        )
+        response_format = create_model('Response', **response_fields)
+        generation_client.set_response_format(response_format)
         response = generation_client.generate(
             messages=[
                 {
