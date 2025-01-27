@@ -97,7 +97,8 @@ def generate_question(question, data, idx):
     targets["paper_id"] = data["paper_id"]
     targets["question_num"] = int(data["question_num"])
     targets["markscheme"] = data["answer"]
-    targets["available_marks"] = int(data["marks"])
+    targets["available_marks"] = int(data["marks"]["total"])
+    targets["mark_breakdown"] = data["marks"]
     targets["question_pages"] = [int(pg) for pg in data["question_pages"]]
     targets["markscheme_pages"] = [int(pg) for pg in data["markscheme_pages"]]
     if data["question_imgs"]:
