@@ -345,6 +345,9 @@ def parse_paper(paper_num):
 
     def parse_question(question_num: int):
         question_parser = unify.Unify("o1@openai", cache=True)
+        question_component_parser = unify.Unify(
+            "o1@openai", system_message=QUESTION_COMPONENT_PARSER, cache=True
+        )
         text_only_detector = unify.Unify(
             "o1@openai",
             cache=True,
@@ -375,10 +378,6 @@ def parse_paper(paper_num):
                 str(question_num + 1),
             ),
         )
-        response_format = build_response_format(question_num, sub_questions)
-        question_parser.set_response_format(
-            response_format
-        )
         question_parsed = question_parser.generate(
             messages=[
                 {
@@ -400,7 +399,11 @@ def parse_paper(paper_num):
                 },
             ],
         )
-        question_parsed = json.loads(question_parsed)
+        question_component_parser.set_response_format(
+            build_response_format(question_num, sub_questions)
+        )
+        question_comp_parsed = question_component_parser.generate(question_parsed)
+        question_comp_parsed = json.loads(question_comp_parsed)
         response = text_only_detector.generate(
                 messages=[
                     {
@@ -424,8 +427,11 @@ def parse_paper(paper_num):
             )
         text_only = "yes" in response.split("\n")[-1].lower()
         questions[question_num] = {
-            "question": (question_parsed if sub_questions
-                         else question_parsed[str(question_num)]),
+            "question": question_parsed,
+            "question-components": (
+                question_comp_parsed if sub_questions
+                else question_comp_parsed[str(question_num)]
+            ),
             "text-only": text_only,
             "pages": pages,
             "correctly_parsed": True,
