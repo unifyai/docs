@@ -114,10 +114,34 @@ in text-only format, please make any formatting improvements as you see fit.
 Please respond with the **question only**. Do not provide any explanations, commentary
 or preliminary details as part of your answer. Just respond with the newly formatted 
 question and nothing else.
+"""
 
-The question structure is fully known, and this is expressed in the provided response 
-format. If the question includes sub-questions, please populate the fields of the 
-response format accordingly.
+QUESTION_COMPONENT_PARSER = """
+Your task is to parse the following question into it's known sub-components, 
+whilst disregarding general explanatory text. For example, if a question has the 
+following structure:
+
+```
+2. This is some general information about the question, explaining the problem.
+
+a) This is a question.
+
+Here is some more information.
+
+b) i) This is another question.
+
+   ii) This is yet another question.
+```
+
+Then only the following should be output:
+
+```
+{
+    "a": "This is a question."
+    "b.i": "This is another question."
+    "b.ii": "This is yet another question."
+}
+```
 """
 
 QUESTION_ANSWER_PARSER = """
