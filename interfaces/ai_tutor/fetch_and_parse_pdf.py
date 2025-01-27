@@ -498,7 +498,7 @@ def parse_paper(paper_num):
 
 
 def parse_markscheme(paper_num, question_to_subquestions, subquestions):
-    question_detector = unify.Unify(
+    qna_detector = unify.Unify(
         "o1@openai",
         cache=True,
         system_message=QUESTION_ANSWER_DETECTION,
@@ -552,15 +552,16 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 continue
             result.append(item)
         result.reverse()
-        return result
+        return [c for c in result if c != ""]
 
     def parse_into_pages():
         diagram_detector.set_system_message(
             DIAGRAM_DETECTION_ON_PAGE.replace("questions", "questions or answers"),
         )
         question_to_pages = dict()
-        latest_num = 0
         all_detected_qs = list()
+        latest_num = 0
+        latest_char = "`"
         for page_num, page in enumerate(reader.pages):
             page_num += 1
             text = page.extract_text().split("OCR  2024  J560/0")[-1][2:]
@@ -594,7 +595,7 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 cv2.imwrite(os.path.join(img_dir, fname), img)
             if contains_diagram:
                 diagram_images[page_num] = img
-            question_detector.set_system_message(
+            qna_detector.set_system_message(
                 QUESTION_ANSWER_DETECTION.replace(
                     "{detected_so_far}",
                     "the full set of questions detected so far up to and including "
@@ -625,9 +626,12 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 ).replace(
                     "{full_question_structure}",
                     json.dumps(question_to_subquestions, indent=4)
+                ).replace(
+                    "{subquestions}",
+                    ", ".join([str(sq) for sq in subquestions])
                 )
             )
-            response = question_detector.generate(
+            response = qna_detector.generate(
                 messages=[
                     {
                         "role": "user",
@@ -649,9 +653,13 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
             )
             detected_qs = parse_question_detector(response)
             if not all(
-                v.isdigit() or (len(v) == 1 and v.isalpha()) for v in detected_qs
+                    v.isdigit() or
+                    (len(v) == 1 and v.isalpha()) or
+                    v in VALID_NUMERALS
+                    for v in detected_qs
             ):
                 continue
+            assert detected_qs
             paper_subquestions = [str(sq) for sq in subquestions[0:len(detected_qs)]]
             # ToDo: maybe turn this assertion into repeated LLM calls until they match
             assert paper_subquestions == detected_qs, \
@@ -659,9 +667,17 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                  f"those parsed from the markscheme {detected_qs} for page {page_num}")
             [subquestions.pop(0) for _ in range(len(detected_qs))]
             num = latest_num
+            char = latest_char
             for i, item in enumerate(detected_qs):
-                if item.isalpha():
-                    question_to_pages[f"{num}.{item}"] = [page_num]
+                if item in VALID_NUMERALS:
+                    question_to_pages[f"{num}.{char}.{item}"] = [page_num]
+                elif item.isalpha():
+                    if len(detected_qs) == i+1 or (
+                            detected_qs[i+1] not in VALID_NUMERALS and
+                            detected_qs[i+1].isalpha()
+                    ) or detected_qs[i+1].isdigit():
+                        question_to_pages[f"{num}.{item}"] = [page_num]
+                    char = item
                 elif item.isdigit():
                     if len(detected_qs) == i+1 or detected_qs[i+1].isdigit():
                         question_to_pages[item] = [page_num]
@@ -669,6 +685,7 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 else:
                     raise ValueError(f"Invalid type for question: {item}")
             latest_num = num
+            latest_char = "`" if detected_qs[-1].isnumeric() else char
             all_detected_qs += detected_qs
             if not subquestions:
                 break
@@ -864,6 +881,7 @@ if __name__ == "__main__":
             target_q_to_pages = json.load(f)
         question_to_subquestions = dict()
         subquestions = list()
+        next_char = "a"
         for k in target_q_to_pages.keys():
             if "." not in k:
                 question_to_subquestions[int(k)] = list()
@@ -874,15 +892,15 @@ if __name__ == "__main__":
                 q_num = int(q_num)
                 if q_num not in question_to_subquestions:
                     subquestions.append(q_num)
+                    next_char = "a"
                     question_to_subquestions[q_num] = list()
                 letter = k_split[1]
+                if letter == next_char:
+                    subquestions.append(letter)
+                    next_char = chr(ord(letter) + 1)
                 if len(k_split) == 3:
                     numeral = k_split[2]
-                    if subquestions[-1] not in VALID_NUMERALS:
-                        subquestions.append(letter)
                     subquestions.append(numeral)
-                else:
-                    subquestions.append(letter)
                 question_to_subquestions[q_num].append(".".join(k_split[1:]))
 
         # markscheme
