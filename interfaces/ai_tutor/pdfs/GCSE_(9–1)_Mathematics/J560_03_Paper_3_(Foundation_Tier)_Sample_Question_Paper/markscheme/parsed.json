@@ -1,277 +1,273 @@
 {
     "1": {
-        "text": {
-            "a": "(a)(i) Answer: 9\nMarks: 1\nPart marks and guidance: 1 AO1.3a\n\n(a)(ii) Answer: 3\nMarks: 1\nPart marks and guidance: 1 AO1.3a\n\n(a)(iii) Answer: 45\nMarks: 1\nPart marks and guidance: 1 AO1.3a",
-            "b": "(b)(i) Answer: 13\nMarks: 2\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for 12 \u00d7 4 \u2013 5 \u00d7 7 or better\n\n(b)(ii) Answer: r = (p + q)/4\nMarks: 2\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for 4r = p + q\n\u2022 Allow correct equivalents of (p+q)/4"
+        "markscheme-components": {
+            "a.i": "Answer: 9 (1 mark)\n[1 AO1.3a]",
+            "a.ii": "Answer: 3 (1 mark)\n[1 AO1.3a]",
+            "a.iii": "Answer: 45 (1 mark)\n[1 AO1.3a]",
+            "b.i": "Answer: 13 (2 marks)\n[2 AO1.3a]\nM1 for 12 \u00d7 4 \u2013 5 \u00d7 7 or better",
+            "b.ii": "Answer: r = (p + q) / 4 (2 marks)\n[2 AO1.3a]\nM1 for 4r = p + q\nAllow correct equivalents of (p + q)/4"
         },
-        "num-marks": 7,
+        "mark-breakdown": {
+            "a.i": 1,
+            "a.ii": 1,
+            "a.iii": 1,
+            "b.i": 2,
+            "b.ii": 2,
+            "total": 7
+        },
         "pages": [
             5
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "2": {
-        "text": {
-            "2": "Pie chart drawn with angles of 78\u00b0, 180\u00b0, 60\u00b0, 42\u00b0 (4 marks)\n\n\u2022 B1 for at least three of 13, 30, 10, 7 seen\n  AND\n  B2 for two sectors correct\n     or B1 for one sector correct\n\nCorrect labelling (1 mark)\n\n1 AO1.3a\n1 AO2.3a\n3 AO2.3b"
+        "markscheme-components": "Pie chart drawn with angles of 78\u00b0, 180\u00b0, 60\u00b0, 42\u00b0 (4 marks)\n\n\u2022 B1 for at least three of 13, 30, 10, 7 seen\n  AND\n  B2 for two sectors correct\n  or B1 for one sector correct\n\nCorrect labelling (1 mark)\n1 AO1.3a, 1 AO2.3a, 3 AO2.3b",
+        "mark-breakdown": {
+            "total": 5
         },
-        "num-marks": 5,
         "pages": [
             5
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "3": {
-        "text": {
-            "a": "Answer: 35\u202f000\nMarks: 2\n\nMark breakdown:\n\u2022 1 AO1.3a\n\u2022 1 AO3.1c\n\nGuidance:\n\u2022 M1 for 7000 \u00d7 5 oe",
-            "b": "Answer: No, following correct working and estimates\nMarks: 4\n\nMark breakdown:\n\u2022 1 AO1.3a\n\u2022 1 AO2.4a\n\u2022 1 AO3.1d\n\u2022 1 AO3.3\n\nGuidance:\n\u2022 M2 for (their '35\u202f000' \u00d7 5) / 1000, or M1 for their '35\u202f000' \u00d7 5\n  AND\n\u2022 B1 for valid estimate of weight a person can carry (5\u202fkg\u201375\u202fkg)\n\u2022 Allow estimates for their '35\u202f000'\n\u2022 \u00a37000 of 5\u202fg coins weigh 175\u202fkg\n\u2022 'No' may be implied by seeing mass of coins and estimate of carry weight identified\n\u2022 Accept any valid alternate argument",
-            "c": "Answer: Valid comment about how a change in the assumption would influence their decision\nMarks: 1\n\nMark breakdown:\n\u2022 1 AO3.5\n\nGuidance:\n\u2022 FT from part (b)"
+        "markscheme-components": {
+            "a": "Answer: 35\u202f000 (2 marks)\n\nPart marks and guidance:\n\u2022 M1 for 7000 \u00d7 5 (or equivalent)",
+            "b": "Answer: No, following correct working and estimates (4 marks)\n\nPart marks and guidance:\n\u2022 M2 for [their \u201835\u202f000\u2019 \u00d7 5 \u00f7 1000], or M1 for their \u201835\u202f000\u2019 \u00d7 5\n\u2022 AND B1 for a valid estimate of weight a person can carry (5\u202fkg\u201375\u202fkg)\n\nAllow estimates for their \u201835\u202f000\u2019\n\nExample:\n\u2022 \u00a37000 of 5\u202fg coins weigh 175\u202fkg\n\u2022 \u2018No\u2019 may be implied by noting the total mass of coins and comparing to the estimate of how much weight a person can carry\n\u2022 Accept any valid alternate argument",
+            "c": "Answer: Valid comment about how a change in the assumption would influence their decision (1 mark)\n\nPart marks and guidance:\n\u2022 Follow through from part (b)"
         },
-        "num-marks": 7,
+        "mark-breakdown": {
+            "a": 2,
+            "b": 4,
+            "c": 1,
+            "total": 7
+        },
         "pages": [
             6
-        ],
-        "sub-questions": [
-            "a",
-            "b",
-            "c"
         ],
         "correctly_parsed": true
     },
     "4": {
-        "text": {
-            "4": "255 with correct working (6 marks)\n2 AO1.3a\n4 AO3.1d\n\nM1 for 6.5 [hours]\nM2 for their \u20186.5\u2019 \u00d7 10 \u00d7 3 oe\n   or M1 for their \u20186.5\u2019 \u00d7 10\n   or their \u20186.5\u2019 \u00d7 3\n\nAND\nM1 for [\u00a3]15\nM1 for their \u201815\u2019 \u00d7 4\n\nIf 0, 1 or 2 scored, instead award SC3 for answer 255 with no working or insufficient working\n\nIf 0 or 1 scored, instead award SC2 for 195 or 60 with no working or insufficient working\n\nIf 0 scored, instead award SC1 for 19.5 or 65 with no working or insufficient working\n\n\u201cCorrect working\u201d requires evidence of at least M2 and M1"
+        "markscheme-components": "255 with correct working (6 marks)\n\n2 AO1.3a, 4 AO3.1d\n\nM1 for 6.5 [hours]\nM2 for their \u20186.5\u2019 \u00d7 10 \u00d7 3 (oe)\nor M1 for their \u20186.5\u2019 \u00d7 10\nor their \u20186.5\u2019 \u00d7 3\n\nAND\n\nM1 for [\u00a3]15\nM1 for their \u201815\u2019 \u00d7 4\n\nIf 0, 1 or 2 scored, instead award SC3 for answer 255 with no working or insufficient working.\n\nIf 0 or 1 scored, instead award SC2 for 195 or 60 with no working or insufficient working.\n\nIf 0 scored, instead award SC1 for 19.5 or 65 with no working or insufficient working.\n\n\u201cCorrect working\u201d requires evidence of at least M2 and M1.\n",
+        "mark-breakdown": {
+            "total": 9
         },
-        "num-marks": 6,
         "pages": [
             7
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "5": {
-        "text": {
-            "5": "He has assumed he can run 800 m at the same speed as he can run 100 m, but he will run 800 m at a slower speed, therefore it will take him more than 120 s\n\nMarks: 3\n(1 AO2.1a, 1 AO3.4a, 1 AO3.5)\n\nB1 for correct reference to Darren\u2019s assumption (or 100/15 = 800/120 soi)\nB1 for \u2018his speed will be slower over 800 m\u2019 oe"
+        "markscheme-components": "He has assumed he can run 800 m at the same speed as he can run 100 m, but he will run 800 m at a slower speed, therefore it will take him more than 120 s\n\nMarks: 3\n(1 AO2.1a, 1 AO3.4a, 1 AO3.5)\n\n\u2022 B1 for correct reference to Darren\u2019s assumption\n  (or 100/15 = 800/120 soi)\n\u2022 B1 for \u201chis speed will be slower over 800 m\u201d oe",
+        "mark-breakdown": {
+            "total": 3
         },
-        "num-marks": 3,
         "pages": [
             7
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "6": {
-        "text": {
-            "a": "Answer: 40 (1 mark)\nMarking guidance:\n\u2022 1 AO1.3a",
-            "b": "Answer: Correct reasoning leading to 36.9 (4 marks)\nMarking guidance:\n\u2022 1 AO1.3b\n\u2022 2 AO2.2\n\u2022 1 AO3.1b\n\nM2 for \u03c0 \u00d7 12\u00b2\n  or M1 for (\u00bd) \u00d7 \u03c0 \u00d7 12\u00b2\nAND\nM1 for their \u201840\u2019 \u2013 \u03c0 \u00d7 12\u00b2",
-            "c": "Answer: 7.38 or better (3 marks)\nMarking guidance:\n\u2022 1 AO1.3a\n\u2022 2 AO3.1b\n\nM1 for 2 mm = 0.2 cm (soi)\nM1 for 36.9 \u00d7 their \u20180.2\u2019 (oe)"
+        "markscheme-components": {
+            "a": "Answer: 40\nMarks: 1\n\n1 AO1.3a",
+            "b": "Answer: Correct reasoning leading to 36.9\nMarks: 4\n\n1 AO1.3b\n2 AO2.2\n1 AO3.1b\n\nM2 for \u03c0 \u00d7 12\u00b2\nor M1 for \u00bd \u00d7 \u03c0 \u00d7 12\u00b2\n\nAND\n\nM1 for their \u201840\u2019 \u2013 \u03c0 \u00d7 12\u00b2",
+            "c": "Answer: 7.38 or better\nMarks: 3\n\n1 AO1.3a\n2 AO3.1b\n\nM1 for 2 mm = 0.2 cm soi\nM1 for 36.9 \u00d7 their \u20180.2\u2019 oe"
         },
-        "num-marks": 8,
+        "mark-breakdown": {
+            "a": 1,
+            "b": 4,
+            "c": 3,
+            "total": 8
+        },
         "pages": [
             8
-        ],
-        "sub-questions": [
-            "a",
-            "b",
-            "c"
         ],
         "correctly_parsed": true
     },
     "7": {
-        "text": {
-            "a": "Part (a)\n\nAnswer: 125\nMarks: 1\nMarking guidance:\n\u2022 1 AO1.2",
-            "b": "Part (b)\n\nAnswer: 20 with correct working\nMarks: 4\nMarking guidance:\n\u2022 2 AO2.1a\n\u2022 2 AO2.4a\n\u2022 B1 for PAB = 45\n\u2022 B1 for BAD = 90\n\u2022 M1 for 360 \u2013 (their \u2018125\u2019 + their \u201890\u2019 + 125)\n   (If 0 scored, instead award SC1 for answer 20 with no working or insufficient working)\n   (\u201cCorrect working\u201d requires evidence of at least M1)\n\nAlternative method:\n\u2022 B1 for PAB = 45\n\u2022 B1 for BAC = 45\n\u2022 M1 for 180 \u2013 (their 45 \u2013 125)"
+        "markscheme-components": {
+            "a": "Question 7(a)\n\nAnswer: 125\nMarks: 1\nPart marks and guidance:\n\u2022 1 AO1.2",
+            "b": "Question 7(b)\n\nAnswer: 20 with correct working\nMarks: 4\nPart marks and guidance:\n\u2022 2 AO2.1a\n\u2022 2 AO2.4a\n\u2022 B1 for PAB = 45\n\u2022 B1 for BAD = 90\n\u2022 M1 for 360 \u2013 (their \u2018125\u2019 + their \u201890\u2019 + 125)\n  - If 0 scored, instead award SC1 for answer 20 with no working or insufficient working\n  - \u201cCorrect working\u201d requires evidence of at least M1\n\nAlternative method:\n\u2022 B1 for PAB = 45\n\u2022 B1 for BAC = 45\n\u2022 M1 for 180 \u2013 (their 45 \u2013 125)"
         },
-        "num-marks": 5,
+        "mark-breakdown": {
+            "a": 1,
+            "b": 4,
+            "total": 5
+        },
         "pages": [
             8
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "8": {
-        "text": {
-            "a": "(a)\n\nAnswer: 21^(5/3) is not an integer\n\nMarks: 2\n\nMark scheme details:\n\u2022 1 AO1.3a\n\u2022 1 AO2.4a\n\u2022 M1 for 21^(5/3) or for 20 and 23 seen",
-            "b": "(b)\n\n(i)\nAnswer: Any valid rule, with correct next two terms following that rule (FT their rule)\n\nMarks: 1 + 1\n\nMark scheme details:\n\u2022 1 AO1.3a\n\u2022 1 AO2.1a\n\nExample valid rules:\n\u2022 \u201cAdd one more to the difference each time\u201d \u2192 next terms: 7, 11\n\u2022 \u201cDoubling\u201d \u2192 next terms: 8, 16\n\n(ii)\nAnswer: Any valid rule, with correct next two terms following that rule (FT their rule)\n\nMarks: 1 + 1\n\nMark scheme details:\n\u2022 1 AO1.3a\n\u2022 1 AO2.1a\n\nExample valid rules:\n\u2022 \u201cAdd one more to the difference each time\u201d \u2192 next terms: 7, 11\n\u2022 \u201cDoubling\u201d \u2192 next terms: 8, 16\n\n(N.B. The answer here must be different to part (b)(i).)"
+        "markscheme-components": {
+            "a": "(a) 21^(5/3) is not an integer\n\nMarks: 2\n1 AO1.3a, 1 AO2.4a\n\nMarking guidance:\n\u2022 M1 for 21^(5/3)\n  or for 20 and 23 seen",
+            "b.i": "(b)(i) Any valid rule\nCorrect next two terms (follow through their rule)\n\nMarks: 1 + 1\n1 AO1.3a, 1 AO2.1a\n\nFor example:\n\u2022 \u201cAdd one more to the difference each time\u201d \u2192 next two terms 7, 11\n\u2022 \u201cDoubling\u201d \u2192 next two terms 8, 16",
+            "b.ii": "(b)(ii) Any valid rule\nCorrect next two terms (follow through their rule)\n\nMarks: 1 + 1\n1 AO1.3a, 1 AO2.1a\n\nFor example:\n\u2022 \u201cAdd one more to the difference each time\u201d \u2192 next two terms 7, 11\n\u2022 \u201cDoubling\u201d \u2192 next two terms 8, 16\nAnswer must be different to part (b)(i)"
         },
-        "num-marks": 6,
+        "mark-breakdown": {
+            "a": 2,
+            "b.i": 2,
+            "b.ii": 2,
+            "total": 6
+        },
         "pages": [
             8,
             9
         ],
-        "sub-questions": [
-            "a",
-            "b"
-        ],
         "correctly_parsed": true
     },
     "9": {
-        "text": {
-            "a": "9(a)(i) ACB, BAC, BCA, CAB, CBA [2 marks, 2 AO1.3a]\n \u2022 B1 for at least three more ways of seating listed\n\n9(a)(ii) 2/3 (or equivalent) [1 mark, 1 AO2.1b]\n \u2022 Follow through on answer to part (a)(i)\n\n9(a)(iii) 1/6 (or equivalent) [1 mark, 1 AO2.1b]\n \u2022 Follow through on answer to part (a)(i)",
-            "b": "9(b)(i) Any valid rule; Correct next two terms, follow through (FT) their rule [2 marks total: 1 AO1.3a + 1 AO2.1a]\n \u2022 For example: \u201cAdd one more to the difference each time\u201d \u2013 next two terms 7, 11\n \u2022 Or: \u201cDoubling\u201d \u2013 next two terms 8, 16\n\n9(b)(ii) Any valid rule; Correct next two terms, FT their rule [2 marks total: 1 AO1.3a + 1 AO2.1a]\n \u2022 For example: \u201cAdd one more to the difference each time\u201d \u2013 next two terms 7, 11\n \u2022 Or: \u201cDoubling\u201d \u2013 next two terms 8, 16\n \u2022 Answer must be different to part (b)(i)"
+        "markscheme-components": {
+            "a.i": "Answer: ACB, BAC, BCA, CAB, CBA\nMarks: 2 (2 AO1.3a)\nGuidance: B1 awarded for listing at least three additional seatings. ",
+            "a.ii": "Answer: 2/3 (or equivalent)\nMarks: 1 (1 AO2.1b)\nGuidance: Follow through on the candidate\u2019s answer to part (a)(i).",
+            "a.iii": "Answer: 1/6 (or equivalent)\nMarks: 1 (1 AO2.1b)\nGuidance: Follow through on the candidate\u2019s answer to part (a)(i).",
+            "b": "No information was provided in the text or images for sub-question 9(b)."
         },
-        "num-marks": 8,
+        "mark-breakdown": {
+            "a.i": 2,
+            "a.ii": 1,
+            "a.iii": 1,
+            "b": 0,
+            "total": 4
+        },
         "pages": [
             9,
             10
         ],
-        "sub-questions": [
-            "a",
-            "b"
-        ],
         "correctly_parsed": true
     },
     "10": {
-        "text": {
-            "a": "Answer: 56\nMarks: 1\nMark scheme guidance: 1 AO1.3a",
-            "b": "Answer: 5\nMarks: 1\nMark scheme guidance: 1 AO1.3a",
-            "c": "Answer: 1/25 or 0.04\nMarks: 1\nMark scheme guidance: 1 AO1.3a"
+        "markscheme-components": {
+            "a": "10(a)\nAnswer: 56\nMarks: 1\n(1 AO1.3a)",
+            "b": "10(b)\nAnswer: 5\nMarks: 1\n(1 AO1.3a)",
+            "c": "10(c)\nAnswer: 1/25 or 0.04\nMarks: 1\n(1 AO1.3a)"
         },
-        "num-marks": 3,
+        "mark-breakdown": {
+            "a": 1,
+            "b": 1,
+            "c": 1,
+            "total": 3
+        },
         "pages": [
             10
-        ],
-        "sub-questions": [
-            "a",
-            "b",
-            "c"
-        ],
-        "correctly_parsed": true
-    },
-    "11": {
-        "text": {
-            "a": "Explanation, e.g. there should be 4 dp in the answer or the answer should be smaller than 0.38 (or 0.26) or because 0.4 \u00d7 0.3 = 0.12\n\nMarks: 1\n(1 AO2.5a)\n\nGuidance:\n\u2022 Clear sensible reason (not just giving the actual answer with no working or explanation).\n\u2022 Condone: multiplying two decimals means a smaller number oe.",
-            "b": "Explanation, e.g. the answer should be bigger than 1 because both 3/4 and 2/3 are bigger than 1/2 oe, or the answer should be bigger than 3/4 but 5/7 is smaller than 3/4 oe.\n\nMarks: 1\n(1 AO2.5a)\n\nExemplars for 1 mark:\n\u2022 \u201cyou don\u2019t add fractions by adding tops and bottoms\u201d\n\u2022 \u201cyou don\u2019t add the denominators\u201d\n\u2022 \u201cyou have to find a common denominator first\u201d\n\u2022 \u201c3/4 + 2/3 is obviously > 1\u201d"
-        },
-        "num-marks": 2,
-        "pages": [
-            10
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "12": {
-        "text": {
-            "12": "Answer:\n\u2022 Vertical axis is not consistent\n\u2022 The line does not represent the days when he doesn\u2019t use the internet\n\nMarks: 2\n\nPart marks and guidance:\n\u2022 2 AO2.5b\n\u2022 B1 for each valid comment"
+        "markscheme-components": "Question 12:\n\nAnswer:\n\u2022 Vertical axis is not consistent\n\u2022 The line does not represent the days when he doesn\u2019t use the internet\n\nMarks: 2 (2 AO2.5b)\n\nPart marks and guidance:\n\u2022 B1 for each valid comment",
+        "mark-breakdown": {
+            "total": 2
         },
-        "num-marks": 2,
         "pages": [
             11
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "13": {
-        "text": {
-            "a": "Answer: 22.5\nMarks: 1\nMarking guidance:\n\u2022 1 AO1.3a",
-            "b": "(i) Answer: 4.125 \u2264 y < 4.135\n   Marks: 2\n   Marking guidance:\n   \u2022 1 AO1.2\n   \u2022 1 AO1.3a\n   \u2022 B1 for either limit with correct inequality sign\n   \u2022 Condone using x instead of y\n\n(ii) Answer: 4650 \u2264 z < 4750\n    Marks: 2\n    Marking guidance:\n    \u2022 1 AO1.2\n    \u2022 1 AO1.3a\n    \u2022 B1 for either limit with correct inequality sign\n    \u2022 Condone using x instead of z"
+        "markscheme-components": {
+            "a": "Part (a)\n\nAnswer: 22.5\nMarks: 1\n\nMarking details:\n\u2022 1 AO1.3a",
+            "b.i": "Part (b)(i)\n\nAnswer: 4.125 \u2264 y < 4.135\nMarks: 2\n\nMarking details:\n\u2022 1 AO1.2\n\u2022 1 AO1.3a\n\u2022 B1 for either limit with correct inequality sign\n\u2022 Condone using x instead of y",
+            "b.ii": "Part (b)(ii)\n\nAnswer: 4650 \u2264 z < 4750\nMarks: 2\n\nMarking details:\n\u2022 1 AO1.2\n\u2022 1 AO1.3a\n\u2022 B1 for either limit with correct inequality sign\n\u2022 Condone using x instead of z"
         },
-        "num-marks": 5,
+        "mark-breakdown": {
+            "a": 1,
+            "b.i": 2,
+            "b.ii": 2,
+            "total": 5
+        },
         "pages": [
             11
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "14": {
-        "text": {
-            "a": "Answer: 8/50 (or equivalent)\nMarks: 2 (1 AO2.3a, 1 AO3.1c)\nPart marks and guidance: B1 for n/50",
-            "b": "Answer: Any comment with valid reason\nMarks: 1 (1 AO3.4b)"
+        "markscheme-components": {
+            "a": "Answer: 8/50 oe\nMarks: 2\nPart marks: 1 AO2.3a, 1 AO3.1c\nGuidance: B1 for n/50",
+            "b": "Answer: Any comment with valid reason\nMarks: 1\nPart marks: 1 AO3.4b"
         },
-        "num-marks": 3,
+        "mark-breakdown": {
+            "a": 2,
+            "b": 1,
+            "total": 3
+        },
         "pages": [
             11
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "15": {
-        "text": {
-            "a": "Angles at B and D are right angles (1 mark). Angles ACB and ECD are vertically opposite (oe) (1 mark). Three equal angles (angle sum of a triangle), hence the triangles are similar (oe) (1 mark). Overall guidance: 2 AO1.3b, 1 AO2.4a.",
-            "b": "Answer: 10.5 (2 marks). Marking details: M1 awarded for 3.5 \u00d7 3 (or equivalent). Overall guidance: 2 AO1.3a."
+        "markscheme-components": {
+            "a": "Answer (Part a):\n\u2022 Angles at B and D are right angles\n\u2022 Angles ACB and ECD are vertically opposite (oe)\n\u2022 Three equal angles (angle sum of a triangle), hence triangles are similar (oe)\n\nMarks:\n\u2022 3 marks total (1 mark for each statement)\n\u2022 2 AO1.3b, 1 AO2.4a",
+            "b": "Answer (Part b):\n\u2022 10.5\n\nMarks:\n\u2022 2 marks total\n\u2022 2 AO1.3a\n\u2022 M1 for 3.5 \u00d7 3 (oe)"
         },
-        "num-marks": 5,
+        "mark-breakdown": {
+            "a": 3,
+            "b": 2,
+            "total": 5
+        },
         "pages": [
             11
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "16": {
-        "text": {
-            "16": "Correct answer (264) with complete correct working, e.g. (3 + 1) \u00d7 6 \u00d7 11\n\n4\n1 AO1.3a\n3 AO3.1a\n\nM3 for correct working but no final answer stated (3 + 1) \u00d7 6 \u00d7 11\nor the working is poorly communicated but is clear,\ne.g. (3 + 1) \u00d7 6 \u00d7 11 = 264\nor number greater than 200 with complete correct working\n\nOr M2 for 264 with no (or incomplete) working or for acceptable number over 200 with poorly communicated working\n\nOr M1 for number greater than 200 with no, or incomplete, working or for (3 \u00d7 6) \u00d7 11 [\u00d7 1] condoning error in calculation\nor for two trials leading to numbers below 200 (condone poor communication)\nor acceptable calculation with their answer minimum 200 but error in evaluation\n\nWorking correctly communicated in stages is acceptable for 4 marks,\ne.g. 3 + 1 = 4, 4 \u00d7 6 = 24, 24 \u00d7 11 = 264\n\nFull written explanation is also acceptable\n\nFor 1 or 2 marks \u2018acceptable\u2019 implies number, minimum 200, that can be made"
+        "markscheme-components": "Correct answer (264) with complete correct working, e.g. (3 + 1) \u00d7 6 \u00d7 11 [4 marks]\n1 AO1.3a\n3 AO3.1a\n\nM3 for correct working but no final answer stated (3 + 1) \u00d7 6 \u00d7 11 or the working is poorly communicated but is clear,\ne.g. (3 + 1) \u00d7 6 \u00d7 11 = 264\nor number greater than 200 with complete correct working\n\nOr M2 for 264 with no (or incomplete) working or for acceptable number over 200 with poorly communicated working\n\nOr M1 for number greater than 200 with no, or incomplete, working or for (3 \u00d7 6) \u00d7 11 [\u00d7 1] condoning error in calculation\nor for two trials leading to numbers below 200 (condone poor communication)\nor acceptable calculation with their answer minimum 200 but error in evaluation\n\nWorking correctly communicated in stages is acceptable for 4 marks,\ne.g. 3 + 1 = 4, 4 \u00d7 6 = 24, 24 \u00d7 11 = 264\n\nFull written explanation is also acceptable\n\nFor 1 or 2 marks \u2018acceptable\u2019 implies number, minimum 200, that can be made",
+        "mark-breakdown": {
+            "total": 6
         },
-        "num-marks": 4,
         "pages": [
             12
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "17": {
-        "text": {
-            "a": "Answer: 20 (2 marks: 1 AO1.1, 1 AO2.3a)\n\nMarking guidance:\n\u2022 M1 for D = M / V (seen or implied)\n\u2022 Can be implied by an answer of 2",
-            "b": "Answer: 8 1/7 or 8.14[\u2026] (4 marks: 2 AO1.3b, 2 AO3.1d)\n\nMarking guidance:\n\u2022 M1 for 15 or 105 \u00f7 7\n\u2022 AND M2 for (180 + 105) / [their(20 + 15)] or 18 + 10.5 or their(2 + 1.5)\n\u2022 OR M1 for some attempt to find (total mass) / (total volume)"
+        "markscheme-components": {
+            "a": "Answer: 20\n\nMarks: 2\n(1 AO1.1, 1 AO2.3a)\n\nPart marks and guidance:\n\u2022 M1 for D = M/V (soi)\n\u2022 Can be implied by an answer of 2",
+            "b": "Answer: 8 1/7 or 8.14[\u2026]\n\nMarks: 4\n(2 AO1.3b, 2 AO3.1d)\n\nPart marks and guidance:\n\u2022 M1 for 15 or 105 \u00f7 7\n\u2022 AND M2 for (180 + 105) / [their(20 + 15)] = 18 + 10.5 or their(2 + 1.5)\n\u2022 Or M1 for some attempt to find (total mass) / (total volume)"
         },
-        "num-marks": 6,
+        "mark-breakdown": {
+            "a": 2,
+            "b": 4,
+            "total": 6
+        },
         "pages": [
             12,
             13
         ],
-        "sub-questions": [
-            "a",
-            "b"
-        ],
         "correctly_parsed": true
     },
     "18": {
-        "text": {
-            "a": "Part (a)\n\n(i) Answer: x > 3\nMarks: 3 (3 AO1.3a)\n\u2022 M1 for 4x soi\n\u2022 M1 for 12 soi\n\n(ii) Answer: 2\nMarks: 1 (1 AO1.3a)",
-            "b": "Answer: [+]5 or \u22125\nMarks: 2 (2 AO1.3a)\n\u2022 M1 for x\u00b2 = 25\n\u2022 If 0 scored, instead award SC1 for 5 seen as answer",
-            "c": "Answer: x = 2, y = \u20131\nMarks: 3 (3 AO1.3b)\n\u2022 M1 for eliminating one variable\n\u2022 M1 for correct substitution of their x or y"
+        "markscheme-components": {
+            "a.i": "Answer: x > 3\n\nMarks: 3 (3 AO1.3a)\n\nMarking guidance:\n\u2022 M1 for 4x (seen or implied)\n\u2022 M1 for 12 (seen or implied)",
+            "a.ii": "Answer: 2\n\nMarks: 1 (1 AO1.3a)",
+            "b": "Answer: [+]5 or \u22125\n\nMarks: 2 (2 AO1.3a)\n\nMarking guidance:\n\u2022 M1 for x\u00b2 = 25\n\u2022 If 0 scored, instead award SC1 for 5 seen as answer",
+            "c": "Answer: x = 2, y = \u22121\n\nMarks: 3 (3 AO1.3b)\n\nMarking guidance:\n\u2022 M1 for eliminating one variable\n\u2022 M1 for correct substitution of their x or their y"
         },
-        "num-marks": 9,
+        "mark-breakdown": {
+            "a.i": 3,
+            "a.ii": 1,
+            "b": 2,
+            "c": 3,
+            "total": 9
+        },
         "pages": [
             13
-        ],
-        "sub-questions": [
-            "a",
-            "b",
-            "c"
         ],
         "correctly_parsed": true
     },
     "19": {
-        "text": {
-            "a": "Answer:\n(Account) A (by) 103[p] with correct working\n\nMarks: 5\n(3 AO1.3b, 1 AO3.1d, 1 AO3.3)\n\nMarking guidance:\n\u2022 M2 for [10 000 \u00d7] 1.03\u00b3 implied by 10 927.27, or M1 for 10 300 and 10 609\n\nAND\n\n\u2022 M2 for [10 000 \u00d7] 1.04 \u00d7 1.03 \u00d7 1.02 implied by 10 926.24, or M1 for 10 400 and 10 712\n\n\u2022 If 0, 1 or 2 scored, instead award SC3 for A by 103[p] with no working or insufficient working\n\n\"Correct working\" requires evidence of at M2M2.\nMay be done in stages.",
-            "b": "Answer:\nHe may not want to leave it there for 3 years\n\nMarks: 1\n(1 AO2.3a)\n\nMarking guidance:\nAccept any valid reason."
+        "markscheme-components": {
+            "a": "(Account) A (by) 103% with correct working\n\nMarks: 5 (3 AO1.3b, 1 AO3.1d, 1 AO3.3)\n\n\u2022 M2 for [10\u202f000 \u00d7 1.03\u00b3] implied by 10\u202f927.27 or M1 for 10\u202f300 and 10\u202f609\n\u2022 AND\n\u2022 M2 for [10\u202f000 \u00d7 1.04 \u00d7 1.03 \u00d7 1.02] implied by 10\u202f926.24 or M1 for 10\u202f400 and 10\u202f712\n\nIf 0, 1 or 2 scored, instead award SC3 for A by 103% with no working or insufficient working\n\n\u201cCorrect working\u201d requires evidence of at M2M2\n\nMay be done in stages",
+            "b": "He may not want to leave it there for 3 years\n\nMarks: 1 (1 AO2.3a)\n\nAccept any valid reason"
         },
-        "num-marks": 6,
+        "mark-breakdown": {
+            "a": 5,
+            "b": 1,
+            "total": 6
+        },
         "pages": [
             14
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     }
