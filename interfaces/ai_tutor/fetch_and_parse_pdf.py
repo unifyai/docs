@@ -708,7 +708,7 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
             system_message=NUM_MARKS_DETECTION,
         )
         sub_questions = [
-            k.split(".")[-1] for k, v in question_to_pages.items()
+            ".".join(k.split(".")[1:]) for k, v in question_to_pages.items()
             if k.startswith(str(question_num) + ".")
         ]
         pages = [
@@ -798,10 +798,9 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
             "".join([c for c in response.split("\n")[-1].lower() if c.isdigit()]),
         )
         questions[question_num] = {
-            "text": qna,
+            "markscheme-components": qna,
             "num-marks": num_marks,
             "pages": pages,
-            "sub-questions": sub_questions,
             "correctly_parsed": True
         }
         parsed = json.dumps(dict(sorted(questions.items())), indent=4)
