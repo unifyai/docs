@@ -215,15 +215,14 @@ yes
 no
 """
 
-NUM_MARKS_DETECTION = """
-Your task is to determine the total number of marks available for this question.
-Under the marks heading, first the total number of marks are shown, followed by how
-these marks are split across different assessment objectives (AOx.xx). The total
-number of marks is usually shown as a single integer, but it might also be shown as a
-list of mark types, prepending with a letter. For example, B1 B1 B1 would indicate 3
-marks. A1 B1 would indicate 2 marks etc. Please response with a single integer on a
-new line like so, with nothing else after your numeric answer:
-3
+MARK_BREAKDOWN_DETECTION = """
+Your task is to determine the total number of marks available for each component of 
+this question. Under the marks heading, first the total number of marks are shown, 
+followed by how these marks are split across different assessment objectives (
+AOx.xx). The total number of marks for each sub-question is usually shown as a single 
+integer, but it might also be shown as a list of mark types, prepending with a 
+letter. For example, B1 B1 B1 would indicate 3 marks. A1 B1 would indicate 2 marks 
+etc. Please response with a single integer per field in the requested response format.
 """
 
 GENERATE_PROMPT = """
