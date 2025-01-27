@@ -1,234 +1,231 @@
 {
     "1": {
-        "text": {
-            "a": "Answer: 1 : 50 (2 marks)\n\u2022 2 AO1.3a\n\u2022 M1 shows a partial simplification (e.g. 4 : 200)",
-            "b": "Answer: 50 300 (2 marks)\n\u2022 2 AO1.3a\n\u2022 M1 for 350 \u00f7 (1 + 6)",
-            "c": "Answer: 90 (2 marks)\n\u2022 2 AO1.3a\n\u2022 M1 for 10% = 45 soi\n  or M1 for 450 \u00d7 0.2"
+        "markscheme-components": {
+            "a": "Answer: 1 : 50 (2 marks)\n\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 shows a partial simplification, e.g. 4 : 200",
+            "b": "Answer: 50 300 (2 marks)\n\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for 350 \u00f7 (1 + 6)",
+            "c": "Answer: 90 (2 marks)\n\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for 10% = 45 (soi), or\n\u2022 M1 for 450 \u00d7 0.2"
         },
-        "num-marks": 6,
+        "mark-breakdown": {
+            "a": 2,
+            "b": 2,
+            "c": 2,
+            "total": 6
+        },
         "pages": [
             5
-        ],
-        "sub-questions": [
-            "a",
-            "b",
-            "c"
         ],
         "correctly_parsed": true
     },
     "2": {
-        "text": {
-            "2": "Answer: 3.5%, \u2153, 0.34\nMarks: 2\n\nMark scheme and guidance (2 AO1.3a):\n\u2022 B1 for \u2153 = 0.33\u2026 or 33\u2026%\n  or\n\u2022 B1 for 0.34 = 34%\n  or\n\u2022 B1 for changing 3.5% to 0.035\n  or\n\u2022 SC1 for \u2153, 0.34, 3.5%\n\nAccept correct order with equivalent values."
+        "markscheme-components": "Answer: 3.5%, 1/3, 0.34\nMarks: 2 (2 AO1.3a)\n\nPart marks and guidance:\n\u2022 B1 for 1/3 = 0.33\u2026 or 33\u2026%\n  OR\n\u2022 B1 for 0.34 = 34%\n  OR\n\u2022 B1 for changing 3.5% to 0.035\n  OR\n\u2022 SC1 for 1/3, 0.34, 3.5%\n\nAccept correct order with equivalent values.",
+        "mark-breakdown": {
+            "total": 2
         },
-        "num-marks": 2,
         "pages": [
             5
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "3": {
-        "text": {
-            "3": "\u00a31.38 with working shown (3 marks)\n\n\u2022 M1 for 7 \u00d7 (3/8)\n\u2022 M1 for 89p + 49p, or 3 \u00d7 49p, or 2 \u00d7 49p > 89p\n  OR\n  B1 for \u00a31.38 without working (condone 138p)\n\n1 AO1.3a, 1 AO3.1d, 1 AO3.3"
+        "markscheme-components": "Question 3\n\nAnswer: \u00a31.38 with working shown\nMarks: 3 (1 AO1.3a, 1 AO3.1d, 1 AO3.3)\n\nPart marks and guidance:\n\u2022 M1 for 7 \u00d7 \u00b3/\u2088\n\u2022 M1 for 89p + 49p or 3 \u00d7 49p or 2 \u00d7 49p > 89p\n  OR\n\u2022 B1 for \u00a31.38 without working\n\nCondone 138p",
+        "mark-breakdown": {
+            "total": 3
         },
-        "num-marks": 3,
         "pages": [
             5
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "4": {
-        "text": {
-            "a": "4(a)(i)\n\u2022 Answer: 5\n\u2022 Marks: 1\n\u2022 Marking guidance: 1 AO1.1\n\n4(a)(ii)\n\u2022 Answer: 1\n\u2022 Marks: 1\n\u2022 Marking guidance: 1 AO1.1\n\n4(a)(iii)\n\u2022 Answer: Any number apart from 1, 3 or 5\n\u2022 Marks: 1\n\u2022 Marking guidance: 1 AO1.1",
-            "b": "4(b)\n\u2022 Answer: Three different numbers only; 6 appears most; More even numbers than odd\n\u2022 Marks: 3\n\u2022 Marking guidance: 3 AO2.1a (B1 for each of the three properties)"
+        "markscheme-components": {
+            "a.i": "Answer: 5\nMarks: 1\n1 AO1.1\n(No additional guidance provided)",
+            "a.ii": "Answer: 1\nMarks: 1\n1 AO1.1\n(No additional guidance provided)",
+            "a.iii": "Answer: Any number apart from 1, 3 or 5\nMarks: 1\n1 AO1.1\n(No additional guidance provided)",
+            "b": "Answer: Three different numbers only, 6 appears most, More even numbers than odd\nMarks: 3\n3 AO2.1a\nGuidance: B1 awarded for each of the three properties"
         },
-        "num-marks": 6,
+        "mark-breakdown": {
+            "a.i": 1,
+            "a.ii": 1,
+            "a.iii": 1,
+            "b": 3,
+            "total": 6
+        },
         "pages": [
             6
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "5": {
-        "text": {
-            "5": "Answer: 48 (cm\u00b2)\nMarks: 3\n\nMark allocation:\n\u2022 1 AO1.3a\n\u2022 2 AO3.1b\n\nMarking instructions:\n\u2022 M1 for \u00bd \u00d7 8 \u00d7 4 = 16\n\u2022 M1 for their \u201c16\u201d \u00d7 3"
+        "markscheme-components": "Answer: 48 (cm\u00b2)\nMarks: 3\n\nPart marks and guidance:\n\u2022 1 AO1.3a\n\u2022 2 AO3.1b\n\u2022 M1 for (\u00bd \u00d7 8 \u00d7 4) = 16\n\u2022 M1 for their \u201816\u2019 \u00d7 3",
+        "mark-breakdown": {
+            "total": 3
         },
-        "num-marks": 3,
         "pages": [
             6
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "6": {
-        "text": {
-            "6": "Marks: 3\n3 AO1.3b\n\n\u2022 B1 for 13 in \u2018intersection\u2019\n\u2022 B1 for (16 \u2013 their \u201813\u2019) in \u2018Cat\u2019\n\u2022 B1 for sum of 8 + their three numbers = 30"
+        "markscheme-components": "Marks: 3 (3 AO1.3b)\n\nMarking Guidance:\n\u2022 B1 for 13 placed in the intersection of the two circles (Dog \u2229 Cat).\n\u2022 B1 for placing (16 \u2212 their \u201813\u2019) in the Cat-only region.\n\u2022 B1 for ensuring the overall sum (8 in Dog-only + 13 in intersection + 3 in Cat-only + 6 outside) is 30.\n\nDiagram (inferred from the image):\n\n      \u250c\u2500\u2500\u2500 Dog \u2500\u2500\u2500\u2500\u2510\n      \u2502     8      \u2502\n      \u2502      \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Cat \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n      \u2502      \u2502   13   \u2502     3        \u2502\n      \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2518\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                 6 (outside)\n",
+        "mark-breakdown": {
+            "total": 3
         },
-        "num-marks": 3,
         "pages": [
             6
         ],
-        "sub-questions": [],
-        "correctly_parsed": true,
-        "images": [
-            "page6.png"
-        ]
+        "correctly_parsed": true
     },
     "7": {
-        "text": {
-            "a": "Question 7(a)\nAnswer: 60 and 50\nMarks: 2 (1 AO1.3a, 1 AO3.1a)\nMarking guidance: B1 awarded for each correct value (60 and 50).",
-            "b": "Question 7(b)\nAnswer: 2\nMarks: 2 (1 AO1.3a, 1 AO3.1a)\nMarking guidance: M1 awarded if the value 8 is seen in the working, then the final answer of 2."
+        "markscheme-components": {
+            "a": "(a)  Answer: 60 50\n     Marks: 2 (1 AO1.3a, 1 AO3.1a)\n     Guidance: B1 for each",
+            "b": "(b)  Answer: 2\n     Marks: 2 (1 AO1.3a, 1 AO3.1a)\n     Guidance: M1 for 8 seen"
         },
-        "num-marks": 4,
+        "mark-breakdown": {
+            "a": 2,
+            "b": 2,
+            "total": 4
+        },
         "pages": [
             6
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "8": {
-        "text": {
-            "8": "Answer: 70\n\nThe triangle is isosceles so the missing angle is x (may be on diagram) oe.\nAngles in a triangle sum to 180\u00b0 oe (may be indicated by summing of angles to 180\u00b0 oe).\n\nMarks: 3\n\nPart marks and guidance:\n\u2022 1 AO1.3a\n\u2022 1 AO2.4a\n\u2022 1 AO3.1b\n\nB1 for each"
+        "markscheme-components": "Answer: 70\n\nThe triangle is isosceles so the missing angle is x (may be on diagram) oe\nAngles in a triangle sum to 180\u00b0 oe (may be indicated by summing of angles to 180\u00b0 oe)\n\nMarks: 3\n1 AO1.3a\n1 AO2.4a\n1 AO3.1b\n\nPart marks and guidance:\nB1 for each",
+        "mark-breakdown": {
+            "total": 3
         },
-        "num-marks": 3,
         "pages": [
             7
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "9": {
-        "text": {
-            "a": "Answer: 100 (1 mark)\n\u2022 1 AO2.1a",
-            "b": "Answer: 10 (1 mark)\n\u2022 1 AO2.1a",
-            "c": "Answer: One and a quarter boxes drawn (3 marks)\n\u2022 1 AO1.3a\n\u2022 1 AO2.3b\n\u2022 1 AO3.1c\n\nMarking guidance:\n\u2022 M2 for 50\n  or\n\u2022 M1 for 310\n  or\n\u2022 M1 FT from subtraction"
+        "markscheme-components": {
+            "a": "Answer: 100\nTotal marks: 1\nMark allocation: 1 AO2.1a\n\nGuidance:\n\u2022 No additional guidance given.",
+            "b": "Answer: 10\nTotal marks: 1\nMark allocation: 1 AO2.1a\n\nGuidance:\n\u2022 No additional guidance given.",
+            "c": "Answer: One and a quarter boxes drawn\nTotal marks: 3\nMark allocation: 1 AO1.3a, 1 AO2.3b, 1 AO3.1c\n\nGuidance / Part marks:\n\u2022 M2 for correct total of 50\n  or\n\u2022 M1 for 310\n  or\n\u2022 M1 (follow through) from subtraction"
         },
-        "num-marks": 5,
+        "mark-breakdown": {
+            "a": 1,
+            "b": 1,
+            "c": 3,
+            "total": 5
+        },
         "pages": [
             7
-        ],
-        "sub-questions": [
-            "a",
-            "b",
-            "c"
         ],
         "correctly_parsed": true
     },
     "10": {
-        "text": {
-            "a": "Part (a)\n\n(i) > 1\n\u2022 Marks: 1\n\u2022 Assessment Objective(s): 1 AO1.2\n\n(ii) < 1\n\u2022 Marks: 1\n\u2022 Assessment Objective(s): 1 AO1.2\n\n(iii) > 1\n\u2022 Marks: 1\n\u2022 Assessment Objective(s): 1 AO1.2",
-            "b": "Part (b)\n\nAnswer: 2500 oe\n\u2022 Marks: 2\n\u2022 Assessment Objective(s): 1 AO1.2, 1 AO1.3a\n\u2022 Marking guidance: M1 for 25 or 100"
+        "markscheme-components": {
+            "a.i": "Answer: >\nMarks: 1\n(1 AO1.2)",
+            "a.ii": "Answer: <\nMarks: 1\n(1 AO1.2)",
+            "a.iii": "Answer: >\nMarks: 1\n(1 AO1.2)",
+            "b": "Answer: 2500 oe\nMarks: 2\n(1 AO1.2, 1 AO1.3a)\nPart marks and guidance:\n\u2022 M1 for 25 or 100"
         },
-        "num-marks": 5,
+        "mark-breakdown": {
+            "a.i": 1,
+            "a.ii": 1,
+            "a.iii": 1,
+            "b": 2,
+            "total": 5
+        },
         "pages": [
             7
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "11": {
-        "text": {
-            "11": "Correct reasoning\n\nTotal marks: 2\n\n\u2022 1 AO1.3a\n\u2022 1 AO2.2\n\nMarking guidance:\nM1 for 4a + 12 \u2013 3a \u00b1 6"
+        "markscheme-components": "Correct reasoning (2 marks)\n\u2022 1 AO1.3a\n\u2022 1 AO2.2\n\nMarking guidance:\nM1 for 4a + 12 \u2013 3a \u00b1 6",
+        "mark-breakdown": {
+            "total": 2
         },
-        "num-marks": 2,
         "pages": [
             7
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "12": {
-        "text": {
-            "a": "Answer and Marking Guidelines (2 marks total):\n\n\u2022 1 AO2.1a, 1 AO2.3b\n\u2022 B1 for 4 \u00d7 4 dotted squares correct\n\u2022 B1 for 4 blocks of 4 black squares correct",
-            "b": "Answer and Marking Guidelines (2 marks total):\n\n\u2022 1 AO1.3a, 1 AO2.1a\n\u2022 Correct answer: 64\n\u2022 M1 for 8 \u00d7 8 or 8\u00b2 (8 squared)",
-            "c": "Answer and Marking Guidelines (2 marks total):\n\n\u2022 1 AO1.3a, 1 AO2.3a\n\u2022 Correct answer: 4n\n\u2022 M1 for 4, 8, 12 seen",
-            "d": "Answer and Marking Guidelines:\n\n\u2022 Number of blacks is always even (oe) and reason\n\u2022 Number of dots alternates between odd and even (oe) and reason\n\u2022 even + even = even\n\u2022 odd + even = odd\n\nMarks:\n\u2022 B1\n\u2022 B1\n\u2022 B1\n\u2022 B1\n\u2022 B1\n\u2022 B1  (2 AO2.2, 4 AO2.4b)\n\nGuidance/Acceptable Explanations:\n\u2022 Accept 4 times table or \u201c4 is even\u201d\n\u2022 Accept any reason that has explanatory value (e.g. odd\u00b2 = odd)\n\u2022 If 0 scored, instead award:\n  \u2013 B1 if shows true for patterns 1, 2 and 3\n  \u2013 B1 if shows true for at least two more patterns"
+        "markscheme-components": {
+            "a": "Marks: 2 (1 AO2.1a, 1 AO2.3b)\nB1 for 4 \u00d7 4 dotted squares correct\nB1 for 4 blocks of 4 black squares correct",
+            "b": "Marks: 2 (1 AO1.3a, 1 AO2.1a)\nM1 for 8 \u00d7 8 or 8\u00b2 or 8 squared",
+            "c": "Marks: 2 (1 AO1.3a, 1 AO2.3a)\nAnswer: 4n\nM1 for 4, 8, 12 seen",
+            "d": "Marks: B1, B1, B1, B1, B1, B1 (2 AO2.2, 4 AO2.4b)\n\n\u2022 Number of blacks is always even (oe) and reason\n\u2022 Number of dots alternates between odd and even (oe) and reason\n\u2022 even + even = even\n\u2022 odd + even = odd\n\nAccept \u201c4 times table\u201d or \u201c4 is even.\u201d\nAccept any reason with explanatory value (e.g. odd\u00b2 = odd).\n\nIf 0 marks scored, instead award:\n\u2022 B1 shows it\u2019s true for patterns 1, 2, and 3\n\u2022 B1 shows it\u2019s true for at least two more patterns"
         },
-        "num-marks": 6,
+        "mark-breakdown": {
+            "a": 2,
+            "b": 2,
+            "c": 2,
+            "d": 6,
+            "total": 12
+        },
         "pages": [
             8
         ],
-        "sub-questions": [
-            "a",
-            "b",
-            "c",
-            "d"
-        ],
-        "correctly_parsed": true,
-        "images": [
-            "page8.png"
-        ]
+        "correctly_parsed": true
     },
     "13": {
-        "text": {
-            "a": "(a)(i) Any straight line through the origin (e.g. the diagram shows a straight line passing through the origin). Marks: 2 (1 AO1.1, 1 AO2.3b). Guidance: B1 for a straight line.\n\n(a)(ii) Marks: 2 (1 AO1.1, 1 AO2.3b). Guidance: B1 for a cubic with two turning points.",
-            "b": "(b)(i) At least one point plotted correctly. Marks: 1 (1 AO2.3b)."
+        "markscheme-components": {
+            "a.i": "Answer:\n\u2022 Any straight line through the origin (for example, a line with gradient 2).\n\nMarks:\n\u2022 2 total\n  \u2013 1 AO1.1\n  \u2013 1 AO2.3b\n\nPart marks and guidance:\n\u2022 B1 for a straight line",
+            "a.ii": "Answer:\n\u2022 Any cubic with two turning points.\n\nMarks:\n\u2022 2 total\n  \u2013 1 AO1.1\n  \u2013 1 AO2.3b\n\nPart marks and guidance:\n\u2022 B1 for a cubic with two turning points",
+            "b.i": "Answer:\n\u2022 At least one point plotted correctly.\n\nMarks:\n\u2022 1 total\n  \u2013 1 AO2.3b",
+            "b.ii": "Answer:\n\u2022 Plotting and curve drawing.\n\nMarks:\n\u2022 3 total\n  \u2013 1 AO2.3b\n  \u2013 1 AO3.1b\n  \u2013 1 AO3.2\n\nPart marks and guidance:\n\u2022 B2 for at least 5 points correctly plotted\n   OR\n\u2022 B1 for at least 3 points correctly plotted\n\nAND\n\u2022 B1 for a curve drawn through their points"
         },
-        "num-marks": 5,
-        "pages": [
-            9
-        ],
-        "sub-questions": [
-            "a",
-            "b"
-        ],
-        "correctly_parsed": true,
-        "images": [
-            "page9.png"
-        ]
-    },
-    "14": {
-        "text": {
-            "a": "Answer: \u00a320\u202f000\n\nMarks: 1\n\nMark scheme:\n\u2022 1 AO1.3a",
-            "b": "Answer: \u00a314\u202f580 or \u00a314\u202f600\n\nMarks: 2\n\nMark scheme:\n\u2022 2 AO1.3a\n\u2022 M1 for 20\u202f000 \u00d7 0.9\u00b3",
-            "c": "Answer: 7 years\n\nMarks: 2\n\nMark scheme:\n\u2022 1 AO1.3a\n\u2022 1 AO3.1c\n\u2022 M1 for 2 trials shown"
+        "mark-breakdown": {
+            "a.i": 2,
+            "a.ii": 2,
+            "b.i": 1,
+            "b.ii": 3,
+            "total": 8
         },
-        "num-marks": 5,
         "pages": [
+            9,
             10
         ],
-        "sub-questions": [
-            "a",
-            "b",
-            "c"
+        "correctly_parsed": true
+    },
+    "14": {
+        "markscheme-components": {
+            "a": "Answer: \u00a320\u202f000\nMarks: 1\nPart marks and guidance:\n\u2022 1 AO1.3a",
+            "b": "Answer: \u00a314\u202f580 or \u00a314\u202f600\nMarks: 2\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for 20\u202f000 \u00d7 0.93",
+            "c": "Answer: 7 years\nMarks: 2\nPart marks and guidance:\n\u2022 1 AO1.3a\n\u2022 1 AO3.1c\n\u2022 M1 for 2 trials shown"
+        },
+        "mark-breakdown": {
+            "a": 1,
+            "b": 2,
+            "c": 2,
+            "total": 5
+        },
+        "pages": [
+            10
         ],
         "correctly_parsed": true
     },
     "15": {
-        "text": {
-            "15": "25, 30, 17 with correct working   5 marks (2 AO1.3a, 2 AO3.1d, 1 AO3.3)\n\nM1 for x \u2212 8 + x + x + 5 = 72\nM1FT for 3x \u2212 3 = 72\nM1FT for 3x = 75 implied by x = 25\n\nAND\n\nM1 for substituting their 25 into x \u2212 8 and x + 5\n\nAlternative method using trials:\n\u2022 M3 for a correctly evaluated trial of x \u2212 8 + x + x + 5 with x = 25\n\u2022 Or M2 for at least two complete correct evaluations of x \u2212 8 + x + x + 5\n\u2022 Or M1 for at least one complete correct evaluation of x \u2212 8 + x + x + 5\n\nAND\n\nM1 for substituting their 25 into x \u2212 8 and x + 5\n\nIf 0 or 1 scored, instead award SC2 for 25, 30, 17 with no working or insufficient working.\n\nIf 0 scored, instead award SC1 for x = 25 with no working or insufficient working.\n\n\u201cCorrect working\u201d requires evidence of at least M1M1M1 or M3.\n\nMethods shown use Kieran as x; apply similar schemes if using Jermaine or Chris as the subject.\n\nNote: x = 25 scores M1M1M1 if there is some supporting work but on its own scores SC1."
+        "markscheme-components": "Answer: 25, 30, 17 with correct working (5 marks)\n(2 AO1.3a, 2 AO3.1d, 1 AO3.3)\n\nMark scheme:\n\u2022 M1 for x \u2212 8 + x + x + 5 = 72\n\u2022 M1FT for 3x \u2212 3 = 72\n\u2022 M1FT for 3x = 75 implied by x = 25\n\nAND\n\n\u2022 M1 for substituting their 25 into x \u2212 8 and x + 5\n\nAlternative method using trials:\n\u2022 M3 for a correctly evaluated trial of x \u2212 8 + x + x + 5 with x = 25\n  OR\n\u2022 M2 for at least two complete correct evaluations of x \u2212 8 + x + x + 5\n  OR\n\u2022 M1 for at least one complete correct evaluation of x \u2212 8 + x + x + 5\n\nAND\n\n\u2022 M1 for substituting their 25 into x \u2212 8 and x + 5\n\nIf 0 or 1 scored, instead award SC2 for 25, 30, 17 with no working or insufficient working.\n\nIf 0 scored, instead award SC1 for x = 25 with no working or insufficient working.\n\n\u201cCorrect working\u201d requires evidence of at least M1M1M1 or M3.\n\nMethods shown use Kieran as x; apply similar schemes if using Jermaine or Chris as the subject.\n\nNote: x = 25 scores M1M1M1 if there is some supporting work but on its own scores SC1.",
+        "mark-breakdown": {
+            "total": 5
         },
-        "num-marks": 5,
         "pages": [
             11
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "16": {
-        "text": {
-            "a": "140 \u2013 160 (s)\n\nMarks: 3\n1 AO1.3a\n1 AO3.1d\n1 AO3.2\n\nB1 for 300 \u00b1 20 (m)\nM1 for their '300'\n2",
-            "b": "Correct location for F\n\nMarks: 2\n1 AO1.3a\n1 AO3.1d\n\nB1 for angle 55\u00b0 \u00b1 2\u00b0\nB1 for distance 8 cm \u00b1 0.2",
-            "c": "Marks: 4\n1 AO1.3b\n1 AO2.3b\n2 AO3.1d\n\nB1 for perpendicular bisector of PQ drawn \u00b1 2\u00b0\nB1 for arcs seen\nB1 arc centre P, radius 4 \u00b1 0.2 cm\nB1 for correct line segment marked\nFT their constructions\n\nArcs must be fit for purpose\nMay be the same arcs as used for perpendicular bisector as shown"
+        "markscheme-components": {
+            "a": "Answer: 140 \u2013 160 (s)\nMarks: 3 (1 AO1.3a, 1 AO3.1d, 1 AO3.2)\n\nPart marks and guidance:\n\u2022 B1 for 300 \u00b1 20 (m)\n\u2022 M1 for their \u2018300\u2019",
+            "b": "Answer: Correct location for F\nMarks: 2 (1 AO1.3a, 1 AO3.1d)\n\nPart marks and guidance:\n\u2022 B1 for angle 55\u00b0 \u00b1 2\u00b0\n\u2022 B1 for distance 8 cm \u00b1 0.2",
+            "c": "Marks: 4 (1 AO1.3b, 1 AO2.3b, 2 AO3.1d)\n\nPart marks and guidance:\n\u2022 B1 for perpendicular bisector of PQ drawn \u00b1 2\u00b0\n\u2022 B1 for arcs seen\n\u2022 B1 arc centre P, radius 4 \u00b1 0.2 cm\n\u2022 B1 for correct line segment marked (FT their constructions)\n\nArcs must be fit for purpose; may be the same arcs as used for perpendicular bisector as shown"
         },
-        "num-marks": 9,
+        "mark-breakdown": {
+            "a": 3,
+            "b": 2,
+            "c": 4,
+            "total": 9
+        },
         "pages": [
             12
-        ],
-        "sub-questions": [
-            "a",
-            "b",
-            "c"
         ],
         "correctly_parsed": true,
         "images": [
@@ -236,62 +233,58 @@
         ]
     },
     "17": {
-        "text": {
-            "a": "(a) Answer: E\nMarks: 1\nMark scheme notes:\n\u2022 1 AO1.3a",
-            "b": "(b) Answer: C and D\nMarks: 2\nMark scheme notes:\n\u2022 2 AO1.3a\n\u2022 B1 for each"
+        "markscheme-components": {
+            "a": "Answer: E\nMarks: 1\n1 AO1.3a",
+            "b": "Answer: C and D\nMarks: 2\n2 AO1.3a\nB1 for each"
         },
-        "num-marks": 3,
+        "mark-breakdown": {
+            "a": 1,
+            "b": 2,
+            "total": 3
+        },
         "pages": [
             12
-        ],
-        "sub-questions": [
-            "a",
-            "b"
         ],
         "correctly_parsed": true
     },
     "18": {
-        "text": {
-            "18": "Answer:\nAverage speed = Distance \u00f7 Time = x/5 km/h\n= (1000x) \u00f7 (60\u00b2 \u00d7 5) m/s\n= (1000x) \u00f7 18000 m/s oe\n= x/18 m/s\n\nMarks: 4 (2 AO1.3a, 2 AO2.2)\n\nPart marks and guidance:\n\u2022 B1 for x km = 1000x m\n\u2022 B1 for 5 hours = 60\u00b2 \u00d7 5 s\n\u2022 B1 for working to given answer without intermediate expression or statement of formula\n"
+        "markscheme-components": "Answer:\nAverage speed = Distance \u00f7 Time = x/5 km/h\n= 1000x \u00f7 (60\u00b2 \u00d7 5) m/s\n= 1000x \u00f7 18000 m/s (oe)\n= x/18 m/s\n\nMarks: 4 (2 AO1.3a, 2 AO2.2)\n\nPart marks and guidance:\n\u2022 B1 for x km = 1000x m\n\u2022 B1 for 5 hours = 60\u00b2 \u00d7 5 s\n\u2022 B1 for working to given answer without intermediate expression or statement of formula",
+        "mark-breakdown": {
+            "total": 4
         },
-        "num-marks": 4,
         "pages": [
             13
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "19": {
-        "text": {
-            "19": "25 with correct working (5 marks)\n2 AO1.3b, 3 AO3.1d\n\nM1 for 10 \u00d7 (2/5) = 4 litres red or for 10 \u00d7 (3/5) = 6 litres white\nM1 for red costs \u00a38 per litre or for white costs \u00a30.50 per litre\nM1 for cost of one 10-litre can is their 4 \u00d7 their 8 + their 6 \u00d7 their 0.5\nM1 for 60 \u2013 their 35\nIf 0 or 1 scored, instead award SC2 for answer 25 with no working or insufficient working\n\n\u201cCorrect working\u201d requires evidence of at least M1M1\n\nAlternative method:\nM1 for 2 : 3 = 20 litres red : 30 litres white\nM1 for 2 \u00d7 \u00a380 + 3 \u00d7 \u00a35 = \u00a3175\nM1 for their 175 \u00f7 5 = 35\nM1 for 60 \u2013 their 35"
+        "markscheme-components": "Answer: 25 with correct working\nMarks: 5 (2 AO1.3b, 3 AO3.1d)\n\nMarking instructions:\n\u2022 M1 for 10 \u00d7 (2/5) = 4 litres red, or for 10 \u00d7 (3/5) = 6 litres white\n\u2022 M1 for red costs \u00a38 per litre or for white costs \u00a30.50 per litre\n\u2022 M1 for cost of one 10-litre can is (their 4 \u00d7 their 8) + (their 6 \u00d7 their 0.5)\n\u2022 M1 for 60 \u2013 their 35\n\nIf 0 or 1 marks scored, instead award SC2 for answer 25 with no working or insufficient working.\n\u201cCorrect working\u201d requires evidence of at least M1M1.\n\nAlternative method:\n\u2022 M1 for 2 : 3 = 20 litres red : 30 litres white\n\u2022 M1 for 2 \u00d7 \u00a380 + 3 \u00d7 \u00a35 = \u00a3175\n\u2022 M1 for (their 175 \u00f7 5) = 35\n\u2022 M1 for 60 \u2013 their 35",
+        "mark-breakdown": {
+            "total": 5
         },
-        "num-marks": 5,
         "pages": [
             13
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "20": {
-        "text": {
-            "20": "Answer: 2.8(0\u2026)\nMarks: 3 (1 AO1.1 and 2 AO1.3a)\n\nMarking guidelines:\n\u2022 B1 for tan \u03b8 = opp/adj\n\u2022 M1 for 4 \u00d7 tan 35"
+        "markscheme-components": "Answer: 2.8(0\u2026)\nMarks: 3\n\nMark scheme:\n\u2022 1 AO1.1\n\u2022 2 AO1.3a\n   \u2013 B1 for tan \u03b8 = opp/adj\n   \u2013 M1 for 4 \u00d7 tan 35",
+        "mark-breakdown": {
+            "total": 3
         },
-        "num-marks": 3,
         "pages": [
             13
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     },
     "21": {
-        "text": {
-            "21": "Answer: 0.82 oe\nMarks: 4 (1 AO1.3a, 3 AO3.1d)\n\nMarking guidelines:\n\u2022 M3 for 0.7 \u00d7 0.4 + 0.7 \u00d7 0.6 + 0.3 \u00d7 0.4 or 1 \u2013 0.18\n   Or\n\u2022 M2 for two correct products\n   Or\n\u2022 M1 for one correct product or 0.3 and 0.6 seen (may be on a tree diagram or equivalent)"
+        "markscheme-components": "Answer: 0.82 oe\n\nMarks: 4 (1 AO1.3a, 3 AO3.1d)\n\nMarking guidance:\n\u2022 M3 for 0.7 \u00d7 0.4 + 0.7 \u00d7 0.6 + 0.3 \u00d7 0.4 or 1 \u2013 0.18\n  OR\n\u2022 M2 for two correct products\n  OR\n\u2022 M1 for one correct product or 0.3 and 0.6 seen (may be on a tree diagram or equivalent)",
+        "mark-breakdown": {
+            "total": 4
         },
-        "num-marks": 4,
         "pages": [
             14
         ],
-        "sub-questions": [],
         "correctly_parsed": true
     }
 }
