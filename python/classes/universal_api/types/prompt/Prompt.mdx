@@ -6,20 +6,18 @@ title: 'Prompt'
 class Prompt
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3888db685db835b8cfec6327a7176689d2c31128/unify/universal_api/types/prompt.py#L4)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/6782723aa744f0d416293e59b1520908b164271b/unify/universal_api/types/prompt.py#L1)</p>
 
 
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3888db685db835b8cfec6327a7176689d2c31128/unify/universal_api/types/prompt.py#L6)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/6782723aa744f0d416293e59b1520908b164271b/unify/universal_api/types/prompt.py#L3)</p>
 
 ```python
 def __init__(
         self,
-        user_message: Optional[str] = None,
-        system_message: Optional[str] = None,
-        **kwargs,
+        **components,
     ):
 ```
 
@@ -27,12 +25,10 @@ Create Prompt instance.
 
 **Arguments**:
 
-- `user_message` - The user message, optional.
-- `system_message` - The system message, optional.
-- `kwargs` - All fields expressed in the pydantic type.
+- `components` - All components of the prompt.
 
 
 
 **Returns**:
 
-The pydantic Prompt instance.
+The Prompt instance.
