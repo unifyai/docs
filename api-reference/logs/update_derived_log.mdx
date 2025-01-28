@@ -1,0 +1,100 @@
+---
+title: 'Update Derived Log'
+api: 'PUT /v0/logs/derived'
+---
+Updates multiple derived log entries with new key, equation, or referenced logs.
+Handles batch updates and recomputes values as needed.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="ids" type="[integer]" required="true">
+List of derived log IDs to update.
+</ParamField>
+
+<ParamField body="original_key" type="string" required="true">
+The original key of the derived entry to update.
+</ParamField>
+
+<ParamField body="key" type="string | null" >
+The new name for the derived entry.
+</ParamField>
+
+<ParamField body="equation" type="string | null" >
+The new equation for computing the value of the derived entry.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PUT \
+  --url 'https://api.unify.ai/v0/logs/derived' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "ids": [
+        123,
+        456,
+        789
+    ],
+    "original_key": "score_diff",
+    "key": "new_score_diff",
+    "equation": "{log0:new_score} - {log1:new_score}"
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs/derived"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"ids": [123, 456, 789], "original_key": "score_diff", "key": "new_score_diff", "equation": "{log0:new_score} - {log1:new_score}"}
+
+response = requests.request("PUT", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Derived logs updated successfully!"
+}
+```
+
+```json 404
+{
+    "detail": "One or more logs with the specified IDs were not found."
+}
+```
+
+```json 400
+{
+    "detail": "Invalid request format or data."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
