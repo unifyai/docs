@@ -4391,7 +4391,7 @@
                     "Logs"
                 ],
                 "summary": "Get Log Groups",
-                "description": "Returns a dict with the different versions as keys and the values of the remaining\nitems within a given project based on its key.",
+                "description": "Returns a dict with the different versions as keys and the values of the remaining\nitems within a given project based on its key.\nThe logs can be filtered using filter_expr, from_ids, and exclude_ids parameters\nbefore grouping.",
                 "operationId": "get_log_groups_v0_logs_groups_get",
                 "security": [
                     {
@@ -4422,6 +4422,63 @@
                         },
                         "description": "Name of the log entry to get distinct values from.",
                         "example": "system_prompt"
+                    },
+                    {
+                        "name": "filter_expr",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Boolean string to filter entries before grouping.",
+                            "title": "Filter Expr"
+                        },
+                        "description": "Boolean string to filter entries before grouping.",
+                        "example": "len(output) > 200 and temperature == 0.5"
+                    },
+                    {
+                        "name": "from_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                            "title": "From Ids"
+                        },
+                        "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
+                        "example": "0&1&2"
+                    },
+                    {
+                        "name": "exclude_ids",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                            "title": "Exclude Ids"
+                        },
+                        "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
+                        "example": "0&1&2"
                     }
                 ],
                 "responses": {
