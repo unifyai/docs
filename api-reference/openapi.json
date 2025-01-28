@@ -3822,14 +3822,80 @@
                 }
             }
         },
-        "/v0/log/derived": {
+        "/v0/logs/derived": {
             "put": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Update Derived Log",
+                "description": "Updates multiple derived log entries with new key, equation, or referenced logs.\nHandles batch updates and recomputes values as needed.",
+                "operationId": "update_derived_log_v0_logs_derived_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateDerivedEntriesConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Derived log updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Derived logs updated successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "One or more logs with the specified IDs were not found."
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid request format or data."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "post": {
                 "tags": [
                     "Logs"
                 ],
                 "summary": "Create Derived Entry",
                 "description": "Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.\nEagerly computes each derived value and stores it in DerivedLog.value.",
-                "operationId": "create_derived_entry_v0_log_derived_put",
+                "operationId": "create_derived_entry_v0_logs_derived_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -6363,6 +6429,62 @@
                     "types"
                 ],
                 "title": "SetFieldTypingRequest"
+            },
+            "UpdateDerivedEntriesConfig": {
+                "properties": {
+                    "ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Ids",
+                        "description": "List of derived log IDs to update.",
+                        "example": [
+                            123,
+                            456,
+                            789
+                        ]
+                    },
+                    "original_key": {
+                        "type": "string",
+                        "title": "Original Key",
+                        "description": "The original key of the derived entry to update.",
+                        "example": "score_diff"
+                    },
+                    "key": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Key",
+                        "description": "The new name for the derived entry.",
+                        "example": "new_score_diff"
+                    },
+                    "equation": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Equation",
+                        "description": "The new equation for computing the value of the derived entry.",
+                        "example": "{log0:new_score} - {log1:new_score}"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "ids",
+                    "original_key"
+                ],
+                "title": "UpdateDerivedEntriesConfig"
             },
             "UpdateLogRequest": {
                 "properties": {

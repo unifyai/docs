@@ -1,6 +1,6 @@
 ---
 title: 'Create Derived Entry'
-api: 'PUT /v0/log/derived'
+api: 'POST /v0/logs/derived'
 ---
 Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.
 Eagerly computes each derived value and stores it in DerivedLog.value.
@@ -32,8 +32,8 @@ The logs to use for each newly created derived entry, either as a list of log id
 <RequestExample>
 
 ```bash cURL
-curl --request PUT \
-  --url 'https://api.unify.ai/v0/log/derived' \
+curl --request POST \
+  --url 'https://api.unify.ai/v0/logs/derived' \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
@@ -56,13 +56,13 @@ curl --request PUT \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/log/derived"
+url = "https://api.unify.ai/v0/logs/derived"
 
 headers = {"Authorization": "Bearer <token>"}
 
 json_input = {"project": "eval-project", "key": "score_diff", "equation": "{log0:score} - {log1:score}", "referenced_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "score > 0.5"}}}
 
-response = requests.request("PUT", url, json=json_input, headers=headers)
+response = requests.request("POST", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
