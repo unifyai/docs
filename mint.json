@@ -155,6 +155,7 @@
                                     "pages": [
                                         "python/functions/interfaces/utils/compositions/add_params",
                                         "python/functions/interfaces/utils/compositions/delete_logs_by_value",
+                                        "python/functions/interfaces/utils/compositions/end_log",
                                         "python/functions/interfaces/utils/compositions/get_log_by_value",
                                         "python/functions/interfaces/utils/compositions/get_logs_by_id",
                                         "python/functions/interfaces/utils/compositions/get_logs_by_value",
@@ -168,6 +169,7 @@
                                         "python/functions/interfaces/utils/compositions/rename_log_params",
                                         "python/functions/interfaces/utils/compositions/replace_log_entries",
                                         "python/functions/interfaces/utils/compositions/replace_log_params",
+                                        "python/functions/interfaces/utils/compositions/start_log",
                                         "python/functions/interfaces/utils/compositions/update_log_entries",
                                         "python/functions/interfaces/utils/compositions/update_log_params"
                                     ]
