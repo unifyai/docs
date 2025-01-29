@@ -5,6 +5,7 @@ import wget
 import json
 import threading
 import numpy as np
+import pdfplumber
 from pypdf import PdfReader, PdfWriter
 from pdf2image import convert_from_path
 
@@ -131,7 +132,7 @@ def parse_paper(paper_num):
     os.makedirs(paper_dir, exist_ok=True)
     paper_path = paper_dir + ".pdf"
 
-    reader = PdfReader(paper_path)
+    reader = pdfplumber.open(paper_path)
     questions = dict()
 
     all_images = [
@@ -497,6 +498,7 @@ def parse_paper(paper_num):
                 cv2.imwrite(os.path.join(img_dir, fname), img)
 
     unify.map(parse_question, list(range(1, num_questions + 1)))
+    reader.close()
 
 
 def parse_markscheme(paper_num, question_to_subquestions, subquestions):
@@ -511,7 +513,7 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
     os.makedirs(markscheme_dir, exist_ok=True)
     markscheme_path = markscheme_dir + ".pdf"
 
-    reader = PdfReader(markscheme_path)
+    reader = pdfplumber.open(markscheme_path)
     questions = dict()
 
     all_images = [
@@ -874,6 +876,7 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
                 cv2.imwrite(os.path.join(img_dir, fname), img)
 
     unify.map(parse_question, list(range(1, num_questions + 1)))
+    reader.close()
 
 
 if __name__ == "__main__":
