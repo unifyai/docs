@@ -153,6 +153,12 @@ answer or guidelines for the preceding question {preceding} or subsequent questi
 Specifically, you should extract **all parts** of question {question_number}, 
 as indicated by the requested output format, containing {sub-questions}.
 
+The only exception to this is the assessment objects which **should be omitted**. 
+These assessment objectives are of the form `{n} AO{1|2|3}.{m{a|b|c|etc.}}`, 
+such as `1 AO1.2a`, `3 AO2.1` and `3 AO2.4b`. These assessment objectives should 
+not be fully omitted from your response, as they are not relevant for awarding 
+the correct marks.
+
 The text was parsed from a PDF, and the formatting might be strange or wrong as a 
 result of this conversion to pure text. More importantly, mathematical symbols 
 such as √w, x², y₄, ⁴√z etc. are very often missed by the parsing logic. Sometimes, 
