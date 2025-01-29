@@ -2,6 +2,7 @@ import os
 import cv2
 import json
 import base64
+from typing import List, Callable
 from pydantic import create_model
 
 VALID_NUMERALS = ("i", "ii", "iii", "iv", "v", "vi")
@@ -34,6 +35,22 @@ def is_invalid_question_order(detected_qs, valid_num, valid_char):
         else:
             raise ValueError(f"Invalid type for question: {item}")
     return False
+
+
+def update_str_in_table(table: List, fn: Callable):
+    new_table = list()
+    for i, item in enumerate(table):
+        if isinstance(item, str):
+            new_table.append(fn(item))
+        elif isinstance(item, list):
+            new_table.append(update_str_in_table(item, fn))
+        elif item is None:
+            new_table.append("")
+        else:
+            raise ValueError(
+                "Expected nested list, but found {} of type {}".format(fn, type(item))
+            )
+    return new_table
 
 
 def prune_invalid_leading_alphanumeric_questions(detected_qs):
