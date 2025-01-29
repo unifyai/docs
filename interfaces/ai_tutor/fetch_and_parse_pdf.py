@@ -14,7 +14,7 @@ unify.CLIENT_LOGGING = True
 from prompts import *
 from helpers import (encode_image, parse_key, is_invalid_question_order,
                      prune_invalid_leading_alphanumeric_questions,
-                     build_response_format, VALID_NUMERALS)
+                     build_response_format, update_str_in_table, VALID_NUMERALS)
 
 url = (
     "https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment"
@@ -571,6 +571,13 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
             text = page.extract_text().split("OCR  2024  J560/0")[-1][2:]
             # remove assessment objectives
             text = re.sub(r"\d+\s+AO[123]\.\w+", "", text)
+            table = page.extract_table()
+            if table:
+                table = update_str_in_table(
+                    table, lambda x: re.sub(r"\d+\s+AO[123]\.\w+", "", x)
+                )
+                text = (f"**Pure text representation:**\n{text}\n\n"
+                        f"**Extracted table:**\n{json.dumps(table, indent=4)}")
 
             # detect diagrams on page
             img = all_images[page_num - 1]
