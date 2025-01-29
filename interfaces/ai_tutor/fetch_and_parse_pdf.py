@@ -12,6 +12,7 @@ import unify
 unify.CLIENT_LOGGING = True
 from prompts import *
 from helpers import (encode_image, parse_key, is_invalid_question_order,
+                     prune_invalid_leading_alphanumeric_questions,
                      build_response_format, VALID_NUMERALS)
 
 url = (
@@ -664,6 +665,7 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
             ):
                 continue
             assert detected_qs
+            detected_qs = prune_invalid_leading_alphanumeric_questions(detected_qs)
             paper_subquestions = [str(sq) for sq in subquestions[0:len(detected_qs)]]
             # ToDo: maybe turn this assertion into repeated LLM calls until they match
             assert paper_subquestions == detected_qs, \

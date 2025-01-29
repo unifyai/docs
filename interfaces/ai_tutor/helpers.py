@@ -36,6 +36,38 @@ def is_invalid_question_order(detected_qs, valid_num, valid_char):
     return False
 
 
+def prune_invalid_leading_alphanumeric_questions(detected_qs):
+    ret = list()
+    next_num = None
+    next_char = None
+    next_numeral = None
+    for q in reversed(detected_qs):
+        if q in VALID_NUMERALS:
+            if not next_numeral or q == next_numeral:
+                ret.append(q)
+            else:
+                break
+            next_numeral_idx = VALID_NUMERALS.index(q) - 1
+            next_numeral = VALID_NUMERALS[next_numeral_idx] \
+                if next_numeral_idx >= 0 else None
+        elif q.isalpha():
+            if not next_char or q == next_char:
+                ret.append(q)
+            else:
+                break
+            next_char = chr(ord(q) - 1) if q != "a" else None
+        elif q.isnumeric():
+            q = int(q)
+            if not next_num or q == next_num:
+                ret.append(str(q))
+            else:
+                break
+            next_num = q - 1
+            if next_num == 0:
+                break
+    return list(reversed(ret))
+
+
 def parse_key(k: str):
     """
     Splits the string on the first dot.
