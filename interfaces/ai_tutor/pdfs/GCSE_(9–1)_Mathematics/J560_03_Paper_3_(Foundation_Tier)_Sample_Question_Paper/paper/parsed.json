@@ -1,12 +1,12 @@
 {
     "1": {
-        "question": "1\u202f(a) Solve:\n\n   (i)\u202f\u202f2x\u202f=\u202f18  \n   (ii)\u202fx\u202f+\u202f2\u202f=\u202f5  \n   (iii)\u202fx/3\u202f=\u202f15  \n\n(b)  \n   (i)\u202fFind the value of\u202ft\u202fwhen\u202fg\u202f=\u202f4\u202fand\u202fh\u202f=\u202f7.  \n       t\u202f=\u202f12g\u202f\u2212\u202f5h  \n   (ii)\u202fRearrange\u202f4r\u202f\u2212\u202fp\u202f=\u202fq\u202fto make\u202fr\u202fthe subject.",
+        "question": "1\u202f(a)\u2003Solve.\n\n\u2003(i)\u20032x\u202f=\u202f18  \n\u2003\u2003\u2003x\u202f=\u202f\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n\u2003(ii)\u2003x\u202f+\u202f2\u202f=\u202f5  \n\u2003\u2003\u2003x\u202f=\u202f\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n\u2003(iii)\u2003x\u202f/\u202f3\u202f=\u202f15  \n\u2003\u2003\u2003x\u202f=\u202f\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b)\u2003(i)\u2003Find the value of t when g\u202f=\u202f4 and h\u202f=\u202f7.  \n\u2003\u2003\u2003t\u202f=\u202f12g\u202f\u2212\u202f5h  \n\u2003\u2003\u2003t\u202f=\u202f\u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n\u2003(ii)\u2003Rearrange to make r the subject.  \n\u2003\u2003\u20034r\u202f\u2212\u202fp\u202f=\u202fq  \n\u2003\u2003\u2003r\u202f=\u202f\u2026\u2026\u2026\u2026\u2026\u2026 [2]",
         "question-components": {
-            "a.i": "2x = 18",
-            "a.ii": "x + 2 = 5",
-            "a.iii": "x/3 = 15",
-            "b.i": "Find the value of t when g = 4 and h = 7. t = 12g \u2212 5h",
-            "b.ii": "Rearrange 4r \u2212 p = q to make r the subject."
+            "a.i": "2x = 18\nx = \u2026\u2026\u2026\u2026\u2026 [1]",
+            "a.ii": "x + 2 = 5\nx = \u2026\u2026\u2026\u2026\u2026 [1]",
+            "a.iii": "x / 3 = 15\nx = \u2026\u2026\u2026\u2026\u2026 [1]",
+            "b.i": "Find the value of t when g=4 and h=7.\nt = 12g - 5h\nt = \u2026\u2026\u2026\u2026\u2026 [2]",
+            "b.ii": "Rearrange to make r the subject.\n4r - p = q\nr = \u2026\u2026\u2026\u2026\u2026 [2]"
         },
         "text-only": true,
         "pages": [
@@ -15,19 +15,19 @@
         "correctly_parsed": true
     },
     "2": {
-        "question": "2\u202f\u202f\u202fCambury Council asked 60 customers what they thought of the local leisure centre.  \nThe results are shown in this bar chart:\n\n\u2022 Excellent: 15  \n\u2022 Good: 30  \n\u2022 Could be improved: 10  \n\u2022 Not good enough: 5  \n\nDraw and label a pie chart to represent this data.  \n\n[5]",
-        "question-components": "Draw and label a pie chart to represent this data.",
-        "text-only": true,
+        "question": "2  Cambury Council asked 60 customers what they thought of the local leisure centre.  \n   The results are shown in this bar chart:\n\n   Excellent: 12  \n   Good: 30  \n   Could be improved: 10  \n   Not good enough: 8  \n\nDraw and label a pie chart to represent this data.  \n\n[5]",
+        "question-components": "Cambury Council asked 60 customers what they thought of the local leisure centre. The results are shown in this bar chart: Excellent: 12, Good: 30, Could be improved: 10, Not good enough: 8. Draw and label a pie chart to represent this data.",
+        "text-only": false,
         "pages": [
             3
         ],
         "correctly_parsed": true
     },
     "3": {
-        "question": "3 (a) How many 20p coins would you need to make up \u00a37000?  \n[2]  \n\n(b) Each 20p coin weighs 5 g.  \n\nLizzie says:  \n\u201cI can lift \u00a37000 worth of 20p coins.\u201d  \n\nIs Lizzie\u2019s claim reasonable?  \nShow your working and state any assumptions you have made.\n\n\u2026................................ because \u2026............................................................................................  \n\n\u2026............................................................................................................................  \n[4]  \n\n(c) How have any assumptions you have made affected your answer to part (b)?  \n\n\u2026............................................................................................................................  \n[1]",
+        "question": "3 (a) How many 20p coins would you need to make up \u00a37000?  \n\u2003\u2003(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n(b) Each 20p coin weighs 5 g.  \n\u2003Lizzie says:  \n\u2003\u201cI can lift \u00a37000 worth of 20p coins.\u201d  \n\nIs Lizzie\u2019s claim reasonable?  \nShow your working and state any assumptions you have made.  \n\n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 because \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [4]\n\n(c) How have any assumptions you have made affected your answer to part (b)?  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]",
         "question-components": {
             "a": "How many 20p coins would you need to make up \u00a37000?",
-            "b": "Each 20p coin weighs 5 g. Lizzie says: \u201cI can lift \u00a37000 worth of 20p coins.\u201d Is Lizzie\u2019s claim reasonable? Show your working and state any assumptions you have made.",
+            "b": "Is Lizzie\u2019s claim reasonable? Show your working and state any assumptions you have made.",
             "c": "How have any assumptions you have made affected your answer to part (b)?"
         },
         "text-only": true,
@@ -37,7 +37,7 @@
         "correctly_parsed": true
     },
     "4": {
-        "question": "4 Antonio works Monday, Tuesday and Wednesday.  \nHe starts work at 4.00 pm and finishes at 10.30 pm.  \nAntonio is paid \u00a310 per hour on weekdays.  \n\nOne week, he also works for 4 hours on Sunday.  \nHe is paid 50% more on Sundays.  \n\nHow much does Antonio earn altogether this week?  \nYou must show your working.  \n\n\u00a3 ..................................................... [6]",
+        "question": "4  Antonio works Monday, Tuesday and Wednesday.  \n    He starts work at 4.00 pm and finishes at 10.30 pm.  \n    Antonio is paid \u00a310 per hour on weekdays.  \n\n    One week, he also works for 4 hours on Sunday.  \n    He is paid 50% more on Sundays.  \n\n    How much does Antonio earn altogether this week?  \n    You must show your working.  \n\n    \u00a3 \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [6]",
         "question-components": "How much does Antonio earn altogether this week? You must show your working.",
         "text-only": true,
         "pages": [
@@ -46,8 +46,8 @@
         "correctly_parsed": true
     },
     "5": {
-        "question": "5  Darren says:\n\n\u201cI can run 100\u202fm in 15\u202fseconds, so I should be able to run 800\u202fm in 120\u202fseconds.\u201d\n\nDo you think that he would take more or less than 120\u202fseconds to run 800\u202fm? Explain your answer, with reference to any assumptions Darren has made.\n\n\u2026............................... because \u2026..............................................................................................  \n\u2026...........................................................................................................................  \n\u2026...........................................................................................................................  \n\u2026...........................................................................................................................  [3]",
-        "question-components": "Darren says: \u201cI can run 100\u202fm in 15\u202fseconds, so I should be able to run 800\u202fm in 120\u202fseconds.\u201d Do you think that he would take more or less than 120\u202fseconds to run 800\u202fm? Explain your answer, with reference to any assumptions Darren has made.",
+        "question": "5  Darren says\n\n\u201cI can run 100\u202fm in 15\u202fseconds, so I should be able to run 800\u202fm in 120\u202fseconds.\u201d\n\nDo you think that he would take more or less than 120\u202fseconds to run 800\u202fm? Explain your answer, with reference to any assumptions Darren has made.\n\n\u2026................................ because \u2026......................................................................................................\n\u2026..........................................................................................................................................................\n\u2026..........................................................................................................................................................\n\u2026.......................................................................................................................................................... [3]",
+        "question-components": "Do you think that he would take more or less than 120\u202fseconds to run 800\u202fm? Explain your answer, with reference to any assumptions Darren has made.",
         "text-only": true,
         "pages": [
             5
@@ -55,11 +55,11 @@
         "correctly_parsed": true
     },
     "6": {
-        "question": "6  Jo makes a pendant from a rectangular piece of silver.\n\n \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n \u2502         \u2502  8 cm\n \u2502         \u2502\n \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n      5 cm\n\n(a) Work out the area of this rectangle.  \n(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 cm\u00b2  [1]\n\n(b) To complete the pendant, Jo cuts two semicircles of radius 1\u202fcm from the rectangle, as shown below.\n\n \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n \u2502   ___   \u2502  8 cm\n \u2502  (   )  \u2502\n \u2502   \u203e\u203e\u203e   \u2502\n \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n      5 cm\n\nShow that the shaded area is 36.9\u202fcm\u00b2 correct to three significant figures.  [4]\n\n(c) The silver Jo uses is 2\u202fmm thick.  \nFind the volume of silver in the pendant.  \nGive your answer in cm\u00b3.\n\n(c) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 cm\u00b3  [3]",
+        "question": "6  Jo makes a pendant from a rectangular piece of silver.\n\n(a)  The rectangle measures 8\u202fcm by 5\u202fcm.  \n     Work out the area of this rectangle.  \n     (a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u202fcm\u00b2  [1]\n\n(b)  To complete the pendant, Jo cuts two semicircles of radius 1\u202fcm from the rectangle, as shown below:\n\n     \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n     \u2502       \u250c\u2500\u2500\u2500\u2510       \u2502  8\u202fcm\n     \u2502       \u2502   \u2502       \u2502\n     \u2502       \u2514\u2500\u2500\u2500\u2518       \u2502\n     \u2502                   \u2502 \n     \u2502       \u250c\u2500\u2500\u2500\u2510       \u2502\n     \u2502       \u2502   \u2502       \u2502\n     \u2502       \u2514\u2500\u2500\u2500\u2518       \u2502\n     \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                5\u202fcm  \n\n     Show that the shaded area is 36.9\u202fcm\u00b2 correct to three significant figures.  \n     [4]\n\n(c)  The silver Jo uses is 2\u202fmm thick.  \n     Find the volume of silver in the pendant. Give your answer in\u202fcm\u00b3.  \n     (c) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u202fcm\u00b3  [3]",
         "question-components": {
-            "a": "Work out the area of this rectangle.",
-            "b": "Show that the shaded area is 36.9 cm\u00b2 correct to three significant figures.",
-            "c": "Find the volume of silver in the pendant. Give your answer in cm\u00b3."
+            "a": "The rectangle measures 8\u202fcm by 5\u202fcm. Work out the area of this rectangle.",
+            "b": "Show that the shaded area is 36.9\u202fcm\u00b2 correct to three significant figures.",
+            "c": "The silver Jo uses is 2\u202fmm thick. Find the volume of silver in the pendant. Give your answer in\u202fcm\u00b3."
         },
         "text-only": true,
         "pages": [
@@ -69,21 +69,24 @@
         "correctly_parsed": true
     },
     "7": {
-        "question": "7  PQRS is a rectangle.  \n   A, B, C and D are points on SP, PQ, QR and RS respectively.  \n   AC is the line of symmetry for the diagram.  \n\n   (a)  Angle ABC = 125\u00b0.  \n        Write down the size of angle ADC.  \n        (a)  Angle ADC = \u2026\u2026\u2026\u2026..\u00b0  [1]  \n\n   (b)  AP is the same length as PB.  \n        Work out the size of angle BCD.  \n        You must show your working.  \n        (b)  Angle BCD = \u2026\u2026\u2026\u2026..\u00b0  [4]",
+        "question": "7  PQRS is a rectangle.  \n   A, B, C and D are points on SP, PQ, QR and RS respectively.  \n   AC is the line of symmetry for the diagram.  \n\n(a) Angle ABC = 125\u00b0.  \n    Write down the size of angle ADC.  \n\n    Angle ADC = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u00b0 [1]\n\n(b) AP is the same length as PB.  \n    Work out the size of angle BCD.  \n    You must show your working.  \n\n    Angle BCD = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u00b0 [4]",
         "question-components": {
-            "a": "Angle ABC = 125\u00b0. Write down the size of angle ADC.",
-            "b": "AP is the same length as PB. Work out the size of angle BCD. You must show your working."
+            "a": "Angle ABC = 125\u00b0. Write down the size of angle ADC. Angle ADC = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u00b0 [1]",
+            "b": "AP is the same length as PB. Work out the size of angle BCD. You must show your working. Angle BCD = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u00b0 [4]"
         },
         "text-only": true,
         "pages": [
             8
         ],
-        "correctly_parsed": true
+        "correctly_parsed": true,
+        "images": [
+            "page8.png"
+        ]
     },
     "8": {
-        "question": "8 (a) The nth term of a sequence is given by 3n + 5.  \nExplain why 21 is not a term in this sequence.  \n\n\u2026.............................................................................................................................  \n\u2026............................................................................................................................. [2]  \n\n(b) Here are the first three terms in a sequence:  \n1   2   4  \n\nThis sequence can be continued in different ways.  \n\n(i) Find one rule for continuing the sequence and give the next two terms.  \n   Rule 1 \u2026...............................................................................................................  \n   Next two terms \u2026\u2026\u2026\u2026\u2026   \u2026\u2026\u2026\u2026\u2026 [2]  \n\n(ii) Find a second rule for continuing the sequence and give the next two terms.  \n   Rule 2 \u2026...............................................................................................................  \n   Next two terms \u2026\u2026\u2026\u2026\u2026   \u2026\u2026\u2026\u2026\u2026 [2]",
+        "question": "8 (a) The nth term of a sequence is given by 3n + 5.  \nExplain why 21 is not a term in this sequence.  \n[2]\n\n(b) Here are the first three terms in a sequence:  \n1   2   4  \n\nThis sequence can be continued in different ways.\n\n(i) Find one rule for continuing the sequence and give the next two terms.  \n    Rule 1 \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n    Next two terms \u2026\u2026\u2026\u2026\u2026 \u2026\u2026\u2026\u2026\u2026  \n    [2]\n\n(ii) Find a second rule for continuing the sequence and give the next two terms.  \n     Rule 2 \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n     Next two terms \u2026\u2026\u2026\u2026\u2026 \u2026\u2026\u2026\u2026\u2026  \n     [2]",
         "question-components": {
-            "a": "Explain why 21 is not a term in this sequence.",
+            "a": "The nth term of a sequence is given by 3n + 5. Explain why 21 is not a term in this sequence.",
             "b.i": "Find one rule for continuing the sequence and give the next two terms.",
             "b.ii": "Find a second rule for continuing the sequence and give the next two terms."
         },
@@ -94,12 +97,12 @@
         "correctly_parsed": true
     },
     "9": {
-        "question": "9  Three friends, Ann (A), Bob (B) and Carol (C), go on holiday together.\n\n(a) They book a row of three seats on the plane.  \n    When they arrive at the plane they sit in a random order.\n\n    (i) List all the different orders they could sit on the three seats.  \n        The first one has been done for you.  \n\n          Seat 1   Seat 2   Seat 3  \n          A        B        C  \n\n        [2]\n\n    (ii) What is the probability that Ann and Carol sit next to each other?  \n         (a)(ii) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n    (iii) What is the probability that Bob sits in seat 1 with Ann next to him?  \n          (iii) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b) Ann, Bob and Carol have a total budget of \u00a3500 to rent a holiday apartment.  \n    The apartment normally costs \u00a350 per night, but they can get a 20% discount  \n    if they book early.  \n\n    Calculate how many extra nights they can stay in the apartment if they book early.  \n    You must show your working.  \n\n    (b) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 nights  [4]",
+        "question": "9  Three friends, Ann (A), Bob (B) and Carol (C), go on holiday together.\n\n(a) They book a row of three seats on the plane.  \n    When they arrive at the plane they sit in a random order.\n\n    (i)  List all the different orders they could sit on the three seats.  \n         The first one has been done for you.\n\n         Seat 1 | Seat 2 | Seat 3  \n         A      | B      | C  \n\n         [2]\n\n    (ii) What is the probability that Ann and Carol sit next to each other?  \n         (a)(ii) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n    (iii) What is the probability that Bob sits in seat 1 with Ann next to him?  \n          (iii) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b) Ann, Bob and Carol have a total budget of \u00a3500 to rent a holiday apartment.  \n    The apartment normally costs \u00a350 per night, but they can get a 20% discount if they book early.  \n\n    Calculate how many extra nights they can stay in the apartment if they book early.  \n    You must show your working.\n\n    (b) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 nights [4]",
         "question-components": {
-            "a.i": "List all the different orders they could sit on the three seats.",
+            "a.i": "List all the different orders they could sit on the three seats. The first one has been done for you.",
             "a.ii": "What is the probability that Ann and Carol sit next to each other?",
             "a.iii": "What is the probability that Bob sits in seat 1 with Ann next to him?",
-            "b": "Calculate how many extra nights they can stay in the apartment if they book early."
+            "b": "Calculate how many extra nights they can stay in the apartment if they book early. You must show your working."
         },
         "text-only": true,
         "pages": [
@@ -109,7 +112,7 @@
         "correctly_parsed": true
     },
     "10": {
-        "question": "10  Calculate.\n\n(a)  \u221a3136  \n    (a)  \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  [1]\n\n(b)  \u2074\u221a625  \n    (b)  \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  [1]\n\n(c)  5\u207b\u00b2  \n    (c)  \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  [1]",
+        "question": "10  Calculate.\n\n(a)  \u221a3136  \n    \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b)  \u2074\u221a625  \n    \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(c)  5\u207b\u00b2  \n    \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]",
         "question-components": {
             "a": "\u221a3136",
             "b": "\u2074\u221a625",
@@ -122,10 +125,10 @@
         "correctly_parsed": true
     },
     "11": {
-        "question": "11  Ema has done some calculations.\n\nFor each calculation, explain how you know the answer is wrong without working out the correct answer.\n\n(a)  0.38 \u00d7 0.26 = 0.827  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b)  3/4 + 2/3 = 5/7  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]",
+        "question": "11 Ema has done some calculations.\n\nFor each calculation, explain how you know the answer is wrong without working out the correct answer.\n\n(a) 0.38 \u00d7 0.26 = 0.827\n\n(b) \u00be + \u00b2/\u2083 = \u2075/\u2087",
         "question-components": {
             "a": "0.38 \u00d7 0.26 = 0.827",
-            "b": "3/4 + 2/3 = 5/7"
+            "b": "\u00be + \u00b2/\u2083 = \u2075/\u2087"
         },
         "text-only": true,
         "pages": [
@@ -134,19 +137,16 @@
         "correctly_parsed": true
     },
     "12": {
-        "question": "12\u202f\u202fShinya\u2019s internet service provider gives him a graph of his internet usage in the first part of February:\n\n  \n  (The vertical axis is labeled \u201cInternet usage (Gigabytes downloaded)\u201d from 0 to 14.  \n   The horizontal axis is labeled \u201cDays in February\u201d from 0 to 15.  \n   A line connects plotted points corresponding to Shinya\u2019s usage each day.)\n\nState two reasons why this graph is misleading.\n\n1\u202f\u202f\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n\n2\u202f\u202f\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n\n[2]",
+        "question": "12 Shinya\u2019s internet service provider gives him a graph of his internet usage in the first part of February:\n\n \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Internet usage (Gigabytes downloaded)\n14 \u2524        \u00d7\u2500\u2500\u2500\u00d7\u2500\u2500\u2500\u00d7\u2500\n12 \u2524       \u00d7         \\\n10 \u2524      \u00d7           \u00d7\n 8 \u2524     \u00d7             \\\n 6 \u2524    \u00d7               \u00d7\n 5 \u2524   \u00d7                \n 4 \u2524                   \n 3 \u2524                     \n 2 \u2524                       \n 1 \u2524                         \n 0 \u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  Days in February\n\nState two reasons why this graph is misleading.\n\n1 \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n2 \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n\n[2]",
         "question-components": "State two reasons why this graph is misleading.",
         "text-only": true,
         "pages": [
             12
         ],
-        "correctly_parsed": true,
-        "images": [
-            "page12.png"
-        ]
+        "correctly_parsed": true
     },
     "13": {
-        "question": "13 (a) Mia cycled 23 km, correct to the nearest km.  \nWhat is the least distance Mia could have cycled?\n\n(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 km [1]\n\n(b) A number x, rounded to one decimal place, is 4.7.  \n   So the error interval for x is given by 4.65 \u2264 x < 4.75.\n\n   (i) A number y, rounded to two decimal places, is 4.13.  \n       Write down the error interval for y.\n\n   (b)(i) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n   (ii) A number z, rounded to two significant figures, is 4700.  \n        Write down the error interval for z.\n\n   (b)(ii) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]",
+        "question": "13 (a) Mia cycled 23\u202fkm, correct to the nearest km.  \nWhat is the least distance Mia could have cycled?  \n\n(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 km [1]\n\n(b) A number x, rounded to one decimal place, is 4.7.  \nSo the error interval for x is given by 4.65 \u2264 x < 4.75.\n\n   (i) A number y, rounded to two decimal places, is 4.13.  \n   Write down the error interval for y.  \n\n   (b)(i) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n   (ii) A number z, rounded to two significant figures, is 4700.  \n   Write down the error interval for z.  \n\n   (b)(ii) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]",
         "question-components": {
             "a": "What is the least distance Mia could have cycled?",
             "b.i": "A number y, rounded to two decimal places, is 4.13. Write down the error interval for y.",
@@ -159,7 +159,7 @@
         "correctly_parsed": true
     },
     "14": {
-        "question": "14\u00a0\u00a0This frequency diagram summarises the number of minutes Astrid\u2019s train was late over the last 50 days:\n\n(Frequency on the vertical axis from 0 to 20, Minutes late on the horizontal axis from 1 to 4)\n\n(a) Use information from this diagram to estimate the probability that her train will be 4 minutes late tomorrow.  \n(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n(b) Explain whether your answer to part (a) gives a reliable probability.  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]",
+        "question": "14\u202f\u202fThis frequency diagram summarises the number of minutes Astrid\u2019s train was late over the last 50 days:\n\n(Frequency axis from 0 to 20, with bars for 1, 2, 3, and 4 minutes late summing to 50 days in total.)\n\n(a)\u202f\u202fUse information from this diagram to estimate the probability that her train will be 4 minutes late tomorrow.  \n(a)\u202f\u202f\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n(b)\u202f\u202fExplain whether your answer to part (a) gives a reliable probability.  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]",
         "question-components": {
             "a": "Use information from this diagram to estimate the probability that her train will be 4 minutes late tomorrow.",
             "b": "Explain whether your answer to part (a) gives a reliable probability."
@@ -168,13 +168,10 @@
         "pages": [
             14
         ],
-        "correctly_parsed": true,
-        "images": [
-            "page14.png"
-        ]
+        "correctly_parsed": true
     },
     "15": {
-        "question": "15\u202f\u202fIn the diagram below, AE and BD are straight lines. Both \u2220B and \u2220D are right angles.\n\n   A\n   |\\\n   | \\\n   |  \\\n   B---C---D\n           \\\n            E\n         (Not to scale)\n\n(a)\u202fShow that triangles ABC and EDC are similar.  \n\u202f\u202f\u202f  \n(b)\u202fThe length DE is 3.5\u202fm.  \n\u202f\u202f\u202f\u202f\u202f\u202fThe ratio BC\u202f:\u202fCD\u202f=\u202f3\u202f:\u202f1.  \n\u202f\u202f\u202f\u202f\u202f\u202fFind the length AB.",
+        "question": "15\u202f\u202fIn the diagram below (not to scale), AE and BD are straight lines, with right angles at B and D:\n\n   A\n    \\\n     \\\n      B\u2500\u2500\u2500\u2500C\u2500\u2500\u2500\u2500D\n             \\\n              \\\n               E\n\n(a)  Show that triangles ABC and EDC are similar.  \n\u2003\u2003\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2003\u2003\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2003\u2003\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2003\u2003\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2003\u2003\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n\u2003\u2003\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [3]\n\n(b)  The length DE is 3.5\u202fm.  \n     The ratio BC\u202f:\u202fCD\u202f=\u202f3\u202f:\u202f1.  \n\n     Find the length AB.\n\n     (b)\u202f\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u202fm\u202f[2]",
         "question-components": {
             "a": "Show that triangles ABC and EDC are similar.",
             "b": "The length DE is 3.5\u202fm. The ratio BC\u202f:\u202fCD\u202f=\u202f3\u202f:\u202f1. Find the length AB."
@@ -189,16 +186,19 @@
         ]
     },
     "16": {
-        "question": "16) Leo is using these numbers to make a new number:\n\n\u2022 11  \n\u2022 1  \n\u2022 3  \n\u2022 6  \n\nHe can use brackets, +, \u2212, \u00d7, and \u00f7 as often as he wishes.  \nHe cannot use any number more than once.  \nHe cannot use powers.  \nHe cannot put numbers together (for example, 136 is not allowed).  \n\nWhat is the biggest number he can make?  \nShow how he can make this number.",
+        "question": "16) Leo is using these numbers to make a new number:  \n\u2022 11  \n\u2022 1  \n\u2022 3  \n\u2022 6  \n\nHe can use brackets, +, \u2013 , \u00d7 and \u00f7 as often as he wishes.  \nHe cannot use any number more than once.  \nHe cannot use powers.  \nHe cannot put numbers together (e.g., he can\u2019t use 136).  \n\nWhat is the biggest number he can make?  \nShow how he can make this number. [4]",
         "question-components": "What is the biggest number he can make? Show how he can make this number.",
         "text-only": true,
         "pages": [
             16
         ],
-        "correctly_parsed": true
+        "correctly_parsed": true,
+        "images": [
+            "page16.png"
+        ]
     },
     "17": {
-        "question": "17) 180 g of copper is mixed with 105 g of zinc to make an alloy.  \nThe density of copper is 9 g/cm\u00b3.  \nThe density of zinc is 7 g/cm\u00b3.  \n\n(a) Work out the volume of copper used in the alloy.  \n(a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 cm\u00b3 [2]  \n\n(b) What is the density of the alloy?  \n(b) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 g/cm\u00b3 [4]",
+        "question": "17  180 g of copper is mixed with 105 g of zinc to make an alloy.  \n    The density of copper is 9 g/cm\u00b3.  \n    The density of zinc is 7 g/cm\u00b3.  \n\n(a)  Work out the volume of copper used in the alloy.  \n     (a) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026. cm\u00b3  [2]  \n\n(b)  What is the density of the alloy?  \n     (b) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 g/cm\u00b3 [4]",
         "question-components": {
             "a": "Work out the volume of copper used in the alloy.",
             "b": "What is the density of the alloy?"
@@ -210,11 +210,11 @@
         "correctly_parsed": true
     },
     "18": {
-        "question": "18 (a)  \n(i) Solve the inequality:  \n   5x + 1 > x + 13  \n   [3]  \n\n(ii) Write down the largest integer that satisfies:  \n   5x \u2013 1 < 10  \n   [1]  \n\n(b) Solve the equation:  \n   3x\u00b2 = 75  \n   [2]  \n\n(c) Solve the simultaneous equations:  \n   4x + 3y = 5  \n   2x + 3y = 1  \n   [3]",
+        "question": "18 (a) (i) Solve:  \n5x + 1 > x + 13  \n\n(a)(i) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [3]\n\n(ii) Write down the largest integer that satisfies 5x \u2013 1 < 10.  \n\n(a)(ii) \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [1]\n\n(b) Solve:  \n3x\u00b2 = 75  \n\n(b) x = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [2]\n\n(c) Solve the simultaneous equations:  \n4x + 3y = 5  \n2x + 3y = 1  \n\n(c) x = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026  \n    y = \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026 [3]",
         "question-components": {
-            "a.i": "Solve the inequality: 5x + 1 > x + 13",
-            "a.ii": "Write down the largest integer that satisfies: 5x \u2013 1 < 10",
-            "b": "Solve the equation: 3x\u00b2 = 75",
+            "a.i": "Solve: 5x + 1 > x + 13",
+            "a.ii": "Write down the largest integer that satisfies 5x \u2013 1 < 10.",
+            "b": "Solve: 3x\u00b2 = 75",
             "c": "Solve the simultaneous equations: 4x + 3y = 5 and 2x + 3y = 1"
         },
         "text-only": true,
@@ -224,9 +224,9 @@
         "correctly_parsed": true
     },
     "19": {
-        "question": "19  Here are the interest rates for two accounts:\n\nAccount A  \n\u2022 Interest: 3% per year compound interest.  \n\u2022 No withdrawals until the end of three years.  \n\nAccount B  \n\u2022 Interest: 4% for the first year, 3% for the second year and 2% for the third year.  \n\u2022 Withdrawals allowed at any time.  \n\nDerrick has \u00a310 000 he wants to invest.\n\n(a) Calculate which account would give him the most money if he invests his money for 3 years.  \nGive the difference in the interest to the nearest penny.  \nYou must show your working.\n\n(a) Account \u2026\u2026\u2026\u2026\u2026\u2026\u2026 by \u2026\u2026\u2026\u2026\u2026\u2026 p  [5]\n\n(b) Explain why he might not want to use Account A.\n\n\u2026............................................................................................................................  \n\u2026............................................................................................................................  [1]",
+        "question": "19\u202fHere are the interest rates for two accounts:\n\nAccount A  \nInterest: 3% per year compound interest.  \nNo withdrawals until the end of three years.  \n\nAccount B  \nInterest: 4% for the first year, 3% for the second year, and 2% for the third year.  \nWithdrawals allowed at any time.  \n\nDerrick has \u00a310\u202f000 he wants to invest.  \n\n(a) Calculate which account would give him most money if he invests his money for 3 years.  \n    Give the difference in the interest to the nearest penny.  \n    You must show your working.  \n\n    (a) Account \u2026\u2026\u2026\u2026\u2026\u2026 by \u2026\u2026\u2026\u2026\u2026\u2026 p\u202f[5]  \n\n(b) Explain why he might not want to use Account A.  \n    \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\n    \u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u2026\u202f[1]",
         "question-components": {
-            "a": "Calculate which account would give him the most money if he invests his money for 3 years. Give the difference in the interest to the nearest penny. You must show your working.\n\nAccount \u2026\u2026\u2026\u2026\u2026\u2026\u2026 by \u2026\u2026\u2026\u2026\u2026\u2026 p  [5]",
+            "a": "Calculate which account would give him most money if he invests his money for 3 years. Give the difference in the interest to the nearest penny. You must show your working.",
             "b": "Explain why he might not want to use Account A."
         },
         "text-only": true,
