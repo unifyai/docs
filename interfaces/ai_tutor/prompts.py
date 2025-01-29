@@ -223,13 +223,20 @@ no
 
 MARK_BREAKDOWN_DETECTION = """
 Your task is to determine the total number of marks available for each component of 
-this question. Under the marks heading, first the total number of marks are shown, 
-followed by how these marks are split across different assessment objectives (
-AOx.xx). The total number of marks for each sub-question is usually shown as a single 
+this question. The total number of marks are shown under the marks heading (disregard 
+any info about assessment objectives which you might see in the image, such as AOx.xx).
+The total number of marks for each sub-question is usually shown as a single 
 integer, but it might also be shown as a list of mark types, prepending with a 
 letter. For example, B1 B1 B1 would indicate 3 marks. A1 B1 would indicate 2 marks 
 etc. Please response with a single integer per field in the requested response 
 format, as well as the total number of marks summed across all fields.
+"""
+
+MARK_BREAKDOWN_DETECTION_NO_SUBQS = """
+Your task is to determine the total number of marks available this question.
+The total number of marks are shown under the marks heading (disregard any 
+info about assessment objectives which you might see in the image, such as AOx.xx).
+Please response with a single integer in the requested response format.
 """
 
 GENERATE_PROMPT = """
