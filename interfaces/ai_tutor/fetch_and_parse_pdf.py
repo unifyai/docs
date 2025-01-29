@@ -717,11 +717,7 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
 
     def parse_question(question_num: int):
         question_answer_parser = unify.Unify("o1@openai", cache=True)
-        mark_breakdown_detector = unify.Unify(
-            "o1@openai",
-            cache=True,
-            system_message=MARK_BREAKDOWN_DETECTION,
-        )
+        mark_breakdown_detector = unify.Unify("o1@openai", cache=True)
         sub_questions = [
             ".".join(k.split(".")[1:]) for k, v in question_to_pages.items()
             if k.startswith(str(question_num) + ".")
@@ -788,6 +784,10 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
             ],
         )
         qna = json.loads(qna)
+        mark_breakdown_detector.set_system_message(
+            MARK_BREAKDOWN_DETECTION if sub_questions
+            else MARK_BREAKDOWN_DETECTION_NO_SUBQS
+        )
         mark_breakdown_detector.set_response_format(
             build_response_format(question_num, sub_questions + ["total"], int)
         )
