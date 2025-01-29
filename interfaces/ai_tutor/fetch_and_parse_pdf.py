@@ -1,3 +1,4 @@
+import re
 import os
 import cv2
 import wget
@@ -565,6 +566,9 @@ def parse_markscheme(paper_num, question_to_subquestions, subquestions):
         for page_num, page in enumerate(reader.pages):
             page_num += 1
             text = page.extract_text().split("OCR  2024  J560/0")[-1][2:]
+            # remove assessment objectives
+            text = re.sub(r"\d+\s+AO[123]\.\w+", "", text)
+
             # detect diagrams on page
             img = all_images[page_num - 1]
             diagram_response = diagram_detector.generate(
