@@ -1,8 +1,8 @@
 {
     "1": {
         "markscheme-components": {
-            "a": "Answer: 7\nMarks: 1\nPart marks and guidance:\n\u2022 1 AO1.3a",
-            "b": "Answer: 4\nMarks: 1\nPart marks and guidance:\n\u2022 1 AO1.3a"
+            "a": "Answer: 7\nMarks: 1\nPart marks and guidance: 1 AO1.3a",
+            "b": "Answer: 4\nMarks: 1\nPart marks and guidance: 1 AO1.3a"
         },
         "mark-breakdown": {
             "a": 1,
@@ -16,8 +16,8 @@
     },
     "2": {
         "markscheme-components": {
-            "a": "Answer: 0.1\nMarks: 2\nMark scheme:\n\u2022 2 AO1.3a\n\u2022 M1 awarded for 0.4 + 0.2 + 0.3 (soi) or 1 \u2013 their \u20180.9\u2019",
-            "b": "Answer: 0.7\nMarks: 2\nMark scheme:\n\u2022 2 AO1.3a\n\u2022 M1 awarded for identifying 0.4 and 0.3"
+            "a": "Answer: 0.1\nMarks: 2\nMark scheme guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for 0.4 + 0.2 + 0.3 soi, or 1 \u2013 their \u20180.9\u2019",
+            "b": "Answer: 0.7\nMarks: 2\nMark scheme guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for 0.4 and 0.3 identified"
         },
         "mark-breakdown": {
             "a": 2,
@@ -31,8 +31,8 @@
     },
     "3": {
         "markscheme-components": {
-            "a": "Answer: Any two odd primes added correctly\nMarks: 1\n1 AO2.1a\nExample: 3 + 5 = 8",
-            "b": "Answer: An odd integer squared with correct result\nMarks: 1\n1 AO2.1a\nExample: 5\u00b2 = 25"
+            "a": "Any two odd primes added correctly\nMarks: 1\nPart marks and guidance: 1 AO2.1a (e.g. 3 + 5 = 8)",
+            "b": "An odd integer squared with correct result\nMarks: 1\nPart marks and guidance: 1 AO2.1a (e.g. 5\u00b2 = 25)"
         },
         "mark-breakdown": {
             "a": 1,
@@ -45,7 +45,7 @@
         "correctly_parsed": true
     },
     "4": {
-        "markscheme-components": "Answer: [\u00a3]1800\nMarks: 4 (2 AO1.3b, 2 AO3.1d)\n\nMarking guidance:\n\u2022 M1 for 1/4 + 1/2 = 3/4 soi\n\u2022 M1 for 1/4 (of the rent) = 450\n\u2022 M1 for 450 \u00d7 4, oe using percentages or decimals",
+        "markscheme-components": "Answer: [\u00a3]1800\nMarks: 4\nPart marks and guidance:\n\u2022 2 AO1.3b, 2 AO3.1d\n\u2022 M1 for \u00bc + \u00bd = \u00be (soi)\n\u2022 M1 for \u00bc (of the rent) = 450\n\u2022 M1 for 450 \u00d7 4\n(oe using percentages or decimals)",
         "mark-breakdown": {
             "total": 4
         },
@@ -56,10 +56,10 @@
     },
     "5": {
         "markscheme-components": {
-            "a": "Answer: China\nMarks: 1\nMarking instructions:\n\u2022 1 AO2.3a",
-            "b": "Answer: 27 100 000\nMarks: 1\nMarking instructions:\n\u2022 1 AO1.3a",
-            "c": "Answer: 7.82 \u00d7 10\u2079\nMarks: 2\nMarking instructions:\n\u2022 1 AO1.2\n\u2022 1 AO1.3a\n\u2022 M1 for attempting to multiply by 1000",
-            "d": "Answer: 7.85 \u00d7 10\u2077\nMarks: 2\nMarking instructions:\n\u2022 2 AO1.3a\n\u2022 M1 for 9.9 \u2013 2.05 soi"
+            "a": "Answer: China\nMarks: 1\nPart marks and guidance:\n\u2022 1 AO2.3a",
+            "b": "Answer: 27 100 000\nMarks: 1\nPart marks and guidance:\n\u2022 1 AO1.3a",
+            "c": "Answer: 7.82 \u00d7 10\u2079\nMarks: 2\nPart marks and guidance:\n\u2022 1 AO1.2\n\u2022 1 AO1.3a\n\u2022 M1 for attempting to multiply by 1000",
+            "d": "Answer: 7.85 \u00d7 10\u2077\nMarks: 2\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for 9.9 \u2013 2.05 soi"
         },
         "mark-breakdown": {
             "a": 1,
@@ -75,8 +75,8 @@
     },
     "6": {
         "markscheme-components": {
-            "a": "Answer: 40 (cm)\nMarks: 2  (1 AO1.3a, 1 AO3.1a)\nM1 for 4 \u00d7 their \u221a100",
-            "b": "Answer: Correct working leading to 4 cm\nMarks: 4  (1 AO1.3b, 2 AO2.2, 1 AO2.4a)\n\u2022 B1 for area of triangle is 24\n\u2022 B1 for their \u201824\u2019 \u00d7 3\n\u2022 B1 for their \u201872\u2019 \u00f7 18\n  or area of parallelogram = 18h"
+            "a": "Answer: 40 (cm)\nMarks: 2\n(1 AO1.3a, 1 AO3.1a)\n\nMarking guidance:\n\u2022 M1 for 4 \u00d7 their \u2018\u221a100\u2019",
+            "b": "Answer: Correct working leading to 4 cm\nMarks: 4\n(1 AO1.3b, 2 AO2.2, 1 AO2.4a)\n\nMarking guidance:\n\u2022 B1 for area of triangle = 24\n\u2022 B1 for their \u201824\u2019 \u00d7 3\n\u2022 B1 for their \u201872\u2019 \u00f7 18\n  or area of parallelogram = 18h"
         },
         "mark-breakdown": {
             "a": 2,
@@ -105,8 +105,8 @@
     },
     "8": {
         "markscheme-components": {
-            "a": "Answer: 8\nMarks: 3\nMark scheme:\n\u2022 2 AO1.3a, 1 AO3.1b\n\u2022 M1 for dividing by 3 or 13\n\u2022 M1 for dividing by remaining factor\n\u2022 M1 for multiplying 3 by 13\n\u2022 M1 for dividing by 39 or listing multiples of 39",
-            "b": "Answer: Any three valid answers (e.g. 2, 7, 23)\nMarks: 3\nMark scheme:\n\u2022 B1 for each\n\u2022 1 AO1.1, 2 AO3.1a\n\u2022 If 0 scored, instead award SC1 for at least 3 primes and 3 squares seen"
+            "a": "Answer: 8\nMarks: 3 (2 AO1.3a, 1 AO3.1b)\nMark Scheme:\n\u2022 M1 for dividing by 3 or 13\n\u2022 M1 for dividing by remaining factor\n\u2022 M1 for multiplying 3 by 13\n\u2022 M1 for dividing by 39 or listing multiples of 39",
+            "b": "Answer: Any three valid answers (e.g. 2, 7, 23)\nMarks: 3 (1 AO1.1, 2 AO3.1a)\nMark Scheme:\n\u2022 B1 for each\n\u2022 If 0 scored, instead award SC1 for at least 3 primes and 3 squares seen"
         },
         "mark-breakdown": {
             "a": 3,
@@ -120,9 +120,9 @@
     },
     "9": {
         "markscheme-components": {
-            "a": "Answer and Marking Guidance (9a):\n\nMarks: 2\nB1 for 2 correct\n\nPrism            Number of faces   Number of edges   Number of vertices\nTriangular (3 sides)       5                9                    6\nRectangular (4 sides)      6               12                    8\nPentagonal (5 sides)       7               15                   10\nHexagonal (6 sides)        8               18                   12\n\n(1 AO1.1, 1 AO2.1a)",
-            "b": "Answer and Marking Guidance (9b):\n\n300 (edges) [1 mark]\n200 (vertices) [1 mark]\n\n(2 AO2.1a)",
-            "c": "Answer and Marking Guidance (9c):\n\nF = N + 2 (or equivalent)\nMarks: 2\n\u2022 1 AO2.3a\n\u2022 1 AO2.3b\nB1 for N + 2 (without a subject)\nCondone for B1 a correct word formula"
+            "a": "Answer: 2 marks\n\n\u2022 B1 for 2 correct (completed table entries)\n\nPrism            Number of faces   Number of edges   Number of vertices\nTriangular (3 sides)       5                9                  6   [1 AO1.1]\nRectangular (4 sides)      6               12                  8   [1 AO2.1a]\nPentagonal (5 sides)       7               15                 10\nHexagonal (6 sides)        8               18                 12",
+            "b": "Answer:\n\u2022 300 (edges) (1 mark)\n\u2022 200 (vertices) (1 mark)\nTotal: 2 marks [2 AO2.1a]",
+            "c": "Answer: F = N + 2 (or equivalent)\nMarks: 2\n\u2022 1 AO2.3a\n\u2022 1 AO2.3b\n\u2022 B1 for N + 2 (without a subject)\n  (Condone for B1 a correct word formula)"
         },
         "mark-breakdown": {
             "a": 2,
@@ -138,12 +138,12 @@
     },
     "10": {
         "markscheme-components": {
-            "a.i": "Positive correlation (1 mark: 1 AO1.1). Condone \u201cpositive\u201d or correct description (for example: \u201cAs the temperature increases, more ice creams are sold.\u201d)",
-            "a.ii": "Correct reason, for example: \u201cHe sold far more ice creams than you would expect him to for a 20\u00b0C day.\u201d (1 mark: 1 AO2.3a)",
-            "b.i": "75\u201395 (1 mark: 1 AO1.3a)",
-            "b.ii": "140\u2013170 (1 mark: 1 AO1.3a)",
-            "b.iii": "The (b)(i) prediction is more reliable, as it is within the range of the given data (2 marks: 1 AO2.1b, 1 AO2.4a). B1 for (b)(i) prediction identified with partial reason.",
-            "c": "No, because there may be other factors involved (2 marks: 1 AO2.5a, 1 AO3.4b). B1 for \u201cNo,\u201d with partial reason."
+            "a.i": "Answer: Positive correlation [1 mark]\n\nPart marks: 1 AO1.1\n\nGuidance: Condone \u2018positive\u2019 or correct description, e.g. \u2018As the temperature increases, more ice creams are sold\u2019.",
+            "a.ii": "Answer: Correct reason, e.g. \u2018He sold far more ice creams than you would expect him to for a 20\u00b0C day\u2019 [1 mark]\n\nPart marks: 1 AO2.3a",
+            "b.i": "Answer: 75\u201395 [1 mark]\n\nPart marks: 1 AO1.3a",
+            "b.ii": "Answer: 140\u2013170 [1 mark]\n\nPart marks: 1 AO1.3a",
+            "b.iii": "Answer: The (b)(i) prediction is more reliable, as it is within the range of the given data [2 marks]\n\nPart marks: 1 AO2.1b, 1 AO2.4a\n\nGuidance: B1 for (b)(i) prediction identified with partial reason.",
+            "c": "Answer: No, because there may be other factors involved [2 marks]\n\nPart marks: 1 AO2.5a, 1 AO3.4b\n\nGuidance: B1 for \u2018No\u2019, with partial reason."
         },
         "mark-breakdown": {
             "a.i": 1,
@@ -161,9 +161,9 @@
     },
     "11": {
         "markscheme-components": {
-            "a": "(a) Answer: 45\u202f000 (2 marks)\n\n\u2022 2 AO1.3a\n\nMarking instructions:\n\nM1 for 50\u202f000 \u00d7 0.9 (soi)\nor 50\u202f000 \u2013 5\u202f000\n",
-            "b": "(b) Answer: Total value of goods sold in May was \u00a332\u202f805, which is less than \u00a335\u202f000 (3 marks)\n\n\u2022 3 AO2.2\n\nMarking instructions:\n\n\u2013 M2 for 50\u202f000 (or 45\u202f000) \u00d7 0.9 used three times (or two times) (soi) or decreasing by 10% three times\n  (Implied by 36\u202f450 and 32\u202f805)\nOR\n\u2013 M1 for 45\u202f000 \u00d7 0.9 or 45\u202f000 \u2013 4\u202f500\n  (Implied by 40\u202f500)\n",
-            "c": "(c) Answer: 8[%] with correct working (5 marks)\n\n\u2022 3 AO1.3b\n\u2022 2 AO3.1d\n\nMarking instructions:\n\n\u2013 B4 for answer 108[%] or 1.08 or [0].08 with correct working\n  OR\n\u2013 M3 for 1.2 \u00d7 [0].9 (oe)\n  or for (100\u202f000 \u00d7 1.2 \u00d7 [0].9 \u2013 100\u202f000) \u00f7 100\u202f000\n  OR\n\u2013 M2 for 1.2 and [0].9\n  OR\n\u2013 M1 for 1.2 or [0].9\n\nIf 0 or 1 mark is scored, instead award SC2 for answer 8[%] with no working or insufficient working.\n\nIf 0 marks are scored, instead award SC1 for 108[%] or 1.08 or [0].08 with no working or insufficient working.\n\n\u201cCorrect working\u201d requires evidence of at least M3 or an alternative convincing approach.\n\nThroughout, percentage calculations may be performed in stages, e.g. 120% by adding 20%.\n\nExamples:\n\u2022 100\u202f000 \u00d7 1.2 \u00d7 [0].9\n\u2022 120\u202f000 \u00d7 [0].9\n\u2022 100\u202f000 \u00d7 1.2 implied by 120\u202f000\n"
+            "a": "Answer: 45 000\nMarks: 2\n(2 AO1.3a)\n\u2022 M1 for 50 000 \u00d7 0.9 soi or 50 000 \u2212 5 000",
+            "b": "Answer: \u201cTotal value of goods sold in May was \u00a332 805, which is less than \u00a335 000\u201d\nMarks: 3\n(3 AO2.2)\n\u2022 M2 for 50 000 (or 45 000) \u00d7 0.9 used three times (or two times) soi or decreasing by 10% three times\n  Or\n  \u2022 M1 for 45 000 \u00d7 0.9 or 45 000 \u2212 4 500\n    (Implied by 36 450 and 32 805)\n    (Implied by 40 500)",
+            "c": "Answer: 8[%] with correct working\nMarks: 5\n(3 AO1.3b, 2 AO3.1d)\n\u2022 B4 for answer 108[%] or 1.08 or [0].08 with correct working\n  Or\n  \u2022 M3 for 1.2 \u00d7 [0].9 oe, or for [100 000 \u00d7 1.2 \u00d7 [0].9 \u2212 100 000] / 100 000\n  Or\n  \u2022 M2 for 1.2 and [0].9\n  Or\n  \u2022 M1 for 1.2 or [0].9\n\nIf 0 or 1 scored, instead award SC2 for answer 8[%] with no working or insufficient working.\nIf 0 scored, instead award SC1 for 108[%] or 1.08 or [0].08 with no working or insufficient working.\n\n\u201cCorrect working\u201d requires evidence of at least M3 or an alternative convincing approach.\nThroughout, percentage calculations may be performed in stages, for example 120% by adding 20%.\n(e.g. 100 000 \u00d7 1.2 \u00d7 [0].9 or 120 000 \u00d7 [0].9, or 100 000 \u00d7 1.2 implied by 120 000.)"
         },
         "mark-breakdown": {
             "a": 2,
@@ -179,8 +179,8 @@
     },
     "12": {
         "markscheme-components": {
-            "a": "Answer: 6\nMarks: 2 (2 AO1.3a)\n\nMarking guidance:\n\u2022 M1 for 3x = 18",
-            "b": "Answer: -3, -5\nMarks: 3 (3 AO1.3a)\n\nMarking guidance:\n\u2022 M2 for (x + 3)(x + 5) seen or implied in table\n  OR\n  M1 for (x \u00b1 3)(x \u00b1 5) seen, or for a pair of factors giving two correct terms seen or implied in table\nAND\n  B1 for correct solutions FT their quadratic factors"
+            "a": "Answer: 6\nMarks: 2\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for 3x = 18",
+            "b": "Answer: \u22123, \u22125\nMarks: 3\nPart marks and guidance:\n\u2022 3 AO1.3a\n\u2022 M2 for (x + 3)(x + 5) seen or implied in table\n  Or\n  M1 for (x \u00b1 3)(x \u00b1 5) seen, or pair of factors giving two correct terms seen or implied in table\n\u2022 B1 for correct solutions, following through their quadratic factors"
         },
         "mark-breakdown": {
             "a": 2,
@@ -195,8 +195,8 @@
     },
     "13": {
         "markscheme-components": {
-            "a": "Answer:\n\u2022 24 cm by 16 cm\n\u2022 12 cm by 8 cm\n\nMarks awarded: 2 (1 AO1.3a, 1 AO3.1c)\n\nMarking guidance:\n\u2022 B1 for each correct pair of dimensions\n\u2022 Answers may be indicated on the list in the question",
-            "b": "Answer:\n\u2022 50\n\nMarks awarded: 3 (1 AO1.3b, 2 AO3.1d)\n\nMarking guidance:\n\u2022 M1 for 45/9 or 60/6\n\u2022 M1 for their \u20185\u2019 \u00d7 their \u201810\u2019\n\u2022 SC2 for 42 or for an area calculation leading to an incorrect answer"
+            "a": "Question 13(a)\n\nAnswer: 24 cm by 16 cm, 12 cm by 8 cm\nMarks: 2 (1 AO1.3a, 1 AO3.1c)\nGuidance:\n\u2022 B1 for each\n\u2022 Answers may be indicated on the list in the question",
+            "b": "Question 13(b)\n\nAnswer: 50\nMarks: 3 (1 AO1.3b, 2 AO3.1d)\nGuidance:\n\u2022 M1 for 45/9 or 60/6\n\u2022 M1 for their \u20185\u2019 \u00d7 their \u201810\u2019\n\u2022 SC2 for 42 or for area calculation leading to incorrect answer"
         },
         "mark-breakdown": {
             "a": 2,
@@ -211,8 +211,8 @@
     },
     "14": {
         "markscheme-components": {
-            "a": "Answer and Marking Guidelines (14a)\n\n\u2022 Correct answer: p = 5, q = \u20135\n\u2022 Marks: 2\n  \u2022 1 AO1.2\n  \u2022 1 AO1.3a\n\u2022 Guidance: B1 for each correct value of p and q",
-            "b": "Answer and Marking Guidelines (14b)\n\n\u2022 Correct answer: c = 3a, d = a + b, e = a \u2013 b\n\u2022 Marks: 3\n  \u2022 3 AO1.3a\n\u2022 Guidance: B1 for each correct expression"
+            "a": "Answer: [p =] 5   [q =] \u20135\nMarks: 2\n\nMark allocation:\n\u2022 1 AO1.2\n\u2022 1 AO1.3a\n\nPart marks and guidance:\n\u2022 B1 for each",
+            "b": "Answer: c = 3a    d = a + b    e = a \u2013 b\nMarks: 3\n\nMark allocation:\n\u2022 3 AO1.3a\n\nPart marks and guidance:\n\u2022 B1 for each"
         },
         "mark-breakdown": {
             "a": 2,
@@ -226,9 +226,9 @@
     },
     "15": {
         "markscheme-components": {
-            "a": "Answer: 800\nMarks: 2\nPart marks and guidance:\n\u2022 1 AO1.3b\n\u2022 1 AO3.1c\n\u2022 M1 for unitary work, e.g. 1 person does 200 letters in 2 hours",
-            "b": "Answer: 30 minutes oe\nMarks: 4\nPart marks and guidance:\n\u2022 2 AO2.1a\n\u2022 2 AO3.1d\n\u2022 M1 for 1 person does 100 letters in 1 hour\n\u2022 M1 for 5 people do 1000 letters in 2 hours\n\u2022 M1 for 4 people do 1000 letters in 2.5 hours\n(FT from their rate in (a) throughout)",
-            "c": "Answer: Correct comment on the reasonableness of her assumption e.g. \u2018She has assumed that \u201call day\u201d means \u201cfor 24 hours\u201d, but it is not reasonable for them to work without a break.\u2019 Correct comment on the effect it will have on the answer e.g. \u2018They can\u2019t work at that rate for that long, so her answer is an over-estimate.\u2019\nMarks: 2\nPart marks and guidance:\n\u2022 1 AO3.4a\n\u2022 1 AO3.5\n\u2022 B1 for each"
+            "a": "Answer: 800\nMarks: 2\nPart marks and guidance:\n\u2022 1 AO1.3b\n\u2022 1 AO3.1c\nM1 for unitary work, e.g. 1 person does 200 letters in 2 hours",
+            "b": "Answer: 30 minutes oe\nMarks: 4\nPart marks and guidance:\n\u2022 2 AO2.1a\n\u2022 2 AO3.1d\nM1 for 1 person does 100 letters in 1 hour\nM1 for 5 people do 1000 letters in 2 hours\nM1 for 4 people do 1000 letters in 2.5 hours\nFT from their rate in (a) throughout",
+            "c": "Correct comment on the reasonableness of her assumption, e.g. \u201cShe has assumed that \u2018all day\u2019 means \u2018for 24 hours\u2019, but it is not reasonable for them to work without a break.\u201d\nCorrect comment on the effect it will have on the answer, e.g. \u201cThey can\u2019t work at that rate for that long, so her answer is an over-estimate.\u201d\nMarks: 2\nPart marks and guidance:\n\u2022 1 AO3.4a\n\u2022 1 AO3.5\nB1 for each"
         },
         "mark-breakdown": {
             "a": 2,
@@ -244,9 +244,9 @@
     },
     "16": {
         "markscheme-components": {
-            "a": "Answer: Outcomes not equally likely (oe)\nMarks awarded: 1\nGuidance: 1 AO3.4b",
-            "b": "Answer: Larger number of trials\nMarks awarded: 1\nGuidance: 1 AO3.4a",
-            "c": "Answer: 0.09 \u2013 0.16\nMarks awarded: 2\nGuidance: 1 AO1.3a, 1 AO2.1b\nM1 for (48/150)\u00b2 or 0.35\u00b2 or any reasonable estimate (FT their (b))"
+            "a": "Answer: Outcomes not equally likely (or equivalent wording)\nMarks: 1\nAssessment objective: 1 AO3.4b\n\n(No further specific guidance)",
+            "b": "Answer: Larger number of trials\nMarks: 1\nAssessment objective: 1 AO3.4a\n\n(No further specific guidance)",
+            "c": "Answer: 0.09 \u2013 0.16\nMarks: 2\nAssessment objectives: 1 AO1.3a, 1 AO2.1b\nGuidance:\n\u2022 M1 for (48/150)\u00b2 or 0.35\u00b2 or any reasonable estimate (follow through their part (b))"
         },
         "mark-breakdown": {
             "a": 1,
@@ -261,10 +261,10 @@
     },
     "17": {
         "markscheme-components": {
-            "a": "Answer: 10, 16, 26\nMarks: 1\nPart marks and guidance:\n\u2022 1 AO1.3a",
-            "b": "Answer: 8, 13, 21\nMarks: 2\nPart marks and guidance:\n\u2022 1 AO1.3a, 1 AO3.1a\n\u2022 M1 awarded for one correct subtraction of two boxes",
-            "c": "Answer: a + b, a + 2b, 2a + 3b\nMarks: 2\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 awarded for two expressions correct",
-            "d": "Answer: 15, 21, 36\nMarks: 3\nPart marks and guidance:\n\u2022 1 AO1.3a, 2 AO2.1a\n\u2022 M1 for their \u20182a + 3b\u2019 = 57\n\u2022 M1 for substituting a = 6 into their final expression and solving for b"
+            "a": "Answer: 10, 16, 26\nMarks: 1\n\u2022 1 AO1.3a",
+            "b": "Answer: 8, 13, 21\nMarks: 2\n\u2022 1 AO1.3a\n\u2022 1 AO3.1a\nGuidance:\nM1 for one correct subtraction of two boxes",
+            "c": "Answer: a + b, a + 2b, 2a + 3b\nMarks: 2\n\u2022 2 AO1.3a\nGuidance:\nM1 for two expressions correct",
+            "d": "Answer: 15, 21, 36\nMarks: 3\n\u2022 1 AO1.3a\n\u2022 2 AO2.1a\nGuidance:\nM1 for their \u20182a + 3b\u2019 = 57\nM1 for substituting a = 6 into their final expression and solving for b"
         },
         "mark-breakdown": {
             "a": 1,
@@ -280,8 +280,8 @@
     },
     "18": {
         "markscheme-components": {
-            "a": "Part (a):\n\nThe first error is in step 2 \u2014 because \u22123x \u2212 2x = \u22125x, not \u2212x, as given.\n\nMarks: 2 (2 AO2.5a)\n\u2022 B1 for identifying step 2\n\u2022 B1 for explaining the error",
-            "b": "Part (b):\n\n[x\u00b2 + 4x + x + 4 = x\u00b2 \u2212 3x \u2212 2x + 6]\nx\u00b2 + 5x + 4 = x\u00b2 \u2212 5x + 6\n5x + 4 = \u22125x + 6\n10x + 4 = 6\n10x = 2\nx = 1/5\n\nMarks: 2 (2 AO1.3a)\n\u2022 M1 for an attempt to correct the solution in line with their answer to (a)"
+            "a": "Answer:\nThe first error is in step 2: \u22123x \u2212 2x = \u22125x, not \u2212x as given.\n\nMarks: 2\n\nPart marks and guidance:\n\u2022 2 AO2.5a\n\u2022 B1 for identifying step 2\n\u2022 B1 for explaining the error",
+            "b": "Answer:\n[x\u00b2 + 4x + x + 4 = x\u00b2 \u2212 3x \u2212 2x + 6]\nx\u00b2 + 5x + 4 = x\u00b2 \u2212 5x + 6\n5x + 4 = \u22125x + 6\n10x + 4 = 6\n10x = 2\nx = 1/5\n\nMarks: 2\n\nPart marks and guidance:\n\u2022 2 AO1.3a\n\u2022 M1 for an attempt to correct the solution in line with their answer to (a)"
         },
         "mark-breakdown": {
             "a": 2,
@@ -295,7 +295,7 @@
         "correctly_parsed": true
     },
     "19": {
-        "markscheme-components": "Answer: 2a + 1\nMarks: 4\nPart marks and guidance:\n\u2022 1 AO1.3b\n\u2022 2 AO3.1b\n\u2022 1 AO3.2\n\nM1 for a + 2 + 3a + 3 + 4a \u2013 1\nM1 for collecting terms\nM1 for dividing their \u20188a + 4\u2019 by 4",
+        "markscheme-components": "Answer: 2a + 1 (Total 4 marks)\n\nMark allocation:\n\u2022 1 AO1.3b\n\u2022 2 AO3.1b\n\u2022 1 AO3.2\n\nMarking guidance:\n\u2022 M1 for a + 2 + 3a + 3 + 4a \u2013 1\n\u2022 M1 for collecting terms\n\u2022 M1 for dividing their \u20188a + 4\u2019 by 4",
         "mark-breakdown": {
             "total": 4
         },
