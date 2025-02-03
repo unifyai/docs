@@ -3896,6 +3896,18 @@
                         "description": "Maximum depth of nested groups to return. If not specified, all levels are returned."
                     },
                     {
+                        "name": "nested_groups",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If True, groups are returned as a nested structure; if False, groups are returned as flat per-field mappings.",
+                            "default": true,
+                            "title": "Nested Groups"
+                        },
+                        "description": "If True, groups are returned as a nested structure; if False, groups are returned as flat per-field mappings."
+                    },
+                    {
                         "name": "return_ids_only",
                         "in": "query",
                         "required": false,
