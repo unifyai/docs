@@ -156,6 +156,7 @@
                                         "python/functions/interfaces/utils/compositions/add_params",
                                         "python/functions/interfaces/utils/compositions/delete_logs_by_value",
                                         "python/functions/interfaces/utils/compositions/end_log",
+                                        "python/functions/interfaces/utils/compositions/get_experiment_by_version",
                                         "python/functions/interfaces/utils/compositions/get_log_by_value",
                                         "python/functions/interfaces/utils/compositions/get_logs_by_id",
                                         "python/functions/interfaces/utils/compositions/get_logs_by_value",
