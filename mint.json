@@ -161,6 +161,7 @@
                                         "python/functions/interfaces/utils/compositions/get_logs_by_value",
                                         "python/functions/interfaces/utils/compositions/get_logs_with_fields",
                                         "python/functions/interfaces/utils/compositions/get_logs_without_fields",
+                                        "python/functions/interfaces/utils/compositions/get_param_by_version",
                                         "python/functions/interfaces/utils/compositions/get_params",
                                         "python/functions/interfaces/utils/compositions/get_source",
                                         "python/functions/interfaces/utils/compositions/group_logs",
