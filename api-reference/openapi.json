@@ -6278,6 +6278,17 @@
                         "type": "string",
                         "title": "Project"
                     },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context"
+                    },
                     "items": {
                         "items": {
                             "$ref": "#/components/schemas/Item"
