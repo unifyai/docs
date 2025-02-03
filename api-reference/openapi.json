@@ -2691,6 +2691,83 @@
                         }
                     }
                 }
+            },
+            "get": {
+                "tags": [
+                    "Contexts"
+                ],
+                "summary": "Get Contexts",
+                "description": "Get a list of contexts within a project.",
+                "operationId": "get_contexts_v0_project__project_name__contexts_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to create context in.",
+                            "title": "Project Name"
+                        },
+                        "description": "Name of the project to create context in.",
+                        "example": "my_project"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ContextCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contexts retrieved.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": [
+                                    {
+                                        "name": "context1",
+                                        "description": "description1"
+                                    },
+                                    {
+                                        "name": "context2",
+                                        "description": "description2"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/v0/project/{project_name}/contexts/{context_name}": {
