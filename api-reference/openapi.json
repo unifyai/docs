@@ -6321,6 +6321,17 @@
                         ],
                         "title": "Context"
                     },
+                    "prev_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Prev Context"
+                    },
                     "filters": {
                         "anyOf": [
                             {
