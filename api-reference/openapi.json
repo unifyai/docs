@@ -4893,12 +4893,22 @@
                             }
                         }
                     },
-                    "404": {
+                    "4041": {
                         "description": "Project Not Found",
                         "content": {
                             "application/json": {
                                 "example": {
                                     "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "4042": {
+                        "description": "Context Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Context <context> not found."
                                 }
                             }
                         }
@@ -4957,6 +4967,16 @@
                         }
                     },
                     "4042": {
+                        "description": "Context Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Context <context> not found."
+                                }
+                            }
+                        }
+                    },
+                    "4043": {
                         "description": "Interface Not Found",
                         "content": {
                             "application/json": {
