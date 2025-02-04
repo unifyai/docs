@@ -4006,7 +4006,7 @@
                     "Logs"
                 ],
                 "summary": "Update Derived Log",
-                "description": "Updates multiple derived log entries with new key, equation, or referenced logs.\nHandles batch updates and recomputes values as needed.",
+                "description": "Updates multiple derived logs, identified either by a direct list of derived IDs or by\nget_logs\u2013style filters. Then sets a new key/equation, and recomputes them.",
                 "operationId": "update_derived_log_v0_logs_derived_put",
                 "requestBody": {
                     "content": {
@@ -6720,25 +6720,36 @@
             },
             "UpdateDerivedEntriesConfig": {
                 "properties": {
-                    "ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "type": "array",
-                        "minItems": 1,
-                        "title": "Ids",
-                        "description": "List of derived log IDs to update.",
-                        "example": [
-                            123,
-                            456,
-                            789
-                        ]
-                    },
-                    "original_key": {
+                    "project": {
                         "type": "string",
-                        "title": "Original Key",
-                        "description": "The original key of the derived entry to update.",
-                        "example": "score_diff"
+                        "title": "Project",
+                        "description": "Name of the project these derived logs belong to.",
+                        "example": "eval-project"
+                    },
+                    "target_derived_logs": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "integer"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "object"
+                            }
+                        ],
+                        "title": "Target Derived Logs",
+                        "description": "The derived logs to update, either as a list of derived_log IDs or as a set of arguments for the get_logs endpoint.",
+                        "example": {
+                            "log0": [
+                                0,
+                                1,
+                                2
+                            ],
+                            "log1": {
+                                "filter_expr": "derived_score > 0.5"
+                            }
+                        }
                     },
                     "key": {
                         "anyOf": [
@@ -6750,8 +6761,8 @@
                             }
                         ],
                         "title": "Key",
-                        "description": "The new name for the derived entry.",
-                        "example": "new_score_diff"
+                        "description": "New key name for the derived entries",
+                        "example": "temp_plus_20"
                     },
                     "equation": {
                         "anyOf": [
@@ -6763,14 +6774,14 @@
                             }
                         ],
                         "title": "Equation",
-                        "description": "The new equation for computing the value of the derived entry.",
-                        "example": "{log0:new_score} - {log1:new_score}"
+                        "description": "New equation for computing derived values",
+                        "example": "{t:temperature} + 20"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "ids",
-                    "original_key"
+                    "project",
+                    "target_derived_logs"
                 ],
                 "title": "UpdateDerivedEntriesConfig"
             },
