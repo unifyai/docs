@@ -2,18 +2,29 @@
 title: 'Get Logs'
 api: 'GET /v0/logs'
 ---
-Returns a list of filtered entries from a project. When group_threshold is set,
-entries that appear in at least that many logs will be grouped together in the
-grouped_entries field to reduce response size. When value_limit is set, fields
-that exceed this limit will be clipped and the clipped_fields field will be
-populated.
+Returns a list of filtered log entries from a project with various expressiveness options:
 
-The response will include:
-- logs: List of log entries with their individual values
-- params: Dictionary of parameter versions
-- count: Total number of logs
-- grouped_entries: (When group_threshold is set) Dictionary of field names to their shared values
-- clipped_fields: List of fields that were clipped due to value_limit
+  1. **Monolithic mode** (when group_by is not provided):
+     - Returns a flat list of log entries (with fields clipped if value_limit is set).
+     - Optionally factors out repeated fields into a grouped_entries field if group_threshold is set.
+
+  2. **Grouped mode** (when group_by is provided):
+     - Supports multi-level grouping of logs. The order of fields in group_by dictates the nesting order.
+     - Supports pagination at the group level using group_limit and group_offset.
+     - Supports limiting the nesting depth with group_depth.
+     - When nested_groups is True, returns a nested structure under the "logs" key.
+     - When nested_groups is False, returns flat per-field mappings under the "groups" key.
+     - When groups_only is True, the detailed log objects are omitted and leaves are simplified
+       to either lists of log ids (if return_timestamps is False) or mappings of {log id: timestamp} (if True).
+
+  3. **Return IDs only mode**:
+     - If return_ids_only is True, returns only the log event ids.
+
+The response always includes:
+  - `params`: The parameter versions used across the logs.
+  - `count`: The total number of logs matching the query.
+  - Additionally, it includes either `logs` (in monolithic or nested grouping mode) or `groups` (in flat grouping mode)
+    as specified by the arguments.
 
 #### Authorizations
 
@@ -95,6 +106,14 @@ Maximum depth of nested groups to return. If not specified, all levels are retur
 If True, groups are returned as a nested structure; if False, groups are returned as flat per-field mappings.
 </ParamField>
 
+<ParamField query="groups_only" type="boolean" >
+If True, do not include a full logs list; only return groups (with leaf values being either log ids or timestamps).
+</ParamField>
+
+<ParamField query="return_timestamps" type="boolean" >
+When groups_only is True, return each leaf as a mapping from log id to timestamp instead of just a list of log ids.
+</ParamField>
+
 <ParamField query="return_ids_only" type="boolean" >
 
 </ParamField>
@@ -103,14 +122,14 @@ If True, groups are returned as a nested structure; if False, groups are returne
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&return_ids_only=None' \
+  --url 'https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&return_ids_only=None"
+url = "https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
