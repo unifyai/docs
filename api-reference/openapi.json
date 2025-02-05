@@ -3372,7 +3372,7 @@
                     "Logs"
                 ],
                 "summary": "Create Logs",
-                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\nA \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry.\n\nThis method returns the ids of the new stored logs.",
+                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nAn \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry. The explicit_types dictionary\ncan also specify if a field is mutable via a 'mutable' boolean flag:\n\n{\n    \"field_name\": {\n        \"type\": \"str\",\n        \"mutable\": false  # Makes the field immutable\n    }\n}\n\nBy default, all fields are immmutable unless specified otherwise.\nOnce a field is marked as mutable, only then can it be modified through\nthe update endpoint.\n\nThis method returns the ids of the new stored logs.",
                 "operationId": "create_logs_v0_logs_post",
                 "security": [
                     {
@@ -5665,8 +5665,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -6029,12 +6029,15 @@
                             }
                         ],
                         "title": "Params",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag.",
                         "default": {},
                         "examples": [
                             {
                                 "explicit_types": {
-                                    "system-prompt": "str"
+                                    "system-prompt": {
+                                        "mutable": true,
+                                        "type": "str"
+                                    }
                                 },
                                 "function_definition": "...",
                                 "system-prompt": "..."
@@ -6062,12 +6065,15 @@
                             }
                         ],
                         "title": "Entries",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries.",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag.",
                         "default": {},
                         "examples": [
                             {
                                 "explicit_types": {
-                                    "input": "Image"
+                                    "input": {
+                                        "mutable": true,
+                                        "type": "Image"
+                                    }
                                 },
                                 "input": "...",
                                 "score-test-1": "..."
@@ -6830,7 +6836,10 @@
                         "default": {},
                         "example": {
                             "explicit_types": {
-                                "system-prompt": "str"
+                                "system-prompt": {
+                                    "mutable": true,
+                                    "type": "str"
+                                }
                             },
                             "function_definition": "...",
                             "system-prompt": "..."
@@ -6853,7 +6862,10 @@
                         "default": {},
                         "example": {
                             "explicit_types": {
-                                "input": "Image"
+                                "input": {
+                                    "mutable": true,
+                                    "type": "Image"
+                                }
                             },
                             "input": "...",
                             "score-test-1": "..."
