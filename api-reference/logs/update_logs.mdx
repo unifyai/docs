@@ -52,14 +52,20 @@ curl --request PUT \
     "context": "experiment1/trial1",
     "params": {
         "explicit_types": {
-            "system-prompt": "str"
+            "system-prompt": {
+                "mutable": true,
+                "type": "str"
+            }
         },
         "function_definition": "...",
         "system-prompt": "..."
     },
     "entries": {
         "explicit_types": {
-            "input": "Image"
+            "input": {
+                "mutable": true,
+                "type": "Image"
+            }
         },
         "input": "...",
         "score-test-1": "..."
@@ -75,7 +81,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"ids": [123, 456, 789], "context": "experiment1/trial1", "params": {"explicit_types": {"system-prompt": "str"}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": "Image"}, "input": "...", "score-test-1": "..."}, "overwrite": False}
+json_input = {"ids": [123, 456, 789], "context": "experiment1/trial1", "params": {"explicit_types": {"system-prompt": {"mutable": True, "type": "str"}}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": {"mutable": True, "type": "Image"}}, "input": "...", "score-test-1": "..."}, "overwrite": False}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 
