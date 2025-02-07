@@ -6615,7 +6615,7 @@
                         ],
                         "title": "Plot Type"
                     },
-                    "plot_scale": {
+                    "plot_scale_x": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -6624,7 +6624,18 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Plot Scale"
+                        "title": "Plot Scale X"
+                    },
+                    "plot_scale_y": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plot Scale Y"
                     },
                     "is_aggregated": {
                         "anyOf": [
