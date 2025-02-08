@@ -3,7 +3,9 @@ title: 'Update Derived Log'
 api: 'PUT /v0/logs/derived'
 ---
 Updates multiple derived logs, identified either by a direct list of derived IDs or by
-get_logs–style filters. Then sets a new key/equation, and recomputes them.
+get_logs–style filters. If 'referenced_logs' is provided, we delete all existing
+derived logs for each (log_event_id, key) group and re-insert new ones referencing
+the new base logs. Finally, we recompute them.
 
 #### Authorizations
 
@@ -29,6 +31,10 @@ New key name for the derived entries
 New equation for computing derived values
 </ParamField>
 
+<ParamField body="referenced_logs" type="object | null" >
+Optional new referenced logs to use for computation. Can be specified either as a list of log IDs or as a set of arguments for the get_logs endpoint.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -49,7 +55,17 @@ curl --request PUT \
         }
     },
     "key": "temp_plus_20",
-    "equation": "{t:temperature} + 20"
+    "equation": "{t:temperature} + 20",
+    "referenced_logs": {
+        "other": {
+            "filter_expr": "score > 0.5"
+        },
+        "t": [
+            1,
+            2,
+            3
+        ]
+    }
 }'
 ```
 
@@ -60,7 +76,7 @@ url = "https://api.unify.ai/v0/logs/derived"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "target_derived_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "derived_score > 0.5"}}, "key": "temp_plus_20", "equation": "{t:temperature} + 20"}
+json_input = {"project": "eval-project", "target_derived_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "derived_score > 0.5"}}, "key": "temp_plus_20", "equation": "{t:temperature} + 20", "referenced_logs": {"other": {"filter_expr": "score > 0.5"}, "t": [1, 2, 3]}}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 

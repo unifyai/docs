@@ -4006,7 +4006,7 @@
                     "Logs"
                 ],
                 "summary": "Update Derived Log",
-                "description": "Updates multiple derived logs, identified either by a direct list of derived IDs or by\nget_logs\u2013style filters. Then sets a new key/equation, and recomputes them.",
+                "description": "Updates multiple derived logs, identified either by a direct list of derived IDs or by\nget_logs\u2013style filters. If 'referenced_logs' is provided, we delete all existing\nderived logs for each (log_event_id, key) group and re-insert new ones referencing\nthe new base logs. Finally, we recompute them.",
                 "operationId": "update_derived_log_v0_logs_derived_put",
                 "requestBody": {
                     "content": {
@@ -4117,6 +4117,62 @@
                             "application/json": {
                                 "example": {
                                     "detail": "All referenced log lists must have the same length. Found lengths: [2, 3]."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Delete Derived Logs",
+                "description": "Deletes specified derived log entries. Logs can be specified either by a direct list\nof derived log IDs or by get_logs-style filters. Only deletes derived logs that belong\nto the user's project and where the user has appropriate permissions.",
+                "operationId": "delete_derived_logs_v0_logs_derived_delete",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteDerivedLogsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Derived logs deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Successfully deleted 3 derived logs."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Derived Log Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "One or more derived logs were not found or you don't have permission to delete them."
                                 }
                             }
                         }
@@ -5665,8 +5721,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -6209,6 +6265,42 @@
                     "name"
                 ],
                 "title": "DatasetNewName"
+            },
+            "DeleteDerivedLogsRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project these derived logs belong to.",
+                        "example": "eval-project"
+                    },
+                    "target_derived_logs": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "integer"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "object"
+                            }
+                        ],
+                        "title": "Target Derived Logs",
+                        "description": "The derived logs to delete, either as a list of derived_log IDs or as a set of arguments for the get_logs endpoint.",
+                        "example": [
+                            123,
+                            456,
+                            789
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "target_derived_logs"
+                ],
+                "title": "DeleteDerivedLogsRequest"
             },
             "DeleteLogEntryRequest": {
                 "properties": {
@@ -6793,6 +6885,41 @@
                         "title": "Equation",
                         "description": "New equation for computing derived values",
                         "example": "{t:temperature} + 20"
+                    },
+                    "referenced_logs": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "anyOf": [
+                                        {
+                                            "items": {
+                                                "type": "integer"
+                                            },
+                                            "type": "array"
+                                        },
+                                        {
+                                            "type": "object"
+                                        }
+                                    ]
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Referenced Logs",
+                        "description": "Optional new referenced logs to use for computation. Can be specified either as a list of log IDs or as a set of arguments for the get_logs endpoint.",
+                        "example": {
+                            "other": {
+                                "filter_expr": "score > 0.5"
+                            },
+                            "t": [
+                                1,
+                                2,
+                                3
+                            ]
+                        }
                     }
                 },
                 "type": "object",
