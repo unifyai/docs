@@ -5,6 +5,10 @@ api: 'POST /v0/logs'
 Creates one or more logs associated to a project. Logs are
 LLM-call-level data that might depend on other variables.
 
+If a context is specified and it is versioned, all logs will be versioned
+and mutable. The context version will be incremented automatically when
+logs are added, updated, or removed.
+
 An "explicit_types" dictionary can be passed as part of the `entries`.
 If present, any matching key inside this dictionary will override the
 inferred type of that particular entry. The explicit_types dictionary
