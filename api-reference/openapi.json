@@ -2611,6 +2611,127 @@
                 ]
             }
         },
+        "/v0/project/{name}/logs": {
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete Project Logs",
+                "description": "Deletes all logs in a project.",
+                "operationId": "delete_project_logs_v0_project__name__logs_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Project Name"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project logs deleted.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "All logs in project deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <name> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project/{name}/contexts": {
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete Project Contexts",
+                "description": "Deletes all contexts and their associated logs from a project.\nThe project's interfaces remain untouched.",
+                "operationId": "delete_project_contexts_v0_project__name__contexts_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project to delete contexts from.",
+                            "title": "Project Name"
+                        },
+                        "description": "Name of the project to delete contexts from.",
+                        "example": "test-project"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project contexts and logs deleted.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Project contexts and logs deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <name> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/project/{project_name}/contexts": {
             "post": {
                 "tags": [
@@ -5811,8 +5932,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
