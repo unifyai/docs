@@ -4971,6 +4971,74 @@
                 }
             }
         },
+        "/v0/logs/rename_field": {
+            "post": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Rename Field",
+                "description": "Renames a field across all logs in a project. This includes:\n- Updating the field type record\n- Renaming the field in all logs (regular and history)\n\nThe operation is atomic - either all renames succeed or none do.",
+                "operationId": "rename_field_v0_logs_rename_field_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RenameFieldRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Field renamed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Field renamed successfully from 'old_name' to 'new_name'"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid field name or field already exists"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project or field not found"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/logs/fields": {
             "get": {
                 "tags": [
@@ -5932,8 +6000,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -7060,6 +7128,49 @@
                     "name"
                 ],
                 "title": "ProjectConfig"
+            },
+            "RenameFieldRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project the field belongs to.",
+                        "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "The context of the field to rename.",
+                        "default": "default",
+                        "example": "test-context"
+                    },
+                    "old_field_name": {
+                        "type": "string",
+                        "title": "Old Field Name",
+                        "description": "The current name of the field to rename.",
+                        "example": "score"
+                    },
+                    "new_field_name": {
+                        "type": "string",
+                        "title": "New Field Name",
+                        "description": "The new name for the field.",
+                        "example": "score_new"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "old_field_name",
+                    "new_field_name"
+                ],
+                "title": "RenameFieldRequest"
             },
             "SetFieldTypingRequest": {
                 "properties": {

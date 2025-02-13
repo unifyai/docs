@@ -477,6 +477,7 @@
                                 "api-reference/logs/get_logs_latest_timestamp",
                                 "api-reference/logs/get_logs_metric",
                                 "api-reference/logs/get_log_groups",
+                                "api-reference/logs/rename_field",
                                 "api-reference/logs/get_fields",
                                 "api-reference/logs/set_field_types"
                             ]
