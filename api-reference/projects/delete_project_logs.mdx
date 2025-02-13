@@ -10,9 +10,9 @@ Deletes all logs in a project.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
-#### Query Parameters
+#### Path Parameters
 
-<ParamField query="project_name" type="string" required="true">
+<ParamField query="name" type="string" required="true">
 
 </ParamField>
 
@@ -20,14 +20,14 @@ Deletes all logs in a project.
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/project/{name}/logs?project_name=None' \
+  --url 'https://api.unify.ai/v0/project/<name>/logs' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/{name}/logs?project_name=None"
+url = "https://api.unify.ai/v0/project/<name>/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
