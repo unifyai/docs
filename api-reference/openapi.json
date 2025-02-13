@@ -2626,12 +2626,12 @@
                 ],
                 "parameters": [
                     {
-                        "name": "project_name",
-                        "in": "query",
+                        "name": "name",
+                        "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "title": "Project Name"
+                            "title": "Name"
                         }
                     }
                 ],
@@ -2685,13 +2685,13 @@
                 ],
                 "parameters": [
                     {
-                        "name": "project_name",
+                        "name": "name",
                         "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string",
                             "description": "Name of the project to delete contexts from.",
-                            "title": "Project Name"
+                            "title": "Name"
                         },
                         "description": "Name of the project to delete contexts from.",
                         "example": "test-project"
