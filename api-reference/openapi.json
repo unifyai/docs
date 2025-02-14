@@ -4979,7 +4979,7 @@
                     "Logs"
                 ],
                 "summary": "Get Fields",
-                "description": "Returns a dictionary of field names and their types for the specified project.\nStrongly typed fields return their type, while others return None.",
+                "description": "Returns a dictionary of field names and their types for the specified project.\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation",
                 "operationId": "get_fields_v0_logs_fields_get",
                 "security": [
                     {
@@ -5007,8 +5007,13 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "field1": "string",
-                                    "field2": "int"
+                                    "field1": {
+                                        "data_type": "string",
+                                        "field_type": "entry",
+                                        "mutable": "true",
+                                        "created_at": "2025-02-14T10:00:00Z",
+                                        "artifacts": ""
+                                    }
                                 }
                             }
                         }

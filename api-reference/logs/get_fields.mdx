@@ -3,7 +3,12 @@ title: 'Get Fields'
 api: 'GET /v0/logs/fields'
 ---
 Returns a dictionary of field names and their types for the specified project.
-Strongly typed fields return their type, while others return None.
+Each field entry contains:
+- data_type: The data type of the field (int, str, etc)
+- field_type: Whether it's an entry, param, or derived_entry
+- mutable: Whether the field can be modified
+- created_at: When the field was first created
+- artifacts: For derived entries, contains the equation
 
 #### Authorizations
 
@@ -42,8 +47,13 @@ print(response.text)
 
 ```json 200
 {
-    "field1": "string",
-    "field2": "int"
+    "field1": {
+        "data_type": "string",
+        "field_type": "entry",
+        "mutable": "true",
+        "created_at": "2025-02-14T10:00:00Z",
+        "artifacts": ""
+    }
 }
 ```
 
