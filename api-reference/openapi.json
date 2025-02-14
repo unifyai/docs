@@ -3702,7 +3702,7 @@
                     "Logs"
                 ],
                 "summary": "Delete Logs",
-                "description": "Deletes a specific entry from multiple logs.",
+                "description": "Deletes log entries based on specified criteria. Can delete both base logs and derived logs.\n\nArgs:\n    source_type: Controls which type of logs to delete:\n        - 'all': Delete both base and derived logs (default)\n        - 'base': Only delete base logs\n        - 'derived': Only delete derived logs",
                 "operationId": "delete_logs_v0_logs_delete",
                 "security": [
                     {
@@ -3741,27 +3741,17 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Log entry deleted successfully from all logs!"
+                                    "info": "Log entries deleted successfully!"
                                 }
                             }
                         }
                     },
-                    "4041": {
+                    "404": {
                         "description": "Log Not Found",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "One or more logs with the specified IDs were not found."
-                                }
-                            }
-                        }
-                    },
-                    "4042": {
-                        "description": "Log Entry Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Log entry <entry> not found in one or more logs."
+                                    "detail": "One or more logs were not found or you don't have permission to delete them."
                                 }
                             }
                         }
@@ -4328,62 +4318,6 @@
                             "application/json": {
                                 "example": {
                                     "detail": "All referenced log lists must have the same length. Found lengths: [2, 3]."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Logs"
-                ],
-                "summary": "Delete Derived Logs",
-                "description": "Deletes specified derived log entries. Logs can be specified either by a direct list\nof derived log IDs or by get_logs-style filters. Only deletes derived logs that belong\nto the user's project and where the user has appropriate permissions.",
-                "operationId": "delete_derived_logs_v0_logs_derived_delete",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DeleteDerivedLogsRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Derived logs deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Successfully deleted 3 derived logs."
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Derived Log Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "One or more derived logs were not found or you don't have permission to delete them."
                                 }
                             }
                         }
@@ -6552,44 +6486,26 @@
                 ],
                 "title": "DatasetNewName"
             },
-            "DeleteDerivedLogsRequest": {
+            "DeleteLogEntryRequest": {
                 "properties": {
                     "project": {
                         "type": "string",
                         "title": "Project",
-                        "description": "Name of the project these derived logs belong to.",
+                        "description": "Name of the project the logs belong to.",
                         "example": "eval-project"
                     },
-                    "target_derived_logs": {
+                    "context": {
                         "anyOf": [
                             {
-                                "items": {
-                                    "type": "integer"
-                                },
-                                "type": "array"
+                                "$ref": "#/components/schemas/ContextCreateRequest"
                             },
                             {
-                                "type": "object"
+                                "type": "null"
                             }
                         ],
-                        "title": "Target Derived Logs",
-                        "description": "The derived logs to delete, either as a list of derived_log IDs or as a set of arguments for the get_logs endpoint.",
-                        "example": [
-                            123,
-                            456,
-                            789
-                        ]
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "project",
-                    "target_derived_logs"
-                ],
-                "title": "DeleteDerivedLogsRequest"
-            },
-            "DeleteLogEntryRequest": {
-                "properties": {
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
+                        "example": "experiment1/trial1"
+                    },
                     "ids_and_fields": {
                         "items": {
                             "prefixItems": [
@@ -6655,10 +6571,23 @@
                                 "response"
                             ]
                         ]
+                    },
+                    "source_type": {
+                        "type": "string",
+                        "enum": [
+                            "base",
+                            "derived",
+                            "all"
+                        ],
+                        "title": "Source Type",
+                        "description": "Specifies which type of logs to delete. Can be 'base' for base logs only, 'derived' for derived logs only, or 'all' to delete from both types.",
+                        "default": "all",
+                        "example": "all"
                     }
                 },
                 "type": "object",
                 "required": [
+                    "project",
                     "ids_and_fields"
                 ],
                 "title": "DeleteLogEntryRequest"

@@ -2,7 +2,13 @@
 title: 'Delete Logs'
 api: 'DELETE /v0/logs'
 ---
-Deletes a specific entry from multiple logs.
+Deletes log entries based on specified criteria. Can delete both base logs and derived logs.
+
+Args:
+    source_type: Controls which type of logs to delete:
+        - 'all': Delete both base and derived logs (default)
+        - 'base': Only delete base logs
+        - 'derived': Only delete derived logs
 
 #### Authorizations
 
@@ -18,8 +24,20 @@ Whether to delete logs which end up being empty as a result of the field deletio
 
 #### Body
 
+<ParamField body="project" type="string" required="true">
+Name of the project the logs belong to.
+</ParamField>
+
+<ParamField body="context" type="any | null" >
+Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').
+</ParamField>
+
 <ParamField body="ids_and_fields" type="[array]" required="true">
 List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items.
+</ParamField>
+
+<ParamField body="source_type" type="string"  default={"all"}>
+Specifies which type of logs to delete. Can be 'base' for base logs only, 'derived' for derived logs only, or 'all' to delete from both types.
 </ParamField>
 
 <RequestExample>
@@ -30,6 +48,8 @@ curl --request DELETE \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{
+    "project": "eval-project",
+    "context": "experiment1/trial1",
     "ids_and_fields": [
         [
             123,
@@ -53,7 +73,8 @@ curl --request DELETE \
             ],
             "response"
         ]
-    ]
+    ],
+    "source_type": "all"
 }'
 ```
 
@@ -64,7 +85,7 @@ url = "https://api.unify.ai/v0/logs?delete_empty_logs=True"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"ids_and_fields": [[123, "score"], [[456, 457], ["score", "response"]], [[458, 459, 460], "response"]]}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "ids_and_fields": [[123, "score"], [[456, 457], ["score", "response"]], [[458, 459, 460], "response"]], "source_type": "all"}
 
 response = requests.request("DELETE", url, json=json_input, headers=headers)
 
@@ -76,19 +97,13 @@ print(response.text)
 
 ```json 200
 {
-    "info": "Log entry deleted successfully from all logs!"
+    "info": "Log entries deleted successfully!"
 }
 ```
 
-```json 404 (1)
+```json 404
 {
-    "detail": "One or more logs with the specified IDs were not found."
-}
-```
-
-```json 404 (2)
-{
-    "detail": "Log entry <entry> not found in one or more logs."
+    "detail": "One or more logs were not found or you don't have permission to delete them."
 }
 ```
 
