@@ -136,8 +136,6 @@
                                 "python/classes/interfaces/logs/Experiment",
                                 "python/classes/interfaces/logs/Log",
                                 "python/classes/interfaces/logs/Params",
-                                "python/functions/interfaces/logs/end_log",
-                                "python/functions/interfaces/logs/start_log",
                                 "python/functions/interfaces/logs/traced"
                             ]
                         },
