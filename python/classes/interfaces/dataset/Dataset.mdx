@@ -6,13 +6,13 @@ title: 'Dataset'
 class Dataset
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L14)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L14)</p>
 
 
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L15)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L15)</p>
 
 ```python
 def __init__(
@@ -48,7 +48,7 @@ Initialize a local dataset.
 
 ### name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L62)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L62)</p>
 
 ```python
 def name(self) -> str:
@@ -62,7 +62,7 @@ Name of the dataset.
 
 ### set\_name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L79)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L79)</p>
 
 ```python
 def set_name(self, name: str) -> Self:
@@ -86,7 +86,7 @@ This dataset, useful for chaining methods.
 
 ### add
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L252)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L252)</p>
 
 ```python
 def add(
@@ -119,7 +119,7 @@ The new dataset following the addition.
 
 ### download
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L176)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L176)</p>
 
 ```python
 def download(self, overwrite: bool = False) -> Self:
@@ -144,7 +144,7 @@ This dataset after the in-place download, useful for chaining methods.
 
 ### from\_upstream
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L92)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L92)</p>
 
 ```python
 def from_upstream(
@@ -176,7 +176,7 @@ The dataset, with contents downloaded from upstream.
 
 ### inplace\_add
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L301)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L301)</p>
 
 ```python
 def inplace_add(
@@ -209,7 +209,7 @@ This dataset following the in-place addition.
 
 ### inplace\_sub
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L330)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L330)</p>
 
 ```python
 def inplace_sub(
@@ -235,7 +235,7 @@ This dataset following the in-place subtraction.
 
 ### sub
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L279)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L279)</p>
 
 ```python
 def sub(
@@ -261,7 +261,7 @@ The new dataset following the subtraction.
 
 ### sync
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L212)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L212)</p>
 
 ```python
 def sync(self) -> Self:
@@ -278,7 +278,7 @@ This dataset after the in-place sync, useful for chaining methods.
 
 ### upload
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L131)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L131)</p>
 
 ```python
 def upload(self, overwrite: bool = False) -> Self:
@@ -303,7 +303,7 @@ This dataset, useful for chaining methods.
 
 ### upstream\_diff
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L224)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L224)</p>
 
 ```python
 def upstream_diff(self) -> Self:
@@ -321,7 +321,7 @@ This dataset after printing the diff, useful for chaining methods.
 
 ### \_\_add\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L354)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L354)</p>
 
 ```python
 def __add__(
@@ -348,7 +348,7 @@ The new dataset following the addition.
 
 ### \_\_contains\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L475)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L475)</p>
 
 ```python
 def __contains__(
@@ -375,7 +375,7 @@ Boolean, whether the passed Dataset is a subset of this one.
 
 ### \_\_getitem\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L505)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L505)</p>
 
 ```python
 def __getitem__(self, item: Union[int, slice]) -> Union[Any, Dataset]:
@@ -399,7 +399,7 @@ An individual item or Dataset slice, for int and slice queries respectively.
 
 ### \_\_iadd\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L398)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L398)</p>
 
 ```python
 def __iadd__(
@@ -425,7 +425,7 @@ This dataset following the in-place addition.
 
 ### \_\_isub\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L449)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L449)</p>
 
 ```python
 def __isub__(
@@ -451,7 +451,7 @@ This dataset following the in-place subtraction.
 
 ### \_\_iter\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L465)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L465)</p>
 
 ```python
 def __iter__(self) -> Any:
@@ -467,7 +467,7 @@ The next instance in the dataset.
 
 ### \_\_len\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L496)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L496)</p>
 
 ```python
 def __len__(self) -> int:
@@ -483,7 +483,7 @@ The number of entries in the dataset.
 
 ### \_\_radd\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L371)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L371)</p>
 
 ```python
 def __radd__(
@@ -518,7 +518,7 @@ The new dataset following the addition.
 
 ### \_\_rsub\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L431)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L431)</p>
 
 ```python
 def __rsub__(
@@ -546,7 +546,7 @@ The new dataset following the subtraction.
 
 ### \_\_sub\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3a7cbe915c30bb5694ac0430644c745ad81ea768/unify/interfaces/dataset.py#L414)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e4d51e7de14f8a992a36d86c1fd4ec20b3ea2e75/unify/interfaces/dataset.py#L414)</p>
 
 ```python
 def __sub__(
