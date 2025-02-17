@@ -407,27 +407,6 @@
                     "group": "Interfaces",
                     "pages": [
                         {
-                            "group": "Datasets",
-                            "pages": [
-                                "api-reference/datasets/list_datasets",
-                                "api-reference/datasets/get_dataset_entries",
-                                "api-reference/datasets/rename_dataset",
-                                "api-reference/datasets/delete_dataset",
-                                "api-reference/datasets/get_dataset_entry",
-                                "api-reference/datasets/delete_dataset_entry",
-                                "api-reference/datasets/create_dataset",
-                                "api-reference/datasets/add_dataset_entries"
-                            ]
-                        },
-                        {
-                            "group": "Dataset Artifacts",
-                            "pages": [
-                                "api-reference/dataset_artifacts/create_artifacts",
-                                "api-reference/dataset_artifacts/list_artifacts",
-                                "api-reference/dataset_artifacts/delete_artifact"
-                            ]
-                        },
-                        {
                             "group": "Projects",
                             "pages": [
                                 "api-reference/projects/create_project",
