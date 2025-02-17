@@ -205,7 +205,8 @@
                                         "python/functions/interfaces/utils/logs/get_log_by_id",
                                         "python/functions/interfaces/utils/logs/get_logs",
                                         "python/functions/interfaces/utils/logs/get_logs_metric",
-                                        "python/functions/interfaces/utils/logs/log"
+                                        "python/functions/interfaces/utils/logs/log",
+                                        "python/functions/interfaces/utils/logs/set_user_logging"
                                     ]
                                 },
                                 {
