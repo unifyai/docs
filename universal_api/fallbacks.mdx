@@ -12,7 +12,7 @@ If one provider goes down or fails to respond for some reason,
 the request will go to the next model on the list, and so on,
 until either the request succeeds or the end of the list is reached.
 
-## Fallback Providers
+## Providers
 
 Lets assume you're deploying `claude-3-opus` for a production application, where
 downtime would be detrimental for your users. You can set `anthropic` as your default
@@ -40,7 +40,7 @@ client = unify.Unify(
 response = client.generate("Hello.")
 ```
 
-## Fallback Models
+## Models
 
 The same logic can also be applied to different models with the same provider,
 for example maybe you're deploying `gemini-1.5-pro` on `vertex-ai`, but you hit
@@ -55,7 +55,7 @@ client = unify.Unify(
 response = client.generate("Hello.")
 ```
 
-## Fallback Endpoints
+## Endpoints
 
 Finally, you can also specify fallbacks for the *entire endpoint*.
 For example, maybe you don't want to keep your users waiting, and so if the first
@@ -69,7 +69,7 @@ client = unify.Unify(
 response = client.generate("Hello.")
 ```
 
-## Fallback Compositions
+## Compositions
 
 The Fallback logic can be composed arbitrarily across models, providers and endpoints.
 For example, the following will attempt `llama-3.1-405b-chat` for a variety of providers
@@ -95,7 +95,7 @@ client = unify.Unify(
 response = client.generate("Hello.")
 ```
 
-## Fallback Regions
+## Regions
 
 For enterprise users deploying [on-prem](https://docs.unify.ai/on_prem),
 you can also route across different *regions*.
@@ -126,7 +126,7 @@ If a fallback *region* is specified, then fallback models,
 providers and endpoints **cannot** be specified as well.
 Fallback regions are only compatible with individual endpoints.
 
-## Fallback Queries
+## Queries
 
 As mentioned above, fallbacks can also be specified for *entire queries*.
 This is useful in cases where aspects of the prompt need to be handled in a

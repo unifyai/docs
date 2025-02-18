@@ -2,23 +2,9 @@
 title: 'Routing'
 ---
 
-In the previous section, we introduced *fallbacks*, which enable you to specify what to
-do in the case of outages.
-
-However, you can also specify routing logic to directly *maximize LLM performance*,
-whether that be be improving *cost*, *quality* or *speed*. First, we outline the
-[Base Metrics](#base-metrics) which can be optimized over, we then explain
-[Meta Providers](#meta-providers) (models used with whatever provider optimizes a
-given metric, based on the latest available benchmark data),
-then [Thresholds](#thresholds) (specifying the permitted bounds for certain
-metrics), then how routing can be performed across models (not only
-providers) in [Model Routing](#model-routing), then how
-[Custom Metrics](#custom-metrics) can be specified as a linear combination of the base
-metrics, then how [The Search Space](#the-search-space) across models,
-providers and endpoints can be defined, and finally we explain how
-[Quality Prediction](#quality-prediction) works under the hood, and why training
-your own router is the best option in order to maximize quality when routing over models
-(explained in the subsequent sections!).
+As well as [fallbacks](https://docs.unify.ai/universal_api/fallbacks),
+you can also route to directly maximize LLM **performance**,
+whether that be be improving cost, quality, speed or a *combination*.
 
 ## Base Metrics
 
@@ -28,7 +14,7 @@ are as follows:
 - **Quality** (The quality of the generated response): `quality, q`
 - **Time to First Token**: `time-to-first-token, ttft, t`
 - **Inter Token Latency**: `inter-token-latency, itl, i`
-- **Cost** ($ per million tokens based on the default [Artificial Analysis](https://artificialanalysis.ai/) input:output ratio of 3:1): `cost, c`
+- **Cost** ($/M tkns, inp:out -> 3:1, [ref](https://artificialanalysis.ai/)): `cost, c`
 - **Input Cost** ($ per million input tokens): `input-cost, ic`
 - **Output Cost** ($ per million output tokens): `output-cost, oc`
 
@@ -50,16 +36,7 @@ curl -X 'POST' \
     }'
 ```
 
-As before, the same can be done via any of the
-[query methods](https://docs.unify.ai/universal_api/making_queries)
-([HTTP Requests](https://docs.unify.ai/universal_api/making_queries#http-requests),
-[Unify Python Package](https://docs.unify.ai/universal_api/making_queries#unify-python-package),
-[OpenAI Python Package](https://docs.unify.ai/universal_api/making_queries#openai-python-package),
-[OpenAI NodeJS Package](https://docs.unify.ai/universal_api/making_queries#openai-nodejs-package),
-again by simply specifying the `model` argument in each case).
-For example, in the
-[Unify Python Package](https://docs.unify.ai/universal_api/making_queries#unify-python-package)
-it would simply look like this:
+In Python:
 
 ```python
 import unify
@@ -67,7 +44,7 @@ client = unify.Unify("claude-3-opus@inter-token-latency")
 response = client.generate("Hello.")
 ```
 
-To be more explicit, the prepending keywords `highest-` and `lowest-` can be specified.
+The prepending keywords `highest-` and `lowest-` can also be specified.
 When the keyword is omitted, it's assumed that the user wants the "best" option, which
 is `highest-` for quality and `lowest-` for all other metrics.
 The example above is equivalent to `claude-3-opus@lowest-inter-token-latency`.
@@ -75,8 +52,9 @@ The example above is equivalent to `claude-3-opus@lowest-inter-token-latency`.
 ## Thresholds
 
 You can specify upper and/or lower bounds for any of these metrics using `<`, `>`, `<=`
-and `>=` and separating each specification with `|` in the command. For example, the
-following command will find the `llama-3.1-405b-chat` provider with the lowest inter
+and `>=` and separating each specification with `|` in the command.
+
+For example, the following command will find the `llama-3.1-405b-chat` provider with the lowest inter
 token latency (the fastest), provided that the endpoint is not more expensive that $5
 per million tokens:
 
@@ -98,118 +76,12 @@ llama-3.1-70b-chat@quality|input-cost<=0.8|output-cost<=0.8|itl>1|itl<20
 As explained above, any of the aliases defined above can be used interchangeably,
 such as `i`, `itl` or `inter-token-latency` for the inter token latency.
 
-## Model Routing
-
-All of the examples above have assumed that there is a *single model* chosen,
-and we're then just optimizing over the *provider* for that chosen model.
-
-However, we can also include the model within the routing decision. To do so, we simply
-specify the model as `router`. For example, the following will find the highest quality
-endpoint (among *all* supported endpoints), which is cheaper than `$0.8` per million
-input tokens, cheaper than `$0.6` per million output tokens, and has an inter token
-latency faster than `20ms`:
-
-```shell
-router@quality|input-cost<0.8|output-cost<0.6|itl<20
-```
-
-## Custom Metrics
-
-So far, we have only considered cases where we optimize for a *single base metric*, and
-then constrain the search space for other metrics. However, you can also specify your
-own *custom metric*, as a linear combination of the base metrics:
-
-```shell
-custom_metric = q_f*q - i_f*i - t_f*t - c_f*c
-```
-
-In words, this metric takes factors `{}_f` for each of the four base metrics:
-`quality`, `inter-token-latency`, `time-to-first-token` and `cost`, and then computes
-their linear combination, with the objective of *maximizing* `custom_metric`.
-
-The `input-cost` and `output-cost` can also be specified independently,
-if you'd rather use a *different ratio* than the default `3:1` that `c_f*c` uses
-(as per the default ratio of [Artificial Analysis](https://artificialanalysis.ai/)):
-
-```shell
-custom_metric = q_f*q - i_f*i - t_f*t - ic_f*ic - oc_f*oc
-```
-
-With this form factor, controlling the custom metric is reduced to specifying the linear
-factors `{}_f`. These linear factors can be specified as follows:
-
-```shell
-router@q:1|i:0.5|t:2|c:0.7
-```
-
-Factors which are left unspecified are assumed to be zero (their contribution to the
-custom metric is ignored). For example, the following are aliases:
-
-```shell
-router@q:1|i:0.5 == router@q:1|i:0.5|t:0|c:0
-```
-
-Returning the the `input-cost` and `output-cost` ratio,
-the following are also exact aliases:
-
-```shell
-router@c:1 == router@ic:0.75|oc:0.25
-```
-
-If `c` is specified, then neither `ic` nor `oc` can be specified in the command
-(as per the example above, they *already are* fully specified via the `c` argument).
-
-As before, any variant of the metric can be used to specify the factors:
-
-```shell
-router@q:1|i:0.5 == router@quality:1|inter-token-latency:0.5
-```
-
-The Meta Providers explained above are actually aliases to this same logic,
-and under the hood they resolve to these factors:
-
-```shell
-llama-3.1-70b-chat@quality == llama-3.1-70b-chat@q:1 == llama-3.1-70b-chat@q:1|i:0|t:0|c:0
-llama-3.1-70b-chat@itl == llama-3.1-70b-chat@i:1 == llama-3.1-70b-chat@q:0|i:1|t:0|c:0
-```
-
-For this reason, meta-providers cannot be specified alongside these factors.
-Meta providers are basically convenient one-liners to specify *all four factors*.
-
-Note that the units are **not normalized**. It's down to **you** to reason about
-sensible values for the factors, based on the respective units:
-`cost` in $ per M tokens, `itl` in ms, `ttft` in ms, and `quality` normalized to `0-1`.
-
-When experimenting, you can retrieve the four metrics for any endpoint as follows:
-
-```shell
-curl -X 'GET' \
-    'https://api.unify.ai/v0/router/metric?endpoint=llama-3.1-405b-chat@together-ai' \
-    -H "Authorization: Bearer $UNIFY_KEY"
-```
-
-This will return a dictionary like below:
-
-```shell
-{
-    "quality": 0.78
-    "inter-token-latency": 15.67
-    "time-to-first-token": 752.39
-    "cost": 0.73
-}
-```
-
-The custom metric can then be reasoned with very easily on the client side,
-by applying any linear combination as desired.
-
-
 ## The Search Space
 
-All of the examples above have assumed that *all compatible* models and/or providers are
-included in the "search space" when making routing decisions. However,
-you might want to limit the search space.
-This can be achieved with the `models`, `providers`, `endpoints`, `skip_models`,
-`skip_providers`, and `skip_endpoints` keywords.
+All of the examples above have assumed that *all compatible* providers are
+included in the "search space" when making routing decisions.
+However, you might want to limit the search space.
+This can be achieved with the `providers` and `skip_providers` keywords.
 Again, this is simply specified within the same chain, separated by `|`.
 
 The following finds the fastest (lowest `itl`) endpoint for `llama-3.1-405b-chat`,
@@ -226,50 +98,7 @@ providers, *excluding* (skipping): `azure-ai` and `aws-bedrock`:
 llama-3.1-405b-chat@itl|skip_providers:azure-ai,aws-bedrock
 ```
 
-These keywords are also compatible when routing across models. The following optimizes
-a custom metric, whilst only considering the models `gpt-4o`, `o1-preview` and
-`claude-3-sonnet`:
+## Feedback
 
-```shell
-router@q:1|i:0.5|models:gpt-4o,o1-preview,claude-3-sonnet
-```
-
-Providers and models can also *both* be limited. The following only considers endpoints
-which are within the set of models **and** providers. It does not find the *superset* of
-endpoints matching the models and providers, but rather the *subset*. For example,
-the endpoints `claude-3-haiku@vertex-ai` and `llama-3-8b-chat@aws-bedrock` are **not**
-included in the search space for the query below, but the endpoint
-`claude-3-haiku@anthropic` **is** included:
-
-```shell
-router@q:1|i:0.5|models:claude-3-haiku,claude-3-sonnet,claude-3-opus|providers:anthropic,aws-bedrock
-```
-
-Note that specifying a single model in `models` using the `router` keyword is
-functionally equivalent to specifying that model on the left-hand-side:
-
-```shell
-router@itl|models:llama-3.1-405b-chat == llama-3.1-405b-chat@itl
-```
-
-Given that `skip_{entity}:` and `{entity}:` specify the *only inclusions* or the
-*only exclusions*, they **cannot** both be specified in the same query, but they can
-for other entities. For example, the following *is* permitted:
-
-```shell
-router@q:1|i:0.5|models:claude-3-haiku,claude-3-sonnet|skip_providers:aws-bedrock
-```
-
-## Quality Prediction
-
-Up to now, we have not explained how quality is predicted ahead of time for each
-endpoint being evaluated, during routing decisions. We have trained a neural scoring
-function on many prompts across several open datasets (such as Open Hermes), with the
-training targets provided via LLM-as-a-judge.
-
-This is a useful baseline for general tasks, but to really get top performance on your
-task, it's necessary to train *your own* neural scoring function on *your own* prompts,
-which will result in better performance on your downstream task.
-
-We cover all aspects of training, configuring and deploying your own neural scoring
-function for your own fully custom router in the remaining sections!
+If you'd like to do more sophisticated routing, such as routing to the best *model* (not only the provider), 
+then let us know [on discord](https://discord.com/invite/sXyFF8tDtm) and we'll get an interface built for model routing! 🔀
