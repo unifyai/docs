@@ -92,7 +92,6 @@
                     "pages": [
                         "universal_api/overview",
                         "universal_api/arguments",
-                        "universal_api/supported_arguments",
                         "universal_api/prompts",
                         "universal_api/responses",
                         "universal_api/fallbacks",
