@@ -35,9 +35,9 @@ unify.list_endpoints(provider="openai")
 unify.list_endpoints(model="llama-3-8b-chat")
 ```
 
-The rest of the docs assume you're using **Python**,
-but this is all built on top of our [REST API](https://docs.unify.ai/api-reference),
-which you can query directly.
+The rest of the docs *generally* assume we're using **Python**,
+but the Python client is built directly on top of our [REST API](https://docs.unify.ai/api-reference),
+which you can also query directly.
 
 For example, listing endpoints:
 
@@ -48,7 +48,7 @@ curl -X 'GET' \
   -H 'accept: application/json'
 ```
 
-We won't show any more `curl` examples, but you can check out the
+We won't show too many more `curl` examples in the docs, but you can check out the
 [API Reference](https://docs.unify.ai/api-reference)
 to see how to make queries for all supported features of the Universal API. 
 
