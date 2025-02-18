@@ -6,11 +6,13 @@ Sometimes individual providers have outages,
 which can disrupt live workflows in production.
 To combat this, you can set a list of fallback providers, models, endpoints, or even
 entire fallback queries (if different models require unique system messages,
-temperature etc.). Therefore, if one provider goes down or fails to respond for some
-reason, the request will go to the next model on the list, and so on, until either the
-request succeeds, or the end of the list is reached.
+temperature etc.).
 
-## Fallback Models, Providers, Endpoints and Regions
+If one provider goes down or fails to respond for some reason,
+the request will go to the next model on the list, and so on,
+until either the request succeeds or the end of the list is reached.
+
+## Fallback Providers
 
 Lets assume you're deploying `claude-3-opus` for a production application, where
 downtime would be detrimental for your users. You can set `anthropic` as your default
@@ -28,22 +30,17 @@ curl -X 'POST' \
     }'
 ```
 
-Of course, the same can be done via any of the
-[query methods](https://docs.unify.ai/universal_api/making_queries)
-([HTTP Requests](https://docs.unify.ai/universal_api/making_queries#http-requests),
-[Unify Python Package](https://docs.unify.ai/universal_api/making_queries#unify-python-package),
-[OpenAI Python Package](https://docs.unify.ai/universal_api/making_queries#openai-python-package),
-[OpenAI NodeJS Package](https://docs.unify.ai/universal_api/making_queries#openai-nodejs-package),
-by simply specifying the `model` argument in each case).
-For example, in the
-[Unify Python Package](https://docs.unify.ai/universal_api/making_queries#unify-python-package)
-it would simply look like this:
+In Python:
 
 ```python
 import unify
-client = unify.Unify("claude-3-opus@anthropic->aws-bedrock")
+client = unify.Unify(
+    "claude-3-opus@anthropic->aws-bedrock"
+)
 response = client.generate("Hello.")
 ```
+
+## Fallback Models
 
 The same logic can also be applied to different models with the same provider,
 for example maybe you're deploying `gemini-1.5-pro` on `vertex-ai`, but you hit
@@ -52,9 +49,13 @@ your *fallback model*, again on `vertex-ai`. This can be specified like so:
 
 ```python
 import unify
-client = unify.Unify("gemini-1.5-pro->gemini-1.5-flash@vertex-ai")
+client = unify.Unify(
+    "gemini-1.5-pro->gemini-1.5-flash@vertex-ai"
+)
 response = client.generate("Hello.")
 ```
+
+## Fallback Endpoints
 
 Finally, you can also specify fallbacks for the *entire endpoint*.
 For example, maybe you don't want to keep your users waiting, and so if the first
@@ -62,9 +63,13 @@ attempt to a larger model fails, then you just want to give them a response quic
 
 ```python
 import unify
-client = unify.Unify("llama-3.1-405b-chat@together-ai->llama-3.1-70b-chat@groq")
+client = unify.Unify(
+    "llama-3.1-405b-chat@together-ai->llama-3.1-70b-chat@groq"
+)
 response = client.generate("Hello.")
 ```
+
+## Fallback Compositions
 
 The Fallback logic can be composed arbitrarily across models, providers and endpoints.
 For example, the following will attempt `llama-3.1-405b-chat` for a variety of providers
@@ -72,7 +77,9 @@ before falling back to `llama-3.1-70b-chat@groq` if they all fail:
 
 ```python
 import unify
-client = unify.Unify("llama-3.1-405b-chat@together-ai->fireworks-ai->vertex-ai->llama-3.1-70b-chat@groq")
+client = unify.Unify(
+    "llama-3.1-405b-chat@together-ai->fireworks-ai->vertex-ai->llama-3.1-70b-chat@groq"
+)
 response = client.generate("Hello.")
 ```
 
@@ -82,9 +89,13 @@ with `vertex-ai`, then attempt `llama-3.1-405b-chat` with `together-ai` and
 
 ```python
 import unify
-client = unify.Unify("gemini-1.5-pro->gemini-1.5-flash@vertex-ai->llama-3.1-405b-chat@together-ai->fireworks-ai->vertex-ai->llama-3.1-70b-chat@groq")
+client = unify.Unify(
+    "gemini-1.5-pro->gemini-1.5-flash@vertex-ai->llama-3.1-405b-chat@together-ai->fireworks-ai->llama-3.1-70b-chat@groq"
+)
 response = client.generate("Hello.")
 ```
+
+## Fallback Regions
 
 For enterprise users deploying [on-prem](https://docs.unify.ai/on_prem),
 you can also route across different *regions*.
@@ -103,7 +114,7 @@ curl -X 'POST' \
     }'
 ```
 
-With the Python client, it would look as follows:
+In Python:
 
 ```python
 import unify
@@ -149,7 +160,7 @@ curl -X 'POST' \
 Fallback queries can also be combined with fallback models, providers, and endpoints.
 For example, the fallback logic below will attempt `claude-3-opus@aws-bedrock` with
 custom API keys, then `vertex-ai` (again with custom API keys, to use your own GCP
-credits), before finally falling back to `anthropic` if both fail:
+credits), before finally falling back to `anthropic` (via your Unify API key) if both fail:
 
 ```shell
 curl -X 'POST' \
@@ -169,7 +180,6 @@ curl -X 'POST' \
     ]'
 ```
 
-Currently, fallbacks across queries is not support in the
+Currently, fallback queries are not support in the
 [Python SDK](https://github.com/unifyai/unify), but if this would be useful,
-then feel free to [hop on a call](https://calendly.com/unify-chat/general)
-or ping us on [discord](https://discord.com/invite/sXyFF8tDtm)! 👾
+then feel free to ping us on [discord](https://discord.com/invite/sXyFF8tDtm)! 👾
