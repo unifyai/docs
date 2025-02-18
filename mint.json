@@ -68,7 +68,6 @@
                     "pages": [
                         "universal_api/overview",
                         "universal_api/queries",
-                        "universal_api/responses",
                         "universal_api/fallbacks",
                         "universal_api/routing",
                         "universal_api/fine_tuning",
