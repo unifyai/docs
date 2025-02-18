@@ -72,7 +72,6 @@
                         "universal_api/routing",
                         "universal_api/fine_tuning",
                         "universal_api/local_models",
-                        "universal_api/logging",
                         "universal_api/caching",
                         "universal_api/comparisons",
                         "universal_api/chatbot"
