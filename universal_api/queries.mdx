@@ -35,15 +35,18 @@ tools = [
         "type": "function",
         "function": {
             "name": "get_current_weather",
-            "description": "Get the current weather in a given location",
+            "description": "Get the weather in a given location",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "location": {
                         "type": "string",
-                        "description": "The city and state, e.g. New York, NY",
+                        "description": "City and state, ie New York, NY",
                     },
-                    "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+                    "unit": {
+                        "type": "string",
+                        "enum": ["celsius", "fahrenheit"]
+                    },
                 },
             },
         },
@@ -97,12 +100,11 @@ print(response)
 
 We get something like the following:
 
-```
-The image depicts a serene landscape featuring a wooden pathway that extends into the distance, cutting through a lush green field.
-The field is filled with tall grasses and a variety of low-lying shrubs and bushes.
-In the background, there are scattered trees, and the sky above is a clear blue with some wispy clouds.
-The scene exudes a calm, peaceful, and natural atmosphere.
-```
+
+> The image depicts a serene landscape featuring a wooden pathway that extends into the distance, cutting through a lush green field.
+> The field is filled with tall grasses and a variety of low-lying shrubs and bushes.
+> In the background, there are scattered trees, and the sky above is a clear blue with some wispy clouds.
+> The scene exudes a calm, peaceful, and natural atmosphere.
 
 Let's do the same with `claude-3-sonnet`, with a different image this time:
 
@@ -113,6 +115,9 @@ Let's do the same with `claude-3-sonnet`, with a different image this time:
 ```python
 import unify
 client = unify.Unify("claude-3-sonnet@anthropic")
+url = "https://raw.githubusercontent.com/" \
+"unifyai/unifyai.github.io/refs/heads/main/" \
+"img/externally_linked/ant.jpg"
 response = client.generate(
   messages=[
     {
@@ -122,7 +127,7 @@ response = client.generate(
         {
           "type": "image_url",
           "image_url": {
-            "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg",
+            "url": url,
           },
         },
       ],
@@ -136,13 +141,13 @@ print(response)
 
 We get something like the following:
 
-```
-The image shows a close-up view of an ant. The ant appears to be a large black carpenter ant species.
-The ant is standing on a light-colored surface, with its mandibles open and antennae extended.
-The image captures intricate details of the ant's body segments and legs.
-The background has a reddish-brown hue, creating a striking contrast against the dark coloration of the ant.
-This macro photography shot highlights the remarkable structure and form of this small insect in great detail.
-```
+
+> The image shows a close-up view of an ant. The ant appears to be a large black carpenter ant species.
+> The ant is standing on a light-colored surface, with its mandibles open and antennae extended.
+> The image captures intricate details of the ant's body segments and legs.
+> The background has a reddish-brown hue, creating a striking contrast against the dark coloration of the ant.
+> This macro photography shot highlights the remarkable structure and form of this small insect in great detail.
+
 
 ## Platform Arguments
 
@@ -168,14 +173,14 @@ There are three types of passthrough arguments:
     curl --request POST \
     --url https://api.unify.ai/v0/chat/completions \
     --header "<header_name>: <value>"
-    ...
+    etc.
     ```
 
 2) extra query parameters, which are passed to the `curl` request like so:
     ```shell
     curl --request POST \
     --url https://api.unify.ai/v0/chat/completions?<parameter>=<value> \
-    ...
+    etc.
     ```
 
 3) extra json properties, which are passed to the `curl` request like so:
@@ -184,7 +189,7 @@ There are three types of passthrough arguments:
     --url https://api.unify.ai/v0/chat/completions \
     --data '{
     "<key>": "<value>"
-    ...
+    etc.
     ```
 
 In the Python client, these extra arguments are handled by the `extra_headers` argument, `extra_query` argument,
@@ -206,7 +211,9 @@ import anthropic
 import base64
 import httpx
 
-image_url = "https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg"
+image_url = "https://raw.githubusercontent.com/" \
+"unifyai/unifyai.github.io/refs/heads/main/" \
+"img/externally_linked/ant.jpg"
 image_media_type = "image/jpeg"
 image_data = base64.b64encode(httpx.get(image_url).content).decode("utf-8")
 
@@ -241,7 +248,9 @@ import unify
 import base64
 import httpx
 
-image_url = "https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg"
+image_url = "https://raw.githubusercontent.com/" \
+"unifyai/unifyai.github.io/refs/heads/main/" \
+"img/externally_linked/ant.jpg"
 image_media_type = "image/jpeg"
 image_data = base64.b64encode(httpx.get(image_url).content).decode("utf-8")
 
@@ -328,7 +337,12 @@ Again, this can also be done in the Unify Python SDK as follows:
 
 ```python
 client = unify.Unify("claude-3-haiku@anthropic")
-client.generate("hello world!", extra_headers={"anthropic-beta": "max-tokens-3-5-sonnet-2024-07-15"})
+client.generate(
+    "hello world!",
+    extra_headers={
+        "anthropic-beta": "max-tokens-3-5-sonnet-2024-07-15"
+    }
+)
 ```
 
 {/* ToDo: add an example for a query parameter, again with both curl + python examples */}
