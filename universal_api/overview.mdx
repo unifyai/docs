@@ -2,14 +2,8 @@
 title: 'Overview'
 ---
 
-There’s an ever expanding ocean of models and providers, with new LLMs coming out all the
-time 🌊
-Each provider requires a unique API key, unique payment processing system, and unique
-format for querying the API.
-When testing out different models and providers, it can quickly become very cumbersome to
-manage all of these nuances 🫠
-
-<p align="center"><iframe width="672" height="378" src="https://www.youtube.com/embed/15wgxK1Cw0E?si=JnrC0yiU5J4ju5Yk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
+New LLM models come out all the time, with each provider requiring a unique API key, billing, and API standard.
+It quickly becomes cumbersome trying to manage all of these nuances.
 
 Our Universal API provides:
 
@@ -17,4 +11,30 @@ Our Universal API provides:
 - One account, with one balance and one API key 🔑
 - Integrations for your own fine-tuned and/or local LLMs 🖥️
 
-To get your universal API key, simply [sign up](https://console.unify.ai)!
+To get started, just [sign up](https://console.unify.ai/), `pip install unifyai`, and make your first query:
+
+
+```python
+import unify
+client = unify.Unify("gpt-4o@openai", api_key="UNIFY_KEY")
+client.generate("hello world!")
+```
+
+You can list all supported models, endpoints and providers like so:
+
+```python
+# all
+unify.list_models()
+unify.list_providers()
+unify.list_endpoints()
+
+# filtered
+unify.list_models("openai")
+unify.list_providers("llama-3-8b-chat")
+unify.list_endpoints(provider="openai")
+unify.list_endpoints(model="llama-3-8b-chat")
+```
+
+That's it, you now have all the power of **all LLMs** at your finger tips ⚡
+
+With great power comes great responsibility 🦸
