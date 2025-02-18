@@ -382,37 +382,13 @@ client.set_temperature(1.0)
 print(client.temperature)  # 1.0
 ```
 
-Passing a value to the `.generate()` method will over*ride* (but not over*write*) the default value specified
+Passing a value to the `.generate()` method will over**ride** (but not over**write**) the default value specified
 for the client.
 
 ```python
 client = unify.Unify("claude-3-haiku@anthropic", temperature=0.5)
 client.generate("Hello world!") # temperature of 0.5
 client.generate("What a nice day.", temperature=1.0) # temperature of 1.0
-```
-
-`Prompt` instances are explained in the next section, but it's worth mentioning here
-that default prompts can also be both *extracted* and *set* for clients.
-The default prompt is determined dynamically based on all of the default values
-mentioned above during retrieval:
-
-```python
-import unify
-client = unify.Unify("gpt-4o@openai", temperature=0.5, n=2)
-assert client.default_prompt.temperature == 0.5
-assert client.default_prompt.n == 2
-```
-
-In other direction, setting the default prompt will update the various default
-parameters that were explained above:
-
-```python
-import unify
-client = unify.Unify("gpt-4o@openai", temperature=0.5, n=2)
-prompt = unify.Prompt(temperature=0.4)
-client.set_default_prompt(prompt)
-assert client.temperature == 0.4
-assert client.n is None
 ```
 
 Calls to set default arguments can also be chained together like so,
@@ -435,4 +411,3 @@ supported, then feel free to let us know [on discord](https://discord.com/invite
 and we'll get it supported as soon as possible! ⚡
 
 Similarly, if you would like to see new arguments and features supported in the platform, then let us know!
-We always love to hear how we can improve features and functionality.
