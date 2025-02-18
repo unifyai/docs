@@ -2,25 +2,13 @@
 title: 'Chatbot'
 ---
 
-Having a back-and-forth conversation with an LLM is a very useful format for engagement,
-it is one of the primary reasons that ChatGPT became such an instant success.
-
 In order to make back-and-forth chats simple in the platform, we've created a simple
 [Chatbot](https://docs.unify.ai/python/chat/chatbot#chatbot) class which wraps around
 either the [Unify](https://docs.unify.ai/python/chat/clients/uni_llm#unify) client or
 the [MultiLLM](https://docs.unify.ai/python/chat/clients/multi_llm#asyncmultillm)
 client.
 
-The asynchronous clients are also supported, but there is no benefit in using them over
-the synchronous versions in this case,
-as the [ChatBot](https://docs.unify.ai/python/chat/chatbot#chatbot) `.run()` method is
-*interactive*, and therefore cannot be combined with other `.run()` calls in parallel,
-with an `asyncio.run` call sitting on top.
-
-Below, we show simple examples, and explain the potential use cases for each
-client + chatbot combination.
-
-## Unify Chatbot
+## Single LLM Chatbot
 
 This is the simplest chatbot, running synchronously with a single LLM:
 
@@ -46,7 +34,7 @@ In order to create a more ChatGPT-esq experience, streaming can be turned on via
 `stream=True` in the `unify.Unify` constructor, such that the chatbot responses are
 streamed to the terminal.
 
-## MultiLLM Chatbot
+## Multi LLM Chatbot
 
 In order to chat with several LLMs in parallel
 (similar to our [chat interface](https://console.unify.ai/dashboard?tab=Chat)),
