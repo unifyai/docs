@@ -6,16 +6,12 @@ Caching LLM responses can be useful for a variety of use cases. For example, if 
 creating a user-facing application, then it can help to speed up responses and save
 money for common requests.
 
-As another example, if you're building a complex multi-step LLM pipeline, caching makes
+Or perhaps you're building a complex multi-step LLM pipeline, and caching makes
 it much easier to debug, without needing to continually send the same queries to the
-same LLMs over and over again, burning both time and money.
+same LLMs repeatedly, burning both time and money.
 
-Caching is currently only supported via the Python client. Caching behind the API is not
-yet supported. However, if caching behind the API would be useful,
-then feel free to [hop on a call](https://calendly.com/unify-chat/general)
-or let us know in [discord](https://discord.com/invite/sXyFF8tDtm)!
-
-Caching can be turned on in the client constructor, like so:
+Caching is currently only supported via the Python client (server-side caching coming soon).
+It can be turned on in the client constructor, like so:
 
 ```python
 import unify
@@ -59,7 +55,7 @@ and queries will once again be made to the LLMs. You can also open up the `.cach
 file in any text editor, and modify the cache on a query-by-query basis if needed.
 
 It's also worth noting that this cache implementation is very simple. For production
-scale caching of thousands or millions of prompts, a more efficient caching mechanisms
-would be needed. If you need more sophisticated caching for your application,
-then [Get in touch](https://calendly.com/unify-chat/general) or ping us on
-[discord](https://discord.com/invite/sXyFF8tDtm)! 👾
+scale caching of thousands or millions of prompts, you should use server-side caching,
+which uses SQL under the hood (coming soon).
+
+Thoughts + feedback always welcome [on discord](https://discord.com/invite/sXyFF8tDtm)! 👾
