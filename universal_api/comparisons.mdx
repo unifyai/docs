@@ -5,12 +5,10 @@ title: 'Comparisons'
 When choosing which LLM to use, it's often very useful to simply get a "vibe check",
 and see which LLMs seem to respond best to the kinds of questions you'd like to ask.
 
-Trying out LLMs one after the other can be tedious. We've therefore made it very easy to
+Trying out LLMs one after the other can be tedious. We've therefore made it easy to
 compare LLM outputs to the same question side-by-side, both via our browser-based
-[chat interface](https://console.unify.ai/dashboard?tab=Chat),
-and the [MultiLLM](https://docs.unify.ai/python/chat/clients/multi_llm#multillm) and
-[MultiLLMAsync](https://docs.unify.ai/python/chat/clients/multi_llm#multillmasync)
-classes in our Python SDK.
+[chat interface](https://console.unify.ai/chat),
+and the `MultiLLM` and `MultiLLMAsync` classes in our Python SDK.
 
 ## Single LLM Clients
 
@@ -25,7 +23,7 @@ print(client.generate("Hello, how it is going?"))
 ```
 
 For optimal performance in handling multiple user requests simultaneously,
-such as in a chatbot application, processing them asynchronously is recommended.
+processing them asynchronously is recommended.
 A minimal example using `AsyncUnify` is given below:
 
  ```python
@@ -66,11 +64,11 @@ Functionality wise, the asynchronous and synchronous clients are identical.
 
 Both `MultiLLM` and `MultiLLMAsync` wrap `AsyncUnify` instances under the hood,
 such that the LLMs are queried in parallel. The distinction between `MultiLLM` and
-`MultiLLMAsync` refers to whether the `.generate()` method is also itself an
+`MultiLLMAsync` refers to whether the `.generate()` method is itself *also* an
 asynchronous function, which can be nested inside a broader outer program orchestrated
 by `asyncio.run`.
 
-An interactive session with several LLM can be spun up in Python very quickly, as follows:
+An interactive session with several LLM can be spun up in Python like so:
 
 ```python
 import unify
@@ -137,3 +135,8 @@ assert set(client.endpoints) == {
     "gpt-4-turbo@openai"
 }
 ```
+
+## Feedback
+
+If you have any feedback on LLM comparisons, or would like to see other features added,
+then feel free to [ping us on discord](https://discord.com/invite/sXyFF8tDtm)! 👾
