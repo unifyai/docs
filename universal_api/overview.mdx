@@ -35,6 +35,23 @@ unify.list_endpoints(provider="openai")
 unify.list_endpoints(model="llama-3-8b-chat")
 ```
 
+The rest of the docs assume you're using **Python**,
+but this is all built on top of our [REST API](https://docs.unify.ai/api-reference),
+which you can query directly.
+
+For example, listing endpoints:
+
+```shell
+curl -X 'GET' \
+  'https://api.unify.ai/v0/endpoints' \
+  -H "Authorization: Bearer $UNIFY_KEY" \
+  -H 'accept: application/json'
+```
+
+We won't show any more `curl` examples, but you can check out the
+[API Reference](https://docs.unify.ai/api-reference)
+to see how to make queries for all supported features of the Universal API. 
+
 That's it, you now have all the power of **all LLMs** at your finger tips ⚡
 
 With great power comes great responsibility 🦸
