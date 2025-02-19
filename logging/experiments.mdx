@@ -1,4 +1,49 @@
 ---
 title: 'Experiments'
 ---
-[coming soon 🚧]
+
+The `unify.Experiment` class is a very simple convenience class for logging experiments.
+It simply creates a parameter with the name `"experiment"`, and automatically increments the value as an ascending integer for each new experiment, if an explicit name is not provided.
+
+```python
+with unify.Experiment():
+    for _ in range(10):
+        unify.log(score=random.random())
+```
+
+IMG
+
+Let's run another experiment, but give it an explicit name.
+
+```python
+with unify.Experiment("my_experiment"):
+    for _ in range(10):
+        unify.log(score=random.random())
+```
+
+IMG
+
+it's often useful to use the `with unify.Experiment()` alongside a `unify.Parameter()` to represent the settable parameters of an experiment.
+
+```python
+with unify.Experiment("final_experiment"), unify.Parameter(
+    system_message="You are a helpful assistant."
+):
+    for _ in range(10):
+        unify.log(score=random.random())
+```
+
+IMG
+
+You can also use negative indexing, and the `overwrite` argument. For example, the following will overwrite the previous experiment.
+Integers are interpreted as the experiment version, and strings are interpreted as the experiment name.
+
+```python
+with unify.Experiment(-1, overwrite=True), unify.Parameter(
+    system_message="You are a *great* assistant."
+):
+    for _ in range(10):
+        unify.log(score=random.random())
+```
+
+IMG
