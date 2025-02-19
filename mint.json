@@ -61,7 +61,8 @@
                     "pages": [
                         "logging/overview",
                         "logging/logs",
-                        "logging/contexts"
+                        "logging/contexts",
+                        "logging/column_contexts"
                     ]
                 },
                 {

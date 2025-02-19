@@ -1,0 +1,90 @@
+---
+title: 'Column Contexts'
+---
+
+Column contexts can be used to organize columns **inside** a table.
+Taking the previous sciences example, column contexts enable us to organize the data like so.
+
+```python
+with unify.ColumnContext("Sciences"):
+    with unify.ColumnContext("Maths"):
+        unify.log(
+            name="Zoe",
+            question="what is 1 + 1?",
+            region="US"
+        )
+    with unify.ColumnContext("Physics"):
+        unify.log(
+            name="John",
+            question="what is the speed of light?",
+            region="EU"
+        )
+```
+
+IMG
+
+Under the hood, column contexts are simply `/` separated field names, and so the below code is equivalent.
+
+```python
+unify.log(
+    **{
+        "Sciences/Maths/name": "Zoe",
+        "Sciences/Maths/question": "what is 1 + 1?",
+        "Sciences/Maths/region": "US",
+    }
+)
+unify.log(
+    **{
+        "Sciences/Physics/name": "John",
+        "Sciences/Physics/question": "what is the speed of light?",
+        "Sciences/Physics/region": "EU",
+    }
+)
+```
+
+As with contexts, `unify.ColumnContext("...")` by default will also change the behaviour of `get_logs`, returning only the logs which are part of the column context.
+
+```python
+with unify.ColumnContext("Sciences"):
+    with unify.ColumnContext("Maths"):
+        unify.log(
+            name="Zoe",
+            question="what is 1 + 1?",
+            region="US"
+        )
+        assert len(unify.get_logs()) == 1
+    with unify.ColumnContext("Physics"):
+        unify.log(
+            name="John",
+            question="what is the speed of light?",
+            region="EU"
+        )
+        assert len(unify.get_logs()) == 1
+assert len(unify.get_logs()) == 2
+```
+
+As before, this behaviour can be change by setting `unify.ColumnContext("...", mode="read")` which will only set the column context for log **getting**,
+and `unify.ColumnContext("...", mode="write")` which will only set the column context for log **setting**.
+
+Note that the `Log` instances will still show the **full field paths**, even when inside a column context.
+
+```python
+with unify.ColumnContext("Sciences"):
+    with unify.ColumnContext("Maths"):
+        unify.log(
+            name="Zoe",
+            question="what is 1 + 1?",
+            region="US"
+        )
+        entries = unify.get_logs()[0].entries
+        assert "Sciences/Maths/name" in entries
+        assert "Sciences/Maths/question" in entries
+        assert "Sciences/Maths/region" in entries
+entries = unify.get_logs()[0].entries
+assert "Sciences/Maths/name" in entries
+assert "Sciences/Maths/question" in entries
+assert "Sciences/Maths/region" in entries
+```
+
+Overall, column contexts make it easy to organize data inside your tables.
+Try them out with more examples of your own!
