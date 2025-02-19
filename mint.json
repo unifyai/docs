@@ -57,6 +57,15 @@
                     ]
                 },
                 {
+                    "group": "Demo",
+                    "pages": [
+                        "demo/the_app",
+                        "demo/user_dashboard",
+                        "demo/datasets",
+                        "demo/llm_evals"
+                    ]
+                },
+                {
                     "group": "Logging",
                     "pages": [
                         "logging/overview",
