@@ -12,7 +12,7 @@ When no context is specified in the interface or the table, then the default con
 
 IMG
 
-However, you can group your logs into *non-overlapping* contexts, which can then be displayed un separate tables.
+However, you can group your logs into *non-overlapping* contexts, which can then be displayed in separate tables.
 
 ```python
 unify.log(
@@ -72,7 +72,7 @@ with unify.Context("Sciences"):
 
 IMG
 
-By default, `unify.Context("...")` also change the behaviour of `get_logs`, returning only the logs relevant within the context.
+By default, `unify.Context("...")` also changes the behaviour of `get_logs`, returning only the logs relevant within the context.
 
 ```python
 with unify.Context("Sciences"):
@@ -102,4 +102,4 @@ This makes it easy to quickly get/set different logs for different purposes thro
 
 Note that in this case, `Sciences/Maths` and `Sciences/Physics` are **disconnected**, and both sets of logs **cannot** be viewed in a single table.
 
-To organize data in a single table, you can use **column contexts**. We explain these in the next section!
+To organize data in a single table, you can use **column contexts**, more on those soon!

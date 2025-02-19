@@ -1,0 +1,28 @@
+---
+title: 'Projects'
+---
+
+All logs are stored inside a project.
+
+You can create and initialize a project like so.
+
+```python
+unify.activate("my_project")
+```
+
+If your codebase needs to engage with multiple projects, you can also use context managers to switch between them.
+
+```python
+with unify.Project("my_project"):
+    unify.log(x=0)
+with unify.Project("my_other_project"):
+    unify.log(y=1)
+```
+
+If no project is set explicitly, then the default project `"_"` is used.
+
+```python
+unify.log(x=0)
+```
+
+That's it! We'll learn more about creating logs next.
