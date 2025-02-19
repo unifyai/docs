@@ -60,6 +60,7 @@
                     "group": "Logging",
                     "pages": [
                         "logging/overview",
+                        "logging/projects",
                         "logging/logs",
                         "logging/contexts",
                         "logging/datasets",
