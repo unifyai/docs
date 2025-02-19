@@ -4,13 +4,13 @@ title: 'Entries'
 
 Entries are the most basic unit for logging. They are simply a key-value pair.
 
-All examples in the previous section have logged entries.
+All examples in the previous sections have logged entries.
 
 ```python
 unify.log(x=0, y={"a": [1, 2, 3]}, msg="hello", score=0.123)
 ```
 
-In this example, `x`, `y`, `msg` and `score` are all **entries**.
+For example, `x`, `y`, `msg` and `score` above are all **entries**.
 
 ## Entry Contexts
 
@@ -38,7 +38,7 @@ for subject, studate_data in all_student_data.items():
 
 IMG
 
-By default, `unify.Entry("...")` also change the behaviour of `get_logs`, returning only the logs which include the entry.
+By default, `unify.Entry("...")` also changes the behaviour of `get_logs`, returning only the logs which include the entry.
 
 ```python
 for grade, students in {

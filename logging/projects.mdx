@@ -8,7 +8,13 @@ All logs are stored inside a project. You can create and initialize a project li
 unify.activate("my_project")
 ```
 
-If your codebase needs to engage with multiple projects, you can also use context managers to switch between them.
+If your codebase needs to engage with multiple projects, you can deactive the current project.
+
+```python
+unify.deactivate()
+```
+
+You can also use context managers to switch between projects, with arbitrary nesting supported.
 
 ```python
 with unify.Project("my_project"):
@@ -17,7 +23,7 @@ with unify.Project("my_other_project"):
     unify.log(y=1)
 ```
 
-You can also easily overwrite a project if you'd like to start again.
+You can also overwrite a project if you'd like to start again.
 
 ```python
 unify.activate("my_project", overwrite=True)
