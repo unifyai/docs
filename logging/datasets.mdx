@@ -16,7 +16,7 @@ You can then upload this to your interface like so.
 my_dataset.upload()
 ```
 
-By default, `unify.Dataset` sets the context as `f"Datasets/{name}"`, so your dataset can be viewed at `Datasets/my_dataset`.
+`unify.Dataset` sets the context as `f"Datasets/{name}"`, so your dataset can be viewed at `Datasets/my_dataset`.
 
 IMG
 
@@ -34,3 +34,25 @@ my_dataset -= [0, 1, 2]
 my_dataset.upload(overwrite=True)
 ```
 
+Given that logs can be shared across multiple contexts, it's easy to create sub-datasets withou duplication.
+
+```python
+import random
+my_dataset = unify.Dataset(
+    list(range(100)), name="my_dataset"
+).upload()
+my_sub_dataset = unify.Dataset(
+    random.sample(my_dataset, 10), name="my_sub_dataset"
+).upload()
+```
+
+IMG
+
+Editing a log (row) in one dataset will be reflected in the other.
+
+IMG
+
+Logs can also be removed from one dataset table, without deleting it from the other.
+However, if the log is deleted from both datasets, then it will be deleted entirely.
+
+IMG
