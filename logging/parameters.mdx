@@ -3,10 +3,10 @@ title: 'Parameters'
 ---
 
 Parameters can be used to represent the **settable** parameters of an experiment or a logging task.
-
 For example, if you're evaluating an LLM, then parameters can be used to represent the: system message, temperature, tools available etc.
 
-Under the hood, parameters are effectively versioned entries. For clarity they are represented separately in the table.
+Under the hood, parameters are effectively just versioned entries.
+They are always shown on the left hand side of the table.
 
 ```python
 log = unify.log(score=0.5, params={"system_message": "You are a helpful assistant."})
@@ -32,8 +32,36 @@ print(json.dumps(log.params, indent=4))
 
 The version is a string, which is simply an incrementing integer.
 In future, we plan to support custom version naming,
-thus the choice of a string rather than integer.
+thus the choice of a *string* type rather than an *integer*.
 
 ## Parameter Contexts
 
-As with 
+As with entries, parameters can be used as a context manager.
+
+```python
+import random
+with unify.Parameter(system_message="You are a helpful assistant."):
+    for _ in range(10):
+        unify.log(score=random.random())
+```
+
+IMG
+
+These can also be nested:
+
+```python
+import random
+with unify.Parameter(system_message="You are a helpful assistant."):
+    with unify.Parameter(temperature=0.5):
+        for _ in range(10):
+            unify.log(score=random.random())
+    with unify.Parameter(temperature=0.7):
+        for _ in range(10):
+            unify.log(score=random.random())
+```
+
+IMG
+
+As with entries, `unify.Parameter("...")` also changes the behaviour of `get_logs`, returning only the logs which include the parameter.
+This behaviour can be change by setting `unify.Parameter("...", mode="read")` which will only impact log **getting**,
+and `unify.Parameter("...", mode="write")` which will only impact log **setting**.
