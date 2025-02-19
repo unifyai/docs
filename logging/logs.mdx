@@ -49,7 +49,7 @@ IMG
 We can also pass arguments, which will also be part of the same log.
 
 ```python
-with unify.Log(x=0, y=2):
+with unify.Log(x=0, y=1):
     unify.log(z=2)
 ```
 
@@ -74,7 +74,7 @@ fn(b=b, c=c, log=log)
 
 IMG
 
-This code is cleaner, avoiding the need to pass `log` around:
+This code is cleaner, avoiding the need to pass `Log` instances around:
 
 ```python
 def fn(b, c):
