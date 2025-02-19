@@ -1,0 +1,48 @@
+---
+title: 'Logs'
+---
+
+Logs can be used to store pretty much **anything** to your interface.
+
+## Basics
+
+Let's create our first log.
+
+```python
+import unify
+unify.log(x=0, y={"a": [1, 2, 3]}, msg="hello", score=0.123)
+```
+
+Logs appear as **rows** in tables, and fields appear as **columns**
+
+IMG
+
+## Logging Contexts
+
+If you want to incrementally update the *same* log (row),
+then you can use `with unify.Log():` to create a logging context, and all calls to `unify.log` will then update this existing log.
+
+```python
+```
+
+These can also be arbitrarily nested.
+
+```python
+```
+
+We can also pass arguments, which will also be part of the same log.
+
+```python
+```
+
+Using `with unify.Log()` is the best practice, as this avoids the need to log handles throughout your program.
+For example, this code:
+
+```python
+```
+
+Is much cleaner than this code:
+
+```python
+```
+

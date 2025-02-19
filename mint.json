@@ -57,10 +57,10 @@
                     ]
                 },
                 {
-                    "group": "Interfaces",
+                    "group": "Logging",
                     "pages": [
-                        "interfaces/overview",
-                        "interfaces/case_study"
+                        "logging/overview",
+                        "logging/logs"
                     ]
                 },
                 {
