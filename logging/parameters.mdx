@@ -1,0 +1,39 @@
+---
+title: 'Parameters'
+---
+
+Parameters can be used to represent the **settable** parameters of an experiment or a logging task.
+
+For example, if you're evaluating an LLM, then parameters can be used to represent the: system message, temperature, tools available etc.
+
+Under the hood, parameters are effectively versioned entries. For clarity they are represented separately in the table.
+
+```python
+log = unify.log(score=0.5, params={"system_message": "You are a helpful assistant."})
+```
+
+IMG
+
+When retrieving logs, parameters are returned as a `(version, value)` tuple.
+
+```python
+import json
+log = unify.get_log_by_id(log.id)
+print(json.dumps(log.params, indent=4))
+```
+```
+{
+    "system_message": [
+        "0",
+        "You are a helpful assistant."
+    ]
+}
+```
+
+The version is a string, which is simply an incrementing integer.
+In future, we plan to support custom version naming,
+thus the choice of a string rather than integer.
+
+## Parameter Contexts
+
+As with 

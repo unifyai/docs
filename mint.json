@@ -62,7 +62,12 @@
                         "logging/overview",
                         "logging/logs",
                         "logging/contexts",
-                        "logging/column_contexts"
+                        "logging/datasets",
+                        "logging/column_contexts",
+                        "logging/entries",
+                        "logging/parameters",
+                        "logging/experiments",
+                        "logging/traces"
                     ]
                 },
                 {

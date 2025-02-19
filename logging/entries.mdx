@@ -1,0 +1,56 @@
+---
+title: 'Entries'
+---
+
+Entries are the most basic unit for logging. They are simply a key-value pair.
+
+All examples in the previous section have logged entries.
+
+```python
+unify.log(x=0, y={"a": [1, 2, 3]}, msg="hello", score=0.123)
+```
+
+In this example, `x`, `y`, `msg` and `score` are all **entries**.
+
+## Entry Contexts
+
+Aside from logging contexts, we can also specify entry contexts.
+
+```python
+for grade, students in student_data.items():
+    with unify.Entry(grade=grade):
+        for student in students:
+            unify.log(name=student)
+```
+
+IMG
+
+These can also be nested:
+
+```python
+for subject, studate_data in all_student_data.items():
+    with unify.Entry(subject=subject):
+        for grade, students in student_data.items():
+            with unify.Entry(grade=grade):
+                for student in students:
+                    unify.log(name=student)
+```
+
+IMG
+
+By default, `unify.Entry("...")` also change the behaviour of `get_logs`, returning only the logs which include the entry.
+
+```python
+for grade, students in {
+    "A": ["Alice", "Bob"],
+    "B": ["Charlie"],
+    "C": ["Eve", "Frank"]
+}:
+    with unify.Entry(grade=grade):
+        for student in students:
+            unify.log(name=student)
+        assert len(unify.get_logs()) == len(students)
+```
+
+This behaviour can be change by setting `unify.Entry("...", mode="read")` which will only impact log **getting**,
+and `unify.Entry("...", mode="write")` which will only impact log **setting**.
