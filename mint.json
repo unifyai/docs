@@ -72,6 +72,12 @@
                     ]
                 },
                 {
+                    "group": "Interfaces",
+                    "pages": [
+                        "interfaces/overview"
+                    ]
+                },
+                {
                     "group": "Universal API",
                     "pages": [
                         "universal_api/overview",
