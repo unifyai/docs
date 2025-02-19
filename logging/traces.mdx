@@ -2,3 +2,66 @@
 title: 'Traces'
 ---
 
+You can easily trace any function using the `unify.traced` decorator.
+
+```python
+@unify.traced
+def my_function(a, b):
+    return a + b
+
+my_function(1, 2)
+```
+
+If you create a view tile and select the trace in the table, you'll then see the trace viewer.
+
+IMG
+
+Traces are made up of spans, each of which represent a unit of computation. Traces can have an arbitrary number of spans, and spans can have child spans up to an arbitrary depth.
+
+```python
+@unify.traced
+def inner_fn(a, b):
+    return a + b
+
+@unify.traced
+def mid_fn(a, b):
+    c = inner_fn(a, b)
+    d = inner_fn(c, b)
+    return c * d
+
+@unify.traced
+def outer_fn(a, b):
+    c = mid_fn(a, b)
+    d = mid_fn(c, a)
+    return d / c
+
+outer_fn(3, 4)
+``` 
+
+IMG
+
+## LLM Traces
+
+LLMs can also be traced, by setting `traced=True` in the client constructor (see [Universal API](https://docs.unify.ai/universal_api) section).
+
+```python
+client = unify.Unify("o3-mini@openai", traced=True)
+client.generate("Hello, world!")
+```
+
+IMG
+
+
+When these LLM calls are part of a broader trace, then the cost and tokens are accumulated in the trace, propogating the cost and tokens to the parent spans.
+
+```python
+@unify.traced
+def llm_jury(question):
+    a1 = unify.Unify("o3-mini@openai", traced=True).generate(question)
+    a2 = unify.Unify("deepseek-r1@together-ai", traced=True).generate(question)
+    return unify.Unify("gpt-4o@openai", traced=True).generate(f"Summarize the following: {a1} {a2}")
+
+llm_jury("What is the capital of France?")
+``` 
+
+IMG
