@@ -83,7 +83,12 @@
                 {
                     "group": "Interfaces",
                     "pages": [
-                        "interfaces/overview"
+                        "interfaces/overview",
+                        "interfaces/tabs",
+                        "interfaces/tiles",
+                        "interfaces/tables",
+                        "interfaces/views",
+                        "interfaces/plots"
                     ]
                 },
                 {
