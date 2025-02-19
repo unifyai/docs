@@ -98,8 +98,26 @@ and `unify.Context("...", mode="write")` which will only set the context for log
 
 This makes it easy to quickly get/set different logs for different purposes throughout your codebase, without needing to manage contexts via local variables.
 
-{/* # ToDo: mention adding logs to a context, and deleting a context deleting it's logs */}
+## Shared Logs
 
-Note that in this case, `Sciences/Maths` and `Sciences/Physics` are **disconnected**, and both sets of logs **cannot** be viewed in a single table.
+Logs can be added to as many contexts as you'd like, without duplication.
+
+```python
+exam_results = [{"name": "Jane", "passed": False}, {"name": "John", "passed": True}]
+with unify.Context("Results"):
+    logs = unify.create_logs(entries=exam_results)
+with unify.Context("Failed"):
+    unify.add_logs_to_context([l.id for l in logs if not l.entries["passed"]], "Results")
+```
+
+If the `Log` is then updated inplace, it will be reflected in all contexts.
+
+```python
+[l.update(entries={"passed": True}) for l in logs]
+```
+
+IMG
+
+Note that in this case, `Results` and `Failed` are **disconnected**, and both sets of logs **cannot** be viewed in a single table.
 
 To organize data in a single table, you can use **column contexts**, more on those soon!

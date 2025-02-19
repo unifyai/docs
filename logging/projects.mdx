@@ -2,9 +2,7 @@
 title: 'Projects'
 ---
 
-All logs are stored inside a project.
-
-You can create and initialize a project like so.
+All logs are stored inside a project. You can create and initialize a project like so.
 
 ```python
 unify.activate("my_project")
@@ -19,10 +17,17 @@ with unify.Project("my_other_project"):
     unify.log(y=1)
 ```
 
+You can also easily overwrite a project if you'd like to start again.
+
+```python
+unify.activate("my_project", overwrite=True)
+```
+
 If no project is set explicitly, then the default project `"_"` is used.
 
 ```python
 unify.log(x=0)
 ```
 
-That's it! We'll learn more about creating logs next.
+Check out the full documentation for more on projects, but that's it for our intro!
+We'll learn more about creating logs next.
