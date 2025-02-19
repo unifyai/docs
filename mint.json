@@ -84,8 +84,7 @@
                     "group": "Interfaces",
                     "pages": [
                         "interfaces/overview",
-                        "interfaces/tabs",
-                        "interfaces/tiles",
+                        "interfaces/basics",
                         "interfaces/tables",
                         "interfaces/views",
                         "interfaces/plots"
