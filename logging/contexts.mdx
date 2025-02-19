@@ -15,8 +15,19 @@ IMG
 However, you can group your logs into *non-overlapping* contexts, which can then be displayed un separate tables.
 
 ```python
-unify.log(name="Zoe", question="what is 1 + 1?", region="US", context="Traffic")
-unify.log(question="what is 2 * 3?", prediction="six", answer=6, context="Evals")
+unify.log(
+    name="Zoe",
+    question="what is 1 + 1?",
+    region="US",
+    context="Traffic"
+)
+
+unify.log(
+    question="what is 2 * 3?",
+    prediction="six",
+    answer=6,
+    context="Evals"
+)
 ```
 
 IMG
@@ -27,8 +38,16 @@ You can use `with unify.Context("..."):` to create a context, and all logging in
 
 ```python
 with unify.Context("Traffic"):
-    unify.log(name="Zoe", question="what is 1 + 1?", region="US")
-    unify.log(name="John", question="what is 2 + 2?", region="EU")
+    unify.log(
+        name="Zoe",
+        question="what is 1 + 1?",
+        region="US"
+    )
+    unify.log(
+        name="John",
+        question="what is 2 + 2?",
+        region="EU"
+    )
 ```
 
 IMG
@@ -38,9 +57,17 @@ These can also be arbitrarily nested, where each context string is joined via `/
 ```python
 with unify.Context("Sciences"):
     with unify.Context("Maths"):
-        unify.log(name="Zoe", question="what is 1 + 1?", region="US")
+        unify.log(
+            name="Zoe",
+            question="what is 1 + 1?",
+            region="US"
+        )
     with unify.Context("Physics"):
-        unify.log(name="John", question="what is the speed of light?", region="EU")
+        unify.log(
+            name="John",
+            question="what is the speed of light?",
+            region="EU"
+        )
 ```
 
 IMG
@@ -50,10 +77,18 @@ By default, `unify.Context("...")` also change the behaviour of `get_logs`, retu
 ```python
 with unify.Context("Sciences"):
     with unify.Context("Maths"):
-        unify.log(name="Zoe", question="what is 1 + 1?", region="US")
+        unify.log(
+            name="Zoe",
+            question="what is 1 + 1?",
+            region="US"
+        )
         assert len(unify.get_logs()) == 1
     with unify.Context("Physics"):
-        unify.log(name="John", question="what is the speed of light?", region="EU")
+        unify.log(
+            name="John",
+            question="what is the speed of light?",
+            region="EU"
+        )
         assert len(unify.get_logs()) == 1
 assert len(unify.get_logs()) == 2
 ```
