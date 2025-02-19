@@ -23,26 +23,71 @@ If you want to incrementally update the *same* log (row),
 then you can use `with unify.Log():` to create a logging context, and all calls to `unify.log` will then update this existing log.
 
 ```python
+with unify.Log():
+    unify.log(x=0)
+    unify.log(y=1)
+    unify.log(z=2)
 ```
+
+IMG
 
 These can also be arbitrarily nested.
 
 ```python
+with unify.Log():
+    unify.log(x=0)
+    with unify.Log():
+        unify.log(x=1)
+        unify.log(x=2)
+        unify.log(x=3)
+    unify.log(y=1)
+    unify.log(z=2)
 ```
+
+IMG
 
 We can also pass arguments, which will also be part of the same log.
 
 ```python
+with unify.Log(x=0, y=2):
+    unify.log(z=2)
 ```
 
-Using `with unify.Log()` is the best practice, as this avoids the need to log handles throughout your program.
-For example, this code:
+IMG
+
+Using `with unify.Log()` is the best practice, as this avoids the need to pass explicit log handles throughout your program.
+For example, this code is not very elegant:
 
 ```python
+def fn(b, c, log):
+    log.update(bx2=b*2)
+    return inner_fn(d=b+c, log=log)
+
+def inner_fn(d, log):
+    log.update(d=d)
+    return d**2
+
+a, b, c = 1, 2, 3
+log = unify.log(a=a)
+fn(b=b, c=c, log=log)
 ```
 
-Is much cleaner than this code:
+IMG
+
+This code is cleaner, avoiding the need to pass `log` around:
 
 ```python
+def fn(b, c):
+    unify.log(bx2=b*2)
+    return inner_fn(d=b+c, log=log)
+
+def inner_fn(d):
+    unify.log(d=d)
+    return d**2
+
+a, b, c = 1, 2, 3
+with unify.Log():
+    fn(b=b, c=c)
 ```
 
+IMG
