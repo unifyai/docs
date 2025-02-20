@@ -9,7 +9,12 @@ Under the hood, parameters are effectively just versioned entries.
 They are always shown on the left hand side of the table.
 
 ```python
-log = unify.log(score=0.5, params={"system_message": "You are a helpful assistant."})
+log = unify.log(
+    score=0.5,
+    params={
+        "system_message": "You are a helpful assistant."
+    }
+)
 ```
 
 IMG
@@ -40,7 +45,9 @@ As with entries, parameters can be used as a context manager.
 
 ```python
 import random
-with unify.Parameter(system_message="You are a helpful assistant."):
+with unify.Parameter(
+    system_message="You are a helpful assistant."
+):
     for _ in range(10):
         unify.log(score=random.random())
 ```
@@ -51,7 +58,9 @@ These can also be nested:
 
 ```python
 import random
-with unify.Parameter(system_message="You are a helpful assistant."):
+with unify.Parameter(
+    system_message="You are a helpful assistant."
+):
     with unify.Parameter(temperature=0.5):
         for _ in range(10):
             unify.log(score=random.random())
