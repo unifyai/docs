@@ -4,7 +4,7 @@ title: 'Tables'
 
 As you might expect, tables are 2D grids of your data, making it easy to view, manipulate and organize whatever you've logged.
 
-The rows each represent a different log, and the columns represent the different fields (parameters and entries) of the log.
+The **rows** each represent a different **log**, and the **columns** represent the different **fields** (parameters and entries) of the log.
 
 ```python
 import unify
@@ -14,8 +14,11 @@ unify.log(x=1, y={"b": [4, 5, 6]}, msg="goodbye", score=0.456)
 
 This will be shown as:
 
-IMG
+<img className="block dark:hidden" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/simple_table_light.png"/>
+<img className="hidden dark:block" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/simple_table_dark.png"/>
 
+Note that the **most recent** log is always shown at the top of the table,
+with row numbers in an ascending manner from top to bottom.
 Columns are all **strongly typed**, and you can see the type by hovering over the column header.
 
 ## Column Manipulation
