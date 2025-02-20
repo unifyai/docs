@@ -192,10 +192,14 @@ For example, let's say we want to see the distribution of user traffic over the 
 Has our product been gaining traction?
 
 ```python
+n = 1000
 for month in range(1, 13):
-    num_queries = random.randint(1000 + month*1000, 10000 + month*1000)
+    num_queries = random.randint(month*n, (month+10)*n)
     unify.create_logs(
-        entries=[{"date": f"{random.randint(1, 28)}/{month}/2024"} for _ in range(num_queries)]
+        entries=[
+            {"date": f"{random.randint(1, 28)}/{month}/2024"}
+            for _ in range(num_queries)
+        ]
     )
 ```
 

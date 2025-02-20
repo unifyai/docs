@@ -17,7 +17,7 @@ This will be shown as:
 <img className="block dark:hidden" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/simple_table_light.png"/>
 <img className="hidden dark:block" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/simple_table_dark.png"/>
 
-Note that the **most recent** log is always shown at the top of the table,
+Note that the **most recent** log is always shown at the **top** of the table,
 with row numbers in an ascending manner from top to bottom.
 Columns are all **strongly typed**, and you can see the type by hovering over the column header.
 
@@ -30,6 +30,7 @@ Columns can easily be hidden by clicking the dropdown and pressing "hide column"
 - hovering between columns and pressing the "+" button
 - clicking the column visibility dropdown and toggling the column
 
+{/* ToDo: Fix Column Adding Bug (https://app.clickup.com/t/86c277unu) */}
 GIF
 
 ### Moving Columns
@@ -44,12 +45,12 @@ You can move columns by simply dragging them to where you want them.
 You can pin columns to the left by dragging the left-most edge of the column towards the right (think Excel).
 This column will then be locked in place when you scroll left and right within the table.
 
-GIF
+<img className="block dark:hidden" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_pinning_light.gif"/>
+<img className="hidden dark:block" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_pinning_dark.gif"/>
 
 ## Grouping
 
 When it comes to data *manipulation*, grouping is probably the most useful and versatile feature.
-
 Consider the following set of (dummy) LLM evaluations:
 
 ```python
@@ -59,46 +60,47 @@ questions = [
     "What is the weather in London?",
 ]
 
-with_tools = [True, False]
 sys_msgs = [
     "You are a helpful assistant",
     "You are a helpful weather assistant",
     "You are a helpful assistant that can use tools",
 ]
-cot = [True, False]
 
 
-for with_tool in with_tools:
+for with_tool in [True, False]:
     for sys_msg in sys_msgs:
-        for cot in cots:
-            with unify.Experiment(), unify.Params(
-                with_tool=with_tool,
-                sys_msg=sys_msg,
-                cot=cot
-            ):
-                for i, question in enumerate(questions):
-                    unify.log(
-                        question=question,
-                        score=i*0.25 +random.random()/2
-                    )
+        with unify.Experiment(), unify.Params(
+            with_tool=with_tool,
+            sys_msg=sys_msg,
+        ):
+            for i, question in enumerate(questions):
+                unify.log(
+                    question=question,
+                    score=i*0.25 +random.random()/2
+                )
 ```
 
 By default, the data is just shown flat, in the order it was logged (most recent at the top).
 
 However, if we want to see the results of each unique experiment, we can simply group by the experiment column, and unfold the data we want to see.
-
 The reduction metrics are automatically calculated for each column.
 
+{/* ToDo: Client Side Grouping (https://app.clickup.com/t/86c1yp5py) */}
+{/* ToDo: Add Server Side Grouping Reduction Metrics: (https://app.clickup.com/t/86c278dgg) */}
 GIF
 
 Conversely, if we want to see which question was the most difficult, we can group by question instead.
 
+{/* ToDo: Client Side Grouping (https://app.clickup.com/t/86c1yp5py) */}
+{/* ToDo: Add Server Side Grouping Reduction Metrics: (https://app.clickup.com/t/86c278dgg) */}
 GIF
 
 We can see that the LLM seems to find London the easiest, then Tokyo, then Paris (again, a contrived example 😁).
 
 Similarly, if we want to what the impact of a system message is, we can group by this column instead, and see the statics reduced across all experiments.
 
+{/* ToDo: Client Side Grouping (https://app.clickup.com/t/86c1yp5py) */}
+{/* ToDo: Add Server Side Grouping Reduction Metrics: (https://app.clickup.com/t/86c278dgg) */}
 GIF
 
 Combined, this makes it very easily to quickly probe the data across **all** of your experiments, enabling you to easily transcending the boundaries of rigid "experiments" flexibly.
@@ -108,7 +110,8 @@ Combined, this makes it very easily to quickly probe the data across **all** of 
 As you'd expect, sorting can also be applied to any column. Simply clicking "sort" will toggle the state between ascending, descending, and off.
 Rows are sorted in the order of the column sorts. For example, sorting by column A and *then* column B will prioritize sorting based on A, and only defer to B when the values in Column A are equal.
 
-GIF
+<img className="block dark:hidden" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/sorting_light.gif"/>
+<img className="hidden dark:block" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/sorting_dark.gif"/>
 
 ### With Grouping
 
@@ -118,6 +121,7 @@ This is the reduction metric that is shown in each cell during grouping.
 
 This makes it easy to quickly show the highest performing experiments at the top of the table (for example).
 
+{/* ToDo Grouping with Sorting (https://app.clickup.com/t/86c1xw420) */}
 GIF
 
 ## Filtering
@@ -132,18 +136,21 @@ Firstly, all columns support filtering the following:
 - `Exists`: whether or not the field was actually included in the log
 - `Is None`: if the field *was* included, but a value of `None` was written
 
-Additionally, all columns support arbitrarily chaining filter expressions together using `AND` and `OR` operators. We will also soon support parentheses for nested filter expressions 🚧
-
-Everything else is column specific:
+Additionally, all columns support arbitrarily chaining filter expressions together using `AND` and `OR` operators. We will also soon support parentheses for nested filter expressions.
+Everything else is column specific.
 
 ### Strings
 
 - `Includes`: whether or not the string includes the substring
 - `Excludes`: whether or not the string excludes the substring
 
+GIF
+
 ### Numbers
 
 - `==`, `!=`, `>`, `>=`, `<`, `<=`: standard comparison operators
+
+GIF
 
 ### DateTime
 
@@ -151,15 +158,21 @@ Everything else is column specific:
 - `Relative Mode`: select relative to the current time
 - `Absolute Mode`: select an absolute point in time
 
+GIF
+
 ### Booleans
 
 - `True`: is true
 - `False`: is false
 
+GIF
+
 ### Lists and Dicts
 
 - `Includes`: whether or not the list includes the item / dict includes the key
 - `Excludes`: whether or not the list excludes the item / dict excludes the key
+
+GIF
 
 ### Groups
 [Coming Soon! 🚧]
@@ -168,7 +181,7 @@ Groups can also be directly filtered. This is useful if you want to select a spe
 The group filtering is applied *independently* to the standard column-wise filtering.
 If you want to propagate the group filters to the columns filters, you can simply press "propagate" in the group filter dropdown.
 
-IMG
+{/* GIF */}
 
 ### Global
 
@@ -185,10 +198,12 @@ unify.log(x=1, y=1)
 Let's imagine we want to filter to find the logs where `x*y > 0`. We couldn't achieve this with column filters, but we can with the global filter,
 using an expression such as `x*y>0` or `(x>0 and y>0) or (x<0 and y<0)`.
 
+{/* ToDo: support Global Filtering (https://app.clickup.com/t/86c1xw47f) */}
 IMG
 
 We can also switch the global filter to "search" mode, which simply searches all cells for a matching substring, after casting all contents to string form (including dicts, lists, etc).
 
+{/* ToDo: support Global Filtering (https://app.clickup.com/t/86c1xw47f) */}
 IMG
 
 ## Derived Columns
