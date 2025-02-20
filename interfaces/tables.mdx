@@ -1,4 +1,139 @@
 ---
 title: 'Tables'
 ---
+
+As you might expect, tables are 2D grids of your data, making it easy to view, manipulate and organize whatever you've logged.
+
+The rows each represent a different log, and the columns represent the different fields (parameters and entries) of the log.
+
+```python
+import unify
+unify.log(x=0, y={"a": [1, 2, 3]}, msg="hello", score=0.123)
+unify.log(x=1, y={"b": [4, 5, 6]}, msg="goodbye", score=0.456)
+```
+
+This will be shown as:
+
+IMG
+
+Columns are all **strongly typed**, and you can see the type by hovering over the column header.
+
+## Hiding Columns
+
+Columns can easily be hidden by clicking the dropdown and pressing "hide column". They can then be re-added by either:
+
+- hovering between columns and pressing the "+" button
+- clicking the column visibility dropdown and toggling the column
+
+GIF
+
+## Moving Columns
+
+You can move columns by simply dragging them to where you want them.
+
+GIF
+
+## Pinning Columns
+
+You can pin columns to the left by dragging the left-most edge of the column towards the right (think Excel).
+This column will then be locked in place when you scroll left and right within the table.
+
+GIF
+
+## Grouping
+
+When it comes to data *manipulation*, grouping is probably the most useful and versatile feature.
+
+Consider the following set of (dummy) LLM evaluations:
+
+```python
+questions = [
+    "What is the weather in Paris?",
+    "What is the weather in Tokyo?",
+    "What is the weather in London?",
+]
+
+with_tools = [True, False]
+sys_msgs = [
+    "You are a helpful assistant",
+    "You are a helpful weather assistant",
+    "You are a helpful assistant that can use tools",
+]
+cot = [True, False]
+
+
+for with_tool in with_tools:
+    for sys_msg in sys_msgs:
+        for cot in cots:
+            with unify.Experiment(), unify.Params(
+                with_tool=with_tool,
+                sys_msg=sys_msg,
+                cot=cot
+            ):
+                for i, question in enumerate(questions):
+                    unify.log(
+                        question=question,
+                        score=i*0.25 +random.random()/2
+                    )
+```
+
+By default, the data is just shown flat, in the order it was logged (most recent at the top).
+
+However, if we want to see the results of each unique experiment, we can simply group by the experiment column, and unfold the data we want to see.
+
+The reduction metrics are automatically calculated for each column.
+
+GIF
+
+Conversely, if we want to see which question was the most difficult, we can group by question instead.
+
+GIF
+
+We can see that the LLM seems to find London the easiest, then Tokyo, then Paris (again, a contrived example 😁).
+
+Similarly, if we want to what the impact of a system message is, we can group by this column instead, and see the statics reduced across all experiments.
+
+GIF
+
+Combined, this makes it very easily to quickly probe the data across **all** of your experiments, enabling you to easily transcending the boundaries of rigid "experiments" flexibly.
+
+## Sorting
+
+As you'd expect, sorting can also be applied to any column. Simply clicking "sort" will toggle the state between ascending, descending, and off.
+Rows are sorted in the order of the column sorts. For example, sorting by column A and *then* column B will prioritize sorting based on A, and only defer to B when the values in Column A are equal.
+
+GIF
+
+### With Grouping
+
+When grouping is applied, the contents of each group are sorted as usual.
+However, the groups themselves are *also* sorted based on the reduction metric that is set in the bottom left.
+This is the reduction metric that is shown in each cell during grouping.
+
+This makes it easy to quickly show the highest performing experiments at the top of the table (for example).
+
+GIF
+
+## Filtering
+
+Filtering
+
+### Strings
+
+### Numbers
+
+### Dates
+
+### Booleans
+
+### Groups
+
+### Global
+
+## Derived Columns
+
+Derived columns are a powerful way to create new columns based on existing ones.
+
+## Joins
 [coming soon 🚧]
+Text
