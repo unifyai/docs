@@ -1,4 +1,206 @@
 ---
 title: 'Plots'
 ---
-[coming soon 🚧]
+
+We support four plot types: **Scatter**, **Line**, **Bar** and **Histograms**.
+
+In order to plot data, you first need at least one table in your interface,
+which is used to define the data which will be used for the plot axes.
+You can also plot data which spans across multiple tables,
+but we'll focus on the single table case for now.
+
+So let's dive in and go through each plot type 🤿
+
+## Scatter Graphs
+
+Scatter graphs can be used to plot two numerical columns against each other.
+For example, let's log the following:
+
+```python
+for _ in range(10):
+    unify.log(
+        x=i,
+        y=i+random.uniform(-0.25, 0.25)
+    )
+```
+
+We can then select the x column for the x-axis and the y column for the y-axis.
+
+IMG
+
+We can also add overlay several plots on the graph, by selecting another column to group by (based on value equality, the same as grouping in the table).
+Let's make an example.
+
+```python
+gender_factors = {"male": 10000, "female": 5000}
+for gender in ["male", "female"]:
+    for age in range(10, 80, 10):
+        unify.log(
+            gender=gender,
+            age=age,
+            salary=(
+                age*1000 +
+                gender_factors[gender]*random.random()
+            ),
+        )
+```
+
+We can then select age for the x-axis, salary for the y-axis and group by gender.
+
+IMG
+
+We can also add a line of best fit to each group in the plot.
+
+IMG
+
+Grouping is not limited to a single column. If multiple columns are selected for grouping,
+then each group in the plot will represent a unique *combination* of the values in the grouped columns.
+Again, this is conceptually the same as nested groups in the table.
+
+```python
+gender_factors = {"male": 10000, "female": 5000}
+loc_factors = {"UK": 20000, "US": 10000}
+for gender in ["male", "female"]:
+    for loc in ["UK", "US"]:
+        for age in range(10, 80, 10):
+            unify.log(
+                gender=gender,
+                nationality=nationality,
+                age=age,
+                salary=(
+                    age*1000 +
+                    gender_factors[gender]*random.random() +
+                    loc_factors[loc]*random.random()
+                ),
+            )
+```
+
+We could then create three plots for example. One which groups by gender, one which groups by location and one which groups by both.
+
+IMG
+
+## Line Graphs
+
+Line graphs are similar to scatter graphs, but a line is drawn between each from left to right.
+This makes them especially suitable for plotting time-series data.
+
+```python
+for i in range(10):
+    unify.log(
+        time=i,
+        speed=random.uniform(-3, 3)
+    )
+```
+
+As before, we can also group by another column.
+Let's imagine we want to plot the speed of different models across time.
+
+```python
+model_speeds = {
+    "llama-3.1-70b": 10,
+    "llama-3.1-405b": 5,
+    "llama-3.1-8k": 1
+}
+for i in range(10):
+    for model, speed in model_speeds.items():
+        unify.log(
+            model=model,
+            time=i,
+            speed=speed+random.uniform(-3, 3)
+        )
+```
+
+We can then select time for the x-axis, speed for the y-axis and group by model.
+
+IMG
+
+As with scatter graphs, we can also group by multiple columns.
+Let's say we also want to group by provider.
+
+```python
+model_speeds = {
+    "llama-3.1-70b": 10,
+    "llama-3.1-405b": 5,
+    "llama-3.1-8k": 1
+}
+provider_speeds = {
+    "fireworks-ai": 10,
+    "together-ai": 9,
+    "aws-bedrock": 8
+}
+for i in range(10):
+    for model, model_speed in model_speeds.items():
+        for provider, provider_speed in provider_speeds.items():
+            unify.log(  
+                model=model,
+                provider=provider,
+                time=i,
+                speed=(
+                    model_speed + 
+                    provider_speed + 
+                    random.uniform(-5, 5)
+                )
+            )
+```
+
+We could then create a plot which represents each unique **endpoint**, by grouping by the model *and* provider.
+
+IMG
+
+## Bar Charts
+
+Bar charts are different to line graphs and scatter graphs.
+The x axis does not represent individual numerical values,
+but instead represents groups of data of any type (which share the same value).
+The y axis then represents a *reduction* across the data in each group (bar) in the graph.
+
+For example, let's say we've run three experiments, which vary the tool use and the system message.
+
+```python
+base_msg = "You are a helpful assistant."
+for tool_use in [True, False]:
+    for sys_msg in [
+        base_msg,
+        base_msg + " You can use tools.",
+        base_msg + " You can use tools and search the web."
+    ]:
+        for example_idx in range(10):
+            unify.log(
+                tool_use=tool_use,
+                sys_msg=sys_msg,
+                example_idx=example_idx,
+                score=random.uniform(0, 10)
+            )
+```
+
+We can then create a bar chart which groups by the system message and tool use.
+Let's plot the *mean* score on the y-axis,
+to see how each of our experiments performed across the 10 examples.
+
+IMG
+
+If we want to see the extremes, we could also plot the *min* or *max* score, and add plots for these.
+
+IMG
+
+## Histograms
+
+Finally, we can also plot histograms, which take a *single* numeric column,
+and then bucket this data into `n` bins on the x-axis, and plot the count of data in each bin on the y-axis.
+
+For example, let's say we want to see the distribution of user traffic over the past year.
+Has our product been gaining traction?
+
+```python
+for month in range(1, 13):
+    num_queries = random.randint(1000 + month*1000, 10000 + month*1000)
+    unify.create_logs(
+        entries=[{"date": f"{random.randint(1, 28)}/{month}/2024"} for _ in range(num_queries)]
+    )
+```
+
+Let's take a look at the corresponding histogram.
+
+IMG
+
+We can see that the usage has been steadily increasing throughout the year, good stuff! 📈
