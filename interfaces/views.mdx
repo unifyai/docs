@@ -1,4 +1,214 @@
 ---
 title: 'Views'
 ---
-[coming soon 🚧]
+
+Views enable us to actually **look** at the data, not only filter, sort, organize and compute statistics on it (what tables are for 🔢)
+
+A view tile must be paired with exactly one table, this can be done from the menu at the top.
+
+GIF
+
+## Cell Selection
+
+Every **cell** in a table is an atomic unit, which can be viewed independently.
+
+In it's most basic form, the view pane acts as an expressive viewer for whatever cell(s) are selected in the table.
+
+These cells can be part of the same row, different rows, different columns, or any combination. In all cases, **all** of the data will be shown in the view pane.
+
+GIF
+
+## Grouping
+
+To avoid redundancy, every value that is shared across multiple cells is grouped in the view pane, with all the row numbers shown at the top.
+
+GIF
+
+This also makes it easy to quickly spot trends in the data.
+
+## View Modes
+
+The view pane supports 3 different modes:
+
+**Markdown**: All text is rendered as markdown.
+
+IMG
+
+**Plain Text**: All text is rendered as plain text.
+
+IMG
+
+**Raw**: The columns (incuding dicts, lists, numbers etc.) are rendered as a raw strings, with no formatting or nested structure.
+
+IMG
+
+## Hiding Columns
+
+Columns can be hidden by directly clicking the (-) icon which appears on hover, and also via the show / hide selector menu at the top.
+Column hiding in the view pane is totally **independent** from hidden columns in the table, making it easy to split the data across the two formats.
+
+For example, consider the following logged data:
+
+```python
+for question in ["what is 1 + 1?", "what is 2 + 2?", "what is 3 + 3?"]:
+    student_answer = f"the answer is {random.randint(0, 6)}"
+    correct_marks_to_award = int(int(student_answer[-1]) == int(eval(question[-4:-1])))
+    awarded_marks = random.randint(0, 1)
+    rationale = f"the student answered {student_answer} "
+    "and I gave them {awarded_marks} marks because I'm not "
+    "good at maths, and {awarded_marks} is my favourite number"
+    diff = correct_marks_to_award - awarded_marks
+    error = abs(diff)
+    unify.log(
+        question,
+        student_answer=student_answer,
+        available_marks=1,
+        awarded_marks=awarded_marks,
+        rationale=rationale,
+        correct_marks_to_award=correct_marks_to_award,
+        diff=diff,
+        error=error,
+    )
+```
+
+The most intuitive way to view this data is to show the numeric data in the table (with all the power of sorting, grouping, filtering etc.),
+and the text data in the view pane to look at the finer details (and benefit from all the features explained below!)
+
+IMG
+
+## Moving Columns
+
+Columns can easily be moved in the view pane by selecting drag mode and then simply clicking and dragging them.
+
+GIF
+
+## Split View
+
+Sometimes it's more convenient to view the data **side-by-side**, the split view makes this easy.
+You can toggle between one, two and three views.
+
+GIF
+
+## Nesting
+
+By default, the view pane will only expand one nest level at a time.
+The deeper contents of dicts and lists are lazily loaded as the nest is incrementally expanded.
+
+GIF
+
+## Diffs
+
+The view pane supports very expressive diffs across cells. Let's use a simple example for exploring the different diff features.
+
+```python
+unify.log(
+    x=1,
+    y=1.2,
+    msg="hello",
+    flag=True,
+    ts=datetime.now().isoformat(),
+    dct={"a": 1, "b": 2},
+    lst=[1, 2, 3],
+)
+unify.log(
+    x=2,
+    y=1.2,
+    msg="hello partner",
+    flag=True,
+    ts=datetime.now().isoformat(),
+    dct={"b": 2, "c": 3},
+    lst=[4, 5, 6],
+)
+unify.log(
+    x=3,
+    y=1.3,
+    msg="hello partner",
+    flag=False,
+    ts=datetime.now().isoformat(),
+    dct={"a": 1, "b": 3, "c": 4},
+    lst=[1, 2, 3, 4],
+)
+```
+
+### Strings
+
+For string diffs, there are four modes:
+
+- **None**: No diff applied, just show contents grouped by value (as above).
+
+IMG
+
+- **Lines**: Per line diffs.
+
+IMG
+
+- **Side-by-side**: Per word diffs.
+
+IMG
+
+- **Characters**: Per character diffs.
+
+IMG
+
+### Numeric
+
+Numeric value "diffs" support the four basic operators: `-`, `+`, `*` and `/`.
+
+IMG
+
+### DateTime
+
+Datetime diffs are presented as a relative difference in time, in the appropriate units (weeks, days, seconds, miliseconds etc.)
+
+IMG
+
+### Structure Diffs
+
+Aside from presenting the diffs for individual items, we can also see how the nested structure of dictionaries and lists change across logs.
+
+IMG
+
+### Base Log
+
+All diffs are relative to the selected base log. This base log can easily be changed at the top of the view pane.
+
+IMG
+
+## Traces
+
+Last but not least, no observability tool would be complete without expressive traces.
+Traces enable you to get a complete view of nested function calls from your program 🔍
+
+### Trace Viewer
+
+The trace viewer is shown on the left, which shows the nested structure of your entire trace.
+Each item in the trace is a span (unit of computation), and the child of each span are shown nested underneath.
+
+Each span shows the **cumulative** values for:
+
+- **Cost**: Can be manually specified during tracing for arbitrary programs. Unify's LLM clients automatically populate this based on the cost of the LLM calls.
+
+- **Tokens**: Can be manually specified during tracing when integrating with other LLM providers. Unify's LLM clients automatically populate this based on the tokens used in the LLM calls.
+
+- **Runtime**: Tracked automatically during tracing of the program.
+
+Each span can be folded and unfolded, and the runtime of the base log can be viewed in the runtime viewer.
+
+IMG
+
+Folding spans in the trace viewer will hide the children from the runtime viewer, and selecting a span will only show this span and it's (non-folded) children in the runtime viewer.
+
+IMG
+
+### Span Viewer
+
+The span viewer is shown on the right, and for each span, this shows:
+
+- **Inputs**: All inputs to the function call (if any).
+- **Outputs**: All outputs from the function call (if any).
+- **Code**: The source code of the function call.
+- **Execution Time**: The time taken to execute the function call.
+- **Cost**: The cost of the function call, including and excluding cached LLM calls which didn't cost anything during the trace itself, but would if there was no cache to read from.
+- **ID**: The unique identifier for the span.
+
+IMG
