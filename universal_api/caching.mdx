@@ -16,8 +16,10 @@ It can be turned on in the client constructor, like so:
 ```python
 import unify
 client = unify.Unify("gpt-4o@openai", cache=True)
-client.generate("Hello.")  # queries LLM, saves query + response to .cache.json
-client.generate("Hello.")  # does not query, loads from .cache.json
+# queries LLM, saves query + response to .cache.json
+client.generate("Hello.")
+# does not query, loads from .cache.json
+client.generate("Hello.")
 ```
 
 It can also be configured on a prompt-by-prompt basis:
@@ -25,10 +27,14 @@ It can also be configured on a prompt-by-prompt basis:
 ```python
 import unify
 client = unify.Unify("gpt-4o@openai")
-client.generate("Hello.")  # queries LLM, does not save
-client.generate("Hello.", cache=True)  # queries LLM, saves query + response to .cache.json
-client.generate("Hello.")  # queries LLM, does not save nor load cache
-client.generate("Hello.", cache=True)  # does not query, loads from .cache.json
+# queries LLM, does not save
+client.generate("Hello.")
+# queries LLM, saves to .cache.json
+client.generate("Hello.", cache=True)
+# queries LLM, does not save nor load cache
+client.generate("Hello.")
+# does not query, loads from .cache.json
+client.generate("Hello.", cache=True)
 ```
 
 The examples above are very contrived, but with multi-step LLM applications this caching
@@ -37,14 +43,20 @@ can be very helpful when debugging:
 ```python
 import unify
 from docs import pdf_text
-from prompts import parse_doc, split_into_sections, summarize_sections
+from prompts import parse_doc, split, summarize
 client = unify.Unify("gpt-4o@openai", cache=True)
 # works fine
-parsed = client.generate(pdf_text, system_message=parse_doc)
+parsed = client.generate(
+    pdf_text, system_message=parse_doc
+)
 # works fine
-sections = client.generate(parsed, system_message=split_into_sections)
+sections = client.generate(
+    parsed, system_message=split
+)
 # debugging, trying different system messages each time
-summaries = client.generate(sections, system_message=summarize_sections)
+summaries = client.generate(
+    sections, system_message=summarize
+)
 ```
 
 By default, the `.cache.json` file will be created in your current working directory.
