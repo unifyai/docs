@@ -18,7 +18,9 @@ IMG
 
 Columns are all **strongly typed**, and you can see the type by hovering over the column header.
 
-## Hiding Columns
+## Column Manipulation
+
+### Hiding Columns
 
 Columns can easily be hidden by clicking the dropdown and pressing "hide column". They can then be re-added by either:
 
@@ -27,13 +29,13 @@ Columns can easily be hidden by clicking the dropdown and pressing "hide column"
 
 GIF
 
-## Moving Columns
+### Moving Columns
 
 You can move columns by simply dragging them to where you want them.
 
 GIF
 
-## Pinning Columns
+### Pinning Columns
 
 You can pin columns to the left by dragging the left-most edge of the column towards the right (think Excel).
 This column will then be locked in place when you scroll left and right within the table.
@@ -116,24 +118,98 @@ GIF
 
 ## Filtering
 
-Filtering
+So far, everything we've considered has been about *viewing* data.
+Filtering enables you to *select* a subset of the data that you want to view.
+Each column type has a different set of filter options.
+
+### Base
+
+Firstly, all columns support filtering the following:
+- `Exists`: whether or not the field was actually included in the log
+- `Is None`: if the field *was* included, but a value of `None` was written
+
+Additionally, all columns support arbitrarily chaining filter expressions together using `AND` and `OR` operators. We will also soon support parentheses for nested filter expressions 🚧
+
+Everything else is column specific:
 
 ### Strings
 
+- `Includes`: whether or not the string includes the substring
+- `Excludes`: whether or not the string excludes the substring
+
 ### Numbers
 
-### Dates
+- `==`, `!=`, `>`, `>=`, `<`, `<=`: standard comparison operators
+
+### DateTime
+
+- `>`, `<`: standard comparison operators
+- `Relative Mode`: select relative to the current time
+- `Absolute Mode`: select an absolute point in time
 
 ### Booleans
 
+- `True`: is true
+- `False`: is false
+
+### Lists and Dicts
+
+- `Includes`: whether or not the list includes the item / dict includes the key
+- `Excludes`: whether or not the list excludes the item / dict excludes the key
+
 ### Groups
+[Coming Soon! 🚧]
+
+Groups can also be directly filtered. This is useful if you want to select a specific subset of experiments, for example.
+The group filtering is applied *independently* to the standard column-wise filtering.
+If you want to propagate the group filters to the columns filters, you can simply press "propagate" in the group filter dropdown.
+
+IMG
 
 ### Global
 
+Filters at the column level apply the filter directly to that column, and each column filter is effectivrely stitched together with an `AND` operator.
+However, you can write your own expressive filter expressions by the global filter, using basic Python syntax, using the column names as variable names.
+
+```python
+unify.log(x=-1, y=-1)
+unify.log(x=-1, y=1)
+unify.log(x=1, y=-1)
+unify.log(x=1, y=1)
+```
+
+Let's imagine we want to filter to find the logs where `x*y > 0`. We couldn't achieve this with column filters, but we can with the global filter,
+using an expression such as `x*y>0` or `(x>0 and y>0) or (x<0 and y<0)`.
+
+IMG
+
+We can also switch the global filter to "search" mode, which simply searches all cells for a matching substring, after casting all contents to string form (including dicts, lists, etc).
+
+IMG
+
 ## Derived Columns
 
-Derived columns are a powerful way to create new columns based on existing ones.
+Derived columns make it possible to create new columns based on existing ones.
+Again, all general Python syntax is supported.
+
+For example, we could derive a new column that compute the length of the vector `[x, y]`.
+
+```python
+for _ in range(10):
+    unify.log(x=random.random(), y=random.random())
+```
+
+We just need to provide the expression `(x**2 + y**2)**0.5`:
+
+IMG
+
 
 ## Joins
-[coming soon 🚧]
-Text
+[Coming Soon! 🚧]
+
+We will soon support creating new tables by joining existing ones 🔗
+
+For example, this will make it easy to compare multiple experiments side by side,
+even in cases where the example ids in the test sets have changed across experiments (preventing the ability to do simple row-wise correspondence).
+
+Stay tuned 📡 👀
