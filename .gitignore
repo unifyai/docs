@@ -12,3 +12,4 @@ __pycache__/
 .cache.json
 *.tmp
 .vscode/
+test.py
