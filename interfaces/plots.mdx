@@ -48,9 +48,6 @@ for gender in ["male", "female"]:
 ```
 
 We can then select age for the x-axis, salary for the y-axis and group by gender.
-
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/scatter_dark.gif"/>
-
 We can also add a line of best fit to each group in the plot.
 
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/scatter_grouped_dark.gif"/>
@@ -87,38 +84,53 @@ IMG */}
 
 Line graphs are similar to scatter graphs, but a line is drawn between each from left to right.
 This makes them especially suitable for plotting time-series data.
+Let's take the same example as before, but plot it as a line graph.
 
 ```python
 for i in range(10):
     unify.log(
-        time=i,
-        speed=random.uniform(-3, 3)
+        x=i,
+        y=i+random.uniform(-0.25, 0.25)
     )
 ```
 
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/line_dark.gif"/>
+
 As before, we can also group by another column.
-Let's imagine we want to plot the speed of different models across time.
+Let's imagine we want to plot the speed of different models across time,
+which are being continually streamed.
 
 ```python
 model_speeds = {
-    "llama-3.1-70b": 10,
-    "llama-3.1-405b": 5,
-    "llama-3.1-8k": 1
+    "llama-3.1-8b-chat": 12,
+    "llama-3.1-70b-chat": 7,
+    "llama-3.1-405b-chat": 4
 }
-for i in range(10):
+while True:
     for model, speed in model_speeds.items():
         unify.log(
             model=model,
-            time=i,
+            time=datetime.now().isoformat(),
             speed=speed+random.uniform(-3, 3)
         )
 ```
 
 We can then select time for the x-axis, speed for the y-axis and group by model.
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/line_group_dark.gif"/>
 
-As with scatter graphs, we can also group by multiple columns.
+By default, new data will **not** be loaded into the interface unless something triggers a reload,
+such as filtering, grouping or sorting.
+The table can be refreshed manually using the refresh button, or streaming mode can be turned on
+in order to continually stream new data into the platform.
+if we want a moving window of the runtime, we can turn streaming on for both the table and the plot,
+and then limit the time horizon to the last 5 minutes, for example.
+
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/line_group_stream_dark.gif"/>
+
+{/* ToDo: Add support for multi-grouping (https://app.clickup.com/t/86c1xw4bf) */}
+
+{/* As with scatter graphs, we can also group by multiple columns.
 Let's say we also want to group by provider.
 
 ```python
@@ -149,7 +161,7 @@ for i in range(10):
 
 We could then create a plot which represents each unique **endpoint**, by grouping by the model *and* provider.
 
-IMG
+IMG */}
 
 ## Bar Charts
 
