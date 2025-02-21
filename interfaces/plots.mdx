@@ -28,32 +28,36 @@ We can then select the x column for the x-axis and the y column for the y-axis.
 
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/scatter_dark.gif"/>
 
-We can also add overlay several plots on the graph, by selecting another column to group by (based on value equality, the same as grouping in the table).
+We can also add overlay several plots on the graph,
+by selecting another column to group by (based on value equality, the same as grouping in the table).
 Let's make an example.
 
 ```python
-gender_factors = {"male": 10000, "female": 5000}
+gender_factors = {"male": 2000, "female": 1000}
 for gender in ["male", "female"]:
-    for age in range(10, 80, 10):
+    for age in range(20, 55):
+        age += random.randint(-5, 5)
         unify.log(
             gender=gender,
             age=age,
             salary=(
-                age*1000 +
-                gender_factors[gender]*random.random()
+                age*500 +
+                age*gender_factors[gender]*random.random()
             ),
         )
 ```
 
 We can then select age for the x-axis, salary for the y-axis and group by gender.
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/scatter_dark.gif"/>
 
 We can also add a line of best fit to each group in the plot.
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/scatter_grouped_dark.gif"/>
 
-Grouping is not limited to a single column. If multiple columns are selected for grouping,
+{/* ToDo: Add support for multi-grouping (https://app.clickup.com/t/86c1xw4bf) */}
+
+{/* Grouping is not limited to a single column. If multiple columns are selected for grouping,
 then each group in the plot will represent a unique *combination* of the values in the grouped columns.
 Again, this is conceptually the same as nested groups in the table.
 
@@ -77,7 +81,7 @@ for gender in ["male", "female"]:
 
 We could then create three plots for example. One which groups by gender, one which groups by location and one which groups by both.
 
-IMG
+IMG */}
 
 ## Line Graphs
 
