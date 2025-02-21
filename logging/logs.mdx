@@ -5,13 +5,12 @@ title: 'Logs'
 Logs can be used to store pretty much **anything** to your interface. Let's create our first log.
 
 ```python
-import unify
 unify.log(x=0, y={"a": [1, 2, 3]}, msg="hello", score=0.123)
 ```
 
 Logs appear as **rows** in tables, and fields appear as **columns**
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/single_log_dark.png"/>
 
 ## Logging Contexts
 
@@ -25,22 +24,23 @@ with unify.Log():
     unify.log(z=2)
 ```
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/logging_context_dark.png"/>
 
 These can also be arbitrarily nested.
+Note that the most recently **created** log is always shown at the top of the table (not most recently **updated**).
 
 ```python
 with unify.Log():
     unify.log(x=0)
     with unify.Log():
         unify.log(x=1)
-        unify.log(x=2)
-        unify.log(x=3)
+        unify.log(y=2)
+        unify.log(z=3)
     unify.log(y=1)
     unify.log(z=2)
 ```
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/logging_context_nested_dark.png"/>
 
 We can also pass arguments, which will also be part of the same log.
 
@@ -49,18 +49,20 @@ with unify.Log(x=0, y=1):
     unify.log(z=2)
 ```
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/logging_context_w_args_dark.png"/>
 
 Using `with unify.Log()` is the best practice, as this avoids the need to pass explicit log handles throughout your program.
-For example, this code is not very elegant:
+This code uses explicit handles (each function has a `log` argument):
 
 ```python
 def fn(b, c, log):
-    log.update(bx2=b*2)
-    return inner_fn(d=b+c, log=log)
-
+    log.add_entries(b=b, bx2=b*2, c=c)
+    dsqrd = inner_fn(d=b+c, log=log)
+    log.add_entries(dsqrd=dsqrd)
+    return dsqrd
+    
 def inner_fn(d, log):
-    log.update(d=d)
+    log.add_entries(d=d)
     return d**2
 
 a, b, c = 1, 2, 3
@@ -68,22 +70,24 @@ log = unify.log(a=a)
 fn(b=b, c=c, log=log)
 ```
 
-IMG
-
-This code is cleaner, avoiding the need to pass `Log` instances around:
+This code logs the same data, but avoids the need to pass the `Log` instance around:
 
 ```python
 def fn(b, c):
-    unify.log(bx2=b*2)
-    return inner_fn(d=b+c, log=log)
+    unify.log(b=b, bx2=b*2, c=c)
+    dsqrd = inner_fn(d=b+c)
+    unify.log(dsqrd=dsqrd)
+    return dsqrd
 
 def inner_fn(d):
     unify.log(d=d)
     return d**2
 
 a, b, c = 1, 2, 3
-with unify.Log():
+with unify.Log(a=a):
     fn(b=b, c=c)
 ```
 
-IMG
+Both result in the same log:
+
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/logging_context_benefit_dark.png"/>
