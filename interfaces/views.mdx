@@ -106,18 +106,18 @@ The view pane supports very expressive diffs across cells. Let's use a simple ex
 unify.log(
     x=1,
     y=1.2,
-    msg="hello",
+    msg="hello friend",
     flag=True,
-    ts=datetime.now().isoformat(),
+    appointment=datetime(2025, 3, 23, 10, 30).isoformat(),
     dct={"a": 1, "b": 2},
     lst=[1, 2, 3],
 )
 unify.log(
     x=2,
     y=1.2,
-    msg="hello partner",
+    msg="hey buddy",
     flag=True,
-    ts=datetime.now().isoformat(),
+    appointment=datetime(2025, 2, 15, 11, 30).isoformat(),
     dct={"b": 2, "c": 3},
     lst=[4, 5, 6],
 )
@@ -126,7 +126,7 @@ unify.log(
     y=1.3,
     msg="hello partner",
     flag=False,
-    ts=datetime.now().isoformat(),
+    appointment=datetime(2025, 4, 11, 12, 30).isoformat(),
     dct={"a": 1, "b": 3, "c": 4},
     lst=[1, 2, 3, 4],
 )
@@ -155,18 +155,21 @@ Numeric value "diffs" support the four basic operators: `-`, `+`, `*` and `/`.
 
 Datetime diffs are presented as a relative difference in time, in the appropriate units (weeks, days, seconds, miliseconds etc.)
 
-IMG
+{/* ToDo: Add Years to DateTime diffs (https://app.clickup.com/t/86c279fdr) */}
+GIF
 
 ### Structure Diffs
 
 Aside from presenting the diffs for individual items, we can also see how the nested structure of dictionaries and lists change across logs.
 
+{/* ToDo: Nests not working (https://app.clickup.com/t/86c2793jk) */}
 IMG
 
 ### Base Log
 
 All diffs are relative to the selected base log. This base log can easily be changed at the top of the view pane.
 
+{/* ToDo: Nests not working (https://app.clickup.com/t/86c2793jk) */}
 IMG
 
 ## Traces
@@ -189,11 +192,12 @@ Each span shows the **cumulative** values for:
 
 Each span can be folded and unfolded, and the runtime of the base log can be viewed in the runtime viewer.
 
-IMG
+GIF
 
-Folding spans in the trace viewer will hide the children from the runtime viewer, and selecting a span will only show this span and it's (non-folded) children in the runtime viewer.
+Folding spans in the trace viewer will hide the children from the runtime viewer, and selecting a span will only show this span and its (non-folded) children in the runtime viewer.
 
-IMG
+{/* ToDo: Add support for this (https://app.clickup.com/t/86c20hcev) */}
+GIF
 
 ### Span Viewer
 
@@ -206,4 +210,4 @@ The span viewer is shown on the right, and for each span, this shows:
 - **Cost**: The cost of the function call, including and excluding cached LLM calls which didn't cost anything during the trace itself, but would if there was no cache to read from.
 - **ID**: The unique identifier for the span.
 
-IMG
+GIF
