@@ -6,7 +6,7 @@ Column contexts can be used to organize columns **inside** a table.
 Taking the previous sciences example, column contexts enable us to organize the data like so.
 
 ```python
-with unify.ColumnContext("Sciences"):
+with unify.Log(), unify.ColumnContext("Sciences"):
     with unify.ColumnContext("Maths"):
         unify.log(
             name="Zoe",
@@ -21,7 +21,7 @@ with unify.ColumnContext("Sciences"):
         )
 ```
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/nested_column_contexts_dark.png"/>
 
 Under the hood, column contexts are simply `/` separated field names, and so the below code is equivalent.
 
