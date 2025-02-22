@@ -10,3 +10,7 @@ log = unify.log(
     answer="The capital of France is Paris.",
     score=1.0
 )
+
+import json
+log = unify.get_log_by_id(log.id)
+print(json.dumps(log.params, indent=4))
