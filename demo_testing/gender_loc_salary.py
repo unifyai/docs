@@ -1,5 +1,5 @@
 import unify
-unify.activate("gender_loc_salary")
+unify.activate("gender_loc_salary", overwrite=True)
 import random
 
 gender_factors = {"male": 1500, "female": 750}
