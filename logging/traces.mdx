@@ -14,7 +14,7 @@ my_function(1, 2)
 
 If you create a view tile and select the trace in the table, you'll then see the trace viewer.
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/trace_view_dark.gif"/>
 
 Traces are made up of spans, each of which represent a unit of computation. Traces can have an arbitrary number of spans, and spans can have child spans up to an arbitrary depth.
 
@@ -38,7 +38,7 @@ def outer_fn(a, b):
 outer_fn(3, 4)
 ``` 
 
-IMG
+GIF
 
 ## LLM Traces
 
@@ -49,7 +49,7 @@ client = unify.Unify("o3-mini@openai", traced=True)
 client.generate("Hello, world!")
 ```
 
-IMG
+GIF
 
 
 When these LLM calls are part of a broader trace, then the cost and tokens are accumulated in the trace, propogating the cost and tokens to the parent spans.
@@ -64,4 +64,4 @@ def llm_jury(question):
 llm_jury("What is the capital of France?")
 ``` 
 
-IMG
+GIF
