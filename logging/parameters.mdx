@@ -3,21 +3,27 @@ title: 'Parameters'
 ---
 
 Parameters can be used to represent the **settable** parameters of an experiment or a logging task.
-For example, if you're evaluating an LLM, then parameters can be used to represent the: system message, temperature, tools available etc.
+For example, if you're evaluating an LLM,
+then parameters can be used to represent the: system message, temperature, tools available etc.
 
-Under the hood, parameters are effectively just versioned entries.
-They are always shown on the left hand side of the table.
+Under the hood, parameters are effectively just *versioned* entries.
 
 ```python
 log = unify.log(
-    score=0.5,
     params={
-        "system_message": "You are a helpful assistant."
-    }
+        "system_message": "You are a helpful assistant.",
+        "tool_use": True,
+        "temperature": 0.5,
+    },
+    question="What is the capital of France?",
+    answer="The capital of France is Paris.",
+    score=1.0
 )
 ```
 
-IMG
+They are always shown on the left hand side of the table.
+
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/params_simple_dark.png"/>
 
 When retrieving logs, parameters are returned as a `(version, value)` tuple.
 
