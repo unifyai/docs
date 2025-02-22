@@ -211,12 +211,16 @@ For example, let's say we want to see the distribution of user traffic over the 
 Has our product been gaining traction?
 
 ```python
-n = 1000
+n = 10
 for month in range(1, 13):
     num_queries = random.randint(month*n, (month+10)*n)
     unify.create_logs(
         entries=[
-            {"date": f"{random.randint(1, 28)}/{month}/2024"}
+            {
+                "date": date(
+                    2025, month, random.randint(1, 28)
+                ).isoformat()
+            }
             for _ in range(num_queries)
         ]
     )
@@ -224,6 +228,6 @@ for month in range(1, 13):
 
 Let's take a look at the corresponding histogram.
 
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/histogram_dark.gif"/>
 
 We can see that the usage has been steadily increasing throughout the year, good stuff! 📈
