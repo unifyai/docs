@@ -3,47 +3,58 @@ title: 'Experiments'
 ---
 
 The `unify.Experiment` class is a very simple convenience class for logging experiments.
-It simply creates a parameter with the name `"experiment"`, and automatically increments the value as an ascending integer for each new experiment, if an explicit name is not provided.
+It simply creates a parameter with the name `"experiment"`,
+and automatically increments the value as an ascending integer for each new experiment,
+if an explicit name is not provided.
 
 ```python
-with unify.Experiment():
-    for _ in range(10):
-        unify.log(score=random.random())
+with unify.Experiment(), unify.Params(
+    sys_msg="You are a helpful assistant."
+):
+    for _ in range(5):
+        unify.log(
+            question_number=random.randint(1, 20),
+            score=random.random()
+        )
 ```
 
-IMG
+This will show in the table like so:
+
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/experiment_0_dark.png"/>
 
 Let's run another experiment, but give it an explicit name.
 
 ```python
-with unify.Experiment("my_experiment"):
-    for _ in range(10):
-        unify.log(score=random.random())
+with unify.Experiment("my_experiment"), unify.Params(
+    sys_msg="You are a helpful assistant."
+):
+    for _ in range(5):
+        unify.log(
+            question_number=random.randint(1, 20),
+            score=random.random()
+        )
 ```
 
-IMG
+This will show in the table like so:
 
-it's often useful to use the `with unify.Experiment()` alongside a `unify.Parameter()` to represent the settable parameters of an experiment.
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/named_experiment.png"/>
+
+You can also use negative indexing, and the `overwrite` argument.
+For example, the following will overwrite the previous experiment.
+Integers are interpreted as the experiment version,
+and strings are interpreted as the experiment name.
 
 ```python
-with unify.Experiment("final_experiment"), unify.Parameter(
-    system_message="You are a helpful assistant."
+with unify.Experiment(-1, overwrite=True), unify.Params(
+    sys_msg="You are a helpful assistant."
 ):
-    for _ in range(10):
-        unify.log(score=random.random())
+    for _ in range(5):
+        unify.log(
+            question_number=random.randint(1, 20),
+            score=random.random()
+        )
 ```
 
-IMG
+The overwrite can be seen in the table, after pressing the `refresh` button:
 
-You can also use negative indexing, and the `overwrite` argument. For example, the following will overwrite the previous experiment.
-Integers are interpreted as the experiment version, and strings are interpreted as the experiment name.
-
-```python
-with unify.Experiment(-1, overwrite=True), unify.Parameter(
-    system_message="You are a *great* assistant."
-):
-    for _ in range(10):
-        unify.log(score=random.random())
-```
-
-IMG
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/experiment_overwrite_dark.gif"/>
