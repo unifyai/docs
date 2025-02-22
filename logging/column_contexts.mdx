@@ -26,23 +26,30 @@ with unify.Log(), unify.ColumnContext("Sciences"):
 Under the hood, column contexts are simply `/` separated field names, and so the below code is equivalent.
 
 ```python
-unify.log(
-    **{
-        "Sciences/Maths/name": "Zoe",
-        "Sciences/Maths/question": "what is 1 + 1?",
-        "Sciences/Maths/region": "US",
-    }
-)
-unify.log(
-    **{
-        "Sciences/Physics/name": "John",
-        "Sciences/Physics/question": "what is the speed of light?",
-        "Sciences/Physics/region": "EU",
-    }
-)
+with unify.Log():
+    unify.log(
+        **{
+            "Sciences/Maths/name": "Zoe",
+            "Sciences/Maths/question": "what is 1 + 1?",
+            "Sciences/Maths/region": "US",
+        }
+    )
+    unify.log(
+        **{
+            "Sciences/Physics/name": "John",
+            "Sciences/Physics/question": "what is the speed of light?",
+            "Sciences/Physics/region": "EU",
+        }
+    )
 ```
 
-As with contexts, `unify.ColumnContext("...")` by default will also change the behaviour of `get_logs`, returning only the logs which are part of the column context.
+Columns contexts can be **moved**, **hidden**, and **focused on** in the table,
+making it easy to view and organize your structured data in bulk.
+
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_column_context_manipulation_dark.gif"/>
+
+As with contexts, `unify.ColumnContext("...")` by default will also change the behaviour of `get_logs`,
+returning only the logs which are part of the column context.
 
 ```python
 with unify.ColumnContext("Sciences"):
