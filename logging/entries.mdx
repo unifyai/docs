@@ -103,15 +103,20 @@ when it's known that they are constant for all inner computation and logging.
 By default, `unify.Entry("...")` also changes the behaviour of `get_logs`, returning only the logs which include the entry.
 
 ```python
-for grade, students in {
-    "A": ["Alice", "Bob"],
-    "B": ["Charlie"],
-    "C": ["Eve", "Frank"]
-}:
-    with unify.Entry(grade=grade):
-        for student in students:
-            unify.log(name=student)
-        assert len(unify.get_logs()) == len(students)
+for subject, studate_data in all_student_data.items():
+    with unify.Entry(subject=subject):
+        for grade, students in studate_data.items():
+            with unify.Entry(grade=grade):
+                for first_name, last_name, dob in students:
+                    unify.log(
+                        first_name=first_name,
+                        last_name=last_name, 
+                        data_of_birth=dob
+                    )
+                assert len(unify.get_logs()) == len(students)
+        assert len(unify.get_logs()) == sum(
+            len(students) for students in studate_data.values()
+        )
 ```
 
 This behaviour can be change by setting `unify.Entry("...", mode="read")` which will only impact log **getting**,
