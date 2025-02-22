@@ -103,7 +103,7 @@ Rows are sorted in the order of the column sorts. For example, sorting by column
 
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/sorting_dark.gif"/>
 
-### With Grouping [Coming Soon! 🚧]
+### With Grouping [🚧]
 
 When grouping is applied, the contents of each group are sorted as usual.
 However, the groups themselves are *also* sorted based on the reduction metric that is set in the bottom left.
@@ -119,7 +119,7 @@ So far, everything we've considered has been about *viewing* data.
 Filtering enables you to *select* a subset of the data that you want to view.
 Each column type has a different set of filter options.
 
-Let's consider the following data for self-proclaimed "10x" engineers:
+Let's consider the following data for self-proclaimed "10x" engineers on the team:
 
 ```python
 num_employees = 20
@@ -192,7 +192,7 @@ Everything else is column specific.
 
 - `==`, `!=`, `>`, `>=`, `<`, `<=`: standard comparison operators
 
-GIF
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_numeric_filtering_dark.gif"/>
 
 ### DateTime
 
@@ -216,7 +216,7 @@ GIF
 
 GIF
 
-### Groups [Coming Soon 🚧]
+### Groups [🚧]
 
 Groups can also be directly filtered. This is useful if you want to select a specific subset of experiments, for example.
 The group filtering is applied *independently* to the standard column-wise filtering.
@@ -224,7 +224,7 @@ If you want to propagate the group filters to the columns filters, you can simpl
 
 {/* GIF */}
 
-### Global [Coming Soon 🚧]
+### Global [🚧]
 
 Filters at the column level apply the filter directly to that column, and each column filter is effectivrely stitched together with an `AND` operator.
 However, you can write your own expressive filter expressions by the global filter, using basic Python syntax, using the column names as variable names.
@@ -265,8 +265,7 @@ Filtering, grouping, and sorting all work on derived columns, just like any othe
 
 GIF
 
-
-## Joins [Coming Soon 🚧]
+## Joins [🚧]
 
 We will soon support creating new tables by joining existing ones 🔗
 
