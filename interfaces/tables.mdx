@@ -103,7 +103,7 @@ Rows are sorted in the order of the column sorts. For example, sorting by column
 
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/sorting_dark.gif"/>
 
-### With Grouping
+### With Grouping [Coming Soon! 🚧]
 
 When grouping is applied, the contents of each group are sorted as usual.
 However, the groups themselves are *also* sorted based on the reduction metric that is set in the bottom left.
@@ -112,7 +112,6 @@ This is the reduction metric that is shown in each cell during grouping.
 This makes it easy to quickly show the highest performing experiments at the top of the table (for example).
 
 {/* ToDo Grouping with Sorting (https://app.clickup.com/t/86c1xw420) */}
-GIF
 
 ## Filtering
 
@@ -120,13 +119,66 @@ So far, everything we've considered has been about *viewing* data.
 Filtering enables you to *select* a subset of the data that you want to view.
 Each column type has a different set of filter options.
 
+Let's consider the following data for self-proclaimed "10x" engineers:
+
+```python
+num_employees = 20
+ages = [
+    random.randint(20, 50)
+    for _ in range(num_employees)
+]
+catchphrases = random.choices(
+    [
+        "hello... friend",
+        "hell no",
+        "did you ask o3?",
+        "will do it tomorrow",
+        "ask the intern",
+    ],
+    k=num_employees,
+)
+last_logins = [
+    (datetime.now() - timedelta(
+        days=random.randint(0, 5)
+    )).isoformat()
+    for _ in range(num_employees)
+]
+open_task_progress = [
+    {
+        task: random.random()
+        for task in random.sample(
+            [
+                "add NextJS loader",
+                "SQL migration",
+                "refactor life",
+            ],
+            random.randint(0, 3),
+        )
+    }
+    for _ in range(num_employees)
+]
+
+for age, catchphrase, last_login, otp in zip(
+    ages, catchphrases, last_logins, open_task_progress
+):
+    unify.log(
+        age=age,
+        how_10x=random.random()*10,
+        catchphrase=catchphrase,
+        last_login=last_login,
+        open_task_progress=otp,
+        will_to_live=random.choice([True, False]),
+    )
+```
+
 ### Base
 
 Firstly, all columns support filtering the following:
 - `Exists`: whether or not the field was actually included in the log
 - `Is None`: if the field *was* included, but a value of `None` was written
 
-Additionally, all columns support arbitrarily chaining filter expressions together using `AND` and `OR` operators. We will also soon support parentheses for nested filter expressions.
+Additionally, all columns support arbitrarily chaining filter expressions together using `AND` and `OR` operators.
+We will also soon support parentheses for nested filter expressions.
 Everything else is column specific.
 
 ### Strings
@@ -134,7 +186,7 @@ Everything else is column specific.
 - `Includes`: whether or not the string includes the substring
 - `Excludes`: whether or not the string excludes the substring
 
-GIF
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_filter_str_dark.gif"/>
 
 ### Numbers
 
@@ -164,8 +216,7 @@ GIF
 
 GIF
 
-### Groups
-[Coming Soon! 🚧]
+### Groups [Coming Soon 🚧]
 
 Groups can also be directly filtered. This is useful if you want to select a specific subset of experiments, for example.
 The group filtering is applied *independently* to the standard column-wise filtering.
@@ -173,7 +224,7 @@ If you want to propagate the group filters to the columns filters, you can simpl
 
 {/* GIF */}
 
-### Global
+### Global [Coming Soon 🚧]
 
 Filters at the column level apply the filter directly to that column, and each column filter is effectivrely stitched together with an `AND` operator.
 However, you can write your own expressive filter expressions by the global filter, using basic Python syntax, using the column names as variable names.
@@ -189,12 +240,10 @@ Let's imagine we want to filter to find the logs where `x*y > 0`. We couldn't ac
 using an expression such as `x*y>0` or `(x>0 and y>0) or (x<0 and y<0)`.
 
 {/* ToDo: support Global Filtering (https://app.clickup.com/t/86c1xw47f) */}
-IMG
 
 We can also switch the global filter to "search" mode, which simply searches all cells for a matching substring, after casting all contents to string form (including dicts, lists, etc).
 
 {/* ToDo: support Global Filtering (https://app.clickup.com/t/86c1xw47f) */}
-IMG
 
 ## Derived Columns
 
@@ -213,8 +262,7 @@ We just need to provide the expression `(x**2 + y**2)**0.5`:
 IMG
 
 
-## Joins
-[Coming Soon! 🚧]
+## Joins [Coming Soon 🚧]
 
 We will soon support creating new tables by joining existing ones 🔗
 
