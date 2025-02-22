@@ -253,13 +253,17 @@ Again, all general Python syntax is supported.
 For example, we could derive a new column that compute the length of the vector `[x, y]`.
 
 ```python
-for _ in range(10):
+for _ in range(20):
     unify.log(x=random.random(), y=random.random())
 ```
 
 We just need to provide the expression `(x**2 + y**2)**0.5`:
 
-IMG
+GIF
+
+Filtering, grouping, and sorting all work on derived columns, just like any other.
+
+GIF
 
 
 ## Joins [Coming Soon 🚧]

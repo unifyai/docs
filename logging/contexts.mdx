@@ -2,35 +2,59 @@
 title: 'Contexts'
 ---
 
-By default, all logs are stored in the default context (represented by the empty string `""`).
+By default, all logs within a project are stored in the default context (represented by the empty string `""`).
 
 ```python
 unify.log(x=0, y=1, z=2)
 ```
 
 When no context is specified in the interface or the table, then the default context is used.
-
-IMG
-
 However, you can group your logs into *non-overlapping* contexts, which can then be displayed in separate tables.
 
 ```python
-unify.log(
-    name="Zoe",
-    question="what is 1 + 1?",
-    region="US",
-    context="Traffic"
+names = ["Zoe", "John", "Jane", "Jim", "Jill"]
+qnas = {
+    "what is 1 + 1?": 2,
+    "what is 2 * 3?": 6,
+    "what is 3 - 2?": 1,
+    "what is 4 / 2?": 2,
+    "what is 5 % 2?": 1
+}
+regions = ["US", "EU", "UK", "AU", "CA"]
+
+for _ in range(20):
+    question, answer = random.choice(
+        list(qnas.items())
+    )
+    unify.log(
+        name=random.choice(names),
+        question=question,
+        answer=answer,
+        region=random.choice(regions),
+        context="Traffic"
 )
 
-unify.log(
-    question="what is 2 * 3?",
-    prediction="six",
-    answer=6,
-    context="Evals"
-)
+predictions = [
+    "six", "one", "two", "three", "four", "five"
+]
+
+for _ in range(15):
+    question, answer = random.choice(
+        list(qnas.items())
+    )
+    unify.log(
+        name=random.choice(names),
+        question=question,
+        prediction=random.choice(
+            predictions
+        ),
+        answer=answer,
+        context="Evals"
+    )
 ```
 
-IMG
+{/* ToDo: Add context improvements (https://app.clickup.com/t/86c27zpkq) */}
+{/* GIF */}
 
 ## Context Handling
 
@@ -121,7 +145,7 @@ If any logs are then updated inplace, they will be reflected in all contexts.
 [l.update(entries={"passed": True}) for l in logs]
 ```
 
-IMG
+GIF
 
 Note that in this case, `Results` and `Failed` are **disconnected**, and both sets of logs **cannot** be viewed in a single table.
 
