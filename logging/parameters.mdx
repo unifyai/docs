@@ -28,7 +28,6 @@ They are always shown on the left hand side of the table.
 Parameter versions are of type string, and the version is simply an incrementing integer.
 In future, we plan to support custom version naming,
 thus the choice of a *string* type rather than an *integer*.
-
 You can see the version of a paramter in the view pane.
 
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/param_version_dark.gif"/>
@@ -38,33 +37,56 @@ You can see the version of a paramter in the view pane.
 As with entries, parameters can be used as a context manager.
 
 ```python
-import random
-with unify.Parameter(
-    system_message="You are a helpful assistant."
+with unify.Params(
+    system_message="You are a helpful assistant.",
+    tool_use=True,
+    temperature=0.5,
 ):
-    for _ in range(10):
+    for _ in range(5):
         unify.log(score=random.random())
 ```
 
-IMG
+This will show in the table like so:
 
-These can also be nested:
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/param_context_dark.png"/>
+
+Like the other context managers, parameter context managers can also be nested:
 
 ```python
-import random
-with unify.Parameter(
-    system_message="You are a helpful assistant."
-):
-    with unify.Parameter(temperature=0.5):
-        for _ in range(10):
-            unify.log(score=random.random())
-    with unify.Parameter(temperature=0.7):
-        for _ in range(10):
-            unify.log(score=random.random())
+with unify.Params(
+    system_message="You are a helpful assistant.",
+):  
+    for temperature in [0.5, 0.7]:
+        with unify.Params(temperature=temperature):
+            for tool_use in [False, True]:
+                with unify.Params(tool_use=tool_use):
+                    [
+                        unify.log(score=random.random())
+                        for _ in range(2)
+                    ]
 ```
 
-IMG
+This will show in the table like so:
+
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/params_double_context_dark.png"/>
 
 As with entries, `unify.Parameter("...")` also changes the behaviour of `get_logs`, returning only the logs which include the parameter.
 This behaviour can be change by setting `unify.Parameter("...", mode="read")` which will only impact log **getting**,
 and `unify.Parameter("...", mode="write")` which will only impact log **setting**.
+
+```python
+with unify.Params(
+    system_message="You are a helpful assistant.",
+):  
+    for temperature in [0.5, 0.7]:
+        with unify.Params(temperature=temperature):
+            for tool_use in [False, True]:
+                with unify.Params(tool_use=tool_use):
+                    [
+                        unify.log(score=random.random())
+                        for _ in range(2)
+                    ]
+                    assert len(unify.get_logs()) == 2
+            assert len(unify.get_logs()) == 4
+    assert len(unify.get_logs()) == 8
+```

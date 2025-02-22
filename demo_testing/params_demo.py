@@ -1,16 +1,11 @@
 import unify
+import random
 unify.activate("params-demo", overwrite=True)
-log = unify.log(
-    params={
-        "system_message": "You are a helpful assistant.",
-        "tool_use": True,
-        "temperature": 0.5,
-    },
-    question="What is the capital of France?",
-    answer="The capital of France is Paris.",
-    score=1.0
-)
-
-import json
-log = unify.get_log_by_id(log.id)
-print(json.dumps(log.params, indent=4))
+with unify.Params(
+    system_message="You are a helpful assistant.",
+):  
+    for temperature in [0.5, 0.7]:
+        with unify.Params(temperature=temperature):
+            for tool_use in [False, True]:
+                with unify.Params(tool_use=tool_use):
+                    [unify.log(score=random.random()) for _ in range(2)]
