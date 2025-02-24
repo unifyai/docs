@@ -3,6 +3,8 @@ title: 'Get Fields'
 api: 'GET /v0/logs/fields'
 ---
 Returns a dictionary of field names and their types for the specified project.
+If a context is provided, returns only fields associated with that context.
+
 Each field entry contains:
 - data_type: The data type of the field (int, str, etc)
 - field_type: Whether it's an entry, param, or derived_entry
@@ -22,18 +24,22 @@ Each field entry contains:
 Name of the project to get fields and their types for.
 </ParamField>
 
+<ParamField query="context" type="string | null"  default={default}>
+Optional context name to filter field types
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs/fields?project=eval-project' \
+  --url 'https://api.unify.ai/v0/logs/fields?project=eval-project&context=training' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/fields?project=eval-project"
+url = "https://api.unify.ai/v0/logs/fields?project=eval-project&context=training"
 
 headers = {"Authorization": "Bearer <token>"}
 

@@ -1,0 +1,33 @@
+---
+title: 'get_logs_metric'
+---
+
+```python
+def get_logs_metric(
+    *,
+    metric: str,
+    key: str,
+    filter: Optional[str] = None,
+    project: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> Union[float, int, bool]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/utils/logs.py#L884)</p>
+
+Retrieve a set of log metrics across a project, after applying the filtering.
+
+**Arguments**:
+
+- `metric` - The reduction metric to compute for the specified key. Supported are:
+- `key` - The key to compute the reduction statistic for.
+- `filter` - The filtering to apply to the various log values, expressed as a string,
+- `project` - The id of the project to retrieve the logs for.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+The full set of reduced log metrics for the project, after optionally applying
+the optional filtering.

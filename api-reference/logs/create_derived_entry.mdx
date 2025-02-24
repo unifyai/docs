@@ -17,6 +17,10 @@ Eagerly computes each derived value and stores it in DerivedLog.value.
 Name of the project the stored entries will be associated to.
 </ParamField>
 
+<ParamField body="context" type="any | null" >
+Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').
+</ParamField>
+
 <ParamField body="key" type="string" required="true">
 The name of the entry.
 </ParamField>
@@ -38,6 +42,7 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
     "project": "eval-project",
+    "context": "experiment1/trial1",
     "key": "score_diff",
     "equation": "{log0:score} - {log1:score}",
     "referenced_logs": {
@@ -60,7 +65,7 @@ url = "https://api.unify.ai/v0/logs/derived"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "key": "score_diff", "equation": "{log0:score} - {log1:score}", "referenced_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "score > 0.5"}}}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "key": "score_diff", "equation": "{log0:score} - {log1:score}", "referenced_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "score > 0.5"}}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

@@ -1,0 +1,24 @@
+---
+title: 'add_dataset_entries'
+---
+
+```python
+def add_dataset_entries(
+    name: str,
+    data: List[Any],
+    *,
+    project: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> List[int]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/utils/datasets.py#L183)</p>
+
+Adds entries to an existing dataset in the server.
+
+**Arguments**:
+
+- `name` - Name of the dataset.
+- `contents` - Contents to add to the dataset.
+- `project` - Name of the project the dataset belongs to.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the

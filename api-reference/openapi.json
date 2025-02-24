@@ -3894,6 +3894,26 @@
                         "example": "eval-project"
                     },
                     {
+                        "name": "context",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Static context to filter logs by.",
+                            "default": "default",
+                            "title": "Context"
+                        },
+                        "description": "Static context to filter logs by.",
+                        "example": "training"
+                    },
+                    {
                         "name": "filter_expr",
                         "in": "query",
                         "required": false,
@@ -4215,7 +4235,7 @@
                     "Logs"
                 ],
                 "summary": "Get Fields",
-                "description": "Returns a dictionary of field names and their types for the specified project.\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation",
+                "description": "Returns a dictionary of field names and their types for the specified project.\nIf a context is provided, returns only fields associated with that context.\n\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation",
                 "operationId": "get_fields_v0_logs_fields_get",
                 "security": [
                     {
@@ -4234,6 +4254,26 @@
                         },
                         "description": "Name of the project to get fields and their types for.",
                         "example": "eval-project"
+                    },
+                    {
+                        "name": "context",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Optional context name to filter field types",
+                            "default": "default",
+                            "title": "Context"
+                        },
+                        "description": "Optional context name to filter field types",
+                        "example": "training"
                     }
                 ],
                 "responses": {
@@ -4250,88 +4290,6 @@
                                         "created_at": "2025-02-14T10:00:00Z",
                                         "artifacts": ""
                                     }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/logs/fields/types": {
-            "post": {
-                "tags": [
-                    "Logs"
-                ],
-                "summary": "Set Field Types",
-                "description": "Sets the typing for specified fields in the project.",
-                "operationId": "set_field_types_v0_logs_fields_types_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to get field types for.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project to get field types for.",
-                        "example": "eval-project"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SetFieldTypingRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Field typing updated successfully.",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Field typing updated successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request - Type mismatch or other validation errors.",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Cannot enable typing for field '<field_name>' as existing logs have different types."
                                 }
                             }
                         }
@@ -5175,8 +5133,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -5462,6 +5420,18 @@
                         "title": "Project",
                         "description": "Name of the project the stored entries will be associated to.",
                         "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ContextCreateRequest"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
+                        "example": "experiment1/trial1"
                     },
                     "key": {
                         "type": "string",
@@ -5825,8 +5795,37 @@
                         "default": false
                     },
                     "new_name": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "New Name"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context"
+                    },
+                    "column_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Context"
                     }
                 },
                 "type": "object",
@@ -5962,6 +5961,17 @@
                             }
                         ],
                         "title": "Context"
+                    },
+                    "column_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Context"
                     },
                     "prev_context": {
                         "anyOf": [
@@ -6273,23 +6283,6 @@
                     "new_field_name"
                 ],
                 "title": "RenameFieldRequest"
-            },
-            "SetFieldTypingRequest": {
-                "properties": {
-                    "types": {
-                        "additionalProperties": {
-                            "type": "boolean"
-                        },
-                        "type": "object",
-                        "title": "Types",
-                        "description": "Dict of field names and booleans as to whether the field should be typed."
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "types"
-                ],
-                "title": "SetFieldTypingRequest"
             },
             "UpdateDerivedEntriesConfig": {
                 "properties": {
