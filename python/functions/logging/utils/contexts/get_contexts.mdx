@@ -1,0 +1,29 @@
+---
+title: 'get_contexts'
+---
+
+```python
+def get_contexts(
+    *,
+    prefix: Optional[str] = None,
+    project: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> Dict[str, str]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/utils/contexts.py#L12)</p>
+
+Gets all contexts associated with a project, with the corresponding prefix.
+
+**Arguments**:
+
+- `prefix` - Prefix of the contexts to get.
+- `project` - Name of the project the artifacts belong to.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+- `kwargs` - Dictionary containing one or more key:value pairs that will be stored
+
+
+
+**Returns**:
+
+A message indicating whether the artifacts were successfully added.

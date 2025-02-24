@@ -1,0 +1,246 @@
+---
+title: 'Log'
+---
+
+```python
+class Log
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L20)</p>
+
+
+
+### \_\_init\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L21)</p>
+
+```python
+def __init__(
+        self,
+        *,
+        id: int = None,
+        _future=None,
+        ts: Optional[datetime] = None,
+        project: Optional[str] = None,
+        context: Optional[str] = None,
+        api_key: Optional[str] = None,
+        params: Dict[str, Tuple[str, Any]] = None,
+        **entries,
+    ):
+```
+
+
+
+## properties
+
+---
+
+### context
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L49)</p>
+
+```python
+def context(self) -> Optional[str]:
+```
+
+
+
+---
+
+### entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L63)</p>
+
+```python
+def entries(self) -> Dict[str, Any]:
+```
+
+
+
+---
+
+### id
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L53)</p>
+
+```python
+def id(self) -> int:
+```
+
+
+
+---
+
+### params
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L67)</p>
+
+```python
+def params(self) -> Dict[str, Tuple[str, Any]]:
+```
+
+
+
+---
+
+### ts
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L59)</p>
+
+```python
+def ts(self) -> Optional[datetime]:
+```
+
+
+
+## setters
+
+---
+
+### set\_id
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L44)</p>
+
+```python
+def set_id(self, id: int) -> None:
+```
+
+
+
+## methods
+
+---
+
+### add\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L96)</p>
+
+```python
+def add_entries(self, **entries) -> None:
+```
+
+
+
+---
+
+### delete
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L108)</p>
+
+```python
+def delete(self) -> None:
+```
+
+
+
+---
+
+### delete\_entries
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L100)</p>
+
+```python
+def delete_entries(
+        self,
+        keys_to_delete: List[str],
+    ) -> None:
+```
+
+
+
+---
+
+### download
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L88)</p>
+
+```python
+def download(self):
+```
+
+
+
+---
+
+### from\_json
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L120)</p>
+
+```python
+def from_json(state):
+```
+
+
+
+---
+
+### to\_json
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L111)</p>
+
+```python
+def to_json(self):
+```
+
+
+
+## dunder_methods
+
+---
+
+### \_\_enter\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L129)</p>
+
+```python
+def __enter__(self):
+```
+
+
+
+---
+
+### \_\_eq\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L73)</p>
+
+```python
+def __eq__(self, other: Union[dict, Log]) -> bool:
+```
+
+
+
+---
+
+### \_\_exit\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L141)</p>
+
+```python
+def __exit__(self, exc_type, exc_val, exc_tb):
+```
+
+
+
+---
+
+### \_\_len\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L80)</p>
+
+```python
+def __len__(self):
+```
+
+
+
+---
+
+### \_\_repr\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/logs.py#L83)</p>
+
+```python
+def __repr__(self) -> str:
+```
+

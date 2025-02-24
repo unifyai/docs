@@ -1,0 +1,23 @@
+---
+title: 'initialize_async_logger'
+---
+
+```python
+def initialize_async_logger(
+    batch_size: int = ASYNC_BATCH_SIZE,
+    flush_interval: float = ASYNC_FLUSH_INTERVAL,
+    max_queue_size: int = ASYNC_MAX_QUEUE_SIZE,
+    api_key: Optional[str] = None,
+) -> None:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/fc26d5c449e76a682f3deb1e2d368b43c892e51d/unify/logging/utils/logs.py#L72)</p>
+
+Initialize the async logger with the specified configuration.
+
+**Arguments**:
+
+- `batch_size` - Number of logs to batch together before sending
+- `flush_interval` - How often to flush logs in seconds
+- `max_queue_size` - Maximum size of the log queue
+- `api_key` - API key for authentication

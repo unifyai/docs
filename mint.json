@@ -109,23 +109,25 @@
             "group": "",
             "pages": [
                 {
-                    "group": "interfaces",
+                    "group": "logging",
                     "pages": [
                         {
                             "group": "dataset",
                             "pages": [
-                                "python/classes/interfaces/dataset/Dataset"
+                                "python/classes/logging/dataset/Dataset"
                             ]
                         },
                         {
                             "group": "logs",
                             "pages": [
-                                "python/classes/interfaces/logs/Context",
-                                "python/classes/interfaces/logs/Entries",
-                                "python/classes/interfaces/logs/Experiment",
-                                "python/classes/interfaces/logs/Log",
-                                "python/classes/interfaces/logs/Params",
-                                "python/functions/interfaces/logs/traced"
+                                "python/classes/logging/logs/ColumnContext",
+                                "python/classes/logging/logs/Entries",
+                                "python/classes/logging/logs/Experiment",
+                                "python/classes/logging/logs/Log",
+                                "python/classes/logging/logs/LogTransformer",
+                                "python/classes/logging/logs/Params",
+                                "python/functions/logging/logs/log_decorator",
+                                "python/functions/logging/logs/traced"
                             ]
                         },
                         {
@@ -134,43 +136,71 @@
                                 {
                                     "group": "artifacts",
                                     "pages": [
-                                        "python/functions/interfaces/utils/artifacts/add_project_artifacts",
-                                        "python/functions/interfaces/utils/artifacts/delete_project_artifact",
-                                        "python/functions/interfaces/utils/artifacts/get_project_artifacts"
+                                        "python/functions/logging/utils/artifacts/add_project_artifacts",
+                                        "python/functions/logging/utils/artifacts/delete_project_artifact",
+                                        "python/functions/logging/utils/artifacts/get_project_artifacts"
+                                    ]
+                                },
+                                {
+                                    "group": "async_logger",
+                                    "pages": [
+                                        "python/classes/logging/utils/async_logger/AsyncLoggerManager"
                                     ]
                                 },
                                 {
                                     "group": "compositions",
                                     "pages": [
-                                        "python/functions/interfaces/utils/compositions/get_experiment_name",
-                                        "python/functions/interfaces/utils/compositions/get_experiment_version",
-                                        "python/functions/interfaces/utils/compositions/get_param_by_value",
-                                        "python/functions/interfaces/utils/compositions/get_param_by_version",
-                                        "python/functions/interfaces/utils/compositions/get_source"
+                                        "python/functions/logging/utils/compositions/get_experiment_name",
+                                        "python/functions/logging/utils/compositions/get_experiment_version",
+                                        "python/functions/logging/utils/compositions/get_param_by_value",
+                                        "python/functions/logging/utils/compositions/get_param_by_version",
+                                        "python/functions/logging/utils/compositions/get_source"
+                                    ]
+                                },
+                                {
+                                    "group": "contexts",
+                                    "pages": [
+                                        "python/functions/logging/utils/contexts/add_logs_to_context",
+                                        "python/functions/logging/utils/contexts/delete_context",
+                                        "python/functions/logging/utils/contexts/get_contexts"
+                                    ]
+                                },
+                                {
+                                    "group": "datasets",
+                                    "pages": [
+                                        "python/functions/logging/utils/datasets/add_dataset_entries",
+                                        "python/functions/logging/utils/datasets/delete_dataset",
+                                        "python/functions/logging/utils/datasets/download_dataset",
+                                        "python/functions/logging/utils/datasets/list_datasets",
+                                        "python/functions/logging/utils/datasets/upload_dataset"
                                     ]
                                 },
                                 {
                                     "group": "logs",
                                     "pages": [
-                                        "python/functions/interfaces/utils/logs/add_log_entries",
-                                        "python/functions/interfaces/utils/logs/add_log_params",
-                                        "python/functions/interfaces/utils/logs/delete_log_fields",
-                                        "python/functions/interfaces/utils/logs/delete_logs",
-                                        "python/functions/interfaces/utils/logs/get_groups",
-                                        "python/functions/interfaces/utils/logs/get_log_by_id",
-                                        "python/functions/interfaces/utils/logs/get_logs",
-                                        "python/functions/interfaces/utils/logs/get_logs_metric",
-                                        "python/functions/interfaces/utils/logs/log",
-                                        "python/functions/interfaces/utils/logs/set_user_logging"
+                                        "python/functions/logging/utils/logs/add_log_entries",
+                                        "python/functions/logging/utils/logs/add_log_params",
+                                        "python/functions/logging/utils/logs/create_logs",
+                                        "python/functions/logging/utils/logs/delete_log_fields",
+                                        "python/functions/logging/utils/logs/delete_logs",
+                                        "python/functions/logging/utils/logs/get_groups",
+                                        "python/functions/logging/utils/logs/get_log_by_id",
+                                        "python/functions/logging/utils/logs/get_logs",
+                                        "python/functions/logging/utils/logs/get_logs_metric",
+                                        "python/functions/logging/utils/logs/initialize_async_logger",
+                                        "python/functions/logging/utils/logs/log",
+                                        "python/functions/logging/utils/logs/set_user_logging",
+                                        "python/functions/logging/utils/logs/shutdown_async_logger",
+                                        "python/functions/logging/utils/logs/update_logs"
                                     ]
                                 },
                                 {
                                     "group": "projects",
                                     "pages": [
-                                        "python/functions/interfaces/utils/projects/create_project",
-                                        "python/functions/interfaces/utils/projects/delete_project",
-                                        "python/functions/interfaces/utils/projects/list_projects",
-                                        "python/functions/interfaces/utils/projects/rename_project"
+                                        "python/functions/logging/utils/projects/create_project",
+                                        "python/functions/logging/utils/projects/delete_project",
+                                        "python/functions/logging/utils/projects/list_projects",
+                                        "python/functions/logging/utils/projects/rename_project"
                                     ]
                                 }
                             ]
@@ -412,8 +442,7 @@
                                 "api-reference/logs/get_logs_metric",
                                 "api-reference/logs/get_log_groups",
                                 "api-reference/logs/rename_field",
-                                "api-reference/logs/get_fields",
-                                "api-reference/logs/set_field_types"
+                                "api-reference/logs/get_fields"
                             ]
                         },
                         {
