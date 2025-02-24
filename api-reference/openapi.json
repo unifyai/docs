@@ -3907,7 +3907,7 @@
                                 }
                             ],
                             "description": "Static context to filter logs by.",
-                            "default": "default",
+                            "default": "",
                             "title": "Context"
                         },
                         "description": "Static context to filter logs by.",
@@ -4269,7 +4269,7 @@
                                 }
                             ],
                             "description": "Optional context name to filter field types",
-                            "default": "default",
+                            "default": "",
                             "title": "Context"
                         },
                         "description": "Optional context name to filter field types",
@@ -5133,8 +5133,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -6260,7 +6260,7 @@
                         ],
                         "title": "Context",
                         "description": "The context of the field to rename.",
-                        "default": "default",
+                        "default": "",
                         "example": "test-context"
                     },
                     "old_field_name": {
