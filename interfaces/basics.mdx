@@ -8,7 +8,7 @@ The best way to get started is to press the "play" button and run this demo â–¶ï
 When opening this project in a new interface,
 you'll see **one tab** (`tab1`) and **two tiles** (`Table` on the left and `View` on the right).
 
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/interface_dark.png"/>
+IMG
 
 ## Tabs
 
@@ -53,6 +53,53 @@ such as applying filters, sorting and grouping on tables, changing the axes sele
 When interactive mode is turned off, the interface acts more like a static dashboard, with data manipulation features disabled.
 
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/interface_modes_dark.gif"/>
+
+## Contexts
+
+Contexts enable you to compartmentalize your data for different tables or for different tabs within your interface.
+The context for an entire tab can be set in the top right, either by selecting a context subdirectory for tables to choose from, 
+or setting the context itself. In the former case, tables will then be limited either to contexts within the selected context subdirectory,
+and in the latter case the tables will all share the same globally set context.
+
+It's best to showcase this with an example:
+
+```python
+with unify.Context("Companies"):
+    with unify.Context("Painted Ltd"):
+        with unify.Context("Sales"):
+            unify.log(
+                {
+                    "revenue": 1000000,
+                    "product": "Paint",
+                }
+            )
+        with unify.Context("Marketing"):
+            unify.log(
+                {
+                    "spend": 1000000,
+                    "format": "TV",
+                }
+            )
+    with unify.Context("Happy Hour Inc"):
+        with unify.Table("Sales"):
+            unify.log(
+                {
+                    "revenue": 2000000,
+                    "product": "Beer",
+                }
+            )
+        with unify.Context("Marketing"):
+            unify.log(
+                {
+                    "spend": 500000,
+                    "format": "Radio",
+                }
+            )
+```
+
+We can then set the contexts for the tab and/or tables in a variety of ways:
+
+GIF
 
 ## Feedback
 
