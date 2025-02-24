@@ -1,4 +1,31 @@
 ---
 title: 'The App'
 ---
-[coming soon 🚧]
+
+According to [QA Education](https://qaeducation.co.uk/feature/uk-teachers-spend-whole-day-marking-each-week/),
+teachers spend a whole day on marking each week, and the majority say they do not spend enough time teaching as a result.
+Let's try and fix this using AI!
+
+We'll use LLMs to build an app that marks students answers, given a known markscheme.
+We have to start somewhere, so let's start with some practice exam papers for high school level maths.
+
+To kick things off, we've parsed [three practice exam papers](https://github.com/unifyai/demos/tree/main/ai_tutor/data/parsed/GCSE_(9%E2%80%931)_Mathematics)
+from [OCR's Sample Assessment Material for GCSE Maths](https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment-materials.pdf),
+and used o1 to generate synthetic student answers which o1 believes are appropriate for each possible number of marks to be awarded.
+
+The details for these preliminary steps are not important,
+but you're welcome to dig deeper if interested.
+Feel free to check out:
+
+- the [script](https://github.com/unifyai/demos/blob/main/ai_tutor/fetch_and_parse_pdf.py), and [data](https://github.com/unifyai/demos/tree/main/ai_tutor/data/parsed/GCSE_(9%E2%80%931)_Mathematics) for the parsed papers and markschemes
+
+- the [script](https://github.com/unifyai/demos/blob/main/ai_tutor/generate_data.py) and [data](https://github.com/unifyai/demos/blob/main/ai_tutor/data/labelled_data.json) for the synthetic student answers
+
+For the demo, we'll go through the following steps:
+
+1. Create a Dataset 🗂️
+2. Analyze Production Traffic 🚦
+3. Iterate and Improve our Agent 🔁
+
+
+Let's dive in! 🤿
