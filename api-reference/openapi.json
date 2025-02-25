@@ -3157,6 +3157,37 @@
                         }
                     },
                     {
+                        "name": "group_sorting",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Sorting configuration that can include both within-group and group-level sorting. When grouping is active, each field has two controls: one for sort within groups and one for sort groups (aggregated sorting).",
+                            "title": "Group Sorting"
+                        },
+                        "description": "Sorting configuration that can include both within-group and group-level sorting. When grouping is active, each field has two controls: one for sort within groups and one for sort groups (aggregated sorting).",
+                        "example": {
+                            "score": {
+                                "field": "score",
+                                "direction": "descending",
+                                "sort_type": "sort_groups",
+                                "metric": "mean"
+                            },
+                            "timestamp": {
+                                "field": "timestamp",
+                                "direction": "ascending",
+                                "sort_type": "within_groups"
+                            }
+                        }
+                    },
+                    {
                         "name": "from_ids",
                         "in": "query",
                         "required": false,
