@@ -235,14 +235,15 @@ unify.log(x=1, y=-1)
 unify.log(x=1, y=1)
 ```
 
-Let's imagine we want to filter to find the logs where `x*y > 0`. We couldn't achieve this with column filters, but we can with the global filter,
-using an expression such as `x*y>0` or `(x>0 and y>0) or (x<0 and y<0)`.
+Let's imagine we want to filter to find the logs where `x * y > 0`. We couldn't achieve this with column filters, but we can with the global filter,
+using an expression such as `x * y > 0` or `( x > 0 and y > 0) or (x < 0 and y < 0)`.
 
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_global_filter_dark.gif"/>
 
+
 We can also switch the global filter to "search" mode, which simply searches all cells for a matching substring, after casting all contents to string form (including dicts, lists, etc).
 
-{/* ToDo: support Global Filtering (https://app.clickup.com/t/86c1xw47f) */}
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_global_search_dark.gif"/>
 
 ## Derived Columns
 
