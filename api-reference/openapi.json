@@ -5846,17 +5846,6 @@
                             }
                         ],
                         "title": "Context"
-                    },
-                    "column_context": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Column Context"
                     }
                 },
                 "type": "object",
