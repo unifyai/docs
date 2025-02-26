@@ -2,40 +2,98 @@
 title: 'Datasets'
 ---
 
-One common use case of contexts is the creation of *datasets*.
-Each dataset has it's own context, such that it can easily be viewed in it's own table.
-
-The `unify.Dataset` class is the best way to interact with your datasets from the Python client.
+The `unify.Dataset` class is the best way to manage and create datasets.
+Datasets support indexing as well as value-based addition and removal.
 
 ```python
 my_dataset = unify.Dataset([0, 1, 2], name="my_dataset")
+my_dataset[0] = -1
+my_dataset += [3, 4, 5]
+my_dataset -= [1, 2]
+print(my_dataset)
+```
+```
+unify.Dataset([-1, 3, 4, 5], name="my_dataset")
 ```
 
-You can then upload this to your interface like so.
+Under the hood, datasets make use of the same logging primitives as `unify.log`.
+The only differences is that datasets each have their own context,
+which is automatically managed by the `unify.Dataset` class.
+
+## Uploading
+
+You can upload any dataset to your interface like so.
 
 ```python
 my_dataset.upload()
 ```
 
-`unify.Dataset` sets the context as `f"Datasets/{name}"`, so your dataset can be viewed at `Datasets/my_dataset`.
+The `unify.Dataset` class automatically sets the context as `f"Datasets/{name}"`, so your dataset can be viewed at `Datasets/my_dataset`.
 
-IMG
+GIF
+
+    Setting `overwrite=True` will overwrite any existing dataset with the same name 
+(even if the upstream dataset contained more data not included in the upload).
+
+```python
+my_dataset.upload(overwrite=True)
+```
+
+## Downloading
 
 If your dataset already exists upstream, you can download it like so.
 
 ```python
-my_dataset = unify.Dataset.from_upstream("my_dataset")
+my_dataset = unify.Dataset.download("my_dataset")
 ```
 
-You can also add and remove content by value using standard Python operators.
+Setting `overwrite=True` will overwrite your local dataset 
+(even if your local dataset contained more data than is in the download).
 
 ```python
-my_dataset += [3, 4, 5]
-my_dataset -= [0, 1, 2]
-my_dataset.upload(overwrite=True)
+my_dataset.download(overwrite=True)
 ```
 
-Given that logs can be shared across multiple contexts, it's easy to create sub-datasets withou duplication.
+## Syncing
+
+Finally, if you want to sync your local dataset with the upstream version,
+to achieve the superset of the upstream and local data, you can do so like so.
+
+```python
+my_dataset.sync()
+```
+
+UNION
+
+SUPERSET
+
+## Duplicates
+
+By default, the `unify.Dataset` class will **not** allow duplicate values.
+
+```python
+unify.Dataset([0, 1, 2, 2])
+```
+```
+EXCEPTION
+```
+
+If you would like to allow duplicates, you can override the default behavior by setting the `allow_duplicates` flag when creating the dataset.
+
+```python
+unify.Dataset([0, 1, 2, 2], allow_duplicates=True)
+```
+
+When `allow_duplicates` is set to `False`, then all upstream entries with identical values to local entries will be assumed to represent the **same entry**,
+and any unset log ids of local values will be updated to match the upstream ids.
+
+If `allow_duplicates` is set to `True`, then any upstream entries with identical values to local entries will simply be added alongside the local entries,
+and the log ids of the local entries will be left unchanged.
+
+If duplicates are not explicitly required for a dataset, 
+then it's best to leave `allow_duplicates` set to `False`.
+Even if duplicates are needed, adding an extra `example_id` column with `allow_duplicates` kept as `False` can be worthwhile, 
+especially if you're regularly syncing datasets between local and upstream sources.
 
 ```python
 import random
