@@ -4544,7 +4544,7 @@
                                 "schema": {},
                                 "example": [
                                     {
-                                        "name": "interface_1",
+                                        "name": "tab1",
                                         "project": "my_project",
                                         "items": [
                                             {
