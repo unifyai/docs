@@ -2,12 +2,64 @@
 title: 'Views'
 ---
 
-Views enable us to actually **look** at the data, not only filter, sort, organize and compute statistics on it (what tables are for 🔢)
+Views enable us to actually **look** at the data, not only filter, sort, organize and compute statistics on it (what tables are for 🔢).
+Let's again consider the following data for self-proclaimed “10x” engineers on the team,
+which is the same data we used when explaining tables:
+
+```python [expandable]
+num_employees = 20
+ages = [
+    random.randint(20, 50)
+    for _ in range(num_employees)
+]
+catchphrases = random.choices(
+    [
+        "hello... friend",
+        "hell no",
+        "did you ask o3?",
+        "will do it tomorrow",
+        "ask the intern",
+    ],
+    k=num_employees,
+)
+last_logins = [
+    (datetime.now() - timedelta(
+        days=random.randint(0, 5)
+    )).isoformat()
+    for _ in range(num_employees)
+]
+open_task_progress = [
+    {
+        task: random.random()
+        for task in random.sample(
+            [
+                "add NextJS loader",
+                "SQL migration",
+                "refactor life",
+            ],
+            random.randint(0, 3),
+        )
+    }
+    for _ in range(num_employees)
+]
+
+for age, catchphrase, last_login, otp in zip(
+    ages, catchphrases, last_logins, open_task_progress
+):
+    unify.log(
+        age=age,
+        how_10x=random.random()*10,
+        catchphrase=catchphrase,
+        last_login=last_login,
+        open_task_progress=otp,
+        will_to_live=random.choice([True, False]),
+    )
+```
 
 A view tile must be paired with exactly one table, this can be done from the menu at the top.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/select_table_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_pair_table_dark.gif"/>
 click image to maximize
 </Accordion>
 
