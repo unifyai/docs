@@ -161,6 +161,7 @@
                                     "group": "contexts",
                                     "pages": [
                                         "python/functions/logging/utils/contexts/add_logs_to_context",
+                                        "python/functions/logging/utils/contexts/create_context",
                                         "python/functions/logging/utils/contexts/delete_context",
                                         "python/functions/logging/utils/contexts/get_contexts"
                                     ]
