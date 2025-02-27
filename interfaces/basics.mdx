@@ -70,42 +70,34 @@ and in the latter case the tables will all share the same globally set context.
 It's best to showcase this with an example:
 
 ```python
-with unify.Context("Companies"):
-    with unify.Context("Painted Ltd"):
-        with unify.Context("Sales"):
+with unify.Context("Sciences"):
+    with unify.Context("Maths"):
+        unify.log(
+            name="Zoe",
+            question="what is 1 + 1?",
+            region="US"
+        )
+        with unify.Context("Physics"):
             unify.log(
-                {
-                    "revenue": 1000000,
-                    "product": "Paint",
-                }
+                name="John",
+                question="what is the speed of light?",
+                region="EU"
             )
-        with unify.Context("Marketing"):
-            unify.log(
-                {
-                    "spend": 1000000,
-                    "format": "TV",
-                }
-            )
-    with unify.Context("Happy Hour Inc"):
-        with unify.Table("Sales"):
-            unify.log(
-                {
-                    "revenue": 2000000,
-                    "product": "Beer",
-                }
-            )
-        with unify.Context("Marketing"):
-            unify.log(
-                {
-                    "spend": 500000,
-                    "format": "Radio",
-                }
-            )
+with unify.Context("Arts"):
+    with unify.Context("Literature"):
+        unify.log(
+            name="Jane",
+            question="What does this sentence convey?",
+            region="UK"
+        )
 ```
 
 We can then set the contexts for the tab and/or tables in a variety of ways:
 
-GIF
+<Accordion title="In the Interface">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_nested_contexts_dark.gif"/>
+click image to maximize
+</Accordion>
 
 ## Feedback
 
