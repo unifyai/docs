@@ -28,11 +28,12 @@ You can upload any dataset to your interface like so.
 my_dataset.upload()
 ```
 
-The `unify.Dataset` class automatically sets the context as `f"Datasets/{name}"`, so your dataset can be viewed at `Datasets/my_dataset`.
+The `unify.Dataset` class automatically sets the context as `f"Datasets/{name}"`,
+so your dataset can be viewed at `Datasets/my_dataset`.
 
-GIF
+IMG 🛑 {/* ToDo: Fix broken contexts (https://app.clickup.com/t/86c2arbbk) */}
 
-    Setting `overwrite=True` will overwrite any existing dataset with the same name 
+Setting `overwrite=True` will overwrite any existing dataset with the same name 
 (even if the upstream dataset contained more data not included in the upload).
 
 ```python
@@ -105,13 +106,13 @@ my_sub_dataset = unify.Dataset(
 ).upload()
 ```
 
-IMG
+IMG 🛑 {/* ToDo: Fix broken contexts (https://app.clickup.com/t/86c2arbbk) */}
 
 Editing a log (row) in one dataset will be reflected in the other.
 
-IMG
+IMG 🛑 {/* ToDo: Get implicit fields working correctly (https://app.clickup.com/t/86c2aq09m) */}
 
 Logs can also be removed from one dataset table, without deleting it from the other.
 However, if the log is deleted from both datasets, then it will be deleted entirely.
 
-IMG
+IMG 🛑 {/* ToDo: Fix broken contexts (https://app.clickup.com/t/86c2arbbk) */}
