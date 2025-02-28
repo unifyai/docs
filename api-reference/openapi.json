@@ -3868,14 +3868,14 @@
                 }
             }
         },
-        "/v0/logs/metric/{metric}": {
+        "/v0/logs/metric/{default_metric}": {
             "get": {
                 "tags": [
                     "Logs"
                 ],
                 "summary": "Get Logs Metric",
-                "description": "Returns the reduction metric for filtered values (base + derived) for a specific key from a project.",
-                "operationId": "get_logs_metric_v0_logs_metric__metric__get",
+                "description": "Returns the reduction metric for filtered values (base + derived) for one or more keys from a project.\nIf a single key is provided, returns the metric value directly (for backward compatibility).\nIf multiple keys are provided, returns a dict of {key: metric result}.",
+                "operationId": "get_logs_metric_v0_logs_metric__default_metric__get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -3883,28 +3883,13 @@
                 ],
                 "parameters": [
                     {
-                        "name": "metric",
+                        "name": "default_metric",
                         "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "The name of the metric you would like to compute.",
-                            "title": "Metric"
-                        },
-                        "description": "The name of the metric you would like to compute.",
-                        "example": "mean"
-                    },
-                    {
-                        "name": "key",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The key you would like to extract the reduction metric for.",
-                            "title": "Key"
-                        },
-                        "description": "The key you would like to extract the reduction metric for.",
-                        "example": "score"
+                            "title": "Default Metric"
+                        }
                     },
                     {
                         "name": "project",
@@ -3912,90 +3897,27 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the project to get entries from.",
                             "title": "Project"
-                        },
-                        "description": "Name of the project to get entries from.",
-                        "example": "eval-project"
-                    },
-                    {
-                        "name": "context",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Static context to filter logs by.",
-                            "default": "",
-                            "title": "Context"
-                        },
-                        "description": "Static context to filter logs by.",
-                        "example": "training"
-                    },
-                    {
-                        "name": "filter_expr",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Boolean string to filter entries. TODO: Detailed page.",
-                            "title": "Filter Expr"
-                        },
-                        "description": "Boolean string to filter entries. TODO: Detailed page.",
-                        "example": "len(output) > 200 and temperature == 0.5"
-                    },
-                    {
-                        "name": "from_ids",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
-                            "title": "From Ids"
-                        },
-                        "description": "The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.",
-                        "example": "0&1&2"
-                    },
-                    {
-                        "name": "exclude_ids",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
-                            "title": "Exclude Ids"
-                        },
-                        "description": "The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.",
-                        "example": "0&1&2"
+                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/GetLogsMetricRequest"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ],
+                                "title": "Request"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -4003,6 +3925,9 @@
                             "application/json": {
                                 "schema": {
                                     "anyOf": [
+                                        {
+                                            "type": "object"
+                                        },
                                         {
                                             "type": "number"
                                         },
@@ -4014,9 +3939,12 @@
                                         },
                                         {
                                             "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
                                         }
                                     ],
-                                    "title": "Response Get Logs Metric V0 Logs Metric  Metric  Get"
+                                    "title": "Response Get Logs Metric V0 Logs Metric  Default Metric  Get"
                                 },
                                 "example": 4.56
                             }
@@ -5158,8 +5086,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -5779,6 +5707,111 @@
                     "ids_and_fields"
                 ],
                 "title": "DeleteLogEntryRequest"
+            },
+            "GetLogsMetricRequest": {
+                "properties": {
+                    "key": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Key",
+                        "description": "Single key string or a list of keys."
+                    },
+                    "metrics": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metrics",
+                        "description": "Optional per-key metrics mapping. If provided, overrides the path metric for those keys."
+                    },
+                    "filter_expr": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filter Expr",
+                        "description": "Expression to filter logs (string or key->expr dict)."
+                    },
+                    "from_ids": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From Ids",
+                        "description": "Log IDs to include (string or key->IDs dict)."
+                    },
+                    "exclude_ids": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Exclude Ids",
+                        "description": "Log IDs to exclude (string or key->IDs dict)."
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "Context name (string)."
+                    }
+                },
+                "type": "object",
+                "title": "GetLogsMetricRequest"
             },
             "HTTPValidationError": {
                 "properties": {

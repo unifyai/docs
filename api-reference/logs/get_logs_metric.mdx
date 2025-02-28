@@ -1,8 +1,10 @@
 ---
 title: 'Get Logs Metric'
-api: 'GET /v0/logs/metric/{metric}'
+api: 'GET /v0/logs/metric/{default_metric}'
 ---
-Returns the reduction metric for filtered values (base + derived) for a specific key from a project.
+Returns the reduction metric for filtered values (base + derived) for one or more keys from a project.
+If a single key is provided, returns the metric value directly (for backward compatibility).
+If multiple keys are provided, returns a dict of {key: metric result}.
 
 #### Authorizations
 
@@ -12,52 +14,62 @@ Returns the reduction metric for filtered values (base + derived) for a specific
 
 #### Path Parameters
 
-<ParamField query="metric" type="string" required="true">
-The name of the metric you would like to compute.
+<ParamField query="default_metric" type="string" required="true">
+
 </ParamField>
 
 #### Query Parameters
 
-<ParamField query="key" type="string" required="true">
-The key you would like to extract the reduction metric for.
-</ParamField>
-
 <ParamField query="project" type="string" required="true">
-Name of the project to get entries from.
+
 </ParamField>
 
-<ParamField query="context" type="string | null" >
-Static context to filter logs by.
+#### Body
+
+<ParamField body="key" type="string | array | null" >
+Single key string or a list of keys.
 </ParamField>
 
-<ParamField query="filter_expr" type="string | null" >
-Boolean string to filter entries. TODO: Detailed page.
+<ParamField body="metrics" type="object | null" >
+Optional per-key metrics mapping. If provided, overrides the path metric for those keys.
 </ParamField>
 
-<ParamField query="from_ids" type="string | null" >
-The log ids which are permitted to be included in the search. Each log id listed does not need to be returned, but no logs which are not included in this list can be returned. This argument *cannot* be set if `exclude_ids` is set.
+<ParamField body="filter_expr" type="string | object | null" >
+Expression to filter logs (string or key->expr dict).
 </ParamField>
 
-<ParamField query="exclude_ids" type="string | null" >
-The log ids which cannot be returned from the search. None of the listed ids will be returned, even if the logs are valid as per the filtering expression etc. This argument *cannot* be set if `from_ids` is set.
+<ParamField body="from_ids" type="string | object | null" >
+Log IDs to include (string or key->IDs dict).
+</ParamField>
+
+<ParamField body="exclude_ids" type="string | object | null" >
+Log IDs to exclude (string or key->IDs dict).
+</ParamField>
+
+<ParamField body="context" type="string | null" >
+Context name (string).
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs/metric/mean?key=score&project=eval-project&context=training&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&from_ids=0&1&2&exclude_ids=0&1&2' \
+  --url 'https://api.unify.ai/v0/logs/metric/<default_metric>?project=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/metric/mean?key=score&project=eval-project&context=training&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&from_ids=0&1&2&exclude_ids=0&1&2"
+url = "https://api.unify.ai/v0/logs/metric/<default_metric>?project=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("GET", url, headers=headers)
+json_input = {}
+
+response = requests.request("GET", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
