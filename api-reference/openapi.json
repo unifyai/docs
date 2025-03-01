@@ -5613,12 +5613,13 @@
                     "context": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/ContextCreateRequest"
+                                "type": "string"
                             },
                             {
                                 "type": "null"
                             }
                         ],
+                        "title": "Context",
                         "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
                         "example": "experiment1/trial1"
                     },
