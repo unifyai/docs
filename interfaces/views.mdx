@@ -269,11 +269,14 @@ Each span shows the **cumulative** values for:
 
 Each span can be folded and unfolded, and the runtime of the base log can be viewed in the runtime viewer.
 
-{/* IMG 🛑 ToDo: Add tokens to spans (https://app.clickup.com/t/86c2442zw) */}
+<Accordion title="Example">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_trace_viewer_dark.gif"/>
+click image to maximize
+</Accordion>
 
-Folding spans in the trace viewer will hide the children from the runtime viewer, and selecting a span will only show this span and its (non-folded) children in the runtime viewer.
+{/*Folding spans in the trace viewer will hide the children from the runtime viewer, and selecting a span will only show this span and its (non-folded) children in the runtime viewer. */}
 
-{/* IMG 🛑 ToDo: Add tokens to spans (https://app.clickup.com/t/86c2442zw) */}
+{/* IMG ToDo: Add tokens to spans (https://app.clickup.com/t/86c2442zw) */}
 
 ### Span Viewer
 
@@ -286,4 +289,11 @@ The span viewer is shown on the right, and for each span, this shows:
 - **Cost**: The cost of the function call, including and excluding cached LLM calls which didn't cost anything during the trace itself, but would if there was no cache to read from.
 - **ID**: The unique identifier for the span.
 
-{/* IMG 🛑 ToDo: Add tokens to spans (https://app.clickup.com/t/86c2442zw) */}
+<Accordion title="Example">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_span_view_dark.gif"/>
+click image to maximize
+</Accordion>
+
+Some extra formatting is done for LLM calls which follow OpenAI's standard:
+
+IMG
