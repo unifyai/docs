@@ -32,12 +32,12 @@ The `unify.Dataset` class automatically sets the context as `f"Datasets/{name}"`
 so your dataset can be viewed at `Datasets/my_dataset`.
 
 <Accordion title="In the Interface">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/uploaded_dataset_dark.png"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/uploaded_dataset_dark.png"/>
 click image to maximize
 </Accordion>
 
 Setting `overwrite=True` will overwrite any existing dataset with the same name 
-(even if the upstream dataset contained more data not included in the upload).
+(even if the upstream dataset contained more data which is not included in the uploaded data).
 
 ```python
 my_dataset.upload(overwrite=True)
@@ -52,7 +52,7 @@ my_dataset = unify.Dataset.download("my_dataset")
 ```
 
 Setting `overwrite=True` will overwrite your local dataset 
-(even if your local dataset contained more data than is in the download).
+(even if your local dataset contained more data than is present in the download).
 
 ```python
 my_dataset.download(overwrite=True)
@@ -67,36 +67,34 @@ to achieve the superset of the upstream and local data, you can do so like so.
 my_dataset.sync()
 ```
 
-UNION
-
-SUPERSET
+This first uploads your local dataset with `overwrite=False` to create the superset upstream,
+and then downloads with `overwrite=True` to get this superset dataset downloaded locally,
+with *every entry* now including the unique log ID.
 
 ## Duplicates
 
 By default, the `unify.Dataset` class will **not** allow duplicate values.
 
 ```python
-unify.Dataset([0, 1, 2, 2])
-```
-```
-EXCEPTION
+unify.Dataset([0, 1, 2, 2]) # fails
 ```
 
-If you would like to allow duplicates, you can override the default behavior by setting the `allow_duplicates` flag when creating the dataset.
+If you would like to allow duplicates,
+you can override the default behavior by setting the `allow_duplicates` flag when creating the dataset.
 
 ```python
 unify.Dataset([0, 1, 2, 2], allow_duplicates=True)
 ```
 
-When `allow_duplicates` is set to `False`, then all upstream entries with identical values to local entries will be assumed to represent the **same entry**,
-and any unset log ids of local values will be updated to match the upstream ids.
+When `allow_duplicates` is set to `False`, then all upstream logs with identical values to local (id-less) logs will be assumed to represent the **same log**,
+and the unset log ids these local logs will be updated to match the upstream ids with the matching values.
 
-If `allow_duplicates` is set to `True`, then any upstream entries with identical values to local entries will simply be added alongside the local entries,
-and the log ids of the local entries will be left unchanged.
+If `allow_duplicates` is set to `True`,
+then any upstream logs with identical values to local logs will assume to represent *different logs* unless the log ids match exactly.
 
 If duplicates are not explicitly required for a dataset, 
-then it's best to leave `allow_duplicates` set to `False`.
-Even if duplicates are needed, adding an extra `example_id` column with `allow_duplicates` kept as `False` can be worthwhile, 
+then it's best to use the default behaviour, and leave `allow_duplicates` set to `False`.
+Even if duplicates are needed, adding an extra `example_id` column with `allow_duplicates` kept as `False` can be worthwhile to avoid accidental duplication, 
 especially if you're regularly syncing datasets between local and upstream sources.
 
 ```python
@@ -110,7 +108,7 @@ my_sub_dataset = unify.Dataset(
 ```
 
 <Accordion title="In the Interface">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/dataset_and_sub_dataset_dark.png"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/dataset_and_sub_dataset_dark.png"/>
 click image to maximize
 </Accordion>
 
@@ -123,14 +121,14 @@ for log in my_dataset:
 ```
 
 <Accordion title="In the Interface">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/shared_dataset_entries_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/shared_dataset_entries_dark.gif"/>
 click image to maximize
 </Accordion>
 
-Logs can also be removed from one dataset table, without deleting it from the other.
-However, if the log is deleted from both datasets, then it will be deleted entirely.
+Logs can also be removed from one dataset table, without removing it from the other.
+However, if the log is removed from both datasets, then the log itself will be deleted entirely.
 
 <Accordion title="In the Interface">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/shared_dataset_deletion_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/shared_dataset_deletion_dark.gif"/>
 click image to maximize
 </Accordion>
