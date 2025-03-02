@@ -15,7 +15,7 @@ unify.log(x=1, y={"b": [4, 5, 6]}, msg="goodbye", score=0.456)
 This will be shown as:
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/simple_table_dark.png"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/simple_table_dark.png"/>
 click image to maximize
 </Accordion>
 
@@ -33,7 +33,7 @@ Columns can easily be hidden by clicking the dropdown and pressing "hide column"
 - clicking the column visibility dropdown and toggling the column
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_add_hide_columns_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_add_hide_columns_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -42,7 +42,7 @@ click image to maximize
 You can move columns by simply dragging them to where you want them.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/drag_columns_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/drag_columns_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -52,7 +52,7 @@ You can pin columns to the left by dragging the left-most edge of the column tow
 This column will then be locked in place when you scroll left and right within the table.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_pinning_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_pinning_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -61,7 +61,7 @@ click image to maximize
 When it comes to data *manipulation*, grouping is probably the most useful and versatile feature.
 Consider the following set of (dummy) LLM evaluations:
 
-```python
+```python [expandable]
 questions = [
     "What is the weather in Paris?",
     "What is the weather in Tokyo?",
@@ -90,51 +90,57 @@ for with_tool in [True, False]:
 
 By default, the data is just shown flat, in the order it was logged (most recent at the top).
 
-However, if we want to see the results of each unique experiment, we can simply group by the experiment column, and unfold the data we want to see.
-The reduction metrics are automatically calculated for each column.
+However, if we want to see the results of each unique experiment,
+we can simply group by the experiment column, and unfold the data we want to see.
+The reduction metrics are automatically calculated for each numeric column.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_grouping_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_grouping_dark.gif"/>
 click image to maximize
 </Accordion>
 
 Conversely, if we want to see which question was the most difficult, we can group by question instead.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_grouping_questions_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_grouping_questions_dark.gif"/>
 click image to maximize
 </Accordion>
 
 We can see that the LLM seems to find London the easiest, then Tokyo, then Paris (again, a contrived example 😁).
 
-Similarly, if we want to what the impact of a system message is, we can group by this column instead, and see the statics reduced across all experiments.
+Similarly, if we want to see the impact of a system message, we can group by this column instead,
+and see the statics reduced across all experiments.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_grouping_sys_msg_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_grouping_sys_msg_dark.gif"/>
 click image to maximize
 </Accordion>
 
-Combined, this makes it very easily to quickly probe the data across **all** of your experiments, enabling you to easily transcending the boundaries of rigid "experiments" flexibly.
+Combined, this makes it very easily to quickly probe the data across **all** of your experiments,
+enabling you to easily transcending the boundaries of rigid "experiments" flexibly.
 
 ## Sorting
 
-As you'd expect, sorting can also be applied to any column. Simply clicking "sort" will toggle the state between ascending, descending, and off.
-Rows are sorted in the order of the column sorts. For example, sorting by column A and *then* column B will prioritize sorting based on A, and only defer to B when the values in Column A are equal.
+As you'd expect, sorting can also be applied to any column.
+Simply clicking "sort" will toggle the state between ascending, descending, and off.
+Rows are sorted in the order of the column sorts.
+For example, sorting by column A and *then* column B will prioritize sorting based on A,
+and only defer to B when the values in Column A are equal.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/sorting_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/sorting_dark.gif"/>
 click image to maximize
 </Accordion>
 
 ### With Grouping [🚧]
 
 When grouping is applied, the contents of each group are sorted as usual.
-However, the groups themselves are *also* sorted based on the reduction metric that is set in the bottom left.
+However, the groups themselves can *also* be sorted based on the reduction metric that is set in the bottom left.
 This is the reduction metric that is shown in each cell during grouping.
 
-This makes it easy to quickly show the highest performing experiments at the top of the table (for example).
-
 {/* ToDo Grouping with Sorting (https://app.clickup.com/t/86c1xw420) */}
+
+This makes it easy to quickly show the highest performing experiments at the top of the table (for example).
 
 ## Filtering
 
@@ -196,7 +202,7 @@ for age, catchphrase, last_login, otp in zip(
 
 ### Base
 
-Firstly, all columns support filtering the following:
+Firstly, all columns support filtering via the following:
 - `Exists`: whether or not the field was actually included in the log
 - `Is None`: if the field *was* included, but a value of `None` was written
 
@@ -210,7 +216,7 @@ Everything else is column specific.
 - `Excludes`: whether or not the string excludes the substring
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_filter_str_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_filter_str_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -219,7 +225,7 @@ click image to maximize
 - `==`, `!=`, `>`, `>=`, `<`, `<=`: standard comparison operators
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_numeric_filtering_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_numeric_filtering_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -230,7 +236,7 @@ click image to maximize
 - `Absolute Mode`: select an absolute point in time
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_filter_datetime_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_filter_datetime_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -240,7 +246,7 @@ click image to maximize
 - `False`: is false
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_filter_bool_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_filter_bool_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -250,20 +256,25 @@ click image to maximize
 - `Excludes`: whether or not the list excludes the item / dict excludes the key
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_filter_dict_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_filter_dict_dark.gif"/>
 click image to maximize
 </Accordion>
 
 ### Groups [🚧]
 
-Groups can also be directly filtered. This is useful if you want to select a specific subset of experiments, for example.
-The group filtering is applied *independently* to the standard column-wise filtering.
-If you want to propagate the group filters to the columns filters, you can simply press "propagate" in the group filter dropdown.
+Groups can also be directly filtered (selected).
+This is useful if you want to *select* a specific subset of experiments, for example.
+Given that it acts more like a *selector* than a *filter*,
+the group filtering is applied *independently* to the standard column-wise filtering.
+If you want to propagate the group selection(s) to the columns filters,
+you can simply press "propagate" in the group filter dropdown.
 
 ### Global
 
-Filters at the column level apply the filter directly to that column, and each column filter is effectivrely stitched together with an `AND` operator.
-However, you can write your own expressive filter expressions by the global filter, using basic Python syntax, using the column names as variable names.
+Filters at the column level apply the filter directly to that column,
+and each column filter is effectivrely stitched together with an `AND` operator.
+However, you can write your own expressive filter expressions by the global filter,
+using basic Python syntax, using the column names as variable names.
 
 ```python
 unify.log(x=-1, y=-1)
@@ -272,19 +283,21 @@ unify.log(x=1, y=-1)
 unify.log(x=1, y=1)
 ```
 
-Let's imagine we want to filter to find the logs where `x * y > 0`. We couldn't achieve this with column filters, but we can with the global filter,
+Let's imagine we want to filter to find the logs where `x * y > 0`.
+We couldn't achieve this with column filters, but we can with the global filter,
 using an expression such as `x * y > 0` or `( x > 0 and y > 0) or (x < 0 and y < 0)`.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_global_filter_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_global_filter_dark.gif"/>
 click image to maximize
 </Accordion>
 
-
-We can also switch the global filter to "search" mode, which simply searches all cells for a matching substring, after casting all contents to string form (including dicts, lists, etc).
+We can also switch the global filter to "search" mode,
+which simply searches all cells for a matching substring,
+after casting all contents to string form (including dicts, lists, etc).
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_global_search_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_global_search_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -303,7 +316,7 @@ for _ in range(20):
 We just need to provide the expression `(x**2 + y**2)**0.5`:
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_derived_column_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_derived_column_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -311,7 +324,7 @@ Filtering, grouping, and sorting all work on derived columns, just like any othe
 However, derived columns *also* support updating their equation.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_derived_columns_sort_n_filter_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_derived_columns_sort_n_filter_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -320,6 +333,7 @@ click image to maximize
 We will soon support creating new tables by joining existing ones 🔗
 
 For example, this will make it easy to compare multiple experiments side by side,
-even in cases where the example ids in the test sets have changed across experiments (preventing the ability to do simple row-wise correspondence).
+even in cases where the example ids in the test sets have changed across experiments
+(preventing the ability to do simple row-wise correspondence).
 
 Stay tuned 📡 👀

@@ -8,30 +8,32 @@ The best way to get started is to press the "play" button and run this demo ▶�
 When opening this project in a new interface,
 you'll see **one tab** (`tab1`) and **two tiles** (`Table` on the left and `View` on the right).
 
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/quick_start_demo_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/quick_start_demo_dark.gif"/>
 
 ## Tabs
 
 Tabs are shown at the top centre of the screen, and an interface can have as many tabs as you want.
 
-Tabs are useful for separating different concepts and data views within a project, for example: `Datasets`, `Usage`, `Evals`, `Metrics`, `Tests`.
+Tabs are useful for separating different concepts and data views within a project,
+for example: `Datasets`, `Usage`, `Evals`, `Metrics`, `Tests` etc.
 
 Each tab can be tailored for it's specific purpose, making it easy to juggle all aspects of your project 🤹🏼
 
 ## Tiles
 
-Tabs consist of **tiles**, which is where the data, interaction, and visualization actually happens. There are four types:
+Tabs consist of **tiles**, which is where the data, interaction, and visualization actually happens.
+There are four types:
 
 - tables 🔢
 - views 🔍
 - plots 📊
 - editor 🕹️ (coming soon)
 
-When in edit mode (`Ctrl + E`), new tiles can be added by clicking on any blank space in the tab, pressing `Ctrl + T`, or clicking "+ Add Tile" at the top of the screen.
+When in edit mode (`Ctrl + E`), new tiles can be added by pressing `Ctrl + T` or clicking "+ Add Tile" at the top of the screen.
 The corners of the tab can then be dragged for resizing, and the tab can be dragged and repositioned.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/tiles_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/tiles_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -42,11 +44,12 @@ This will declutter the workspace, minimize the icons on screen and make the bes
 
 If you want to look at one tile in particular, you can expand this into the focus mode view,
 by clicking the expand button in the top right of the tile.
-This will open the tile in focus mode, where other tiles can be positioned alongside for comparison.
+This will open the tile in focus mode, where other tiles can be positioned alongside for comparison,
+or the single tile can occupy the full screen by dragging the central divider to the side.
 You can exit via the top right "X" button to return to the default interface view.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/focus_mode_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/focus_mode_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -59,7 +62,7 @@ such as applying filters, sorting and grouping on tables, changing the axes sele
 When interactive mode is turned off, the interface acts more like a static dashboard, with data manipulation features disabled.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/interface_modes_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/interface_modes_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -72,7 +75,7 @@ and in the latter case the tables will all share the same globally set context.
 
 It's best to showcase this with an example:
 
-```python
+```python [expandable]
 with unify.Context("Sciences"):
     with unify.Context("Maths"):
         unify.log(
@@ -98,14 +101,6 @@ with unify.Context("Arts"):
 We can then set the contexts for the tab and/or tables in a variety of ways:
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_nested_contexts_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_nested_contexts_dark.gif"/>
 click image to maximize
 </Accordion>
-
-## Feedback
-
-These are the only concepts you should need to know to get started.
-If anything is unclear, or there is another feature you'd like to see,
-then let us know [on discord](https://discord.com/invite/sXyFF8tDtm)! 👾
-
-Feedback is always welcome 🙏

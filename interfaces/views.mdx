@@ -2,7 +2,8 @@
 title: 'Views'
 ---
 
-Views enable us to actually **look** at the data, not only filter, sort, organize and compute statistics on it (what tables are for 🔢).
+Views enable us to actually **look** at the data,
+not only filter, sort, organize and compute statistics on it (what tables are for 🔢).
 Let's again consider the following data for self-proclaimed “10x” engineers on the team,
 which is the same data we used when explaining tables:
 
@@ -59,7 +60,7 @@ for age, catchphrase, last_login, otp in zip(
 A view tile must be paired with exactly one table, this can be done from the menu at the top.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_pair_table_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_pair_table_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -73,16 +74,17 @@ These cells can be part of the same row, different rows, different columns, or a
 In all cases, **all** of the data will be shown in the view pane.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_multi_cell_selection_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_multi_cell_selection_dark.gif"/>
 click image to maximize
 </Accordion>
 
 ## Grouping
 
-To avoid redundancy, every value that is shared across multiple cells is grouped in the view pane, with all the row numbers shown at the top.
+To avoid redundancy, every value that is shared across multiple cells is grouped in the view pane,
+with all the row numbers shown at the top.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_cell_selection_grouping_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_cell_selection_grouping_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -94,21 +96,24 @@ The view pane supports 3 different view modes:
 
 1. **Markdown**: All text is rendered as markdown.
 2. **Plain Text**: All text is rendered as plain text.
-3. **Raw**: The columns (incuding dicts, lists, numbers etc.) are rendered as a raw strings, with no formatting or nested structure.
+3. **Raw**: The columns (incuding dicts, lists, numbers etc.) are rendered as a raw strings,
+with no formatting or nested structure.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/text_modes_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/text_modes_dark.gif"/>
 click image to maximize
 </Accordion>
 
 ## Hiding Columns
 
-Columns can be hidden by directly clicking the (-) icon which appears on hover, and also via the show / hide selector menu at the top.
-Column hiding in the view pane is totally **independent** from hidden columns in the table, making it easy to split the data across the two formats.
+Columns can be hidden by directly clicking the (-) icon which appears on hover,
+and also via the show / hide selector menu at the top.
+Column hiding in the view pane is totally **independent** from hidden columns in the table,
+making it easy to split the data across the two formats.
 
 For example, consider the following logged data:
 
-```python
+```python [expandable]
 for question in ["what is 1 + 1?", "what is 2 + 2?", "what is 3 + 3?"]:
     student_answer = f"the answer is {random.randint(0, 6)}"
     correct_marks_to_award = int(int(student_answer[-1]) == int(eval(question[-4:-1])))
@@ -130,11 +135,13 @@ for question in ["what is 1 + 1?", "what is 2 + 2?", "what is 3 + 3?"]:
     )
 ```
 
-The most intuitive way to view this data is to show the numeric data in the table (with all the power of sorting, grouping, filtering etc.),
-and the text data in the view pane to look at the finer details (and benefit from all the features explained below!)
+The most intuitive way to view this data is to show the numeric data in the table
+(with all the power of sorting, grouping, filtering etc.),
+and the text data in the view pane to look at the finer details
+(and benefit from all the view pane features).
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_show_hide_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_show_hide_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -143,7 +150,7 @@ click image to maximize
 Columns can easily be moved in the view pane by selecting drag mode and then simply clicking and dragging them.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_move_columns_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_move_columns_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -153,7 +160,7 @@ Sometimes it's more convenient to view the data **side-by-side**, the split view
 You can toggle between one, two and three views.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_split_mode_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_split_mode_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -165,7 +172,7 @@ Pressing "Expand All Children" will expand all children recursively with one cli
 and "Collapse All Children" will do the inverse.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_nested_expand_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_nested_expand_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -174,7 +181,7 @@ click image to maximize
 The view pane supports very expressive diffs across cells.
 Let's use a simple example for exploring the different diff features.
 
-```python
+```python [expandable]
 unify.log(
     x=1,
     y=1.2,
@@ -214,7 +221,7 @@ For string diffs, there are four modes:
 - **Characters**: Per character diffs.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/string_diffs_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/string_diffs_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -223,29 +230,32 @@ click image to maximize
 Numeric value "diffs" support the four basic operators: `-`, `+`, `*` and `/`.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/numeric_diffs_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/numeric_diffs_dark.gif"/>
 click image to maximize
 </Accordion>
 
 ### DateTime
 
-Datetime diffs are presented as a relative difference in time, in the appropriate units (weeks, days, seconds, miliseconds etc.)
+Datetime diffs are presented as a relative difference in time,
+in the appropriate units (weeks, days, seconds, miliseconds etc.)
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/datetime_diffs_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/datetime_diffs_dark.gif"/>
 click image to maximize
 </Accordion>
 
 ### Structure Diffs
 
-Aside from presenting the diffs for individual items, we can also see how the nested structure of dictionaries and lists change across logs.
+Aside from presenting the diffs for individual items,
+we can also see how the nested structure of dictionaries and lists change across logs.
 The same is also true for traces (more details below).
 
 {/* IMG 🛑 ToDo: Fix dict diff issues (https://app.clickup.com/t/86c2bkny4) */}
 
 ### Base Log
 
-All diffs are relative to the selected base log. This base log can easily be changed at the top of the view pane.
+All diffs are relative to the selected base log.
+This base log can easily be changed at the top of the view pane.
 
 {/* IMG 🛑 ToDo: Fix dict diff issues (https://app.clickup.com/t/86c2bkny4) */}
 
@@ -257,20 +267,24 @@ Traces enable you to get a complete view of nested function calls from your prog
 ### Trace Viewer
 
 The trace viewer is shown on the left, which shows the nested structure of your entire trace.
-Each item in the trace is a span (unit of computation), and the child of each span are shown nested underneath.
+Each item in the trace is a span (unit of computation),
+and the children of each span are shown nested underneath.
 
 Each span shows the **cumulative** values for:
 
-- **Cost**: Can be manually specified during tracing for arbitrary programs. Unify's LLM clients automatically populate this based on the cost of the LLM calls.
+- **Cost**: Can be manually specified during tracing for arbitrary programs.
+Unify's LLM clients automatically populate this based on the cost of the LLM calls.
 
-- **Tokens**: Can be manually specified during tracing when integrating with other LLM providers. Unify's LLM clients automatically populate this based on the tokens used in the LLM calls.
+- **Tokens**: Can be manually specified during tracing when integrating with other LLM providers.
+Unify's LLM clients automatically populate this based on the tokens used in the LLM calls.
 
 - **Runtime**: Tracked automatically during tracing of the program.
 
-Each span can be folded and unfolded, and the runtime of the base log can be viewed in the runtime viewer.
+Each span can be folded and unfolded,
+and the runtime of the base log can be viewed in the runtime viewer.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_trace_viewer_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_trace_viewer_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -288,13 +302,13 @@ The span viewer is shown on the right, and for each span, this shows:
 - **ID**: The unique identifier for the span.
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_span_view_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_span_view_dark.gif"/>
 click image to maximize
 </Accordion>
 
 Some extra formatting is done for LLM calls which follow OpenAI's standard:
 
 <Accordion title="Example">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/view_llm_span_view_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_llm_span_view_dark.gif"/>
 click image to maximize
 </Accordion>
