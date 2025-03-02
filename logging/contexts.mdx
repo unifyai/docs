@@ -60,7 +60,7 @@ for _ in range(15):
 ```
 
 <Accordion title="In the Interface">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/two_contexts_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/two_contexts_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -115,7 +115,7 @@ However, "Sciences" **can** be selected as the context of the tab in the interfa
 which limits the search space for each table within the tab.
 
 <Accordion title="In the Interface">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/table_nested_contexts_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_nested_contexts_dark.gif"/>
 click image to maximize
 </Accordion>
 
@@ -139,13 +139,13 @@ with unify.Context("Sciences"):
             region="EU"
         )
         assert len(unify.get_logs()) == 1
-assert len(unify.get_logs()) == 2
 ```
 
-This behaviour can be change by setting `unify.Context("...", mode="read")` which will only set the context for log **getting**,
+This behaviour can be changed by setting `unify.Context("...", mode="read")` which will only set the context for log **getting**,
 and `unify.Context("...", mode="write")` which will only set the context for log **setting**.
 
-This makes it easy to quickly get/set different logs for different purposes throughout your codebase, without needing to manage contexts via local variables.
+This makes it easy to quickly get/set different logs for different purposes throughout your codebase,
+without needing to manage contexts via local variables.
 
 ## Shared Logs
 
@@ -171,7 +171,7 @@ If any logs are then updated inplace, they will be reflected in all contexts.
 ```
 
 <Accordion title="In the Interface">
-<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/context_shared_logs_dark.gif"/>
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/context_shared_logs_dark.gif"/>
 click image to maximize
 </Accordion>
 
