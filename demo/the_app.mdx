@@ -6,7 +6,7 @@ According to [QA Education](https://qaeducation.co.uk/feature/uk-teachers-spend-
 teachers spend a whole day on marking each week, and the majority say they do not spend enough time teaching as a result.
 Let's try and fix this using AI!
 
-We'll use LLMs to build an app that marks students answers, given a known markscheme.
+We'll use LLMs to build an app that asks students questions *and* marks their answers, given a known markscheme.
 We have to start somewhere, so let's start with some practice exam papers for high school level maths.
 
 To kick things off, we've parsed [three practice exam papers](https://github.com/unifyai/demos/tree/main/ai_tutor/data/parsed/GCSE_(9%E2%80%931)_Mathematics)
@@ -21,11 +21,10 @@ Feel free to check out:
 
 - the [script](https://github.com/unifyai/demos/blob/main/ai_tutor/generate_data.py) and [data](https://github.com/unifyai/demos/blob/main/ai_tutor/data/labelled_data.json) for the synthetic student answers
 
-For the demo, we'll go through the following steps:
+For the demo, we'll make use of this synthetic data, and walk through the following three steps:
 
-1. Create a Dataset 🗂️
-2. Analyze Production Traffic 🚦
+1. Build a Usage Dashboard 📊
+2. Upload Eval Datasets 🗂️
 3. Iterate and Improve our Agent 🔁
-
 
 Let's dive in! 🤿

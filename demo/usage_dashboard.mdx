@@ -1,0 +1,173 @@
+---
+title: 'Usage Dashboard'
+---
+
+Let's assume our app has been deployed for a few weeks now,
+and we've been tracking the daily usage coming from ~100 active users.
+For now, the students answer the questions,
+and then a human marks the questions asynchronously,
+but this is both timely and expensive.
+
+Firt things first, let's activate our project.
+
+```python
+unify.activate("MarkingAssistant")
+```
+
+We have the usage data exported to a `usage_data.json` file,
+so the next step is to upload this production traffic into our new interface to get a complete picture.
+This will take a few minutes,
+as there are 10,000 beafy logs to upload.
+
+```python
+with open("usage_data.json", "r") as f:
+    usage_data = json.load(f)
+unify.create_logs(context="Usage", entries=usage_data)
+```
+
+We can already start to explore the data while the upload is happening.
+Let's open our "MarkingAssistant" project,
+and rename the default `tab1` to `Usage`.
+
+GIF
+
+Let's then also set the *context* of the tab to "Usage",
+so that the tab is accessing the correct data.
+
+GIF
+
+We can then start to explore the data in the table and viewer,
+whilst it's uploading.
+Let's first explore which students are making the most use of the platform,
+answering the highest volume of questions.
+Let's click `group by` above the `email` field.
+This will group each log on a student-by-student basis,
+each of which can be unfolded to see the raw data.
+
+GIF
+
+The reduction metrics of each group can be seen in the table.
+By default the `mean` is plotted,
+but this can be changed at the bottom of the table.
+Let's change the metric to `count` instead,
+and let's order **the groups** in ascending count order.
+It doesn't matter which column we use for the group sorting,
+they all have the same `count` value,
+which refers to the number of logs (rows),
+and so is independent of the column values.
+In this case we'll just go the the email count.
+
+GIF
+
+With this configuration applied,
+we have the students making most use shown at the top,
+and those making the least use shown at the bottom.
+
+GIF
+
+Not *all* of the students are shown by default due to pagination.
+You can either continue scrolling to the bottom of the page to get all groups,
+or change the number of rows you'd like to be shown by default.
+
+GIF
+
+We can also plot the distribution of usage across each student as a bar chart.
+We first select the bar chart type in the plot,
+with `email` for the `x` axis (unique student identifier) and `email -> count` for the `y` axis.
+A separate bar is then plotted for each unique email address, with the number of logs on the y axis.
+
+GIF
+
+Let's do a slightly more complicated example,
+and find the average time in the day when males vs females are on the platform.
+First, let's create a new column which calculates the *remainder* timestamp when dividing by the number of days,
+which gives us the *time of day* for the request.
+
+GIF
+
+If we choose `mean` as our reduction statistic, and group by `gender`,
+we'll then get the average time of day for the requests shown in the table.
+
+GIF
+
+Similarly, if we want to see how the average time of usage in the day varies across different ages,
+we can create a scatter graph of time of day versus age. We can then click the "correlation" button,
+and we'll get the correlation coefficient and line of best fit shown on the graph.
+
+GIF
+
+We can also split this scatter graph into male and female data if we want.
+
+GIF
+
+These are just examples. We can manipulate the data in all kinds of other ways.
+For example, if we want to see which questions have the most marks available,
+we can group by the question, and then sort by the marks available:
+
+GIF
+
+Finally, let's imagine we have **live** production traffic streaming in.
+We can simulate this by sampling from the usage dataset and updating the timstamp to be current time.
+
+```python [expandable]
+```
+
+By default, the *most recent* logs will be shown at the top of the screen.
+
+Let's now create a plot to monitor how the traffic is changing over time.
+We create a new plot tile, select the histogram type, select timestamp for the `x` axis,
+and then select the number of buckets we'd like to use. Let's go with 50 buckets.
+
+GIF
+
+Let's now turn on streaming mode,
+such that the logs in the table and all corresponding plots are automatically updated whenever new data is available.
+
+GIF
+
+The plot and table will continue to grow unbounded in the current configuration.
+Let's add a filter to the timestamp column,
+such that we're only retrieving logs from the past 5 minutes.
+
+GIF
+
+If we want to look at traffic for a particular student, we can simply filter for
+this student in the table, and the plot will also be updated automatically.
+
+GIF
+
+Similarly, we can filter for a questions from a particular past paper,
+or anything else, and again the plot will update automatically.
+
+GIF
+
+If we'd like to view several of these plots at the same time,
+then we can simply make a clone of the table (or create a new one),
+make the filtering changes to this new table,
+and then create another plot which references this second table.
+
+GIF
+
+If you don't need to see the table on screen,
+then you can simply hide the table tile.
+
+GIF
+
+If you're happy with your configuration,
+you can save it as an interface for loading later.
+Let's save this interface as `"Traffic"`.
+We can then close the browser,
+and when we open up the `"EdTech"` project,
+we can see our `"Traffic"` interface listed at the top the screen.
+
+GIF
+
+This set of examples have just been a *very* simple taster of the kinds of things you can
+quickly hack together in an interface for logging,
+in this case focusing on the live usage data.
+
+You should play around with this interface yourself,
+and explore other useful representations you can create by juggling things around,
+and applying filters, sorting, grouping, and various plots.
+If you find a useful representation of the data,
+then you can save this as an interface and come back to this view of the data at a later stage.
