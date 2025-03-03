@@ -15,7 +15,7 @@ Returns a list of filtered log entries from a project with various expressivenes
      - When nested_groups is True, returns a nested structure under the "logs" key.
      - When nested_groups is False, returns flat per-field mappings under the "groups" key.
      - When groups_only is True, the detailed log objects are omitted and leaves are simplified
-       to either lists of log ids (if return_timestamps is False) or mappings of `{log id: timestamp}` (if True).
+       to either lists of log ids (if return_timestamps is False) or mappings of {log id: timestamp} (if True).
 
   3. **Return IDs only mode**:
      - If return_ids_only is True, returns only the log event ids.
@@ -30,7 +30,7 @@ The response always includes:
 If return_versions=True:
 - Returns all versions of logs in versioned contexts
 - from_ids and exclude_ids must be provided as lists of objects with 'id' and 'version' keys
-- Each object must have format: `{"id": log_event_id, "version": version_number}`
+- Each object must have format: {"id": log_event_id, "version": version_number}
 - This is only valid for logs in versioned contexts
 
 If return_versions=False (default):
@@ -121,7 +121,7 @@ Number of groups to skip at each level
 Maximum depth of nested groups to return. If not specified, all levels are returned.
 </ParamField>
 
-<ParamField query="nested_groups" type="boolean"  default={true}>
+<ParamField query="nested_groups" type="boolean"  default={True}>
 If True, groups are returned as a nested structure; if False, groups are returned as flat per-field mappings.
 </ParamField>
 
