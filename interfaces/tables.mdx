@@ -62,6 +62,9 @@ When it comes to data *manipulation*, grouping is probably the most useful and v
 Consider the following set of (dummy) LLM evaluations:
 
 ```python [expandable]
+import unify
+import random
+
 questions = [
     "What is the weather in Paris?",
     "What is the weather in Tokyo?",
@@ -151,6 +154,9 @@ Each column type has a different set of filter options.
 Let's consider the following data for self-proclaimed "10x" engineers on the team:
 
 ```python [expandable]
+import unify
+import random
+
 num_employees = 20
 ages = [
     random.randint(20, 50)
@@ -277,6 +283,8 @@ However, you can write your own expressive filter expressions by the global filt
 using basic Python syntax, using the column names as variable names.
 
 ```python
+import unify
+
 unify.log(x=-1, y=-1)
 unify.log(x=-1, y=1)
 unify.log(x=1, y=-1)
@@ -309,6 +317,9 @@ Again, all general Python syntax is supported.
 For example, we could derive a new column that compute the length of the vector `[x, y]`.
 
 ```python
+import unify
+import random
+
 for _ in range(20):
     unify.log(x=random.random(), y=random.random())
 ```

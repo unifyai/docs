@@ -9,6 +9,8 @@ then parameters can be used to represent the: system message, temperature, tools
 Under the hood, parameters are effectively just *versioned* entries.
 
 ```python
+import unify
+
 log = unify.log(
     params={
         "system_message": "You are a helpful assistant.",
@@ -43,6 +45,9 @@ click image to maximize
 As with entries, parameters can be used as a context manager.
 
 ```python
+import unify
+import random
+
 with unify.Params(
     system_message="You are a helpful assistant.",
     tool_use=True,
@@ -62,6 +67,9 @@ click image to maximize
 Like the other context managers, parameter context managers can also be nested:
 
 ```python
+import unify
+import random
+
 with unify.Params(
     system_message="You are a helpful assistant.",
 ):  
@@ -87,6 +95,9 @@ This behaviour can be change by setting `unify.Parameter("...", mode="read")` wh
 and `unify.Parameter("...", mode="write")` which will only impact log **setting**.
 
 ```python
+import unify
+import random
+
 with unify.Params(
     system_message="You are a helpful assistant.",
 ):  

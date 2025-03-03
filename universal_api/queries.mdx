@@ -30,6 +30,8 @@ Since our API adheres to the OpenAI standard, we accept tools as specified by th
 This is the default function calling example from OpenAI, working with an Anthropic model:
 
 ```python
+import unify
+
 tools = [
     {
         "type": "function",
@@ -305,6 +307,8 @@ curl --request POST \
 ```
 This can also be done in the Unify Python SDK, as follows:
 ```python
+import unify
+
 client = unify.Unify("claude-3-haiku@anthropic")
 client.generate("hello world!", top_k=5)
 ```
@@ -336,6 +340,8 @@ curl --request POST \
 Again, this can also be done in the Unify Python SDK as follows:
 
 ```python
+import unify
+
 client = unify.Unify("claude-3-haiku@anthropic")
 client.generate(
     "hello world!",

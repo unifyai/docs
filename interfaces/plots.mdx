@@ -17,6 +17,9 @@ Scatter graphs can be used to plot two numerical columns against each other.
 For example, let's log the following:
 
 ```python
+import unify
+import random
+
 for i in range(10):
     unify.log(
         x=i,
@@ -37,6 +40,9 @@ by selecting another column to **group by**
 Let's make an example.
 
 ```python
+import unify
+import random
+
 gender_factors = {"male": 2000, "female": 1000}
 for gender in ["male", "female"]:
     for age in range(20, 55):
@@ -63,6 +69,9 @@ If we want to group across *multiple* independent variables, we can just create 
 Let's assume we also log the nationality of the person.
 
 ```python
+import unify
+import random
+
 gender_factors = {"male": 1500, "female": 750}
 loc_offsets = {"UK": 15000, "US": 45000}
 for gender in ["male", "female"]:
@@ -106,6 +115,9 @@ This makes them especially suitable for plotting time-series data.
 Let's take the same example as before, but plot it as a line graph.
 
 ```python
+import unify
+import random
+
 for i in range(10):
     unify.log(
         x=i,
@@ -123,6 +135,10 @@ Let's imagine we want to plot the speed of different models across time,
 which are being continually streamed.
 
 ```python
+import unify
+import random
+from datetime import datetime
+
 model_speeds = {
     "llama-3.1-8b-chat": 12,
     "llama-3.1-70b-chat": 7,
@@ -161,6 +177,9 @@ we can create a derived `endpoint` column to plot a unique line for each `model`
 Let's create some dummy data for this scenario:
 
 ```python
+import unify
+import random
+
 model_speeds = {
     "llama-3.1-8b-chat": 12,
     "llama-3.1-70b-chat": 7,
@@ -203,6 +222,9 @@ The y axis then represents a *reduction* across the data in each group (bar) in 
 For example, let's say we've run two experiments, which vary the tool use and the system message.
 
 ```python
+import unify
+import random
+
 base_msg = "You are a helpful assistant."
 for tool_use in [True, False]:
     with unify.Params(tool_use=tool_use):
@@ -237,6 +259,9 @@ For example, let's say we want to see the distribution of user traffic over the 
 Has our product been gaining traction?
 
 ```python
+import unify
+import random
+
 n = 10
 for month in range(1, 13):
     num_queries = random.randint(month*n, (month+10)*n)

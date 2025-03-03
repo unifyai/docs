@@ -17,6 +17,8 @@ unify.deactivate()
 You can also use context managers to switch between projects, with arbitrary nesting supported.
 
 ```python
+import unify
+
 with unify.Project("my_project"):
     unify.log(x=0)
 with unify.Project("my_other_project"):
