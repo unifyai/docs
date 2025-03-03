@@ -1,6 +1,24 @@
 ---
-title: 'Create a Dataset'
+title: 'Upload your Dataset'
 ---
+
+Firstly, let's assume our app is deployed, and we have 100 active users on the platform.
+We have exported these details to a `students.json` file.
+
+We can easily upload this to the platform via the Python client.
+
+```python
+import json
+import unify
+
+
+with open("students.json", "r") as f:
+    students = json.load(f)
+unify.upload_dataset(students, name="Students")
+```
+
+Let's now create a Dataset Tab in our interface to view this Dataset.
+
 
 It's easiest to create a dataset from the Python client.
 Let's first get the data in the representation we actually want it.
