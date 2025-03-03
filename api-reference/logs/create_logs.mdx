@@ -14,12 +14,14 @@ If present, any matching key inside this dictionary will override the
 inferred type of that particular entry. The explicit_types dictionary
 can also specify if a field is mutable via a 'mutable' boolean flag:
 
+```json
 {
     "field_name": {
         "type": "str",
         "mutable": false  # Makes the field immutable
     }
 }
+```
 
 By default, all fields are immmutable unless specified otherwise.
 Once a field is marked as mutable, only then can it be modified through
