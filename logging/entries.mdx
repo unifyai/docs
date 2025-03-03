@@ -17,6 +17,8 @@ For example, `x`, `y`, `msg` and `score` above are all **entries**.
 Aside from logging contexts, we can also specify entry contexts.
 
 ```python
+import unify
+
 student_data = {
     "A": [
         ("Alice", "Smith", "23/04/2005"),
@@ -51,6 +53,8 @@ click image to maximize
 These can also be nested:
 
 ```python
+import unify
+
 all_student_data = {
     "Maths": {
         "A": [
@@ -109,6 +113,8 @@ when it's known that they are constant for all inner computation and logging.
 By default, `unify.Entry("...")` also changes the behaviour of `get_logs`, returning only the logs which include the entry.
 
 ```python
+import unify
+
 for subject, studate_data in all_student_data.items():
     with unify.Entry(subject=subject):
         for grade, students in studate_data.items():

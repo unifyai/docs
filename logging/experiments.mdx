@@ -8,6 +8,9 @@ and automatically increments the value as an ascending integer for each new expe
 if an explicit name is not provided.
 
 ```python
+import unify
+import random
+
 with unify.Experiment(), unify.Params(
     sys_msg="You are a helpful assistant."
 ):
@@ -28,6 +31,9 @@ click image to maximize
 Let's run another experiment, but give it an explicit name.
 
 ```python
+import unify
+import random
+
 with unify.Experiment("my_experiment"), unify.Params(
     sys_msg="You are a helpful assistant."
 ):
@@ -51,6 +57,9 @@ Integers are interpreted as the experiment version,
 and strings are interpreted as the experiment name.
 
 ```python
+import unify
+import random
+
 with unify.Experiment(-1, overwrite=True), unify.Params(
     sys_msg="You are a helpful assistant."
 ):

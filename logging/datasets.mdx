@@ -6,6 +6,8 @@ The `unify.Dataset` class is the best way to manage and create datasets.
 Datasets support indexing as well as value-based addition and removal.
 
 ```python
+import unify
+
 my_dataset = unify.Dataset([0, 1, 2], name="my_dataset")
 my_dataset[0] = -1
 my_dataset += [3, 4, 5]
@@ -98,7 +100,9 @@ Even if duplicates are needed, adding an extra `example_id` column with `allow_d
 especially if you're regularly syncing datasets between local and upstream sources.
 
 ```python
+import unify
 import random
+
 my_dataset = unify.Dataset(
     list(range(100)), name="my_dataset"
 ).sync()

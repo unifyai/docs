@@ -76,6 +76,8 @@ and in the latter case the tables will all share the same globally set context.
 It's best to showcase this with an example:
 
 ```python [expandable]
+import unify
+
 with unify.Context("Sciences"):
     with unify.Context("Maths"):
         unify.log(

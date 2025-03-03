@@ -12,6 +12,10 @@ When no context is specified in the interface or the table, then the default con
 However, you can group your logs into *non-overlapping* contexts, which can then be displayed in separate tables.
 
 ```python [expandable]
+import unify
+import random
+from datetime import datetime
+
 first_names = ["Zoe", "John", "Jane", "Jim", "Jill"]
 last_names = ["Smith", "Johnson", "Williams", "Jones", "Brown"]
 qnas = {
@@ -69,6 +73,8 @@ click image to maximize
 You can use `with unify.Context("..."):` to create a context, and all logging inside this block will adopt this context.
 
 ```python
+import unify
+
 with unify.Context("Traffic"):
     unify.log(
         name="Zoe",
@@ -87,6 +93,8 @@ with unify.Context("Traffic"):
 These can also be arbitrarily nested, where each context string is joined via `/` to define the full context path.
 
 ```python
+import unify
+
 with unify.Context("Sciences"):
     with unify.Context("Maths"):
         unify.log(
@@ -124,6 +132,8 @@ click image to maximize
 By default, `unify.Context("...")` also changes the behaviour of `get_logs`, returning only the logs relevant within the context.
 
 ```python
+import unify
+
 with unify.Context("Sciences"):
     with unify.Context("Maths"):
         unify.log(
@@ -152,6 +162,8 @@ without needing to manage contexts via local variables.
 Logs can be added to as many contexts as you'd like, without duplication.
 
 ```python
+import unify
+
 exam_results = [
     {"name": "Zoe", "passed": False},
     {"name": "John", "passed": True}

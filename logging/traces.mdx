@@ -5,6 +5,8 @@ title: 'Traces'
 You can easily trace any function using the `unify.traced` decorator.
 
 ```python
+import unify
+
 @unify.traced
 def my_function(a, b):
     return a + b
@@ -25,6 +27,8 @@ Traces can have an arbitrary number of spans,
 and spans can have child spans up to an arbitrary depth.
 
 ```python
+import unify
+
 @unify.traced
 def inner_fn(a, b):
     return a + b
@@ -56,6 +60,8 @@ click image to maximize
 LLMs can also be traced, by setting `traced=True` in the client constructor (see [Universal API](https://docs.unify.ai/universal_api) section).
 
 ```python
+import unify
+
 client = unify.Unify("o3-mini@openai", traced=True)
 client.generate("Hello, world!")
 ```
@@ -71,6 +77,8 @@ then the cost and tokens are accumulated in the trace,
 propogating the cost and tokens to the parent spans.
 
 ```python
+import unify
+
 @unify.traced
 def llm_jury(question):
     a1 = unify.Unify("o3-mini@openai", traced=True).generate(question)

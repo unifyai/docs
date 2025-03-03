@@ -6,6 +6,8 @@ Column contexts can be used to organize columns **inside** a table.
 Taking the previous sciences example, column contexts enable us to organize the data like so.
 
 ```python
+import unify
+
 with unify.Log(), unify.ColumnContext("Sciences"):
     with unify.ColumnContext("Maths"):
         unify.log(
@@ -29,6 +31,8 @@ click image to maximize
 Under the hood, column contexts are simply `/` separated field names, and so the below code is equivalent.
 
 ```python
+import unify
+
 with unify.Log():
     unify.log(
         **{
@@ -58,6 +62,8 @@ As with contexts, `unify.ColumnContext("...")` by default will also change the b
 returning only the logs which are part of the column context.
 
 ```python
+import unify
+
 with unify.ColumnContext("Sciences"):
     with unify.ColumnContext("Maths"):
         unify.log(
@@ -88,6 +94,8 @@ The getting behaviour only impacts the logs which are retrieved, not the represe
 This is in contrast to the setting behaviour, which does update the field pattern in the arguments.
 
 ```python
+import unify
+
 with unify.ColumnContext("Sciences"):
     with unify.ColumnContext("Maths"):
         unify.log(
