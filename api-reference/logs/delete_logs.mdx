@@ -33,7 +33,7 @@ Optional context path to update for the logs. Can use '/' for nested contexts (e
 </ParamField>
 
 <ParamField body="ids_and_fields" type="[array]" required="true">
-List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items.
+List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items. A log ID of None indicates that the field should be deleted from all logs.
 </ParamField>
 
 <ParamField body="source_type" type="string"  default={"all"}>
@@ -72,6 +72,10 @@ curl --request DELETE \
                 460
             ],
             "response"
+        ],
+        [
+            null,
+            "score"
         ]
     ],
     "source_type": "all"
@@ -85,7 +89,7 @@ url = "https://api.unify.ai/v0/logs?delete_empty_logs=True"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1", "ids_and_fields": [[123, "score"], [[456, 457], ["score", "response"]], [[458, 459, 460], "response"]], "source_type": "all"}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "ids_and_fields": [[123, "score"], [[456, 457], ["score", "response"]], [[458, 459, 460], "response"], [None, "score"]], "source_type": "all"}
 
 response = requests.request("DELETE", url, json=json_input, headers=headers)
 

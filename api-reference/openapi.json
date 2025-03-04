@@ -5636,6 +5636,9 @@
                                                 "type": "integer"
                                             },
                                             "type": "array"
+                                        },
+                                        {
+                                            "type": "null"
                                         }
                                     ]
                                 },
@@ -5663,7 +5666,7 @@
                         "type": "array",
                         "minItems": 1,
                         "title": "Ids And Fields",
-                        "description": "List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items.",
+                        "description": "List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items. A log ID of None indicates that the field should be deleted from all logs.",
                         "example": [
                             [
                                 123,
@@ -5686,6 +5689,10 @@
                                     460
                                 ],
                                 "response"
+                            ],
+                            [
+                                null,
+                                "score"
                             ]
                         ]
                     },
