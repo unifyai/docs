@@ -63,7 +63,7 @@ for age, catchphrase, last_login, otp in zip(
 
 A view tile must be paired with exactly one table, this can be done from the menu at the top.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_pair_table_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -77,7 +77,7 @@ In it's most basic form, the view pane acts as an expressive viewer for whatever
 These cells can be part of the same row, different rows, different columns, or any combination.
 In all cases, **all** of the data will be shown in the view pane.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_multi_cell_selection_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -87,7 +87,7 @@ click image to maximize
 To avoid redundancy, every value that is shared across multiple cells is grouped in the view pane,
 with all the row numbers shown at the top.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_cell_selection_grouping_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -103,7 +103,7 @@ The view pane supports 3 different view modes:
 3. **Raw**: The columns (incuding dicts, lists, numbers etc.) are rendered as a raw strings,
 with no formatting or nested structure.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/text_modes_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -147,7 +147,7 @@ The most intuitive way to view this data is to show the numeric data in the tabl
 and the text data in the view pane to look at the finer details
 (and benefit from all the view pane features).
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_show_hide_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -156,7 +156,7 @@ click image to maximize
 
 Columns can easily be moved in the view pane by selecting drag mode and then simply clicking and dragging them.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_move_columns_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -166,7 +166,7 @@ click image to maximize
 Sometimes it's more convenient to view the data **side-by-side**, the split view makes this easy.
 You can toggle between one, two and three views.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_split_mode_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -178,7 +178,7 @@ The deeper contents of dicts and lists are lazily loaded as the nest is incremen
 Pressing "Expand All Children" will expand all children recursively with one click,
 and "Collapse All Children" will do the inverse.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_nested_expand_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -230,7 +230,7 @@ For string diffs, there are four modes:
 - **Side-by-side**: Per word diffs.
 - **Characters**: Per character diffs.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/string_diffs_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -239,7 +239,7 @@ click image to maximize
 
 Numeric value "diffs" support the four basic operators: `-`, `+`, `*` and `/`.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/numeric_diffs_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -249,7 +249,7 @@ click image to maximize
 Datetime diffs are presented as a relative difference in time,
 in the appropriate units (weeks, days, seconds, miliseconds etc.)
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/datetime_diffs_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -260,7 +260,7 @@ Aside from presenting the diffs for individual items,
 we can also see how the nested structure of dictionaries and lists change across logs.
 The same is also true for traces (more details below).
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_dict_diffs_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -270,7 +270,7 @@ click image to maximize
 All diffs are relative to the selected base log.
 This base log can easily be changed at the top of the view pane.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_diff_bases_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -299,7 +299,7 @@ Unify's LLM clients automatically populate this based on the tokens used in the 
 Each span can be folded and unfolded,
 and the runtime of the base log can be viewed in the runtime viewer.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_trace_viewer_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -317,14 +317,14 @@ The span viewer is shown on the right, and for each span, this shows:
 - **Cost**: The cost of the function call, including and excluding cached LLM calls which didn't cost anything during the trace itself, but would if there was no cache to read from.
 - **ID**: The unique identifier for the span.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_span_view_dark.gif"/>
 click image to maximize
 </Accordion>
 
 Some extra formatting is done for LLM calls which follow OpenAI's standard:
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/view_llm_span_view_dark.gif"/>
 click image to maximize
 </Accordion>

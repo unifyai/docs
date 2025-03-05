@@ -14,7 +14,7 @@ unify.log(x=1, y={"b": [4, 5, 6]}, msg="goodbye", score=0.456)
 
 This will be shown as:
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/simple_table_dark.png"/>
 click image to maximize
 </Accordion>
@@ -32,7 +32,7 @@ Columns can easily be hidden by clicking the dropdown and pressing "hide column"
 - hovering between columns and pressing the "+" button
 - clicking the column visibility dropdown and toggling the column
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_add_hide_columns_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -41,7 +41,7 @@ click image to maximize
 
 You can move columns by simply dragging them to where you want them.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/drag_columns_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -51,7 +51,7 @@ click image to maximize
 You can pin columns to the left by dragging the left-most edge of the column towards the right (think Excel).
 This column will then be locked in place when you scroll left and right within the table.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_pinning_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -97,14 +97,14 @@ However, if we want to see the results of each unique experiment,
 we can simply group by the experiment column, and unfold the data we want to see.
 The reduction metrics are automatically calculated for each numeric column.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_grouping_dark.gif"/>
 click image to maximize
 </Accordion>
 
 Conversely, if we want to see which question was the most difficult, we can group by question instead.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_grouping_questions_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -114,7 +114,7 @@ We can see that the LLM seems to find London the easiest, then Tokyo, then Paris
 Similarly, if we want to see the impact of a system message, we can group by this column instead,
 and see the statics reduced across all experiments.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_grouping_sys_msg_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -130,7 +130,7 @@ Rows are sorted in the order of the column sorts.
 For example, sorting by column A and *then* column B will prioritize sorting based on A,
 and only defer to B when the values in Column A are equal.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/sorting_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -221,7 +221,7 @@ Everything else is column specific.
 - `Includes`: whether or not the string includes the substring
 - `Excludes`: whether or not the string excludes the substring
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_filter_str_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -230,7 +230,7 @@ click image to maximize
 
 - `==`, `!=`, `>`, `>=`, `<`, `<=`: standard comparison operators
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_numeric_filtering_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -241,7 +241,7 @@ click image to maximize
 - `Relative Mode`: select relative to the current time
 - `Absolute Mode`: select an absolute point in time
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_filter_datetime_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -251,7 +251,7 @@ click image to maximize
 - `True`: is true
 - `False`: is false
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_filter_bool_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -261,7 +261,7 @@ click image to maximize
 - `Includes`: whether or not the list includes the item / dict includes the key
 - `Excludes`: whether or not the list excludes the item / dict excludes the key
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_filter_dict_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -295,7 +295,7 @@ Let's imagine we want to filter to find the logs where `x * y > 0`.
 We couldn't achieve this with column filters, but we can with the global filter,
 using an expression such as `x * y > 0` or `( x > 0 and y > 0) or (x < 0 and y < 0)`.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_global_filter_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -304,7 +304,7 @@ We can also switch the global filter to "search" mode,
 which simply searches all cells for a matching substring,
 after casting all contents to string form (including dicts, lists, etc).
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_global_search_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -326,7 +326,7 @@ for _ in range(20):
 
 We just need to provide the expression `(x**2 + y**2)**0.5`:
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_derived_column_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -334,7 +334,7 @@ click image to maximize
 Filtering, grouping, and sorting all work on derived columns, just like any other.
 However, derived columns *also* support updating their equation.
 
-<Accordion title="Example">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/table_derived_columns_sort_n_filter_dark.gif"/>
 click image to maximize
 </Accordion>
