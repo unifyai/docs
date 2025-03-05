@@ -60,7 +60,7 @@
                     "group": "Demo",
                     "pages": [
                         "demo/the_app",
-                        "demo/user_dashboard",
+                        "demo/usage_dashboard",
                         "demo/datasets",
                         "demo/llm_evals"
                     ]
