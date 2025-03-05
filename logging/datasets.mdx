@@ -33,7 +33,7 @@ my_dataset.upload()
 The `unify.Dataset` class automatically sets the context as `f"Datasets/{name}"`,
 so your dataset can be viewed at `Datasets/my_dataset`.
 
-<Accordion title="In the Interface">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/uploaded_dataset_dark.png"/>
 click image to maximize
 </Accordion>
@@ -111,7 +111,7 @@ my_sub_dataset = unify.Dataset(
 ).sync()
 ```
 
-<Accordion title="In the Interface">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/dataset_and_sub_dataset_dark.png"/>
 click image to maximize
 </Accordion>
@@ -124,7 +124,7 @@ for log in my_dataset:
     log.update_entries(data=val*100)
 ```
 
-<Accordion title="In the Interface">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/shared_dataset_entries_dark.gif"/>
 click image to maximize
 </Accordion>
@@ -132,7 +132,7 @@ click image to maximize
 Logs can also be removed from one dataset table, without removing it from the other.
 However, if the log is removed from both datasets, then the log itself will be deleted entirely.
 
-<Accordion title="In the Interface">
+<Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/shared_dataset_deletion_dark.gif"/>
 click image to maximize
 </Accordion>
