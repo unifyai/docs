@@ -34,7 +34,7 @@ student_data = {
     ],
 }
 for grade, students in student_data.items():
-    with unify.Entry(grade=grade):
+    with unify.Entries(grade=grade):
         for first_name, last_name, dob in students:
             unify.log(
                 first_name=first_name,
@@ -87,9 +87,9 @@ all_student_data = {
 }
 
 for subject, studate_data in all_student_data.items():
-    with unify.Entry(subject=subject):
+    with unify.Entries(subject=subject):
         for grade, students in studate_data.items():
-            with unify.Entry(grade=grade):
+            with unify.Entries(grade=grade):
                 for first_name, last_name, dob in students:
                     unify.log(
                         first_name=first_name,
@@ -110,15 +110,15 @@ but if there are many nested function calls processing the data inside the `subj
 then their use avoids the need to pass around the `subject` or `grade` contexts explicitly between all inner function calls,
 when it's known that they are constant for all inner computation and logging.
 
-By default, `unify.Entry("...")` also changes the behaviour of `get_logs`, returning only the logs which include the entry.
+By default, `unify.Entries("...")` also changes the behaviour of `get_logs`, returning only the logs which include the entry.
 
 ```python
 import unify
 
 for subject, studate_data in all_student_data.items():
-    with unify.Entry(subject=subject):
+    with unify.Entries(subject=subject):
         for grade, students in studate_data.items():
-            with unify.Entry(grade=grade):
+            with unify.Entries(grade=grade):
                 for first_name, last_name, dob in students:
                     unify.log(
                         first_name=first_name,
@@ -131,5 +131,5 @@ for subject, studate_data in all_student_data.items():
         )
 ```
 
-This behaviour can be change by setting `unify.Entry("...", mode="read")` which will only impact log **getting**,
-and `unify.Entry("...", mode="write")` which will only impact log **setting**.
+This behaviour can be change by setting `unify.Entries("...", mode="read")` which will only impact log **getting**,
+and `unify.Entries("...", mode="write")` which will only impact log **setting**.
