@@ -121,6 +121,7 @@
                             "group": "logs",
                             "pages": [
                                 "python/classes/logging/logs/ColumnContext",
+                                "python/classes/logging/logs/Context",
                                 "python/classes/logging/logs/Entries",
                                 "python/classes/logging/logs/Experiment",
                                 "python/classes/logging/logs/Log",
