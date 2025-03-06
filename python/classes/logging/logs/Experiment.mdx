@@ -6,16 +6,21 @@ title: 'Experiment'
 class Experiment
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/8bbedcf3cec6394ab71921621ab0aead591a33d3/unify/logging/logs.py#L207)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/c0b55f207c5293224491bfd6d32b93c52a8e1a01/unify/logging/logs.py#L309)</p>
 
 
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/8bbedcf3cec6394ab71921621ab0aead591a33d3/unify/logging/logs.py#L208)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/c0b55f207c5293224491bfd6d32b93c52a8e1a01/unify/logging/logs.py#L310)</p>
 
 ```python
-def __init__(self, name: Optional[Union[str, int]] = None, overwrite: bool = False):
+def __init__(
+        self,
+        name: Optional[Union[str, int]] = None,
+        overwrite: bool = False,
+        mode: str = "both",
+    ):
 ```
 
 
@@ -26,7 +31,7 @@ def __init__(self, name: Optional[Union[str, int]] = None, overwrite: bool = Fal
 
 ### \_\_enter\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/8bbedcf3cec6394ab71921621ab0aead591a33d3/unify/logging/logs.py#L222)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/c0b55f207c5293224491bfd6d32b93c52a8e1a01/unify/logging/logs.py#L332)</p>
 
 ```python
 def __enter__(self):
@@ -38,7 +43,7 @@ def __enter__(self):
 
 ### \_\_exit\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/8bbedcf3cec6394ab71921621ab0aead591a33d3/unify/logging/logs.py#L233)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/c0b55f207c5293224491bfd6d32b93c52a8e1a01/unify/logging/logs.py#L352)</p>
 
 ```python
 def __exit__(self, *args, **kwargs):

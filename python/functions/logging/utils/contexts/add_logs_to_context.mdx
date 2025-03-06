@@ -5,14 +5,14 @@ title: 'add_logs_to_context'
 ```python
 def add_logs_to_context(
     log_ids: List[int],
-    context: str,
     *,
+    context: Optional[str] = None,
     project: Optional[str] = None,
     api_key: Optional[str] = None,
 ) -> None:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/8bbedcf3cec6394ab71921621ab0aead591a33d3/unify/logging/utils/contexts.py#L150)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/c0b55f207c5293224491bfd6d32b93c52a8e1a01/unify/logging/utils/contexts.py#L151)</p>
 
 Add logs to a context.
 
