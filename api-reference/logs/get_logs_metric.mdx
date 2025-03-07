@@ -3,8 +3,27 @@ title: 'Get Logs Metric'
 api: 'GET /v0/logs/metric/{default_metric}'
 ---
 Returns the reduction metric for filtered values (base + derived) for one or more keys from a project.
-If a single key is provided, returns the metric value directly (for backward compatibility).
-If multiple keys are provided, returns a dict of {key: metric result}.
+
+This endpoint supports three modes of operation:
+
+1. Single key, no grouping: Returns a single metric value
+   Example: GET /logs/metric/mean?key=score
+   Response: 4.56
+
+2. Multiple keys, no grouping: Returns a dict mapping keys to metric values
+   Example: GET /logs/metric/mean?key=["score","length"]
+   Response: {"score": 4.56, "length": 120}
+
+3. With grouping: Returns metrics grouped by one or more fields
+   Example: GET /logs/metric/mean with body {"key": "score", "group_by": "model"}
+   Response: {"gpt-4": 4.56, "gpt-3.5": 3.78}
+
+   For nested grouping, provide a list of fields:
+   Example: GET /logs/metric/mean with body {"key": "score", "group_by": ["model", "temperature"]}
+   Response: {"gpt-4": {"0.7": 4.56, "0.9": 4.23}, "gpt-3.5": {"0.7": 3.78, "0.9": 3.45}}
+
+The group_by parameter can be a string for single-level grouping or a list of strings for
+nested grouping. Each group_by field can be prefixed with "params/" to indicate it's a parameter.
 
 #### Authorizations
 
@@ -48,6 +67,10 @@ Log IDs to exclude (string or key->IDs dict).
 
 <ParamField body="context" type="string | null" >
 Context name (string).
+</ParamField>
+
+<ParamField body="group_by" type="string | array | null" >
+Field(s) to group by when computing metrics. Can be a single field name or a list of field names for nested grouping.
 </ParamField>
 
 <RequestExample>
