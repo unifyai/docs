@@ -3874,7 +3874,7 @@
                     "Logs"
                 ],
                 "summary": "Get Logs Metric",
-                "description": "Returns the reduction metric for filtered values (base + derived) for one or more keys from a project.\nIf a single key is provided, returns the metric value directly (for backward compatibility).\nIf multiple keys are provided, returns a dict of {key: metric result}.",
+                "description": "Returns the reduction metric for filtered values (base + derived) for one or more keys from a project.\n\nThis endpoint supports three modes of operation:\n\n1. Single key, no grouping: Returns a single metric value\n   Example: GET /logs/metric/mean?key=score\n   Response: 4.56\n\n2. Multiple keys, no grouping: Returns a dict mapping keys to metric values\n   Example: GET /logs/metric/mean?key=[\"score\",\"length\"]\n   Response: {\"score\": 4.56, \"length\": 120}\n\n3. With grouping: Returns metrics grouped by one or more fields\n   Example: GET /logs/metric/mean with body {\"key\": \"score\", \"group_by\": \"model\"}\n   Response: {\"gpt-4\": 4.56, \"gpt-3.5\": 3.78}\n\n   For nested grouping, provide a list of fields:\n   Example: GET /logs/metric/mean with body {\"key\": \"score\", \"group_by\": [\"model\", \"temperature\"]}\n   Response: {\"gpt-4\": {\"0.7\": 4.56, \"0.9\": 4.23}, \"gpt-3.5\": {\"0.7\": 3.78, \"0.9\": 3.45}}\n\nThe group_by parameter can be a string for single-level grouping or a list of strings for\nnested grouping. Each group_by field can be prefixed with \"params/\" to indicate it's a parameter.",
                 "operationId": "get_logs_metric_v0_logs_metric__default_metric__get",
                 "security": [
                     {
@@ -5816,6 +5816,24 @@
                         ],
                         "title": "Context",
                         "description": "Context name (string)."
+                    },
+                    "group_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group By",
+                        "description": "Field(s) to group by when computing metrics. Can be a single field name or a list of field names for nested grouping."
                     }
                 },
                 "type": "object",
