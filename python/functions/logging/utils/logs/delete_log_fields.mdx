@@ -3,8 +3,28 @@ title: 'delete_log_fields'
 ---
 
 ```python
-def wrapped(*args, **kwargs):
+def delete_log_fields(
+    *,
+    field: str,
+    logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
+    project: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/df379711ddafc5f87f8ff81027f354767bc9dada/unify/logging/utils/logs.py#L801)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/977a97963ad152af7caa6d507e86d129917ed0df/unify/logging/utils/logs.py#L793)</p>
 
+Deletes an entry from a log.
+
+**Arguments**:
+
+- `field` - Name of the field to delete from the given logs.
+- `logs` - log(s) to delete entries from.
+- `project` - Name of the project to delete logs from.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+A message indicating whether the log entries were successfully deleted.

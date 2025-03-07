@@ -3,8 +3,17 @@ title: 'update_logs'
 ---
 
 ```python
-def wrapped(*args, **kwargs):
+def update_logs(
+    *,
+    logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
+    context: Optional[Union[str, List[str]]] = None,
+    params: Optional[Union[Dict[str, Any], List[Dict[str, Any]]]] = None,
+    entries: Optional[Union[Dict[str, Any], List[Dict[str, Any]]]] = None,
+    overwrite: bool = False,
+    api_key: Optional[str] = None,
+) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/df379711ddafc5f87f8ff81027f354767bc9dada/unify/logging/utils/logs.py#L725)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/977a97963ad152af7caa6d507e86d129917ed0df/unify/logging/utils/logs.py#L719)</p>
 
+Updates existing logs.
