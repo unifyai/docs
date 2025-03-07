@@ -61,8 +61,8 @@
                     "pages": [
                         "demo/the_app",
                         "demo/usage_dashboard",
-                        "demo/datasets",
-                        "demo/llm_evals"
+                        "demo/upload_datasets",
+                        "demo/improve_agent"
                     ]
                 },
                 {
