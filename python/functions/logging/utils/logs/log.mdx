@@ -3,8 +3,42 @@ title: 'log'
 ---
 
 ```python
-def wrapped(*args, **kwargs):
+def log(
+    fn: Optional[Callable] = None,
+    *,
+    project: Optional[str] = None,
+    context: Optional[str] = None,
+    params: Dict[str, Any] = None,
+    new: bool = False,
+    overwrite: bool = False,
+    mutable: Optional[Union[bool, Dict[str, bool]]] = True,
+    api_key: Optional[str] = None,
+    **entries,
+) -> Union[unify.Log, Callable]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/df379711ddafc5f87f8ff81027f354767bc9dada/unify/logging/utils/logs.py#L287)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/977a97963ad152af7caa6d507e86d129917ed0df/unify/logging/utils/logs.py#L286)</p>
 
+Can be used either as a regular function to create logs or as a decorator to log function inputs, intermediates and outputs.When used as a regular function:
+Creates one or more logs associated to a project. unify.Logs are LLM-call-level data
+that might depend on other variables.When used as a decorator:
+Logs function inputs and intermediate values.
+
+**Arguments**:
+
+- `fn` - When used as a decorator, this is the function to be wrapped.
+- `project` - Name of the project the stored logs will be associated to.
+- `context` - Context for the logs.
+- `params` - Dictionary containing one or more key:value pairs that will be
+- `new` - Whether to create a new log if there is a currently active global log.
+- `overwrite` - If adding to an existing log, dictates whether or not to overwrite
+- `mutable` - Either a boolean to apply uniform mutability for all fields, or a dictionary mapping field names to booleans for per-field control. Defaults to True.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+- `entries` - Dictionary containing one or more key:value pairs that will be logged
+
+
+
+**Returns**:
+
+When used as a regular function: The unique id of newly created log.
+When used as a decorator: The wrapped function.

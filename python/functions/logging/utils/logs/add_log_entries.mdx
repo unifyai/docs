@@ -3,8 +3,30 @@ title: 'add_log_entries'
 ---
 
 ```python
-def wrapped(*args, **kwargs):
+def add_log_entries(
+    *,
+    logs: Optional[Union[int, unify.Log, List[Union[int, unify.Log]]]] = None,
+    overwrite: bool = False,
+    mutable: Optional[Union[bool, Dict[str, bool]]] = True,
+    api_key: Optional[str] = None,
+    **entries,
+) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/df379711ddafc5f87f8ff81027f354767bc9dada/unify/logging/utils/logs.py#L679)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/977a97963ad152af7caa6d507e86d129917ed0df/unify/logging/utils/logs.py#L674)</p>
 
+Add extra entries into an existing log.
+
+**Arguments**:
+
+- `logs` - The log(s) to update with extra entries. Looks for the current active log if
+- `overwrite` - Whether or not to overwrite an entry pre-existing with the same name.
+- `mutable` - Either a boolean to apply uniform mutability for all entries, or a dictionary mapping entry names to booleans for per-field control.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+- `entries` - Dictionary containing one or more key:value pairs that will be logged
+
+
+
+**Returns**:
+
+A message indicating whether the logs were successfully updated.
