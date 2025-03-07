@@ -112,7 +112,6 @@ with open("test_set.json", "r") as f:
 # create a dataset,
 
 # ```python
-breakpoint()
 test_set = unify.Dataset(test_set, name="TestSet")
 # ```
 
