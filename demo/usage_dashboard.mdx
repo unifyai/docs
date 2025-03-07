@@ -69,11 +69,16 @@ click image to maximize
 We can then start to explore the data in the table and viewer.
 Let's first explore which students are making the most use of the platform,
 answering the highest volume of questions.
-Let's click `group by` above the `email` field.
+We can expand the table tile and remove the viewer tile for now,
+we don't need it yet.
+Let's then click `group by` above the `email` field.
 This will group each log on a student-by-student basis,
 each of which can be unfolded to see the raw data.
 
-GIF [ready]
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_group_emails_dark.gif"/>
+click image to maximize
+</Accordion>
 
 The reduction metrics of each numeric,
 boolean and datetime group can be seen in the table.
@@ -86,25 +91,30 @@ they all have the same `count` value,
 which refers to the number of logs (rows).
 In this case we'll just go with the timestamp count.
 
-GIF [add timestamp to group sorting]
-
 With this configuration applied,
 we have the students making most use shown at the top,
 and those making the least use shown at the bottom.
 
-GIF [add timestamp to group sorting]
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_sort_count_dark.gif"/>
+click image to maximize
+</Accordion>
 
 We can also plot the distribution of usage across each student as a bar chart.
 We first select the bar chart type in the plot,
 with `student/email` for the `x` axis (unique student identifier) and `student/email -> count` for the `y` axis.
-A separate bar is then plotted for each unique email address, with the number of logs on the y axis.
+A separate bar is then plotted for each unique email address,
+with the number of logs on the y axis.
 
-GIF [plot x axes + sorting]
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_count_bar_chart_dark.gif"/>
+click image to maximize
+</Accordion>
 
 Let's do a slightly more complicated example,
 and find the average time in the day when males vs females are on the platform.
-First, let's create a new column which calculates the *remainder* timestamp when dividing by the number of days,
-which gives us the *time of day* for the request.
+First, let's create a new derived column for the time of day,
+by applying the `time()` function on our datetime column.
 
 GIF [support timestamp arithmatic]
 
