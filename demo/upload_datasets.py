@@ -24,7 +24,7 @@ import unify
 # activate the project,
 
 # ```python
-unify.activate("MarkingAssistantTest", overwrite=True)
+unify.activate("MarkingAssistant")
 # ```
 
 # download the data,
