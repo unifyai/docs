@@ -8,19 +8,22 @@ For now, the students answer the questions,
 and then a **human** marks the questions asynchronously,
 but this is both timely and expensive.
 
-Firt things first, let's add the necessary imports...
+Firt things first, let's add the necessary imports,
 
 ```python
+import os
 import json
 import wget
 import unify
 ```
 
-...and activate our project.
+and then activate our project.
 
 ```python
 unify.activate("MarkingAssistant")
 ```
+
+## Historic Data
 
 We have the usage data exported to [usage_data.json](https://github.com/unifyai/demos/blob/main/marking_assistant/data/usage_data.json).
 Let's first download this file.
@@ -47,7 +50,7 @@ unify.create_logs(context="Usage", entries=usage_data)
 ```
 
 We can already start to explore the data while the upload is happening.
-Let's first open our "MarkingAssistant" project,
+Let's open our "MarkingAssistant" project,
 and rename the default `tab1` to `Usage`.
 
 <Accordion title="Expand">
@@ -63,54 +66,47 @@ so that the tab is accessing the correct data.
 click image to maximize
 </Accordion>
 
-We can then start to explore the data in the table and viewer,
-whilst it's uploading.
+We can then start to explore the data in the table and viewer.
 Let's first explore which students are making the most use of the platform,
 answering the highest volume of questions.
 Let's click `group by` above the `email` field.
 This will group each log on a student-by-student basis,
 each of which can be unfolded to see the raw data.
 
-GIF
+GIF [ready]
 
-The reduction metrics of each group can be seen in the table.
+The reduction metrics of each numeric,
+boolean and datetime group can be seen in the table.
 By default the `mean` is plotted,
 but this can be changed at the bottom of the table.
 Let's change the metric to `count` instead,
 and let's order **the groups** in ascending count order.
 It doesn't matter which column we use for the group sorting,
 they all have the same `count` value,
-which refers to the number of logs (rows),
-and so is independent of the column values.
-In this case we'll just go the the email count.
+which refers to the number of logs (rows).
+In this case we'll just go with the timestamp count.
 
-GIF
+GIF [add timestamp to group sorting]
 
 With this configuration applied,
 we have the students making most use shown at the top,
 and those making the least use shown at the bottom.
 
-GIF
-
-Not *all* of the students are shown by default due to pagination.
-You can either continue scrolling to the bottom of the page to get all groups,
-or change the number of rows you'd like to be shown by default.
-
-GIF
+GIF [add timestamp to group sorting]
 
 We can also plot the distribution of usage across each student as a bar chart.
 We first select the bar chart type in the plot,
-with `email` for the `x` axis (unique student identifier) and `email -> count` for the `y` axis.
+with `student/email` for the `x` axis (unique student identifier) and `student/email -> count` for the `y` axis.
 A separate bar is then plotted for each unique email address, with the number of logs on the y axis.
 
-GIF
+GIF [plot x axes + sorting]
 
 Let's do a slightly more complicated example,
 and find the average time in the day when males vs females are on the platform.
 First, let's create a new column which calculates the *remainder* timestamp when dividing by the number of days,
 which gives us the *time of day* for the request.
 
-GIF
+GIF [support timestamp arithmatic]
 
 If we choose `mean` as our reduction statistic, and group by `gender`,
 we'll then get the average time of day for the requests shown in the table.
@@ -131,7 +127,9 @@ These are just examples. We can manipulate the data in all kinds of other ways.
 For example, if we want to see which questions have the most marks available,
 we can group by the question, and then sort by the marks available:
 
-GIF
+GIF [ready]
+
+## Live Traffic
 
 Finally, let's imagine we have **live** production traffic streaming in.
 We can simulate this by sampling from the usage dataset and updating the timstamp to be current time.
@@ -182,10 +180,10 @@ GIF
 
 If you're happy with your configuration,
 you can save it as an interface for loading later.
-Let's save this interface as `"Traffic"`.
+Let's save this interface as `Traffic`.
 We can then close the browser,
-and when we open up the `"EdTech"` project,
-we can see our `"Traffic"` interface listed at the top the screen.
+and when we open up the `MarkingAssistant` project,
+we can see our `Traffic` interface listed at the top the screen.
 
 GIF
 
