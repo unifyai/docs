@@ -14,12 +14,14 @@ Firt things first, let's add the necessary imports,
 import os
 import json
 import wget
-import unify
+import random
+from datetime import datetime
 ```
 
-and then activate our project.
+and then import unify, and activate our project.
 
 ```python
+import unify
 unify.activate("MarkingAssistant")
 ```
 
@@ -90,7 +92,6 @@ It doesn't matter which column we use for the group sorting,
 they all have the same `count` value,
 which refers to the number of logs (rows).
 In this case we'll just go with the timestamp count.
-
 With this configuration applied,
 we have the students making most use shown at the top,
 and those making the least use shown at the bottom.
@@ -142,12 +143,37 @@ GIF [ready]
 ## Live Traffic
 
 Finally, let's imagine we have **live** production traffic streaming in.
-We can simulate this by sampling from the usage dataset and updating the timstamp to be current time.
+Let's first initialize the asynchronous logger,
+for much faster (non-blocking) logging (but without catching any of the created log ids).
 
-```python [expandable]
+```python
+unify.initialize_async_logger()
 ```
 
-By default, the *most recent* logs will be shown at the top of the screen.
+We can simulate the live production traffic by sampling from the existing usage dataset,
+and updating the timstamp to be current time.
+
+```python
+random.seed(0)
+while True:
+    sample = random.choice(usage_data)
+    sample["student/timestamp"] = datetime.now().isoformat()
+    unify.log(**sample, context="Usage")
+```
+
+Let's turn on streaming mode for the table,
+and then we'll see the new logs flash green as they appear in the table.
+The *most recent* logs are always shown at the *top* of the table by default.
+
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_stream_table_dark.gif"/>
+click image to maximize
+</Accordion>
+
+Let's filter the log timestamps so we only get those which have be logged today or later,
+so we don't get any of the historic data included in the table.
+
+
 
 Let's now create a plot to monitor how the traffic is changing over time.
 We create a new plot tile, select the histogram type, select timestamp for the `x` axis,
@@ -155,14 +181,14 @@ and then select the number of buckets we'd like to use. Let's go with 50 buckets
 
 GIF
 
-Let's now turn on streaming mode,
-such that the logs in the table and all corresponding plots are automatically updated whenever new data is available.
+Let's now *also* turn on streaming mode for the plot,
+such that the plot is also automatically updated whenever new data is available.
 
 GIF
 
 The plot and table will continue to grow unbounded in the current configuration.
 Let's add a filter to the timestamp column,
-such that we're only retrieving logs from the past 5 minutes.
+such that we're only retrieving logs from the past 2 minutes.
 
 GIF
 
@@ -189,11 +215,11 @@ then you can simply hide the table tile.
 GIF
 
 If you're happy with your configuration,
-you can save it as an interface for loading later.
-Let's save this interface as `Traffic`.
+you can explicitly save the tab.
 We can then close the browser,
 and when we open up the `MarkingAssistant` project,
-we can see our `Traffic` interface listed at the top the screen.
+and select our `Usage` tab,
+we see the same configuration we previously saved.
 
 GIF
 
@@ -205,4 +231,4 @@ You should play around with this interface yourself,
 and explore other useful representations you can create by juggling things around,
 and applying filters, sorting, grouping, and various plots.
 If you find a useful representation of the data,
-then you can save this as an interface and come back to this view of the data at a later stage.
+then you can save this tab and come back to this view of the data at a later stage.
