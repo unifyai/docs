@@ -2,10 +2,10 @@ import os
 import json
 import wget
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import unify
-unify.activate("MarkingAssistant")
+unify.activate("MarkingAssistant", overwrite=True)
 
 if not os.path.exists("usage_data.json"):
     wget.download(
@@ -21,5 +21,9 @@ unify.initialize_async_logger()
 
 while True:
     sample = random.choice(usage_data)
-    sample["student/timestamp"] = datetime.now().isoformat()
+    sample["student/timestamp"] = (
+        datetime.now() + timedelta(
+            seconds=random.randint(-90, 90)
+        )
+    ).isoformat()
     unify.log(**sample, context="Usage")
