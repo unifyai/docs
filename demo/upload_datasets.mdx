@@ -9,7 +9,8 @@ showing the traffic coming from 100 active users on the platform 📈
 
 Let's now create a "Users" dataset to store all of the user data in one place 🗂️
 
-We have exported these details to [users.json](https://github.com/unifyai/demos/blob/main/marking_assistant/data/users.json).
+We have exported these details to
+[users.json](https://github.com/unifyai/demos/blob/main/marking_assistant/data/users.json).
 We can easily upload this to the platform via the Python client.
 
 Let's add imports,
@@ -62,9 +63,15 @@ users_dataset.sync()
 In this case the dataset did not exist upstream,
 and so `.sync()` was equivalent to calling `.upload()`.
 
-Let's now create a new `Dataset` Tab in our interface to view our new `Users` dataset.
+Let's now create a new `Dataset` Tab in our interface,
+and set the context of the *entire tab* to `Datasets`
+such that all tables will only have access to this context.
+The only datasets, `Users`, is then loaded into the table automatically.
 
-GIF
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_datasets_create_tab.gif"/>
+click image to maximize
+</Accordion>
 
 We can sort the data alphabetically if we want the data to be more structured.
 
