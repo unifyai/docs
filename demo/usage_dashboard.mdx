@@ -161,7 +161,15 @@ while True:
     unify.log(**sample, context="Usage")
 ```
 
-Let's turn on streaming mode for the table,
+Let's first filter the log timestamps so we only get those which have be logged today or later,
+so we don't get any of the historic data included in the table.
+
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_clip_timestamp.gif"/>
+click image to maximize
+</Accordion>
+
+Let's then turn also on streaming mode for the table,
 and then we'll see the new logs flash green as they appear in the table.
 The *most recent* logs are always shown at the *top* of the table by default.
 
@@ -170,16 +178,16 @@ The *most recent* logs are always shown at the *top* of the table by default.
 click image to maximize
 </Accordion>
 
-Let's filter the log timestamps so we only get those which have be logged today or later,
-so we don't get any of the historic data included in the table.
-
-
-
 Let's now create a plot to monitor how the traffic is changing over time.
-We create a new plot tile, select the histogram type, select timestamp for the `x` axis,
+We can create a new plot tile,
+select the histogram type,
+select timestamp for the `x` axis,
 and then select the number of buckets we'd like to use. Let's go with 50 buckets.
 
-GIF
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_histogram_full.gif"/>
+click image to maximize
+</Accordion>
 
 Let's now *also* turn on streaming mode for the plot,
 such that the plot is also automatically updated whenever new data is available.
@@ -187,8 +195,9 @@ such that the plot is also automatically updated whenever new data is available.
 GIF
 
 The plot and table will continue to grow unbounded in the current configuration.
-Let's add a filter to the timestamp column,
-such that we're only retrieving logs from the past 2 minutes.
+Let's update the filter on the timestamp column,
+such that we're always only retrieving logs from the past 2 minutes,
+relative to the current time.
 
 GIF
 
