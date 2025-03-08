@@ -2,5 +2,98 @@
 title: 'Improve Agent'
 ---
 
+In the last section we created test sets of varying sizes,
+ready to evaluate our agent.
+So, it's finally time to start our data flywheel spinning!
+The general process for optimizing an LLM agent is quite straightforward:
+
+1. create simplest possible agent 🤖
+
+while True:
+
+2. &nbsp;&nbsp;&nbsp;&nbsp;create/expand unit tests (evals) 🗂️
+3. &nbsp;&nbsp;&nbsp;&nbsp;🔁 while run(tests) failing: 🧪
+4. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Analyze failures, understand the root cause 🔍
+4. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vary system prompt, in-context
+examples, tools etc. to rectify 🔀
+5. &nbsp;&nbsp;&nbsp;&nbsp;[Optional] Beta test with users, find more failures 🚦
+
+Firstly, let's initialize and activate a new context called `Evals`, where we'll store all of our evaluation runs.
+
+```python
+unify.set_context("Evals")
+```
+
+Let's now go through this data flywheel step-by-step!
+
+### 🤖 Create Agent
+
+Let's start with a simple 0-shot LLM to begin with.
+
+```python
+agent = unify.Unify("o3-mini@openai", traced=True)
+```
+
+Let's also download a `.cache.json` file which was previously generated whilst running this notebook,
+to avoid making any real LLM calls,
+and to also make our walkthrough deterministic.
+
+If you'd rather go down **your own unique iteration journey**,
+then you should skip the cell below,
+and either remove `cache="read-only"` (turn off caching)
+or replace it with `cache=True` (create your own local cache) in the agent constructor above.
+
+However,
+this would mean many parts of the remaining walkthrough might not directly apply in your case,
+as the specific failure modes and the order in which they appear are likely to be different.
+
+```python
+if os.path.exists(".cache.json"):
+    os.remove(".cache.json")
+wget.download("https://raw.githubusercontent.com/unifyai/demos/refs/heads/main/marking_assistant/.cache.json")
+```
+
+The agent needs to mark student answers to questions,
+out of a possible maximum number of marks.
+Let's give it a sensible system message to begin with:
+
+```python
+system_message = """
+Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks_total} marks.
+
+The question is:
+
+{question}
 
 
+Their answer to this question is:
+
+{answer}
+
+
+As the very final part of your response, simply provide the number of marks on a *new line*, without any additional formatting. For example:
+
+3
+"""
+```
+
+Let's wrap our system prompt in a simple function so the system message is updated based on the specific data involved,
+and let's use our function `dct_to_str` to parse the student answer `dict` into a useful representation:
+
+```python
+@unify.traced
+def call_agent(system_msg, question, answer, available_marks_total):
+    local_agent = agent.copy()
+    local_agent.set_system_message(
+        system_msg.replace(
+            "{question}", question
+        ).replace(
+            "{answer}", json.dumps(answer, indent=4)
+        ).replace(
+            "{available_marks_total}", str(available_marks_total)
+        )
+    )
+    return local_agent.generate()
+```
+
+## 🗂️ Add Tests
