@@ -146,10 +146,11 @@ Whilst we're improving out LLM agent (next section),
 we won't necessarily want to test against **all** 321 examples **every time**.
 This would be both very costly and very time consuming,
 and needlessly wasteful early on,
-when a handful examples will suffice to point us in the right direction.
+when a handful of examples will suffice to point us in the right direction.
 
 Therefore, let's create some subsets of the full test dataset.
-Let's start with 10 examples, and then double up to 160 (almost half the full size).
+Let's start with 10 examples,
+and then double up to 160 (almost half the full size).
 The test set has already been shuffled,
 so we can simply take increasing slices starting from the beginning.
 
