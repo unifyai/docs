@@ -1,0 +1,25 @@
+import os
+import json
+import wget
+import random
+from datetime import datetime
+
+import unify
+unify.activate("MarkingAssistant")
+
+if not os.path.exists("usage_data.json"):
+    wget.download(
+        "https://github.com/unifyai/demos/"
+        "raw/refs/heads/main/marking_assistant/"
+        "data/usage_data.json"
+    )
+
+with open("usage_data.json", "r") as f:
+    usage_data = json.load(f)
+
+unify.initialize_async_logger()
+
+while True:
+    sample = random.choice(usage_data)
+    sample["student/timestamp"] = datetime.now().isoformat()
+    unify.log(**sample, context="Usage")
