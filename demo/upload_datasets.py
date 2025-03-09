@@ -3,16 +3,20 @@ import wget
 import json
 import unify
 
-unify.activate("MarkingAssistant", overwrite=True)
+unify.activate("MarkingAssistant")
+if "Datasets" in unify.get_contexts():
+    unify.delete_context("Datasets")
 
 # Users
 
-if not os.path.exists("users.json"):
-    wget.download(
-        "https://github.com/unifyai/demos/"
-        "raw/refs/heads/main/marking_assistant/"
-        "data/users.json"
-    )
+if os.path.exists("users.json"):
+    os.remove("users.json")
+
+wget.download(
+    "https://github.com/unifyai/demos/"
+    "raw/refs/heads/main/marking_assistant/"
+    "data/users.json"
+)
 
 with open("users.json", "r") as f:
     users = json.load(f)
@@ -22,12 +26,14 @@ users_dataset.sync()
 
 # Test Set
 
-if not os.path.exists("users.json"):
-    wget.download(
-        "https://github.com/unifyai/demos/"
-        "raw/refs/heads/main/marking_assistant/"
-        "data/test_set.json"
-    )
+if os.path.exists("test_set.json"):
+    os.remove("test_set.json")
+
+wget.download(
+    "https://github.com/unifyai/demos/"
+    "raw/refs/heads/main/marking_assistant/"
+    "data/test_set.json"
+)
 
 with open("test_set.json", "r") as f:
     test_set = json.load(f)
