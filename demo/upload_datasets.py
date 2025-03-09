@@ -4,8 +4,8 @@ import json
 import unify
 
 unify.activate("MarkingAssistant")
-if "Datasets" in unify.get_contexts():
-    unify.delete_context("Datasets")
+for dataset in unify.list_datasets():
+    unify.delete_dataset(dataset)
 
 # Users
 
