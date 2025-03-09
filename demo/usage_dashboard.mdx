@@ -117,14 +117,17 @@ and find the average time in the day when males vs females are on the platform.
 First, let's create a new derived column for the time of day,
 by applying the `time()` function on our datetime column.
 
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_time_of_day.gif"/>
+click image to maximize
+</Accordion>
+
+If we keep `mean` as our reduction statistic, and group by `gender`,
+we'll then get the average time of day when males vs female are on the platform.
+
 GIF [support timestamp arithmatic]
 
-If we choose `mean` as our reduction statistic, and group by `gender`,
-we'll then get the average time of day for the requests shown in the table.
-
-GIF [support timestamp arithmatic]
-
-Similarly, if we want to see how the average time of usage in the day varies across different ages,
+{/* Similarly, if we want to see how the average time of usage in the day varies across different ages,
 we can create a scatter graph of time of day versus age. We can then click the "correlation" button,
 and we'll get the correlation coefficient and line of best fit shown on the graph.
 
@@ -132,13 +135,17 @@ GIF [support timestamp arithmatic]
 
 We can also split this scatter graph into male and female data if we want.
 
-GIF [support timestamp arithmatic]
+GIF [support timestamp arithmatic] */}
+
+Alternatively, we could create a derived column for the success rate,
+and see how the user performance varies with the time of day when they're on the platform.
+
+GIF [fix derived columns]
+
+Seems like [insert trend]
 
 These are just examples. We can manipulate the data in all kinds of other ways.
-For example, if we want to see which questions have the most marks available,
-we can group by the question, and then sort by the marks available:
-
-GIF [ready]
+If you have any other ideas, then give them a try! 📊
 
 ## Live Traffic
 
@@ -201,30 +208,40 @@ The plot and table will continue to grow unbounded in the current configuration.
 Let's update the filter on the timestamp column,
 such that we're always only retrieving logs from the past 2 minutes,
 relative to the current time.
+Now, the number of plotted logs remains steady at around ~X,
+with older logs falling out of scope once they're more than 2 minutes old.
 
 GIF
 
 If we want to look at traffic for a particular student, we can simply filter for
 this student in the table, and the plot will also be updated automatically.
 
-GIF
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_email_filter.gif"/>
+click image to maximize
+</Accordion>
 
-Similarly, we can filter for a questions from a particular past paper,
-or anything else, and again the plot will update automatically.
+Alternatively, we could filter for a particular paper and question number,
+and show only the traffic which is not receiving full marks for that question.
 
-GIF
+GIF [derived columns]
 
 If we'd like to view several of these plots at the same time,
 then we can simply make a clone of the table (or create a new one),
 make the filtering changes to this new table,
 and then create another plot which references this second table.
+Let's add three plots.
+One histogram for monitoring the traffic,
+one line graph for user-specific scores through time,
+and one bar chart to show which questions are the most difficult,
+and which are the easiest.
 
-GIF
+GIF [derived columns]
 
-If you don't need to see the table on screen,
-then you can simply hide the table tile.
+If there are any tables on screen that you don't need to see,
+then you can simply hide them.
 
-GIF
+GIF [derived columns]
 
 If you're happy with your configuration,
 you can explicitly save the tab.
@@ -233,7 +250,7 @@ and when we open up the `MarkingAssistant` project,
 and select our `Usage` tab,
 we see the same configuration we previously saved.
 
-GIF
+GIF [derived columns]
 
 This set of examples have just been a *very* simple taster of the kinds of things you can
 quickly hack together in an interface for logging,

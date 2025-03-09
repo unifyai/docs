@@ -22,7 +22,7 @@ unify.initialize_async_logger()
 while True:
     sample = random.choice(usage_data)
     sample["student/timestamp"] = (
-        datetime.now() + timedelta(
+        datetime.utcnow() + timedelta(
             seconds=random.randint(-90, 90)
         )
     ).isoformat()
