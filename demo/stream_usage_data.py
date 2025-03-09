@@ -5,7 +5,7 @@ import random
 from datetime import datetime, timedelta
 
 import unify
-unify.activate("MarkingAssistant", overwrite=True)
+unify.activate("MarkingAssistant")
 
 if not os.path.exists("usage_data.json"):
     wget.download(
@@ -26,4 +26,4 @@ while True:
             seconds=random.randint(-90, 90)
         )
     ).isoformat()
-    unify.log(**sample, context="Usage")
+    unify.log(**sample)

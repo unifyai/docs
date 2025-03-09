@@ -122,12 +122,12 @@ by applying the `time()` function on our datetime column.
 click image to maximize
 </Accordion>
 
-If we keep `mean` as our reduction statistic, and group by `gender`,
+{/* If we keep `mean` as our reduction statistic, and group by `gender`,
 we'll then get the average time of day when males vs female are on the platform.
 
 GIF [support timestamp arithmatic]
 
-{/* Similarly, if we want to see how the average time of usage in the day varies across different ages,
+Similarly, if we want to see how the average time of usage in the day varies across different ages,
 we can create a scatter graph of time of day versus age. We can then click the "correlation" button,
 and we'll get the correlation coefficient and line of best fit shown on the graph.
 
@@ -135,14 +135,14 @@ GIF [support timestamp arithmatic]
 
 We can also split this scatter graph into male and female data if we want.
 
-GIF [support timestamp arithmatic] */}
+GIF [support timestamp arithmatic]
 
 Alternatively, we could create a derived column for the success rate,
 and see how the user performance varies with the time of day when they're on the platform.
 
 GIF [fix derived columns]
 
-Seems like [insert trend]
+Seems like [insert trend] */}
 
 These are just examples. We can manipulate the data in all kinds of other ways.
 If you have any other ideas, then give them a try! 📊
@@ -158,13 +158,15 @@ unify.initialize_async_logger()
 ```
 
 We can simulate the live production traffic by sampling from the existing usage dataset,
-and updating the timstamp to be current time.
+and updating the timstamp to be current time, with some noise applied.
 
 ```python
 random.seed(0)
 while True:
     sample = random.choice(usage_data)
-    sample["student/timestamp"] = datetime.now().isoformat()
+    sample["student/timestamp"] = datetime.now().isoformat() + timedelta(
+        seconds=random.randint(-30, 30)
+    )
     unify.log(**sample, context="Usage")
 ```
 
@@ -204,7 +206,7 @@ such that the plot is also automatically updated whenever new data is available.
 click image to maximize
 </Accordion>
 
-The plot and table will continue to grow unbounded in the current configuration.
+{/* The plot and table will continue to grow unbounded in the current configuration.
 Let's update the filter on the timestamp column,
 such that we're always only retrieving logs from the past 2 minutes,
 relative to the current time.
@@ -213,8 +215,22 @@ with older logs falling out of scope once they're more than 2 minutes old.
 
 GIF
 
-If we want to look at traffic for a particular student, we can simply filter for
-this student in the table, and the plot will also be updated automatically.
+Let's freeze the data, so no new data is added into the platform,
+despite the streaming still occuring behind the scenes.
+Let's also keep the timestamp filter applied,
+so we're not including the large amount of historic data.
+Freezing the data can help us to focus on trends with a fixed data sample,
+without a constant stream of new data distorting things.
+
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_freeze_button.gif"/>
+click image to maximize
+</Accordion>
+
+So, let's play around with the data a bit.
+For example, if we want to look at traffic for a particular student,
+we can simply filter for this student in the table,
+and the plot will also be updated automatically.
 
 <Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_email_filter.gif"/>
@@ -250,7 +266,7 @@ and when we open up the `MarkingAssistant` project,
 and select our `Usage` tab,
 we see the same configuration we previously saved.
 
-GIF [derived columns]
+GIF [derived columns] */}
 
 This set of examples have just been a *very* simple taster of the kinds of things you can
 quickly hack together in an interface for logging,
