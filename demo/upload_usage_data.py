@@ -16,5 +16,4 @@ if not os.path.exists("usage_data.json"):
 with open("usage_data.json", "r") as f:
     usage_data = json.load(f)
 
-for i in range(31, 40):
-    unify.create_logs(entries=usage_data[i*250:i*250+250])
+unify.create_logs(entries=usage_data)
