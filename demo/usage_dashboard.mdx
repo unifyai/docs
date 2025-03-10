@@ -25,9 +25,17 @@ import unify
 unify.activate("MarkingAssistant")
 ```
 
+Let's also set the context as `"Usage"`,
+as we'll be uploading and analyzing usage data in this section.
+
+```python
+unify.set_context("Usage")
+```
+
 ## Historic Data
 
-We have the usage data exported to [usage_data.json](https://github.com/unifyai/demos/blob/main/marking_assistant/data/usage_data.json).
+We have the usage data exported to
+[usage_data.json](https://github.com/unifyai/demos/blob/main/marking_assistant/data/usage_data.json).
 Let's first download this file.
 
 ```python
@@ -52,7 +60,7 @@ unify.create_logs(context="Usage", entries=usage_data)
 ```
 
 We can already start to explore the data while the upload is happening.
-Let's open our "MarkingAssistant" project,
+Let's open our new "MarkingAssistant" project,
 and rename the default `tab1` to `Usage`.
 
 <Accordion title="Expand">
@@ -90,7 +98,7 @@ Let's change the metric to `count` instead,
 and let's order **the groups** in ascending count order.
 It doesn't matter which column we use for the group sorting,
 they all have the same `count` value,
-which refers to the number of logs (rows).
+which refers to the number of logs (rows) in the group.
 In this case we'll just go with the timestamp count.
 With this configuration applied,
 we have the students making most use shown at the top,
@@ -103,7 +111,8 @@ click image to maximize
 
 We can also plot the distribution of usage across each student as a bar chart.
 We first select the bar chart type in the plot,
-with `student/email` for the `x` axis (unique student identifier) and `student/email -> count` for the `y` axis.
+with `student/email` for the `x` axis (unique student identifier)
+and `student/email -> count` for the `y` axis.
 A separate bar is then plotted for each unique email address,
 with the number of logs on the y axis.
 
