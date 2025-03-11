@@ -79,8 +79,8 @@ click image to maximize
 We can then start to explore the data in the table and viewer.
 Let's first explore which students are making the most use of the platform,
 answering the highest volume of questions.
-We can expand the table tile and remove the viewer tile for now,
-we don't need it yet.
+We can remove the viewer tile for now (we don't need it yet),
+and also expand the table tile.
 Let's then click `group by` above the `email` field.
 This will group each log on a student-by-student basis,
 each of which can be unfolded to see the raw data.
@@ -110,7 +110,8 @@ click image to maximize
 </Accordion>
 
 We can also plot the distribution of usage across each student as a bar chart.
-We first select the bar chart type in the plot,
+Let's first make some room for the plot on the right hand side by resizing the table.
+We then add the plot tile, select the bar chart type in the plot,
 with `student/email` for the `x` axis (unique student identifier)
 and `student/email -> count` for the `y` axis.
 A separate bar is then plotted for each unique email address,
@@ -123,7 +124,8 @@ click image to maximize
 
 Let's do a slightly more complicated example,
 and find the average time in the day when males vs females are on the platform.
-First, let's create a new derived column for the time of day,
+Let's remove the grouping and filtering by clicking on the green icons.
+Let's then create a new derived column for the time of day,
 by applying the `time()` function on our datetime column.
 
 <Accordion title="Expand">
@@ -173,9 +175,11 @@ and updating the timstamp to be current time, with some noise applied.
 random.seed(0)
 while True:
     sample = random.choice(usage_data)
-    sample["student/timestamp"] = datetime.now().isoformat() + timedelta(
-        seconds=random.randint(-30, 30)
-    )
+    sample["student/timestamp"] = (
+        datetime.utcnow() + timedelta(
+            seconds=random.randint(-90, 90)
+        )
+    ).isoformat()
     unify.log(**sample, context="Usage")
 ```
 
