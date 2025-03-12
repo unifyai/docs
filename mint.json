@@ -327,7 +327,9 @@
                         {
                             "group": "map",
                             "pages": [
-                                "python/functions/utils/map/map"
+                                "python/functions/utils/map/get_map_mode",
+                                "python/functions/utils/map/map",
+                                "python/functions/utils/map/set_map_mode"
                             ]
                         }
                     ]
