@@ -16,7 +16,7 @@ So let's dive in and go through each plot type 🤿
 Scatter graphs can be used to plot two numerical columns against each other.
 For example, let's log the following:
 
-<a href="https://console.unify.ai/interfaces?demo=Plots/Scatter+Plot/Simple&create=true" target="_blank">Run in your console</a>
+<a href="https://console.unify.ai/interfaces?demo=Plots/Scatter+Plot/Simple&create=true" target="_blank">Open in your console</a>
 
 ```python
 import unify
@@ -41,7 +41,7 @@ by selecting another column to **group by**
 (based on value equality, the same as grouping in the table).
 Let's make an example.
 
-<a href="https://console.unify.ai/interfaces?demo=Plots/Scatter+Plot/Gender+Grouping&create=true" target="_blank">Run in your console</a>
+<a href="https://console.unify.ai/interfaces?demo=Plots/Scatter+Plot/Gender+Grouping&create=true" target="_blank">Open in your console</a>
 
 ```python
 import unify
@@ -72,7 +72,7 @@ click image to maximize
 If we want to group across *multiple* independent variables, we can just create a new derived column to express the desired group.
 Let's assume we also log the nationality of the person.
 
-<a href="https://console.unify.ai/interfaces?demo=Plots/Scatter+Plot/Derived+Grouping&create=true" target="_blank">Run in your console</a>
+<a href="https://console.unify.ai/interfaces?demo=Plots/Scatter+Plot/Derived+Grouping&create=true" target="_blank">Open in your console</a>
 
 ```python
 import unify
@@ -120,7 +120,7 @@ Line graphs are similar to scatter graphs, but a line is drawn between each from
 This makes them especially suitable for plotting time-series data.
 Let's take the same example as before, but plot it as a line graph.
 
-<a href="https://console.unify.ai/interfaces?demo=Plots/Line+Plot/Simple&create=true" target="_blank">Run in your console</a>
+<a href="https://console.unify.ai/interfaces?demo=Plots/Line+Plot/Simple&create=true" target="_blank">Open in your console</a>
 
 ```python
 import unify
@@ -142,7 +142,7 @@ As before, we can also group by another column.
 Let's imagine we want to plot the speed of different models across time,
 which are being continually streamed.
 
-<a href="https://console.unify.ai/interfaces?demo=Plots/Line+Plot/Model+Speed&create=true" target="_blank">Run in your console</a>
+<a href="https://console.unify.ai/interfaces?demo=Plots/Line+Plot/Model+Speed&create=true" target="_blank">Open in your console</a>
 
 ```python
 import unify
@@ -186,7 +186,7 @@ Similar to the derived `identity` column before,
 we can create a derived `endpoint` column to plot a unique line for each `model` + `provider` combination.
 Let's create some dummy data for this scenario:
 
-<a href="https://console.unify.ai/interfaces?demo=Plots/Line+Plot/Endpoint+Speed&create=true" target="_blank">Run in your console</a>
+<a href="https://console.unify.ai/interfaces?demo=Plots/Line+Plot/Endpoint+Speed&create=true" target="_blank">Open in your console</a>
 
 ```python
 import unify
@@ -233,7 +233,7 @@ The y axis then represents a *reduction* across the data in each group (bar) in 
 
 For example, let's say we've run two experiments, which vary the tool use and the system message.
 
-<a href="https://console.unify.ai/interfaces?demo=Plots/Bar+Plot&create=true" target="_blank">Run in your console</a>
+<a href="https://console.unify.ai/interfaces?demo=Plots/Bar+Plot&create=true" target="_blank">Open in your console</a>
 
 ```python
 import unify
@@ -272,7 +272,7 @@ and then bucket this data into `n` bins on the x-axis, and plot the count of dat
 For example, let's say we want to see the distribution of user traffic over the past year.
 Has our product been gaining traction?
 
-<a href="https://console.unify.ai/interfaces?demo=Plots/Histogram&create=true" target="_blank">Run in your console</a>
+<a href="https://console.unify.ai/interfaces?demo=Plots/Histogram&create=true" target="_blank">Open in your console</a>
 
 ```python
 import unify
