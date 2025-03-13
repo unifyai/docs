@@ -325,6 +325,12 @@
                     "group": "utils",
                     "pages": [
                         {
+                            "group": "helpers",
+                            "pages": [
+                                "python/classes/utils/helpers/RequestError"
+                            ]
+                        },
+                        {
                             "group": "map",
                             "pages": [
                                 "python/functions/utils/map/get_map_mode",
