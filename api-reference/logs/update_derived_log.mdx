@@ -19,6 +19,10 @@ the new base logs. Finally, we recompute them.
 Name of the project these derived logs belong to.
 </ParamField>
 
+<ParamField body="context" type="any | null" >
+Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').
+</ParamField>
+
 <ParamField body="target_derived_logs" type="array | object" required="true">
 The derived logs to update, either as a list of derived_log IDs or as a set of arguments for the get_logs endpoint.
 </ParamField>
@@ -44,6 +48,7 @@ curl --request PUT \
   --header 'Content-Type: application/json' \
   --data '{
     "project": "eval-project",
+    "context": "experiment1/trial1",
     "target_derived_logs": {
         "log0": [
             0,
@@ -76,7 +81,7 @@ url = "https://api.unify.ai/v0/logs/derived"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "target_derived_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "derived_score > 0.5"}}, "key": "temp_plus_20", "equation": "{t:temperature} + 20", "referenced_logs": {"other": {"filter_expr": "score > 0.5"}, "t": [1, 2, 3]}}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "target_derived_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "derived_score > 0.5"}}, "key": "temp_plus_20", "equation": "{t:temperature} + 20", "referenced_logs": {"other": {"filter_expr": "score > 0.5"}, "t": [1, 2, 3]}}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 

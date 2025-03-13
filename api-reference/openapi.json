@@ -5086,8 +5086,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -6375,6 +6375,18 @@
                         "title": "Project",
                         "description": "Name of the project these derived logs belong to.",
                         "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ContextCreateRequest"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
+                        "example": "experiment1/trial1"
                     },
                     "target_derived_logs": {
                         "anyOf": [
