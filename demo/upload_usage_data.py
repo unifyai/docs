@@ -8,7 +8,6 @@ unify.activate("MarkingAssistant")
 unify.set_context("Usage")
 
 if not os.path.exists("usage_data.json"):
-    breakpoint()
     wget.download(
         "https://github.com/unifyai/demos/"
         "raw/refs/heads/main/marking_assistant/"
