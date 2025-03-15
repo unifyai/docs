@@ -184,6 +184,28 @@ If you have any other ideas, then give them a try! 📊
 
 ## Live Traffic
 
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    }}
+    src="https://www.youtube.com/embed/0hXPZFhwi_s"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
 Finally, let's imagine we have **live** production traffic streaming in.
 Let's first initialize the asynchronous logger,
 for much faster (non-blocking) logging (but without catching any of the created log ids).
