@@ -9,6 +9,10 @@ If a context is specified and it is versioned, all logs will be versioned
 and mutable. The context version will be incremented automatically when
 logs are added, updated, or removed.
 
+The context parameter can be:
+- A string: Uses the string as the context name with default values (description=None, is_versioned=False)
+- An object: Uses the object's name, description, and is_versioned properties
+
 An "explicit_types" dictionary can be passed as part of the `entries`.
 If present, any matching key inside this dictionary will override the
 inferred type of that particular entry. The explicit_types dictionary
@@ -39,8 +43,8 @@ This method returns the ids of the new stored logs.
 Name of the project the stored entries will be associated to.
 </ParamField>
 
-<ParamField body="context" type="any | null" >
-Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').
+<ParamField body="context" type="any | string | null" >
+Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.
 </ParamField>
 
 <ParamField body="params" type="object | array"  default={{}}>

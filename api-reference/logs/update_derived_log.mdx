@@ -7,6 +7,10 @@ get_logs–style filters. If 'referenced_logs' is provided, we delete all existi
 derived logs for each (log_event_id, key) group and re-insert new ones referencing
 the new base logs. Finally, we recompute them.
 
+The context parameter can be:
+- A string: Uses the string as the context name with default values (description=None, is_versioned=False)
+- An object: Uses the object's name, description, and is_versioned properties
+
 #### Authorizations
 
 <ParamField header="Authorization" type="string" required="true">
@@ -19,8 +23,8 @@ the new base logs. Finally, we recompute them.
 Name of the project these derived logs belong to.
 </ParamField>
 
-<ParamField body="context" type="any | null" >
-Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').
+<ParamField body="context" type="any | string | null" >
+Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.
 </ParamField>
 
 <ParamField body="target_derived_logs" type="array | object" required="true">

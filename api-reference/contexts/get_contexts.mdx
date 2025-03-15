@@ -17,18 +17,24 @@ Returns information about each context including its versioning status and curre
 Name of the project to create context in.
 </ParamField>
 
+#### Query Parameters
+
+<ParamField query="prefix" type="string | null" >
+Optional prefix to filter contexts by name
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/project/my_project/contexts' \
+  --url 'https://api.unify.ai/v0/project/my_project/contexts?prefix=experiment1/' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/my_project/contexts"
+url = "https://api.unify.ai/v0/project/my_project/contexts?prefix=experiment1/"
 
 headers = {"Authorization": "Bearer <token>"}
 

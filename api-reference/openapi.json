@@ -1974,7 +1974,7 @@
                     "Contexts"
                 ],
                 "summary": "Create Context",
-                "description": "Creates a new context within a project. Contexts can be used to organize logs\nand artifacts within a project.\n\nIf is_versioned=True, all logs in this context will be versioned and mutable.\nThe context version will increment automatically when logs are added, updated, or removed.",
+                "description": "Creates a new context within a project. Contexts can be used to organize logs\nand artifacts within a project.\n\nIf is_versioned=True, all logs in this context will be versioned and mutable.\nThe context version will increment automatically when logs are added, updated, or removed.\n\nThe context can be provided as a string (which will be used as the name with no description)\nor as an object with name and description fields.",
                 "operationId": "create_context_v0_project__project_name__contexts_post",
                 "security": [
                     {
@@ -2000,7 +2000,15 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ContextCreateRequest"
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ContextCreateRequest"
+                                    },
+                                    {
+                                        "type": "string"
+                                    }
+                                ],
+                                "title": "Request"
                             }
                         }
                     }
@@ -2076,6 +2084,25 @@
                         },
                         "description": "Name of the project to create context in.",
                         "example": "my_project"
+                    },
+                    {
+                        "name": "prefix",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Optional prefix to filter contexts by name",
+                            "title": "Prefix"
+                        },
+                        "description": "Optional prefix to filter contexts by name",
+                        "example": "experiment1/"
                     }
                 ],
                 "responses": {
@@ -2279,7 +2306,7 @@
                     "Contexts"
                 ],
                 "summary": "Add Logs To Context",
-                "description": "Adds existing logs to a context within a project. The logs must already exist\nin the project and can be specified by their IDs.\nThe same logs can be associated with multiple contexts.",
+                "description": "Adds existing logs to a context within a project. The logs must already exist\nin the project and can be specified by their IDs.\nThe same logs can be associated with multiple contexts.\n\nThe context_name can be provided as a string or as an object with a name field.\nIf the context doesn't exist, it will be created automatically.",
                 "operationId": "add_logs_to_context_v0_project__project_name__contexts_add_logs_post",
                 "security": [
                     {
@@ -2811,7 +2838,7 @@
                     "Logs"
                 ],
                 "summary": "Create Logs",
-                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nIf a context is specified and it is versioned, all logs will be versioned\nand mutable. The context version will be incremented automatically when\nlogs are added, updated, or removed.\n\nAn \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry. The explicit_types dictionary\ncan also specify if a field is mutable via a 'mutable' boolean flag:\n\n{\n    \"field_name\": {\n        \"type\": \"str\",\n        \"mutable\": false  # Makes the field immutable\n    }\n}\n\nBy default, all fields are immmutable unless specified otherwise.\nOnce a field is marked as mutable, only then can it be modified through\nthe update endpoint.\n\nThis method returns the ids of the new stored logs.",
+                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nIf a context is specified and it is versioned, all logs will be versioned\nand mutable. The context version will be incremented automatically when\nlogs are added, updated, or removed.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties\n\nAn \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry. The explicit_types dictionary\ncan also specify if a field is mutable via a 'mutable' boolean flag:\n\n{\n    \"field_name\": {\n        \"type\": \"str\",\n        \"mutable\": false  # Makes the field immutable\n    }\n}\n\nBy default, all fields are immmutable unless specified otherwise.\nOnce a field is marked as mutable, only then can it be modified through\nthe update endpoint.\n\nThis method returns the ids of the new stored logs.",
                 "operationId": "create_logs_v0_logs_post",
                 "security": [
                     {
@@ -2938,7 +2965,7 @@
                     "Logs"
                 ],
                 "summary": "Delete Logs",
-                "description": "Deletes log entries based on specified criteria. Can delete both base logs and derived logs.\n\nArgs:\n    source_type: Controls which type of logs to delete:\n        - 'all': Delete both base and derived logs (default)\n        - 'base': Only delete base logs\n        - 'derived': Only delete derived logs",
+                "description": "Deletes log entries based on specified criteria. Can delete both base logs and derived logs.\n\nIf a context is provided, logs will be removed from that context instead of being entirely\ndeleted, unless it is the last context associated with the log. This allows logs to be\nshared across multiple contexts and only removed from specific contexts when needed.\n\nArgs:\n    source_type: Controls which type of logs to delete:\n        - 'all': Delete both base and derived logs (default)\n        - 'base': Only delete base logs\n        - 'derived': Only delete derived logs",
                 "operationId": "delete_logs_v0_logs_delete",
                 "security": [
                     {
@@ -3468,7 +3495,7 @@
                     "Logs"
                 ],
                 "summary": "Update Derived Log",
-                "description": "Updates multiple derived logs, identified either by a direct list of derived IDs or by\nget_logs\u2013style filters. If 'referenced_logs' is provided, we delete all existing\nderived logs for each (log_event_id, key) group and re-insert new ones referencing\nthe new base logs. Finally, we recompute them.",
+                "description": "Updates multiple derived logs, identified either by a direct list of derived IDs or by\nget_logs\u2013style filters. If 'referenced_logs' is provided, we delete all existing\nderived logs for each (log_event_id, key) group and re-insert new ones referencing\nthe new base logs. Finally, we recompute them.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties",
                 "operationId": "update_derived_log_v0_logs_derived_put",
                 "requestBody": {
                     "content": {
@@ -3534,7 +3561,7 @@
                     "Logs"
                 ],
                 "summary": "Create Derived Entry",
-                "description": "Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.\nEagerly computes each derived value and stores it in DerivedLog.value.",
+                "description": "Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.\nEagerly computes each derived value and stores it in DerivedLog.value.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties",
                 "operationId": "create_derived_entry_v0_logs_derived_post",
                 "requestBody": {
                     "content": {
@@ -5380,10 +5407,14 @@
                                 "$ref": "#/components/schemas/ContextCreateRequest"
                             },
                             {
+                                "type": "string"
+                            },
+                            {
                                 "type": "null"
                             }
                         ],
-                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
+                        "title": "Context",
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.",
                         "example": "experiment1/trial1"
                     },
                     "key": {
@@ -5450,10 +5481,14 @@
                                 "$ref": "#/components/schemas/ContextCreateRequest"
                             },
                             {
+                                "type": "string"
+                            },
+                            {
                                 "type": "null"
                             }
                         ],
-                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
+                        "title": "Context",
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.",
                         "example": "experiment1/trial1"
                     },
                     "params": {
@@ -6382,10 +6417,14 @@
                                 "$ref": "#/components/schemas/ContextCreateRequest"
                             },
                             {
+                                "type": "string"
+                            },
+                            {
                                 "type": "null"
                             }
                         ],
-                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
+                        "title": "Context",
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.",
                         "example": "experiment1/trial1"
                     },
                     "target_derived_logs": {
@@ -6504,10 +6543,27 @@
                                 "$ref": "#/components/schemas/ContextCreateRequest"
                             },
                             {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ContextCreateRequest"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
                                 "type": "null"
                             }
                         ],
-                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').",
+                        "title": "Context",
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.",
                         "example": "experiment1/trial1"
                     },
                     "params": {
