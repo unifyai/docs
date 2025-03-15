@@ -8,6 +8,9 @@ and artifacts within a project.
 If is_versioned=True, all logs in this context will be versioned and mutable.
 The context version will increment automatically when logs are added, updated, or removed.
 
+The context can be provided as a string (which will be used as the name with no description)
+or as an object with name and description fields.
+
 #### Authorizations
 
 <ParamField header="Authorization" type="string" required="true">

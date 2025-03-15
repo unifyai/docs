@@ -4,6 +4,10 @@ api: 'DELETE /v0/logs'
 ---
 Deletes log entries based on specified criteria. Can delete both base logs and derived logs.
 
+If a context is provided, logs will be removed from that context instead of being entirely
+deleted, unless it is the last context associated with the log. This allows logs to be
+shared across multiple contexts and only removed from specific contexts when needed.
+
 Args:
     source_type: Controls which type of logs to delete:
         - 'all': Delete both base and derived logs (default)

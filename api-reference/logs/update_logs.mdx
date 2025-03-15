@@ -20,8 +20,8 @@ If present, it will override the inferred type of any matching key in all logs.
 List of log IDs to update with new or overriding entries.
 </ParamField>
 
-<ParamField body="context" type="any | null" >
-Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').
+<ParamField body="context" type="any | string | array | null" >
+Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.
 </ParamField>
 
 <ParamField body="params" type="object | array"  default={{}}>

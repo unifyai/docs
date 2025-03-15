@@ -6,6 +6,9 @@ Adds existing logs to a context within a project. The logs must already exist
 in the project and can be specified by their IDs.
 The same logs can be associated with multiple contexts.
 
+The context_name can be provided as a string or as an object with a name field.
+If the context doesn't exist, it will be created automatically.
+
 #### Authorizations
 
 <ParamField header="Authorization" type="string" required="true">

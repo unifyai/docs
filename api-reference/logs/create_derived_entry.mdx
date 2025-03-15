@@ -5,6 +5,10 @@ api: 'POST /v0/logs/derived'
 Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.
 Eagerly computes each derived value and stores it in DerivedLog.value.
 
+The context parameter can be:
+- A string: Uses the string as the context name with default values (description=None, is_versioned=False)
+- An object: Uses the object's name, description, and is_versioned properties
+
 #### Authorizations
 
 <ParamField header="Authorization" type="string" required="true">
@@ -17,8 +21,8 @@ Eagerly computes each derived value and stores it in DerivedLog.value.
 Name of the project the stored entries will be associated to.
 </ParamField>
 
-<ParamField body="context" type="any | null" >
-Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1').
+<ParamField body="context" type="any | string | null" >
+Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.
 </ParamField>
 
 <ParamField body="key" type="string" required="true">
