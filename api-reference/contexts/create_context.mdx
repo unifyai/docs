@@ -37,6 +37,10 @@ Optional description of the context
 Whether the context should be versioned. If True, the context will be versioned and mutable. 
 </ParamField>
 
+<ParamField body="allow_duplicates" type="boolean"  default={true}>
+Whether duplicate log entries are allowed in this context. If False, attempts to add duplicate logs will be ignored.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -47,7 +51,8 @@ curl --request POST \
   --data '{
     "name": "experiment1/trial1",
     "description": "Context for experiment 1 trial 1",
-    "is_versioned": true
+    "is_versioned": true,
+    "allow_duplicates": true
 }'
 ```
 
@@ -58,7 +63,7 @@ url = "https://api.unify.ai/v0/project/my_project/contexts"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True}
+json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True, "allow_duplicates": True}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

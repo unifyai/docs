@@ -5384,6 +5384,13 @@
                         "description": "Whether the context should be versioned. If True, the context will be versioned and mutable. ",
                         "default": false,
                         "example": true
+                    },
+                    "allow_duplicates": {
+                        "type": "boolean",
+                        "title": "Allow Duplicates",
+                        "description": "Whether duplicate log entries are allowed in this context. If False, attempts to add duplicate logs will be ignored.",
+                        "default": true,
+                        "example": true
                     }
                 },
                 "type": "object",
