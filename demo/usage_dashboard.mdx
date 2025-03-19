@@ -26,7 +26,7 @@ title: 'Usage Dashboard'
 
 Let's assume our app has been deployed for a few weeks now,
 and we've been tracking the daily usage coming from ~100 active users.
-For now, the students answer the questions,
+For now, let's assume that the students answer the questions,
 and then a **human** marks the questions asynchronously,
 but this is both timely and expensive.
 
@@ -58,9 +58,9 @@ unify.set_context("Usage")
 
 ## Historic Data
 
-We have the usage data exported to
+Let's assume we have the historic usage data exported to
 [usage_data.json](https://github.com/unifyai/demos/blob/main/marking_assistant/data/usage_data.json).
-Let's first download this file.
+Let's first go ahead and download this file.
 
 ```python
 if not os.path.exists("usage_data.json"):
@@ -80,7 +80,7 @@ as there are 10,000 logs to upload.
 with open("usage_data.json", "r") as f:
     usage_data = json.load(f)
 
-unify.create_logs(context="Usage", entries=usage_data)
+unify.create_logs(entries=usage_data)
 ```
 
 We can already start to explore the data while the upload is happening.
