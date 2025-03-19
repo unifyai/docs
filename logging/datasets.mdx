@@ -89,7 +89,7 @@ unify.Dataset([0, 1, 2, 2], allow_duplicates=True)
 ```
 
 When `allow_duplicates` is set to `False`, then all upstream logs with identical values to local (id-less) logs will be assumed to represent the **same log**,
-and the unset log ids these local logs will be updated to match the upstream ids with the matching values.
+and the unset log ids of these local logs will be updated to match the upstream ids with the matching values.
 
 If `allow_duplicates` is set to `True`,
 then any upstream logs with identical values to local logs will assume to represent *different logs* unless the log ids match exactly.
