@@ -3,9 +3,9 @@ title: 'Usage Dashboard'
 ---
 
 Let's assume our app has been deployed for a few weeks now,
-and we've been tracking the daily usage coming from ~100 active users 📈
+and we've been tracking the daily usage 📈
 
-For now, let's assume that the students answer the questions,
+For now, let's assume that the users answer the questions,
 and then *humans* have been marking the questions asynchronously,
 all of which is captured in the usage data.
 
@@ -14,10 +14,11 @@ and we'd like to automate this part of our app using AI 🤖
 
 ## Historic Data
 
-Let's assume we have the historic usage data exported to
+To begin with, let's get all of our historic usage data added into our Unify interface.
+Let's assume we have this data exported to
 [usage_data.json](https://github.com/unifyai/demos/blob/main/marking_assistant/data/usage_data.json).
 This has already been captured,
-and we'd now like to migrate this existing data over to our new Unify interface.
+and so we now just need to migrate it over to our new Unify interface.
 
 ### Upload the Data
 
@@ -109,7 +110,7 @@ unify.create_logs(entries=usage_data)
       width: '100%',
       height: '100%',
     }}
-    src="https://www.youtube.com/embed/-4pDPNwZMOo"
+    src="https://www.youtube.com/embed/QYHkRzHyqR8"
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowFullScreen
@@ -201,28 +202,6 @@ If you have any other ideas, then give them a try! 📊
 ## Live Traffic
 
 Finally, let's imagine we have **live** production traffic streaming in.
-
-<div
-  style={{
-    position: 'relative',
-    paddingBottom: '56.25%', // 16:9 ratio
-    height: 0,
-  }}
->
-  <iframe
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-    }}
-    src="https://www.youtube.com/embed/QYHkRzHyqR8"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-  />
-</div>
 
 ### Stream the Data
 
