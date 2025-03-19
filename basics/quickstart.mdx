@@ -44,7 +44,7 @@ def evaluate_response(question: str, response: str) -> float:
 # define evaluation
 @unify.traced
 def evaluate(q: str):
-    response = client.generate(q)
+    response = client.copy().generate(q)
     score = evaluate_response(q, response)
     unify.log(
         question=q,
