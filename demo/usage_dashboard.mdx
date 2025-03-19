@@ -27,7 +27,7 @@ title: 'Usage Dashboard'
 Let's assume our app has been deployed for a few weeks now,
 and we've been tracking the daily usage coming from ~100 active users.
 For now, let's assume that the students answer the questions,
-and then a **human** marks the questions asynchronously,
+and then a human marks the questions asynchronously,
 but this is both timely and expensive.
 
 <a href="https://console.unify.ai/interfaces?demo=Demos/Marking+Assistant&create=true" target="_blank">Open in your console</a>
@@ -58,30 +58,13 @@ unify.set_context("Usage")
 
 ## Historic Data
 
-<div
-  style={{
-    position: 'relative',
-    paddingBottom: '56.25%', // 16:9 ratio
-    height: 0,
-  }}
->
-  <iframe
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-    }}
-    src="https://www.youtube.com/embed/-4pDPNwZMOo"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-  />
-</div>
-
 Let's assume we have the historic usage data exported to
 [usage_data.json](https://github.com/unifyai/demos/blob/main/marking_assistant/data/usage_data.json).
+This has already been captured,
+and we'd now like to migrate this existing data over to our new Unify interface.
+
+### Upload the Data
+
 Let's first go ahead and download this file.
 
 ```python
@@ -104,6 +87,30 @@ with open("usage_data.json", "r") as f:
 
 unify.create_logs(entries=usage_data)
 ```
+
+### Analyze the Data
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    }}
+    src="https://www.youtube.com/embed/-4pDPNwZMOo"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
 
 We can already start to explore the data while the upload is happening.
 Let's open our new "MarkingAssistant" project,
@@ -179,32 +186,17 @@ by applying the `time()` function on our datetime column.
 click image to maximize
 </Accordion>
 
-{/* If we keep `mean` as our reduction statistic, and group by `gender`,
+If we keep `mean` as our reduction statistic, and group by `gender`,
 we'll then get the average time of day when males vs female are on the platform.
 
-GIF [support timestamp arithmatic]
-
-Similarly, if we want to see how the average time of usage in the day varies across different ages,
-we can create a scatter graph of time of day versus age. We can then click the "correlation" button,
-and we'll get the correlation coefficient and line of best fit shown on the graph.
-
-GIF [support timestamp arithmatic]
-
-We can also split this scatter graph into male and female data if we want.
-
-GIF [support timestamp arithmatic]
-
-Alternatively, we could create a derived column for the success rate,
-and see how the user performance varies with the time of day when they're on the platform.
-
-GIF [fix derived columns]
-
-Seems like [insert trend] */}
+{/* GIF */}
 
 These are just examples. We can manipulate the data in all kinds of other ways.
 If you have any other ideas, then give them a try! 📊
 
 ## Live Traffic
+
+Finally, let's imagine we have **live** production traffic streaming in.
 
 <div
   style={{
@@ -228,7 +220,8 @@ If you have any other ideas, then give them a try! 📊
   />
 </div>
 
-Finally, let's imagine we have **live** production traffic streaming in.
+### Stream the Data
+
 Let's first initialize the asynchronous logger,
 for much faster (non-blocking) logging (but without catching any of the created log ids).
 
@@ -250,6 +243,8 @@ while True:
     ).isoformat()
     unify.log(**sample, context="Usage")
 ```
+
+### Monitor the Data
 
 Let's first filter the log timestamps so we only get those which have be logged today or later,
 so we don't get any of the historic data included in the table.
