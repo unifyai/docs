@@ -126,7 +126,7 @@ and rename the default `tab1` to `Usage`.
 click image to maximize
 </Accordion>
 
-Let's then also set the *context* of the tab to "Usage",
+Let's then also set the *context* of the table to "Usage",
 so that the tab is accessing the correct data.
 
 <Accordion title="Expand">
@@ -134,7 +134,7 @@ so that the tab is accessing the correct data.
 click image to maximize
 </Accordion>
 
-We can then start to explore the data in the table and viewer.
+We can then start to explore the data in the table.
 Let's first explore which students are making the most use of the platform,
 answering the highest volume of questions.
 We can remove the viewer tile for now (we don't need it yet),
@@ -149,8 +149,10 @@ click image to maximize
 </Accordion>
 
 The reduction metrics of each numeric,
-boolean and datetime group can be seen in the table.
-By default the `mean` is plotted,
+boolean and datetime group are shown in green in the table,
+and values shared across the entire group are shown in light blue
+(these are not shown in the GIFs, which were created before this feature addition).
+By default the `mean` is plotted for the reduction metrics,
 but this can be changed at the bottom of the table.
 Let's change the metric to `count` instead,
 and let's order **the groups** in ascending count order.
@@ -201,7 +203,7 @@ If you have any other ideas, then give them a try! 📊
 
 ## Live Traffic
 
-Finally, let's imagine we have **live** production traffic streaming in,
+Finally, let's imagine we have **live** production traffic streaming in from our app,
 and we'd like to have a dashboard to monitor this live data.
 
 <div
@@ -219,7 +221,7 @@ and we'd like to have a dashboard to monitor this live data.
       width: '100%',
       height: '100%',
     }}
-    src="https://www.youtube.com/embed/2LyEbj-ubRw"
+    src="https://www.youtube.com/embed/RtbSnayb-i8"
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowFullScreen
@@ -236,7 +238,7 @@ unify.initialize_async_logger()
 ```
 
 We can simulate the live production traffic by sampling from the existing usage dataset,
-and updating the timstamp to be current time, with some noise applied.
+and updating the timstamp to be the current time, with some noise applied.
 
 ```python
 random.seed(0)
@@ -260,9 +262,9 @@ so we don't get any of the historic data included in the table.
 click image to maximize
 </Accordion>
 
-Let's then turn also on streaming mode for the table,
+Let's then also turn on streaming mode for the table,
 and then we'll see the new logs flash green as they appear in the table.
-The *most recent* logs are always shown at the *top* of the table by default.
+The *most recent* logs are shown at the *top* of the table by default.
 
 <Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_stream_table_dark.gif"/>
@@ -288,19 +290,22 @@ such that the plot is also automatically updated whenever new data is available.
 click image to maximize
 </Accordion>
 
-{/* The plot and table will continue to grow unbounded in the current configuration.
+The plot and table will continue to grow unbounded in the current configuration.
 Let's update the filter on the timestamp column,
 such that we're always only retrieving logs from the past 2 minutes,
 relative to the current time.
-Now, the number of plotted logs remains steady at around ~X,
+Now, the number of plotted logs remains steady at around ~500,
 with older logs falling out of scope once they're more than 2 minutes old.
 
-GIF
+{/* GIF */}
 
-Let's freeze the data, so no new data is added into the platform,
-despite the streaming still occuring behind the scenes.
-Let's also keep the timestamp filter applied,
-so we're not including the large amount of historic data.
+Let's assume we want to spot trends in the recent usage data.
+Let's first revert the timestamp filter back to "today and later",
+so we're still not including the large amount of historic data,
+but we're no longer limiting it to only the past 2 minutes.
+Let's also *freeze* the data,
+so no *new* data is added into the platform beyond the point in time when the freeze was clicked
+(despite the streaming still occuring behind the scenes).
 Freezing the data can help us to focus on trends with a fixed data sample,
 without a constant stream of new data distorting things.
 
@@ -322,24 +327,22 @@ click image to maximize
 Alternatively, we could filter for a particular paper and question number,
 and show only the traffic which is not receiving full marks for that question.
 
-GIF [derived columns]
+{/* GIF */}
 
 If we'd like to view several of these plots at the same time,
 then we can simply make a clone of the table (or create a new one),
 make the filtering changes to this new table,
 and then create another plot which references this second table.
-Let's add three plots.
-One histogram for monitoring the traffic,
-one line graph for user-specific scores through time,
-and one bar chart to show which questions are the most difficult,
-and which are the easiest.
 
-GIF [derived columns]
+Let's add two plots.
+A histogram for monitoring the traffic and a bar chart to show the question difficulties.
+
+{/* GIF */}
 
 If there are any tables on screen that you don't need to see,
 then you can simply hide them.
 
-GIF [derived columns]
+{/* GIF */}
 
 If you're happy with your configuration,
 you can explicitly save the tab.
@@ -348,7 +351,7 @@ and when we open up the `MarkingAssistant` project,
 and select our `Usage` tab,
 we see the same configuration we previously saved.
 
-GIF [derived columns] */}
+{/* GIF */}
 
 This set of examples have just been a *very* simple taster of the kinds of things you can
 quickly hack together in an interface for logging,
@@ -358,4 +361,4 @@ You should play around with this interface yourself,
 and explore other useful representations you can create by juggling things around,
 and applying filters, sorting, grouping, and various plots.
 If you find a useful representation of the data,
-then you can save this tab and come back to this view of the data at a later stage.
+then you can save this tab and come back to this view of the data at a later stage 📊
