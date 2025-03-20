@@ -7,6 +7,8 @@ from datetime import datetime, timedelta
 import unify
 unify.activate("MarkingAssistant")
 
+unify.set_context("Usage")
+
 if not os.path.exists("usage_data.json"):
     wget.download(
         "https://github.com/unifyai/demos/"
