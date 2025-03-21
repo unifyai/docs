@@ -343,13 +343,31 @@ then we can simply make a clone of the table (or create a new one),
 make the filtering changes to this new table,
 and then create another plot which references this second table.
 
-Let's add two plots.
-A histogram for monitoring the traffic and a bar chart to show the question difficulties.
+Let's add two plots:
+a histogram for monitoring the traffic and a bar chart to show the question difficulties,
+both plotted over the past 24 hours.
+Let's first add the histogram for monitoring the traffic.
+
+{/* GIF */}
+
+Let's now add the bar chart for monitoring the question difficulties.
+However, we'll first need to create some derived columns `` for X and `` for Y.
+Let's do that first.
+
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/two_plots_part_2.gif"/>
+click image to maximize
+</Accordion>
+
+We can now use these derived columns to plot the desired bar chart,
+remembering to also apply the 24 hours filter on the table.
 
 {/* GIF */}
 
 If there are any tables on screen that you don't need to see,
 then you can simply hide them.
+Let's hide our two tables,
+whose sole purpose is to define the data for the two plots.
 
 <Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/hide_tables.gif"/>
