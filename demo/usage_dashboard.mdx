@@ -248,7 +248,7 @@ random.seed(0)
 while True:
     sample = random.choice(usage_data)
     sample["student/timestamp"] = (
-        datetime.utcnow() + timedelta(
+        datetime.now(timezone.utc) + timedelta(
             seconds=random.randint(-90, 90)
         )
     ).isoformat()

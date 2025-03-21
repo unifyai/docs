@@ -2,7 +2,7 @@ import os
 import json
 import wget
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import unify
 unify.activate("MarkingAssistant")
@@ -24,7 +24,7 @@ unify.initialize_async_logger()
 while True:
     sample = random.choice(usage_data)
     sample["student/timestamp"] = (
-        datetime.utcnow() + timedelta(
+        datetime.now(timezone.utc) + timedelta(
             seconds=random.randint(-90, 90)
         )
     ).isoformat()
