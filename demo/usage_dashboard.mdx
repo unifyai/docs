@@ -354,8 +354,10 @@ click image to maximize
 </Accordion>
 
 Let's now add the bar chart for monitoring the question difficulties.
-However, we'll first need to create some derived columns `` for X and `` for Y.
-Let's do that first.
+However, we'll first need to create some derived columns:
+`performance` for the ratio of marks acheived out of the total available,
+and `paper_question_num` for a unique paper + question value.
+Let's create these derived columns.
 
 <Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/two_plots_part_2.gif"/>
@@ -383,7 +385,7 @@ click image to maximize
 If you're happy with your configuration,
 you can explicitly save the tab.
 We can then close the browser,
-and when we open up the `MarkingAssistant` project,
+and when we open up the `MarkingAssistant` project
 and select our `Usage` tab,
 we see the same configuration we previously saved.
 
