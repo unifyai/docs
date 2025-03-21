@@ -12,7 +12,7 @@ all of which is captured in the usage data.
 This manual marking process is both timely and expensive,
 and we'd like to automate this part of our app using AI 🤖
 
-## Historic Data
+# Historic Data
 
 To begin with, let's get all of our historic usage data added into our Unify interface.
 Let's assume we have this data exported to
@@ -20,7 +20,7 @@ Let's assume we have this data exported to
 This has already been captured,
 and so we now just need to migrate it over to our new Unify interface.
 
-### Upload the Data
+## Upload the Data
 
 <div
   style={{
@@ -53,7 +53,7 @@ import wget
 import unify
 ```
 
-and then import unify, and activate our project.
+and then activate our project.
 
 ```python
 unify.activate("MarkingAssistant")
@@ -66,7 +66,7 @@ as we'll be uploading and analyzing usage data in this section.
 unify.set_context("Usage")
 ```
 
-Let's now go ahead and download this file.
+Let's now go ahead and download the `usage_data.json` file.
 
 ```python
 if not os.path.exists("usage_data.json"):
@@ -93,7 +93,7 @@ as there are 10,000 logs to upload.
 unify.create_logs(entries=usage_data)
 ```
 
-### Analyze the Data
+## Analyze the Data
 
 <div
   style={{
@@ -117,6 +117,8 @@ unify.create_logs(entries=usage_data)
   />
 </div>
 
+### Rename Tab and Set Context
+
 We can already start to explore the data while the upload is happening.
 Let's open our new "MarkingAssistant" project,
 and rename the default `tab1` to `Usage`.
@@ -134,9 +136,14 @@ so that the tab is accessing the correct data.
 click image to maximize
 </Accordion>
 
-We can then start to explore the data in the table.
+### Find Most Active Users
+
+We can then start to explore the data.
 Let's first explore which students are making the most use of the platform,
 answering the highest volume of questions.
+
+#### Via the Table
+
 We can remove the viewer tile for now (we don't need it yet),
 and also expand the table tile.
 Let's then click `group by` above the `email` field.
@@ -152,6 +159,7 @@ The reduction metrics of each numeric,
 boolean and datetime group are shown in green in the table,
 and values shared across the entire group are shown in light blue
 (these are not shown in the GIFs, which were created before this feature addition).
+
 By default the `mean` is plotted for the reduction metrics,
 but this can be changed at the bottom of the table.
 Let's change the metric to `count` instead,
@@ -169,6 +177,8 @@ and those making the least use shown at the bottom.
 click image to maximize
 </Accordion>
 
+#### Via Plotting
+
 We can also plot the distribution of usage across each student as a bar chart.
 Let's first make some room for the plot on the right hand side by resizing the table.
 We then add the plot tile, select the bar chart type in the plot,
@@ -181,6 +191,8 @@ with the number of logs on the y axis.
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_count_bar_chart_dark.gif"/>
 click image to maximize
 </Accordion>
+
+### Average Usage Time
 
 Let's do a slightly more complicated example,
 and find the average time in the day when males vs females are on the platform.
@@ -204,10 +216,10 @@ click image to maximize
 These are just examples. We can manipulate the data in all kinds of other ways.
 If you have any other ideas, then give them a try! 📊
 
-## Live Traffic
+# Live Traffic
 
 Finally, let's imagine we have **live** production traffic streaming in from our app,
-and we'd like to have a dashboard to monitor this live data.
+and we'd like to have a dashboard to monitor this live data 📈
 
 <div
   style={{
@@ -257,6 +269,11 @@ while True:
 
 ### Monitor the Data
 
+We can then create a dashboard to monitor this live data as it is streaming in.
+Let's dive in!
+
+#### Filter for Today
+
 Let's first filter the log timestamps so we only get those which have be logged today or later,
 so we don't get any of the historic data included in the table.
 
@@ -264,6 +281,8 @@ so we don't get any of the historic data included in the table.
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_clip_timestamp.gif"/>
 click image to maximize
 </Accordion>
+
+#### Stream Table
 
 Let's then also turn on streaming mode for the table,
 and then we'll see the new logs flash green as they appear in the table.
@@ -274,16 +293,21 @@ The *most recent* logs are shown at the *top* of the table by default.
 click image to maximize
 </Accordion>
 
+#### Create Usage Histogram
+
 Let's now create a plot to monitor how the traffic is changing over time.
 We can create a new plot tile,
 select the histogram type,
 select timestamp for the `x` axis,
-and then select the number of buckets we'd like to use. Let's go with 50 buckets.
+and then select the number of buckets we'd like to use.
+Let's go with 50 buckets.
 
 <Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_histogram_full.gif"/>
 click image to maximize
 </Accordion>
+
+#### Stream Plot
 
 Let's now turn on streaming mode for both the table *and* the plot,
 such that the plot is also automatically updated whenever new data is available.
@@ -292,6 +316,8 @@ such that the plot is also automatically updated whenever new data is available.
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/demo_usage_stream_histogram.gif"/>
 click image to maximize
 </Accordion>
+
+#### Dynamic Time Window
 
 The plot and table will continue to grow unbounded in the current configuration.
 Let's update the filter on the timestamp column,
@@ -304,6 +330,8 @@ with older logs falling out of scope once they're more than 2 minutes old.
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/last_2_mins.gif"/>
 click image to maximize
 </Accordion>
+
+#### Freeze Data
 
 Let's assume we want to spot trends in the recent usage data.
 Let's first revert the timestamp filter back to "today and later",
@@ -320,6 +348,8 @@ without a constant stream of new data distorting things.
 click image to maximize
 </Accordion>
 
+#### Filter for Student
+
 So, let's play around with the data a bit.
 For example, if we want to look at traffic for a particular student,
 we can simply filter for this student in the table,
@@ -330,6 +360,8 @@ and the plot will also be updated automatically.
 click image to maximize
 </Accordion>
 
+#### Filter for Paper and Question
+
 Alternatively, we could filter for a particular paper and question number,
 and show only the traffic which is not receiving full marks for that question.
 
@@ -337,6 +369,8 @@ and show only the traffic which is not receiving full marks for that question.
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/filter_for_paper_and_question.gif"/>
 click image to maximize
 </Accordion>
+
+#### Multiple Plots
 
 If we'd like to view several of these plots at the same time,
 then we can simply make a clone of the table (or create a new one),
@@ -346,12 +380,17 @@ and then create another plot which references this second table.
 Let's add two plots:
 a histogram for monitoring the traffic and a bar chart to show the question difficulties,
 both plotted over the past 24 hours.
+
+**Histogram**
+
 Let's first add the histogram for monitoring the traffic.
 
 <Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/two_plots_part_1.gif"/>
 click image to maximize
 </Accordion>
+
+**Bar Chart**
 
 Let's now add the bar chart for monitoring the question difficulties.
 However, we'll first need to create some derived columns:
@@ -372,6 +411,8 @@ remembering to also apply the 24 hours filter on the table.
 click image to maximize
 </Accordion>
 
+**Hide Tables**
+
 If there are any tables on screen that you don't need to see,
 then you can simply hide them.
 Let's hide our two tables,
@@ -381,6 +422,8 @@ whose sole purpose is to define the data for the two plots.
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/hide_tables.gif"/>
 click image to maximize
 </Accordion>
+
+**Save Interface**
 
 If you're happy with your configuration,
 you can explicitly save the tab.
@@ -393,6 +436,8 @@ we see the same configuration we previously saved.
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/save_interface.gif"/>
 click image to maximize
 </Accordion>
+
+# Try your Own
 
 This set of examples have just been a *very* simple taster of the kinds of things you can
 quickly hack together in an interface for logging,

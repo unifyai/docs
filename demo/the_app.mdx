@@ -24,12 +24,16 @@ title: 'The App'
   />
 </div>
 
+# Motivation
+
 According to [QA Education](https://qaeducation.co.uk/feature/uk-teachers-spend-whole-day-marking-each-week/),
 teachers spend a whole day on marking each week, and the majority say they do not spend enough time teaching as a result.
 Let's try and fix this using AI!
 
 We'll use LLMs to build an app that asks students questions *and* marks their answers, given a known markscheme.
 We have to start somewhere, so let's start with some practice exam papers for high school level maths.
+
+# Data
 
 To kick things off, we've parsed [three practice exam papers](https://github.com/unifyai/demos/tree/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics)
 from [OCR's Sample Assessment Material for GCSE Maths](https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment-materials.pdf),
@@ -44,6 +48,8 @@ Feel free to check out:
 - the [script](https://github.com/unifyai/demos/blob/main/marking_assistant/generate_data.py) and [data](https://github.com/unifyai/demos/blob/main/marking_assistant/data/labelled_data.json) for the synthetic student answers and target marks to award
 
 - the [script](https://github.com/unifyai/demos/blob/main/marking_assistant/generate_test_dataset.py) and [data](https://github.com/unifyai/demos/blob/main/marking_assistant/data/test_set.json) for building the resultant test set, for our agent evaluations
+
+# Steps
 
 For the demo, we'll make use of this synthetic data, and walk through the following three steps:
 
