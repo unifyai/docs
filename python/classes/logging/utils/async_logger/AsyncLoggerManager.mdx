@@ -6,22 +6,21 @@ title: 'AsyncLoggerManager'
 class AsyncLoggerManager
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/c55ea88408fe515925384639866360b39889fd1d/unify/logging/utils/async_logger.py#L16)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/4d2ddc56d40cfb156a84191c02fa4fa67a166920/unify/logging/utils/async_logger.py#L18)</p>
 
 
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/c55ea88408fe515925384639866360b39889fd1d/unify/logging/utils/async_logger.py#L17)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/4d2ddc56d40cfb156a84191c02fa4fa67a166920/unify/logging/utils/async_logger.py#L19)</p>
 
 ```python
 def __init__(
         self,
+        *,
         base_url: str,
-        api_key: str,
-        batch_size: int = 100,
-        flush_interval: float = 0.5,
-        max_queue_size: int = 10000,
+        api_key: str = os.getenv("UNIFY_KEY"),
+        num_consumers: int = 256,
     ):
 ```
 
@@ -33,7 +32,7 @@ def __init__(
 
 ### log\_create
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/c55ea88408fe515925384639866360b39889fd1d/unify/logging/utils/async_logger.py#L79)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/4d2ddc56d40cfb156a84191c02fa4fa67a166920/unify/logging/utils/async_logger.py#L115)</p>
 
 ```python
 def log_create(
@@ -45,20 +44,20 @@ def log_create(
     ) -> asyncio.Future:
 ```
 
-Enqueue a log creation event and return a Future that will be resolved with the real log id.
+
 
 ---
 
 ### log\_update
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/c55ea88408fe515925384639866360b39889fd1d/unify/logging/utils/async_logger.py#L104)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/4d2ddc56d40cfb156a84191c02fa4fa67a166920/unify/logging/utils/async_logger.py#L136)</p>
 
 ```python
 def log_update(
         self,
         project: str,
         context: str,
-        log_future: asyncio.Future,
+        future: asyncio.Future,
         mode: str,
         overwrite: bool,
         mutable,
@@ -66,27 +65,15 @@ def log_update(
     ) -> None:
 ```
 
-Enqueue a log update event.
+
 
 ---
 
-### start
+### stop\_sync
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/c55ea88408fe515925384639866360b39889fd1d/unify/logging/utils/async_logger.py#L46)</p>
-
-```python
-def start(self):
-```
-
-Start the background worker thread.
-
----
-
-### stop
-
-<p align="right">[source code](https://github.com/unifyai/unify/tree/c55ea88408fe515925384639866360b39889fd1d/unify/logging/utils/async_logger.py#L57)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/4d2ddc56d40cfb156a84191c02fa4fa67a166920/unify/logging/utils/async_logger.py#L160)</p>
 
 ```python
-def stop(self):
+def stop_sync(self):
 ```
 
