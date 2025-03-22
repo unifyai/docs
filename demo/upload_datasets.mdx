@@ -164,6 +164,8 @@ The data was then organized into a test set using
 [this script](https://github.com/unifyai/demos/blob/main/marking_assistant/generate_test_dataset.py),
 and the resultant data is saved in [test_set.json](https://github.com/unifyai/demos/blob/main/marking_assistant/data/test_set.json).
 
+### Full Dataset
+
 As before, lets download the data,
 
 ```python
@@ -217,7 +219,7 @@ for size in [10, 20, 40, 80, 160]:
 
 Let's now analyze the test datasets, to verify everything is as it should be  🔍
 
-### Check Slices
+### Check Sub-Datasets
 
 Let's take a look at our different dataset slices.
 
@@ -234,38 +236,72 @@ click image to maximize
 ### Verify All Data is Present
 
 Let's verify that all of the data is present, as expected.
+
+#### Number of Papers
+
 We should have a total of three papers, as per this
-[original PDF](),
+[original PDF](https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment-materials.pdf),
 and as per the parsed representation we extracted
-[here]().
+[here](https://github.com/unifyai/demos/tree/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics).
 We can confirm this by grouping by the papers.
 
-{/* GIF */}
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/group_papers.gif"/>
+click image to maximize
+</Accordion>
+
+#### Number of Questions
 
 Each paper should have a set number of questions.
-Checking the PDF, we can see that:
-Paper 1 -> X Questions
-Paper 2 -> Y Questions
-Paper 3 -> Z Questions
+Checking [the original PDF](https://www.ocr.org.uk/Images/169000-foundation-tier-sample-assessment-materials.pdf),
+we can see that:
 
+- Paper1 -> 21 Questions
+- Paper 2 -> 19 Questions
+- Paper 3 -> 19 Questions
 
-Let's verify this is correct,
-by *also* grouping by the question number,
-and unfolding the nested group.
+However, questions are also **omitted** from the test set if:
 
-{/* GIF */}
+- they involve an image as **part of the question**, (they are [not text-only](https://github.com/unifyai/demos/blob/main/marking_assistant/helpers.py#L125))
+- the question was not `correctly_parsed` (example [parsed paper](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/parsed.json))
+- the question markscheme was not `correctly_parsed` (example [parsed markscheme](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/markscheme/parsed.json))
+
+Let's check how many questions were used from each of the three papers.
+We can simply *also* group by the question number,
+and then unfold these nested groups.
+
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/group_questions.gif"/>
+click image to maximize
+</Accordion>
+
+As expected,
+we can see that not all of the questions are replicated in the test set.
+Upon further inspection,
+we can see that the following questions are all ommitted due to
+the inclusion of necessary images as part of the question (`"text-only": false`):
+
+- [Paper1->Question12](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/parsed.json#L131)
+- [Paper1->Question13](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/parsed.json#L146)
+- [Paper1->Question16](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/parsed.json#L183)
+- [Paper3->Question2](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_03_Paper_3_(Foundation_Tier)_Sample_Question_Paper/paper/parsed.json#L17)
+
+#### Number of Target Answers
 
 Finally, each question should have `N+1` candidate answers,
 where `N` is the number of available marks: `[0, 1, ..., N]`.
 Let's verify this is correct,
-by adding the `available_marks` column,
-and verifying that the group sizes are all equal to `available_marks + 1`.
+by adding the `available_marks_total` column,
+and verifying that the group sizes are all equal to `available_marks_total + 1`.
 
-{/* GIF */}
+<Accordion title="Expand">
+<img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/unfold_available_marks_total.gif"/>
+click image to maximize
+</Accordion>
 
 It seems as though the data is all formatted as we expected it to be,
 and the 321 ground truth examples do indeed exhaustively fill all possible marks
-for all questions across all papers ✅
+for all the valid (text-only) questions across all papers ✅
 
 That's it, we're now ready to implement our LLM agent,
 and start iterating to improve the performance! 🔁
