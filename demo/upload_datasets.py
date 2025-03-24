@@ -3,7 +3,7 @@ import wget
 import json
 import unify
 
-unify.activate("MarkingAssistant")
+unify.activate("MarkingAssistant", overwrite=True)
 for dataset in unify.list_datasets():
     unify.delete_dataset(dataset)
 
@@ -22,7 +22,7 @@ with open("users.json", "r") as f:
     users = json.load(f)
 
 users_dataset = unify.Dataset(users, name="Users")
-users_dataset.sync()
+# users_dataset.sync()
 
 # Test Set
 
@@ -39,11 +39,11 @@ with open("test_set.json", "r") as f:
     test_set = json.load(f)
 
 test_set = unify.Dataset(test_set, name="TestSet")
-test_set.sync()
+# test_set.sync()
 
 # Sub Test Sets
 
-for size in [10, 20, 40, 80, 160]:
+for size in [10]:
     # ToDo uncomment once add_log_to_context implicitly creates the context
     # test_set[0:size].set_name(f"TestSet{size}").sync()
     unify.Dataset(test_set[0:size].data).set_name(f"TestSet{size}").sync()

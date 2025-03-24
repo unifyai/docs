@@ -1,0 +1,211 @@
+---
+title: 'Iteration 0'
+---
+
+The first step of the flywheel is to create our agent.
+Let's add something simple to begin with,
+and we can add more complexity on future iterations 🔁 
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/t2W0iMPM22c"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
+## 🤖 Create Agent
+
+We can start with a simple 0-shot LLM.
+
+```python
+agent = unify.Unify("o3-mini@openai", traced=True)
+```
+
+Let's also download a `.cache.json` file which was previously generated whilst running this notebook,
+to avoid making any real LLM calls,
+and to also make our walkthrough deterministic.
+
+If you'd rather go down **your own unique iteration journey**,
+then you should skip the cell below,
+and either remove `cache="read-only"` (turn off caching)
+or replace it with `cache=True` (create your own local cache) in the agent constructor above.
+However,
+this would mean many parts of the remaining walkthrough might not directly apply in your case,
+as the specific failure modes and the order in which they appear are likely to be different.
+
+```python
+if os.path.exists(".cache.json"):
+    os.remove(".cache.json")
+wget.download(
+    "https://raw.githubusercontent.com/"
+    "unifyai/demos/refs/heads/main/"
+    "marking_assistant/.cache.json"
+)
+```
+
+The agent needs to mark student answers to questions,
+out of a possible maximum number of marks.
+Let's give it a sensible system message to begin with:
+
+```
+system_message = """
+Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks_total} marks.
+
+The question is:
+
+{question}
+
+
+Their answer to this question is:
+
+{answer}
+
+
+As the very final part of your response, simply provide the number of marks on a *new line*, without any additional formatting. For example:
+
+3
+"""
+```
+
+Let's wrap our system prompt in a simple function so the system message is updated based on the specific data involved:
+
+```python
+@unify.traced
+def call_agent(system_msg, question, answer, available_marks_total):
+
+    # copy agent, so each thread uniquely sets system message
+    local_agent = agent.copy()
+
+    # set each of the placeholder values
+    local_agent.set_system_message(
+        system_msg.replace(
+            "{question}", question
+        ).replace(
+            "{answer}", json.dumps(answer, indent=4)
+        ).replace(
+            "{available_marks_total}", str(available_marks_total)
+        )
+    )
+
+    # return prediction (no user message, only system message)
+    return local_agent.generate()
+```
+
+## 🗂️ Add Tests
+
+Great, we now have our agent implemented.
+So, what are some good unit tests to begin with?
+Rather than using all 321 examples for our first iteration.
+Let's use the smallest subset of 10 examples,
+which we created in the previous section.
+
+```python
+test_set_10 = unify.download_dataset("TestSet10")
+```
+
+## 🧪 Run Tests
+
+Let's add an evaluation function,
+and include all other arguments that we would like to log as part of the evaluation.
+All input arguments, intermediate variables,
+and return variables without a prepending `"_"` in the name
+(all "non-private" arguments, returns and intermediate variables)
+will automatically be logged when the function is called,
+due to the inclusion of the `unify.log` decorator.
+
+```python
+@unify.log
+def evaluate(
+    question,
+    student_answer,
+    available_marks_total,
+    correct_marks_total,
+    per_question_breakdown,
+    _system_message,
+):
+
+    # extract agent prediction
+    pred_marks = call_agent(
+        _system_message, question, student_answer,
+        available_marks_total
+    )
+
+    # parse the predicted integer
+    _pred_marks_split = pred_marks.split("\n")
+    pred_marks_total, diff_total, error_total = None, None, None
+    for _substr in reversed(_pred_marks_split):
+        _extracted = "".join([c for c in _substr if c.isdigit()])
+        if _extracted != "":
+
+          # log intermediate variables once detected, and break
+          pred_marks_total = int(_extracted)
+          diff_total = correct_marks_total - pred_marks_total
+          error_total = abs(diff_total)
+          break
+
+    # log structured prediction
+    pred_marks = {"_": {"marks": pred_marks_total, "rationale": pred_marks}}
+    return
+```
+
+We can then run our evaluation,
+with the logging included,
+like so:
+
+```python
+with unify.Experiment("simple_agent"), unify.Params(
+    system_message=system_message,
+    dataset="TestSet10"
+):
+    unify.map(
+        evaluate,
+        [
+             dict(**d, _system_message=system_message)
+             for d in dataset_10
+        ],
+        name="Evals"
+    )
+```
+
+
+The `unify.Experiment()` term creates an `"experiment"` parameter in the context. The `unify.Params()` term sets the parameters which are held constant throughout the experiment.
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/{placeholder}"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
+By looking in our interface, we can see that we have some failures, with a mean error of `0.8` across the ten examples.
+We'll need to dive in and understand what's going wrong on the next iteration 🔁
