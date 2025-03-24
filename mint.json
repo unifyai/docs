@@ -62,7 +62,15 @@
                         "demo/the_app",
                         "demo/usage_dashboard",
                         "demo/upload_datasets",
-                        "demo/improve_agent"
+                        {
+                            "group": "Optimize Agent",
+                            "pages": [
+                                "demo/optimize_agent/flywheel",
+                                "demo/optimize_agent/iteration_0",
+                                "demo/optimize_agent/iteration_1",
+                                "demo/optimize_agent/remaining_iterations"
+                            ]
+                        }
                     ]
                 },
                 {

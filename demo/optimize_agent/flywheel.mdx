@@ -1,0 +1,33 @@
+---
+title: 'Flywheel'
+---
+
+In the last section we created test sets of varying sizes,
+ready to evaluate our agent.
+So, it's finally time to start our data flywheel spinning!
+The general process for optimizing an LLM agent is quite straightforward:
+
+```
+1  Create simplest possible agent 🤖
+2  While True:
+3      Create/expand unit tests (evals) 🗂️
+4      While run(tests) failing: 🧪
+5          Analyze failures, understand the root cause 🔍
+6          Vary system prompt, in-context examples, tools etc. to rectify 🔀
+7      [Optional] Beta test with users, find more failures 🚦
+```
+
+Firstly, let's activate the `MarkingAssistant` project.
+
+```python
+unify.activate("MarkingAssistant")
+```
+
+Let's also set a new context `Evals`,
+where we'll store all of our evaluation runs.
+
+```python
+unify.set_context("Evals")
+```
+
+Great, we can now dive into the first step of the flywheel! 🤿
