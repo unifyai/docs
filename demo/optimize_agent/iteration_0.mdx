@@ -170,7 +170,8 @@ like so:
 ```python
 with unify.Experiment("simple_agent"), unify.Params(
     system_message=system_message,
-    dataset="TestSet10"
+    dataset="TestSet10",
+    source=unify.get_source()
 ):
     unify.map(
         evaluate,
