@@ -25,7 +25,7 @@ and why they're failing.
       height: '100%',
       border: 'none'
     }}
-    src="https://www.youtube.com/embed/woEeIeZyytM"
+    src="https://www.youtube.com/embed/R_q22r9UY5I"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowFullScreen
   />
@@ -145,19 +145,47 @@ The mark scheme gives 2 marks if the student states "No, there may be other fact
 
 ### Thoughts
 
-Overall, it's clear that the agent is unable to properly make sense of the different mark types, such as B1, SC1, M1, A1 etc.
+Overall, it's clear that the agent is unable to properly make sense of the different mark types,
+such as `B1`, `SC1`, `M1`, `A1` etc.
 
-This is not surprising, as we've never explained what these terms mean in the system prompt!
+This is not surprising,
+as we've never explained what these terms mean in the system prompt!
 
 ## 🔀 Add Marking Guidelines
 
-Let's add the general marking guidelines to the system prompt, so the agent knows what all of these mark terms mean, and also fully understands how to interpret the markscheme for each question.
+Let's add the general marking guidelines to the system prompt,
+so the agent knows what all of these mark terms mean,
+and also fully understands how to interpret the markscheme for each question.
 
-The marking guidelines can be extracted from the beginning of any of the markscheme pdf files, such as [this one](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/markscheme.pdf).
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/{placeholder}"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
 
-Let's store this in a seperate variable, which will make it easier for us to parameterize the inclusion of the guidelines in future experiment iterations.
+The marking guidelines can be extracted from the beginning of any of the markscheme pdf files,
+such as [this one](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/markscheme.pdf).
 
-```python
+Let's store this in a seperate variable,
+which will make it easier for us to parameterize the inclusion of the guidelines in future experiment iterations.
+
+```text [expandable]
 general_guidelines = """----
 
 1.
@@ -237,9 +265,11 @@ Anything in the mark scheme which is in square brackets [...] is not required fo
 ----"""
 ```
 
-Let's also update the system message to include a placeholder for these general guidelines.
+Let's also update the system message to include a placeholder for these general guidelines,
+and let's also reword other parts of the system message to make it clear which parts are *for the question*,
+and which parts are general guidelines.
 
-```python
+```{4-6,8,13,18}
 system_message = """
 Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks_total} marks.
 
@@ -257,7 +287,7 @@ The markscheme for this specific question is:
 {markscheme}
 
 
-The student's answer to this question (which you need to marked) is:
+The student's answer to this question (which you need to mark) is:
 
 {answer}
 
