@@ -1,0 +1,227 @@
+---
+title: 'Iteration 4'
+---
+
+## 🔍 Context Alignment
+
+Let's take a look,
+and see if we can work out why the agent might be failing on some examples 🕵️
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/{placeholder}"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
+In terms of failures, let's take **Example 132** as an example. For this particular question, there are 6 sub-questions (a.i, a.ii, b.i, b.ii, b.iii, c), and we're asking the LLM to do a lot in a single shot:
+
+1. understand all 16 points in the general marking guidelines
+2. understand all 6 of the sub-questions
+3. understand all 6 of the student's answers to the sub-questions
+4. understand all 6 of the markscheme's reasoning for said sub-questions
+
+More importantly, the system prompt doesn't align the relevant information together. The agent receives the information like so:
+
+```json
+{
+  question: [a.i, a.ii, b.i, b.ii, b.iii, c],
+  markscheme: [a.i, a.ii, b.i, b.ii, b.iii, c],
+  answer: [a.i, a.ii, b.i, b.ii, b.iii, c]
+}
+```
+
+Let's update the system prompt, so the information is aligned better, more like the following:
+
+```json
+{
+  a.i: [sub-qstn, sub-mrkshm, sub-ans],
+  a.ii: [sub-qstn, sub-mrkshm, sub-ans],
+  b.i: [sub-qstn, sub-mrkshm, sub-ans],
+  b.ii: [sub-qstn, sub-mrkshm, sub-ans],
+  b.iii: [sub-qstn, sub-mrkshm, sub-ans],
+  c: [sub-qstn, sub-mrkshm, sub-ans],
+}
+```
+
+## 🔀 Better Align Context
+
+So,
+let's go ahead and improve the system prompt such that relevant information is closer together,
+and see if it helps 🤞
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/{placeholder}"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
+First, let's abstract this into a `"{questions_markscheme_and_answers}"` placeholder:
+
+```python
+system_message = """
+Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks_total} marks.
+
+The general marking guidelines (relevant for all questions) are as follows:
+
+{general_guidelines}
+
+The question you need to mark is:
+
+{question}
+
+The sub-question breakdown, including each sub-question, it's associated markscheme and it's associated answer, are as follows:
+
+{questions_markscheme_and_answers}
+
+
+{output_response_explanation}
+""".replace(
+    "{general_guidelines}",
+    general_guidelines
+)
+```
+
+Let's then update `call_agent`
+
+```python
+@unify.traced
+def call_agent(system_msg, question, sub_questions, markscheme, answer, available_marks_total):
+    local_agent = agent.copy()
+    with_subqs = len(markscheme) > 1
+    response_format = create_response_format(
+        list(markscheme.keys()) if with_subqs else None
+    )
+    local_agent.set_response_format(response_format)
+    if with_subqs:
+        output_response_exp = output_response_explanations["with_subqs"]
+        output_response_exp = output_response_exp.replace(
+            "{subquestions}", json.dumps(list(markscheme.keys()))
+        )
+    else:
+        output_response_exp = output_response_explanations["without_subqs"]
+    local_agent.set_system_message(
+        system_msg.replace(
+            "{question}", question
+        ).replace(
+            "{markscheme}", json.dumps(markscheme, indent=4)
+        ).replace(
+            "{answer}", json.dumps(answer, indent=4)
+        ).replace(
+            "{available_marks_total}", str(available_marks_total)
+        ).replace(
+            "{questions_markscheme_and_answers}", json.dumps(
+              {
+                  k: {
+                      "sub-question": sub_questions[k],
+                      "markscheme": markscheme[k],
+                      "answer": answer[k]
+                  } for k in sub_questions.keys()
+              },
+              indent=4
+            )
+        ).replace(
+            "{output_response_explanation}",
+            output_response_exp
+        )
+    )
+    ret = local_agent.generate()
+    if "```" in ret:
+        ret = ret.split("```")[-2].lstrip("json")
+    ret = response_format.model_validate_json(ret).model_dump()
+    if not with_subqs:
+        return {"_": ret}
+    return ret
+```
+
+Let's also update our `evaluate` function, so that we pass the `sub_questions` into the `call_agent` function:
+
+```python
+@unify.log
+def evaluate(
+    question,
+    sub_questions,
+    student_answer,
+    available_marks_total,
+    markscheme,
+    correct_marks,
+    per_question_breakdown,
+    _system_message,
+):
+    pred_marks = call_agent(
+        _system_message, question, sub_questions, markscheme, student_answer,
+        available_marks_total
+    )
+    pred_marks_total = sum([v["marks"] for v in pred_marks.values()])
+    diff = {
+        k: vcor["marks"] - vpred["marks"] for (k, vcor), (_, vpred) in
+        zip(correct_marks.items(), pred_marks.items())
+    }
+    error = {k: abs(v) for k, v in diff.items()}
+    diff_total = sum(diff.values())
+    error_total = sum(error.values())
+    per_question_breakdown = {
+        k: {
+            **per_question_breakdown[k],
+            "predicted_marks": pm,
+            "diff": d
+        } for (k, pqb), pm, d in zip(
+            per_question_breakdown.items(),
+            pred_marks.values(),
+            diff.values()
+        )
+    }
+    return error
+```
+
+## 🧪 Rreun Tests
+
+```python
+with unify.Experiment("align_context"), unify.Params(
+    system_message=system_message,
+    model=agent.model,
+    dataset="dataset_10"
+):
+    unify.map(
+        evaluate,
+        [
+             dict(**d.entries, _system_message=system_message)
+             for d in test_set_10
+        ],
+        name="Evals"
+    )
+```
+
+The mean error has now dropped to `0.3`.
+Again, let's explore what's going wrong in the next iteration 🔁
