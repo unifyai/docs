@@ -65,9 +65,10 @@
                         {
                             "group": "Optimize Agent",
                             "pages": [
-                                "demo/optimize_agent/flywheel",
+                                "demo/optimize_agent/data_flywheel",
                                 "demo/optimize_agent/iteration_0",
                                 "demo/optimize_agent/iteration_1",
+                                "demo/optimize_agent/iteration_2",
                                 "demo/optimize_agent/remaining_iterations"
                             ]
                         }
