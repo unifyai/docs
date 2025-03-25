@@ -1,279 +1,6 @@
 ---
-title: 'Remaining Iterations [Placeholder]'
+title: 'Remaining Iterations'
 ---
-
-## 🔁 Iteration 2
-
-### 🔍 Misunderstanding Mark Types
-
-Seven out of ten have a perfect error of 0, with three examples having an error of 1. Let's take a closer look at these examples, and why they're failing.
-
-GIF
-
-Let's dive in and explore each of these failures in more detail, to see how we can rectify them.
-
-
-**Example 207**
-
-❓ Question [2 Marks]:
-
-> Write these in order, smallest first:
->
->    0.34,    1/3,    3.5%
->
->    ……………………   ……………………   ……………………
-
-📝 Student's Answer:
-
-> 1/3, 0.34, 3.5%
-
-☑️ Markscheme:
-
-> 3.5%, 1/3, 0.34
->
-> Part marks and guidance:
-> - B1 for 1/3 = 0.33… or 33…%
-> - or B1 for 0.34 = 34%
-> - or B1 for changing 3.5% to 0.035
-> - or SC1 for 1/3, 0.34, 3.5%
->
-> Accept correct order with equivalent values.
-
-✅ Correct Marks [1/2] Rationale:
-
-> The candidate’s order is 1/3, 0.34, 3.5%. According to the markscheme, this earns SC1 (special case, partially correct ordering) for 1 mark.
-
-🤖 Predicted Marks [0/2] Rationale:
-
-> The student’s ordering is incorrect because smallest first should be 3.5%, 1/3, 0.34, but the student provided 1/3, 0.34, 3.5%.
->
-> 0
-
-
-**Example 261**
-
-❓ Question [5 Marks]:
-
-> Peter makes a large amount of pink paint by mixing red and white paint in the ratio 2 : 3.
->
->   • Red paint costs £80 per 10 litres.  
->   • White paint costs £5 per 10 litres.  
->   • Peter sells his pink paint in 10-litre tins for £60 per tin.
->
-> Calculate how much profit he makes for each tin he sells.  
-> You must show your working.
->
-> £ …………………………………………
-
-📝 Student's Answer:
-
-> Peter needs 4 litres of red paint and 6 litres of white paint for every 10-litre batch (because 2 out of 5 parts is red, 3 out of 5 parts is white).
-
-☑️ Markscheme:
-
-> 25 with correct working (5 marks)
->
-> "Correct working" requires evidence of at least M1M1
-> - M1 for 10 × (2/5) = 4 litres red or for 10 × (3/5) = 6 litres white
-> - M1 for red costs £8 per litre or for white costs £0.50 per litre
-> - M1 for cost of one 10-litre can is their 4 × their 8 + their 6 × their 0.5
-> - M1 for 60 – their 35
->
-> Alternative method:
-> - M1 for 2 : 3 = 20 litres red : 30 litres white
-> - M1 for 2 × £80 + 3 × £5 = £175
-> - M1 for (their 175) ÷ 5 = 35
-> - M1 for 60 – their 35
-> - M1 for cost of one 10-litre can is their 4 × their 8 + their 6 × their 0.5
->
-> If 0 or 1 scored, instead award SC2 for answer 25 with no working or insufficient working
-
-✅ Correct Marks [1/5] Rationale:
-
-> Awarding 1 mark (M1) for correctly finding that a 10-litre tin contains 4 litres of red and 6 litres of white from the 2:3 ratio. No further steps towards the final profit are shown, so only this 1 mark is earned.
-
-🤖 Predicted Marks [0/5] Rationale:
-
-> The student's response only states that Peter needs 4 litres of red paint and 6 litres of white paint per 10-litre batch. It does not show any further working or provide the calculation of the cost of the paints or the profit per tin. Therefore, the answer does not meet the full requirements for the calculation and is awarded 0 marks.
->
-> 0
-
-
-**Example 132 (c)**
-
-❓ Question [2 Marks]:
-
-> A newspaper headline reads: 'High temperatures make more people buy ice cream!' Does the graph above prove this claim? Give a reason for your decision.
-
-📝 Student's Answer:
-
-> No. The graph alone does not completely prove the claim, because we cannot be certain this trend always holds true in all situations.
-
-☑️ Markscheme:
-
-> Answer: No, because there may be other factors involved (2 marks)
-Guidance: B1 for 'No', with partial reason.
-
-✅ Correct Marks [1/2] Rationale:
-
-> The mark scheme gives 2 marks if the student states “No, there may be other factors involved.” Here, only a partial reason is given, so 1 mark is awarded for denying that the graph proves the claim but not fully explaining other possible factors.
-
-🤖 Predicted Marks [2/2] Rationale:
-
-> `No Rationale Given`
-
-
-**Thoughts:**
-
-Overall, it's clear that the agent is unable to properly make sense of the different mark types, such as B1, SC1, M1, A1 etc.
-
-This is not surprising, as we've never explained what these terms mean in the system prompt!
-
-### 🔀 Add Marking Guidelines
-
-Let's add the general marking guidelines to the system prompt, so the agent knows what all of these mark terms mean, and also fully understands how to interpret the markscheme for each question.
-
-The marking guidelines can be extracted from the beginning of any of the markscheme pdf files, such as [this one](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/markscheme.pdf).
-
-Let's store this in a seperate variable, which will make it easier for us to parameterize the inclusion of the guidelines in future experiment iterations.
-
-```python
-general_guidelines = """----
-
-1.
-M marks are for using a correct method and are not lost for purely numerical errors.
-A marks are for an accurate answer and depend on preceding M (method) marks. Therefore M0 A1 cannot be awarded.
-B marks are independent of M (method) marks and are for a correct final answer, a partially correct answer, or a correct intermediate stage.
-SC marks are for special cases that are worthy of some credit.
-
-2.
-Unless the answer and marks columns of the mark scheme specify M and A marks etc, or the mark scheme is ‘banded’, then if the correct answer is clearly given and is not from wrong working full marks should be awarded.
-
-Do not award the marks if the answer was obtained from an incorrect method, i.e. incorrect working is seen and the correct answer clearly follows from it.
-
-3.
-Where follow through (FT) is indicated in the mark scheme, marks can be awarded where the candidate’s work follows correctly from a previous answer whether or not it was correct.
-
-Figures or expressions that are being followed through are sometimes encompassed by single quotation marks after the word their for clarity, e.g. FT 180 × (their ‘37’ + 16), or FT 300 – (their ‘52 + 72’). Answers to part questions which are being followed through are indicated by e.g. FT 3 × their (a).
-
-For questions with FT available you must ensure that you refer back to the relevant previous answer. You may find it easier to mark these questions candidate by candidate rather than question by question.
-
-4.
-Where dependent (dep) marks are indicated in the mark scheme, you must check that the candidate has met all the criteria specified for the mark to be awarded.
-
-5.
-The following abbreviations are commonly found in GCSE Mathematics mark schemes.
-- **figs 237**, for example, means any answer with only these digits. You should ignore leading or trailing zeros and any decimal point e.g. 237000, 2.37, 2.370, 0.00237 would be acceptable but 23070 or 2374 would not.
-- **isw** means **ignore subsequent working** after correct answer obtained and applies as a default.
-- **nfww** means not from wrong working.
-- **oe** means **or equivalent**.
-- **rot** means **rounded or truncated**.
-- **seen** means that you should award the mark if that number/expression is seen anywhere in the answer space, including the answer line, even if it is not in the method leading to the final answer
-- **soi** means seen or implied.
-
-6.
-In questions with no final answer line, make no deductions for wrong work after an acceptable answer (ie **isw**) unless the mark scheme says otherwise, indicated by the instruction ‘mark final answer’.
-
-7.
-In questions with a final answer line following working space:
-
-(i)If the correct answer is seen in the body of working and the answer given on the answer line is a clear transcription error allow full marks unless the mark scheme says ‘mark final answer’. Place the annotation ✓ next to the correct answer.
-
-(ii)If the correct answer is seen in the body of working but the answer line is blank, allow full marks. Place the annotation ✓ next to the correct answer.
-
-(iii)If the correct answer is seen in the body of working but a completely different answer is seen on the answer line, then accuracy marks for the answer are lost. Method marks could still be awarded. Use the M0, M1, M2 annotations as appropriate and place the annotation  next to the wrong answer.
-
-8.
-In questions with a final answer line:
-
-(i)If one answer is provided on the answer line, mark the method that leads to that answer.
-
-(ii)If more than one answer is provided on the answer line and there is a single method provided, award method marks only.
-
-(iii)If more than one answer is provided on the answer line and there is more than one method provided, award zero marks for the question unless the candidate has clearly indicated which method is to be marked.
-
-9.
-In questions with no final answer line:
-
-(i)If a single response is provided, mark as usual.
-
-(ii)If more than one response is provided, award zero marks for the question unless the candidate has clearly indicated which response is to be marked.
-
-10.
-When the data of a question is consistently misread in such a way as not to alter the nature or difficulty of the question, please follow the candidate’s work and allow follow through for **A** and **B** marks. Deduct 1 mark from any **A** or **B** marks earned and record this by using the MR annotation. **M** marks are not deducted for misreads.
-
-11.
-Unless the question asks for an answer to a specific degree of accuracy, always mark at the greatest number of significant figures even if this is rounded or truncated on the answer line. For example, an answer in the mark scheme is 15 75, which is seen in the working. The candidate then rounds or truncates this to 15.8, 15 or 16 on the answer line. Allow full marks for the 15.75.
-
-12.
-Ranges of answers given in the mark scheme are always inclusive.
-
-13.
-For methods not provided for in the mark scheme give as far as possible equivalent marks for equivalent work.
-
-14.
-Anything in the mark scheme which is in square brackets […] is not required for the mark to be earned, but if present it must be correct.
-
-----"""
-```
-
-Let's also update the system message to include a placeholder for these general guidelines.
-
-```python
-system_message = """
-Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks_total} marks.
-
-The general marking guidelines (relevant for all questions) are as follows:
-
-{general_guidelines}
-
-The question you need to mark is:
-
-{question}
-
-
-The markscheme for this specific question is:
-
-{markscheme}
-
-
-The student's answer to this question (which you need to marked) is:
-
-{answer}
-
-
-As the very final part of your response, simply provide the number of marks on a *new line*, without any additional formatting. For example:
-
-3
-"""
-```
-
-Let's then update the system message to include the guidelines by default.
-
-```python
-system_message = system_message.replace(
-    "{general_guidelines}", general_guidelines
-)
-```
-
-### 🧪 Rreun Tests
-
-```python
-with unify.Experiment("add_marking_guidelines"), unify.Params(
-    system_message=system_message,
-    dataset="dataset_10"
-):
-    unify.map(
-        evaluate,
-        [
-             dict(**d.entries, _system_message=system_message)
-             for d in test_set_10
-        ],
-        name="Evals"
-    )
-```
-
-The mean error has gone down from `0.3` to `0.2`. Let's explore the remaining errors in another iteration.
 
 ## 🔁 Iteration 3
 
@@ -644,7 +371,7 @@ Our evaluation runs serve both as tests for comparing parameter configurations (
 
 This is one benefit of the flexible spreadsheet design. Experiments are not indivisible atomic groups, they're simply labels, and the raw evaluation data can be juggled in whatever way makes sense to you as the user.
 
-GIF
+VIDEO
 
 Let's first recap, the fixed question ❓, student answer 📝, markscheme ☑️ and correct marks ✅, before unpacking the various agent justifications 🤖 across all experiments.
 
@@ -677,15 +404,15 @@ Let's first recap, the fixed question ❓, student answer 📝, markscheme ☑�
 
 ✅ Correct Marks [1/2] Rationale:
 
-> The candidate’s order is 1/3, 0.34, 3.5%. According to the markscheme, this earns SC1 (special case, partially correct ordering) for 1 mark.
+> The candidate's order is 1/3, 0.34, 3.5%. According to the markscheme, this earns SC1 (special case, partially correct ordering) for 1 mark.
 
 🤖 Predicted Marks [x/2] Rationales (with added insights 💡):
 
 > `simple_agent` [0/2] ❌: The correct order should be 3.5%, 1/3, 0.34. The student's answer is incorrect. [**No reference to SC1 💡**]
 >
-> `add_markscheme` [0/2] ❌: The student’s ordering is incorrect because smallest first should be 3.5%, 1/3, 0.34, but the student provided 1/3, 0.34, 3.5%. [**No reference to SC1 💡**]
+> `add_markscheme` [0/2] ❌: The student's ordering is incorrect because smallest first should be 3.5%, 1/3, 0.34, but the student provided 1/3, 0.34, 3.5%. [**No reference to SC1 💡**]
 
-> `add_marking_guidelines` [0/2] ❌: The required order, from smallest to largest, is 3.5%, 1/3, 0.34 (since 3.5% = 0.035, 1/3 ≃ 0.333, and 0.34 = 0.34). The student’s answer lists the numbers as 1/3, 0.34, 3.5%, which is not in the correct order. [**No reference to SC1 💡**]
+> `add_marking_guidelines` [0/2] ❌: The required order, from smallest to largest, is 3.5%, 1/3, 0.34 (since 3.5% = 0.035, 1/3 ≃ 0.333, and 0.34 = 0.34). The student's answer lists the numbers as 1/3, 0.34, 3.5%, which is not in the correct order. [**No reference to SC1 💡**]
 
 > `add_structured_output` [0/2] ❌: The correct order should list the values from smallest to largest: 3.5% (which is equivalent to 0.035), then 1/3 (approximately 0.333...), and finally 0.34. The student's answer, '1/3, 0.34, 3.5%', does not follow the required order. Therefore, no marks can be awarded for this answer. [**No reference to SC1 💡**]
 
@@ -746,13 +473,13 @@ Clearly, the agent is really failing to pick up on the SC1 mark from the marksch
 > - Adding the costs gives a total cost of £32 + £3 = £35.
 > - Subtracting this from the selling price, the profit per tin is £60 − £35 = £25.
 >
-> The student’s answer only identifies the paint volumes (4 litres red and 6 litres white) without completing the cost and profit calculations. [**No reference to M1 💡**]
+> The student's answer only identifies the paint volumes (4 litres red and 6 litres white) without completing the cost and profit calculations. [**No reference to M1 💡**]
 
 > `add_markscheme` [0/5] ❌: The student's response only states that Peter needs 4 litres of red paint and 6 litres of white paint per 10-litre batch. It does not show any further working or provide the calculation of the cost of the paints or the profit per tin. Therefore, the answer does not meet the full requirements for the calculation and is awarded 0 marks.  [**No reference to M1 💡**]
 
 > `add_marking_guidelines` [1/5] ✅: The student only shows that a 10‐litre tin requires 4 litres red paint and 6 litres white paint (i.e. the ratio part), but they do not continue to use these figures to work out the cost or the profit. This is an incomplete answer which does not answer the question. [**No reference to M1 💡**]
 
-> `add_structured_output` [0/5] ❌: The student’s work shows part of the method by correctly determining that a 10‐litre batch contains 4 litres of red paint and 6 litres of white paint. However, the answer does not extend to calculate the cost of the red and white paint, nor does it compute the final profit per tin by subtracting the total cost from the selling price. According to the mark scheme, a correct final answer of £25 with full working is needed for 5 marks. Since the student has given only part of the working (the mix ratio) and omitted the critical profit calculation, the answer deserves only credit for knowing the ratio. In such cases, with insufficient working, the mark scheme permits awarding SC2 (2 marks) for an answer that states the correct profit value by implication. As the final profit figure is missing, awarding 2 marks is appropriate. [**No reference to M1 💡**]
+> `add_structured_output` [0/5] ❌: The student's work shows part of the method by correctly determining that a 10‐litre batch contains 4 litres of red paint and 6 litres of white paint. However, the answer does not extend to calculate the cost of the red and white paint, nor does it compute the final profit per tin by subtracting the total cost from the selling price. According to the mark scheme, a correct final answer of £25 with full working is needed for 5 marks. Since the student has given only part of the working (the mix ratio) and omitted the critical profit calculation, the answer deserves only credit for knowing the ratio. In such cases, with insufficient working, the mark scheme permits awarding SC2 (2 marks) for an answer that states the correct profit value by implication. As the final profit figure is missing, awarding 2 marks is appropriate. [**No reference to M1 💡**]
 
 > `align_context` [0/5] ❌: The answer only shows that Peter uses 4 litres of red paint and 6 litres of white paint in a 10‑litre batch. However, the question asks for the profit per tin, which requires further calculation including the cost of the paints and then subtracting from the selling price (£60). No profit calculation or final numerical answer for the profit is given. As a result, none of the required steps for computing profit were provided. Therefore, no marks can be awarded. [**No reference to M1 💡**]
 
@@ -783,7 +510,7 @@ Guidance: B1 for 'No', with partial reason.
 
 ✅ Correct Marks [1/2] Rationale:
 
-> The mark scheme gives 2 marks if the student states “No, there may be other factors involved.” Here, only a partial reason is given, so 1 mark is awarded for denying that the graph proves the claim but not fully explaining other possible factors.
+> The mark scheme gives 2 marks if the student states "No, there may be other factors involved." Here, only a partial reason is given, so 1 mark is awarded for denying that the graph proves the claim but not fully explaining other possible factors.
 
 🤖 Predicted Marks [x/2] Rationale (with added insights 💡):
 
@@ -1462,17 +1189,17 @@ Let's look at some of the previous justifications for **not** awarding the mark,
 
 🤖 Predicted Marks [x/1] Rationales:
 
-> `simple_agent` [0/1] ✅: The answer should explain that although Account A gives slightly more money, Derrick might not want this account because his money is tied up for three years (i.e. it has poor liquidity). The student’s explanation about the bank “keeping the money forever” is not an acceptable financial rationale.
+> `simple_agent` [0/1] ✅: The answer should explain that although Account A gives slightly more money, Derrick might not want this account because his money is tied up for three years (i.e. it has poor liquidity). The student's explanation about the bank "keeping the money forever" is not an acceptable financial rationale.
 
 > `add_markscheme` [0/1] ✅: The explanation provided is not a valid reason and does not address the restriction of no withdrawals for three years. Therefore, no mark can be awarded for this part either.
 
-> `add_marking_guidelines` [0/1] ✅: The explanation given (“because the bank might keep the money forever and he could lose it”) does not correctly address why he might not want to use Account A (namely, that his money is locked away for 3 years with no withdrawals allowed).
+> `add_marking_guidelines` [0/1] ✅: The explanation given ("because the bank might keep the money forever and he could lose it") does not correctly address why he might not want to use Account A (namely, that his money is locked away for 3 years with no withdrawals allowed).
 
-> `add_structured_output` [0/1] ✅: The answer needed to explain why Account A might not be desirable, which is because funds are locked in for three years and withdrawals are not allowed until the end of the period. The student’s answer states that the bank might keep the money forever and he could lose it, which does not address the actual restriction (lack of liquidity). This is an irrelevant or incorrect reason and does not meet the mark scheme.
+> `add_structured_output` [0/1] ✅: The answer needed to explain why Account A might not be desirable, which is because funds are locked in for three years and withdrawals are not allowed until the end of the period. The student's answer states that the bank might keep the money forever and he could lose it, which does not address the actual restriction (lack of liquidity). This is an irrelevant or incorrect reason and does not meet the mark scheme.
 
-> `align_context` [0/1] ✅: The mark scheme accepts any valid reason such as not being able to withdraw the money because it is locked in for 3 years. The candidate’s answer – that the bank might 'keep the money forever' and he could lose it – is not a valid explanation for the funds being inaccessible. It does not clearly express that his money is tied up for 3 years. Therefore, this explanation does not meet the requirement and no mark should be awarded.
+> `align_context` [0/1] ✅: The mark scheme accepts any valid reason such as not being able to withdraw the money because it is locked in for 3 years. The candidate's answer – that the bank might 'keep the money forever' and he could lose it – is not a valid explanation for the funds being inaccessible. It does not clearly express that his money is tied up for 3 years. Therefore, this explanation does not meet the requirement and no mark should be awarded.
 
-> `align_guidelines_and_clarify_reasoning` [0/1] ✅: The answer to part (b) should explain that Account A requires the money to be locked in for three years which might be a disadvantage if immediate access is desired. The student’s explanation – that the bank might ‘keep the money forever’ – does not address the real issue of the restriction on withdrawals. As the explanation provided is not a valid reason as per the mark scheme, no marks should be awarded for this part.
+> `align_guidelines_and_clarify_reasoning` [0/1] ✅: The answer to part (b) should explain that Account A requires the money to be locked in for three years which might be a disadvantage if immediate access is desired. The student's explanation – that the bank might 'keep the money forever' – does not address the real issue of the restriction on withdrawals. As the explanation provided is not a valid reason as per the mark scheme, no marks should be awarded for this part.
 
 > `mark_type_reasoning` [0/1] ✅: The explanation provided does not address the key issue mentioned in the mark scheme (the restriction of no withdrawals for 3 years) and instead gives a non sequitur reason that the bank might 'keep the money forever.' This does not meet the required rationale, so no mark is awarded.
 
@@ -2061,7 +1788,7 @@ M1 for one correct subtraction of two boxes
 
 🤖 Predicted Marks [0/2] Rationale:
 
-> The candidate’s final numerical answer is correct (the missing boxes are 8, 13, and 21), matching the answer in the mark scheme. However, the mark scheme specifically awards M1 for showing a correct subtraction (i.e. working that reverses the addition rule), which is a required part of the method. Since the candidate only provided the final answer without demonstrating any subtraction (or any equivalent working) to show the method, no evidence is provided to award the M1 mark. As A marks (for an accurate answer) depend on obtaining the method mark, no further marks can be awarded. Therefore, despite the correct final answer, the lack of required working means no marks should be awarded.
+> The candidate's final numerical answer is correct (the missing boxes are 8, 13, and 21), matching the answer in the mark scheme. However, the mark scheme specifically awards M1 for showing a correct subtraction (i.e. working that reverses the addition rule), which is a required part of the method. Since the candidate only provided the final answer without demonstrating any subtraction (or any equivalent working) to show the method, no evidence is provided to award the M1 mark. As A marks (for an accurate answer) depend on obtaining the method mark, no further marks can be awarded. Therefore, despite the correct final answer, the lack of required working means no marks should be awarded.
 
 This is an interesting failure mode. Interestly, the justification for the "correct" (ground truth) marks is wrong. There is no **A1** mark for this question (which *would* depend on a method mark). This is irrelevant in terms of the agent failure (the agent doesn't know the correct marks or rationale), but it's still an interesting observsation regarding our "ground truth" data.
 
