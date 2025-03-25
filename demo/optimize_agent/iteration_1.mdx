@@ -2,19 +2,38 @@
 title: 'Iteration 1'
 ---
 
-# 🔍 Inconsistent Formatting
+## 🔍 Inconsistent Formatting
 
-Let's take a look at our results in the table
+Let's take a look at our results in the table.
 
-GIF
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/tQyJaHAT-RQ"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
 
 **Example 215** has the largest error. Let's take a look at what's going wrong.
 
-❓ Question [8 Marks]:
+<Accordion title="❓ Question [8 Marks]">
+In this row of boxes, you start with 5 and 7.
 
-> In this row of boxes, you start with 5 and 7.
->
-> ```
+```
 ┌───┬───┬────┬────┬────┐
 │ 5 │ 7 │    │    │    │
 └───┴───┴────┴────┴────┘
@@ -28,79 +47,84 @@ You add 12 and 19 to get 31 to go in the fifth box.
 └───┴───┴────┴────┴────┘
 ```
 Complete these rows of boxes using the rule shown above.
->
-> (a)
+
+(a)
 ```
 ┌───┬───┬────┬────┐
 │ 4 │ 6 │    │    │ [1]
 └───┴───┴────┴────┘
 ```
-> (b)
+(b)
 ```  
 ┌────┬────┬────┬────┐
 │    │    │ 34 │ 55 │ [2]
 └────┴────┴────┴────┘
 ```
-> (c) Complete this row of boxes, writing your expressions in their simplest form.
+(c) Complete this row of boxes, writing your expressions in their simplest form.
 ```
 ┌───┬───┬────┬────┐
 │ a │ b │    │    │ [2]
 └───┴───┴────┴────┘
 ```
-> (d) Use your answer to (c) to help you fill in the missing numbers in this row of boxes.
+(d) Use your answer to (c) to help you fill in the missing numbers in this row of boxes.
 ```
 ┌───┬────┬────┬────┐
 │ 6 │    │    │ 57 │ [3]
 └───┴────┴────┴────┘
 ```
+</Accordion>
 
-📝 Student's Answer:
+<Accordion title="📝 Student's Answer">
+(a) The next three boxes are 10, 16, and 26. So the row becomes 4, 6, 10, 16, 26.
 
-> (a) The next three boxes are 10, 16, and 26. So the row becomes 4, 6, 10, 16, 26.
->
-> (b) The missing boxes are 8, 13, and 21, making the sequence 8, 13, 21, 34, 55.
->
-> (c) a + b, a + 2b, a + 3b
->
-> (d) By setting 2a + 3b = 57, we substitute a = 6 to get 12 + 3b = 57, so b = 15. Then, adding consecutively gives 6, 15, 21, 37, with the final box stated as 57 in the question.
+(b) The missing boxes are 8, 13, and 21, making the sequence 8, 13, 21, 34, 55.
 
-Based on these two, it seems as though there is a small discrepency in the text-based box formatting in the question given to the agent, with the question presenting *four* boxes per question but the true number being *five*. We can verify this by looking at the original page, which can be found [here](https://raw.githubusercontent.com/unifyai/demos/refs/heads/main/ai_tutor/pdfs/GCSE_(9%E2%80%931)_Mathematics/J560_02_Paper_2_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page16.png).
+(c) a + b, a + 2b, a + 3b
 
-☑️ Markscheme [Not Given to Agent]:
+(d) By setting 2a + 3b = 57, we substitute a = 6 to get 12 + 3b = 57, so b = 15. Then, adding consecutively gives 6, 15, 21, 37, with the final box stated as 57 in the question.
+</Accordion>
 
-> (a) Answer: 10, 16, 26. Marks: 1
->
-> (b) Answer: 8, 13, 21. Marks: 2. Guidance: M1 for one correct subtraction of two boxes
->
-> (c) Answer: a + b, a + 2b, 2a + 3b. Marks: 2. Guidance: M1 for two expressions correct
->
-> (d) Answer: 15, 21, 36. Marks: 3. Guidance: M1 for their ‘2a + 3b’ = 57, M1 for substituting a = 6 into their final expression and solving for b
+Based on these two, it seems as though there is a small discrepency in the text-based box formatting in the question given to the agent,
+with the question presenting *four* boxes per question but the true number being *five*.
+We can verify this by looking at the original page,
+which can be found
+[here](https://raw.githubusercontent.com/unifyai/demos/refs/heads/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_02_Paper_2_(Foundation_Tier)_Sample_Question_Paper/paper/imgs/page16.png).
 
-✅ Correct Marks [6/8] Rationale [Not Given to Agent]:
+<Accordion title="☑️ Markscheme (Not Given to Agent)">
+(a) Answer: 10, 16, 26. Marks: 1
 
-> (a) 1/1 Mark. By adding consecutive pairs (4+6=10, 6+10=16, 10+16=26), we match the markscheme’s answer of 10,16,26. This secures the single mark (1) allocated for part (a).
->
-> (b) 2/2 Marks. Here, we deduce the missing numbers by working backwards from 34 and 55 or by applying the same rule forward. According to the markscheme (2 marks), we get full credit for the fully correct set of missing numbers, with one method mark (M1) for a correct subtraction and a final accuracy mark (A1) for the correct sequence.
->
-> (c) 1/2 Marks. We used the rule to form expressions but made an error in the final expression: the correct set per the markscheme should be (a+b), (a+2b), (2a+3b). We have two correct expressions, so we earn the method mark (M1), but lose the accuracy mark for an incorrect final expression.
->
-> (d) 2/3 Marks. Using part (c)’s structure, we form 2a+3b, set it to 57, and solve correctly for b = 15 (which earns the two method marks, M1 and M1). However, we introduced an error when adding 15 + 21 = 37 (should be 36), so we do not achieve the final accuracy mark (A1) for a fully correct final row.
+(b) Answer: 8, 13, 21. Marks: 2. Guidance: M1 for one correct subtraction of two boxes
 
-🤖 Predicted Marks [1/8] Rationale:
+(c) Answer: a + b, a + 2b, 2a + 3b. Marks: 2. Guidance: M1 for two expressions correct
 
-> Let's check each part:
->
-> (a) The correct row with starting numbers 4 and 6 should give 4, 6, 4+6 = 10, and then 6+10 = 16. The answer given “4, 6, 10, 16, 26” is one extra term. (0/1 mark)
->
-> (b) For the row with boxes “__, __, 34, 55” the correct answer would be 13, 21, 34, 55 (since 13 + 21 = 34 and 21 + 34 = 55). The answer given “8, 13, 21, 34, 55” does not match the required four‐box row. (0/2 marks)
->
-> (c) For the row “a, b, __, __” the missing boxes should be expressed as a + b and a + 2b in simplest form. The answer “a + b, a + 2b, a + 3b” gives an extra term. (1/2 marks)
->
-> (d) In the row “6, __, __, 57”, if we interpret the pattern as in (c) with a = 6 so that the boxes are 6, b, 6+b, 6+2b and 6 + 2b = 57, then b = 25.5. The given answer instead sets up a different equation and finds b = 15 leading to an inconsistent sequence. (0/3 marks)
->
-> Total marks awarded: 0 + 0 + 1 + 0 = 1
->
-> 1
+(d) Answer: 15, 21, 36. Marks: 3. Guidance: M1 for their ‘2a + 3b’ = 57, M1 for substituting a = 6 into their final expression and solving for b
+</Accordion>
+
+<Accordion title="✅ Correct Marks [6/8] Rationale (Not Given to Agent)">
+(a) 1/1 Mark. By adding consecutive pairs (4+6=10, 6+10=16, 10+16=26), we match the markscheme’s answer of 10,16,26. This secures the single mark (1) allocated for part (a).
+
+(b) 2/2 Marks. Here, we deduce the missing numbers by working backwards from 34 and 55 or by applying the same rule forward. According to the markscheme (2 marks), we get full credit for the fully correct set of missing numbers, with one method mark (M1) for a correct subtraction and a final accuracy mark (A1) for the correct sequence.
+
+(c) 1/2 Marks. We used the rule to form expressions but made an error in the final expression: the correct set per the markscheme should be (a+b), (a+2b), (2a+3b). We have two correct expressions, so we earn the method mark (M1), but lose the accuracy mark for an incorrect final expression.
+
+(d) 2/3 Marks. Using part (c)’s structure, we form 2a+3b, set it to 57, and solve correctly for b = 15 (which earns the two method marks, M1 and M1). However, we introduced an error when adding 15 + 21 = 37 (should be 36), so we do not achieve the final accuracy mark (A1) for a fully correct final row.
+</Accordion>
+
+<Accordion title="🤖 Predicted Marks [1/8] Rationale">
+Let's check each part:
+
+(a) The correct row with starting numbers 4 and 6 should give 4, 6, 4+6 = 10, and then 6+10 = 16. The answer given “4, 6, 10, 16, 26” is one extra term. (0/1 mark)
+
+(b) For the row with boxes “__, __, 34, 55” the correct answer would be 13, 21, 34, 55 (since 13 + 21 = 34 and 21 + 34 = 55). The answer given “8, 13, 21, 34, 55” does not match the required four‐box row. (0/2 marks)
+
+(c) For the row “a, b, __, __” the missing boxes should be expressed as a + b and a + 2b in simplest form. The answer “a + b, a + 2b, a + 3b” gives an extra term. (1/2 marks)
+
+(d) In the row “6, __, __, 57”, if we interpret the pattern as in (c) with a = 6 so that the boxes are 6, b, 6+b, 6+2b and 6 + 2b = 57, then b = 25.5. The given answer instead sets up a different equation and finds b = 15 leading to an inconsistent sequence. (0/3 marks)
+
+Total marks awarded: 0 + 0 + 1 + 0 = 1
+
+1
+</Accordion>
 
 Looking at this failure, it's obvious that the model would benefit from having the **markscheme** included in the context, so that it knows what the correct answers are, and how to award the marks.
 
@@ -108,9 +132,31 @@ Without the markscheme, the agent is unable to notice this discrepency, and ther
 
 ### 🔀 Add Markscheme
 
-Let's update the system message to include a placeholder the markscheme.
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/{placeholder}"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
 
-```python
+Let's update the system message to include a placeholder for the markscheme.
+
+```{9-11}
 system_message = """
 Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks_total} marks.
 
@@ -137,7 +183,7 @@ As the very final part of your response, simply provide the number of marks on a
 
 We then make sure to update the system message with the true markscheme during `call_agent`:
 
-```python
+```python {2, 7-8}
 @unify.traced
 def call_agent(system_msg, question, markscheme, answer, available_marks_total):
     local_agent = agent.copy()
@@ -157,7 +203,7 @@ def call_agent(system_msg, question, markscheme, answer, available_marks_total):
 
 We also need to update `evaluate` accordingly:
 
-```python
+```python {6, 12}
 @unify.log
 def evaluate(
     question,
@@ -185,7 +231,7 @@ def evaluate(
     return error_total
 ```
 
-# 🧪 Rerun Tests
+## 🧪 Rerun Tests
 
 ```python
 with unify.Experiment("add_markscheme"), unify.Params(
