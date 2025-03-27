@@ -38,8 +38,6 @@ Our evaluation runs serve both as tests for comparing parameter configurations (
 
 This is one benefit of the flexible spreadsheet design. Experiments are not indivisible atomic groups, they're simply labels, and the raw evaluation data can be juggled in whatever way makes sense to you as the user.
 
-VIDEO
-
 Let's first recap, the fixed question ❓, student answer 📝, markscheme ☑️ and correct marks ✅, before unpacking the various agent justifications 🤖 across all experiments.
 
 
@@ -194,6 +192,28 @@ Guidance: B1 for 'No', with partial reason.
 In this case, it's not so much an error with understanding the mark types, it's more of an issue with falsely hallucinating things the student said, or perhaps being very liberal in the interpretation. Perhaps the agent is confusing the markscheme with the student answer. The student's answer "we cannot be certain this trend always holds true" is very different to "there may be other factors involved". The former (incorrect) assumes the trend does exist, but just might not continue, while the (correct) latter is a point about correlation != causation, indicating the apparent causation may not exist at all.
 
 ## 🔀 Better Align Guidelines
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/GM8GaOIKbJk"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
 
 Firstly, the recurring problem for **Example 207 and 261**  seems to be that the agent doesn't remember and/or understand the different types of marks (B1, SC1, M1 etc.). Let's be more explicit, and parse each sub-question markscheme for the different mark types, and add the explanations directly as part of the sub-question specific markschemes, and see if this improves performance.
 
