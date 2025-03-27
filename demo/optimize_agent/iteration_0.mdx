@@ -33,7 +33,7 @@ and we can add more complexity on future iterations 🔁
 We can start with a simple 0-shot LLM.
 
 ```python
-agent = unify.Unify("o3-mini@openai", traced=True)
+agent = unify.Unify("o3-mini@openai", traced=True, cache="read-only")
 ```
 
 Let's also download a `.cache.json` file which was previously generated whilst running this notebook,
