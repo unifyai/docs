@@ -1,0 +1,451 @@
+---
+title: 'Remaining Iterations [WIP]'
+---
+
+### 🔍 Still Ignoring Mark Types
+
+Given that the agent is **still** failing to follow the instructions for each mark in the markscheme, perhaps it's time we tried to perform per-mark reasoning, with a separate LLM call made for each candidate mark to award. This might help the LLM deeply consider each candidate mark mentioned in the markscheme.
+
+Let's give it a try!
+
+### 🔀 Queries per Mark
+
+We will still want our per-subquestion LLM to perform the final reasoning about the number of marks to award for the sub-question, but we just want to provide it with the reasoning performed by each of our per-mark LLM queries.
+
+We therefore now have two different LLMs, with two different roles, and therefore we need two different system messages.
+
+Let's first update the subquestion system message, in anticipation of the incoming mark-by-mark reasoning. Let's also split the markscheme and the mark type reasoning, rather than naively combining these as was done in `update_markscheme`.
+
+```python
+subq_system_message = """
+Your task is to award a suitable number of marks for a student's answer to question {subq}, from 0 up to a maximum of {available_marks} marks.
+
+The general marking guidelines (relevant for all questions) are as follows:
+
+{general_guidelines}
+
+
+The *overall* question is:
+
+{question}
+
+{prior_context}
+
+The specific question you need to mark is:
+
+{subquestion}
+
+
+Their answer to this specific question is:
+
+{answer}
+
+
+The markscheme for this specific question is:
+
+{markscheme}
+
+{mark_types_explanation}
+
+{mark_observations}
+
+{output_response_explanation}
+""".replace(
+    "{general_guidelines}",
+    general_guidelines
+)
+```
+
+The `"{mark_types_explanation}"` placeholder can be overriden explicitly, giving us more control. Let's create a new function `extract_mark_type_explanation`, inspired from `update_markscheme` above.
+
+```python
+@unify.traced(name="extract_mark_type_explanation_{marks_to_consider}")
+def extract_mark_type_explanation(markscheme: str, marks_to_consider=None):
+    m_marks = sorted(list(set(re.findall(r'M\d+', markscheme))))
+    a_marks = sorted(list(set(re.findall(r'A\d+', markscheme))))
+    b_marks = sorted(list(set(re.findall(r'B\d+', markscheme))))
+    sc_marks = sorted(list(set(re.findall(r'SC\d+', markscheme))))
+    if not any(m_marks + a_marks + b_marks + sc_marks):
+        return ""
+    full_exp = """As a recap, the general guidelines for each of these mark types are as follows:
+
+{mark_types_explanation}"""
+    for marks in (m_marks, a_marks, b_marks, sc_marks):
+        for mark in marks:
+            if marks_to_consider and mark not in marks_to_consider:
+                continue
+            key = "".join(c for c in mark if not c.isdigit())
+            num_marks = int("".join(c for c in mark if c.isdigit()))
+            exp = mark_types[key]
+            exp = exp.replace(
+                "{num}", str(num_marks)
+            ).replace(
+                "{num_marks}", "1 mark" if num_marks == 1 else f"{num_marks} marks"
+            )
+            full_exp = full_exp.replace(
+                "{mark_types_explanation}",
+                key + ":/n" + exp + "\n\n{mark_types_explanation}"
+            )
+    return full_exp.replace("{mark_types_explanation}", "")
+```
+
+Let's now create the system message for our mark reasoning agent, again with the explicit `{mark_types_explanation}` placeholder.
+
+```python
+mark_system_message = """
+Your task is to determine whether mark {mark} should be awarded for the following student's answer to question {subq}, based on the provided markscheme.
+
+The general marking guidelines (relevant for all questions) are as follows:
+
+{general_guidelines}
+
+
+The *overall* question is:
+
+{question}
+
+{prior_context}
+
+The specific question you need to mark is:
+
+{subquestion}
+
+
+Their answer to this specific question is:
+
+{answer}
+
+
+The markscheme for this specific question, with the mark in question {mark} expressed in bold and with a prepending `(to consider!)`, is as follows:
+
+{markscheme}
+
+{mark_types_explanation}
+
+You should populate the `thoughts` field with your thoughts on the whether the specific mark identified within the markscheme should be awarded for the student's answer. The mark might be irrelevant given the student's approach or answer, in which case just respond `False` for the `should_award` field, and explain this in the `thoughts` field. Please think carefully about your decision for the mark, considering the general guidelines.
+""".replace(
+    "{general_guidelines}",
+    general_guidelines
+)
+```
+
+Let's first define `call_subq_agent`, which will include mark-by-mark reasoning with several LLM calls
+
+```python
+@unify.traced(name="call_subq_agent_{subq}")
+def call_subq_agent(example_id, subq, subq_agent, markscheme, mark_sys_msg):
+    parsed_markscheme = parse_marks_from_markscheme(markscheme)
+    mark_agents = [
+        [k, agent.copy()] for k in
+        [itm[0] for itm in parsed_markscheme]
+    ]
+    [
+        agnt.set_response_format(ThoughtsAndAwardDecision)
+        for _, agnt in mark_agents
+    ]
+    for i, (k, v) in enumerate(parsed_markscheme):
+        mark_agents[i][1].set_system_message(
+            mark_sys_msg.replace(
+                "{mark}", k
+            ).replace(
+                "{markscheme}", markscheme
+            ).replace(
+                v, v.replace(k, f"**{k}** (to consider!)")
+            ).replace(
+                "{mark_types_explanation}",
+                extract_mark_type_explanation(markscheme, [k])
+            )
+        )
+    if mark_agents:
+        explanation = "An expert marker has already taken a look at the student's answer, and they have made the following observations for each of the candidate marks mentioned in the markscheme. You should pay special attention to these observations."
+        vals = unify.map(
+            lambda a: json.loads(a.generate()),
+            [agnt for _, agnt in mark_agents],
+            name=f"Evals[{example_id}]->SubQAgent[{subq}]->MarkAgent"
+        )
+        keys = list()
+        for k, _ in mark_agents:
+            if k not in keys:
+                keys.append(k)
+                continue
+            keys.append(
+                k + f"({len([ky for ky in keys if k in ky])})"
+            )
+        mark_obs_dict = dict(zip(keys, vals))
+        mark_observations = explanation + "\n\n" + json.dumps(
+            mark_obs_dict, indent=4
+        )
+    else:
+        mark_observations = ""
+    subq_agent.set_system_message(
+        subq_agent.system_message.replace(
+            "{mark_observations}",
+            mark_observations
+        )
+    )
+    ret = subq_agent.generate()
+    if "```" in ret:
+        ret = ret.split("```")[-2].lstrip("json")
+    ret = json.loads(ret)
+    if not mark_agents:
+        return ret
+    ret["reasoning"] = {
+        **mark_obs_dict,
+        "overall_thoughts": ret["reasoning"]
+    }
+    return ret
+```
+
+Let's now update `call_agent`, making use of our `call_subq_agent` function, which processes a single sub-question.
+
+```python
+@unify.traced
+def call_agent(
+    example_id,
+    subq_system_message,
+    mark_system_message,
+    question_num,
+    question,
+    sub_questions,
+    markscheme,
+    answer,
+    available_marks
+):
+    subq_agents = {k: agent.copy() for k in markscheme.keys()}
+    with_subqs = len(markscheme) > 1
+    response_formats = {
+        k: MarksAndReasoning for k, v in markscheme.items()
+    }
+    [
+        agnt.set_response_format(rf)
+        for agnt, rf in zip(
+            subq_agents.values(), response_formats.values()
+        )
+    ]
+    mark_sys_msgs = list()
+    for i, k in enumerate(markscheme.keys()):
+        subq_agents[k].set_system_message(
+            subq_system_message.replace(
+                "{subq}", k.replace("_", str(question_num))
+            ).replace(
+                "{question}", question,
+            ).replace(
+                "{subquestion}", sub_questions[k]
+            ).replace(
+                "{markscheme}", markscheme[k]
+            ).replace(
+                "{mark_types_explanation}",
+                extract_mark_type_explanation(markscheme[k])
+            ).replace(
+                "{answer}", answer[k]
+            ).replace(
+                "{available_marks}",
+                str(available_marks[k.replace("_", "total")])
+            ).replace(
+                "{output_response_explanation}",
+                output_response_explanation
+            ).replace(
+            "{prior_context}", (prior_context_exp + json.dumps(
+              {
+                  k: {
+                      "sub-question": sub_questions[k],
+                      "markscheme": markscheme[k],
+                      "answer": answer[k]
+                  } for k in list(sub_questions.keys())[0:i]
+              },
+              indent=4
+            )) if with_subqs and i > 0 else ""
+          )
+        )
+        mark_sys_msgs.append(
+            mark_system_message.replace(
+                "{subq}", k.replace("_", str(question_num))
+            ).replace(
+                "{question}", question,
+            ).replace(
+                "{subquestion}", sub_questions[k]
+            ).replace(
+                "{answer}", answer[k]
+            ).replace(
+            "{prior_context}", (prior_context_exp + json.dumps(
+              {
+                  k: {
+                      "sub-question": sub_questions[k],
+                      "markscheme": markscheme[k],
+                      "answer": answer[k]
+                  } for k in list(sub_questions.keys())[0:i]
+              },
+              indent=4
+            )) if with_subqs and i > 0 else ""
+          )
+        )
+    rets = unify.map(
+        lambda *a: call_subq_agent(example_id, *a),
+        list(sub_questions.keys()),
+        list(subq_agents.values()),
+        list(markscheme.values()),
+        mark_sys_msgs,
+        from_args=True,
+        name=f"Evals[{example_id}]->SubQAgent"
+    )
+    return dict(zip(markscheme.keys(), rets))
+```
+
+We also need to update the `evaluate` function, to pass each of the two different system messages to the `call_agent` function.
+
+```python
+@unify.log
+def evaluate(
+    example_id,
+    question_num,
+    question,
+    sub_questions,
+    student_answer,
+    available_marks,
+    available_marks_total,
+    markscheme,
+    correct_marks,
+    correct_marks_total,
+    per_question_breakdown,
+    _subq_system_message,
+    _mark_system_message
+):
+    pred_marks = call_agent(
+        example_id,
+        _subq_system_message,
+        _mark_system_message,
+        question_num,
+        question,
+        sub_questions,
+        markscheme,
+        student_answer,
+        available_marks
+    )
+    pred_marks_total = sum([v["marks"] for v in pred_marks.values()])
+    diff = {
+        k: vcor["marks"] - vpred["marks"] for (k, vcor), (_, vpred) in
+        zip(correct_marks.items(), pred_marks.items())
+    }
+    error = {k: abs(v) for k, v in diff.items()}
+    diff_total = sum(diff.values())
+    error_total = sum(error.values())
+    per_question_breakdown = {
+        k: {
+            **per_question_breakdown[k],
+            "predicted_marks": pm,
+            "diff": d
+        } for (k, pqb), pm, d in zip(
+            per_question_breakdown.items(),
+            pred_marks.values(),
+            diff.values()
+        )
+    }
+    return error
+```
+
+### 🧪 Rreun Tests
+
+```python
+agent.set_cache("read-only")
+with unify.Experiment("queries_per_mark"), unify.Params(
+    subq_system_message=subq_system_message,
+    mark_system_message=mark_system_message,
+    model=agent.model,
+    dataset="dataset_10"
+):
+    unify.map(
+        evaluate,
+        [
+             dict(
+                 **d.entries,
+                 _subq_system_message=subq_system_message,
+                 _mark_system_message=mark_system_message
+            )
+             for d in test_set_10[0:1]
+        ],
+        name="Eval",
+    )
+```
+
+Great, this seems to have addressed two of the three failures (on this run at least).
+
+### 🔍 Method Marks Confusion
+
+All of the prior failures now seem to have been resolved, but we have a new regression for **Example 215 (b)**. Let's take a look.
+
+**Example 215 (b)**
+
+❓ Question [2 Marks]:
+
+> Complete these rows of boxes using the rule shown above.
+
+📝 Student's Answer:
+
+> The missing boxes are 8, 13, and 21, making the sequence 8, 13, 21, 34, 55.
+
+☑️ Markscheme:
+
+> Answer: 8, 13, 21
+Marks: 2
+Guidance:
+M1 for one correct subtraction of two boxes
+
+✅ Correct Marks [2/2] Rationale:
+
+> Here, we deduce the missing numbers by working backwards from 34 and 55 or by applying the same rule forward. According to the markscheme (2 marks), we get full credit for the fully correct set of missing numbers, with one method mark (M1) for a correct subtraction and a final accuracy mark (A1) for the correct sequence.
+
+🤖 Predicted Marks [0/2] Rationale:
+
+> The candidate's final numerical answer is correct (the missing boxes are 8, 13, and 21), matching the answer in the mark scheme. However, the mark scheme specifically awards M1 for showing a correct subtraction (i.e. working that reverses the addition rule), which is a required part of the method. Since the candidate only provided the final answer without demonstrating any subtraction (or any equivalent working) to show the method, no evidence is provided to award the M1 mark. As A marks (for an accurate answer) depend on obtaining the method mark, no further marks can be awarded. Therefore, despite the correct final answer, the lack of required working means no marks should be awarded.
+
+This is an interesting failure mode. Interestly, the justification for the "correct" (ground truth) marks is wrong. There is no **A1** mark for this question (which *would* depend on a method mark). This is irrelevant in terms of the agent failure (the agent doesn't know the correct marks or rationale), but it's still an interesting observsation regarding our "ground truth" data.
+
+Interestingly, the agent has made the *same mistake* as occurs in the "ground truth" rationale. Our agent presumes the existence of an **A** mark where none were stated. It seems like the agent doesn't understand that correct answers should always earn full marks, unless otherwise explicitly stated. **M1** marks are not necessary to achieve full marks in such cases, unless an **A** mark is specifically referenced.
+
+### 🔀 Clarify Mark + Answer Marks
+
+Let's try to fully clarify these points for the sub-question agent, and re-run the evals.
+
+```python
+output_response_explanation = """
+You should populate the `reasoning` field with your general thoughts on each individual mark identified in the markscheme, and also a decision as to whether each of these mark should be awarded.
+
+If you deem that a mark *should* be awarded (such SC1, B1, A1 etc.), then it is worth as many marks as appear in the mark type itself (SC1, B1, and A1 are therefore worth 1 mark each, A2 is worth 2 marks etc.). However, these marks are not *necessarily* cumulative with regards to the total marks to award for this sub-question, and some may be irrelevant given the student's approach or answer.
+
+More importantly, full marks should *always* be given for a fully correct answer, unless otherwise *explicitly* stated. For example, a correct answer without any method shown should still get *full marks*, despite the M1 criteria not being met. The only exception to this is explicitly referenced A marks, which do depend on the preceding M marks being awarded.
+
+Finally, after you've given it a lot of thought, you should put the total number of marks to award for this sub-question in the `marks` field.
+"""
+```
+
+### 🧪 Rreun Tests
+
+```python
+with unify.Experiment("clarify_method_marks"), unify.Params(
+    subq_system_message=subq_system_message,
+    mark_system_message=mark_system_message,
+    model=agent.model,
+    dataset="dataset_10"
+):
+    unify.map(
+        evaluate,
+        [
+             dict(
+                 **d.entries,
+                 _subq_system_message=subq_system_message,
+                 _mark_system_message=mark_system_message
+            )
+             for d in test_set_10
+        ],
+        name="Eval"
+    )
+```
+
+Great, we've finally got all 10/10 tests passing perfectly 🎉
+
+### For Downloading cache
+
+```python
+from google.colab import files
+files.download('.cache.json')
+```
