@@ -2,7 +2,7 @@
 title: 'Iteration 8'
 ---
 
-### 🔍 Still Ignoring Mark Types
+## 🔍 Still Ignoring Mark Types
 
 Let's see what affect our new output format had on the nature of the agent's responses, if any.
 
@@ -18,7 +18,7 @@ Enforcing the agent to consider one mark at a time might rectify this lack of at
 
 Let's see if using a separate LLM call per sub-question improves the performance on **Example 132**.
 
-### 🔀 Queries per Subquestion
+## 🔀 Queries per Subquestion
 
 Firstly, let's create a new system prompt for our agent, which will reason about one-subquestion at a time.
 
@@ -154,7 +154,7 @@ def evaluate(
     return error
 ```
 
-### 🧪 Rreun Tests
+## 🧪 Rreun Tests
 
 ```python
 with unify.Experiment("queries_per_subquestion"), unify.Params(
@@ -172,7 +172,7 @@ with unify.Experiment("queries_per_subquestion"), unify.Params(
     )
 ```
 
-### 🔍 Lack of Global Context
+## 🔍 Lack of Global Context
 
 These updates have actually regressed the overall performance, with us now having a mean error of `0.5`.
 
@@ -226,7 +226,7 @@ Maybe strict adherence to the markscheme alone without the full context is prohi
 
 Let's update our per-subquestion system prompts to also fully include the **preceeding** sub-questions, their markschemes, and their answers. It's unlikely that the context of a **later** question will assists with the marking of an earlier question, and we still want to try and keep the agent as focused as possible on the relevant information.
 
-### 🔀 Include Preceeding Context
+## 🔀 Include Preceeding Context
 
 Let's first update the system prompt, re-introducing the placeholder for the aligned subquestions, markschemes and answers, this time calling it `{prior_context}`, which will only be included when sub-questions are present. Let's also include the full question.
 
@@ -387,7 +387,7 @@ def evaluate(
     return error
 ```
 
-### 🧪 Rreun Tests
+## 🧪 Rreun Tests
 
 ```python
 with unify.Experiment("with_preceeding_context"), unify.Params(

@@ -2,13 +2,13 @@
 title: 'Iteration 10'
 ---
 
-### 🔍 Still Ignoring Mark Types
+## 🔍 Still Ignoring Mark Types
 
 Given that the agent is **still** failing to follow the instructions for each mark in the markscheme, perhaps it's time we tried to perform per-mark reasoning, with a separate LLM call made for each candidate mark to award. This might help the LLM deeply consider each candidate mark mentioned in the markscheme.
 
 Let's give it a try!
 
-### 🔀 Queries per Mark
+## 🔀 Queries per Mark
 
 We will still want our per-subquestion LLM to perform the final reasoning about the number of marks to award for the sub-question, but we just want to provide it with the reasoning performed by each of our per-mark LLM queries.
 
@@ -343,7 +343,7 @@ def evaluate(
     return error
 ```
 
-### 🧪 Rreun Tests
+## 🧪 Rreun Tests
 
 ```python
 agent.set_cache("read-only")
@@ -369,7 +369,7 @@ with unify.Experiment("queries_per_mark"), unify.Params(
 
 Great, this seems to have addressed two of the three failures (on this run at least).
 
-### 🔍 Method Marks Confusion
+## 🔍 Method Marks Confusion
 
 All of the prior failures now seem to have been resolved, but we have a new regression for **Example 215 (b)**. Let's take a look.
 
@@ -402,7 +402,7 @@ This is an interesting failure mode. Interestly, the justification for the "corr
 
 Interestingly, the agent has made the *same mistake* as occurs in the "ground truth" rationale. Our agent presumes the existence of an **A** mark where none were stated. It seems like the agent doesn't understand that correct answers should always earn full marks, unless otherwise explicitly stated. **M1** marks are not necessary to achieve full marks in such cases, unless an **A** mark is specifically referenced.
 
-### 🔀 Clarify Mark + Answer Marks
+## 🔀 Clarify Mark + Answer Marks
 
 Let's try to fully clarify these points for the sub-question agent, and re-run the evals.
 
@@ -418,7 +418,7 @@ Finally, after you've given it a lot of thought, you should put the total number
 """
 ```
 
-### 🧪 Rreun Tests
+## 🧪 Rreun Tests
 
 ```python
 with unify.Experiment("clarify_method_marks"), unify.Params(
@@ -442,10 +442,3 @@ with unify.Experiment("clarify_method_marks"), unify.Params(
 ```
 
 Great, we've finally got all 10/10 tests passing perfectly 🎉
-
-### For Downloading cache
-
-```python
-from google.colab import files
-files.download('.cache.json')
-```
