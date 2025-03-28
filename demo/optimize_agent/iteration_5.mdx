@@ -405,8 +405,8 @@ Now we've made *both* of these changes, let's re-run our evals to see if *either
 ```python
 with unify.Experiment("align_guidelines_and_clarify_reasoning"), unify.Params(
     system_message=system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source()
 ):
     unify.map(
         evaluate,

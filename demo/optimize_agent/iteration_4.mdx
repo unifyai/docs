@@ -208,11 +208,11 @@ def evaluate(
 
 ## 🧪 Rreun Tests
 
-```python
+```python {1}
 with unify.Experiment("align_context"), unify.Params(
     system_message=system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source()
 ):
     unify.map(
         evaluate,
