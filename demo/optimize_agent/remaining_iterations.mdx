@@ -232,11 +232,11 @@ def evaluate(
 
 ### 🧪 Rreun Tests
 
-```python
-with unify.Experiment("mark_type_reasoning"), unify.Params(
+```python {1}
+with unify.Experiment("mark_type_reasoning", overwrite=True), unify.Params(
     system_message=system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source()
 ):
     unify.map(
         evaluate,
@@ -406,11 +406,11 @@ def evaluate(
 
 ### 🧪 Rreun Tests
 
-```python
-with unify.Experiment("queries_per_subquestion"), unify.Params(
+```python {1}
+with unify.Experiment("queries_per_subquestion", overwrite=True), unify.Params(
     system_message=system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source()
 ):
     unify.map(
         evaluate,
@@ -641,11 +641,11 @@ def evaluate(
 
 ### 🧪 Rreun Tests
 
-```python
-with unify.Experiment("with_preceeding_context"), unify.Params(
+```python {1}
+with unify.Experiment("with_preceeding_context", overwrite=True), unify.Params(
     system_message=system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source()
 ):
     unify.map(
         evaluate,
@@ -1005,12 +1005,12 @@ def evaluate(
 ### 🧪 Rreun Tests
 
 ```python
-agent.set_cache("read-only")
-with unify.Experiment("queries_per_mark"), unify.Params(
+agent.set_cache("read-only") {1-3, 12-13}
+with unify.Experiment("queries_per_mark", overwrite=True), unify.Params(
     subq_system_message=subq_system_message,
     mark_system_message=mark_system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source()
 ):
     unify.map(
         evaluate,
@@ -1020,7 +1020,7 @@ with unify.Experiment("queries_per_mark"), unify.Params(
                  _subq_system_message=subq_system_message,
                  _mark_system_message=mark_system_message
             )
-             for d in test_set_10[0:1]
+             for d in test_set_10
         ],
         name="Eval",
     )
@@ -1081,12 +1081,12 @@ Finally, after you've given it a lot of thought, you should put the total number
 
 ### 🧪 Rreun Tests
 
-```python
-with unify.Experiment("clarify_method_marks"), unify.Params(
+```python {1}
+with unify.Experiment("clarify_method_marks", overwrite=True), unify.Params(
     subq_system_message=subq_system_message,
     mark_system_message=mark_system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source()
 ):
     unify.map(
         evaluate,
