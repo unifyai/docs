@@ -2,13 +2,13 @@
 title: 'Iteration 9'
 ---
 
-### 🔍 Still Ignoring Mark Types
+## 🔍 Still Ignoring Mark Types
 
 Given that the agent is **still** failing to follow the instructions for each mark in the markscheme, perhaps it's time we tried to perform per-mark reasoning, with a separate LLM call made for each candidate mark to award. This might help the LLM deeply consider each candidate mark mentioned in the markscheme.
 
 Let's give it a try!
 
-### 🔀 Queries per Mark
+## 🔀 Queries per Mark
 
 We will still want our per-subquestion LLM to perform the final reasoning about the number of marks to award for the sub-question, but we just want to provide it with the reasoning performed by each of our per-mark LLM queries.
 
@@ -343,7 +343,7 @@ def evaluate(
     return error
 ```
 
-### 🧪 Rreun Tests
+## 🧪 Rreun Tests
 
 ```python
 agent.set_cache("read-only") {1-3, 12-13}

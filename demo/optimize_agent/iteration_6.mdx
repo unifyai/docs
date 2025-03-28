@@ -2,7 +2,7 @@
 title: 'Iteration 6'
 ---
 
-### 🔍 Still Ignoring Mark Types
+## 🔍 Still Ignoring Mark Types
 
 Let's try to *force* the agent to reason about each potential mark mentioned in the markscheme, by further refining our structured output. Let's expand upon the `reasoning` field for each sub-question, with a field for each mark type referenced in the sub-question markscheme, going from the following structure:
 
@@ -49,7 +49,7 @@ Prediction:
 
 This way, the agent will be **forced** to reason about `SC1` for **Example 207**, `M1` for **Example 261**, and `B1` for **Example 132 (c)**.
 
-### 🔀 Mark Type Reasoning
+## 🔀 Mark Type Reasoning
 
 Let's first define a function to dynamically construct the required pydantic type. For each parsed mark type, we want the model to give it's thoughts and make a decision as to whether or not the mark should be awarded. Let's create this pydantic type first:
 
@@ -228,7 +228,7 @@ def evaluate(
     return error
 ```
 
-### 🧪 Rreun Tests
+## 🧪 Rreun Tests
 
 ```python
 with unify.Experiment("mark_type_reasoning"), unify.Params(
