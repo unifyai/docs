@@ -230,7 +230,7 @@ def evaluate(
 ## 🧪 Rreun Tests
 
 ```python {1}
-with unify.Experiment("add_structured_output"), unify.Params(
+with unify.Experiment("add_structured_output", overwrite=True), unify.Params(
     system_message=system_message,
     dataset="TestSet10",
     source=unify.get_source()

@@ -403,7 +403,7 @@ def evaluate(
 Now we've made *both* of these changes, let's re-run our evals to see if *either* of these changes were able to address the problems they're intended to resolve.
 
 ```python
-with unify.Experiment("align_guidelines_and_clarify_reasoning"), unify.Params(
+with unify.Experiment("align_guidelines_and_clarify_reasoning", overwrite=True), unify.Params(
     system_message=system_message,
     dataset="TestSet10",
     source=unify.get_source()
