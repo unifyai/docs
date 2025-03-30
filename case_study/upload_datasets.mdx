@@ -90,6 +90,9 @@ users_dataset.sync()
 In this case the dataset did not exist upstream,
 and so `.sync()` was equivalent to calling `.upload()`.
 
+The full script for uploading this users dataset (and the ones mentioned below) can be found
+[here](https://github.com/unifyai/demos/blob/main/marking_assistant/upload_datasets.py).
+
 ## Analyze
 
 Let's now create a new `Dataset` Tab in our interface,
@@ -214,6 +217,9 @@ so we can simply take increasing slices starting from the beginning.
 for size in [10, 20, 40, 80, 160]:
     test_set[0:size].set_name(f"TestSet{size}").sync()
 ```
+
+As mentioned above, the full script for uploading all of these datasets into the platform can be found
+[here](https://github.com/unifyai/demos/blob/main/marking_assistant/upload_datasets.py).
 
 ## Analyze
 
