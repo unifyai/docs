@@ -93,7 +93,7 @@ and see if it helps 🤞
 First,
 let's abstract this into a `"{questions_markscheme_and_answers}"` placeholder:
 
-```
+``` {12,14}
 system_message = """
 Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks_total} marks.
 
@@ -113,52 +113,71 @@ The sub-question breakdown, including each sub-question, it's associated marksch
 {output_response_explanation}
 """.replace(
     "{general_guidelines}",
-    general_guidelines
+    general_guidelines,
 )
 ```
 
 Let's then update `call_agent`
 
-```python
+```python {5,41-54}
 @unify.traced
-def call_agent(system_msg, question, sub_questions, markscheme, answer, available_marks_total):
+def call_agent(
+    system_msg,
+    question,
+    sub_questions,
+    markscheme,
+    answer,
+    available_marks_total,
+):
     local_agent = agent.copy()
     with_subqs = len(markscheme) > 1
     response_format = create_response_format(
-        list(markscheme.keys()) if with_subqs else None
+        list(markscheme.keys()) if with_subqs else None,
     )
     local_agent.set_response_format(response_format)
     if with_subqs:
         output_response_exp = output_response_explanations["with_subqs"]
         output_response_exp = output_response_exp.replace(
-            "{subquestions}", json.dumps(list(markscheme.keys()))
+            "{subquestions}",
+            ", ".join(list(markscheme.keys())),
         )
     else:
         output_response_exp = output_response_explanations["without_subqs"]
     local_agent.set_system_message(
         system_msg.replace(
-            "{question}", question
-        ).replace(
-            "{markscheme}", json.dumps(markscheme, indent=4)
-        ).replace(
-            "{answer}", json.dumps(answer, indent=4)
-        ).replace(
-            "{available_marks_total}", str(available_marks_total)
-        ).replace(
-            "{questions_markscheme_and_answers}", json.dumps(
-              {
-                  k: {
-                      "sub-question": sub_questions[k],
-                      "markscheme": markscheme[k],
-                      "answer": answer[k]
-                  } for k in sub_questions.keys()
-              },
-              indent=4
-            )
-        ).replace(
-            "{output_response_explanation}",
-            output_response_exp
+            "{question}",
+            textwrap.indent(question, " " * 4),
         )
+        .replace(
+            "{markscheme}",
+            pretty_print_dict(markscheme, indent=4),
+        )
+        .replace(
+            "{answer}",
+            pretty_print_dict(answer, indent=4),
+        )
+        .replace(
+            "{available_marks_total}",
+            str(available_marks_total),
+        )
+        .replace(
+            "{questions_markscheme_and_answers}",
+            pretty_print_dict(
+                {
+                    k: {
+                        "sub-question": sub_questions[k],
+                        "markscheme": markscheme[k],
+                        "answer": answer[k],
+                    }
+                    for k in sub_questions.keys()
+                },
+                indent=4,
+            ),
+        )
+        .replace(
+            "{output_response_explanation}",
+            output_response_exp,
+        ),
     )
     ret = local_agent.generate()
     if "```" in ret:
@@ -171,7 +190,7 @@ def call_agent(system_msg, question, sub_questions, markscheme, answer, availabl
 
 Let's also update our `evaluate` function, so that we pass the `sub_questions` into the `call_agent` function:
 
-```python
+```python {4,15}
 @unify.log
 def evaluate(
     question,
@@ -184,13 +203,17 @@ def evaluate(
     _system_message,
 ):
     pred_marks = call_agent(
-        _system_message, question, sub_questions, markscheme, student_answer,
-        available_marks_total
+        _system_message,
+        question,
+        sub_questions,
+        markscheme,
+        student_answer,
+        available_marks_total,
     )
     pred_marks_total = sum([v["marks"] for v in pred_marks.values()])
     diff = {
-        k: vcor["marks"] - vpred["marks"] for (k, vcor), (_, vpred) in
-        zip(correct_marks.items(), pred_marks.items())
+        k: vcor["marks"] - vpred["marks"]
+        for (k, vcor), (_, vpred) in zip(correct_marks.items(), pred_marks.items())
     }
     error = {k: abs(v) for k, v in diff.items()}
     diff_total = sum(diff.values())
@@ -199,14 +222,15 @@ def evaluate(
         k: {
             **per_question_breakdown[k],
             "predicted_marks": pm,
-            "diff": d
-        } for (k, pqb), pm, d in zip(
+            "diff": d,
+        }
+        for (k, pqb), pm, d in zip(
             per_question_breakdown.items(),
             pred_marks.values(),
-            diff.values()
+            diff.values(),
         )
     }
-    return error
+    return error_total
 ```
 
 ## 🧪 Rreun Tests
@@ -215,15 +239,12 @@ def evaluate(
 with unify.Experiment("align_context", overwrite=True), unify.Params(
     system_message=system_message,
     dataset="TestSet10",
-    source=unify.get_source()
+    source=unify.get_source(),
 ):
     unify.map(
         evaluate,
-        [
-             dict(**d.entries, _system_message=system_message)
-             for d in test_set_10
-        ],
-        name="Evals"
+        [dict(**d.entries, _system_message=system_message) for d in test_set_10],
+        name="Evals",
     )
 ```
 
