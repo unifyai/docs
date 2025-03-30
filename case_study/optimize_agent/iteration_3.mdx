@@ -110,7 +110,7 @@ When they are not present:
 
 Firstly, the general template:
 
-```python
+``` {23-27}
 system_message = """
 Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks_total} marks.
 
@@ -154,7 +154,7 @@ output_response_explanations["without_subqs"] = (
 
 Let's update our `call_agent` method to set the output format dynamically:
 
-```python
+```python {4-16, 34-37, 39-45}
 @unify.traced
 def call_agent(system_msg, question, markscheme, answer, available_marks_total):
     local_agent = agent.copy()
@@ -206,7 +206,7 @@ Let's also update our `evaluate` method to parse the returned json correctly,
 and also include a subquestion level diff,
 and update the per-question-breakdown to also include the subquestion level predictions:
 
-```python
+```python {7-8, 18-37}
 @unify.log
 def evaluate(
     question,
