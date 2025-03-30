@@ -27,7 +27,8 @@ title: 'The App'
 # Motivation
 
 According to [QA Education](https://qaeducation.co.uk/feature/uk-teachers-spend-whole-day-marking-each-week/),
-teachers spend a whole day on marking each week, and the majority say they do not spend enough time teaching as a result.
+teachers spend a whole day on marking **each week**,
+and the majority say they do not spend enough time teaching as a result.
 Let's try and fix this using AI!
 
 We'll use LLMs to build an app that asks students questions *and* marks their answers, given a known markscheme.
@@ -43,18 +44,18 @@ The details for these preliminary steps are not important,
 but you're welcome to dig deeper if interested.
 Feel free to check out:
 
-- the [script](https://github.com/unifyai/demos/blob/main/marking_assistant/fetch_and_parse_pdf.py) and [data](https://github.com/unifyai/demos/tree/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics) for the parsed papers and markschemes
+- the [script](https://github.com/unifyai/demos/blob/main/marking_assistant/setup/fetch_and_parse_pdf.py) and [data](https://github.com/unifyai/demos/tree/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics) for the parsed papers and markschemes
 
-- the [script](https://github.com/unifyai/demos/blob/main/marking_assistant/generate_data.py) and [data](https://github.com/unifyai/demos/blob/main/marking_assistant/data/labelled_data.json) for the synthetic student answers and target marks to award
+- the [script](https://github.com/unifyai/demos/blob/main/marking_assistant/setup/generate_data.py) and [data](https://github.com/unifyai/demos/blob/main/marking_assistant/data/labelled_data.json) for the synthetic student answers and target marks to award
 
-- the [script](https://github.com/unifyai/demos/blob/main/marking_assistant/generate_test_dataset.py) and [data](https://github.com/unifyai/demos/blob/main/marking_assistant/data/test_set.json) for building the resultant test set, for our agent evaluations
+- the [script](https://github.com/unifyai/demos/blob/main/marking_assistant/setup/generate_test_dataset.py) and [data](https://github.com/unifyai/demos/blob/main/marking_assistant/data/test_set.json) for building the resultant test set, for our agent evaluations
 
 # Steps
 
 For the demo, we'll make use of this synthetic data, and walk through the following three steps:
 
 1. Build a Usage Dashboard 📊
-2. Upload Eval Datasets 🗂️
+2. Upload Datasets 🗂️
 3. Iterate and Improve our Agent 🔁
 
 Step 3 is the most involved,
@@ -62,4 +63,4 @@ where we'll perform several iterations to really get the AI agent flying 🪁
 
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/flywheel-cropd-2mb-dark.gif"/>
 
-Let's dive in! 🤿
+So, without further ado... let's dive in! 🤿
