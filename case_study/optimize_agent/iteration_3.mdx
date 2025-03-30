@@ -86,9 +86,9 @@ based on the subquestions present.
 def create_response_format(response_keys):
     if response_keys:
         response_fields = dict(
-            zip(response_keys, [(MarksAndReasoning, ...)] * len(response_keys))
+            zip(response_keys, [(MarksAndReasoning, ...)] * len(response_keys)),
         )
-        return create_model('Response', **response_fields)
+        return create_model("Response", **response_fields)
     else:
         return MarksAndReasoning
 ```
@@ -136,7 +136,7 @@ The student's answer to this question (which you need to marked) is:
 {output_response_explanation}
 """.replace(
     "{general_guidelines}",
-    general_guidelines
+    general_guidelines,
 )
 ```
 
@@ -144,8 +144,12 @@ Then the two excerpts:
 
 ```python
 output_response_explanations = dict()
-output_response_explanations["with_subqs"] = "For each sub-question {subquestions}, you should populate the `reasoning` field with your initial reasoning about the correct number of marks to award. Finally, you should put the number of marks to award for this sub-question in the `marks` field."
-output_response_explanations["without_subqs"] = "You should populate the `reasoning` field with your initial reasoning about the correct number of marks to award. Finally, you should put the number of marks to award in the `marks` field."
+output_response_explanations["with_subqs"] = (
+    "For each sub-question {subquestions} you should populate the `reasoning` field with your initial reasoning about the correct number of marks to award. Finally, you should put the number of marks to award for this sub-question in the `marks` field."
+)
+output_response_explanations["without_subqs"] = (
+    "You should populate the `reasoning` field with your initial reasoning about the correct number of marks to award. Finally, you should put the number of marks to award in the `marks` field."
+)
 ```
 
 Let's update our `call_agent` method to set the output format dynamically:
@@ -156,29 +160,38 @@ def call_agent(system_msg, question, markscheme, answer, available_marks_total):
     local_agent = agent.copy()
     with_subqs = len(markscheme) > 1
     response_format = create_response_format(
-        list(markscheme.keys()) if with_subqs else None
+        list(markscheme.keys()) if with_subqs else None,
     )
     local_agent.set_response_format(response_format)
     if with_subqs:
         output_response_exp = output_response_explanations["with_subqs"]
         output_response_exp = output_response_exp.replace(
-            "{subquestions}", json.dumps(list(markscheme.keys()))
+            "{subquestions}",
+            ", ".join(list(markscheme.keys())),
         )
     else:
         output_response_exp = output_response_explanations["without_subqs"]
     local_agent.set_system_message(
         system_msg.replace(
-            "{question}", question
-        ).replace(
-            "{markscheme}", json.dumps(markscheme, indent=4)
-        ).replace(
-            "{answer}", json.dumps(answer, indent=4)
-        ).replace(
-            "{available_marks_total}", str(available_marks_total)
-        ).replace(
-            "{output_response_explanation}",
-            output_response_exp
+            "{question}",
+            textwrap.indent(question, " " * 4),
         )
+        .replace(
+            "{markscheme}",
+            pretty_print_dict(markscheme, indent=4),
+        )
+        .replace(
+            "{answer}",
+            pretty_print_dict(answer, indent=4),
+        )
+        .replace(
+            "{available_marks_total}",
+            str(available_marks_total),
+        )
+        .replace(
+            "{output_response_explanation}",
+            output_response_exp,
+        ),
     )
     ret = local_agent.generate()
     if "```" in ret:
@@ -205,13 +218,16 @@ def evaluate(
     _system_message,
 ):
     pred_marks = call_agent(
-        _system_message, question, markscheme, student_answer,
-        available_marks_total
+        _system_message,
+        question,
+        markscheme,
+        student_answer,
+        available_marks_total,
     )
     pred_marks_total = sum([v["marks"] for v in pred_marks.values()])
     diff = {
-        k: vcor["marks"] - vpred["marks"] for (k, vcor), (_, vpred) in
-        zip(correct_marks.items(), pred_marks.items())
+        k: vcor["marks"] - vpred["marks"]
+        for (k, vcor), (_, vpred) in zip(correct_marks.items(), pred_marks.items())
     }
     error = {k: abs(v) for k, v in diff.items()}
     diff_total = sum(diff.values())
@@ -220,14 +236,15 @@ def evaluate(
         k: {
             **per_question_breakdown[k],
             "predicted_marks": pm,
-            "diff": d
-        } for (k, pqb), pm, d in zip(
+            "diff": d,
+        }
+        for (k, pqb), pm, d in zip(
             per_question_breakdown.items(),
             pred_marks.values(),
-            diff.values()
+            diff.values(),
         )
     }
-    return error
+    return error_total
 ```
 
 ## 🧪 Rreun Tests
@@ -236,17 +253,43 @@ def evaluate(
 with unify.Experiment("add_structured_output", overwrite=True), unify.Params(
     system_message=system_message,
     dataset="TestSet10",
-    source=unify.get_source()
+    source=unify.get_source(),
 ):
     unify.map(
         evaluate,
-        [
-             dict(**d.entries, _system_message=system_message)
-             for d in test_set_10
-        ],
-        name="Evals"
+        [dict(**d.entries, _system_message=system_message) for d in test_set_10],
+        name="Evals",
     )
 ```
 
 The mean error has actually gone back up from `0.2` to `0.4`.
+
+Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+and each LLM call has the template variables in the system message populated correctly.
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/{placeholder}"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
+It seems as though everything was implemented correctly,
+and the per-LLM system messages look good ✅
+
 Let's explore what's going wrong in the next iteration 🔁
