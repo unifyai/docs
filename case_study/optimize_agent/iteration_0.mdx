@@ -36,9 +36,9 @@ We can start with a simple 0-shot LLM.
 agent = unify.Unify("o3-mini@openai", traced=True, cache="read-only")
 ```
 
-Let's also download a `.cache.json` file which was previously generated whilst running this notebook,
-to avoid making any real LLM calls,
-and to also make our walkthrough deterministic.
+Let's also download a `.cache.json` file which was previously generated whilst running through this demo.
+This avoids the need to make any real LLM calls, saving time and money,
+and it also ensures the walkthrough is fully deterministic.
 
 If you'd rather go down **your own unique iteration journey**,
 then you should skip the cell below,
@@ -60,7 +60,7 @@ wget.download(
 
 The agent needs to mark student answers to questions,
 out of a possible maximum number of marks.
-Let's give it a sensible system message to begin with:
+Let's give it a sensible system message template to begin with:
 
 ```
 system_message = """
@@ -82,7 +82,8 @@ As the very final part of your response, simply provide the number of marks on a
 """
 ```
 
-Let's wrap our system prompt in a simple function so the system message is updated based on the specific data involved:
+Let's wrap our system message template in a simple function to populate the template variables with the specific data involved,
+before querying the agent for a response:
 
 ```python
 @unify.traced
@@ -159,7 +160,7 @@ def evaluate(
 
     # log structured prediction
     pred_marks = {"_": {"marks": pred_marks_total, "rationale": pred_marks}}
-    return
+    return error_total
 ```
 
 We can then run our evaluation,
@@ -183,7 +184,16 @@ with unify.Experiment("simple_agent", overwrite=True), unify.Params(
 ```
 
 
-The `unify.Experiment()` term creates an `"experiment"` parameter in the context. The `unify.Params()` term sets the parameters which are held constant throughout the experiment.
+The `unify.Experiment()` term creates an `"experiment"` parameter in the context,
+with value `"simple_agent"` in this case.
+The `overwrite=True` argument will remove all prior logs with experiment parameter equal to `"simple_agent"`.
+This is useful if you would like to re-run an experiment (clearing any previous runs).
+
+If you would like to *accumulate* data for a specific experiment,
+then the `overwrite` flag should *not* be set,
+and new logs will simply be added without deleting any prior logs.
+
+The `unify.Params()` term sets the parameters which are held constant throughout the experiment.
 
 <div
   style={{
@@ -208,4 +218,33 @@ The `unify.Experiment()` term creates an `"experiment"` parameter in the context
 </div>
 
 By looking in our interface, we can see that we have some failures, with a mean error of `0.8` across the ten examples.
-We'll need to dive in and understand what's going wrong on the next iteration 🔁
+
+Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+and each LLM call had the template variables in the system message populated correctly.
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/QkSdzEaXDKU"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
+It seems as though everything was implemented correctly,
+and the per-LLM system messages look good ✅
+
+So, for the next iteration, we'll need to dive in and understand why the agent is failing to make the correct prediction in some cases 🔁
