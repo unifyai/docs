@@ -54,7 +54,7 @@ if os.path.exists(".cache.json"):
 wget.download(
     "https://raw.githubusercontent.com/"
     "unifyai/demos/refs/heads/main/"
-    "marking_assistant/.cache.json"
+    "marking_assistant/.cache.json",
 )
 ```
 
@@ -82,8 +82,29 @@ As the very final part of your response, simply provide the number of marks on a
 """
 ```
 
-Let's wrap our system message template in a simple function to populate the template variables with the specific data involved,
-before querying the agent for a response:
+In our test set,
+the student answer is stored as a dictionary with keys for each sub-question.
+When no sub-questions are present, then a dummy "_" key is used instead (to preserve the dict type for all answers).
+Rather than unpacking the dictionary directly into the system message,
+let's instead add a simple "pretty print" function to format this more elegantly.
+
+```python
+def pretty_print_dict(d, indent=0):
+    output = ""
+    for key, value in d.items():
+        if key != "_":
+            output += " " * indent + str(key) + ":\n"
+        if isinstance(value, dict):
+            output += pretty_print_dict(value, indent=indent + (4 * int(key != "_")))
+        else:
+            for line in str(value).splitlines():
+                output += " " * (indent + 4) + line + "\n"
+    return output
+```
+
+Let's now wrap our system message template in a simple function to populate the template variables with the specific data involved,
+before querying the agent for a response.
+We also make use of the `pretty_print_dict` for the answer as explained above.
 
 ```python
 @unify.traced
@@ -95,12 +116,17 @@ def call_agent(system_msg, question, answer, available_marks_total):
     # set each of the placeholder values
     local_agent.set_system_message(
         system_msg.replace(
-            "{question}", question
-        ).replace(
-            "{answer}", json.dumps(answer, indent=4)
-        ).replace(
-            "{available_marks_total}", str(available_marks_total)
+            "{question}",
+            textwrap.indent(question, " " * 4),
         )
+        .replace(
+            "{answer}",
+            pretty_print_dict(answer, indent=4),
+        )
+        .replace(
+            "{available_marks_total}",
+            str(available_marks_total),
+        ),
     )
 
     # return prediction (no user message, only system message)
@@ -138,27 +164,21 @@ def evaluate(
     correct_marks_total,
     _system_message,
 ):
-
-    # extract agent prediction
     pred_marks = call_agent(
-        _system_message, question, student_answer,
-        available_marks_total
+        _system_message,
+        question,
+        student_answer,
+        available_marks_total,
     )
-
-    # parse the predicted integer
     _pred_marks_split = pred_marks.split("\n")
     pred_marks_total, diff_total, error_total = None, None, None
     for _substr in reversed(_pred_marks_split):
         _extracted = "".join([c for c in _substr if c.isdigit()])
         if _extracted != "":
-
-          # log intermediate variables once detected, and break
-          pred_marks_total = int(_extracted)
-          diff_total = correct_marks_total - pred_marks_total
-          error_total = abs(diff_total)
-          break
-
-    # log structured prediction
+            pred_marks_total = int(_extracted)
+            diff_total = correct_marks_total - pred_marks_total
+            error_total = abs(diff_total)
+            break
     pred_marks = {"_": {"marks": pred_marks_total, "rationale": pred_marks}}
     return error_total
 ```
@@ -171,15 +191,12 @@ like so:
 with unify.Experiment("simple_agent", overwrite=True), unify.Params(
     system_message=system_message,
     dataset="TestSet10",
-    source=unify.get_source()
+    source=unify.get_source(),
 ):
     unify.map(
         evaluate,
-        [
-             dict(**d.entries, _system_message=system_message)
-             for d in test_set_10
-        ],
-        name="Evals"
+        [dict(**d.entries, _system_message=system_message) for d in test_set_10],
+        name="Evals",
     )
 ```
 
