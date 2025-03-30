@@ -198,14 +198,14 @@ B marks are independent of M (method) marks and are for a correct final answer, 
 SC marks are for special cases that are worthy of some credit.
 
 2.
-Unless the answer and marks columns of the mark scheme specify M and A marks etc, or the mark scheme is 'banded', then if the correct answer is clearly given and is not from wrong working full marks should be awarded.
+Unless the answer and marks columns of the mark scheme specify M and A marks etc, or the mark scheme is ‘banded’, then if the correct answer is clearly given and is not from wrong working full marks should be awarded.
 
 Do not award the marks if the answer was obtained from an incorrect method, i.e. incorrect working is seen and the correct answer clearly follows from it.
 
 3.
-Where follow through (FT) is indicated in the mark scheme, marks can be awarded where the candidate's work follows correctly from a previous answer whether or not it was correct.
+Where follow through (FT) is indicated in the mark scheme, marks can be awarded where the candidate’s work follows correctly from a previous answer whether or not it was correct.
 
-Figures or expressions that are being followed through are sometimes encompassed by single quotation marks after the word their for clarity, e.g. FT 180 × (their '37' + 16), or FT 300 – (their '52 + 72'). Answers to part questions which are being followed through are indicated by e.g. FT 3 × their (a).
+Figures or expressions that are being followed through are sometimes encompassed by single quotation marks after the word their for clarity, e.g. FT 180 × (their ‘37’ + 16), or FT 300 – (their ‘52 + 72’). Answers to part questions which are being followed through are indicated by e.g. FT 3 × their (a).
 
 For questions with FT available you must ensure that you refer back to the relevant previous answer. You may find it easier to mark these questions candidate by candidate rather than question by question.
 
@@ -223,12 +223,12 @@ The following abbreviations are commonly found in GCSE Mathematics mark schemes.
 - **soi** means seen or implied.
 
 6.
-In questions with no final answer line, make no deductions for wrong work after an acceptable answer (ie **isw**) unless the mark scheme says otherwise, indicated by the instruction 'mark final answer'.
+In questions with no final answer line, make no deductions for wrong work after an acceptable answer (ie **isw**) unless the mark scheme says otherwise, indicated by the instruction ‘mark final answer’.
 
 7.
 In questions with a final answer line following working space:
 
-(i)If the correct answer is seen in the body of working and the answer given on the answer line is a clear transcription error allow full marks unless the mark scheme says 'mark final answer'. Place the annotation ✓ next to the correct answer.
+(i)If the correct answer is seen in the body of working and the answer given on the answer line is a clear transcription error allow full marks unless the mark scheme says ‘mark final answer’. Place the annotation ✓ next to the correct answer.
 
 (ii)If the correct answer is seen in the body of working but the answer line is blank, allow full marks. Place the annotation ✓ next to the correct answer.
 
@@ -251,7 +251,7 @@ In questions with no final answer line:
 (ii)If more than one response is provided, award zero marks for the question unless the candidate has clearly indicated which response is to be marked.
 
 10.
-When the data of a question is consistently misread in such a way as not to alter the nature or difficulty of the question, please follow the candidate's work and allow follow through for **A** and **B** marks. Deduct 1 mark from any **A** or **B** marks earned and record this by using the MR annotation. **M** marks are not deducted for misreads.
+When the data of a question is consistently misread in such a way as not to alter the nature or difficulty of the question, please follow the candidate’s work and allow follow through for **A** and **B** marks. Deduct 1 mark from any **A** or **B** marks earned and record this by using the MR annotation. **M** marks are not deducted for misreads.
 
 11.
 Unless the question asks for an answer to a specific degree of accuracy, always mark at the greatest number of significant figures even if this is rounded or truncated on the answer line. For example, an answer in the mark scheme is 15 75, which is seen in the working. The candidate then rounds or truncates this to 15.8, 15 or 16 on the answer line. Allow full marks for the 15.75.
@@ -263,7 +263,7 @@ Ranges of answers given in the mark scheme are always inclusive.
 For methods not provided for in the mark scheme give as far as possible equivalent marks for equivalent work.
 
 14.
-Anything in the mark scheme which is in square brackets [...] is not required for the mark to be earned, but if present it must be correct.
+Anything in the mark scheme which is in square brackets […] is not required for the mark to be earned, but if present it must be correct.
 
 ----"""
 ```
@@ -272,7 +272,7 @@ Let's also update the system message to include a placeholder for these general 
 and let's also reword other parts of the system message to make it clear which parts are *for the question*,
 and which parts are general guidelines.
 
-```{4-6,8,13,18}
+```{4-8,13,18}
 system_message = """
 Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks_total} marks.
 
@@ -290,7 +290,7 @@ The markscheme for this specific question is:
 {markscheme}
 
 
-The student's answer to this question (which you need to mark) is:
+The student's answer to this question (which you need to marked) is:
 
 {answer}
 
@@ -305,7 +305,8 @@ Let's then update the system message to include the guidelines by default.
 
 ```python
 system_message = system_message.replace(
-    "{general_guidelines}", general_guidelines
+    "{general_guidelines}",
+    general_guidelines,
 )
 ```
 
@@ -315,17 +316,43 @@ system_message = system_message.replace(
 with unify.Experiment("add_marking_guidelines", overwrite=True), unify.Params(
     system_message=system_message,
     dataset="TestSet10",
-    source=unify.get_source()
+    source=unify.get_source(),
 ):
     unify.map(
         evaluate,
-        [
-             dict(**d.entries, _system_message=system_message)
-             for d in test_set_10
-        ],
-        name="Evals"
+        [dict(**d.entries, _system_message=system_message) for d in test_set_10],
+        name="Evals",
     )
 ```
 
 The mean error has gone down from `0.3` to `0.2`.
+
+Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+and each LLM call had the template variables in the system message populated correctly.
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/-AlbLn_m1wA"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
+It seems as though everything was implemented correctly,
+and the per-LLM system messages look good ✅
+
 Let's explore the remaining errors in the next iteration 🔁
