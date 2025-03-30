@@ -57,26 +57,26 @@
                     ]
                 },
                 {
-                    "group": "Demo",
+                    "group": "Case Study",
                     "pages": [
-                        "demo/the_app",
-                        "demo/usage_dashboard",
-                        "demo/upload_datasets",
+                        "case_study/the_app",
+                        "case_study/usage_dashboard",
+                        "case_study/upload_datasets",
                         {
                             "group": "Optimize Agent",
                             "pages": [
-                                "demo/optimize_agent/data_flywheel",
-                                "demo/optimize_agent/iteration_0",
-                                "demo/optimize_agent/iteration_1",
-                                "demo/optimize_agent/iteration_2",
-                                "demo/optimize_agent/iteration_3",
-                                "demo/optimize_agent/iteration_4",
-                                "demo/optimize_agent/iteration_5",
-                                "demo/optimize_agent/iteration_6",
-                                "demo/optimize_agent/iteration_7",
-                                "demo/optimize_agent/iteration_8",
-                                "demo/optimize_agent/iteration_9",
-                                "demo/optimize_agent/iteration_10"
+                                "case_study/optimize_agent/data_flywheel",
+                                "case_study/optimize_agent/iteration_0",
+                                "case_study/optimize_agent/iteration_1",
+                                "case_study/optimize_agent/iteration_2",
+                                "case_study/optimize_agent/iteration_3",
+                                "case_study/optimize_agent/iteration_4",
+                                "case_study/optimize_agent/iteration_5",
+                                "case_study/optimize_agent/iteration_6",
+                                "case_study/optimize_agent/iteration_7",
+                                "case_study/optimize_agent/iteration_8",
+                                "case_study/optimize_agent/iteration_9",
+                                "case_study/optimize_agent/iteration_10"
                             ]
                         }
                     ]
