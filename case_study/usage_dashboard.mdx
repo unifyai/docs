@@ -93,6 +93,9 @@ as there are 10,000 logs to upload.
 unify.create_logs(entries=usage_data)
 ```
 
+The full script for this upload can be found
+[here](https://github.com/unifyai/demos/blob/main/marking_assistant/upload_usage_data.py).
+
 ## Analyze the Data
 
 <div
@@ -158,7 +161,7 @@ click image to maximize
 The reduction metrics of each numeric,
 boolean and datetime group are shown in green in the table,
 and values shared across the entire group are shown in light blue
-(these are not shown in the VIDEOs, which were created before this feature addition).
+(these are not shown in the GIFs, which were created before this feature addition).
 
 By default the `mean` is plotted for the reduction metrics,
 but this can be changed at the bottom of the table.
@@ -266,6 +269,9 @@ while True:
     ).isoformat()
     unify.log(**sample, context="Usage")
 ```
+
+The full script for streaming the data can be found
+[here](https://github.com/unifyai/demos/blob/main/marking_assistant/stream_usage_data.py).
 
 ### Monitor the Data
 
@@ -417,6 +423,8 @@ If there are any tables on screen that you don't need to see,
 then you can simply hide them.
 Let's hide our two tables,
 whose sole purpose is to define the data for the two plots.
+We can also turn off edit mode and turn off interactive mode,
+if we would like our interface to instead act as a static dashboard.
 
 <Accordion title="Expand">
 <img class="dark-light" width="100%" src="https://raw.githubusercontent.com/unifyai/unifyai.github.io/refs/heads/main/img/externally_linked/docs/hide_tables.gif"/>
