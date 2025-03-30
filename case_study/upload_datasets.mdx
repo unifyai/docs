@@ -202,7 +202,7 @@ test_set.sync()
 ### Sub-Datasets
 
 Whilst we're improving our LLM agent (next section),
-we won't necessarily want to test against **all** 321 examples **every time**.
+we won't necessarily want to test against **all 321 examples** every time.
 This would be both very costly and very time consuming,
 and needlessly wasteful early on,
 when a handful of examples will suffice to point us in the right direction.
@@ -268,9 +268,9 @@ we can see that:
 
 However, questions are also **omitted** from the test set if:
 
-- they involve an image as **part of the question**, (they are [not text-only](https://github.com/unifyai/demos/blob/main/marking_assistant/helpers.py#L125))
-- the question was not `correctly_parsed` (example [parsed paper](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/parsed.json))
-- the question markscheme was not `correctly_parsed` (example [parsed markscheme](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/markscheme/parsed.json))
+- they involve an image as **part of the question**, (they are [not text-only](https://github.com/unifyai/demos/blob/main/marking_assistant/setup/helpers.py#L125))
+- the question was not `correctly_parsed` (example full [parsed paper](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/paper/parsed.json))
+- the question markscheme was not `correctly_parsed` (example full [parsed markscheme](https://github.com/unifyai/demos/blob/main/marking_assistant/data/parsed/GCSE_(9%E2%80%931)_Mathematics/J560_01_Paper_1_(Foundation_Tier)_Sample_Question_Paper/markscheme/parsed.json))
 
 Let's check how many questions were used from each of the three papers.
 We can simply *also* group by the question number,
@@ -294,8 +294,8 @@ the inclusion of necessary images as part of the question (`"text-only": false`)
 
 #### Number of Target Answers
 
-Finally, each question should have `N+1` candidate answers,
-where `N` is the number of available marks: `[0, 1, ..., N]`.
+Finally, each question should have `N+1` candidate answers which are expected to receive `[0, 1, ..., N]` marks,
+where `N` is the total number of available marks.
 Let's verify this is correct,
 by adding the `available_marks_total` column,
 and verifying that the group sizes are all equal to `available_marks_total + 1`.
