@@ -25,7 +25,7 @@ Let's see if using a separate LLM call per sub-question improves the performance
 
 Firstly, let's create a new system prompt for our agent, which will reason about one-subquestion at a time.
 
-```python
+```
 system_message = """
 Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks} marks.
 

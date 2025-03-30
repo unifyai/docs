@@ -63,7 +63,7 @@ Let's update our per-subquestion system prompts to also fully include the **prec
 
 Let's first update the system prompt, re-introducing the placeholder for the aligned subquestions, markschemes and answers, this time calling it `{prior_context}`, which will only be included when sub-questions are present. Let's also include the full question.
 
-```python
+```
 system_message = """
 Your task is to award a suitable number of marks for a student's answer to question {subq}, from 0 up to a maximum of {available_marks} marks.
 
