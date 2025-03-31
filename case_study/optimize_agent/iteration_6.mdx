@@ -9,6 +9,7 @@ The full script for running this iteration can be found
 
 Let's try to *force* the agent to reason about each potential mark mentioned in the markscheme,
 by further refining our structured output.
+
 Let's expand upon the `reasoning` field for each sub-question,
 with a field for each mark type referenced in the sub-question markscheme,
 going from the following structure:
@@ -124,8 +125,10 @@ def create_response_format(response_keys, mark_types):
 ```
 
 We also need to write a function to parse the relevant marks from each sub-question markscheme.
+
 We can take inspiration from `update_markscheme` defined in the previous iteration,
 which parses the markscheme in the same manner but for a different reason.
+
 Let's have the function extract the marks,
 and also the surrounding context.
 
