@@ -50,11 +50,17 @@ Prediction:
 ```
 
 
-This way, the agent will be **forced** to reason about `SC1` for **Example 207**, `M1` for **Example 261**, and `B1` for **Example 132 (c)**.
+This way,
+the agent will be **forced** to reason about `SC1` for **Example 207**,
+`M1` for **Example 261**,
+and `B1` for **Example 132 (c)**.
 
 ## 🔀 Mark Type Reasoning
 
-Let's first define a function to dynamically construct the required pydantic type. For each parsed mark type, we want the model to give it's thoughts and make a decision as to whether or not the mark should be awarded. Let's create this pydantic type first:
+Let's first define a function to dynamically construct the required pydantic type.
+For each parsed mark type,
+we want the model to give it's thoughts and make a decision as to whether or not the mark should be awarded.
+Let's create this pydantic type first:
 
 ```python
 class ThoughtsAndAwardDecision(BaseModel):
@@ -62,35 +68,40 @@ class ThoughtsAndAwardDecision(BaseModel):
     should_award: bool
 ```
 
-Let's then create a function to dynamically construct a `PerMarkReasoning` pydantic type, with one `ThoughtsAndAwardDecision` instance for each mark detected in the sub-question markscheme.
+Let's then create a function to dynamically construct a `PerMarkReasoning` pydantic type,
+with one `ThoughtsAndAwardDecision` instance for each mark detected in the sub-question markscheme.
 
 ```python
 @unify.traced(name="create_per_mark_reasoning_format_{mark_types}")
 def create_per_mark_reasoning_format(mark_types):
     response_fields = dict(
         zip(
-            mark_types + ["overall_thoughts"], [(ThoughtsAndAwardDecision, ...)] * len(mark_types) + [(str, ...)]
-        )
+            mark_types + ["overall_thoughts"],
+            [(ThoughtsAndAwardDecision, ...)] * len(mark_types) + [(str, ...)],
+        ),
     )
-    return create_model('PerMarkReasoning', **response_fields)
+    return create_model("PerMarkReasoning", **response_fields)
 ```
 
-Let's then re-define `MarksAndReasoning` (previously this was statically defined, see above) such that the `reasoning` field is no longer just a string, but is intead our newly created `PerMarkReasoning` (above).
+Let's then re-define `MarksAndReasoning` (previously this was statically defined, see previous iteration)
+such that the `reasoning` field is no longer just a string,
+but is intead our newly created `PerMarkReasoning` (above).
 
 ```python
 @unify.traced(name="create_marks_and_reasoning_format_{mark_types}")
 def create_marks_and_reasoning_format(mark_types):
     return create_model(
-        'MarksAndReasoning',
+        "MarksAndReasoning",
         reasoning=(create_per_mark_reasoning_format(mark_types), ...),
-        marks=(int, ...)
+        marks=(int, ...),
     )
 ```
 
-Finally, let's then update the top-level function `create_response_format` such that we're making use of our newly defined `create_marks_and_reasoning_format` for each sub-question.
+Finally,
+let's then update the top-level function `create_response_format` such that we're making use of our newly defined `create_marks_and_reasoning_format` for each sub-question.
 
-```python
-@unify.traced(name="create_response_format_{response_keys}_{mark_types}")
+```python {1-2,5-11,15}
+@unify.traced(name="create_response_format_{mark_types}")
 def create_response_format(response_keys, mark_types):
     if response_keys:
         response_fields = dict(
@@ -99,20 +110,24 @@ def create_response_format(response_keys, mark_types):
                 [
                     (create_marks_and_reasoning_format(mark_types[key]), ...)
                     for key in response_keys
-                ]
-            )
+                ],
+            ),
         )
-        return create_model('Response', **response_fields)
+        return create_model("Response", **response_fields)
     else:
         return create_marks_and_reasoning_format(mark_types["_"])
 ```
 
-We also need to write a function to parse the relevant marks from each sub-question markscheme. We can take inspiration from [here](https://colab.research.google.com/drive/1mWlZxuL8jyl-C--F_vmtIHq1cIm4poxG#scrollTo=aLB8DdP__KlC&line=6&uniqifier=1), where we wrote a parser for a slightly different reason. Let's have the function extract the marks, and also the surrounding context.
+We also need to write a function to parse the relevant marks from each sub-question markscheme.
+We can take inspiration from `update_markscheme` defined in the previous iteration,
+which parses the markscheme in the same manner but for a different reason.
+Let's have the function extract the marks,
+and also the surrounding context.
 
 ```python
-@unify.traced
-def parse_marks_from_markscheme(markscheme: str):
-    extracted_marks = re.findall(r'(?:SC|M|A|B)\d+', markscheme)
+@unify.traced(name="parse_marks_from_markscheme{subquestion}")
+def parse_marks_from_markscheme(subquestion: str, markscheme: str):
+    extracted_marks = re.findall(r"(?:SC|M|A|B)\d+", markscheme)
     if not extracted_marks:
         return []
     marks_n_context = list()
@@ -120,59 +135,88 @@ def parse_marks_from_markscheme(markscheme: str):
         index = markscheme.find(mark)
         chunk = markscheme[0:index]
         if i > 0:
-            prev_mark = extracted_marks[i-1]
-            marks_n_context[i-1][1] += chunk
+            prev_mark = extracted_marks[i - 1]
+            marks_n_context[i - 1][1] += chunk
         markscheme = markscheme[index:]
         marks_n_context.append([mark, chunk])
     marks_n_context[-1][1] += markscheme
     return marks_n_context
 ```
 
-Finally, we'll also need to update `call_agent` such that we call `parse_available_marks_from_markscheme` on each sub-question markscheme, and then pass these into our newly defined `create_response_format`.
+Finally,
+we'll also need to update `call_agent` such that we call `parse_available_marks_from_markscheme` on each sub-question markscheme,
+and then pass these into our newly defined `create_response_format`.
 
-```python
+```python {14-20,}
 @unify.traced
-def call_agent(system_msg, question, sub_questions, markscheme, answer, available_marks_total):
+def call_agent(
+    system_msg,
+    question,
+    sub_questions,
+    markscheme,
+    answer,
+    available_marks_total,
+):
     local_agent = agent.copy()
     with_subqs = len(markscheme) > 1
     response_format = create_response_format(
         list(markscheme.keys()) if with_subqs else None,
-        {k: [itm[0] for itm in parse_marks_from_markscheme(v)]
-        for k, v in markscheme.items()}
+        {
+            k: [
+                itm[0]
+                for itm in parse_marks_from_markscheme(f"_{k}" if k != "_" else "", v)
+            ]
+            for k, v in markscheme.items()
+        },
     )
     local_agent.set_response_format(response_format)
     if with_subqs:
         output_response_exp = output_response_explanations["with_subqs"]
         output_response_exp = output_response_exp.replace(
-            "{subquestions}", json.dumps(list(markscheme.keys()))
+            "{subquestions}",
+            ", ".join(list(markscheme.keys())),
         )
     else:
         output_response_exp = output_response_explanations["without_subqs"]
-    markscheme = {k: update_markscheme(v) for k, v in markscheme.items()}
+    markscheme = {
+        k: update_markscheme(f"_{k}" if k != "_" else "", v)
+        for k, v in markscheme.items()
+    }
     local_agent.set_system_message(
         system_msg.replace(
-            "{question}", question
-        ).replace(
-            "{markscheme}", json.dumps(markscheme, indent=4)
-        ).replace(
-            "{answer}", json.dumps(answer, indent=4)
-        ).replace(
-            "{available_marks_total}", str(available_marks_total)
-        ).replace(
-            "{questions_markscheme_and_answers}", json.dumps(
-              {
-                  k: {
-                      "sub-question": sub_questions[k],
-                      "markscheme": markscheme[k],
-                      "answer": answer[k]
-                  } for k in sub_questions.keys()
-              },
-              indent=4
-            )
-        ).replace(
-            "{output_response_explanation}",
-            output_response_exp
+            "{question}",
+            textwrap.indent(question, " " * 4),
         )
+        .replace(
+            "{markscheme}",
+            pretty_print_dict(markscheme, indent=4),
+        )
+        .replace(
+            "{answer}",
+            pretty_print_dict(answer, indent=4),
+        )
+        .replace(
+            "{available_marks_total}",
+            str(available_marks_total),
+        )
+        .replace(
+            "{questions_markscheme_and_answers}",
+            pretty_print_dict(
+                {
+                    k: {
+                        "sub-question": sub_questions[k],
+                        "markscheme": markscheme[k],
+                        "answer": answer[k],
+                    }
+                    for k in sub_questions.keys()
+                },
+                indent=4,
+            ),
+        )
+        .replace(
+            "{output_response_explanation}",
+            output_response_exp,
+        ),
     )
     ret = local_agent.generate()
     if "```" in ret:
@@ -183,69 +227,33 @@ def call_agent(system_msg, question, sub_questions, markscheme, answer, availabl
     return ret
 ```
 
-Let's also update our system message to explain to better explain to the agent how it should reason about this new output structure.
+Let's also update our system message to better explain to the agent how it should reason about this new output structure.
 
-```python
+```python {3,6}
 output_response_explanations = dict()
-output_response_explanations["with_subqs"] = "For each sub-question {subquestions}, you should populate the `reasoning` field with your general thoughts on each individual mark identified in the markscheme, and also a decision as to whether each of these mark should be awarded. These marks are not necessarily cumulative with regards to the marks to award, and some may be irrelevant given the student's approach or answer, in which case just respond `False` for the `should_award` field. Finally, you should put the total number of marks to award for each sub-question in the corresponding `marks` field."
-output_response_explanations["without_subqs"] = "You should populate the `reasoning` field with your general thoughts on each individual mark identified in the markscheme, and also a decision as to whether each of these mark should be awarded. These marks are not necessarily cumulative with regards to the marks to award, and some may be irrelevant given the student's approach or answer, in which case just respond `False` for the `should_award` field. Finally, you should put the total number of marks to award in the `marks` field."
-```
-
-We also need to update `evaluate`, given some of the other changes.
-
-```python
-@unify.log
-def evaluate(
-    question,
-    sub_questions,
-    student_answer,
-    available_marks_total,
-    markscheme,
-    correct_marks,
-    per_question_breakdown,
-    _system_message,
-):
-    pred_marks = call_agent(
-        _system_message, question, sub_questions, markscheme, student_answer,
-        available_marks_total
-    )
-    pred_marks_total = sum([v["marks"] for v in pred_marks.values()])
-    diff = {
-        k: vcor["marks"] - vpred["marks"] for (k, vcor), (_, vpred) in
-        zip(correct_marks.items(), pred_marks.items())
-    }
-    error = {k: abs(v) for k, v in diff.items()}
-    diff_total = sum(diff.values())
-    error_total = sum(error.values())
-    per_question_breakdown = {
-        k: {
-            **per_question_breakdown[k],
-            "predicted_marks": pm,
-            "diff": d
-        } for (k, pqb), pm, d in zip(
-            per_question_breakdown.items(),
-            pred_marks.values(),
-            diff.values()
-        )
-    }
-    return error
+output_response_explanations["with_subqs"] = (
+    "For each sub-question {subquestions} you should populate the `reasoning` field with your general thoughts on each individual mark identified in the markscheme, and also a decision as to whether each of these mark should be awarded. These marks are not necessarily cumulative with regards to the marks to award, and some may be irrelevant given the student's approach or answer, in which case just respond `False` for the `should_award` field. Finally, you should put the total number of marks to award for each sub-question in the corresponding `marks` field."
+)
+output_response_explanations["without_subqs"] = (
+    "You should populate the `reasoning` field with your general thoughts on each individual mark identified in the markscheme, and also a decision as to whether each of these mark should be awarded. These marks are not necessarily cumulative with regards to the marks to award, and some may be irrelevant given the student's approach or answer, in which case just respond `False` for the `should_award` field. Finally, you should put the total number of marks to award in the `marks` field."
+)
 ```
 
 ## 🧪 Rerun Tests
 
-```python
-with unify.Experiment("mark_type_reasoning"), unify.Params(
+```python {2}
+with unify.Experiment(
+    "mark_type_reasoning",
+    overwrite=True,
+), unify.Params(
     system_message=system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source(),
 ):
     unify.map(
         evaluate,
-        [
-             dict(**d.entries, _system_message=system_message)
-             for d in test_set_10
-        ],
-        name="Evals"
+        [dict(**d.entries, _system_message=system_message) for d in test_set_10],
+        name="Evals",
     )
 ```
 
