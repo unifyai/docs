@@ -25,7 +25,7 @@ Let's see if using a separate LLM call per sub-question improves the performance
 
 Firstly, let's create a new system prompt for our agent, which will reason about one-subquestion at a time.
 
-```
+``` {2,8,14-21}
 system_message = """
 Your task is to award a suitable number of marks for a student's answer to a question, from 0 up to a maximum of {available_marks} marks.
 
@@ -52,62 +52,81 @@ The markscheme is:
 {output_response_explanation}
 """.replace(
     "{general_guidelines}",
-    general_guidelines
+    general_guidelines,
 )
 ```
 
-Given the changes, we can also remove the `output_response_explanations` dict, and relace it with a single `output_response_explanation` string variable, given that the agent no longer needs to output responses for multiple sub-questions in a single response.
+Given the changes, we can also remove the `output_response_explanations` dict,
+and relace it with a single `output_response_explanation` string variable,
+given that the agent no longer needs to output responses for multiple sub-questions in a single response.
 
-```python
+```python {1}
 output_response_explanation = "You should populate the `reasoning` field with your general thoughts on each individual mark identified in the markscheme, and also a decision as to whether each of these mark should be awarded. These marks are not necessarily cumulative with regards to the marks to award, and some may be irrelevant given the student's approach or answer, in which case just respond `False` for the `should_award` field. Finally, you should put the total number of marks to award in the `marks` field."
 ```
 
-Let's update `call_agent` to map each subquestion to a unique LLM call, and let's also add a `unify.traced` decorator so we're able to capture each individual LLM call in the overall trace.
+Let's update `call_agent` to map each subquestion to a unique LLM call.
 
-```python
+```python {3,8,10-13,16,18-26,31-51,54-57,59-66}
 @unify.traced
-def call_agent(example_id, system_msg, sub_questions, markscheme, answer, available_marks):
+def call_agent(
+    example_id,
+    system_msg,
+    sub_questions,
+    markscheme,
+    answer,
+    available_marks,
+):
     agents = {k: agent.copy() for k in markscheme.keys()}
-    with_subqs = len(markscheme) > 1
     response_formats = {
         k: create_marks_and_reasoning_format(
-            [itm[0] for itm in parse_marks_from_markscheme(v)]
-        ) for k, v in markscheme.items()
+            [
+                itm[0]
+                for itm in parse_marks_from_markscheme(f"_{k}" if k != "_" else "", v)
+            ],
+        )
+        for k, v in markscheme.items()
     }
     [
         agnt.set_response_format(rf)
         for agnt, rf in zip(
-            agents.values(), response_formats.values()
+            agents.values(),
+            response_formats.values(),
         )
     ]
     markscheme = {
-        k: update_markscheme(v) for k, v in markscheme.items()
+        k: update_markscheme(f"_{k}" if k != "_" else "", v)
+        for k, v in markscheme.items()
     }
     for k in markscheme.keys():
         agents[k].set_system_message(
             system_msg.replace(
-                "{question}", sub_questions[k]
-            ).replace(
-                "{markscheme}", markscheme[k]
-            ).replace(
-                "{answer}", answer[k]
-            ).replace(
-                "{available_marks}",
-                str(available_marks[k.replace("_", "total")])
-            ).replace(
-                "{output_response_explanation}",
-                output_response_explanation
+                "{question}",
+                textwrap.indent(sub_questions[k], " " * 4),
             )
+            .replace(
+                "{markscheme}",
+                textwrap.indent(markscheme[k], " " * 4),
+            )
+            .replace(
+                "{answer}",
+                textwrap.indent(answer[k], " " * 4),
+            )
+            .replace(
+                "{available_marks}",
+                str(available_marks[k.replace("_", "total")]),
+            )
+            .replace(
+                "{output_response_explanation}",
+                output_response_explanation,
+            ),
         )
     rets = unify.map(
-        lambda a: a.generate(),
-        list(agents.values()),
-        name=f"Evals[{example_id}]->SubQAgent"
+        lambda k, a: a.generate(tags=[k]),
+        list(agents.items()),
+        name=f"Evals[{example_id}]->SubQAgent",
     )
     rets = [
-        ret.split("```")[-2].lstrip("json")
-        if "```" in ret else ret
-        for ret in rets
+        ret.split("```")[-2].lstrip("json") if "```" in ret else ret for ret in rets
     ]
     rets = {
         k: response_formats[k].model_validate_json(ret).model_dump()
@@ -118,11 +137,10 @@ def call_agent(example_id, system_msg, sub_questions, markscheme, answer, availa
 
 Let's also update `evaluate` to pass the updated parameters to `call_agent`.
 
-```python
+```python {3,6,13,18}
 @unify.log
 def evaluate(
     example_id,
-    question,
     sub_questions,
     student_answer,
     available_marks,
@@ -132,13 +150,17 @@ def evaluate(
     _system_message,
 ):
     pred_marks = call_agent(
-        example_id, _system_message, sub_questions, markscheme, student_answer,
-        available_marks
+        example_id,
+        _system_message,
+        sub_questions,
+        markscheme,
+        student_answer,
+        available_marks,
     )
     pred_marks_total = sum([v["marks"] for v in pred_marks.values()])
     diff = {
-        k: vcor["marks"] - vpred["marks"] for (k, vcor), (_, vpred) in
-        zip(correct_marks.items(), pred_marks.items())
+        k: vcor["marks"] - vpred["marks"]
+        for (k, vcor), (_, vpred) in zip(correct_marks.items(), pred_marks.items())
     }
     error = {k: abs(v) for k, v in diff.items()}
     diff_total = sum(diff.values())
@@ -147,31 +169,32 @@ def evaluate(
         k: {
             **per_question_breakdown[k],
             "predicted_marks": pm,
-            "diff": d
-        } for (k, pqb), pm, d in zip(
+            "diff": d,
+        }
+        for (k, pqb), pm, d in zip(
             per_question_breakdown.items(),
             pred_marks.values(),
-            diff.values()
+            diff.values(),
         )
     }
-    return error
+    return error_total
 ```
 
 ## 🧪 Rerun Tests
 
-```python
-with unify.Experiment("queries_per_subquestion"), unify.Params(
+```python {2}
+with unify.Experiment(
+    "queries_per_subquestion",
+    overwrite=True,
+), unify.Params(
     system_message=system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source(),
 ):
     unify.map(
         evaluate,
-        [
-             dict(**d.entries, _system_message=system_message)
-             for d in test_set_10
-        ],
-        name="Evals"
+        [dict(**d.entries, _system_message=system_message) for d in test_set_10],
+        name="Evals",
     )
 ```
 
