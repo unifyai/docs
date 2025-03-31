@@ -57,13 +57,22 @@ Perhaps preventing the agent from having access to the full question prevents it
 
 Maybe strict adherence to the markscheme alone without the full context is prohibitive.
 
-Let's update our per-subquestion system prompts to also fully include the **preceeding** sub-questions, their markschemes, and their answers. It's unlikely that the context of a **later** question will assists with the marking of an earlier question, and we still want to try and keep the agent as focused as possible on the relevant information.
+Let's update our per-subquestion system prompts to also fully include the **preceeding** sub-questions,
+their markschemes,
+and their answers.
+It's unlikely that the context of a **later** question will assists with the marking of an earlier question,
+and we still want to try and keep the agent as focused as possible on the relevant information.
 
 ## 🔀 Include Preceeding Context
 
-Let's first update the system prompt, re-introducing the placeholder for the aligned subquestions, markschemes and answers, this time calling it `{prior_context}`, which will only be included when sub-questions are present. Let's also include the full question.
+Let's first update the system prompt,
+re-introducing the placeholder for the aligned subquestions,
+markschemes and answers,
+this time calling it `{prior_context}`,
+which will only be included when sub-questions are present.
+Let's also include the full question.
 
-```
+``` {2,9,13,15-20,25}
 system_message = """
 Your task is to award a suitable number of marks for a student's answer to question {subq}, from 0 up to a maximum of {available_marks} marks.
 
@@ -96,13 +105,13 @@ The markscheme for this specific question is:
 {output_response_explanation}
 """.replace(
     "{general_guidelines}",
-    general_guidelines
+    general_guidelines,
 )
 ```
 
 Let's also add a general explanation for the prior context, in cases where it is included.
 
-```python
+```
 prior_context_exp = """
 All of the *preceeding* sub-questions, their specific markschemes and the student's answers are as follows:
 """
@@ -110,65 +119,99 @@ All of the *preceeding* sub-questions, their specific markschemes and the studen
 
 Let's now update `call_agent` to pass in the required information.
 
-```python
+```python {5-6,13,34,37-40,42-45,64-84,87-88}
 @unify.traced
-def call_agent(example_id, system_msg, question_num, question, sub_questions, markscheme, answer, available_marks):
+def call_agent(
+    example_id,
+    system_msg,
+    question_num,
+    question,
+    sub_questions,
+    markscheme,
+    answer,
+    available_marks,
+):
     agents = {k: agent.copy() for k in markscheme.keys()}
     with_subqs = len(markscheme) > 1
     response_formats = {
         k: create_marks_and_reasoning_format(
-            [itm[0] for itm in parse_marks_from_markscheme(v)]
-        ) for k, v in markscheme.items()
+            [
+                itm[0]
+                for itm in parse_marks_from_markscheme(f"_{k}" if k != "_" else "", v)
+            ],
+        )
+        for k, v in markscheme.items()
     }
     [
         agnt.set_response_format(rf)
         for agnt, rf in zip(
-            agents.values(), response_formats.values()
+            agents.values(),
+            response_formats.values(),
         )
     ]
     markscheme = {
-        k: update_markscheme(v) for k, v in markscheme.items()
+        k: update_markscheme(f"_{k}" if k != "_" else "", v)
+        for k, v in markscheme.items()
     }
     for i, k in enumerate(markscheme.keys()):
         agents[k].set_system_message(
             system_msg.replace(
-                "{subq}", k.replace("_", str(question_num))
-            ).replace(
-                "{question}", question,
-            ).replace(
-                "{subquestion}", sub_questions[k]
-            ).replace(
-                "{markscheme}", markscheme[k]
-            ).replace(
-                "{answer}", answer[k]
-            ).replace(
+                "{subq}",
+                k.replace("_", str(question_num)),
+            )
+            .replace(
+                "{question}",
+                textwrap.indent(question, " " * 4),
+            )
+            .replace(
+                "{subquestion}",
+                textwrap.indent(sub_questions[k], " " * 4),
+            )
+            .replace(
+                "{markscheme}",
+                textwrap.indent(markscheme[k], " " * 4),
+            )
+            .replace(
+                "{answer}",
+                textwrap.indent(answer[k], " " * 4),
+            )
+            .replace(
                 "{available_marks}",
-                str(available_marks[k.replace("_", "total")])
-            ).replace(
+                str(available_marks[k.replace("_", "total")]),
+            )
+            .replace(
                 "{output_response_explanation}",
-                output_response_explanation
-            ).replace(
-            "{prior_context}", (prior_context_exp + json.dumps(
-              {
-                  k: {
-                      "sub-question": sub_questions[k],
-                      "markscheme": markscheme[k],
-                      "answer": answer[k]
-                  } for k in list(sub_questions.keys())[0:i]
-              },
-              indent=4
-            )) if with_subqs and i > 0 else ""
-          )
+                output_response_explanation,
+            )
+            .replace(
+                "{prior_context}",
+                (
+                    (
+                        prior_context_exp
+                        + pretty_print_dict(
+                            {
+                                k: {
+                                    "sub-question": sub_questions[k],
+                                    "markscheme": markscheme[k],
+                                    "answer": answer[k],
+                                }
+                                for k in list(sub_questions.keys())[0:i]
+                            },
+                            indent=4,
+                        )
+                    )
+                    if with_subqs and i > 0
+                    else ""
+                ),
+            ),
         )
     rets = unify.map(
-        lambda a: a.generate(),
+        lambda a: a.generate(tags=[k]),
         list(agents.values()),
-        name=f"Evals[{example_id}]->SubQAgent"
+        name=f"Evals[{example_id}]->SubQAgent",
     )
     rets = [
-        ret.split("```")[-2].lstrip("json")
-        if "```" in ret else ret
-        for ret in rets
+        ret.split("```")[-2].lstrip("json") if "```" in ret else ret for ret in rets
     ]
     rets = {
         k: response_formats[k].model_validate_json(ret).model_dump()
@@ -179,7 +222,7 @@ def call_agent(example_id, system_msg, question_num, question, sub_questions, ma
 
 Finally, let's update `evaluate` accordingly.
 
-```python
+```python {4-5,17-18}
 @unify.log
 def evaluate(
     example_id,
@@ -188,20 +231,25 @@ def evaluate(
     sub_questions,
     student_answer,
     available_marks,
-    available_marks_total,
     markscheme,
     correct_marks,
-    correct_marks_total,
     per_question_breakdown,
     _system_message,
 ):
     pred_marks = call_agent(
-        example_id, _system_message, question_num, question, sub_questions, markscheme, student_answer, available_marks
+        example_id,
+        _system_message,
+        question_num,
+        question,
+        sub_questions,
+        markscheme,
+        student_answer,
+        available_marks,
     )
     pred_marks_total = sum([v["marks"] for v in pred_marks.values()])
     diff = {
-        k: vcor["marks"] - vpred["marks"] for (k, vcor), (_, vpred) in
-        zip(correct_marks.items(), pred_marks.items())
+        k: vcor["marks"] - vpred["marks"]
+        for (k, vcor), (_, vpred) in zip(correct_marks.items(), pred_marks.items())
     }
     error = {k: abs(v) for k, v in diff.items()}
     diff_total = sum(diff.values())
@@ -210,31 +258,32 @@ def evaluate(
         k: {
             **per_question_breakdown[k],
             "predicted_marks": pm,
-            "diff": d
-        } for (k, pqb), pm, d in zip(
+            "diff": d,
+        }
+        for (k, pqb), pm, d in zip(
             per_question_breakdown.items(),
             pred_marks.values(),
-            diff.values()
+            diff.values(),
         )
     }
-    return error
+    return error_total
 ```
 
 ## 🧪 Rerun Tests
 
-```python
-with unify.Experiment("with_preceeding_context"), unify.Params(
+```python {2}
+with unify.Experiment(
+    "with_preceeding_context",
+    overwrite=True,
+), unify.Params(
     system_message=system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source(),
 ):
     unify.map(
         evaluate,
-        [
-             dict(**d.entries, _system_message=system_message)
-             for d in test_set_10
-        ],
-        name="Evals"
+        [dict(**d.entries, _system_message=system_message) for d in test_set_10],
+        name="Evals",
     )
 ```
 
