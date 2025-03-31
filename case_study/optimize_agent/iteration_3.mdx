@@ -46,7 +46,8 @@ Let's give it a try!
 
 ## 🔀 Add Structured Output
 
-So, let's go ahead and implement structured output! 🧑‍💻
+So,
+let's go ahead and implement structured output! 🧑‍💻
 
 <div
   style={{
@@ -108,7 +109,8 @@ When they are not present:
 
 > "You should populate the `reasoning` field with your initial reasoning about the correct number of marks to award. Finally, you should put the number of marks to award in the `marks` field."
 
-Firstly, the general template:
+Firstly,
+the general template:
 
 ``` {23-27}
 system_message = """
@@ -264,7 +266,8 @@ with unify.Experiment("add_structured_output", overwrite=True), unify.Params(
 
 The mean error has actually gone back up from `0.2` to `0.4`.
 
-Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+Let's take a look at the traces,
+to ensure that the system message template has been implemented correctly,
 and each LLM call has the template variables in the system message populated correctly.
 
 <div

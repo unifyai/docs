@@ -7,23 +7,34 @@ The full script for running this iteration can be found
 
 ## 🔍 Still Ignoring Mark Types
 
-Let's see what affect our new output format had on the nature of the agent's responses, if any.
+Let's see what affect our new output format had on the nature of the agent's responses,
+if any.
 
-Considering **Example 207**, the agent still failed to award `SC1` for the student's answer `1/3, 0.34, 3.5%`, despite the markscheme explicitly stating `SC1 for 1/3, 0.34, 3.5%`. The agent's explicit `thoughts` about `SC1` were:
+Considering **Example 207**,
+the agent still failed to award `SC1` for the student's answer `1/3, 0.34, 3.5%`,
+despite the markscheme explicitly stating `SC1 for 1/3, 0.34, 3.5%`.
+The agent's explicit `thoughts` about `SC1` were:
 
 > 🤖 No special case credit is applicable here since the order is incorrect and no alternative acceptable method is demonstrated.
 
-This is a pretty fluffy and empty statement. Despite o3-mini being a multi-step reasoning model, perhaps we're *still* asking the agent to consider too many things at once.
+This is a pretty fluffy and empty statement.
+Despite `o3-mini` being a multi-step reasoning model,
+perhaps we're *still* asking the agent to consider too many things at once.
 
 Enforcing the agent to consider one mark at a time might rectify this lack of attention to detail.
 
-**Example 132** is even more difficult, where the agent not only needs to consider each mark, but it also has six different sub-questions to reason about, each with their own set of available marks and mark types.
+**Example 132** is even more difficult,
+where the agent not only needs to consider each mark,
+but it also has six different sub-questions to reason about,
+each with their own set of available marks and mark types.
 
 Let's see if using a separate LLM call per sub-question improves the performance on **Example 132**.
 
 ## 🔀 Queries per Subquestion
 
-Firstly, let's create a new system prompt for our agent, which will reason about one-subquestion at a time.
+Firstly,
+let's create a new system prompt for our agent,
+which will reason about one-subquestion at a time.
 
 ``` {2,8,14-21}
 system_message = """
@@ -56,7 +67,8 @@ The markscheme is:
 )
 ```
 
-Given the changes, we can also remove the `output_response_explanations` dict,
+Given the changes,
+we can also remove the `output_response_explanations` dict,
 and relace it with a single `output_response_explanation` string variable,
 given that the agent no longer needs to output responses for multiple sub-questions in a single response.
 
@@ -198,9 +210,12 @@ with unify.Experiment(
     )
 ```
 
-We actually have a regression it seems, with the mean error increasing from `0.3` up to to `0.5`.
+We actually have a regression it seems,
+with the mean error increasing from `0.3` up to to `0.5`.
 
-Firstly, let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+Firstly,
+let's take a look at the traces,
+to ensure that the system message template has been implemented correctly,
 and each LLM call has the template variables in the system message populated correctly.
 
 <div
@@ -228,5 +243,6 @@ and each LLM call has the template variables in the system message populated cor
 It seems as though everything was implemented correctly,
 and the per-LLM system messages look good ✅
 
-Again, let's explore what's going wrong in the next iteration,
+Again,
+let's explore what's going wrong in the next iteration,
 and try to understand why we've seen this regression 🔁

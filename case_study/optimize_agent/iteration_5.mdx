@@ -2,7 +2,8 @@
 title: 'Iteration 5'
 ---
 
-As usual, let's take a look and explore why the agent might be failing on the remaining examples 🕵️
+As usual,
+let's take a look and explore why the agent might be failing on the remaining examples 🕵️
 
 <div
   style={{
@@ -31,17 +32,33 @@ The full script for running this iteration can be found
 
 ## 🔍 Ignoring Mark Types
 
-Lookg a bit deeper, it seems we're getting the *same failures* as we were before. These errors seem quite persistent, we might need to make more radical changes to try and address them.
+Lookg a bit deeper,
+it seems we're getting the *same failures* as we were before.
+These errors seem quite persistent,
+we might need to make more radical changes to try and address them.
 
-Let's revisit each of these failures again, and explore them in more detail, to see how we can rectify them.
+Let's revisit each of these failures again,
+and explore them in more detail,
+to see how we can rectify them.
 
-Given the consistent prevalence of these errors, it's useful to consider these failing examples **across all experiments**, and see the different kinds of rationale our agent is giving across each run.
+Given the consistent prevalence of these errors,
+it's useful to consider these failing examples **across all experiments**,
+and see the different kinds of rationale our agent is giving across each run.
 
-Our evaluation runs serve both as tests for comparing parameter configurations (when the agent output depend strongly on the changed parameters 🔀) **and** they also perform a kind of sampling from the noise distribution for each test set example (when the agent output depends less strongly on the changed parameters across each experiment 📊).
+Our evaluation runs serve both as tests for comparing parameter configurations
+(when the agent output depend strongly on the changed parameters 🔀)
+**and** they also perform a kind of sampling from the noise distribution for each test set example
+(when the agent output depends less strongly on the changed parameters across each experiment 📊).
 
-This is one benefit of the flexible spreadsheet design. Experiments are not indivisible atomic groups, they're simply labels, and the raw evaluation data can be juggled in whatever way makes sense to you as the user.
+This is one benefit of the flexible spreadsheet design.
+Experiments are not indivisible atomic groups,
+they're simply labels,
+and the raw evaluation data can be juggled in whatever way makes sense to you as the user.
 
-Let's first recap, the fixed question ❓, student answer 📝, markscheme ☑️ and correct marks ✅, before unpacking the various agent justifications 🤖 across all experiments.
+Let's first recap the fixed question ❓,
+student answer 📝,
+markscheme ☑️, and correct marks ✅,
+before unpacking the various agent justifications 🤖 across all experiments.
 
 
 ### Example 207
@@ -93,7 +110,9 @@ The correct order, based on numerical values (3.5% = 0.035, 1/3 ≈ 0.333, 0.34 
 </Accordion>
 </Accordion>
 
-Clearly, the agent is really failing to pick up on the SC1 mark from the markscheme, irrespective of the various parameter changes we've made across each experiment run.
+Clearly,
+the agent is really failing to pick up on the SC1 mark from the markscheme,
+irrespective of the various parameter changes we've made across each experiment run.
 
 
 ### Example 261
@@ -158,15 +177,28 @@ Clearly, the agent is really failing to pick up on the SC1 mark from the marksch
 
 > `align_context` [0/5] ❌: The answer only shows that Peter uses 4 litres of red paint and 6 litres of white paint in a 10‑litre batch. However, the question asks for the profit per tin, which requires further calculation including the cost of the paints and then subtracting from the selling price (£60). No profit calculation or final numerical answer for the profit is given. As a result, none of the required steps for computing profit were provided. Therefore, no marks can be awarded. [**No reference to M1 💡**]
 
-Again, regardless of our parameter variations, it seems as though the agent is not correctly understanding the M1 mark in the markscheme, which clearly states `M1 for 10 × (2/5) = 4 litres red or for 10 × (3/5) = 6 litres white`. Even on the two occassions where it got things right, it feels like a lucky guess, as this was not justified via the markscheme's M1 mark.
+Again,
+regardless of our parameter variations,
+it seems as though the agent is not correctly understanding the M1 mark in the markscheme,
+which clearly states `M1 for 10 × (2/5) = 4 litres red or for 10 × (3/5) = 6 litres white`.
+Even on the two occassions where it got things right,
+it feels like a lucky guess,
+as this was not justified via the markscheme's M1 mark.
 
-Example 132 (c) is failing for a slighly different reason, and so we'll consider this separately.
+Example 132 (c) is failing for a slighly different reason,
+and so we'll consider this separately.
 
-In general, as we get deeper into the evaluation iterations, it's often wise to consider multiple failure modes **at once**. Larger evals can be expensive to run, and you generally want to use **all** of the newly gained knowledge to try and improve your agent in the next evaluation run, even if this means making several unrelated changes to address several unrelated failure modes.
+In general,
+as we get deeper into the evaluation iterations,
+it's often wise to consider multiple failure modes **at once**.
+Larger evals can be expensive to run,
+and you generally want to use **all** of the newly gained knowledge to try and improve your agent in the next evaluation run,
+even if this means making several unrelated changes to address several unrelated failure modes.
 
 ## 🔍 Lenient Reasoning
 
-Let's perform the same deepe analysis for Example 132 (c), and see what's going wrong in this case.
+Let's perform the same deepe analysis for Example 132 (c),
+and see what's going wrong in this case.
 
 ### Example 132 (c)
 
@@ -199,7 +231,16 @@ Guidance: B1 for 'No', with partial reason.
 
 > `align_context` [2/2] ❌: The answer indicates that the graph alone does not fully prove the claim since other factors might be involved, which adequately meets the criteria for the mark scheme. [**Not true, the student doesn't mention "other factors might be involved" 💡**]
 
-In this case, it's not so much an error with understanding the mark types, it's more of an issue with falsely hallucinating things the student said, or perhaps being very liberal in the interpretation. Perhaps the agent is confusing the markscheme with the student answer. The student's answer "we cannot be certain this trend always holds true" is very different to "there may be other factors involved". The former (incorrect) assumes the trend does exist, but just might not continue, while the (correct) latter is a point about correlation != causation, indicating the apparent causation may not exist at all.
+In this case,
+it's not so much an error with understanding the mark types,
+it's more of an issue with falsely hallucinating things the student said,
+or perhaps being very liberal in the interpretation.
+Perhaps the agent is confusing the markscheme with the student answer.
+The student's answer "we cannot be certain this trend always holds true" is very different to "there may be other factors involved".
+The former (incorrect) assumes the trend does exist,
+but just might not continue,
+while the (correct) latter is a point about correlation != causation,
+indicating the apparent causation may not exist at all.
 
 ## 🔀 Better Align Guidelines
 
@@ -225,9 +266,15 @@ In this case, it's not so much an error with understanding the mark types, it's 
   />
 </div>
 
-Firstly, the recurring problem for **Example 207 and 261**  seems to be that the agent doesn't remember and/or understand the different types of marks (B1, SC1, M1 etc.). Let's be more explicit, and parse each sub-question markscheme for the different mark types, and add the explanations directly as part of the sub-question specific markschemes, and see if this improves performance.
+Firstly,
+the recurring problem for **Example 207 and 261**  seems to be that the agent doesn't remember and/or understand the different types of marks (B1, SC1, M1 etc.).
+Let's be more explicit,
+and parse each sub-question markscheme for the different mark types,
+and add the explanations directly as part of the sub-question specific markschemes,
+and see if this improves performance.
 
-Let's first create a dictionary with the mark type explanations, written in a more direct manner to accompany the subquestion-specific markschemes and to make it easier to parse:
+Let's first create a dictionary with the mark type explanations,
+written in a more direct manner to accompany the subquestion-specific markschemes and to make it easier to parse:
 
 ```python
 mark_types = {
@@ -238,7 +285,9 @@ mark_types = {
 }
 ```
 
-Let's then write a simple function to update each sub-question specific markscheme, prepending the markscheme with the relevant definitions from our `mark_types` dict, so that the agent has all the relevant information close at hand:
+Let's then write a simple function to update each sub-question specific markscheme,
+prepending the markscheme with the relevant definitions from our `mark_types` dict,
+so that the agent has all the relevant information close at hand:
 
 ```python
 @unify.traced(name="update_markscheme{subquestion}")
@@ -353,9 +402,12 @@ def call_agent(
 
 ## 🔀 Clarify Strict Reasoning
 
-We've just addressed the recurring problem for **Example 207 and 261**, but the failure for **Example 132 (c)** was quite different.
+We've just addressed the recurring problem for **Example 207 and 261**,
+but the failure for **Example 132 (c)** was quite different.
 
-Let's add another instructions to our `general_guidelines` variable, with an imaginary extra piece of guidance, to try and avoid the leniency we've observed in the marking of **Example 132 (c)**.
+Let's add another instructions to our `general_guidelines` variable,
+with an imaginary extra piece of guidance,
+to try and avoid the leniency we've observed in the marking of **Example 132 (c)**.
 
 ```
 general_guidelines = (
@@ -370,7 +422,8 @@ When students are explaining something in their answer, then their explanation m
 
 ## 🧪 Rerun Tests
 
-Now we've made *both* of these changes, let's re-run our evals to see if *either* of these changes were able to address the problems they're intended to resolve.
+Now we've made *both* of these changes,
+let's re-run our evals to see if *either* of these changes were able to address the problems they're intended to resolve.
 
 ```python {2}
 with unify.Experiment(
@@ -388,9 +441,11 @@ with unify.Experiment(
     )
 ```
 
-Our failure mechanisms are **exactly the same** as before, clearly the agent is still struggling to correctly reason about the different mark types.
+Our failure mechanisms are **exactly the same** as before,
+clearly the agent is still struggling to correctly reason about the different mark types.
 
-Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+Let's take a look at the traces,
+to ensure that the system message template has been implemented correctly,
 and each LLM call has the template variables in the system message populated correctly.
 
 <div

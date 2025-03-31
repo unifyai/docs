@@ -32,14 +32,20 @@ and see if we can work out why the agent might be failing on some examples 🕵�
   />
 </div>
 
-In terms of failures, let's take **Example 132** as an example. For this particular question, there are 6 sub-questions (a.i, a.ii, b.i, b.ii, b.iii, c), and we're asking the LLM to do a lot in a single shot:
+In terms of failures,
+let's take **Example 132** as an example.
+For this particular question,
+there are 6 sub-questions (a.i, a.ii, b.i, b.ii, b.iii, c),
+and we're asking the LLM to do a lot in a single shot:
 
 1. understand all 16 points in the general marking guidelines
 2. understand all 6 of the sub-questions
 3. understand all 6 of the student's answers to the sub-questions
 4. understand all 6 of the markscheme's reasoning for said sub-questions
 
-More importantly, the system prompt doesn't align the relevant information together. The agent receives the information like so:
+More importantly,
+the system prompt doesn't align the relevant information together.
+The agent receives the information like so:
 
 ```json
 {
@@ -49,7 +55,9 @@ More importantly, the system prompt doesn't align the relevant information toget
 }
 ```
 
-Let's update the system prompt, so the information is aligned better, more like the following:
+Let's update the system prompt,
+so the information is aligned better,
+more like the following:
 
 ```json
 {
@@ -188,7 +196,8 @@ def call_agent(
     return ret
 ```
 
-Let's also update our `evaluate` function, so that we pass the `sub_questions` into the `call_agent` function:
+Let's also update our `evaluate` function,
+so that we pass the `sub_questions` into the `call_agent` function:
 
 ```python {4,15}
 @unify.log
@@ -250,7 +259,8 @@ with unify.Experiment("align_context", overwrite=True), unify.Params(
 
 The mean error has now dropped to `0.3`.
 
-Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+Let's take a look at the traces,
+to ensure that the system message template has been implemented correctly,
 and each LLM call has the template variables in the system message populated correctly.
 
 <div
@@ -278,4 +288,5 @@ and each LLM call has the template variables in the system message populated cor
 It seems as though everything was implemented correctly,
 and the per-LLM system messages look good ✅
 
-Again, let's explore what's going wrong in the next iteration 🔁
+Again,
+let's explore what's going wrong in the next iteration 🔁
