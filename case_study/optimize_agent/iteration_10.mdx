@@ -42,7 +42,7 @@ Interestingly, the agent has made the *same mistake* as occurs in the "ground tr
 
 Let's try to fully clarify these points for the sub-question agent, and re-run the evals.
 
-```python
+``` {1-9}
 output_response_explanation = """
 You should populate the `reasoning` field with your general thoughts on each individual mark identified in the markscheme, and also a decision as to whether each of these mark should be awarded.
 
@@ -56,24 +56,27 @@ Finally, after you've given it a lot of thought, you should put the total number
 
 ## 🧪 Rerun Tests
 
-```python
-with unify.Experiment("clarify_method_marks"), unify.Params(
+```python {2}
+with unify.Experiment(
+    "clarify_method_marks",
+    overwrite=True,
+), unify.Params(
     subq_system_message=subq_system_message,
     mark_system_message=mark_system_message,
-    model=agent.model,
-    dataset="dataset_10"
+    dataset="TestSet10",
+    source=unify.get_source(),
 ):
     unify.map(
         evaluate,
         [
-             dict(
-                 **d.entries,
-                 _subq_system_message=subq_system_message,
-                 _mark_system_message=mark_system_message
+            dict(
+                **d.entries,
+                _subq_system_message=subq_system_message,
+                _mark_system_message=mark_system_message,
             )
-             for d in test_set_10
+            for d in test_set_10
         ],
-        name="Eval"
+        name="Evals",
     )
 ```
 
