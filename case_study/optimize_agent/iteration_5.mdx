@@ -111,71 +111,83 @@ The correct order, based on numerical values (3.5% = 0.035, 1/3 ≈ 0.333, 0.34 
 </Accordion>
 
 Clearly,
-the agent is really failing to pick up on the SC1 mark from the markscheme,
+the agent is really failing to pick up on the `SC1` mark from the markscheme,
 irrespective of the various parameter changes we've made across each experiment run.
 
 
 ### Example 261
 
-❓ Question [5 Marks]:
+<Accordion title="❓ Question [5 Marks]">
 
-> Peter makes a large amount of pink paint by mixing red and white paint in the ratio 2 : 3.
->
->   • Red paint costs £80 per 10 litres.  
->   • White paint costs £5 per 10 litres.  
->   • Peter sells his pink paint in 10-litre tins for £60 per tin.
->
-> Calculate how much profit he makes for each tin he sells.  
-> You must show your working.
->
-> £ …………………………………………
+Peter makes a large amount of pink paint by mixing red and white paint in the ratio 2 : 3.
 
-📝 Student's Answer:
+  • Red paint costs £80 per 10 litres.  
+  • White paint costs £5 per 10 litres.  
+  • Peter sells his pink paint in 10-litre tins for £60 per tin.
 
-> Peter needs 4 litres of red paint and 6 litres of white paint for every 10-litre batch (because 2 out of 5 parts is red, 3 out of 5 parts is white).
+Calculate how much profit he makes for each tin he sells.  
+You must show your working.
 
-☑️ Markscheme:
+£ …………………………………………
+</Accordion>
 
-> 25 with correct working (5 marks)
->
-> "Correct working" requires evidence of at least M1M1
-> - M1 for 10 × (2/5) = 4 litres red or for 10 × (3/5) = 6 litres white
-> - M1 for red costs £8 per litre or for white costs £0.50 per litre
-> - M1 for cost of one 10-litre can is their 4 × their 8 + their 6 × their 0.5
-> - M1 for 60 – their 35
->
-> Alternative method:
-> - M1 for 2 : 3 = 20 litres red : 30 litres white
-> - M1 for 2 × £80 + 3 × £5 = £175
-> - M1 for (their 175) ÷ 5 = 35
-> - M1 for 60 – their 35
-> - M1 for cost of one 10-litre can is their 4 × their 8 + their 6 × their 0.5
->
-> If 0 or 1 scored, instead award SC2 for answer 25 with no working or insufficient working
+<Accordion title="📝 Student's Answer">
+Peter needs 4 litres of red paint and 6 litres of white paint for every 10-litre batch (because 2 out of 5 parts is red, 3 out of 5 parts is white).
+</Accordion>
 
-✅ Correct Marks [1/5] Rationale:
+<Accordion title="☑️ Markscheme">
+25 with correct working (5 marks)
 
-> Awarding 1 mark (M1) for correctly finding that a 10-litre tin contains 4 litres of red and 6 litres of white from the 2:3 ratio. No further steps towards the final profit are shown, so only this 1 mark is earned.
+"Correct working" requires evidence of at least M1M1
+- M1 for 10 × (2/5) = 4 litres red or for 10 × (3/5) = 6 litres white
+- M1 for red costs £8 per litre or for white costs £0.50 per litre
+- M1 for cost of one 10-litre can is their 4 × their 8 + their 6 × their 0.5
+- M1 for 60 – their 35
 
-🤖 Predicted Marks [x/5] Rationale (with added insights 💡):
+Alternative method:
+- M1 for 2 : 3 = 20 litres red : 30 litres white
+- M1 for 2 × £80 + 3 × £5 = £175
+- M1 for (their 175) ÷ 5 = 35
+- M1 for 60 – their 35
+- M1 for cost of one 10-litre can is their 4 × their 8 + their 6 × their 0.5
 
-> `simple_agent` [1/5] ✅: The full solution should involve several steps:
-> - Determining that in a 10‐litre mix, Peter uses 4 litres of red (2/5 of 10) and 6 litres of white (3/5 of 10).
-> - Calculating the cost per litre for each colour:
->  - Red: £80/10 = £8 per litre, so 4 litres costs 4 × £8 = £32.
->  - White: £5/10 = £0.50 per litre, so 6 litres costs 6 × £0.50 = £3.
-> - Adding the costs gives a total cost of £32 + £3 = £35.
-> - Subtracting this from the selling price, the profit per tin is £60 − £35 = £25.
->
-> The student's answer only identifies the paint volumes (4 litres red and 6 litres white) without completing the cost and profit calculations. [**No reference to M1 💡**]
+If 0 or 1 scored, instead award SC2 for answer 25 with no working or insufficient working
+</Accordion>
 
-> `add_markscheme` [0/5] ❌: The student's response only states that Peter needs 4 litres of red paint and 6 litres of white paint per 10-litre batch. It does not show any further working or provide the calculation of the cost of the paints or the profit per tin. Therefore, the answer does not meet the full requirements for the calculation and is awarded 0 marks.  [**No reference to M1 💡**]
+<Accordion title="✅ Correct Marks [1/5] Rationale">
+Awarding 1 mark (M1) for correctly finding that a 10-litre tin contains 4 litres of red and 6 litres of white from the 2:3 ratio. No further steps towards the final profit are shown, so only this 1 mark is earned.
+</Accordion>
 
-> `add_marking_guidelines` [1/5] ✅: The student only shows that a 10‐litre tin requires 4 litres red paint and 6 litres white paint (i.e. the ratio part), but they do not continue to use these figures to work out the cost or the profit. This is an incomplete answer which does not answer the question. [**No reference to M1 💡**]
+<Accordion title="🤖 Predicted Marks [x/5] Rationale (with added insights💡)">
 
-> `add_structured_output` [0/5] ❌: The student's work shows part of the method by correctly determining that a 10‐litre batch contains 4 litres of red paint and 6 litres of white paint. However, the answer does not extend to calculate the cost of the red and white paint, nor does it compute the final profit per tin by subtracting the total cost from the selling price. According to the mark scheme, a correct final answer of £25 with full working is needed for 5 marks. Since the student has given only part of the working (the mix ratio) and omitted the critical profit calculation, the answer deserves only credit for knowing the ratio. In such cases, with insufficient working, the mark scheme permits awarding SC2 (2 marks) for an answer that states the correct profit value by implication. As the final profit figure is missing, awarding 2 marks is appropriate. [**No reference to M1 💡**]
+<Accordion title="simple_agent [1/5] ✅">
+The full solution should involve several steps:
+- Determining that in a 10‐litre mix, Peter uses 4 litres of red (2/5 of 10) and 6 litres of white (3/5 of 10).
+- Calculating the cost per litre for each colour:
+ - Red: £80/10 = £8 per litre, so 4 litres costs 4 × £8 = £32.
+ - White: £5/10 = £0.50 per litre, so 6 litres costs 6 × £0.50 = £3.
+- Adding the costs gives a total cost of £32 + £3 = £35.
+- Subtracting this from the selling price, the profit per tin is £60 − £35 = £25.
 
-> `align_context` [0/5] ❌: The answer only shows that Peter uses 4 litres of red paint and 6 litres of white paint in a 10‑litre batch. However, the question asks for the profit per tin, which requires further calculation including the cost of the paints and then subtracting from the selling price (£60). No profit calculation or final numerical answer for the profit is given. As a result, none of the required steps for computing profit were provided. Therefore, no marks can be awarded. [**No reference to M1 💡**]
+The student's answer only identifies the paint volumes (4 litres red and 6 litres white) without completing the cost and profit calculations. [**No reference to M1 💡**]
+</Accordion>
+
+<Accordion title="add_markscheme [0/5] ❌">
+The student's response only states that Peter needs 4 litres of red paint and 6 litres of white paint per 10-litre batch. It does not show any further working or provide the calculation of the cost of the paints or the profit per tin. Therefore, the answer does not meet the full requirements for the calculation and is awarded 0 marks.  [**No reference to M1 💡**]
+</Accordion>
+
+<Accordion title="add_marking_guidelines [1/5] ✅">
+The student only shows that a 10‐litre tin requires 4 litres red paint and 6 litres white paint (i.e. the ratio part), but they do not continue to use these figures to work out the cost or the profit. This is an incomplete answer which does not answer the question. [**No reference to M1 💡**]
+</Accordion>
+
+<Accordion title="add_structured_output [0/5] ❌">
+The student's work shows part of the method by correctly determining that a 10‐litre batch contains 4 litres of red paint and 6 litres of white paint. However, the answer does not extend to calculate the cost of the red and white paint, nor does it compute the final profit per tin by subtracting the total cost from the selling price. According to the mark scheme, a correct final answer of £25 with full working is needed for 5 marks. Since the student has given only part of the working (the mix ratio) and omitted the critical profit calculation, the answer deserves only credit for knowing the ratio. In such cases, with insufficient working, the mark scheme permits awarding SC2 (2 marks) for an answer that states the correct profit value by implication. As the final profit figure is missing, awarding 2 marks is appropriate. [**No reference to M1 💡**]
+</Accordion>
+
+<Accordion title="align_context [0/5] ❌">
+The answer only shows that Peter uses 4 litres of red paint and 6 litres of white paint in a 10‑litre batch. However, the question asks for the profit per tin, which requires further calculation including the cost of the paints and then subtracting from the selling price (£60). No profit calculation or final numerical answer for the profit is given. As a result, none of the required steps for computing profit were provided. Therefore, no marks can be awarded. [**No reference to M1 💡**]
+</Accordion>
+</Accordion>
 
 Again,
 regardless of our parameter variations,
@@ -202,41 +214,55 @@ and see what's going wrong in this case.
 
 ### Example 132 (c)
 
-❓ Question [2 Marks]:
+<Accordion title="❓ Question [2 Marks]">
+A newspaper headline reads: 'High temperatures make more people buy ice cream!' Does the graph above prove this claim? Give a reason for your decision.
+</Accordion>
 
-> A newspaper headline reads: 'High temperatures make more people buy ice cream!' Does the graph above prove this claim? Give a reason for your decision.
+<Accordion title="📝 Student's Answer">
+No. The graph alone does not completely prove the claim, because we cannot be certain this trend always holds true in all situations.
+</Accordion>
 
-📝 Student's Answer:
-
-> No. The graph alone does not completely prove the claim, because we cannot be certain this trend always holds true in all situations.
-
-☑️ Markscheme:
-
-> Answer: No, because there may be other factors involved (2 marks)
+<Accordion title="☑️ Markscheme">
+Answer: No, because there may be other factors involved (2 marks)
 Guidance: B1 for 'No', with partial reason.
+</Accordion>
 
-✅ Correct Marks [1/2] Rationale:
+<Accordion title="✅ Correct Marks [1/2] Rationale">
+The mark scheme gives 2 marks if the student states "No, there may be other factors involved." Here, only a partial reason is given, so 1 mark is awarded for denying that the graph proves the claim but not fully explaining other possible factors.
+</Accordion>
 
-> The mark scheme gives 2 marks if the student states "No, there may be other factors involved." Here, only a partial reason is given, so 1 mark is awarded for denying that the graph proves the claim but not fully explaining other possible factors.
+<Accordion title="🤖 Predicted Marks [x/2] Rationale (with added insights💡)">
 
-🤖 Predicted Marks [x/2] Rationale (with added insights 💡):
+<Accordion title="simple_agent [2/2] ❌">
+The response correctly explains that the graph, by itself, does not prove the claim as it only shows a correlation under the conditions measured. [**No mention of other factors, which is needed 💡**]
+</Accordion>
 
-> `simple_agent` [2/2] ❌: The response correctly explains that the graph, by itself, does not prove the claim as it only shows a correlation under the conditions measured. [**No mention of other factors, which is needed 💡**]
+<Accordion title="add_markscheme [2/2] ❌">
+[**No rationale given at all! 💡**]
+</Accordion>
 
-> `add_markscheme` [2/2] ❌: [**No rationale given at all! 💡**]
+<Accordion title="add_marking_guidelines [2/2] ❌">
+[**No rationale given at all! 💡**]
+</Accordion>
 
-> `add_marking_guidelines` [2/2] ❌: [**No rationale given at all! 💡**]
+<Accordion title="add_structured_output [2/2] ❌">
+The explanation correctly states that the graph alone does not prove the claim due to other potential factors affecting ice cream sales. This answer meets the criteria for 2 marks. [**Not true, the student doesn't mention "other potential factors affecting ice cream sales" 💡**]
+</Accordion>
 
-> `add_structured_output` [2/2] ❌: The explanation correctly states that the graph alone does not prove the claim due to other potential factors affecting ice cream sales. This answer meets the criteria for 2 marks. [**Not true, the student doesn't mention "other potential factors affecting ice cream sales" 💡**]
+<Accordion title="align_context [2/2] ❌">
+The answer indicates that the graph alone does not fully prove the claim since other factors might be involved, which adequately meets the criteria for the mark scheme. [**Not true, the student doesn't mention "other factors might be involved" 💡**]
+</Accordion>
 
-> `align_context` [2/2] ❌: The answer indicates that the graph alone does not fully prove the claim since other factors might be involved, which adequately meets the criteria for the mark scheme. [**Not true, the student doesn't mention "other factors might be involved" 💡**]
+</Accordion>
 
 In this case,
 it's not so much an error with understanding the mark types,
 it's more of an issue with falsely hallucinating things the student said,
 or perhaps being very liberal in the interpretation.
+
 Perhaps the agent is confusing the markscheme with the student answer.
 The student's answer "we cannot be certain this trend always holds true" is very different to "there may be other factors involved".
+
 The former (incorrect) assumes the trend does exist,
 but just might not continue,
 while the (correct) latter is a point about correlation != causation,
