@@ -7,7 +7,9 @@ The full script for running this iteration can be found
 
 ## 🔍 Method Marks Confusion
 
-All of the prior failures now seem to have been resolved, but we have a new regression for **Example 215 (b)**. Let's take a look.
+All of the prior failures now seem to have been resolved,
+but we have a new regression for **Example 215 (b)**.
+Let's take a look.
 
 **Example 215 (b)**
 
@@ -34,13 +36,24 @@ M1 for one correct subtraction of two boxes
 
 > The candidate's final numerical answer is correct (the missing boxes are 8, 13, and 21), matching the answer in the mark scheme. However, the mark scheme specifically awards M1 for showing a correct subtraction (i.e. working that reverses the addition rule), which is a required part of the method. Since the candidate only provided the final answer without demonstrating any subtraction (or any equivalent working) to show the method, no evidence is provided to award the M1 mark. As A marks (for an accurate answer) depend on obtaining the method mark, no further marks can be awarded. Therefore, despite the correct final answer, the lack of required working means no marks should be awarded.
 
-This is an interesting failure mode. Interestly, the justification for the "correct" (ground truth) marks is wrong. There is no **A1** mark for this question (which *would* depend on a method mark). This is irrelevant in terms of the agent failure (the agent doesn't know the correct marks or rationale), but it's still an interesting observsation regarding our "ground truth" data.
+This is an interesting failure mode.
+The justification for the "correct" (ground truth) marks is actually wrong.
+There is no **A1** mark for this question (which *would* depend on a method mark).
+This is irrelevant in terms of the agent failure (the agent doesn't know the correct marks or rationale),
+but it's still an interesting observsation regarding our "ground truth" data.
 
-Interestingly, the agent has made the *same mistake* as occurs in the "ground truth" rationale. Our agent presumes the existence of an **A** mark where none were stated. It seems like the agent doesn't understand that correct answers should always earn full marks, unless otherwise explicitly stated. **M1** marks are not necessary to achieve full marks in such cases, unless an **A** mark is specifically referenced.
+Interestingly,
+the agent has made the *same mistake* as occurs in the "ground truth" rationale.
+Our agent presumes the existence of an **A** mark where none were stated.
+It seems like the agent doesn't understand that correct answers should always earn full marks,
+unless otherwise explicitly stated.
+**M1** marks are not necessary to achieve full marks in such cases,
+unless an **A** mark is specifically referenced.
 
 ## 🔀 Clarify Method + Answer Marks
 
-Let's try to fully clarify these points for the sub-question agent, and re-run the evals.
+Let's try to fully clarify these points for the sub-question agent,
+and re-run the evals.
 
 ``` {1-9}
 output_response_explanation = """
@@ -80,7 +93,8 @@ with unify.Experiment(
     )
 ```
 
-Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+Let's take a look at the traces,
+to ensure that the system message template has been implemented correctly,
 and each LLM call has the template variables in the system message populated correctly.
 
 <div
@@ -108,4 +122,5 @@ and each LLM call has the template variables in the system message populated cor
 It seems as though everything was implemented correctly,
 and the per-LLM system messages look good ✅
 
-Also, we've finally got all 10/10 tests passing perfectly 🎉
+Also,
+we've finally got all 10/10 tests passing perfectly 🎉

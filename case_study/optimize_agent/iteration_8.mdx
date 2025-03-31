@@ -7,9 +7,12 @@ The full script for running this iteration can be found
 
 ## 🔍 Lack of Global Context
 
-These updates have actually regressed the overall performance, with us now having a mean error of `0.5`.
+These updates have actually regressed the overall performance,
+with us now having a mean error of `0.5`.
 
-Maybe the purely local reasoning has some shortcomings. Let's focus on one of the **new regressions**, to understand why our latest change has distrupted the agent where it was previously very consistently correct.
+Maybe the purely local reasoning has some shortcomings.
+Let's focus on one of the **new regressions**,
+to understand why our latest change has distrupted the agent where it was previously very consistently correct.
 
 **Example 20 (b)**
 
@@ -53,7 +56,8 @@ Let's look at some of the previous justifications for **not** awarding the mark,
 
 > `mark_type_reasoning` [0/1] ✅: The explanation provided does not address the key issue mentioned in the mark scheme (the restriction of no withdrawals for 3 years) and instead gives a non sequitur reason that the bank might 'keep the money forever.' This does not meet the required rationale, so no mark is awarded.
 
-Perhaps preventing the agent from having access to the full question prevents it from using "common sense" and realizing how "silly" the proposed answer is, in light of the overall question and the information provided to the student.
+Perhaps preventing the agent from having access to the full question prevents it from using "common sense" and realizing how "silly" the proposed answer is,
+in light of the overall question and the information provided to the student.
 
 Maybe strict adherence to the markscheme alone without the full context is prohibitive.
 
@@ -109,7 +113,8 @@ The markscheme for this specific question is:
 )
 ```
 
-Let's also add a general explanation for the prior context, in cases where it is included.
+Let's also add a general explanation for the prior context,
+in cases where it is included.
 
 ```
 prior_context_exp = """
@@ -220,7 +225,8 @@ def call_agent(
     return rets
 ```
 
-Finally, let's update `evaluate` accordingly.
+Finally,
+let's update `evaluate` accordingly.
 
 ```python {4-5,17-18}
 @unify.log
@@ -287,9 +293,13 @@ with unify.Experiment(
     )
 ```
 
-Great, so we've fixed the new regressions, but again we're back at the same three failures, failing for the same reason.
+Great,
+so we've fixed the new regressions,
+but again we're back at the same three failures,
+failing for the same reason.
 
-Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+Let's take a look at the traces,
+to ensure that the system message template has been implemented correctly,
 and each LLM call has the template variables in the system message populated correctly.
 
 <div
@@ -317,4 +327,5 @@ and each LLM call has the template variables in the system message populated cor
 It seems as though everything was implemented correctly,
 and the per-LLM system messages look good ✅
 
-Again, let's explore what's going wrong in the next iteration 🔁
+Again,
+let's explore what's going wrong in the next iteration 🔁

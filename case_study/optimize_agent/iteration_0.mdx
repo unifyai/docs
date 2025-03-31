@@ -40,7 +40,8 @@ agent = unify.Unify("o3-mini@openai", traced=True, cache="read-only")
 ```
 
 Let's also download a `.cache.json` file which was previously generated whilst running through this demo.
-This avoids the need to make any real LLM calls, saving time and money,
+This avoids the need to make any real LLM calls,
+saving time and money,
 and it also ensures the walkthrough is fully deterministic.
 
 If you'd rather go down **your own unique iteration journey**,
@@ -87,7 +88,8 @@ As the very final part of your response, simply provide the number of marks on a
 
 In our test set,
 the student answer is stored as a dictionary with keys for each sub-question.
-When no sub-questions are present, then a dummy "_" key is used instead (to preserve the dict type for all answers).
+When no sub-questions are present,
+then a dummy "_" key is used instead (to preserve the dict type for all answers).
 Rather than unpacking the dictionary directly into the system message,
 let's instead add a simple "pretty print" function to format this more elegantly.
 
@@ -238,9 +240,11 @@ The `unify.Params()` term sets the parameters which are held constant throughout
   />
 </div>
 
-By looking in our interface, we can see that we have some failures, with a mean error of `0.8` across the ten examples.
+By looking in our interface, we can see that we have some failures,
+with a mean error of `0.8` across the ten examples.
 
-Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+Let's take a look at the traces,
+to ensure that the system message template has been implemented correctly,
 and each LLM call has the template variables in the system message populated correctly.
 
 <div
@@ -268,4 +272,6 @@ and each LLM call has the template variables in the system message populated cor
 It seems as though everything was implemented correctly,
 and the per-LLM system messages look good ✅
 
-So, for the next iteration, we'll need to dive in and understand why the agent is failing to make the correct prediction in some cases 🔁
+So,
+for the next iteration,
+we'll need to dive in and understand why the agent is failing to make the correct prediction in some cases 🔁

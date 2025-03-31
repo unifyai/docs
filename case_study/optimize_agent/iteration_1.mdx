@@ -33,7 +33,8 @@ Let's take a look at our results in the table.
 
 ### Example 215
 
-**Example 215** has the largest error. Let's take a look at what's going wrong.
+**Example 215** has the largest error.
+Let's take a look at what's going wrong.
 
 <Accordion title="❓ Question [8 Marks]">
 In this row of boxes, you start with 5 and 7.
@@ -89,7 +90,8 @@ Complete these rows of boxes using the rule shown above.
 (d) By setting 2a + 3b = 57, we substitute a = 6 to get 12 + 3b = 57, so b = 15. Then, adding consecutively gives 6, 15, 21, 37, with the final box stated as 57 in the question.
 </Accordion>
 
-Based on these two, it seems as though there is a small discrepency in the text-based box formatting in the question given to the agent,
+Based on these two,
+it seems as though there is a small discrepency in the text-based box formatting in the question given to the agent,
 with the question presenting *four* boxes per question but the true number being *five*.
 We can verify this by looking at the original page,
 which can be found
@@ -131,9 +133,15 @@ Total marks awarded: 0 + 0 + 1 + 0 = 1
 1
 </Accordion>
 
-Looking at this failure, it's obvious that the model would benefit from having the **markscheme** included in the context, so that it knows what the correct answers are, and how to award the marks.
+Looking at this failure,
+it's obvious that the model would benefit from having the **markscheme** included in the context,
+so that it knows what the correct answers are,
+and how to award the marks.
 
-Without the markscheme, the agent is unable to notice this discrepency, and therefore presumes that a total of *four* numbers are reqired for each answer, instead of the necessary *five*.
+Without the markscheme,
+the agent is unable to notice this discrepency,
+and therefore presumes that a total of *four* numbers are reqired for each answer,
+instead of the necessary *five*.
 
 ## 🔀 Add Markscheme
 
@@ -260,9 +268,12 @@ with unify.Experiment("add_markscheme", overwrite=True), unify.Params(
     )
 ```
 
-Great! Our mean error has gone down from 0.8 to 0.3, we're definitely making progress 💪
+Great!
+Our mean error has gone down from 0.8 to 0.3,
+we're definitely making progress 💪
 
-Let's take a look at the traces, to ensure that the system message template has been implemented correctly,
+Let's take a look at the traces,
+to ensure that the system message template has been implemented correctly,
 and each LLM call has the template variables in the system message populated correctly.
 
 <div
@@ -290,4 +301,5 @@ and each LLM call has the template variables in the system message populated cor
 It seems as though everything was implemented correctly,
 and the per-LLM system messages look good ✅
 
-We still need to try to address the remaining errors though. Let's explore what's going wrong in another iteration.
+We still need to try to address the remaining errors though.
+Let's explore what's going wrong in another iteration.
