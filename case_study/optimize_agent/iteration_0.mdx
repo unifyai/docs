@@ -206,12 +206,13 @@ with unify.Experiment("simple_agent", overwrite=True), unify.Params(
 
 The `unify.Experiment()` term creates an `"experiment"` parameter in the context,
 with value `"simple_agent"` in this case.
+
 The `overwrite=True` argument will remove all prior logs with experiment parameter equal to `"simple_agent"`.
 This is useful if you would like to re-run an experiment (clearing any previous runs).
 
 If you would like to *accumulate* data for a specific experiment,
 then the `overwrite` flag should *not* be set,
-and new logs will simply be added without deleting any prior logs.
+and new logs will simply be added to the experiment without deleting any prior logs.
 
 The `unify.Params()` term sets the parameters which are held constant throughout the experiment.
 
