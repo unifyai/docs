@@ -14,47 +14,66 @@ Maybe the purely local reasoning has some shortcomings.
 Let's focus on one of the **new regressions**,
 to understand why our latest change has distrupted the agent where it was previously very consistently correct.
 
-**Example 20 (b)**
+### Example 20 (b)
 
-❓ Question [1 Mark]:
+<Accordion title="❓ Question [1 Mark]">
+Explain why he might not want to use Account A.
+</Accordion>
 
-> Explain why he might not want to use Account A.
+<Accordion title="📝 Student's Answer">
+He might not want to use Account A because the bank might keep the money forever and he could lose it.
+</Accordion>
 
-📝 Student's Answer:
+<Accordion title="☑️ Markscheme">
+He may not want to leave it there for 3 years. Accept any valid reason.
+</Accordion>
 
-> He might not want to use Account A because the bank might keep the money forever and he could lose it.
+<Accordion title="✅ Correct Marks [0/1] Rationale">
+The markscheme awards 1 mark for a valid reason such as not wanting to lock away funds for 3 years. Here, the stated reason is irrelevant and does not accurately reflect the restrictions of Account A.
+</Accordion>
 
-☑️ Markscheme:
+<Accordion title="🤖 Predicted Marks [1/1] ❌ Rationale">
+The mark scheme awards 1 mark for any valid reason why the person might not want to leave the money in Account A for 3 years. The student's answer, although phrasing it as the bank might keep the money forever and thus he could lose it, is a valid reason to be cautious, even though it doesn't mention the explicit time period of 3 years. This interpretation sufficiently aligns with the mark scheme's requirement of a valid reason. Therefore, the mark is awarded.
+</Accordion>
 
-> He may not want to leave it there for 3 years. Accept any valid reason.
+Clearly,
+the agent is now taking some liberties with what constitutes a "valid reason".
+It's unclear why the agent is only making these mistakes now.
 
-✅ Correct Marks [0/1] Rationale:
+Let's look at some of the previous justifications for **not** awarding the mark,
+from the previous runs.
 
-> The markscheme awards 1 mark for a valid reason such as not wanting to lock away funds for 3 years. Here, the stated reason is irrelevant and does not accurately reflect the restrictions of Account A.
+<Accordion title="🤖 Predicted Marks [x/1] Rationales">
 
-🤖 Predicted Marks [1/1] ❌ Rationale:
+<Accordion title="simple_agent [0/1] ✅">
+The answer should explain that although Account A gives slightly more money, Derrick might not want this account because his money is tied up for three years (i.e. it has poor liquidity). The student's explanation about the bank "keeping the money forever" is not an acceptable financial rationale.
+</Accordion>
 
-> The mark scheme awards 1 mark for any valid reason why the person might not want to leave the money in Account A for 3 years. The student's answer, although phrasing it as the bank might keep the money forever and thus he could lose it, is a valid reason to be cautious, even though it doesn't mention the explicit time period of 3 years. This interpretation sufficiently aligns with the mark scheme's requirement of a valid reason. Therefore, the mark is awarded.
+<Accordion title="add_markscheme [0/1] ✅">
+The explanation provided is not a valid reason and does not address the restriction of no withdrawals for three years. Therefore, no mark can be awarded for this part either.
+</Accordion>
 
-Clearly, the agent is now taking some liberties with what constitutes a "valid reason". It's unclear why the agent is only making these mistakes now.
+<Accordion title="add_marking_guidelines [0/1] ✅">
+The explanation given ("because the bank might keep the money forever and he could lose it") does not correctly address why he might not want to use Account A (namely, that his money is locked away for 3 years with no withdrawals allowed).
+</Accordion>
 
-Let's look at some of the previous justifications for **not** awarding the mark, from the previous runs.
+<Accordion title="add_structured_output [0/1] ✅">
+The answer needed to explain why Account A might not be desirable, which is because funds are locked in for three years and withdrawals are not allowed until the end of the period. The student's answer states that the bank might keep the money forever and he could lose it, which does not address the actual restriction (lack of liquidity). This is an irrelevant or incorrect reason and does not meet the mark scheme.
+</Accordion>
 
-🤖 Predicted Marks [x/1] Rationales:
+<Accordion title="align_context [0/1] ✅">
+The mark scheme accepts any valid reason such as not being able to withdraw the money because it is locked in for 3 years. The candidate's answer – that the bank might 'keep the money forever' and he could lose it – is not a valid explanation for the funds being inaccessible. It does not clearly express that his money is tied up for 3 years. Therefore, this explanation does not meet the requirement and no mark should be awarded.
+</Accordion>
 
-> `simple_agent` [0/1] ✅: The answer should explain that although Account A gives slightly more money, Derrick might not want this account because his money is tied up for three years (i.e. it has poor liquidity). The student's explanation about the bank "keeping the money forever" is not an acceptable financial rationale.
+<Accordion title="align_guidelines_and_clarify_reasoning [0/1] ✅">
+The answer to part (b) should explain that Account A requires the money to be locked in for three years which might be a disadvantage if immediate access is desired. The student's explanation – that the bank might 'keep the money forever' – does not address the real issue of the restriction on withdrawals. As the explanation provided is not a valid reason as per the mark scheme, no marks should be awarded for this part.
+</Accordion>
 
-> `add_markscheme` [0/1] ✅: The explanation provided is not a valid reason and does not address the restriction of no withdrawals for three years. Therefore, no mark can be awarded for this part either.
+<Accordion title="mark_type_reasoning [0/1] ✅">
+The explanation provided does not address the key issue mentioned in the mark scheme (the restriction of no withdrawals for 3 years) and instead gives a non sequitur reason that the bank might 'keep the money forever.' This does not meet the required rationale, so no mark is awarded.
+</Accordion>
 
-> `add_marking_guidelines` [0/1] ✅: The explanation given ("because the bank might keep the money forever and he could lose it") does not correctly address why he might not want to use Account A (namely, that his money is locked away for 3 years with no withdrawals allowed).
-
-> `add_structured_output` [0/1] ✅: The answer needed to explain why Account A might not be desirable, which is because funds are locked in for three years and withdrawals are not allowed until the end of the period. The student's answer states that the bank might keep the money forever and he could lose it, which does not address the actual restriction (lack of liquidity). This is an irrelevant or incorrect reason and does not meet the mark scheme.
-
-> `align_context` [0/1] ✅: The mark scheme accepts any valid reason such as not being able to withdraw the money because it is locked in for 3 years. The candidate's answer – that the bank might 'keep the money forever' and he could lose it – is not a valid explanation for the funds being inaccessible. It does not clearly express that his money is tied up for 3 years. Therefore, this explanation does not meet the requirement and no mark should be awarded.
-
-> `align_guidelines_and_clarify_reasoning` [0/1] ✅: The answer to part (b) should explain that Account A requires the money to be locked in for three years which might be a disadvantage if immediate access is desired. The student's explanation – that the bank might 'keep the money forever' – does not address the real issue of the restriction on withdrawals. As the explanation provided is not a valid reason as per the mark scheme, no marks should be awarded for this part.
-
-> `mark_type_reasoning` [0/1] ✅: The explanation provided does not address the key issue mentioned in the mark scheme (the restriction of no withdrawals for 3 years) and instead gives a non sequitur reason that the bank might 'keep the money forever.' This does not meet the required rationale, so no mark is awarded.
+</Accordion>
 
 Perhaps preventing the agent from having access to the full question prevents it from using "common sense" and realizing how "silly" the proposed answer is,
 in light of the overall question and the information provided to the student.
