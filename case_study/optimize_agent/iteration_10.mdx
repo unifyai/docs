@@ -149,37 +149,7 @@ with unify.Experiment(
     )
 ```
 
-Let's take a look at the traces,
-to ensure that the system message template has been implemented correctly,
-and each LLM call has the template variables in the system message populated correctly.
-
-<div
-  style={{
-    position: 'relative',
-    paddingBottom: '56.25%', // 16:9 ratio
-    height: 0,
-  }}
->
-  <iframe
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      border: 'none'
-    }}
-    src="https://www.youtube.com/embed/{placeholder}"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-  />
-</div>
-
-It seems as though everything was implemented correctly,
-and the per-LLM system messages look good ✅
-
-Also,
-we've finally got all 10/10 tests passing perfectly 🎉
+We've finally got all 10/10 tests passing perfectly 🎉
 
 If we were to continue optimizing our agent,
 we would expand the test set to `"TestSet20"` and continue iterating,
