@@ -113,6 +113,7 @@
                     "pages": [
                         "interfaces/overview",
                         "interfaces/basics",
+                        "interfaces/editors",
                         "interfaces/tables",
                         "interfaces/views",
                         "interfaces/plots"
