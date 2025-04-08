@@ -10,6 +10,31 @@ The full script for running this iteration can be found
 These updates have actually regressed the overall performance,
 with us now having a mean error of `0.5`.
 
+As usual,
+let's take a look and explore why the agent might be failing on the remaining examples 🕵️
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%', // 16:9 ratio
+    height: 0,
+  }}
+>
+  <iframe
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 'none'
+    }}
+    src="https://www.youtube.com/embed/zRRuTegDja0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div>
+
 Maybe the purely local reasoning has some shortcomings.
 Let's focus on one of the **new regressions**,
 to understand why our latest change has distrupted the agent where it was previously very consistently correct.
