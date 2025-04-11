@@ -5941,6 +5941,17 @@
                             }
                         ],
                         "title": "Context"
+                    },
+                    "color": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Color"
                     }
                 },
                 "type": "object",
@@ -6010,6 +6021,17 @@
                         "type": "boolean",
                         "title": "Visible",
                         "default": true
+                    },
+                    "color": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Color"
                     },
                     "tab": {
                         "anyOf": [
@@ -6318,6 +6340,17 @@
                             }
                         ],
                         "title": "Plot Group By"
+                    },
+                    "plot_group_by_colors": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Plot Group By Colors"
                     },
                     "bin_count": {
                         "anyOf": [
