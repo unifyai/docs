@@ -1,0 +1,32 @@
+---
+title: 'flexible_deepcopy'
+---
+
+```python
+def flexible_deepcopy(
+    obj: Any,
+    on_fail: str = "raise",
+    _memo: Dict[int, Any] | None = None,
+) -> Any:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e28bc2e4b6934a61ffedbc301378a5eed39a34f2/unify/utils/helpers.py#L145)</p>
+
+Perform a deepcopy that tolerates un‑copyable elements.Parameters
+----------
+obj : Any
+The object you wish to copy.
+on_fail : {'raise', 'skip', 'shallow'}, default 'raise'
+• 'raise'   – re‑raise copy error (standard behaviour).
+• 'skip'    – drop the offending element from the result.
+• 'shallow' – insert the original element unchanged.
+_memo : dict or None (internal)
+Memoisation dict to preserve identity & avoid infinite recursion.Returns
+-------
+Any
+A deep‑copied version of *obj*, modified per *on_fail* strategy.Raises
+------
+ValueError
+If *on_fail* is not one of the accepted values.
+Exception
+Re‑raises whatever copy error occurred when *on_fail* == 'raise'.
