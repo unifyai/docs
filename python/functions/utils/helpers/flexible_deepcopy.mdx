@@ -6,11 +6,11 @@ title: 'flexible_deepcopy'
 def flexible_deepcopy(
     obj: Any,
     on_fail: str = "raise",
-    _memo: Dict[int, Any] | None = None,
+    _memo: Optional[Dict[int, Any]] = None,
 ) -> Any:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/32702a19eac726600ea5a48b954f7eeb022a64ab/unify/utils/helpers.py#L149)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1c95b06aaaf8340753437254188440bc3d6ef5f5/unify/utils/helpers.py#L149)</p>
 
 Perform a deepcopy that tolerates un‑copyable elements.Parameters
 ----------
