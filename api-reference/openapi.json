@@ -5208,8 +5208,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -5923,6 +5923,30 @@
                         ],
                         "title": "From Ids",
                         "description": "Log IDs to include (string or key->IDs dict)."
+                    },
+                    "limit": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Limit",
+                        "description": "Limit the number of logs to include."
+                    },
+                    "offset": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Offset",
+                        "description": "Offset the number of logs to include."
                     },
                     "exclude_ids": {
                         "anyOf": [
