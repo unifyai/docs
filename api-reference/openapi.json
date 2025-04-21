@@ -2306,7 +2306,7 @@
                     "Contexts"
                 ],
                 "summary": "Add Logs To Context",
-                "description": "Adds existing logs to a context within a project. The logs must already exist\nin the project and can be specified by their IDs.\nThe same logs can be associated with multiple contexts.\n\nThe context_name can be provided as a string or as an object with a name field.\nIf the context doesn't exist, it will be created automatically.",
+                "description": "Adds existing logs to a context within a project. The logs must already exist\nin the project and can be specified by their IDs or by log_args criteria.\nThe same logs can be associated with multiple contexts.\n\nThe context_name can be provided as a string or as an object with a name field.\nIf the context doesn't exist, it will be created automatically.\n\nIf copy=True, new copies of the logs will be created and added to the context.\nIf copy=False (default), the existing logs will be associated with the context.",
                 "operationId": "add_logs_to_context_v0_project__project_name__contexts_add_logs_post",
                 "security": [
                     {
@@ -4209,6 +4209,74 @@
                 ]
             }
         },
+        "/v0/logs/join": {
+            "post": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Join Logs",
+                "description": "Joins two sets of logs based on specified criteria and creates new logs with the joined data.\n\nThe join operation is similar to SQL joins, allowing inner, left, right, and outer joins\nbetween two sets of logs filtered by the criteria in pair_of_args.\n\nArgs:\n    pair_of_args: List of two dictionaries containing filtering criteria for logs to join.\n                 Each dictionary can include context, filter_expr, from_ids, etc.\n    join_expr: SQL expression for the join condition using aliases A and B\n              (e.g., 'A.user_id = B.user_id')\n    mode: Type of join to perform ('inner', 'left', 'right', or 'outer')\n    new_context: Name for the new context where joined logs will be stored\n    columns: Optional list of column names to include in the joined result\n    project: Name of the project containing the logs\n\nReturns:\n    JSON response with info about the join operation",
+                "operationId": "join_logs_v0_logs_join_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JoinLogsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Logs joined successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Joined logs created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid join parameters. Check your request and try again."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/logs/fields": {
             "get": {
                 "tags": [
@@ -4772,11 +4840,18 @@
                         "example": "experiment1/trial1"
                     },
                     "log_ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "type": "array",
-                        "minItems": 1,
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "integer"
+                                },
+                                "type": "array",
+                                "minItems": 1
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Log Ids",
                         "description": "List of log IDs to add to the context. At least one log ID must be provided.",
                         "example": [
@@ -4784,12 +4859,32 @@
                             456,
                             789
                         ]
+                    },
+                    "log_args": {
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Log Args",
+                        "description": "Dictionary of arguments (e.g. filter_expr) to select logs by criteria.",
+                        "example": {
+                            "filter_expr": "metric > 0.9"
+                        }
+                    },
+                    "copy": {
+                        "type": "boolean",
+                        "title": "Copy",
+                        "description": "If True, a copy of each log is created and then added to the context. If False, the existing log associations are simply used.",
+                        "default": false
                     }
                 },
                 "type": "object",
                 "required": [
-                    "context_name",
-                    "log_ids"
+                    "context_name"
                 ],
                 "title": "AddLogsToContextRequest",
                 "description": "Request model for adding existing logs to a context."
@@ -6417,6 +6512,79 @@
                     "h"
                 ],
                 "title": "Item"
+            },
+            "JoinLogsRequest": {
+                "properties": {
+                    "pair_of_args": {
+                        "items": {
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Pair Of Args",
+                        "description": "Two sets of filtering criteria for logs to join",
+                        "example": [
+                            {
+                                "context": "context_a",
+                                "filter_expr": "user_id == 1"
+                            },
+                            {
+                                "context": "context_b",
+                                "filter_expr": "user_id == 2"
+                            }
+                        ]
+                    },
+                    "join_expr": {
+                        "type": "string",
+                        "title": "Join Expr",
+                        "description": "SQL expression for join condition using aliases A and B",
+                        "example": "A.user_id == B.user_id"
+                    },
+                    "mode": {
+                        "type": "string",
+                        "title": "Mode",
+                        "description": "Join type: 'inner', 'left', 'right', or 'outer'",
+                        "example": "inner"
+                    },
+                    "new_context": {
+                        "type": "string",
+                        "title": "New Context",
+                        "description": "Name for the new context where joined logs will be stored",
+                        "example": "Derived/A_B"
+                    },
+                    "columns": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Columns",
+                        "description": "Optional list of columns to include in the result",
+                        "example": [
+                            "A.user_id",
+                            "B.score"
+                        ]
+                    },
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "pair_of_args",
+                    "join_expr",
+                    "mode",
+                    "new_context",
+                    "project"
+                ],
+                "title": "JoinLogsRequest"
             },
             "ProjectConfig": {
                 "properties": {
