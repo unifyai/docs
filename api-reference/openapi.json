@@ -5924,30 +5924,6 @@
                         "title": "From Ids",
                         "description": "Log IDs to include (string or key->IDs dict)."
                     },
-                    "limit": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Limit",
-                        "description": "Limit the number of logs to include."
-                    },
-                    "offset": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Offset",
-                        "description": "Offset the number of logs to include."
-                    },
                     "exclude_ids": {
                         "anyOf": [
                             {
