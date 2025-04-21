@@ -3,11 +3,14 @@ title: 'Add Logs To Context'
 api: 'POST /v0/project/{project_name}/contexts/add_logs'
 ---
 Adds existing logs to a context within a project. The logs must already exist
-in the project and can be specified by their IDs.
+in the project and can be specified by their IDs or by log_args criteria.
 The same logs can be associated with multiple contexts.
 
 The context_name can be provided as a string or as an object with a name field.
 If the context doesn't exist, it will be created automatically.
+
+If copy=True, new copies of the logs will be created and added to the context.
+If copy=False (default), the existing logs will be associated with the context.
 
 #### Authorizations
 
@@ -27,8 +30,16 @@ Name of the project to create context in.
 Name of the context to add logs to.
 </ParamField>
 
-<ParamField body="log_ids" type="[integer]" required="true">
+<ParamField body="log_ids" type="array | null" >
 List of log IDs to add to the context. At least one log ID must be provided.
+</ParamField>
+
+<ParamField body="log_args" type="object | null" >
+Dictionary of arguments (e.g. filter_expr) to select logs by criteria.
+</ParamField>
+
+<ParamField body="copy" type="boolean"  default={false}>
+If True, a copy of each log is created and then added to the context. If False, the existing log associations are simply used.
 </ParamField>
 
 <RequestExample>
@@ -44,7 +55,10 @@ curl --request POST \
         123,
         456,
         789
-    ]
+    ],
+    "log_args": {
+        "filter_expr": "metric > 0.9"
+    }
 }'
 ```
 
@@ -55,7 +69,7 @@ url = "https://api.unify.ai/v0/project/my_project/contexts/add_logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"context_name": "experiment1/trial1", "log_ids": [123, 456, 789]}
+json_input = {"context_name": "experiment1/trial1", "log_ids": [123, 456, 789], "log_args": {"filter_expr": "metric > 0.9"}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
