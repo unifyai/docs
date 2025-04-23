@@ -501,6 +501,13 @@
                                 "api-reference/credits/get_credits",
                                 "api-reference/credits/promo_code"
                             ]
+                        },
+                        {
+                            "group": "Query Logging",
+                            "pages": [
+                                "api-reference/query_logging/get_query_logging_status",
+                                "api-reference/query_logging/update_query_logging_status"
+                            ]
                         }
                     ]
                 }
