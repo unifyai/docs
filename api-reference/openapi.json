@@ -5,6 +5,74 @@
         "version": "0.1.0"
     },
     "paths": {
+        "/v0/user/query-logging": {
+            "get": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Get Query Logging Status",
+                "description": "Get the current query logging status for the authenticated user.",
+                "operationId": "get_query_logging_status_v0_user_query_logging_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Update Query Logging Status",
+                "description": "Update the query logging status for the authenticated user.",
+                "operationId": "update_query_logging_status_v0_user_query_logging_patch",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateQueryLoggingRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/providers": {
             "get": {
                 "tags": [
@@ -7278,6 +7346,20 @@
                     "ids"
                 ],
                 "title": "UpdateLogRequest"
+            },
+            "UpdateQueryLoggingRequest": {
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "Enabled"
+                    }
+                },
+                "additionalProperties": true,
+                "type": "object",
+                "required": [
+                    "enabled"
+                ],
+                "title": "UpdateQueryLoggingRequest"
             },
             "ValidationError": {
                 "properties": {
