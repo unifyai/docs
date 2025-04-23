@@ -1,0 +1,87 @@
+---
+title: 'Update Favorite'
+api: 'PATCH /v0/project/favorites/{id}'
+---
+Updates a specific favorite project.
+
+Only the provided fields will be updated.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="id" type="integer" required="true">
+The ID of the favorite to update
+</ParamField>
+
+#### Body
+
+<ParamField body="icon" type="string | null" >
+Icon identifier for the favorite project
+</ParamField>
+
+<ParamField body="position" type="integer | null" >
+Position of the project in the favorites list
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/project/favorites/<id>' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/project/favorites/<id>"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("PATCH", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": 1,
+    "project": "my-project",
+    "icon": "updated-icon",
+    "position": 2
+}
+```
+
+```json 404
+{
+    "detail": "Favorite with ID 123 not found"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
