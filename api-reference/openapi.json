@@ -1908,10 +1908,11 @@
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "Favorite deleted successfully",
                         "content": {
                             "application/json": {
+                                "schema": {},
                                 "example": {
                                     "info": "Favorite deleted successfully!"
                                 }
@@ -5522,8 +5523,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
