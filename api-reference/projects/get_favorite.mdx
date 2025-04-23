@@ -1,0 +1,71 @@
+---
+title: 'Get Favorite'
+api: 'GET /v0/project/favorites/{id}'
+---
+Returns details of a specific favorite project.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="id" type="integer" required="true">
+The ID of the favorite to retrieve
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/project/favorites/<id>' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/project/favorites/<id>"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": 1,
+    "project": "my-project",
+    "icon": "star",
+    "position": 0
+}
+```
+
+```json 404
+{
+    "detail": "Favorite with ID 123 not found"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

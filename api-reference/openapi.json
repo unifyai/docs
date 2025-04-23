@@ -1627,6 +1627,320 @@
                 }
             }
         },
+        "/v0/project/favorites": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get Favorites",
+                "description": "Returns a list of the user's favorite projects, sorted by position.",
+                "operationId": "get_favorites_v0_project_favorites_get",
+                "responses": {
+                    "200": {
+                        "description": "List of favorite projects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/FavoriteProjectOut"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Favorites V0 Project Favorites Get"
+                                },
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "project": "my-project",
+                                        "icon": "star",
+                                        "position": 0
+                                    },
+                                    {
+                                        "id": 2,
+                                        "project": "another-project",
+                                        "icon": "folder",
+                                        "position": 1
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Create Favorite",
+                "description": "Creates a new favorite project for the user.\n\nEach favorite must include a project name, icon, and position.",
+                "operationId": "create_favorite_v0_project_favorites_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FavoriteProjectIn"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Favorite created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FavoriteProjectOut"
+                                },
+                                "example": {
+                                    "id": 1,
+                                    "project": "my-project",
+                                    "icon": "star",
+                                    "position": 0
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request or duplicate favorite",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project is already in favorites"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project 'unknown-project' not found"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/project/favorites/{id}": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get Favorite",
+                "description": "Returns details of a specific favorite project.",
+                "operationId": "get_favorite_v0_project_favorites__id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The ID of the favorite to retrieve",
+                            "title": "Id"
+                        },
+                        "description": "The ID of the favorite to retrieve"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favorite project details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FavoriteProjectOut"
+                                },
+                                "example": {
+                                    "id": 1,
+                                    "project": "my-project",
+                                    "icon": "star",
+                                    "position": 0
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Favorite not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Favorite with ID 123 not found"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Update Favorite",
+                "description": "Updates a specific favorite project.\n\nOnly the provided fields will be updated.",
+                "operationId": "update_favorite_v0_project_favorites__id__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The ID of the favorite to update",
+                            "title": "Id"
+                        },
+                        "description": "The ID of the favorite to update"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FavoriteProjectUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Favorite updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FavoriteProjectOut"
+                                },
+                                "example": {
+                                    "id": 1,
+                                    "project": "my-project",
+                                    "icon": "updated-icon",
+                                    "position": 2
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Favorite not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Favorite with ID 123 not found"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete Favorite",
+                "description": "Deletes a specific favorite project.",
+                "operationId": "delete_favorite_v0_project_favorites__id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The ID of the favorite to delete",
+                            "title": "Id"
+                        },
+                        "description": "The ID of the favorite to delete"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Favorite deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "info": "Favorite deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Favorite not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Favorite with ID 123 not found"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/project": {
             "post": {
                 "tags": [
@@ -5852,6 +6166,97 @@
                     "ids_and_fields"
                 ],
                 "title": "DeleteLogEntryRequest"
+            },
+            "FavoriteProjectIn": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "The name of the project to favorite"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "title": "Icon",
+                        "description": "Icon identifier for the favorite project"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "title": "Position",
+                        "description": "Position of the project in the favorites list"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "icon",
+                    "position"
+                ],
+                "title": "FavoriteProjectIn",
+                "description": "Request model for creating a favorite project."
+            },
+            "FavoriteProjectOut": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "The name of the project to favorite"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "title": "Icon",
+                        "description": "Icon identifier for the favorite project"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "title": "Position",
+                        "description": "Position of the project in the favorites list"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "title": "Id",
+                        "description": "Unique identifier for the favorite project"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "icon",
+                    "position",
+                    "id"
+                ],
+                "title": "FavoriteProjectOut",
+                "description": "Response model for favorite project data."
+            },
+            "FavoriteProjectUpdate": {
+                "properties": {
+                    "icon": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Icon",
+                        "description": "Icon identifier for the favorite project"
+                    },
+                    "position": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Position",
+                        "description": "Position of the project in the favorites list"
+                    }
+                },
+                "type": "object",
+                "title": "FavoriteProjectUpdate",
+                "description": "Request model for updating a favorite project."
             },
             "GetLogsMetricRequest": {
                 "properties": {
