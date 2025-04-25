@@ -1,0 +1,92 @@
+---
+title: 'Update assistant configuration'
+api: 'PATCH /v0/assistant/{assistant_id}/config'
+---
+Updates the configuration parameters of an existing assistant.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="assistant_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="weekly_limit" type="number | null" >
+Weekly time limit for the assistant in hours
+</ParamField>
+
+<ParamField body="max_parallel" type="integer | null" >
+Maximum number of parallel tasks the assistant can handle
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/assistant/<assistant_id>/config' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{
+    "weekly_limit": 20.5,
+    "max_parallel": 3
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/<assistant_id>/config"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"weekly_limit": 20.5, "max_parallel": 3}
+
+response = requests.request("PATCH", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "agent_id": "123",
+    "first_name": "Alice",
+    "surname": "Smith",
+    "age": 25,
+    "weekly_limit": 45.0,
+    "max_parallel": 4,
+    "created_at": "2025-04-25T12:00:00Z",
+    "updated_at": "2025-04-25T14:30:00Z"
+}
+```
+
+```json 404
+{
+    "detail": "Assistant not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

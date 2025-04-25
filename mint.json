@@ -417,6 +417,15 @@
                                 "api-reference/endpoint_metrics/delete_endpoint_metrics",
                                 "api-reference/endpoint_metrics/get_endpoint_details"
                             ]
+                        },
+                        {
+                            "group": "Assistants",
+                            "pages": [
+                                "api-reference/assistants/list_all_assistants",
+                                "api-reference/assistants/create_a_new_assistant",
+                                "api-reference/assistants/delete_an_assistant",
+                                "api-reference/assistants/update_assistant_configuration"
+                            ]
                         }
                     ]
                 },

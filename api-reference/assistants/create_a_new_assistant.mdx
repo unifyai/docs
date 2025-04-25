@@ -1,0 +1,95 @@
+---
+title: 'Create a new assistant'
+api: 'POST /v0/assistant'
+---
+Creates a new assistant for the authenticated user with the specified configuration.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="first_name" type="string" required="true">
+First name of the assistant
+</ParamField>
+
+<ParamField body="surname" type="string" required="true">
+Surname of the assistant
+</ParamField>
+
+<ParamField body="age" type="integer" required="true">
+Age of the assistant
+</ParamField>
+
+<ParamField body="weekly_limit" type="number" required="true">
+Weekly time limit for the assistant in hours
+</ParamField>
+
+<ParamField body="max_parallel" type="integer" required="true">
+Maximum number of parallel tasks the assistant can handle
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/assistant' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "first_name": "Ada",
+    "surname": "Lovelace",
+    "age": 28,
+    "weekly_limit": 15.75,
+    "max_parallel": 2
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "agent_id": "123",
+    "first_name": "Alice",
+    "surname": "Smith",
+    "age": 25,
+    "weekly_limit": 40.0,
+    "max_parallel": 3,
+    "created_at": "2025-04-25T12:00:00Z",
+    "updated_at": "2025-04-25T12:00:00Z"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
