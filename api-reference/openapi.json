@@ -1695,6 +1695,273 @@
                 }
             }
         },
+        "/v0/assistant": {
+            "get": {
+                "tags": [
+                    "Assistants",
+                    "Assistants"
+                ],
+                "summary": "List all assistants",
+                "description": "Returns a list of all assistants belonging to the authenticated user.",
+                "operationId": "list_assistants_v0_assistant_get",
+                "responses": {
+                    "200": {
+                        "description": "List of assistants retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/AssistantRead"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Assistants V0 Assistant Get"
+                                },
+                                "example": [
+                                    {
+                                        "agent_id": "123",
+                                        "first_name": "Alice",
+                                        "surname": "Smith",
+                                        "age": 25,
+                                        "weekly_limit": 40.0,
+                                        "max_parallel": 3,
+                                        "created_at": "2025-04-25T12:00:00Z",
+                                        "updated_at": "2025-04-25T12:00:00Z"
+                                    },
+                                    {
+                                        "agent_id": "456",
+                                        "first_name": "Bob",
+                                        "surname": "Jones",
+                                        "age": 30,
+                                        "weekly_limit": 35.5,
+                                        "max_parallel": 2,
+                                        "created_at": "2025-04-24T10:30:00Z",
+                                        "updated_at": "2025-04-24T10:30:00Z"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Assistants"
+                ],
+                "summary": "Create a new assistant",
+                "description": "Creates a new assistant for the authenticated user with the specified configuration.",
+                "operationId": "create_assistant_v0_assistant_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssistantCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assistant created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssistantRead"
+                                },
+                                "example": {
+                                    "agent_id": "123",
+                                    "first_name": "Alice",
+                                    "surname": "Smith",
+                                    "age": 25,
+                                    "weekly_limit": 40.0,
+                                    "max_parallel": 3,
+                                    "created_at": "2025-04-25T12:00:00Z",
+                                    "updated_at": "2025-04-25T12:00:00Z"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": [
+                                        {
+                                            "loc": [
+                                                "body",
+                                                "first_name"
+                                            ],
+                                            "msg": "field required",
+                                            "type": "value_error.missing"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/assistant/{assistant_id}": {
+            "delete": {
+                "tags": [
+                    "Assistants",
+                    "Assistants"
+                ],
+                "summary": "Delete an assistant",
+                "description": "Deletes a specific assistant by ID for the authenticated user.",
+                "operationId": "delete_assistant_v0_assistant__assistant_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assistant deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Assistant deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Assistant Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Assistant not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/{assistant_id}/config": {
+            "patch": {
+                "tags": [
+                    "Assistants",
+                    "Assistants"
+                ],
+                "summary": "Update assistant configuration",
+                "description": "Updates the configuration parameters of an existing assistant.",
+                "operationId": "update_assistant_config_v0_assistant__assistant_id__config_patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssistantUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assistant configuration updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssistantRead"
+                                },
+                                "example": {
+                                    "agent_id": "123",
+                                    "first_name": "Alice",
+                                    "surname": "Smith",
+                                    "age": 25,
+                                    "weekly_limit": 45.0,
+                                    "max_parallel": 4,
+                                    "created_at": "2025-04-25T12:00:00Z",
+                                    "updated_at": "2025-04-25T14:30:00Z"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Assistant Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Assistant not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": [
+                                        {
+                                            "loc": [
+                                                "body",
+                                                "weekly_limit"
+                                            ],
+                                            "msg": "value is not a valid float",
+                                            "type": "type_error.float"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/project/favorites": {
             "get": {
                 "tags": [
@@ -5289,6 +5556,156 @@
                     "artifacts"
                 ],
                 "title": "ArtifactConfig"
+            },
+            "AssistantCreate": {
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "title": "First Name",
+                        "description": "First name of the assistant",
+                        "example": "Ada"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "title": "Surname",
+                        "description": "Surname of the assistant",
+                        "example": "Lovelace"
+                    },
+                    "age": {
+                        "type": "integer",
+                        "title": "Age",
+                        "description": "Age of the assistant",
+                        "example": 28
+                    },
+                    "weekly_limit": {
+                        "type": "number",
+                        "title": "Weekly Limit",
+                        "description": "Weekly time limit for the assistant in hours",
+                        "example": 15.75
+                    },
+                    "max_parallel": {
+                        "type": "integer",
+                        "title": "Max Parallel",
+                        "description": "Maximum number of parallel tasks the assistant can handle",
+                        "example": 2
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "first_name",
+                    "surname",
+                    "age",
+                    "weekly_limit",
+                    "max_parallel"
+                ],
+                "title": "AssistantCreate",
+                "description": "Schema for creating a new assistant."
+            },
+            "AssistantRead": {
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "title": "First Name",
+                        "description": "First name of the assistant",
+                        "example": "Ada"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "title": "Surname",
+                        "description": "Surname of the assistant",
+                        "example": "Lovelace"
+                    },
+                    "age": {
+                        "type": "integer",
+                        "title": "Age",
+                        "description": "Age of the assistant",
+                        "example": 28
+                    },
+                    "weekly_limit": {
+                        "type": "number",
+                        "title": "Weekly Limit",
+                        "description": "Weekly time limit for the assistant in hours",
+                        "example": 15.75
+                    },
+                    "max_parallel": {
+                        "type": "integer",
+                        "title": "Max Parallel",
+                        "description": "Maximum number of parallel tasks the assistant can handle",
+                        "example": 2
+                    },
+                    "agent_id": {
+                        "type": "string",
+                        "title": "Agent Id",
+                        "description": "Unique identifier for the assistant",
+                        "example": "12345"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At",
+                        "description": "Timestamp when the assistant was created",
+                        "example": "2025-04-25T10:30:00Z"
+                    },
+                    "updated_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Updated At",
+                        "description": "Timestamp when the assistant was last updated",
+                        "example": "2025-04-26T14:15:00Z"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "first_name",
+                    "surname",
+                    "age",
+                    "weekly_limit",
+                    "max_parallel",
+                    "agent_id",
+                    "created_at"
+                ],
+                "title": "AssistantRead",
+                "description": "Schema for reading assistant data, extends AssistantCreate with additional fields."
+            },
+            "AssistantUpdate": {
+                "properties": {
+                    "weekly_limit": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Weekly Limit",
+                        "description": "Weekly time limit for the assistant in hours",
+                        "example": 20.5
+                    },
+                    "max_parallel": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Parallel",
+                        "description": "Maximum number of parallel tasks the assistant can handle",
+                        "example": 3
+                    }
+                },
+                "type": "object",
+                "title": "AssistantUpdate",
+                "description": "Schema for updating an existing assistant.\nOnly includes fields that can be updated."
             },
             "Body_log_query_v0_queries_post": {
                 "properties": {
