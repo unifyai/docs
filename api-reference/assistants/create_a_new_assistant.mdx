@@ -32,6 +32,18 @@ Weekly time limit for the assistant in hours
 Maximum number of parallel tasks the assistant can handle
 </ParamField>
 
+<ParamField body="region" type="string" required="true">
+Geographic region of the assistant
+</ParamField>
+
+<ParamField body="profile_photo" type="string" required="true">
+URL to the assistant's profile photo
+</ParamField>
+
+<ParamField body="about" type="string" required="true">
+Brief description about the assistant
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -44,7 +56,10 @@ curl --request POST \
     "surname": "Lovelace",
     "age": 28,
     "weekly_limit": 15.75,
-    "max_parallel": 2
+    "max_parallel": 2,
+    "region": "North America",
+    "profile_photo": "https://example.com/photos/ada.jpg",
+    "about": "Mathematician and writer known for work on Analytical Engine"
 }'
 ```
 
@@ -55,7 +70,7 @@ url = "https://api.unify.ai/v0/assistant"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2}
+json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2, "region": "North America", "profile_photo": "https://example.com/photos/ada.jpg", "about": "Mathematician and writer known for work on Analytical Engine"}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
