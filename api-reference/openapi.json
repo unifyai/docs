@@ -1924,6 +1924,11 @@
                                     "age": 25,
                                     "weekly_limit": 45.0,
                                     "max_parallel": 4,
+                                    "about": "Award-winning mathematician specializing in algorithm development",
+                                    "phone": "+1-555-987-6543",
+                                    "email": "alice.smith@example.com",
+                                    "region": "North America",
+                                    "profile_photo": "https://example.com/photos/alice.jpg",
                                     "created_at": "2025-04-25T12:00:00Z",
                                     "updated_at": "2025-04-25T14:30:00Z"
                                 }
@@ -1949,10 +1954,10 @@
                                         {
                                             "loc": [
                                                 "body",
-                                                "weekly_limit"
+                                                "email"
                                             ],
-                                            "msg": "value is not a valid float",
-                                            "type": "type_error.float"
+                                            "msg": "value is not a valid email address",
+                                            "type": "value_error.email"
                                         }
                                     ]
                                 }
@@ -5588,6 +5593,24 @@
                         "title": "Max Parallel",
                         "description": "Maximum number of parallel tasks the assistant can handle",
                         "example": 2
+                    },
+                    "region": {
+                        "type": "string",
+                        "title": "Region",
+                        "description": "Geographic region of the assistant",
+                        "example": "North America"
+                    },
+                    "profile_photo": {
+                        "type": "string",
+                        "title": "Profile Photo",
+                        "description": "URL to the assistant's profile photo",
+                        "example": "https://example.com/photos/ada.jpg"
+                    },
+                    "about": {
+                        "type": "string",
+                        "title": "About",
+                        "description": "Brief description about the assistant",
+                        "example": "Mathematician and writer known for work on Analytical Engine"
                     }
                 },
                 "type": "object",
@@ -5596,7 +5619,10 @@
                     "surname",
                     "age",
                     "weekly_limit",
-                    "max_parallel"
+                    "max_parallel",
+                    "region",
+                    "profile_photo",
+                    "about"
                 ],
                 "title": "AssistantCreate",
                 "description": "Schema for creating a new assistant."
@@ -5633,6 +5659,24 @@
                         "description": "Maximum number of parallel tasks the assistant can handle",
                         "example": 2
                     },
+                    "region": {
+                        "type": "string",
+                        "title": "Region",
+                        "description": "Geographic region of the assistant",
+                        "example": "North America"
+                    },
+                    "profile_photo": {
+                        "type": "string",
+                        "title": "Profile Photo",
+                        "description": "URL to the assistant's profile photo",
+                        "example": "https://example.com/photos/ada.jpg"
+                    },
+                    "about": {
+                        "type": "string",
+                        "title": "About",
+                        "description": "Brief description about the assistant",
+                        "example": "Mathematician and writer known for work on Analytical Engine"
+                    },
                     "agent_id": {
                         "type": "string",
                         "title": "Agent Id",
@@ -5659,6 +5703,32 @@
                         "title": "Updated At",
                         "description": "Timestamp when the assistant was last updated",
                         "example": "2025-04-26T14:15:00Z"
+                    },
+                    "phone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Phone",
+                        "description": "Contact phone number for the assistant",
+                        "example": "+1-555-123-4567"
+                    },
+                    "email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Email",
+                        "description": "Email address for the assistant",
+                        "example": "ada.lovelace@example.com"
                     }
                 },
                 "type": "object",
@@ -5668,6 +5738,9 @@
                     "age",
                     "weekly_limit",
                     "max_parallel",
+                    "region",
+                    "profile_photo",
+                    "about",
                     "agent_id",
                     "created_at"
                 ],
@@ -5701,6 +5774,45 @@
                         "title": "Max Parallel",
                         "description": "Maximum number of parallel tasks the assistant can handle",
                         "example": 3
+                    },
+                    "about": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "About",
+                        "description": "Brief description about the assistant",
+                        "example": "Award-winning mathematician specializing in algorithm development"
+                    },
+                    "phone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Phone",
+                        "description": "Contact phone number for the assistant",
+                        "example": "+1-555-987-6543"
+                    },
+                    "email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Email",
+                        "description": "Email address for the assistant",
+                        "example": "ada.lovelace@newdomain.com"
                     }
                 },
                 "type": "object",
