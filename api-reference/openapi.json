@@ -1724,6 +1724,11 @@
                                         "age": 25,
                                         "weekly_limit": 40.0,
                                         "max_parallel": 3,
+                                        "phone": "+1-555-123-4567",
+                                        "email": "alice.smith@example.com",
+                                        "region": "North America",
+                                        "profile_photo": "https://example.com/photos/alice.jpg",
+                                        "about": "Mathematician and writer known for work on Analytical Engine",
                                         "created_at": "2025-04-25T12:00:00Z",
                                         "updated_at": "2025-04-25T12:00:00Z"
                                     },
@@ -1734,6 +1739,11 @@
                                         "age": 30,
                                         "weekly_limit": 35.5,
                                         "max_parallel": 2,
+                                        "phone": "+1-555-987-6543",
+                                        "email": "bob.jones@example.com",
+                                        "region": "South America",
+                                        "profile_photo": "https://example.com/photos/bob.jpg",
+                                        "about": "Machine learning expert with focus on computer vision",
                                         "created_at": "2025-04-24T10:30:00Z",
                                         "updated_at": "2025-04-24T10:30:00Z"
                                     }
@@ -1782,7 +1792,9 @@
                                     "weekly_limit": 40.0,
                                     "max_parallel": 3,
                                     "created_at": "2025-04-25T12:00:00Z",
-                                    "updated_at": "2025-04-25T12:00:00Z"
+                                    "updated_at": "2025-04-25T12:00:00Z",
+                                    "phone": "+1-555-123-4567",
+                                    "email": "alice.smith@example.com"
                                 }
                             }
                         }
@@ -2928,6 +2940,90 @@
                                 "schema": {},
                                 "example": {
                                     "info": "Context deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project or Context Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project or context not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project/{project_name}/contexts/{context_name}/columns": {
+            "post": {
+                "tags": [
+                    "Contexts"
+                ],
+                "summary": "Create Columns",
+                "description": "Creates columns in a context within a project. Columns can have explicit types\nor their types can be auto-detected when data is added.\n\nThe columns are specified as a dictionary mapping column names to their types.\nIf a type is specified as null, the type will be auto-detected when data is added.",
+                "operationId": "create_columns_v0_project__project_name__contexts__context_name__columns_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project containing the context.",
+                            "title": "Project Name"
+                        },
+                        "description": "Name of the project containing the context.",
+                        "example": "my_project"
+                    },
+                    {
+                        "name": "context_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the context to create columns for.",
+                            "title": "Context Name"
+                        },
+                        "description": "Name of the context to create columns for.",
+                        "example": "my_context"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateColumnsRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Columns created successfully."
                                 }
                             }
                         }
@@ -5565,144 +5661,108 @@
             "AssistantCreate": {
                 "properties": {
                     "first_name": {
-                        "type": "string",
-                        "title": "First Name",
-                        "description": "First name of the assistant",
-                        "example": "Ada"
-                    },
-                    "surname": {
-                        "type": "string",
-                        "title": "Surname",
-                        "description": "Surname of the assistant",
-                        "example": "Lovelace"
-                    },
-                    "age": {
-                        "type": "integer",
-                        "title": "Age",
-                        "description": "Age of the assistant",
-                        "example": 28
-                    },
-                    "weekly_limit": {
-                        "type": "number",
-                        "title": "Weekly Limit",
-                        "description": "Weekly time limit for the assistant in hours",
-                        "example": 15.75
-                    },
-                    "max_parallel": {
-                        "type": "integer",
-                        "title": "Max Parallel",
-                        "description": "Maximum number of parallel tasks the assistant can handle",
-                        "example": 2
-                    },
-                    "region": {
-                        "type": "string",
-                        "title": "Region",
-                        "description": "Geographic region of the assistant",
-                        "example": "North America"
-                    },
-                    "profile_photo": {
-                        "type": "string",
-                        "title": "Profile Photo",
-                        "description": "URL to the assistant's profile photo",
-                        "example": "https://example.com/photos/ada.jpg"
-                    },
-                    "about": {
-                        "type": "string",
-                        "title": "About",
-                        "description": "Brief description about the assistant",
-                        "example": "Mathematician and writer known for work on Analytical Engine"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "first_name",
-                    "surname",
-                    "age",
-                    "weekly_limit",
-                    "max_parallel",
-                    "region",
-                    "profile_photo",
-                    "about"
-                ],
-                "title": "AssistantCreate",
-                "description": "Schema for creating a new assistant."
-            },
-            "AssistantRead": {
-                "properties": {
-                    "first_name": {
-                        "type": "string",
-                        "title": "First Name",
-                        "description": "First name of the assistant",
-                        "example": "Ada"
-                    },
-                    "surname": {
-                        "type": "string",
-                        "title": "Surname",
-                        "description": "Surname of the assistant",
-                        "example": "Lovelace"
-                    },
-                    "age": {
-                        "type": "integer",
-                        "title": "Age",
-                        "description": "Age of the assistant",
-                        "example": 28
-                    },
-                    "weekly_limit": {
-                        "type": "number",
-                        "title": "Weekly Limit",
-                        "description": "Weekly time limit for the assistant in hours",
-                        "example": 15.75
-                    },
-                    "max_parallel": {
-                        "type": "integer",
-                        "title": "Max Parallel",
-                        "description": "Maximum number of parallel tasks the assistant can handle",
-                        "example": 2
-                    },
-                    "region": {
-                        "type": "string",
-                        "title": "Region",
-                        "description": "Geographic region of the assistant",
-                        "example": "North America"
-                    },
-                    "profile_photo": {
-                        "type": "string",
-                        "title": "Profile Photo",
-                        "description": "URL to the assistant's profile photo",
-                        "example": "https://example.com/photos/ada.jpg"
-                    },
-                    "about": {
-                        "type": "string",
-                        "title": "About",
-                        "description": "Brief description about the assistant",
-                        "example": "Mathematician and writer known for work on Analytical Engine"
-                    },
-                    "agent_id": {
-                        "type": "string",
-                        "title": "Agent Id",
-                        "description": "Unique identifier for the assistant",
-                        "example": "12345"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "title": "Created At",
-                        "description": "Timestamp when the assistant was created",
-                        "example": "2025-04-25T10:30:00Z"
-                    },
-                    "updated_at": {
                         "anyOf": [
                             {
-                                "type": "string",
-                                "format": "date-time"
+                                "type": "string"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Updated At",
-                        "description": "Timestamp when the assistant was last updated",
-                        "example": "2025-04-26T14:15:00Z"
+                        "title": "First Name",
+                        "description": "First name of the assistant",
+                        "example": "Ada"
+                    },
+                    "surname": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Surname",
+                        "description": "Surname of the assistant",
+                        "example": "Lovelace"
+                    },
+                    "age": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Age",
+                        "description": "Age of the assistant",
+                        "example": 28
+                    },
+                    "weekly_limit": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Weekly Limit",
+                        "description": "Weekly time limit for the assistant in hours",
+                        "example": 15.75
+                    },
+                    "max_parallel": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Parallel",
+                        "description": "Maximum number of parallel tasks the assistant can handle",
+                        "example": 2
+                    },
+                    "region": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Region",
+                        "description": "Geographic region of the assistant",
+                        "example": "North America"
+                    },
+                    "profile_photo": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Profile Photo",
+                        "description": "URL to the assistant's profile photo",
+                        "example": "https://example.com/photos/ada.jpg"
+                    },
+                    "about": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "About",
+                        "description": "Brief description about the assistant",
+                        "example": "Mathematician and writer known for work on Analytical Engine"
                     },
                     "phone": {
                         "anyOf": [
@@ -5732,15 +5792,171 @@
                     }
                 },
                 "type": "object",
+                "title": "AssistantCreate",
+                "description": "Schema for creating a new assistant."
+            },
+            "AssistantRead": {
+                "properties": {
+                    "first_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "First Name",
+                        "description": "First name of the assistant",
+                        "example": "Ada"
+                    },
+                    "surname": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Surname",
+                        "description": "Surname of the assistant",
+                        "example": "Lovelace"
+                    },
+                    "age": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Age",
+                        "description": "Age of the assistant",
+                        "example": 28
+                    },
+                    "weekly_limit": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Weekly Limit",
+                        "description": "Weekly time limit for the assistant in hours",
+                        "example": 15.75
+                    },
+                    "max_parallel": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Max Parallel",
+                        "description": "Maximum number of parallel tasks the assistant can handle",
+                        "example": 2
+                    },
+                    "region": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Region",
+                        "description": "Geographic region of the assistant",
+                        "example": "North America"
+                    },
+                    "profile_photo": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Profile Photo",
+                        "description": "URL to the assistant's profile photo",
+                        "example": "https://example.com/photos/ada.jpg"
+                    },
+                    "about": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "About",
+                        "description": "Brief description about the assistant",
+                        "example": "Mathematician and writer known for work on Analytical Engine"
+                    },
+                    "phone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Phone",
+                        "description": "Contact phone number for the assistant",
+                        "example": "+1-555-123-4567"
+                    },
+                    "email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Email",
+                        "description": "Email address for the assistant",
+                        "example": "ada.lovelace@example.com"
+                    },
+                    "agent_id": {
+                        "type": "string",
+                        "title": "Agent Id",
+                        "description": "Unique identifier for the assistant",
+                        "example": "12345"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At",
+                        "description": "Timestamp when the assistant was created",
+                        "example": "2025-04-25T10:30:00Z"
+                    },
+                    "updated_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Updated At",
+                        "description": "Timestamp when the assistant was last updated",
+                        "example": "2025-04-26T14:15:00Z"
+                    }
+                },
+                "type": "object",
                 "required": [
-                    "first_name",
-                    "surname",
-                    "age",
-                    "weekly_limit",
-                    "max_parallel",
-                    "region",
-                    "profile_photo",
-                    "about",
                     "agent_id",
                     "created_at"
                 ],
@@ -6406,6 +6622,35 @@
                 ],
                 "title": "ContextCreateRequest",
                 "description": "Request model for creating a new context within a project."
+            },
+            "CreateColumnsRequest": {
+                "properties": {
+                    "columns": {
+                        "additionalProperties": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "type": "object",
+                        "title": "Columns",
+                        "description": "Dictionary mapping column names to their explicit types (or None for auto-detection).",
+                        "example": {
+                            "accuracy": "float",
+                            "model_name": "str"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "columns"
+                ],
+                "title": "CreateColumnsRequest",
+                "description": "Request model for creating columns in a context."
             },
             "CreateDerivedEntriesConfig": {
                 "properties": {
