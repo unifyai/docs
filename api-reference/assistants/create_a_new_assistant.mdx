@@ -12,36 +12,44 @@ Creates a new assistant for the authenticated user with the specified configurat
 
 #### Body
 
-<ParamField body="first_name" type="string" required="true">
+<ParamField body="first_name" type="string | null" >
 First name of the assistant
 </ParamField>
 
-<ParamField body="surname" type="string" required="true">
+<ParamField body="surname" type="string | null" >
 Surname of the assistant
 </ParamField>
 
-<ParamField body="age" type="integer" required="true">
+<ParamField body="age" type="integer | null" >
 Age of the assistant
 </ParamField>
 
-<ParamField body="weekly_limit" type="number" required="true">
+<ParamField body="weekly_limit" type="number | null" >
 Weekly time limit for the assistant in hours
 </ParamField>
 
-<ParamField body="max_parallel" type="integer" required="true">
+<ParamField body="max_parallel" type="integer | null" >
 Maximum number of parallel tasks the assistant can handle
 </ParamField>
 
-<ParamField body="region" type="string" required="true">
+<ParamField body="region" type="string | null" >
 Geographic region of the assistant
 </ParamField>
 
-<ParamField body="profile_photo" type="string" required="true">
+<ParamField body="profile_photo" type="string | null" >
 URL to the assistant's profile photo
 </ParamField>
 
-<ParamField body="about" type="string" required="true">
+<ParamField body="about" type="string | null" >
 Brief description about the assistant
+</ParamField>
+
+<ParamField body="phone" type="string | null" >
+Contact phone number for the assistant
+</ParamField>
+
+<ParamField body="email" type="string | null" >
+Email address for the assistant
 </ParamField>
 
 <RequestExample>
@@ -59,7 +67,9 @@ curl --request POST \
     "max_parallel": 2,
     "region": "North America",
     "profile_photo": "https://example.com/photos/ada.jpg",
-    "about": "Mathematician and writer known for work on Analytical Engine"
+    "about": "Mathematician and writer known for work on Analytical Engine",
+    "phone": "+1-555-123-4567",
+    "email": "ada.lovelace@example.com"
 }'
 ```
 
@@ -70,7 +80,7 @@ url = "https://api.unify.ai/v0/assistant"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2, "region": "North America", "profile_photo": "https://example.com/photos/ada.jpg", "about": "Mathematician and writer known for work on Analytical Engine"}
+json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2, "region": "North America", "profile_photo": "https://example.com/photos/ada.jpg", "about": "Mathematician and writer known for work on Analytical Engine", "phone": "+1-555-123-4567", "email": "ada.lovelace@example.com"}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
@@ -89,7 +99,9 @@ print(response.text)
     "weekly_limit": 40.0,
     "max_parallel": 3,
     "created_at": "2025-04-25T12:00:00Z",
-    "updated_at": "2025-04-25T12:00:00Z"
+    "updated_at": "2025-04-25T12:00:00Z",
+    "phone": "+1-555-123-4567",
+    "email": "alice.smith@example.com"
 }
 ```
 
