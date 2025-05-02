@@ -2635,6 +2635,249 @@
                 }
             }
         },
+        "/v0/project/{project}/contexts/{context_name}/artifacts": {
+            "post": {
+                "tags": [
+                    "Context Artifacts"
+                ],
+                "summary": "Create Context Artifacts",
+                "description": "Creates one or more artifacts associated to a context within a project.",
+                "operationId": "create_context_artifacts_v0_project__project__contexts__context_name__artifacts_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project the context belongs to.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project the context belongs to.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "context_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the context to create artifacts in.",
+                            "title": "Context Name"
+                        },
+                        "description": "Name of the context to create artifacts in.",
+                        "example": "experiment1/trial1"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ContextArtifactCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Context artifact(s) created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project or Context Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> or context <context> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Context Artifacts"
+                ],
+                "summary": "List Context Artifacts",
+                "description": "Returns the key-value pairs of all artifacts in a context.",
+                "operationId": "list_context_artifacts_v0_project__project__contexts__context_name__artifacts_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project containing the context.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project containing the context.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "context_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the context to list artifacts from.",
+                            "title": "Context Name"
+                        },
+                        "description": "Name of the context to list artifacts from.",
+                        "example": "training"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "artifact_1": "value_1",
+                                    "artifact_2": "value_2"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project or Context Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> or context <context> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project/{project}/contexts/{context}/artifacts/{key}": {
+            "delete": {
+                "tags": [
+                    "Context Artifacts"
+                ],
+                "summary": "Delete Context Artifact",
+                "description": "Deletes an artifact from a context within a project.",
+                "operationId": "delete_context_artifact_v0_project__project__contexts__context__artifacts__key__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the project containing the context.",
+                            "title": "Project"
+                        },
+                        "description": "Name of the project containing the context.",
+                        "example": "eval-project"
+                    },
+                    {
+                        "name": "context",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Name of the context to delete an artifact from.",
+                            "title": "Context"
+                        },
+                        "description": "Name of the context to delete an artifact from.",
+                        "example": "training"
+                    },
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Key of the artifact to delete.",
+                            "title": "Key"
+                        },
+                        "description": "Key of the artifact to delete.",
+                        "example": "context-description"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Context artifact deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project, Context, or Artifact Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project>, context <context>, or artifact <key> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/project/{project_name}/contexts": {
             "post": {
                 "tags": [
@@ -3123,6 +3366,94 @@
                 }
             }
         },
+        "/v0/project/{project_name}/contexts/{context_name}/rename": {
+            "patch": {
+                "tags": [
+                    "Contexts"
+                ],
+                "summary": "Rename Context",
+                "description": "Rename an existing context within a project.",
+                "operationId": "rename_context_v0_project__project_name__contexts__context_name__rename_patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Project Name"
+                        }
+                    },
+                    {
+                        "name": "context_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Context Name"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RenameContextRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Context renamed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Context renamed successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Context with new name already exists",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "A context with this name already exists in the project."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project or Context Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project or context not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/project/{project}/artifacts": {
             "post": {
                 "tags": [
@@ -3323,249 +3654,6 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Artifact <key> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/project/{project}/contexts/{context_name}/artifacts": {
-            "post": {
-                "tags": [
-                    "Context Artifacts"
-                ],
-                "summary": "Create Context Artifacts",
-                "description": "Creates one or more artifacts associated to a context within a project.",
-                "operationId": "create_context_artifacts_v0_project__project__contexts__context_name__artifacts_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project the context belongs to.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project the context belongs to.",
-                        "example": "eval-project"
-                    },
-                    {
-                        "name": "context_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the context to create artifacts in.",
-                            "title": "Context Name"
-                        },
-                        "description": "Name of the context to create artifacts in.",
-                        "example": "experiment1/trial1"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ContextArtifactCreateRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Context artifact(s) created successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project or Context Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> or context <context> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Context Artifacts"
-                ],
-                "summary": "List Context Artifacts",
-                "description": "Returns the key-value pairs of all artifacts in a context.",
-                "operationId": "list_context_artifacts_v0_project__project__contexts__context_name__artifacts_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project containing the context.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project containing the context.",
-                        "example": "eval-project"
-                    },
-                    {
-                        "name": "context_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the context to list artifacts from.",
-                            "title": "Context Name"
-                        },
-                        "description": "Name of the context to list artifacts from.",
-                        "example": "training"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "artifact_1": "value_1",
-                                    "artifact_2": "value_2"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project or Context Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> or context <context> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/project/{project}/contexts/{context}/artifacts/{key}": {
-            "delete": {
-                "tags": [
-                    "Context Artifacts"
-                ],
-                "summary": "Delete Context Artifact",
-                "description": "Deletes an artifact from a context within a project.",
-                "operationId": "delete_context_artifact_v0_project__project__contexts__context__artifacts__key__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project containing the context.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project containing the context.",
-                        "example": "eval-project"
-                    },
-                    {
-                        "name": "context",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the context to delete an artifact from.",
-                            "title": "Context"
-                        },
-                        "description": "Name of the context to delete an artifact from.",
-                        "example": "training"
-                    },
-                    {
-                        "name": "key",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Key of the artifact to delete.",
-                            "title": "Key"
-                        },
-                        "description": "Key of the artifact to delete.",
-                        "example": "context-description"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Context artifact deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project, Context, or Artifact Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project>, context <context>, or artifact <key> not found."
                                 }
                             }
                         }
@@ -7848,6 +7936,22 @@
                     "name"
                 ],
                 "title": "ProjectConfig"
+            },
+            "RenameContextRequest": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "New name for the context, must meet naming rules",
+                        "example": "experiment2/trial3"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "RenameContextRequest",
+                "description": "Request model for renaming an existing context."
             },
             "RenameFieldRequest": {
                 "properties": {

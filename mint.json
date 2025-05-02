@@ -464,7 +464,8 @@
                                 "api-reference/contexts/get_context",
                                 "api-reference/contexts/delete_context",
                                 "api-reference/contexts/create_columns",
-                                "api-reference/contexts/add_logs_to_context"
+                                "api-reference/contexts/add_logs_to_context",
+                                "api-reference/contexts/rename_context"
                             ]
                         },
                         {
