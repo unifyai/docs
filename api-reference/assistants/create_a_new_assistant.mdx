@@ -92,16 +92,18 @@ print(response.text)
 
 ```json 200
 {
-    "agent_id": "123",
-    "first_name": "Alice",
-    "surname": "Smith",
-    "age": 25,
-    "weekly_limit": 40.0,
-    "max_parallel": 3,
-    "created_at": "2025-04-25T12:00:00Z",
-    "updated_at": "2025-04-25T12:00:00Z",
-    "phone": "+1-555-123-4567",
-    "email": "alice.smith@example.com"
+    "info": {
+        "agent_id": "123",
+        "first_name": "Alice",
+        "surname": "Smith",
+        "age": 25,
+        "weekly_limit": 40.0,
+        "max_parallel": 3,
+        "created_at": "2025-04-25T12:00:00Z",
+        "updated_at": "2025-04-25T12:00:00Z",
+        "phone": "+1-555-123-4567",
+        "email": "alice.smith@example.com"
+    }
 }
 ```
 
