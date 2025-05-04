@@ -10,12 +10,12 @@ def create_logs(
     params: Optional[Union[List[Dict[str, Any]], Dict[str, Any]]] = None,
     entries: Optional[Union[List[Dict[str, Any]], Dict[str, Any]]] = None,
     mutable: Optional[Union[bool, Dict[str, bool]]] = True,
-    batched: bool = False,
+    batched: Optional[bool] = None,
     api_key: Optional[str] = None,
 ) -> List[int]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/df0e9b9bb7e9804124b6fcbb76394981ccfa3f71/unify/logging/utils/logs.py#L514)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/d3149b1b86ea2fe8af5a8be40798429224cee847/unify/logging/utils/logs.py#L514)</p>
 
 Creates one or more logs associated to a project.
 
