@@ -1,8 +1,8 @@
 ---
-title: 'Update Interface'
-api: 'PUT /v0/interfaces/'
+title: 'Update Tab'
+api: 'PUT /v0/tab/'
 ---
-Update an interface by ID or by project ID and name.
+Update a tab by ID or by interface_id and name.
 
 #### Authorizations
 
@@ -12,16 +12,16 @@ Update an interface by ID or by project ID and name.
 
 #### Query Parameters
 
-<ParamField query="interface_id" type="string | null" >
-The ID of the interface to update
+<ParamField query="tab_id" type="string | null" >
+The ID of the tab to update
 </ParamField>
 
-<ParamField query="project" type="string | null" >
-The project ID the interface belongs to
+<ParamField query="interface_id" type="string | null" >
+The interface ID the tab belongs to
 </ParamField>
 
 <ParamField query="name" type="string | null" >
-The name of the interface to update
+The name of the tab to update
 </ParamField>
 
 <ParamField query="checkpoint" type="boolean" >
@@ -34,7 +34,19 @@ Whether this is a checkpoint update (manual save)
 
 </ParamField>
 
-<ParamField body="active_tab_id" type="string | null" >
+<ParamField body="visible" type="boolean | null" >
+
+</ParamField>
+
+<ParamField body="active" type="boolean | null" >
+
+</ParamField>
+
+<ParamField body="order" type="integer | null" >
+
+</ParamField>
+
+<ParamField body="global_context" type="string | null" >
 
 </ParamField>
 
@@ -46,7 +58,7 @@ Whether this is a checkpoint update (manual save)
 
 ```bash cURL
 curl --request PUT \
-  --url 'https://api.unify.ai/v0/interfaces/?interface_id=None&project=None&name=None&checkpoint=None' \
+  --url 'https://api.unify.ai/v0/tab/?tab_id=None&interface_id=None&name=None&checkpoint=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -55,7 +67,7 @@ curl --request PUT \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interfaces/?interface_id=None&project=None&name=None&checkpoint=None"
+url = "https://api.unify.ai/v0/tab/?tab_id=None&interface_id=None&name=None&checkpoint=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -72,25 +84,29 @@ print(response.text)
 ```json 200
 {
     "id": "123",
-    "name": "my_interface",
-    "project_id": "proj_abc",
-    "tabs": [],
-    "color": "blue",
+    "interface_id": "456",
+    "name": "updated_tab_name",
+    "visible": true,
+    "active": true,
+    "order": 1,
+    "global_context": {},
+    "color": "red",
     "is_checkpoint": false,
+    "tiles": [],
     "created_at": "2024-01-01T12:00:00Z",
-    "updated_at": "2024-01-01T12:00:00Z"
+    "updated_at": "2024-01-01T12:30:00Z"
 }
 ```
 
 ```json 404
 {
-    "detail": "Interface with ID 123 not found."
+    "detail": "Tab with ID 123 not found."
 }
 ```
 
 ```json 400
 {
-    "detail": "Either interface_id or both project and name must be provided."
+    "detail": "Either tab_id or both interface_id and name must be provided."
 }
 ```
 

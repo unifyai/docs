@@ -1,0 +1,117 @@
+---
+title: 'Get Tile Checkpoint'
+api: 'GET /v0/tile/checkpoint'
+---
+Get the checkpoint (manual save) for a tile by ID or by tab_id and name.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="tile_id" type="string | null" >
+The ID of the tile to get checkpoint for
+</ParamField>
+
+<ParamField query="tab_id" type="string | null" >
+The tab ID the tile belongs to
+</ParamField>
+
+<ParamField query="name" type="string | null" >
+The name of the tile to get checkpoint for
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/tile/checkpoint?tile_id=None&tab_id=None&name=None' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/tile/checkpoint?tile_id=None&tab_id=None&name=None"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "checkpoint_123",
+    "tab_id": "checkpoint_tab_456",
+    "name": "Data Table",
+    "type": "Table",
+    "position": {
+        "x": 0,
+        "y": 0,
+        "width": 6,
+        "height": 4
+    },
+    "min_width": 2,
+    "min_height": 2,
+    "visible": true,
+    "locked": false,
+    "moved": false,
+    "static": false,
+    "table": "main_data",
+    "auto_update": true,
+    "freeze": false,
+    "is_checkpoint": true,
+    "table_tile": {
+        "id": "checkpoint_table_123",
+        "tile_id": "checkpoint_123",
+        "table_type": "Data Table",
+        "page_number": 1,
+        "column_order": [
+            "id",
+            "name",
+            "value"
+        ],
+        "hidden_columns": [],
+        "columns_pin_left": [],
+        "columns_pin_right": []
+    },
+    "created_at": "2024-01-01T12:00:00Z",
+    "updated_at": "2024-01-01T12:30:00Z"
+}
+```
+
+```json 404
+{
+    "detail": "No checkpoint found for the specified tile."
+}
+```
+
+```json 400
+{
+    "detail": "Either tile_id or both tab_id and name must be provided."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

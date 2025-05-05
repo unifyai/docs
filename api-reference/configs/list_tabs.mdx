@@ -1,0 +1,103 @@
+---
+title: 'List Tabs'
+api: 'GET /v0/tab/list'
+---
+List all tabs for an interface.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="interface_id" type="string" required="true">
+The interface ID to list tabs for
+</ParamField>
+
+<ParamField query="name" type="string | null" >
+Filter tabs by name
+</ParamField>
+
+<ParamField query="checkpoint" type="boolean" >
+Whether to list checkpoint tabs (manual save)
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/tab/list?interface_id=None&name=None&checkpoint=None' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/tab/list?interface_id=None&name=None&checkpoint=None"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+[
+    {
+        "id": "123",
+        "interface_id": "456",
+        "name": "my_tab_1",
+        "visible": true,
+        "active": true,
+        "order": 1,
+        "global_context": {},
+        "color": "blue",
+        "is_checkpoint": false,
+        "tiles": [],
+        "created_at": "2024-01-01T12:00:00Z",
+        "updated_at": "2024-01-01T12:00:00Z"
+    },
+    {
+        "id": "124",
+        "interface_id": "456",
+        "name": "my_tab_2",
+        "visible": true,
+        "active": false,
+        "order": 2,
+        "global_context": {},
+        "color": "green",
+        "is_checkpoint": false,
+        "tiles": [],
+        "created_at": "2024-01-01T12:00:00Z",
+        "updated_at": "2024-01-01T12:00:00Z"
+    }
+]
+```
+
+```json 404
+{
+    "detail": "Interface with ID 456 not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
