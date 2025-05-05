@@ -1,9 +1,14 @@
 ---
-title: 'Create Derived Entry'
+title: 'Create From Logs'
 api: 'POST /v0/logs/derived'
 ---
-Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.
-Eagerly computes each derived value and stores it in DerivedLog.value.
+Creates one or more entries based on `body.equation` and `body.referenced_logs`.
+
+When body.derived=True (default):
+  Eagerly computes each derived value and stores it in DerivedLog.value.
+
+When body.derived=False:
+  Computes values and stores them directly in the base logs as regular entries.
 
 The context parameter can be:
 - A string: Uses the string as the context name with default values (description=None, is_versioned=False)
@@ -37,6 +42,10 @@ The equation for computing the value of each derived entry.
 The logs to use for each newly created derived entry, either as a list of log ids or as a set of arguments for the get_logs endpoint.
 </ParamField>
 
+<ParamField body="derived" type="boolean"  default={true}>
+Whether to create derived logs (True) or static entries in base logs (False).
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -58,7 +67,8 @@ curl --request POST \
         "log1": {
             "filter_expr": "score > 0.5"
         }
-    }
+    },
+    "derived": false
 }'
 ```
 
@@ -69,7 +79,7 @@ url = "https://api.unify.ai/v0/logs/derived"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1", "key": "score_diff", "equation": "{log0:score} - {log1:score}", "referenced_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "score > 0.5"}}}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "key": "score_diff", "equation": "{log0:score} - {log1:score}", "referenced_logs": {"log0": [0, 1, 2], "log1": {"filter_expr": "score > 0.5"}}, "derived": False}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

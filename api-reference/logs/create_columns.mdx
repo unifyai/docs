@@ -1,0 +1,90 @@
+---
+title: 'Create Columns'
+api: 'POST /v0/logs/columns'
+---
+Creates one or more columns in a project. Columns are field definitions that can be used
+in logs. This endpoint allows pre-defining columns before adding any log data.
+
+Each column can have an optional description. If a column already exists, its description
+will be updated.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="project" type="string" required="true">
+Name of the project the columns belong to.
+</ParamField>
+
+<ParamField body="context" type="string | null" >
+Optional context path for the columns.
+</ParamField>
+
+<ParamField body="columns" type="object" required="true">
+Dictionary mapping column names to their descriptions (or None if no description).
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/logs/columns' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "project": "eval-project",
+    "context": "experiment1/trial1",
+    "columns": {
+        "score": "Evaluation score"
+    }
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs/columns"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "columns": {"score": "Evaluation score"}}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Columns created successfully."
+}
+```
+
+```json 404
+{
+    "detail": "Project 'example_project' not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -3214,90 +3214,6 @@
                 }
             }
         },
-        "/v0/project/{project_name}/contexts/{context_name}/columns": {
-            "post": {
-                "tags": [
-                    "Contexts"
-                ],
-                "summary": "Create Columns",
-                "description": "Creates columns in a context within a project. Columns can have explicit types\nor their types can be auto-detected when data is added.\n\nThe columns are specified as a dictionary mapping column names to their types.\nIf a type is specified as null, the type will be auto-detected when data is added.",
-                "operationId": "create_columns_v0_project__project_name__contexts__context_name__columns_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project containing the context.",
-                            "title": "Project Name"
-                        },
-                        "description": "Name of the project containing the context.",
-                        "example": "my_project"
-                    },
-                    {
-                        "name": "context_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the context to create columns for.",
-                            "title": "Context Name"
-                        },
-                        "description": "Name of the context to create columns for.",
-                        "example": "my_context"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateColumnsRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Columns created successfully."
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project or Context Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project or context not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v0/project/{project_name}/contexts/add_logs": {
             "post": {
                 "tags": [
@@ -3742,7 +3658,7 @@
                     "Logs"
                 ],
                 "summary": "Update Logs",
-                "description": "Updates multiple logs with the provided entries. Each entry will be either added\nor overridden in the specified logs.\n\nA dictionary of \"explicit_types\" can be passed as part of the `entries`.\nIf present, it will override the inferred type of any matching key in all logs.",
+                "description": "Updates multiple logs with the provided entries. Each entry will be either added\nor overridden in the specified logs.\n\nThe `logs` parameter can be either:\n- A list of log IDs to update\n- A filter dictionary to select logs matching specific criteria (requires `project` or `context`)\n\nA dictionary of \"explicit_types\" can be passed as part of the `entries`.\nIf present, it will override the inferred type of any matching key in all logs.",
                 "operationId": "update_logs_v0_logs_put",
                 "security": [
                     {
@@ -3786,7 +3702,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Invalid request format or data."
+                                    "detail": "When passing a filter dict in `logs`, you must supply `project` or `context`."
                                 }
                             }
                         }
@@ -3813,21 +3729,6 @@
                 "security": [
                     {
                         "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "delete_empty_logs",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "description": "Whether to delete logs which end up being empty as a result of the field deletion.",
-                            "default": false,
-                            "title": "Delete Empty Logs"
-                        },
-                        "description": "Whether to delete logs which end up being empty as a result of the field deletion.",
-                        "example": true
                     }
                 ],
                 "requestBody": {
@@ -4269,9 +4170,11 @@
                         "required": false,
                         "schema": {
                             "type": "boolean",
+                            "description": "If True, return only log IDs instead of full entries.",
                             "default": false,
                             "title": "Return Ids Only"
-                        }
+                        },
+                        "description": "If True, return only log IDs instead of full entries."
                     }
                 ],
                 "responses": {
@@ -4403,9 +4306,9 @@
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Create Derived Entry",
-                "description": "Creates one or more derived-log entries based on `body.equation` and `body.referenced_logs`.\nEagerly computes each derived value and stores it in DerivedLog.value.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties",
-                "operationId": "create_derived_entry_v0_logs_derived_post",
+                "summary": "Create From Logs",
+                "description": "Creates one or more entries based on `body.equation` and `body.referenced_logs`.\n\nWhen body.derived=True (default):\n  Eagerly computes each derived value and stores it in DerivedLog.value.\n\nWhen body.derived=False:\n  Computes values and stores them directly in the base logs as regular entries.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties",
+                "operationId": "create_from_logs_v0_logs_derived_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -4984,19 +4887,19 @@
                 }
             }
         },
-        "/v0/logs/rename_field": {
+        "/v0/logs/rename_column": {
             "post": {
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Rename Field",
-                "description": "Renames a field across all logs in a project. This includes:\n- Updating the field type record\n- Renaming the field in all logs (regular and history)\n\nThe operation is atomic - either all renames succeed or none do.",
-                "operationId": "rename_field_v0_logs_rename_field_post",
+                "summary": "Rename Column",
+                "description": "Renames a column across all logs in a project. This includes:\n- Updating the field type record\n- Renaming the column in all logs (regular and history)\n\nThe operation is atomic - either all renames succeed or none do.",
+                "operationId": "rename_column_v0_logs_rename_column_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/RenameFieldRequest"
+                                "$ref": "#/components/schemas/RenameColumnRequest"
                             }
                         }
                     },
@@ -5004,12 +4907,12 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Field renamed successfully",
+                        "description": "Column renamed successfully",
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Field renamed successfully from 'old_name' to 'new_name'"
+                                    "info": "Column renamed successfully from 'old_name' to 'new_name'"
                                 }
                             }
                         }
@@ -5019,7 +4922,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Invalid field name or field already exists"
+                                    "detail": "Invalid column name or column already exists"
                                 }
                             }
                         }
@@ -5029,7 +4932,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project or field not found"
+                                    "detail": "Project or column not found"
                                 }
                             }
                         }
@@ -5120,14 +5023,14 @@
                 ]
             }
         },
-        "/v0/logs/fields": {
+        "/v0/logs/columns": {
             "get": {
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Get Fields",
-                "description": "Returns a dictionary of field names and their types for the specified project.\nIf a context is provided, returns only fields associated with that context.\n\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation",
-                "operationId": "get_fields_v0_logs_fields_get",
+                "summary": "Get Columns",
+                "description": "Returns a dictionary of column names and their types for the specified project.\nIf a context is provided, returns only columns associated with that context.\n\nEach column entry contains:\n- data_type: The data type of the column (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the column can be modified\n- created_at: When the column was first created\n- artifacts: For derived entries, contains the equation",
+                "operationId": "get_columns_v0_logs_columns_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -5140,10 +5043,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the project to get fields and their types for.",
+                            "description": "Name of the project to get columns and their types for.",
                             "title": "Project"
                         },
-                        "description": "Name of the project to get fields and their types for.",
+                        "description": "Name of the project to get columns and their types for.",
                         "example": "eval-project"
                     },
                     {
@@ -5159,11 +5062,11 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Optional context name to filter field types",
+                            "description": "Optional context name to filter column types",
                             "default": "",
                             "title": "Context"
                         },
-                        "description": "Optional context name to filter field types",
+                        "description": "Optional context name to filter column types",
                         "example": "training"
                     }
                 ],
@@ -5174,7 +5077,7 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "field1": {
+                                    "column1": {
                                         "data_type": "string",
                                         "field_type": "entry",
                                         "mutable": "true",
@@ -5191,6 +5094,122 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Create Columns",
+                "description": "Creates one or more columns in a project. Columns are field definitions that can be used\nin logs. This endpoint allows pre-defining columns before adding any log data.\n\nEach column can have an optional description. If a column already exists, its description\nwill be updated.",
+                "operationId": "create_columns_v0_logs_columns_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateColumnsRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Columns created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Columns created successfully."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project or context not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project 'example_project' not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Delete Columns",
+                "description": "Deletes one or more columns from a project. This will:\n1. Delete all log entries with the specified column names\n2. Delete the field type records for those columns\n\nThis operation cannot be undone, so use with caution.",
+                "operationId": "delete_columns_v0_logs_columns_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteColumnsRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Columns deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Columns deleted successfully.",
+                                    "deleted_columns": [
+                                        "score",
+                                        "response"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project or context not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project 'example_project' not found."
                                 }
                             }
                         }
@@ -9921,6 +9940,25 @@
             },
             "CreateColumnsRequest": {
                 "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project the columns belong to.",
+                        "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "Optional context path for the columns.",
+                        "example": "experiment1/trial1"
+                    },
                     "columns": {
                         "additionalProperties": {
                             "anyOf": [
@@ -9934,19 +9972,18 @@
                         },
                         "type": "object",
                         "title": "Columns",
-                        "description": "Dictionary mapping column names to their explicit types (or None for auto-detection).",
+                        "description": "Dictionary mapping column names to their descriptions (or None if no description).",
                         "example": {
-                            "accuracy": "float",
-                            "model_name": "str"
+                            "score": "Evaluation score"
                         }
                     }
                 },
                 "type": "object",
                 "required": [
+                    "project",
                     "columns"
                 ],
-                "title": "CreateColumnsRequest",
-                "description": "Request model for creating columns in a context."
+                "title": "CreateColumnsRequest"
             },
             "CreateDerivedEntriesConfig": {
                 "properties": {
@@ -10011,6 +10048,13 @@
                                 "filter_expr": "score > 0.5"
                             }
                         }
+                    },
+                    "derived": {
+                        "type": "boolean",
+                        "title": "Derived",
+                        "description": "Whether to create derived logs (True) or static entries in base logs (False).",
+                        "default": true,
+                        "example": false
                     }
                 },
                 "type": "object",
@@ -10465,6 +10509,47 @@
                 ],
                 "title": "CustomEndpointModelResponse"
             },
+            "DeleteColumnsRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project the columns belong to.",
+                        "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "Optional context path for the columns.",
+                        "example": "experiment1/trial1"
+                    },
+                    "columns": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Columns",
+                        "description": "List of column names to delete.",
+                        "example": [
+                            "score",
+                            "response"
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "columns"
+                ],
+                "title": "DeleteColumnsRequest"
+            },
             "DeleteLogEntryRequest": {
                 "properties": {
                     "project": {
@@ -10501,6 +10586,9 @@
                                             "type": "array"
                                         },
                                         {
+                                            "type": "object"
+                                        },
+                                        {
                                             "type": "null"
                                         }
                                     ]
@@ -10529,7 +10617,7 @@
                         "type": "array",
                         "minItems": 1,
                         "title": "Ids And Fields",
-                        "description": "List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items. A log ID of None indicates that the field should be deleted from all logs.",
+                        "description": "List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items. A log ID of None indicates that the field should be deleted from all logs. Can also use a dict of filter arguments to select logs. The filter dict should be a key:value pair where the key is the field to filter on and the value is the value to filter on.",
                         "example": [
                             [
                                 123,
@@ -10554,6 +10642,12 @@
                                 "response"
                             ],
                             [
+                                {
+                                    "score": "100"
+                                },
+                                null
+                            ],
+                            [
                                 null,
                                 "score"
                             ]
@@ -10570,6 +10664,20 @@
                         "description": "Specifies which type of logs to delete. Can be 'base' for base logs only, 'derived' for derived logs only, or 'all' to delete from both types.",
                         "default": "all",
                         "example": "all"
+                    },
+                    "delete_empty_logs": {
+                        "type": "boolean",
+                        "title": "Delete Empty Logs",
+                        "description": "Whether to delete logs which end up being empty as a result of the field deletion.",
+                        "default": false,
+                        "example": true
+                    },
+                    "delete_empty_columns": {
+                        "type": "boolean",
+                        "title": "Delete Empty Columns",
+                        "description": "Whether to delete columns that have no data after log deletion.",
+                        "default": true,
+                        "example": true
                     }
                 },
                 "type": "object",
@@ -11740,6 +11848,49 @@
                 ],
                 "title": "ProjectConfig"
             },
+            "RenameColumnRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project the column belongs to.",
+                        "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "The context of the column to rename.",
+                        "default": "",
+                        "example": "test-context"
+                    },
+                    "old_field_name": {
+                        "type": "string",
+                        "title": "Old Field Name",
+                        "description": "The current name of the column to rename.",
+                        "example": "score"
+                    },
+                    "new_field_name": {
+                        "type": "string",
+                        "title": "New Field Name",
+                        "description": "The new name for the column.",
+                        "example": "score_new"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "old_field_name",
+                    "new_field_name"
+                ],
+                "title": "RenameColumnRequest"
+            },
             "RenameContextRequest": {
                 "properties": {
                     "name": {
@@ -11755,49 +11906,6 @@
                 ],
                 "title": "RenameContextRequest",
                 "description": "Request model for renaming an existing context."
-            },
-            "RenameFieldRequest": {
-                "properties": {
-                    "project": {
-                        "type": "string",
-                        "title": "Project",
-                        "description": "Name of the project the field belongs to.",
-                        "example": "eval-project"
-                    },
-                    "context": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Context",
-                        "description": "The context of the field to rename.",
-                        "default": "",
-                        "example": "test-context"
-                    },
-                    "old_field_name": {
-                        "type": "string",
-                        "title": "Old Field Name",
-                        "description": "The current name of the field to rename.",
-                        "example": "score"
-                    },
-                    "new_field_name": {
-                        "type": "string",
-                        "title": "New Field Name",
-                        "description": "The new name for the field.",
-                        "example": "score_new"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "project",
-                    "old_field_name",
-                    "new_field_name"
-                ],
-                "title": "RenameFieldRequest"
             },
             "TabSchema": {
                 "properties": {
@@ -12456,19 +12564,44 @@
             },
             "UpdateLogRequest": {
                 "properties": {
-                    "ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "type": "array",
-                        "minItems": 1,
-                        "title": "Ids",
-                        "description": "List of log IDs to update with new or overriding entries.",
-                        "example": [
-                            123,
-                            456,
-                            789
+                    "logs": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "integer"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "object"
+                            }
+                        ],
+                        "title": "Logs",
+                        "description": "List of log IDs or a dict of filter arguments to select logs. Filter dicts are passed as key:value pairs (e.g. `{\"status\": \"done\", \"user_id\": 12}`).",
+                        "examples": [
+                            [
+                                123,
+                                456,
+                                789
+                            ],
+                            {
+                                "status": "done",
+                                "user_id": 12
+                            }
                         ]
+                    },
+                    "project": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Project",
+                        "description": "Name of the project. Required when using filter dict in `logs`. Omit when passing a list of IDs.",
+                        "example": "eval-project"
                     },
                     "context": {
                         "anyOf": [
@@ -12496,7 +12629,7 @@
                             }
                         ],
                         "title": "Context",
-                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.",
+                        "description": "Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object. Required when using filter dict in `logs` if project is not provided.",
                         "example": "experiment1/trial1"
                     },
                     "params": {
@@ -12561,7 +12694,7 @@
                 },
                 "type": "object",
                 "required": [
-                    "ids"
+                    "logs"
                 ],
                 "title": "UpdateLogRequest"
             },

@@ -1,15 +1,15 @@
 ---
-title: 'Get Fields'
-api: 'GET /v0/logs/fields'
+title: 'Get Columns'
+api: 'GET /v0/logs/columns'
 ---
-Returns a dictionary of field names and their types for the specified project.
-If a context is provided, returns only fields associated with that context.
+Returns a dictionary of column names and their types for the specified project.
+If a context is provided, returns only columns associated with that context.
 
-Each field entry contains:
-- data_type: The data type of the field (int, str, etc)
+Each column entry contains:
+- data_type: The data type of the column (int, str, etc)
 - field_type: Whether it's an entry, param, or derived_entry
-- mutable: Whether the field can be modified
-- created_at: When the field was first created
+- mutable: Whether the column can be modified
+- created_at: When the column was first created
 - artifacts: For derived entries, contains the equation
 
 #### Authorizations
@@ -21,25 +21,25 @@ Each field entry contains:
 #### Query Parameters
 
 <ParamField query="project" type="string" required="true">
-Name of the project to get fields and their types for.
+Name of the project to get columns and their types for.
 </ParamField>
 
 <ParamField query="context" type="string | null" >
-Optional context name to filter field types
+Optional context name to filter column types
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs/fields?project=eval-project&context=training' \
+  --url 'https://api.unify.ai/v0/logs/columns?project=eval-project&context=training' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/fields?project=eval-project&context=training"
+url = "https://api.unify.ai/v0/logs/columns?project=eval-project&context=training"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -53,7 +53,7 @@ print(response.text)
 
 ```json 200
 {
-    "field1": {
+    "column1": {
         "data_type": "string",
         "field_type": "entry",
         "mutable": "true",
