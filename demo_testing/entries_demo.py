@@ -1,4 +1,5 @@
 import unify
+
 unify.activate("entries-context", overwrite=True)
 all_student_data = {
     "Maths": {
@@ -37,6 +38,6 @@ for subject, studate_data in all_student_data.items():
                 subject=subject,
                 grade=grade,
                 first_name=first_name,
-                last_name=last_name, 
-                data_of_birth=dob
+                last_name=last_name,
+                data_of_birth=dob,
             )
