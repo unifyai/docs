@@ -1,0 +1,95 @@
+---
+title: 'Delete Columns'
+api: 'DELETE /v0/logs/columns'
+---
+Deletes one or more columns from a project. This will:
+1. Delete all log entries with the specified column names
+2. Delete the field type records for those columns
+
+This operation cannot be undone, so use with caution.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="project" type="string" required="true">
+Name of the project the columns belong to.
+</ParamField>
+
+<ParamField body="context" type="string | null" >
+Optional context path for the columns.
+</ParamField>
+
+<ParamField body="columns" type="[string]" required="true">
+List of column names to delete.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/logs/columns' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "project": "eval-project",
+    "context": "experiment1/trial1",
+    "columns": [
+        "score",
+        "response"
+    ]
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs/columns"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "columns": ["score", "response"]}
+
+response = requests.request("DELETE", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Columns deleted successfully.",
+    "deleted_columns": [
+        "score",
+        "response"
+    ]
+}
+```
+
+```json 404
+{
+    "detail": "Project 'example_project' not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

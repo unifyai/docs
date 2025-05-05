@@ -5,6 +5,10 @@ api: 'PUT /v0/logs'
 Updates multiple logs with the provided entries. Each entry will be either added
 or overridden in the specified logs.
 
+The `logs` parameter can be either:
+- A list of log IDs to update
+- A filter dictionary to select logs matching specific criteria (requires `project` or `context`)
+
 A dictionary of "explicit_types" can be passed as part of the `entries`.
 If present, it will override the inferred type of any matching key in all logs.
 
@@ -16,12 +20,16 @@ If present, it will override the inferred type of any matching key in all logs.
 
 #### Body
 
-<ParamField body="ids" type="[integer]" required="true">
-List of log IDs to update with new or overriding entries.
+<ParamField body="logs" type="array | object" required="true">
+List of log IDs or a dict of filter arguments to select logs. Filter dicts are passed as key:value pairs (e.g. `{"status": "done", "user_id": 12}`).
+</ParamField>
+
+<ParamField body="project" type="string | null" >
+Name of the project. Required when using filter dict in `logs`. Omit when passing a list of IDs.
 </ParamField>
 
 <ParamField body="context" type="any | string | array | null" >
-Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object.
+Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object. Required when using filter dict in `logs` if project is not provided.
 </ParamField>
 
 <ParamField body="params" type="object | array"  default={{}}>
@@ -44,11 +52,7 @@ curl --request PUT \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
-    "ids": [
-        123,
-        456,
-        789
-    ],
+    "project": "eval-project",
     "context": "experiment1/trial1",
     "params": {
         "explicit_types": {
@@ -81,7 +85,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"ids": [123, 456, 789], "context": "experiment1/trial1", "params": {"explicit_types": {"system-prompt": {"mutable": True, "type": "str"}}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": {"mutable": True, "type": "Image"}}, "input": "...", "score-test-1": "..."}, "overwrite": False}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "params": {"explicit_types": {"system-prompt": {"mutable": True, "type": "str"}}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": {"mutable": True, "type": "Image"}}, "input": "...", "score-test-1": "..."}, "overwrite": False}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 
@@ -105,7 +109,7 @@ print(response.text)
 
 ```json 400
 {
-    "detail": "Invalid request format or data."
+    "detail": "When passing a filter dict in `logs`, you must supply `project` or `context`."
 }
 ```
 

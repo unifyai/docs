@@ -463,7 +463,6 @@
                                 "api-reference/contexts/get_contexts",
                                 "api-reference/contexts/get_context",
                                 "api-reference/contexts/delete_context",
-                                "api-reference/contexts/create_columns",
                                 "api-reference/contexts/add_logs_to_context",
                                 "api-reference/contexts/rename_context"
                             ]
@@ -484,13 +483,15 @@
                                 "api-reference/logs/delete_logs",
                                 "api-reference/logs/get_logs",
                                 "api-reference/logs/update_derived_log",
-                                "api-reference/logs/create_derived_entry",
+                                "api-reference/logs/create_from_logs",
                                 "api-reference/logs/get_logs_latest_timestamp",
                                 "api-reference/logs/get_logs_metric",
                                 "api-reference/logs/get_log_groups",
-                                "api-reference/logs/rename_field",
+                                "api-reference/logs/rename_column",
                                 "api-reference/logs/join_logs",
-                                "api-reference/logs/get_fields"
+                                "api-reference/logs/get_columns",
+                                "api-reference/logs/create_columns",
+                                "api-reference/logs/delete_columns"
                             ]
                         },
                         {
