@@ -1,0 +1,195 @@
+---
+title: 'Update Tile'
+api: 'PUT /v0/tile/'
+---
+Update a tile by ID or by tab_id and name.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="tile_id" type="string | null" >
+The ID of the tile to update
+</ParamField>
+
+<ParamField query="tab_id" type="string | null" >
+The tab ID the tile belongs to
+</ParamField>
+
+<ParamField query="name" type="string | null" >
+The name of the tile to update
+</ParamField>
+
+<ParamField query="checkpoint" type="boolean" >
+Whether this is a checkpoint update (manual save)
+</ParamField>
+
+#### Body
+
+<ParamField body="name" type="string | null" >
+
+</ParamField>
+
+<ParamField body="position" type="any | null" >
+
+</ParamField>
+
+<ParamField body="min_width" type="number | null" >
+
+</ParamField>
+
+<ParamField body="min_height" type="number | null" >
+
+</ParamField>
+
+<ParamField body="visible" type="boolean | null" >
+
+</ParamField>
+
+<ParamField body="locked" type="boolean | null" >
+
+</ParamField>
+
+<ParamField body="context" type="string | null" >
+
+</ParamField>
+
+<ParamField body="table" type="string | null" >
+
+</ParamField>
+
+<ParamField body="auto_update" type="string | null" >
+
+</ParamField>
+
+<ParamField body="freeze" type="string | null" >
+
+</ParamField>
+
+<ParamField body="filters" type="string | null" >
+
+</ParamField>
+
+<ParamField body="common_filter" type="string | null" >
+
+</ParamField>
+
+<ParamField body="metric" type="string | null" >
+
+</ParamField>
+
+<ParamField body="table_tile" type="any | null" >
+
+</ParamField>
+
+<ParamField body="plot_tile" type="any | null" >
+
+</ParamField>
+
+<ParamField body="view_tile" type="any | null" >
+
+</ParamField>
+
+<ParamField body="editor_tile" type="any | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PUT \
+  --url 'https://api.unify.ai/v0/tile/?tile_id=None&tab_id=None&name=None&checkpoint=None' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/tile/?tile_id=None&tab_id=None&name=None&checkpoint=None"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("PUT", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "123",
+    "tab_id": "tab_456",
+    "name": "Updated Data Table",
+    "type": "Table",
+    "position": {
+        "x": 1,
+        "y": 1,
+        "width": 8,
+        "height": 5
+    },
+    "min_width": 2,
+    "min_height": 2,
+    "visible": true,
+    "locked": false,
+    "moved": true,
+    "static": false,
+    "table": "main_data",
+    "auto_update": true,
+    "freeze": false,
+    "is_checkpoint": false,
+    "table_tile": {
+        "id": "table_123",
+        "tile_id": "123",
+        "table_type": "Data Table",
+        "page_number": 1,
+        "column_order": [
+            "id",
+            "name",
+            "value"
+        ],
+        "hidden_columns": [],
+        "columns_pin_left": [],
+        "columns_pin_right": []
+    },
+    "created_at": "2024-01-01T12:00:00Z",
+    "updated_at": "2024-01-01T12:30:00Z"
+}
+```
+
+```json 404
+{
+    "detail": "Tile with ID 123 not found."
+}
+```
+
+```json 400
+{
+    "detail": "Either tile_id or both tab_id and name must be provided."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

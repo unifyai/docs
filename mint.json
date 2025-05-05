@@ -499,7 +499,30 @@
                                 "api-reference/configs/create_interface",
                                 "api-reference/configs/update_interface",
                                 "api-reference/configs/get_interfaces",
-                                "api-reference/configs/delete_interface"
+                                "api-reference/configs/delete_interface",
+                                "api-reference/configs/create_interface",
+                                "api-reference/configs/get_interface",
+                                "api-reference/configs/update_interface",
+                                "api-reference/configs/delete_interface",
+                                "api-reference/configs/list_interfaces",
+                                "api-reference/configs/create_interface_checkpoint",
+                                "api-reference/configs/get_interface_checkpoint",
+                                "api-reference/configs/create_tab",
+                                "api-reference/configs/get_tab",
+                                "api-reference/configs/update_tab",
+                                "api-reference/configs/delete_tab",
+                                "api-reference/configs/list_tabs",
+                                "api-reference/configs/create_tab_checkpoint",
+                                "api-reference/configs/get_tab_checkpoint",
+                                "api-reference/configs/create_tile",
+                                "api-reference/configs/get_tile",
+                                "api-reference/configs/update_tile",
+                                "api-reference/configs/delete_tile",
+                                "api-reference/configs/patch_tile",
+                                "api-reference/configs/list_tiles",
+                                "api-reference/configs/create_tile_checkpoint",
+                                "api-reference/configs/get_tile_checkpoint",
+                                "api-reference/configs/patch_specialized_tile"
                             ]
                         }
                     ]

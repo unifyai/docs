@@ -1,8 +1,8 @@
 ---
-title: 'Delete Interface'
-api: 'DELETE /v0/interfaces/'
+title: 'Get Interface Checkpoint'
+api: 'GET /v0/interfaces/checkpoint'
 ---
-Delete an interface by ID or by project ID and name.
+Get the latest checkpoint (manual save) for an interface by ID or by project ID and name.
 
 #### Authorizations
 
@@ -13,7 +13,7 @@ Delete an interface by ID or by project ID and name.
 #### Query Parameters
 
 <ParamField query="interface_id" type="string | null" >
-The ID of the interface to delete
+The ID of the interface to get checkpoint for
 </ParamField>
 
 <ParamField query="project" type="string | null" >
@@ -21,25 +21,25 @@ The project ID the interface belongs to
 </ParamField>
 
 <ParamField query="name" type="string | null" >
-The name of the interface to delete
+The name of the interface to get checkpoint for
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request DELETE \
-  --url 'https://api.unify.ai/v0/interfaces/?interface_id=None&project=None&name=None' \
+curl --request GET \
+  --url 'https://api.unify.ai/v0/interfaces/checkpoint?interface_id=None&project=None&name=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interfaces/?interface_id=None&project=None&name=None"
+url = "https://api.unify.ai/v0/interfaces/checkpoint?interface_id=None&project=None&name=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("DELETE", url, headers=headers)
+response = requests.request("GET", url, headers=headers)
 
 print(response.text)
 ```
@@ -47,27 +47,28 @@ print(response.text)
 </RequestExample>
 <ResponseExample>
 
-```json 204
+```json 200
 {
-    "info": "Interface deleted successfully"
+    "id": "123",
+    "name": "my_interface",
+    "project_id": "proj_abc",
+    "tabs": [],
+    "color": "blue",
+    "is_checkpoint": true,
+    "created_at": "2024-01-01T12:00:00Z",
+    "updated_at": "2024-01-01T12:00:00Z"
 }
 ```
 
 ```json 404
 {
-    "detail": "Interface with ID 123 not found."
+    "detail": "No checkpoint found for the specified interface."
 }
 ```
 
 ```json 400
 {
     "detail": "Either interface_id or both project and name must be provided."
-}
-```
-
-```json 500
-{
-    "detail": "Failed to delete interface."
 }
 ```
 
