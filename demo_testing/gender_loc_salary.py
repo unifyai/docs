@@ -1,4 +1,5 @@
 import unify
+
 unify.activate("gender_loc_salary", overwrite=True)
 import random
 
@@ -12,8 +13,8 @@ for gender in ["male", "female"]:
                 nationality=loc,
                 age=age,
                 salary=(
-                    age*500 +
-                    age*gender_factors[gender]*random.random() +
-                    loc_offsets[loc]*random.random()
+                    age * 500
+                    + age * gender_factors[gender] * random.random()
+                    + loc_offsets[loc] * random.random()
                 ),
             )

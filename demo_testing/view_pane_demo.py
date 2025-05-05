@@ -1,14 +1,12 @@
 import unify
 import random
 from datetime import datetime, timedelta
+
 unify.activate("view-pane-demo", overwrite=True)
 
 
 num_employees = 20
-ages = [
-    random.randint(20, 50)
-    for _ in range(num_employees)
-]
+ages = [random.randint(20, 50) for _ in range(num_employees)]
 catchphrases = random.choices(
     [
         "hello... friend",
@@ -20,9 +18,7 @@ catchphrases = random.choices(
     k=num_employees,
 )
 last_logins = [
-    (datetime.now() - timedelta(
-        days=random.randint(0, 5)
-    )).isoformat()
+    (datetime.now() - timedelta(days=random.randint(0, 5))).isoformat()
     for _ in range(num_employees)
 ]
 open_task_progress = [
@@ -46,7 +42,7 @@ for age, catchphrase, last_login, otp in zip(
     unify.log(
         age=age,
         catchphrase=catchphrase,
-        how_10x=random.random()*10,
+        how_10x=random.random() * 10,
         last_login=last_login,
         open_task_progress=otp,
         will_to_live=random.choice([True, False]),
