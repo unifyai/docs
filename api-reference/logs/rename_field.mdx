@@ -1,10 +1,10 @@
 ---
-title: 'Rename Column'
-api: 'POST /v0/logs/rename_column'
+title: 'Rename Field'
+api: 'POST /v0/logs/rename_field'
 ---
-Renames a column across all logs in a project. This includes:
+Renames a field across all logs in a project. This includes:
 - Updating the field type record
-- Renaming the column in all logs (regular and history)
+- Renaming the field in all logs (regular and history)
 
 The operation is atomic - either all renames succeed or none do.
 
@@ -17,26 +17,26 @@ The operation is atomic - either all renames succeed or none do.
 #### Body
 
 <ParamField body="project" type="string" required="true">
-Name of the project the column belongs to.
+Name of the project the field belongs to.
 </ParamField>
 
 <ParamField body="context" type="string | null"  default={""}>
-The context of the column to rename.
+The context of the field to rename.
 </ParamField>
 
 <ParamField body="old_field_name" type="string" required="true">
-The current name of the column to rename.
+The current name of the field to rename.
 </ParamField>
 
 <ParamField body="new_field_name" type="string" required="true">
-The new name for the column.
+The new name for the field.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/logs/rename_column' \
+  --url 'https://api.unify.ai/v0/logs/rename_field' \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
@@ -50,7 +50,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/rename_column"
+url = "https://api.unify.ai/v0/logs/rename_field"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -66,19 +66,19 @@ print(response.text)
 
 ```json 200
 {
-    "info": "Column renamed successfully from 'old_name' to 'new_name'"
+    "info": "Field renamed successfully from 'old_name' to 'new_name'"
 }
 ```
 
 ```json 400
 {
-    "detail": "Invalid column name or column already exists"
+    "detail": "Invalid field name or field already exists"
 }
 ```
 
 ```json 404
 {
-    "detail": "Project or column not found"
+    "detail": "Project or field not found"
 }
 ```
 

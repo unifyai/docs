@@ -3191,6 +3191,16 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Forbidden Operation",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Cannot delete built-in Tasks context."
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Project or Context Not Found",
                         "content": {
@@ -3347,6 +3357,16 @@
                             "application/json": {
                                 "example": {
                                     "detail": "A context with this name already exists in the project."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden Operation",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Cannot modify built-in Tasks context."
                                 }
                             }
                         }
@@ -3597,7 +3617,7 @@
                     "Logs"
                 ],
                 "summary": "Create Logs",
-                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nIf a context is specified and it is versioned, all logs will be versioned\nand mutable. The context version will be incremented automatically when\nlogs are added, updated, or removed.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties\n\nAn \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry. The explicit_types dictionary\ncan also specify if a field is mutable via a 'mutable' boolean flag:\n\n{\n    \"field_name\": {\n        \"type\": \"str\",\n        \"mutable\": false  # Makes the field immutable\n    }\n}\n\nBy default, all fields are immmutable unless specified otherwise.\nOnce a field is marked as mutable, only then can it be modified through\nthe update endpoint.\n\nThis method returns the ids of the new stored logs.",
+                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nIf a context is specified and it is versioned, all logs will be versioned\nand mutable. The context version will be incremented automatically when\nlogs are added, updated, or removed.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties\n\nAn \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry. The explicit_types dictionary\ncan also specify if a field is mutable via a 'mutable' boolean flag:\n\n```json\n{\n    \"field_name\": {\n        \"type\": \"str\",\n        \"mutable\": false  # Makes the field immutable\n    }\n}\n```\n\nBy default, all fields are immmutable unless specified otherwise.\nOnce a field is marked as mutable, only then can it be modified through\nthe update endpoint.\n\nThis method returns the ids of the new stored logs.",
                 "operationId": "create_logs_v0_logs_post",
                 "security": [
                     {
@@ -3780,7 +3800,7 @@
                     "Logs"
                 ],
                 "summary": "Get Logs",
-                "description": "Returns a list of filtered log entries from a project with various expressiveness options:\n\n  1. **Monolithic mode** (when group_by is not provided):\n     - Returns a flat list of log entries (with fields clipped if value_limit is set).\n     - Optionally factors out repeated fields into a grouped_entries field if group_threshold is set.\n\n  2. **Grouped mode** (when group_by is provided):\n     - Supports multi-level grouping of logs. The order of fields in group_by dictates the nesting order.\n     - Supports pagination at the group level using group_limit and group_offset.\n     - Supports limiting the nesting depth with group_depth.\n     - When nested_groups is True, returns a nested structure under the \"logs\" key.\n     - When nested_groups is False, returns flat per-field mappings under the \"groups\" key.\n     - When groups_only is True, the detailed log objects are omitted and leaves are simplified\n       to either lists of log ids (if return_timestamps is False) or mappings of {log id: timestamp} (if True).\n\n  3. **Return IDs only mode**:\n     - If return_ids_only is True, returns only the log event ids.\n     - If return_versions is also True, returns a list of objects with both id and version information.\n\nThe response always includes:\n  - `params`: The parameter versions used across the logs.\n  - `count`: The total number of logs matching the query.\n  - Additionally, it includes either `logs` (in monolithic or nested grouping mode) or `groups` (in flat grouping mode)\n    as specified by the arguments.\n\nIf return_versions=True:\n- Returns all versions of logs in versioned contexts\n- from_ids and exclude_ids must be provided as lists of objects with 'id' and 'version' keys\n- Each object must have format: {\"id\": log_event_id, \"version\": version_number}\n- This is only valid for logs in versioned contexts\n\nIf return_versions=False (default):\n- Returns only the latest version of each log\n- from_ids and exclude_ids should be strings of '&'-separated log event IDs",
+                "description": "Returns a list of filtered log entries from a project with various expressiveness options:\n\n  1. **Monolithic mode** (when group_by is not provided):\n     - Returns a flat list of log entries (with fields clipped if value_limit is set).\n     - Optionally factors out repeated fields into a grouped_entries field if group_threshold is set.\n\n  2. **Grouped mode** (when group_by is provided):\n     - Supports multi-level grouping of logs. The order of fields in group_by dictates the nesting order.\n     - Supports pagination at the group level using group_limit and group_offset.\n     - Supports limiting the nesting depth with group_depth.\n     - When nested_groups is True, returns a nested structure under the \"logs\" key.\n     - When nested_groups is False, returns flat per-field mappings under the \"groups\" key.\n     - When groups_only is True, the detailed log objects are omitted and leaves are simplified\n       to either lists of log ids (if return_timestamps is False) or mappings of `{log id: timestamp}` (if True).\n\n  3. **Return IDs only mode**:\n     - If return_ids_only is True, returns only the log event ids.\n     - If return_versions is also True, returns a list of objects with both id and version information.\n\nThe response always includes:\n  - `params`: The parameter versions used across the logs.\n  - `count`: The total number of logs matching the query.\n  - Additionally, it includes either `logs` (in monolithic or nested grouping mode) or `groups` (in flat grouping mode)\n    as specified by the arguments.\n\nIf return_versions=True:\n- Returns all versions of logs in versioned contexts\n- from_ids and exclude_ids must be provided as lists of objects with 'id' and 'version' keys\n- Each object must have format: `{\"id\": log_event_id, \"version\": version_number}`\n- This is only valid for logs in versioned contexts\n\nIf return_versions=False (default):\n- Returns only the latest version of each log\n- from_ids and exclude_ids should be strings of '&'-separated log event IDs",
                 "operationId": "get_logs_v0_logs_get",
                 "security": [
                     {
@@ -4647,7 +4667,7 @@
                     "Logs"
                 ],
                 "summary": "Get Logs Metric",
-                "description": "Returns the reduction metric for filtered values (base + derived) for one or more keys from a project.\n\nThis endpoint supports three modes of operation:\n\n1. Single key, no grouping: Returns a single metric value\n   Example: GET /logs/metric/mean?key=score\n   Response: 4.56\n\n2. Multiple keys, no grouping: Returns a dict mapping keys to metric values\n   Example: GET /logs/metric/mean?key=[\"score\",\"length\"]\n   Response: {\"score\": 4.56, \"length\": 120}\n\n3. With grouping: Returns metrics grouped by one or more fields\n   Example: GET /logs/metric/mean with body {\"key\": \"score\", \"group_by\": \"model\"}\n   Response: {\"gpt-4\": 4.56, \"gpt-3.5\": 3.78}\n\n   For nested grouping, provide a list of fields:\n   Example: GET /logs/metric/mean with body {\"key\": \"score\", \"group_by\": [\"model\", \"temperature\"]}\n   Response: {\"gpt-4\": {\"0.7\": 4.56, \"0.9\": 4.23}, \"gpt-3.5\": {\"0.7\": 3.78, \"0.9\": 3.45}}\n\nThe group_by parameter can be a string for single-level grouping or a list of strings for\nnested grouping. Each group_by field can be prefixed with \"params/\" to indicate it's a parameter.",
+                "description": "Returns the reduction metric for filtered values (base + derived) for one or more keys from a project.\n\nThis endpoint supports three modes of operation:\n\n1. Single key, no grouping: Returns a single metric value\n   Example:\n   ```bash\n   GET /logs/metric/mean?key=score\n   ```\n   Response:\n   ```json\n   4.56\n   ```\n\n2. Multiple keys, no grouping: Returns a dict mapping keys to metric values\n   Example:\n   ```bash\n   GET /logs/metric/mean?key=[\"score\",\"length\"]\n   ```\n   Response:\n   ```json\n   {\"score\": 4.56, \"length\": 120}\n   ```\n\n3. With grouping: Returns metrics grouped by one or more fields\n   Example:\n   ```bash\n   GET /logs/metric/mean with body {\"key\": \"score\", \"group_by\": \"model\"}\n   ```\n   Response:\n   ```json\n   {\"gpt-4\": 4.56, \"gpt-3.5\": 3.78}\n   ```\n\n   For nested grouping, provide a list of fields:\n   Example:\n   ```bash\n   GET /logs/metric/mean with body {\"key\": \"score\", \"group_by\": [\"model\", \"temperature\"]}\n   ```\n   Response:\n   ```json\n   {\"gpt-4\": {\"0.7\": 4.56, \"0.9\": 4.23}, \"gpt-3.5\": {\"0.7\": 3.78, \"0.9\": 3.45}}\n   ```\n\nThe group_by parameter can be a string for single-level grouping or a list of strings for\nnested grouping. Each group_by field can be prefixed with \"params/\" to indicate it's a parameter.",
                 "operationId": "get_logs_metric_v0_logs_metric__default_metric__get",
                 "security": [
                     {
@@ -4887,19 +4907,19 @@
                 }
             }
         },
-        "/v0/logs/rename_column": {
+        "/v0/logs/rename_field": {
             "post": {
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Rename Column",
-                "description": "Renames a column across all logs in a project. This includes:\n- Updating the field type record\n- Renaming the column in all logs (regular and history)\n\nThe operation is atomic - either all renames succeed or none do.",
-                "operationId": "rename_column_v0_logs_rename_column_post",
+                "summary": "Rename Field",
+                "description": "Renames a field across all logs in a project. This includes:\n- Updating the field type record\n- Renaming the field in all logs (regular and history)\n\nThe operation is atomic - either all renames succeed or none do.",
+                "operationId": "rename_field_v0_logs_rename_field_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/RenameColumnRequest"
+                                "$ref": "#/components/schemas/RenameFieldRequest"
                             }
                         }
                     },
@@ -4907,12 +4927,12 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Column renamed successfully",
+                        "description": "Field renamed successfully",
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Column renamed successfully from 'old_name' to 'new_name'"
+                                    "info": "Field renamed successfully from 'old_name' to 'new_name'"
                                 }
                             }
                         }
@@ -4922,7 +4942,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Invalid column name or column already exists"
+                                    "detail": "Invalid field name or field already exists"
                                 }
                             }
                         }
@@ -4932,7 +4952,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Project or column not found"
+                                    "detail": "Project or field not found"
                                 }
                             }
                         }
@@ -5023,14 +5043,14 @@
                 ]
             }
         },
-        "/v0/logs/columns": {
+        "/v0/logs/fields": {
             "get": {
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Get Columns",
-                "description": "Returns a dictionary of column names and their types for the specified project.\nIf a context is provided, returns only columns associated with that context.\n\nEach column entry contains:\n- data_type: The data type of the column (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the column can be modified\n- created_at: When the column was first created\n- artifacts: For derived entries, contains the equation",
-                "operationId": "get_columns_v0_logs_columns_get",
+                "summary": "Get Fields",
+                "description": "Returns a dictionary of fields names and their types for the specified project.\nIf a context is provided, returns only fields associated with that context.\n\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation",
+                "operationId": "get_fields_v0_logs_fields_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -5043,10 +5063,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the project to get columns and their types for.",
+                            "description": "Name of the project to get fields and their types for.",
                             "title": "Project"
                         },
-                        "description": "Name of the project to get columns and their types for.",
+                        "description": "Name of the project to get fields and their types for.",
                         "example": "eval-project"
                     },
                     {
@@ -5062,11 +5082,11 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Optional context name to filter column types",
+                            "description": "Optional context name to filter fields types",
                             "default": "",
                             "title": "Context"
                         },
-                        "description": "Optional context name to filter column types",
+                        "description": "Optional context name to filter fields types",
                         "example": "training"
                     }
                 ],
@@ -5077,7 +5097,7 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "column1": {
+                                    "field1": {
                                         "data_type": "string",
                                         "field_type": "entry",
                                         "mutable": "true",
@@ -5114,9 +5134,9 @@
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Create Columns",
-                "description": "Creates one or more columns in a project. Columns are field definitions that can be used\nin logs. This endpoint allows pre-defining columns before adding any log data.\n\nEach column can have an optional description. If a column already exists, its description\nwill be updated.",
-                "operationId": "create_columns_v0_logs_columns_post",
+                "summary": "Create Fields",
+                "description": "Creates one or more fields in a project. Fields are field definitions that can be used\nin logs. This endpoint allows pre-defining fields before adding any log data.\n\nEach field can have an optional description. If a field already exists, its description\nwill be updated.",
+                "operationId": "create_fields_v0_logs_fields_post",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -5127,19 +5147,19 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateColumnsRequest"
+                                "$ref": "#/components/schemas/CreateFieldsRequest"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Columns created successfully",
+                        "description": "Fields created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Columns created successfully."
+                                    "info": "Fields created successfully."
                                 }
                             }
                         }
@@ -5170,9 +5190,9 @@
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Delete Columns",
-                "description": "Deletes one or more columns from a project. This will:\n1. Delete all log entries with the specified column names\n2. Delete the field type records for those columns\n\nThis operation cannot be undone, so use with caution.",
-                "operationId": "delete_columns_v0_logs_columns_delete",
+                "summary": "Delete Fields",
+                "description": "Deletes one or more fields from a project. This will:\n1. Delete all log entries with the specified field names\n2. Delete the field type records for those fields\n\nThis operation cannot be undone, so use with caution.",
+                "operationId": "delete_fields_v0_logs_fields_delete",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -5183,20 +5203,20 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/DeleteColumnsRequest"
+                                "$ref": "#/components/schemas/DeleteFieldsRequest"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Columns deleted successfully",
+                        "description": "Fields deleted successfully",
                         "content": {
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Columns deleted successfully.",
-                                    "deleted_columns": [
+                                    "info": "Fields deleted successfully.",
+                                    "deleted_fields": [
                                         "score",
                                         "response"
                                     ]
@@ -9651,8 +9671,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -9938,53 +9958,6 @@
                 "title": "ContextCreateRequest",
                 "description": "Request model for creating a new context within a project."
             },
-            "CreateColumnsRequest": {
-                "properties": {
-                    "project": {
-                        "type": "string",
-                        "title": "Project",
-                        "description": "Name of the project the columns belong to.",
-                        "example": "eval-project"
-                    },
-                    "context": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Context",
-                        "description": "Optional context path for the columns.",
-                        "example": "experiment1/trial1"
-                    },
-                    "columns": {
-                        "additionalProperties": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "type": "object",
-                        "title": "Columns",
-                        "description": "Dictionary mapping column names to their descriptions (or None if no description).",
-                        "example": {
-                            "score": "Evaluation score"
-                        }
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "project",
-                    "columns"
-                ],
-                "title": "CreateColumnsRequest"
-            },
             "CreateDerivedEntriesConfig": {
                 "properties": {
                     "project": {
@@ -10065,6 +10038,53 @@
                     "referenced_logs"
                 ],
                 "title": "CreateDerivedEntriesConfig"
+            },
+            "CreateFieldsRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project the fields belong to.",
+                        "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "Optional context path for the fields.",
+                        "example": "experiment1/trial1"
+                    },
+                    "fields": {
+                        "additionalProperties": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "type": "object",
+                        "title": "Fields",
+                        "description": "Dictionary mapping field names to their descriptions (or None if no description).",
+                        "example": {
+                            "score": "Evaluation score"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "fields"
+                ],
+                "title": "CreateFieldsRequest"
             },
             "CreateInterfaceRequest": {
                 "properties": {
@@ -10509,12 +10529,12 @@
                 ],
                 "title": "CustomEndpointModelResponse"
             },
-            "DeleteColumnsRequest": {
+            "DeleteFieldsRequest": {
                 "properties": {
                     "project": {
                         "type": "string",
                         "title": "Project",
-                        "description": "Name of the project the columns belong to.",
+                        "description": "Name of the project the fields belong to.",
                         "example": "eval-project"
                     },
                     "context": {
@@ -10527,16 +10547,16 @@
                             }
                         ],
                         "title": "Context",
-                        "description": "Optional context path for the columns.",
+                        "description": "Optional context path for the fields.",
                         "example": "experiment1/trial1"
                     },
-                    "columns": {
+                    "fields": {
                         "items": {
                             "type": "string"
                         },
                         "type": "array",
-                        "title": "Columns",
-                        "description": "List of column names to delete.",
+                        "title": "Fields",
+                        "description": "List of field names to delete.",
                         "example": [
                             "score",
                             "response"
@@ -10546,9 +10566,9 @@
                 "type": "object",
                 "required": [
                     "project",
-                    "columns"
+                    "fields"
                 ],
-                "title": "DeleteColumnsRequest"
+                "title": "DeleteFieldsRequest"
             },
             "DeleteLogEntryRequest": {
                 "properties": {
@@ -10672,10 +10692,10 @@
                         "default": false,
                         "example": true
                     },
-                    "delete_empty_columns": {
+                    "delete_empty_fields": {
                         "type": "boolean",
-                        "title": "Delete Empty Columns",
-                        "description": "Whether to delete columns that have no data after log deletion.",
+                        "title": "Delete Empty Fields",
+                        "description": "Whether to delete fields that have no data after log deletion.",
                         "default": true,
                         "example": true
                     }
@@ -11848,49 +11868,6 @@
                 ],
                 "title": "ProjectConfig"
             },
-            "RenameColumnRequest": {
-                "properties": {
-                    "project": {
-                        "type": "string",
-                        "title": "Project",
-                        "description": "Name of the project the column belongs to.",
-                        "example": "eval-project"
-                    },
-                    "context": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Context",
-                        "description": "The context of the column to rename.",
-                        "default": "",
-                        "example": "test-context"
-                    },
-                    "old_field_name": {
-                        "type": "string",
-                        "title": "Old Field Name",
-                        "description": "The current name of the column to rename.",
-                        "example": "score"
-                    },
-                    "new_field_name": {
-                        "type": "string",
-                        "title": "New Field Name",
-                        "description": "The new name for the column.",
-                        "example": "score_new"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "project",
-                    "old_field_name",
-                    "new_field_name"
-                ],
-                "title": "RenameColumnRequest"
-            },
             "RenameContextRequest": {
                 "properties": {
                     "name": {
@@ -11906,6 +11883,49 @@
                 ],
                 "title": "RenameContextRequest",
                 "description": "Request model for renaming an existing context."
+            },
+            "RenameFieldRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Name of the project the field belongs to.",
+                        "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "The context of the field to rename.",
+                        "default": "",
+                        "example": "test-context"
+                    },
+                    "old_field_name": {
+                        "type": "string",
+                        "title": "Old Field Name",
+                        "description": "The current name of the field to rename.",
+                        "example": "score"
+                    },
+                    "new_field_name": {
+                        "type": "string",
+                        "title": "New Field Name",
+                        "description": "The new name for the field.",
+                        "example": "score_new"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "old_field_name",
+                    "new_field_name"
+                ],
+                "title": "RenameFieldRequest"
             },
             "TabSchema": {
                 "properties": {

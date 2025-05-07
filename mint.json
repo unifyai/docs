@@ -487,11 +487,11 @@
                                 "api-reference/logs/get_logs_latest_timestamp",
                                 "api-reference/logs/get_logs_metric",
                                 "api-reference/logs/get_log_groups",
-                                "api-reference/logs/rename_column",
+                                "api-reference/logs/rename_field",
                                 "api-reference/logs/join_logs",
-                                "api-reference/logs/get_columns",
-                                "api-reference/logs/create_columns",
-                                "api-reference/logs/delete_columns"
+                                "api-reference/logs/get_fields",
+                                "api-reference/logs/create_fields",
+                                "api-reference/logs/delete_fields"
                             ]
                         },
                         {

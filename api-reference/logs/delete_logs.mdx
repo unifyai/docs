@@ -42,8 +42,8 @@ Specifies which type of logs to delete. Can be 'base' for base logs only, 'deriv
 Whether to delete logs which end up being empty as a result of the field deletion.
 </ParamField>
 
-<ParamField body="delete_empty_columns" type="boolean"  default={true}>
-Whether to delete columns that have no data after log deletion.
+<ParamField body="delete_empty_fields" type="boolean"  default={true}>
+Whether to delete fields that have no data after log deletion.
 </ParamField>
 
 <RequestExample>
@@ -92,7 +92,7 @@ curl --request DELETE \
     ],
     "source_type": "all",
     "delete_empty_logs": true,
-    "delete_empty_columns": true
+    "delete_empty_fields": true
 }'
 ```
 
@@ -103,7 +103,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1", "ids_and_fields": [[123, "score"], [[456, 457], ["score", "response"]], [[458, 459, 460], "response"], [{"score": "100"}, None], [None, "score"]], "source_type": "all", "delete_empty_logs": True, "delete_empty_columns": True}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "ids_and_fields": [[123, "score"], [[456, 457], ["score", "response"]], [[458, 459, 460], "response"], [{"score": "100"}, None], [None, "score"]], "source_type": "all", "delete_empty_logs": True, "delete_empty_fields": True}
 
 response = requests.request("DELETE", url, json=json_input, headers=headers)
 
