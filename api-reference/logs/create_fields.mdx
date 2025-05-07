@@ -1,12 +1,12 @@
 ---
-title: 'Delete Columns'
-api: 'DELETE /v0/logs/columns'
+title: 'Create Fields'
+api: 'POST /v0/logs/fields'
 ---
-Deletes one or more columns from a project. This will:
-1. Delete all log entries with the specified column names
-2. Delete the field type records for those columns
+Creates one or more fields in a project. Fields are field definitions that can be used
+in logs. This endpoint allows pre-defining fields before adding any log data.
 
-This operation cannot be undone, so use with caution.
+Each field can have an optional description. If a field already exists, its description
+will be updated.
 
 #### Authorizations
 
@@ -17,44 +17,43 @@ This operation cannot be undone, so use with caution.
 #### Body
 
 <ParamField body="project" type="string" required="true">
-Name of the project the columns belong to.
+Name of the project the fields belong to.
 </ParamField>
 
 <ParamField body="context" type="string | null" >
-Optional context path for the columns.
+Optional context path for the fields.
 </ParamField>
 
-<ParamField body="columns" type="[string]" required="true">
-List of column names to delete.
+<ParamField body="fields" type="object" required="true">
+Dictionary mapping field names to their descriptions (or None if no description).
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request DELETE \
-  --url 'https://api.unify.ai/v0/logs/columns' \
+curl --request POST \
+  --url 'https://api.unify.ai/v0/logs/fields' \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{
     "project": "eval-project",
     "context": "experiment1/trial1",
-    "columns": [
-        "score",
-        "response"
-    ]
+    "fields": {
+        "score": "Evaluation score"
+    }
 }'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/columns"
+url = "https://api.unify.ai/v0/logs/fields"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1", "columns": ["score", "response"]}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "fields": {"score": "Evaluation score"}}
 
-response = requests.request("DELETE", url, json=json_input, headers=headers)
+response = requests.request("POST", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
@@ -64,11 +63,7 @@ print(response.text)
 
 ```json 200
 {
-    "info": "Columns deleted successfully.",
-    "deleted_columns": [
-        "score",
-        "response"
-    ]
+    "info": "Fields created successfully."
 }
 ```
 
