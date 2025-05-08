@@ -37,7 +37,7 @@ Dictionary or list of dictionaries of key-value parameter pairs to add or update
 </ParamField>
 
 <ParamField body="entries" type="object | array"  default={{}}>
-Dictionary or list of dictionaries of key-value entry pairs to add or update in the logs.
+Dictionary or list of dictionaries of key-value entry pairs to add or update in the logs. Supports nested path syntax using dot notation for object properties (e.g., 'metadata.author') and bracket notation for array indices (e.g., 'results[0]'). Complex paths like 'results[0].scores.accuracy' are also supported for deep updates.
 </ParamField>
 
 <ParamField body="overwrite" type="boolean"  default={false}>
@@ -56,6 +56,18 @@ curl --request PUT \
     "context": "experiment1/trial1",
     "params": {
         "explicit_types": {
+            "category": {
+                "restrict": false,
+                "type": "enum",
+                "values": [
+                    "A",
+                    "B",
+                    "C"
+                ]
+            },
+            "priority": {
+                "type": "enum"
+            },
             "system-prompt": {
                 "mutable": true,
                 "type": "str"
@@ -69,6 +81,18 @@ curl --request PUT \
             "input": {
                 "mutable": true,
                 "type": "Image"
+            },
+            "label": {
+                "type": "enum"
+            },
+            "status": {
+                "restrict": true,
+                "type": "enum",
+                "values": [
+                    "pending",
+                    "completed",
+                    "failed"
+                ]
             }
         },
         "input": "...",
@@ -85,7 +109,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1", "params": {"explicit_types": {"system-prompt": {"mutable": True, "type": "str"}}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": {"mutable": True, "type": "Image"}}, "input": "...", "score-test-1": "..."}, "overwrite": False}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "params": {"explicit_types": {"category": {"restrict": False, "type": "enum", "values": ["A", "B", "C"]}, "priority": {"type": "enum"}, "system-prompt": {"mutable": True, "type": "str"}}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": {"mutable": True, "type": "Image"}, "label": {"type": "enum"}, "status": {"restrict": True, "type": "enum", "values": ["pending", "completed", "failed"]}}, "input": "...", "score-test-1": "..."}, "overwrite": False}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 
