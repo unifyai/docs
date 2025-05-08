@@ -1,0 +1,79 @@
+---
+title: 'List all recordings for an assistant'
+api: 'GET /v0/assistant/{assistant_id}/recordings'
+---
+Returns a list of all call recordings for the specified assistant.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="assistant_id" type="integer" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/assistant/<assistant_id>/recordings' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/<assistant_id>/recordings"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": [
+        {
+            "id": 123,
+            "url": "https://storage.example.com/recordings/call_123.mp3",
+            "created_at": "2025-05-08T14:30:00Z"
+        },
+        {
+            "id": 124,
+            "url": "https://storage.example.com/recordings/call_124.mp3",
+            "created_at": "2025-05-09T10:15:00Z"
+        }
+    ]
+}
+```
+
+```json 404
+{
+    "detail": "Assistant not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

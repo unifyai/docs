@@ -1983,6 +1983,231 @@
                 }
             }
         },
+        "/v0/assistant/{assistant_id}/recordings": {
+            "post": {
+                "tags": [
+                    "Assistants"
+                ],
+                "summary": "Add a call recording for an assistant",
+                "description": "Uploads a new call recording for the specified assistant.",
+                "operationId": "create_recording_v0_assistant__assistant_id__recordings_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RecordingCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recording added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_RecordingInfo_"
+                                },
+                                "example": {
+                                    "info": {
+                                        "id": 123,
+                                        "url": "https://storage.example.com/recordings/call_123.mp3",
+                                        "created_at": "2025-05-08T14:30:00Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Assistant Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Assistant not found."
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Recording Error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Error processing recording."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Assistants"
+                ],
+                "summary": "List all recordings for an assistant",
+                "description": "Returns a list of all call recordings for the specified assistant.",
+                "operationId": "list_recordings_v0_assistant__assistant_id__recordings_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of recordings retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_List_RecordingInfo__"
+                                },
+                                "example": {
+                                    "info": [
+                                        {
+                                            "id": 123,
+                                            "url": "https://storage.example.com/recordings/call_123.mp3",
+                                            "created_at": "2025-05-08T14:30:00Z"
+                                        },
+                                        {
+                                            "id": 124,
+                                            "url": "https://storage.example.com/recordings/call_124.mp3",
+                                            "created_at": "2025-05-09T10:15:00Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Assistant Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Assistant not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/{assistant_id}/recordings/{recording_id}": {
+            "delete": {
+                "tags": [
+                    "Assistants"
+                ],
+                "summary": "Delete a recording",
+                "description": "Deletes a specific call recording by ID for the specified assistant.",
+                "operationId": "delete_recording_v0_assistant__assistant_id__recordings__recording_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    },
+                    {
+                        "name": "recording_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Recording Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recording deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_str_"
+                                },
+                                "example": {
+                                    "info": "Recording deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Recording Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Recording not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/project/favorites": {
             "get": {
                 "tags": [
@@ -5191,7 +5416,7 @@
                     "Logs"
                 ],
                 "summary": "Delete Fields",
-                "description": "Deletes one or more fields from a project. This will:\n1. Delete all log entries with the specified field names\n2. Delete the field type records for those fields\n\nThis operation cannot be undone, so use with caution.",
+                "description": "Deletes one or more fields from a project. This will:\n1. Delete all log events with the specified field names (which cascades to logs and derived logs)\n2. Delete the field type records for those fields\n\nThis operation cannot be undone, so use with caution.",
                 "operationId": "delete_fields_v0_logs_fields_delete",
                 "security": [
                     {
@@ -10073,9 +10298,9 @@
                         },
                         "type": "object",
                         "title": "Fields",
-                        "description": "Dictionary mapping field names to their descriptions (or None if no description).",
+                        "description": "Dictionary mapping field names to their types (or None if no type is specified).",
                         "example": {
-                            "score": "Evaluation score"
+                            "score": "int"
                         }
                     }
                 },
@@ -10153,11 +10378,24 @@
                             }
                         ],
                         "title": "Params",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag.",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).",
                         "default": {},
                         "examples": [
                             {
                                 "explicit_types": {
+                                    "category": {
+                                        "restrict": true,
+                                        "type": "enum",
+                                        "values": [
+                                            "A",
+                                            "B",
+                                            "C"
+                                        ]
+                                    },
+                                    "status": {
+                                        "restrict": false,
+                                        "type": "enum"
+                                    },
                                     "system-prompt": {
                                         "mutable": true,
                                         "type": "str"
@@ -10189,7 +10427,7 @@
                             }
                         ],
                         "title": "Entries",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag.",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).",
                         "default": {},
                         "examples": [
                             {
@@ -10197,6 +10435,18 @@
                                     "input": {
                                         "mutable": true,
                                         "type": "Image"
+                                    },
+                                    "status": {
+                                        "restrict": true,
+                                        "type": "enum",
+                                        "values": [
+                                            "pending",
+                                            "completed",
+                                            "failed"
+                                        ]
+                                    },
+                                    "tag": {
+                                        "type": "enum"
                                     }
                                 },
                                 "input": "...",
@@ -10412,6 +10662,28 @@
                             }
                         ],
                         "title": "Metric"
+                    },
+                    "column_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Context"
+                    },
+                    "grouping": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Grouping"
                     },
                     "table_tile": {
                         "anyOf": [
@@ -11022,6 +11294,34 @@
                     "info"
                 ],
                 "title": "InfoResponse[List[AssistantRead]]"
+            },
+            "InfoResponse_List_RecordingInfo__": {
+                "properties": {
+                    "info": {
+                        "items": {
+                            "$ref": "#/components/schemas/RecordingInfo"
+                        },
+                        "type": "array",
+                        "title": "Info"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[List[RecordingInfo]]"
+            },
+            "InfoResponse_RecordingInfo_": {
+                "properties": {
+                    "info": {
+                        "$ref": "#/components/schemas/RecordingInfo"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[RecordingInfo]"
             },
             "InfoResponse_str_": {
                 "properties": {
@@ -11868,6 +12168,61 @@
                 ],
                 "title": "ProjectConfig"
             },
+            "RecordingCreate": {
+                "properties": {
+                    "recording_raw": {
+                        "type": "string",
+                        "title": "Recording Raw",
+                        "description": "Base64-encoded audio payload",
+                        "example": "UklGRiSAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQyAAAAA..."
+                    },
+                    "content_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Content Type",
+                        "description": "Content type of the audio file",
+                        "example": "audio/wav"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "recording_raw"
+                ],
+                "title": "RecordingCreate"
+            },
+            "RecordingInfo": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "url": {
+                        "type": "string",
+                        "maxLength": 2083,
+                        "minLength": 1,
+                        "format": "uri",
+                        "title": "Url"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "url",
+                    "created_at"
+                ],
+                "title": "RecordingInfo"
+            },
             "RenameContextRequest": {
                 "properties": {
                     "name": {
@@ -12057,17 +12412,6 @@
                         ],
                         "title": "Table Type"
                     },
-                    "column_context": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Column Context"
-                    },
                     "page_number": {
                         "anyOf": [
                             {
@@ -12111,17 +12455,6 @@
                             }
                         ],
                         "title": "Sorting"
-                    },
-                    "grouping": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Grouping"
                     },
                     "group_sorting": {
                         "anyOf": [
@@ -12669,6 +13002,18 @@
                         "default": {},
                         "example": {
                             "explicit_types": {
+                                "category": {
+                                    "restrict": false,
+                                    "type": "enum",
+                                    "values": [
+                                        "A",
+                                        "B",
+                                        "C"
+                                    ]
+                                },
+                                "priority": {
+                                    "type": "enum"
+                                },
                                 "system-prompt": {
                                     "mutable": true,
                                     "type": "str"
@@ -12691,13 +13036,25 @@
                             }
                         ],
                         "title": "Entries",
-                        "description": "Dictionary or list of dictionaries of key-value entry pairs to add or update in the logs.",
+                        "description": "Dictionary or list of dictionaries of key-value entry pairs to add or update in the logs. Supports nested path syntax using dot notation for object properties (e.g., 'metadata.author') and bracket notation for array indices (e.g., 'results[0]'). Complex paths like 'results[0].scores.accuracy' are also supported for deep updates.",
                         "default": {},
                         "example": {
                             "explicit_types": {
                                 "input": {
                                     "mutable": true,
                                     "type": "Image"
+                                },
+                                "label": {
+                                    "type": "enum"
+                                },
+                                "status": {
+                                    "restrict": true,
+                                    "type": "enum",
+                                    "values": [
+                                        "pending",
+                                        "completed",
+                                        "failed"
+                                    ]
                                 }
                             },
                             "input": "...",
@@ -12948,6 +13305,28 @@
                             }
                         ],
                         "title": "Metric"
+                    },
+                    "column_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Context"
+                    },
+                    "grouping": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Grouping"
                     },
                     "table_tile": {
                         "anyOf": [
