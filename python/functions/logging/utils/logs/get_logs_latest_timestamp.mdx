@@ -1,0 +1,23 @@
+---
+title: 'get_logs_latest_timestamp'
+---
+
+```python
+def get_logs_latest_timestamp(
+    *,
+    project: Optional[str] = None,
+    context: Optional[str] = None,
+    column_context: Optional[str] = None,
+    filter: Optional[str] = None,
+    sort_by: Optional[str] = None,
+    from_ids: Optional[List[int]] = None,
+    exclude_ids: Optional[List[int]] = None,
+    limit: Optional[int] = None,
+    offset: Optional[int] = None,
+    api_key: Optional[str] = None,
+) -> int:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/42aeea974097f7b0426197ed3a8a883dba4911c9/unify/logging/utils/logs.py#L1318)</p>
+
+Returns the update timestamp of the most recently updated log within the specified page and filter bounds.

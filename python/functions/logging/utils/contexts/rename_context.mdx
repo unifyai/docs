@@ -1,0 +1,24 @@
+---
+title: 'rename_context'
+---
+
+```python
+def rename_context(
+    name: str,
+    new_name: str,
+    *,
+    project: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> None:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/42aeea974097f7b0426197ed3a8a883dba4911c9/unify/logging/utils/contexts.py#L71)</p>
+
+Rename a context.
+
+**Arguments**:
+
+- `name` - Name of the context to rename.
+- `new_name` - New name of the context.
+- `project` - Name of the project the context belongs to.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the

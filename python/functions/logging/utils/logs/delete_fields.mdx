@@ -1,0 +1,24 @@
+---
+title: 'delete_fields'
+---
+
+```python
+def delete_fields(
+    fields: List[str],
+    *,
+    project: Optional[str] = None,
+    context: Optional[str] = None,
+    api_key: Optional[str] = None,
+):
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/42aeea974097f7b0426197ed3a8a883dba4911c9/unify/logging/utils/logs.py#L1547)</p>
+
+Delete one or more fields from a project.
+
+**Arguments**:
+
+- `fields` - List of field names to delete.
+- `project` - Name of the project to delete fields from.
+- `context` - The context to delete fields from.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
