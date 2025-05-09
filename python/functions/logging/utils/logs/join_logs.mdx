@@ -1,0 +1,20 @@
+---
+title: 'join_logs'
+---
+
+```python
+def join_logs(
+    *,
+    pair_of_args: List[Dict[str, Any]],
+    join_expr: str,
+    mode: str,
+    new_context: str,
+    columns: Optional[List[str]] = None,
+    project: Optional[str] = None,
+    api_key: Optional[str] = None,
+):
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/42aeea974097f7b0426197ed3a8a883dba4911c9/unify/logging/utils/logs.py#L1395)</p>
+
+Join two sets of logs based on specified criteria and creates new logs with the joined data.

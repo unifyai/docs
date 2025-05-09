@@ -142,6 +142,7 @@
                                 "python/classes/logging/logs/Entries",
                                 "python/classes/logging/logs/Experiment",
                                 "python/classes/logging/logs/Log",
+                                "python/classes/logging/logs/LogGroup",
                                 "python/classes/logging/logs/LogTransformer",
                                 "python/classes/logging/logs/Params",
                                 "python/classes/logging/logs/TraceTransformer",
@@ -184,7 +185,9 @@
                                         "python/functions/logging/utils/contexts/add_logs_to_context",
                                         "python/functions/logging/utils/contexts/create_context",
                                         "python/functions/logging/utils/contexts/delete_context",
-                                        "python/functions/logging/utils/contexts/get_contexts"
+                                        "python/functions/logging/utils/contexts/get_context",
+                                        "python/functions/logging/utils/contexts/get_contexts",
+                                        "python/functions/logging/utils/contexts/rename_context"
                                     ]
                                 },
                                 {
@@ -202,17 +205,24 @@
                                     "pages": [
                                         "python/functions/logging/utils/logs/add_log_entries",
                                         "python/functions/logging/utils/logs/add_log_params",
+                                        "python/functions/logging/utils/logs/create_fields",
                                         "python/functions/logging/utils/logs/create_logs",
+                                        "python/functions/logging/utils/logs/delete_fields",
                                         "python/functions/logging/utils/logs/delete_log_fields",
                                         "python/functions/logging/utils/logs/delete_logs",
+                                        "python/functions/logging/utils/logs/get_fields",
                                         "python/functions/logging/utils/logs/get_groups",
                                         "python/functions/logging/utils/logs/get_log_by_id",
                                         "python/functions/logging/utils/logs/get_logs",
+                                        "python/functions/logging/utils/logs/get_logs_latest_timestamp",
                                         "python/functions/logging/utils/logs/get_logs_metric",
                                         "python/functions/logging/utils/logs/initialize_async_logger",
+                                        "python/functions/logging/utils/logs/join_logs",
                                         "python/functions/logging/utils/logs/log",
+                                        "python/functions/logging/utils/logs/rename_field",
                                         "python/functions/logging/utils/logs/set_user_logging",
                                         "python/functions/logging/utils/logs/shutdown_async_logger",
+                                        "python/functions/logging/utils/logs/update_derived_log",
                                         "python/functions/logging/utils/logs/update_logs"
                                     ]
                                 },
@@ -221,6 +231,8 @@
                                     "pages": [
                                         "python/functions/logging/utils/projects/create_project",
                                         "python/functions/logging/utils/projects/delete_project",
+                                        "python/functions/logging/utils/projects/delete_project_contexts",
+                                        "python/functions/logging/utils/projects/delete_project_logs",
                                         "python/functions/logging/utils/projects/list_projects",
                                         "python/functions/logging/utils/projects/rename_project"
                                     ]
