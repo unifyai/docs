@@ -18,6 +18,10 @@ Whether to create a checkpoint tile (manual save)
 
 #### Body
 
+<ParamField body="tile_id" type="string | null" >
+
+</ParamField>
+
 <ParamField body="tab_id" type="string" required="true">
 
 </ParamField>
@@ -30,31 +34,35 @@ Whether to create a checkpoint tile (manual save)
 
 </ParamField>
 
-<ParamField body="type" type="string" required="true">
+<ParamField body="type" type="string | null" >
 
 </ParamField>
 
-<ParamField body="min_width" type="number | null" >
+<ParamField body="minW" type="number | null" >
 
 </ParamField>
 
-<ParamField body="min_height" type="number | null" >
+<ParamField body="minH" type="number | null" >
 
 </ParamField>
 
-<ParamField body="visible" type="boolean"  default={true}>
+<ParamField body="visible" type="boolean | null"  default={true}>
 
 </ParamField>
 
-<ParamField body="locked" type="boolean"  default={false}>
+<ParamField body="locked" type="boolean | null"  default={false}>
 
 </ParamField>
 
-<ParamField body="moved" type="boolean"  default={false}>
+<ParamField body="moved" type="boolean | null"  default={false}>
 
 </ParamField>
 
-<ParamField body="static" type="boolean"  default={false}>
+<ParamField body="static" type="boolean | null"  default={false}>
+
+</ParamField>
+
+<ParamField body="color" type="string | null" >
 
 </ParamField>
 
@@ -149,8 +157,8 @@ print(response.text)
         "width": 6,
         "height": 4
     },
-    "min_width": 2,
-    "min_height": 2,
+    "minW": 2,
+    "minH": 2,
     "visible": true,
     "locked": false,
     "moved": false,

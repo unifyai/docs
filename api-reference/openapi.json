@@ -4025,7 +4025,7 @@
                     "Logs"
                 ],
                 "summary": "Get Logs",
-                "description": "Returns a list of filtered log entries from a project with various expressiveness options:\n\n  1. **Monolithic mode** (when group_by is not provided):\n     - Returns a flat list of log entries (with fields clipped if value_limit is set).\n     - Optionally factors out repeated fields into a grouped_entries field if group_threshold is set.\n\n  2. **Grouped mode** (when group_by is provided):\n     - Supports multi-level grouping of logs. The order of fields in group_by dictates the nesting order.\n     - Supports pagination at the group level using group_limit and group_offset.\n     - Supports limiting the nesting depth with group_depth.\n     - When nested_groups is True, returns a nested structure under the \"logs\" key.\n     - When nested_groups is False, returns flat per-field mappings under the \"groups\" key.\n     - When groups_only is True, the detailed log objects are omitted and leaves are simplified\n       to either lists of log ids (if return_timestamps is False) or mappings of `{log id: timestamp}` (if True).\n\n  3. **Return IDs only mode**:\n     - If return_ids_only is True, returns only the log event ids.\n     - If return_versions is also True, returns a list of objects with both id and version information.\n\nThe response always includes:\n  - `params`: The parameter versions used across the logs.\n  - `count`: The total number of logs matching the query.\n  - Additionally, it includes either `logs` (in monolithic or nested grouping mode) or `groups` (in flat grouping mode)\n    as specified by the arguments.\n\nIf return_versions=True:\n- Returns all versions of logs in versioned contexts\n- from_ids and exclude_ids must be provided as lists of objects with 'id' and 'version' keys\n- Each object must have format: `{\"id\": log_event_id, \"version\": version_number}`\n- This is only valid for logs in versioned contexts\n\nIf return_versions=False (default):\n- Returns only the latest version of each log\n- from_ids and exclude_ids should be strings of '&'-separated log event IDs",
+                "description": "Returns a list of filtered log entries from a project with various expressiveness options:\n\n  1. **Monolithic mode** (when group_by is not provided):\n     - Returns a flat list of log entries (with fields clipped if value_limit is set).\n     - Optionally factors out repeated fields into a grouped_entries field if group_threshold is set.\n\n  2. **Grouped mode** (when group_by is provided):\n     - Supports multi-level grouping of logs. The order of fields in group_by dictates the nesting order.\n     - Supports pagination at the group level using group_limit and group_offset.\n     - Supports limiting the nesting depth with group_depth.\n     - When nested_groups is True, returns a nested structure under the \"logs\" key.\n     - When nested_groups is False, returns flat per-field mappings under the \"groups\" key.\n     - When groups_only is True, the detailed log objects are omitted and leaves are simplified\n       to either lists of log ids (if return_timestamps is False) or mappings of `{log id: timestamp}` (if True).\n\n  3. **Return IDs only mode**:\n     - If return_ids_only is True, returns only the log event ids.\n     - If return_versions is also True, returns a list of objects with both id and version information.\n\n  4. **Dynamic expression sorting**:\n     - In addition to static field-based sorting, you can use dynamic expressions for sorting.\n     - The same grammar supported for `filter_expr` applies to sorting expressions.\n\nThe response always includes:\n  - `params`: The parameter versions used across the logs.\n  - `count`: The total number of logs matching the query.\n  - Additionally, it includes either `logs` (in monolithic or nested grouping mode) or `groups` (in flat grouping mode)\n    as specified by the arguments.\n\nIf return_versions=True:\n- Returns all versions of logs in versioned contexts\n- from_ids and exclude_ids must be provided as lists of objects with 'id' and 'version' keys\n- Each object must have format: `{\"id\": log_event_id, \"version\": version_number}`\n- This is only valid for logs in versioned contexts\n\nIf return_versions=False (default):\n- Returns only the latest version of each log\n- from_ids and exclude_ids should be strings of '&'-separated log event IDs",
                 "operationId": "get_logs_v0_logs_get",
                 "security": [
                     {
@@ -4163,13 +4163,13 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.",
+                            "description": "JSON-encoded dict mapping either static column names (e.g. `timestamp`) or full Python2SQL expressions (e.g. `cosine(embed('search text'), embedding_vector)`) to sort directions (`\"ascending\"` or `\"descending\"`). The first key is the primary sort field; subsequent keys break ties.",
                             "title": "Sorting"
                         },
-                        "description": "Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.",
+                        "description": "JSON-encoded dict mapping either static column names (e.g. `timestamp`) or full Python2SQL expressions (e.g. `cosine(embed('search text'), embedding_vector)`) to sort directions (`\"ascending\"` or `\"descending\"`). The first key is the primary sort field; subsequent keys break ties.",
                         "example": {
-                            "score": "ascending",
-                            "timestamp": "descending"
+                            "timestamp": "descending",
+                            "round(score, 2)": "ascending"
                         }
                     },
                     {
@@ -7614,8 +7614,8 @@
                                         "width": 6,
                                         "height": 4
                                     },
-                                    "min_width": 2,
-                                    "min_height": 2,
+                                    "minW": 2,
+                                    "minH": 2,
                                     "visible": true,
                                     "locked": false,
                                     "moved": false,
@@ -7777,8 +7777,8 @@
                                         "width": 6,
                                         "height": 4
                                     },
-                                    "min_width": 2,
-                                    "min_height": 2,
+                                    "minW": 2,
+                                    "minH": 2,
                                     "visible": true,
                                     "locked": false,
                                     "moved": false,
@@ -7950,8 +7950,8 @@
                                         "width": 8,
                                         "height": 5
                                     },
-                                    "min_width": 2,
-                                    "min_height": 2,
+                                    "minW": 2,
+                                    "minH": 2,
                                     "visible": true,
                                     "locked": false,
                                     "moved": true,
@@ -8247,8 +8247,8 @@
                                         "width": 6,
                                         "height": 4
                                     },
-                                    "min_width": 2,
-                                    "min_height": 2,
+                                    "minW": 2,
+                                    "minH": 2,
                                     "visible": true,
                                     "locked": false,
                                     "moved": true,
@@ -8420,8 +8420,8 @@
                                             "width": 6,
                                             "height": 4
                                         },
-                                        "min_width": 2,
-                                        "min_height": 2,
+                                        "minW": 2,
+                                        "minH": 2,
                                         "visible": true,
                                         "locked": false,
                                         "moved": false,
@@ -8458,8 +8458,8 @@
                                             "width": 6,
                                             "height": 4
                                         },
-                                        "min_width": 2,
-                                        "min_height": 2,
+                                        "minW": 2,
+                                        "minH": 2,
                                         "visible": true,
                                         "locked": false,
                                         "moved": false,
@@ -8599,8 +8599,8 @@
                                         "width": 6,
                                         "height": 4
                                     },
-                                    "min_width": 2,
-                                    "min_height": 2,
+                                    "minW": 2,
+                                    "minH": 2,
                                     "visible": true,
                                     "locked": false,
                                     "moved": false,
@@ -8760,8 +8760,8 @@
                                         "width": 6,
                                         "height": 4
                                     },
-                                    "min_width": 2,
-                                    "min_height": 2,
+                                    "minW": 2,
+                                    "minH": 2,
                                     "visible": true,
                                     "locked": false,
                                     "moved": false,
@@ -8929,8 +8929,8 @@
                                         "width": 6,
                                         "height": 4
                                     },
-                                    "min_width": 2,
-                                    "min_height": 2,
+                                    "minW": 2,
+                                    "minH": 2,
                                     "visible": true,
                                     "locked": false,
                                     "moved": false,
@@ -10313,6 +10313,17 @@
             },
             "CreateInterfaceRequest": {
                 "properties": {
+                    "interface_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Id"
+                    },
                     "project": {
                         "type": "string",
                         "title": "Project"
@@ -10473,6 +10484,17 @@
             },
             "CreateTabRequest": {
                 "properties": {
+                    "tab_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tab Id"
+                    },
                     "interface_id": {
                         "type": "string",
                         "title": "Interface Id"
@@ -10529,6 +10551,17 @@
             },
             "CreateTileRequest": {
                 "properties": {
+                    "tile_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tile Id"
+                    },
                     "tab_id": {
                         "type": "string",
                         "title": "Tab Id"
@@ -10541,10 +10574,17 @@
                         "$ref": "#/components/schemas/TilePosition"
                     },
                     "type": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Type"
                     },
-                    "min_width": {
+                    "minW": {
                         "anyOf": [
                             {
                                 "type": "number"
@@ -10553,9 +10593,9 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Min Width"
+                        "title": "Minw"
                     },
-                    "min_height": {
+                    "minH": {
                         "anyOf": [
                             {
                                 "type": "number"
@@ -10564,27 +10604,66 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Min Height"
+                        "title": "Minh"
                     },
                     "visible": {
-                        "type": "boolean",
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Visible",
                         "default": true
                     },
                     "locked": {
-                        "type": "boolean",
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Locked",
                         "default": false
                     },
                     "moved": {
-                        "type": "boolean",
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Moved",
                         "default": false
                     },
                     "static": {
-                        "type": "boolean",
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Static",
                         "default": false
+                    },
+                    "color": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Color"
                     },
                     "context": {
                         "anyOf": [
@@ -10731,8 +10810,7 @@
                 "required": [
                     "tab_id",
                     "name",
-                    "position",
-                    "type"
+                    "position"
                 ],
                 "title": "CreateTileRequest"
             },
@@ -12583,7 +12661,7 @@
                         ],
                         "title": "Type"
                     },
-                    "min_width": {
+                    "minW": {
                         "anyOf": [
                             {
                                 "type": "number"
@@ -12592,9 +12670,9 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Min Width"
+                        "title": "Minw"
                     },
-                    "min_height": {
+                    "minH": {
                         "anyOf": [
                             {
                                 "type": "number"
@@ -12603,7 +12681,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Min Height"
+                        "title": "Minh"
                     },
                     "visible": {
                         "type": "boolean",
@@ -12624,6 +12702,17 @@
                         "type": "boolean",
                         "title": "Static",
                         "default": false
+                    },
+                    "color": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Color"
                     },
                     "context": {
                         "anyOf": [
@@ -12701,6 +12790,28 @@
                             }
                         ],
                         "title": "Metric"
+                    },
+                    "column_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Context"
+                    },
+                    "grouping": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Grouping"
                     },
                     "tab_id": {
                         "type": "string",
@@ -13185,7 +13296,7 @@
                             }
                         ]
                     },
-                    "min_width": {
+                    "minW": {
                         "anyOf": [
                             {
                                 "type": "number"
@@ -13194,9 +13305,9 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Min Width"
+                        "title": "Minw"
                     },
-                    "min_height": {
+                    "minH": {
                         "anyOf": [
                             {
                                 "type": "number"
@@ -13205,7 +13316,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Min Height"
+                        "title": "Minh"
                     },
                     "visible": {
                         "anyOf": [
@@ -13228,6 +13339,39 @@
                             }
                         ],
                         "title": "Locked"
+                    },
+                    "moved": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Moved"
+                    },
+                    "static": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Static"
+                    },
+                    "color": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Color"
                     },
                     "context": {
                         "anyOf": [
