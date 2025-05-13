@@ -21,6 +21,10 @@ Returns a list of filtered log entries from a project with various expressivenes
      - If return_ids_only is True, returns only the log event ids.
      - If return_versions is also True, returns a list of objects with both id and version information.
 
+  4. **Dynamic expression sorting**:
+     - In addition to static field-based sorting, you can use dynamic expressions for sorting.
+     - The same grammar supported for `filter_expr` applies to sorting expressions.
+
 The response always includes:
   - `params`: The parameter versions used across the logs.
   - `count`: The total number of logs matching the query.
@@ -74,7 +78,7 @@ Boolean string to filter entries. TODO: Detailed page.
 </ParamField>
 
 <ParamField query="sorting" type="string | null" >
-Dict with fields as keys and either 'ascending' or 'descending' as values. The first entry in the dict is the last field to be sorted by, which takes ultimate precedent, with other keys only remaining in order when the first key values are equal.
+JSON-encoded dict mapping either static column names (e.g. `timestamp`) or full Python2SQL expressions (e.g. `cosine(embed('search text'), embedding_vector)`) to sort directions (`"ascending"` or `"descending"`). The first key is the primary sort field; subsequent keys break ties.
 </ParamField>
 
 <ParamField query="group_sorting" type="string | null" >
@@ -141,14 +145,14 @@ If True, return only log IDs instead of full entries.
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&return_versions=None&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&group_sorting={'entries/student':%20{'field':%20'score',%20'direction':%20'descending',%20'metric':%20'mean'}}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None' \
+  --url 'https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&return_versions=None&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'timestamp':%20'descending',%20'round(score,%202)':%20'ascending'}&group_sorting={'entries/student':%20{'field':%20'score',%20'direction':%20'descending',%20'metric':%20'mean'}}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&return_versions=None&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&group_sorting={'entries/student':%20{'field':%20'score',%20'direction':%20'descending',%20'metric':%20'mean'}}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None"
+url = "https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&return_versions=None&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'timestamp':%20'descending',%20'round(score,%202)':%20'ascending'}&group_sorting={'entries/student':%20{'field':%20'score',%20'direction':%20'descending',%20'metric':%20'mean'}}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None"
 
 headers = {"Authorization": "Bearer <token>"}
 

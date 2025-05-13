@@ -38,11 +38,11 @@ Whether this is a checkpoint update (manual save)
 
 </ParamField>
 
-<ParamField body="min_width" type="number | null" >
+<ParamField body="minW" type="number | null" >
 
 </ParamField>
 
-<ParamField body="min_height" type="number | null" >
+<ParamField body="minH" type="number | null" >
 
 </ParamField>
 
@@ -51,6 +51,18 @@ Whether this is a checkpoint update (manual save)
 </ParamField>
 
 <ParamField body="locked" type="boolean | null" >
+
+</ParamField>
+
+<ParamField body="moved" type="boolean | null" >
+
+</ParamField>
+
+<ParamField body="static" type="boolean | null" >
+
+</ParamField>
+
+<ParamField body="color" type="string | null" >
 
 </ParamField>
 
@@ -145,8 +157,8 @@ print(response.text)
         "width": 8,
         "height": 5
     },
-    "min_width": 2,
-    "min_height": 2,
+    "minW": 2,
+    "minH": 2,
     "visible": true,
     "locked": false,
     "moved": true,
