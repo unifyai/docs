@@ -4420,6 +4420,37 @@
                             "title": "Return Ids Only"
                         },
                         "description": "If True, return only log IDs instead of full entries."
+                    },
+                    {
+                        "name": "randomize",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If true, return logs in a deterministic random order (fixed seed) instead of newest-first.",
+                            "default": false,
+                            "title": "Randomize"
+                        },
+                        "description": "If true, return logs in a deterministic random order (fixed seed) instead of newest-first."
+                    },
+                    {
+                        "name": "seed",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "If provided, use this seed for deterministic random ordering instead of the default.",
+                            "default": "42",
+                            "title": "Seed"
+                        },
+                        "description": "If provided, use this seed for deterministic random ordering instead of the default."
                     }
                 ],
                 "responses": {
@@ -4828,6 +4859,18 @@
                             "default": 0,
                             "title": "Offset"
                         }
+                    },
+                    {
+                        "name": "randomize",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If true, return logs in a deterministic random order (fixed seed) instead of newest-first.",
+                            "default": false,
+                            "title": "Randomize"
+                        },
+                        "description": "If true, return logs in a deterministic random order (fixed seed) instead of newest-first."
                     }
                 ],
                 "responses": {

@@ -53,22 +53,26 @@ The fields which cannot be returned from the search. None of the listed fields w
 
 </ParamField>
 
-<ParamField query="offset" type="integer" >
+<ParamField query="offset" type="integer"  default=0>
 
+</ParamField>
+
+<ParamField query="randomize" type="boolean"  default=false>
+If true, return logs in a deterministic random order (fixed seed) instead of newest-first.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs/latest_timestamp?project=eval-project&column_context=subjects/science/physics&context=training&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None' \
+  --url 'https://api.unify.ai/v0/logs/latest_timestamp?project=eval-project&column_context=subjects/science/physics&context=training&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&randomize=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs/latest_timestamp?project=eval-project&column_context=subjects/science/physics&context=training&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None"
+url = "https://api.unify.ai/v0/logs/latest_timestamp?project=eval-project&column_context=subjects/science/physics&context=training&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'score':%20'ascending',%20'timestamp':%20'descending'}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&randomize=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
