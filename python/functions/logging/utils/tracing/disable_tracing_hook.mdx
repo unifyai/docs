@@ -1,0 +1,12 @@
+---
+title: 'disable_tracing_hook'
+---
+
+```python
+def disable_tracing_hook():
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/544b733bdfec28bdedfd21b96855d76a542ea22d/unify/logging/utils/tracing.py#L67)</p>
+
+Remove the tracing import hook from sys.meta_path.This function removes any TraceFinder instances from sys.meta_path, effectively
+disabling the tracing functionality for subsequent module imports.
