@@ -28,11 +28,11 @@ Timestamp of the earliest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.
 Timestamp of the latest query to aggregate. Format is `YYYY-MM-DD hh:mm:ss`.
 </ParamField>
 
-<ParamField query="page_number" type="integer | null"  default={1}>
+<ParamField query="page_number" type="integer | null"  default=1>
 The query history is returned in pages, with up to 20 prompts per page. Increase the page number to see older prompts.
 </ParamField>
 
-<ParamField query="failures" type="boolean | string" >
+<ParamField query="failures" type="boolean | string"  default=false>
 indicates whether to includes failures in the return (when set as True ), or whether to return failures exlusively (when set as 'only').
 </ParamField>
 
