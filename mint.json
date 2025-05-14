@@ -236,6 +236,15 @@
                                         "python/functions/logging/utils/projects/list_projects",
                                         "python/functions/logging/utils/projects/rename_project"
                                     ]
+                                },
+                                {
+                                    "group": "tracing",
+                                    "pages": [
+                                        "python/classes/logging/utils/tracing/TraceFinder",
+                                        "python/classes/logging/utils/tracing/TraceLoader",
+                                        "python/functions/logging/utils/tracing/disable_tracing_hook",
+                                        "python/functions/logging/utils/tracing/install_tracing_hook"
+                                    ]
                                 }
                             ]
                         }
