@@ -61,7 +61,7 @@ The context (prepending '/' seperated field names) from which to retrieve the lo
 Static context to filter logs by.
 </ParamField>
 
-<ParamField query="return_versions" type="boolean"  default=false>
+<ParamField query="return_versions" type="boolean"  default={false}>
 Whether to return all versions of logs. Only valid for versioned contexts.
 </ParamField>
 
@@ -105,7 +105,7 @@ The fields which cannot be returned from the search. None of the listed fields w
 
 </ParamField>
 
-<ParamField query="offset" type="integer"  default=0>
+<ParamField query="offset" type="integer"  default={0}>
 
 </ParamField>
 
@@ -117,7 +117,7 @@ List of fields to group results by. Results will be nested based on these fields
 Maximum number of groups to return at each level
 </ParamField>
 
-<ParamField query="group_offset" type="integer"  default=0>
+<ParamField query="group_offset" type="integer"  default={0}>
 Number of groups to skip at each level
 </ParamField>
 
@@ -125,27 +125,27 @@ Number of groups to skip at each level
 Maximum depth of nested groups to return. If not specified, all levels are returned.
 </ParamField>
 
-<ParamField query="nested_groups" type="boolean"  default=true>
+<ParamField query="nested_groups" type="boolean"  default={true}>
 If True, groups are returned as a nested structure; if False, groups are returned as flat per-field mappings.
 </ParamField>
 
-<ParamField query="groups_only" type="boolean"  default=false>
+<ParamField query="groups_only" type="boolean"  default={false}>
 If True, do not include a full logs list; only return groups (with leaf values being either log ids or timestamps).
 </ParamField>
 
-<ParamField query="return_timestamps" type="boolean"  default=false>
+<ParamField query="return_timestamps" type="boolean"  default={false}>
 When groups_only is True, return each leaf as a mapping from log id to timestamp instead of just a list of log ids.
 </ParamField>
 
-<ParamField query="return_ids_only" type="boolean"  default=false>
+<ParamField query="return_ids_only" type="boolean"  default={false}>
 If True, return only log IDs instead of full entries.
 </ParamField>
 
-<ParamField query="randomize" type="boolean"  default=false>
+<ParamField query="randomize" type="boolean"  default={false}>
 If true, return logs in a deterministic random order (fixed seed) instead of newest-first.
 </ParamField>
 
-<ParamField query="seed" type="string | null"  default="42">
+<ParamField query="seed" type="string | null"  default={"42"}>
 If provided, use this seed for deterministic random ordering instead of the default.
 </ParamField>
 
