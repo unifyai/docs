@@ -9939,8 +9939,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -12656,7 +12656,14 @@
             "TileSchema": {
                 "properties": {
                     "id": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Id"
                     },
                     "created_at": {
@@ -12903,7 +12910,6 @@
                 },
                 "type": "object",
                 "required": [
-                    "id",
                     "name",
                     "position",
                     "tab_id"
@@ -13338,6 +13344,17 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Type"
                     },
                     "minW": {
                         "anyOf": [
