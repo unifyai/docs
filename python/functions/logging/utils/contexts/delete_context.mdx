@@ -6,17 +6,19 @@ title: 'delete_context'
 def delete_context(
     name: str,
     *,
+    delete_children: bool = True,
     project: Optional[str] = None,
     api_key: Optional[str] = None,
 ) -> None:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/9eb2e3b63343c57a5ef0482e6f566e532da9a0f3/unify/logging/utils/contexts.py#L194)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/960f0870f0a7979d5bc45386ad7142207dfcad62/unify/logging/utils/contexts.py#L194)</p>
 
 Delete a context from the server.
 
 **Arguments**:
 
 - `name` - Name of the context to delete.
+- `delete_children` - Whether to delete child contexts (which share the same "/" separated prefix).
 - `project` - Name of the project the context belongs to.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
