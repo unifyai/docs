@@ -1,6 +1,6 @@
 ---
 title: 'Delete Project'
-api: 'DELETE /v0/project/{name}'
+api: 'DELETE /v0/project/{project_name}'
 ---
 Deletes a project from your account.
 
@@ -12,22 +12,22 @@ Deletes a project from your account.
 
 #### Path Parameters
 
-<ParamField query="name" type="string" required="true">
-Name of the project to delete.
+<ParamField query="project_name" type="string" required="true">
+Project name, may contain slashes
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/project/eval-project' \
+  --url 'https://api.unify.ai/v0/project/proj/a' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/eval-project"
+url = "https://api.unify.ai/v0/project/proj/a"
 
 headers = {"Authorization": "Bearer <token>"}
 

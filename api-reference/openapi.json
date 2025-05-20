@@ -2208,662 +2208,6 @@
                 }
             }
         },
-        "/v0/project/favorites": {
-            "get": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Get Favorites",
-                "description": "Returns a list of the user's favorite projects, sorted by position.",
-                "operationId": "get_favorites_v0_project_favorites_get",
-                "responses": {
-                    "200": {
-                        "description": "List of favorite projects",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "items": {
-                                        "$ref": "#/components/schemas/FavoriteProjectOut"
-                                    },
-                                    "type": "array",
-                                    "title": "Response Get Favorites V0 Project Favorites Get"
-                                },
-                                "example": [
-                                    {
-                                        "id": 1,
-                                        "project": "my-project",
-                                        "icon": "star",
-                                        "position": 0
-                                    },
-                                    {
-                                        "id": 2,
-                                        "project": "another-project",
-                                        "icon": "folder",
-                                        "position": 1
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Create Favorite",
-                "description": "Creates a new favorite project for the user.\n\nEach favorite must include a project name, icon, and position.",
-                "operationId": "create_favorite_v0_project_favorites_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/FavoriteProjectIn"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Favorite created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/FavoriteProjectOut"
-                                },
-                                "example": {
-                                    "id": 1,
-                                    "project": "my-project",
-                                    "icon": "star",
-                                    "position": 0
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request or duplicate favorite",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project is already in favorites"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project 'unknown-project' not found"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/project/favorites/{id}": {
-            "get": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Get Favorite",
-                "description": "Returns details of a specific favorite project.",
-                "operationId": "get_favorite_v0_project_favorites__id__get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "description": "The ID of the favorite to retrieve",
-                            "title": "Id"
-                        },
-                        "description": "The ID of the favorite to retrieve"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Favorite project details",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/FavoriteProjectOut"
-                                },
-                                "example": {
-                                    "id": 1,
-                                    "project": "my-project",
-                                    "icon": "star",
-                                    "position": 0
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Favorite not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Favorite with ID 123 not found"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Update Favorite",
-                "description": "Updates a specific favorite project.\n\nOnly the provided fields will be updated.",
-                "operationId": "update_favorite_v0_project_favorites__id__patch",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "description": "The ID of the favorite to update",
-                            "title": "Id"
-                        },
-                        "description": "The ID of the favorite to update"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/FavoriteProjectUpdate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Favorite updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/FavoriteProjectOut"
-                                },
-                                "example": {
-                                    "id": 1,
-                                    "project": "my-project",
-                                    "icon": "updated-icon",
-                                    "position": 2
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Favorite not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Favorite with ID 123 not found"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Delete Favorite",
-                "description": "Deletes a specific favorite project.",
-                "operationId": "delete_favorite_v0_project_favorites__id__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "description": "The ID of the favorite to delete",
-                            "title": "Id"
-                        },
-                        "description": "The ID of the favorite to delete"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Favorite deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Favorite deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Favorite not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Favorite with ID 123 not found"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/project": {
-            "post": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Create Project",
-                "description": "Creates a logging project and adds this to your account. This project will\nhave a set of logs associated with it.",
-                "operationId": "create_project_v0_project_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProjectConfig"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Project created successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Already Existing Project",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "A logging project with this name already exists."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/project/{name}": {
-            "delete": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Delete Project",
-                "description": "Deletes a project from your account.",
-                "operationId": "delete_project_v0_project__name__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to delete.",
-                            "title": "Name"
-                        },
-                        "description": "Name of the project to delete.",
-                        "example": "eval-project"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Project deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <name> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Rename Project",
-                "description": "Renames a project from `name` to `new_name` in your account.",
-                "operationId": "rename_project_v0_project__name__patch",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to rename.",
-                            "title": "Name"
-                        },
-                        "description": "Name of the project to rename.",
-                        "example": "old-project-name"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProjectConfig"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Project renamed successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <name> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/projects": {
-            "get": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "List Projects",
-                "description": "Returns the names of all projects stored in your account.",
-                "operationId": "list_projects_v0_projects_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": [
-                                    "project_a",
-                                    "project_b",
-                                    "project_c"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/project/{name}/logs": {
-            "delete": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Delete Project Logs",
-                "description": "Deletes all logs in a project.",
-                "operationId": "delete_project_logs_v0_project__name__logs_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "title": "Name"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Project logs deleted.",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "All logs in project deleted successfully"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <name> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/project/{name}/contexts": {
-            "delete": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Delete Project Contexts",
-                "description": "Deletes all contexts and their associated logs from a project.\nThe project's interfaces remain untouched.",
-                "operationId": "delete_project_contexts_v0_project__name__contexts_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to delete contexts from.",
-                            "title": "Name"
-                        },
-                        "description": "Name of the project to delete contexts from.",
-                        "example": "test-project"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Project contexts and logs deleted.",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Project contexts and logs deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <name> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v0/project/{project}/contexts/{context_name}/artifacts": {
             "post": {
                 "tags": [
@@ -3273,6 +2617,66 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Project not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete Project Contexts",
+                "description": "Deletes all contexts and their associated logs from a project.\nThe project's interfaces remain untouched.",
+                "operationId": "delete_project_contexts_v0_project__project_name__contexts_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Project name, may contain slashes",
+                            "title": "Project Name"
+                        },
+                        "description": "Project name, may contain slashes",
+                        "example": "proj/a"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project contexts and logs deleted.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Project contexts and logs deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <name> not found."
                                 }
                             }
                         }
@@ -3834,6 +3238,603 @@
                         }
                     }
                 }
+            }
+        },
+        "/v0/project/favorites": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get Favorites",
+                "description": "Returns a list of the user's favorite projects, sorted by position.",
+                "operationId": "get_favorites_v0_project_favorites_get",
+                "responses": {
+                    "200": {
+                        "description": "List of favorite projects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/FavoriteProjectOut"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Favorites V0 Project Favorites Get"
+                                },
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "project": "my-project",
+                                        "icon": "star",
+                                        "position": 0
+                                    },
+                                    {
+                                        "id": 2,
+                                        "project": "another-project",
+                                        "icon": "folder",
+                                        "position": 1
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Create Favorite",
+                "description": "Creates a new favorite project for the user.\n\nEach favorite must include a project name, icon, and position.",
+                "operationId": "create_favorite_v0_project_favorites_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FavoriteProjectIn"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Favorite created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FavoriteProjectOut"
+                                },
+                                "example": {
+                                    "id": 1,
+                                    "project": "my-project",
+                                    "icon": "star",
+                                    "position": 0
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request or duplicate favorite",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project is already in favorites"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project 'unknown-project' not found"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/project/favorites/{id}": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get Favorite",
+                "description": "Returns details of a specific favorite project.",
+                "operationId": "get_favorite_v0_project_favorites__id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The ID of the favorite to retrieve",
+                            "title": "Id"
+                        },
+                        "description": "The ID of the favorite to retrieve"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favorite project details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FavoriteProjectOut"
+                                },
+                                "example": {
+                                    "id": 1,
+                                    "project": "my-project",
+                                    "icon": "star",
+                                    "position": 0
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Favorite not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Favorite with ID 123 not found"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Update Favorite",
+                "description": "Updates a specific favorite project.\n\nOnly the provided fields will be updated.",
+                "operationId": "update_favorite_v0_project_favorites__id__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The ID of the favorite to update",
+                            "title": "Id"
+                        },
+                        "description": "The ID of the favorite to update"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FavoriteProjectUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Favorite updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FavoriteProjectOut"
+                                },
+                                "example": {
+                                    "id": 1,
+                                    "project": "my-project",
+                                    "icon": "updated-icon",
+                                    "position": 2
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Favorite not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Favorite with ID 123 not found"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete Favorite",
+                "description": "Deletes a specific favorite project.",
+                "operationId": "delete_favorite_v0_project_favorites__id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The ID of the favorite to delete",
+                            "title": "Id"
+                        },
+                        "description": "The ID of the favorite to delete"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favorite deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Favorite deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Favorite not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Favorite with ID 123 not found"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Create Project",
+                "description": "Creates a logging project and adds this to your account. This project will\nhave a set of logs associated with it.",
+                "operationId": "create_project_v0_project_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectConfig"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Project created successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Already Existing Project",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "A logging project with this name already exists."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/project/{project_name}/logs": {
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete Project Logs",
+                "description": "Deletes all logs in a project.",
+                "operationId": "delete_project_logs_v0_project__project_name__logs_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Project name, may contain slashes",
+                            "title": "Project Name"
+                        },
+                        "description": "Project name, may contain slashes",
+                        "example": "proj/a"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project logs deleted.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "All logs in project deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <name> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project/{project_name}": {
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete Project",
+                "description": "Deletes a project from your account.",
+                "operationId": "delete_project_v0_project__project_name__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Project name, may contain slashes",
+                            "title": "Project Name"
+                        },
+                        "description": "Project name, may contain slashes",
+                        "example": "proj/a"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Project deleted successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <name> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Rename Project",
+                "description": "Renames a project from `name` to `new_name` in your account.",
+                "operationId": "rename_project_v0_project__project_name__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Project name, may contain slashes",
+                            "title": "Project Name"
+                        },
+                        "description": "Project name, may contain slashes",
+                        "example": "proj/a"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectConfig"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Project renamed successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <name> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/projects": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "List Projects",
+                "description": "Returns the names of all projects stored in your account.",
+                "operationId": "list_projects_v0_projects_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": [
+                                    "project_a",
+                                    "project_b",
+                                    "project_c"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/v0/logs": {
@@ -12278,9 +12279,13 @@
                 "properties": {
                     "name": {
                         "type": "string",
+                        "maxLength": 255,
+                        "minLength": 1,
+                        "pattern": "^[a-zA-Z0-9_\\-/]+$",
                         "title": "Name",
                         "description": "A unique, user-defined name used when referencing  the project.",
-                        "example": "eval-project"
+                        "example": "eval-project",
+                        "pattern_description": "Only letters, numbers, underscores, slashes, and hyphens are allowed"
                     }
                 },
                 "type": "object",

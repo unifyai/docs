@@ -462,17 +462,17 @@
                         {
                             "group": "Projects",
                             "pages": [
+                                "api-reference/projects/delete_project_contexts",
                                 "api-reference/projects/get_favorites",
                                 "api-reference/projects/create_favorite",
                                 "api-reference/projects/get_favorite",
                                 "api-reference/projects/update_favorite",
                                 "api-reference/projects/delete_favorite",
                                 "api-reference/projects/create_project",
+                                "api-reference/projects/delete_project_logs",
                                 "api-reference/projects/delete_project",
                                 "api-reference/projects/rename_project",
-                                "api-reference/projects/list_projects",
-                                "api-reference/projects/delete_project_logs",
-                                "api-reference/projects/delete_project_contexts"
+                                "api-reference/projects/list_projects"
                             ]
                         },
                         {

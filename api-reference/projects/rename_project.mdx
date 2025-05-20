@@ -1,6 +1,6 @@
 ---
 title: 'Rename Project'
-api: 'PATCH /v0/project/{name}'
+api: 'PATCH /v0/project/{project_name}'
 ---
 Renames a project from `name` to `new_name` in your account.
 
@@ -12,8 +12,8 @@ Renames a project from `name` to `new_name` in your account.
 
 #### Path Parameters
 
-<ParamField query="name" type="string" required="true">
-Name of the project to rename.
+<ParamField query="project_name" type="string" required="true">
+Project name, may contain slashes
 </ParamField>
 
 #### Body
@@ -26,7 +26,7 @@ A unique, user-defined name used when referencing  the project.
 
 ```bash cURL
 curl --request PATCH \
-  --url 'https://api.unify.ai/v0/project/old-project-name' \
+  --url 'https://api.unify.ai/v0/project/proj/a' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{
@@ -37,7 +37,7 @@ curl --request PATCH \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/old-project-name"
+url = "https://api.unify.ai/v0/project/proj/a"
 
 headers = {"Authorization": "Bearer <token>"}
 

@@ -1,6 +1,6 @@
 ---
 title: 'Delete Project Contexts'
-api: 'DELETE /v0/project/{name}/contexts'
+api: 'DELETE /v0/project/{project_name}/contexts'
 ---
 Deletes all contexts and their associated logs from a project.
 The project's interfaces remain untouched.
@@ -13,22 +13,22 @@ The project's interfaces remain untouched.
 
 #### Path Parameters
 
-<ParamField query="name" type="string" required="true">
-Name of the project to delete contexts from.
+<ParamField query="project_name" type="string" required="true">
+Project name, may contain slashes
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/project/test-project/contexts' \
+  --url 'https://api.unify.ai/v0/project/proj/a/contexts' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/test-project/contexts"
+url = "https://api.unify.ai/v0/project/proj/a/contexts"
 
 headers = {"Authorization": "Bearer <token>"}
 
