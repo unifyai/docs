@@ -5177,13 +5177,13 @@
             }
         },
         "/v0/logs/rename_field": {
-            "post": {
+            "patch": {
                 "tags": [
                     "Logs"
                 ],
                 "summary": "Rename Field",
                 "description": "Renames a field across all logs in a project. This includes:\n- Updating the field type record\n- Renaming the field in all logs (regular and history)\n\nThe operation is atomic - either all renames succeed or none do.",
-                "operationId": "rename_field_v0_logs_rename_field_post",
+                "operationId": "rename_field_v0_logs_rename_field_patch",
                 "requestBody": {
                     "content": {
                         "application/json": {
