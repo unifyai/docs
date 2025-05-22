@@ -221,6 +221,7 @@
                                         "python/functions/logging/utils/logs/initialize_async_logger",
                                         "python/functions/logging/utils/logs/join_logs",
                                         "python/functions/logging/utils/logs/log",
+                                        "python/functions/logging/utils/logs/mark_spans_as_done",
                                         "python/functions/logging/utils/logs/rename_field",
                                         "python/functions/logging/utils/logs/set_trace_context",
                                         "python/functions/logging/utils/logs/set_user_logging",

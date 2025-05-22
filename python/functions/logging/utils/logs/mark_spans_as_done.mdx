@@ -1,0 +1,18 @@
+---
+title: 'mark_spans_as_done'
+---
+
+```python
+def mark_spans_as_done(
+    log_ids: Optional[Union[int, List[int]]] = None,
+    span_ids: Optional[Union[str, List[str]]] = None,
+    *,
+    project: Optional[str] = None,
+    contexts: Optional[Union[str, List[str]]] = None,
+):
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a3f072193bc0d7e1184bbed411b1b62b45b5b440/unify/logging/utils/logs.py#L226)</p>
+
+Marks all of the listed span ids for the listed logs in the listed contexts as completed.
+In all cases of this specification hierarchy, if none are provided then all associated spans are marked as complete.
