@@ -1,0 +1,63 @@
+---
+title: 'List all assistant voices for the user.'
+api: 'GET /v0/assistant/voice'
+---
+Returns a list of all assistant voices created available for the user.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/assistant/voice' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/voice"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": [
+        {
+            "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+            "name": "English Woman Calm 1",
+            "description": "Calm and relaxting voice of an english-speaking woman",
+            "gender": "female",
+            "language": "en"
+        },
+        {
+            "voice_id": "c99d36f3-5ffd-4253-803a-535c1bc9c306",
+            "name": "English Male Deep 1",
+            "description": "A deep, smoooth British man's voice perfect for narration.",
+            "gender": "male",
+            "language": "en"
+        }
+    ]
+}
+```
+
+```json 404
+{
+    "detail": "Voice not found."
+}
+```
+
+</ResponseExample>

@@ -1726,6 +1726,7 @@
                                             "region": "North America",
                                             "profile_photo": "https://example.com/photos/alice.jpg",
                                             "about": "Mathematician and writer known for work on Analytical Engine",
+                                            "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
                                             "created_at": "2025-04-25T12:00:00Z",
                                             "updated_at": "2025-04-25T12:00:00Z"
                                         },
@@ -1741,6 +1742,7 @@
                                             "region": "South America",
                                             "profile_photo": "https://example.com/photos/bob.jpg",
                                             "about": "Machine learning expert with focus on computer vision",
+                                            "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
                                             "created_at": "2025-04-24T10:30:00Z",
                                             "updated_at": "2025-04-24T10:30:00Z"
                                         }
@@ -1793,7 +1795,8 @@
                                         "created_at": "2025-04-25T12:00:00Z",
                                         "updated_at": "2025-04-25T12:00:00Z",
                                         "phone": "+1-555-123-4567",
-                                        "email": "alice.smith@example.com"
+                                        "email": "alice.smith@example.com",
+                                        "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5"
                                     }
                                 }
                             }
@@ -1944,6 +1947,7 @@
                                         "email": "alice.smith@example.com",
                                         "region": "North America",
                                         "profile_photo": "https://example.com/photos/alice.jpg",
+                                        "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
                                         "created_at": "2025-04-25T12:00:00Z",
                                         "updated_at": "2025-04-25T14:30:00Z"
                                     }
@@ -2191,6 +2195,195 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Recording not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/voice": {
+            "get": {
+                "tags": [
+                    "Assistants",
+                    "Voices"
+                ],
+                "summary": "List all assistant voices for the user.",
+                "description": "Returns a list of all assistant voices created available for the user.",
+                "operationId": "list_voices_v0_assistant_voice_get",
+                "responses": {
+                    "200": {
+                        "description": "List of voices retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_List_VoiceRead__"
+                                },
+                                "example": {
+                                    "info": [
+                                        {
+                                            "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+                                            "name": "English Woman Calm 1",
+                                            "description": "Calm and relaxting voice of an english-speaking woman",
+                                            "gender": "female",
+                                            "language": "en"
+                                        },
+                                        {
+                                            "voice_id": "c99d36f3-5ffd-4253-803a-535c1bc9c306",
+                                            "name": "English Male Deep 1",
+                                            "description": "A deep, smoooth British man's voice perfect for narration.",
+                                            "gender": "male",
+                                            "language": "en"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Voice Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Voice not found."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Voices"
+                ],
+                "summary": "Create a new voice record",
+                "description": "Create a voice that can be used my any assistant during TTS.",
+                "operationId": "create_voice_v0_assistant_voice_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VoiceCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_VoiceRead_"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Voice created successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "info": {
+                                        "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+                                        "name": "English Woman Calm 1",
+                                        "description": "Calm and relaxting voice of an english-speaking woman",
+                                        "gender": "female",
+                                        "language": "en"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": [
+                                        {
+                                            "loc": [
+                                                "body",
+                                                "name"
+                                            ],
+                                            "msg": "field required",
+                                            "type": "value_error.missing"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/assistant/voice/{voice_id}": {
+            "delete": {
+                "tags": [
+                    "Assistants",
+                    "Voices"
+                ],
+                "summary": "Delete a user's voice record",
+                "description": "Deletes a specific voice record by its Cartesia ID for the authenticated user. This does NOT delete the voice from Cartesia itself, that should be a separate Cartesia API call if needed.",
+                "operationId": "delete_voice_v0_assistant_voice__voice_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "voice_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Voice Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Voice deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_str_"
+                                },
+                                "example": {
+                                    "info": "Voice deleted successfully"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Voice not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Voice not found."
                                 }
                             }
                         }
@@ -9393,6 +9586,19 @@
                         "title": "Email",
                         "description": "Email address for the assistant",
                         "example": "ada.lovelace@example.com"
+                    },
+                    "voice_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Voice Id",
+                        "description": "Id of the voice (Cartesia ID) to use for the assistant",
+                        "example": "bf0a246a-8642-498a-9950-80c35e9276b5"
                     }
                 },
                 "type": "object",
@@ -9531,6 +9737,19 @@
                         "description": "Email address for the assistant",
                         "example": "ada.lovelace@example.com"
                     },
+                    "voice_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Voice Id",
+                        "description": "Id of the voice (Cartesia ID) to use for the assistant",
+                        "example": "bf0a246a-8642-498a-9950-80c35e9276b5"
+                    },
                     "agent_id": {
                         "type": "string",
                         "title": "Agent Id",
@@ -9633,6 +9852,19 @@
                         "title": "Email",
                         "description": "Email address for the assistant",
                         "example": "ada.lovelace@newdomain.com"
+                    },
+                    "voice_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Voice Id",
+                        "description": "Id of the voice (Cartesia ID) to use for the assistant",
+                        "example": "bf0a246a-8642-498a-9950-80c35e9276b5"
                     }
                 },
                 "type": "object",
@@ -9940,8 +10172,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -11433,6 +11665,22 @@
                 ],
                 "title": "InfoResponse[List[RecordingInfo]]"
             },
+            "InfoResponse_List_VoiceRead__": {
+                "properties": {
+                    "info": {
+                        "items": {
+                            "$ref": "#/components/schemas/VoiceRead"
+                        },
+                        "type": "array",
+                        "title": "Info"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[List[VoiceRead]]"
+            },
             "InfoResponse_RecordingInfo_": {
                 "properties": {
                     "info": {
@@ -11444,6 +11692,18 @@
                     "info"
                 ],
                 "title": "InfoResponse[RecordingInfo]"
+            },
+            "InfoResponse_VoiceRead_": {
+                "properties": {
+                    "info": {
+                        "$ref": "#/components/schemas/VoiceRead"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[VoiceRead]"
             },
             "InfoResponse_str_": {
                 "properties": {
@@ -13653,6 +13913,94 @@
                 },
                 "type": "object",
                 "title": "ViewTileSchema"
+            },
+            "VoiceCreate": {
+                "properties": {
+                    "voice_id": {
+                        "type": "string",
+                        "title": "Voice Id",
+                        "description": "Cartesia Voice ID",
+                        "example": "bf0a246a-8642-498a-9950-80c35e9276b5"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "User-given name for the voice",
+                        "example": "English Woman Calm 1"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description",
+                        "description": "Description of the voice",
+                        "example": "Calm and relaxing voice of an english-speaking woman"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "title": "Gender",
+                        "description": "Gender of the voice",
+                        "example": "female"
+                    },
+                    "language": {
+                        "type": "string",
+                        "title": "Language",
+                        "description": "Language code of the voice",
+                        "example": "en"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "voice_id",
+                    "name",
+                    "description",
+                    "gender",
+                    "language"
+                ],
+                "title": "VoiceCreate",
+                "description": "Schema for creating a new assistant voice entry in our DB.\nThe voice_id is provided by Cartesia after a successful clone/localize."
+            },
+            "VoiceRead": {
+                "properties": {
+                    "voice_id": {
+                        "type": "string",
+                        "title": "Voice Id",
+                        "description": "Cartesia Voice ID",
+                        "example": "bf0a246a-8642-498a-9950-80c35e9276b5"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "User-given name for the voice",
+                        "example": "English Woman Calm 1"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description",
+                        "description": "Description of the voice",
+                        "example": "Calm and relaxing voice of an english-speaking woman"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "title": "Gender",
+                        "description": "Gender of the voice",
+                        "example": "female"
+                    },
+                    "language": {
+                        "type": "string",
+                        "title": "Language",
+                        "description": "Language code of the voice",
+                        "example": "en"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "voice_id",
+                    "name",
+                    "description",
+                    "gender",
+                    "language"
+                ],
+                "title": "VoiceRead",
+                "description": "Schema for reading voice data from the DB."
             }
         },
         "securitySchemes": {
