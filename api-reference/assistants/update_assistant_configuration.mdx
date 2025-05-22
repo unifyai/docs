@@ -38,6 +38,10 @@ Contact phone number for the assistant
 Email address for the assistant
 </ParamField>
 
+<ParamField body="voice_id" type="string | null" >
+Id of the voice (Cartesia ID) to use for the assistant
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -50,7 +54,8 @@ curl --request PATCH \
     "max_parallel": 3,
     "about": "Award-winning mathematician specializing in algorithm development",
     "phone": "+1-555-987-6543",
-    "email": "ada.lovelace@newdomain.com"
+    "email": "ada.lovelace@newdomain.com",
+    "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5"
 }'
 ```
 
@@ -61,7 +66,7 @@ url = "https://api.unify.ai/v0/assistant/<assistant_id>/config"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"weekly_limit": 20.5, "max_parallel": 3, "about": "Award-winning mathematician specializing in algorithm development", "phone": "+1-555-987-6543", "email": "ada.lovelace@newdomain.com"}
+json_input = {"weekly_limit": 20.5, "max_parallel": 3, "about": "Award-winning mathematician specializing in algorithm development", "phone": "+1-555-987-6543", "email": "ada.lovelace@newdomain.com", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5"}
 
 response = requests.request("PATCH", url, json=json_input, headers=headers)
 
@@ -85,6 +90,7 @@ print(response.text)
         "email": "alice.smith@example.com",
         "region": "North America",
         "profile_photo": "https://example.com/photos/alice.jpg",
+        "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
         "created_at": "2025-04-25T12:00:00Z",
         "updated_at": "2025-04-25T14:30:00Z"
     }

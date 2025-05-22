@@ -452,7 +452,10 @@
                                 "api-reference/assistants/update_assistant_configuration",
                                 "api-reference/assistants/add_a_call_recording_for_an_assistant",
                                 "api-reference/assistants/list_all_recordings_for_an_assistant",
-                                "api-reference/assistants/delete_a_recording"
+                                "api-reference/assistants/delete_a_recording",
+                                "api-reference/assistants/list_all_assistant_voices_for_the_user.",
+                                "api-reference/assistants/create_a_new_voice_record",
+                                "api-reference/assistants/delete_a_user's_voice_record"
                             ]
                         }
                     ]

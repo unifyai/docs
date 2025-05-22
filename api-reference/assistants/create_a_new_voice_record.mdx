@@ -1,0 +1,100 @@
+---
+title: 'Create a new voice record'
+api: 'POST /v0/assistant/voice'
+---
+Create a voice that can be used my any assistant during TTS.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="voice_id" type="string" required="true">
+Cartesia Voice ID
+</ParamField>
+
+<ParamField body="name" type="string" required="true">
+User-given name for the voice
+</ParamField>
+
+<ParamField body="description" type="string" required="true">
+Description of the voice
+</ParamField>
+
+<ParamField body="gender" type="string" required="true">
+Gender of the voice
+</ParamField>
+
+<ParamField body="language" type="string" required="true">
+Language code of the voice
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/assistant/voice' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+    "name": "English Woman Calm 1",
+    "description": "Calm and relaxing voice of an english-speaking woman",
+    "gender": "female",
+    "language": "en"
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/voice"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "name": "English Woman Calm 1", "description": "Calm and relaxing voice of an english-speaking woman", "gender": "female", "language": "en"}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "info": "object"
+}
+```
+
+```json 200
+{
+    "info": {
+        "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+        "name": "English Woman Calm 1",
+        "description": "Calm and relaxting voice of an english-speaking woman",
+        "gender": "female",
+        "language": "en"
+    }
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
