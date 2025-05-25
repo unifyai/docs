@@ -332,7 +332,6 @@
                     "Usage"
                 ],
                 "summary": "Get Query Tags",
-                "description": "Returns a list of the tags in your account",
                 "operationId": "get_query_tags_v0_tags_get",
                 "responses": {
                     "200": {
@@ -363,7 +362,6 @@
                     "Usage"
                 ],
                 "summary": "Get Queries",
-                "description": "Get the queries history, optionally for a given set of tags for a narrowed search.",
                 "operationId": "get_queries_v0_queries_get",
                 "security": [
                     {
@@ -1302,7 +1300,6 @@
                     "Endpoint Metrics"
                 ],
                 "summary": "Log Endpoint Metric",
-                "description": "Append speed or cost data to the standardized time-series benchmarks for a custom\nendpoint (only custom endpoints are publishable by end users).",
                 "operationId": "log_endpoint_metric_v0_endpoint_metrics_post",
                 "security": [
                     {
@@ -1633,7 +1630,7 @@
                     "Endpoint Metrics"
                 ],
                 "summary": "Get Endpoint Details",
-                "description": "Extracts cost and context window data for the provided endpoint .\n\nThe `endpoint` is the endpoint name in the form \\<model\\>@\\<provider\\>.",
+                "description": "Extracts cost and context window data for the provided endpoint .\n\nThe `endpoint` is the endpoint name in the form <model>@<provider>.",
                 "operationId": "get_endpoint_details_v0_endpoint_details_get",
                 "security": [
                     {
@@ -7920,7 +7917,6 @@
                     "tile"
                 ],
                 "summary": "Get Tile",
-                "description": "Get a specific tile by ID or by tab_id and name.",
                 "operationId": "get_tile_v0_tile__get",
                 "security": [
                     {
@@ -8083,7 +8079,6 @@
                     "tile"
                 ],
                 "summary": "Update Tile",
-                "description": "Update a tile by ID or by tab_id and name.",
                 "operationId": "update_tile_v0_tile__put",
                 "security": [
                     {
@@ -8256,7 +8251,6 @@
                     "tile"
                 ],
                 "summary": "Delete Tile",
-                "description": "Delete a tile by ID or by tab_id and name.",
                 "operationId": "delete_tile_v0_tile__delete",
                 "security": [
                     {
@@ -8379,7 +8373,6 @@
                     "tile"
                 ],
                 "summary": "Patch Tile",
-                "description": "Partially update a tile by ID or by tab_id and name.\n\nOnly the fields included in the request body will be updated.",
                 "operationId": "patch_tile_v0_tile__patch",
                 "security": [
                     {
@@ -8565,7 +8558,6 @@
                     "tile"
                 ],
                 "summary": "List Tiles",
-                "description": "List all tiles for a tab.",
                 "operationId": "list_tiles_v0_tile_list_get",
                 "security": [
                     {
@@ -8754,7 +8746,6 @@
                     "tile"
                 ],
                 "summary": "Create Tile Checkpoint",
-                "description": "Create a manual checkpoint (save) of a tile.",
                 "operationId": "create_tile_checkpoint_v0_tile_checkpoint_post",
                 "security": [
                     {
@@ -8915,7 +8906,6 @@
                     "tile"
                 ],
                 "summary": "Get Tile Checkpoint",
-                "description": "Get the checkpoint (manual save) for a tile by ID or by tab_id and name.",
                 "operationId": "get_tile_checkpoint_v0_tile_checkpoint_get",
                 "security": [
                     {
@@ -9068,7 +9058,6 @@
                     "tile"
                 ],
                 "summary": "Patch Specialized Tile",
-                "description": "Generic endpoint to patch any specialized tile type.\n\nThe tile_type parameter determines which specialized tile type to update.\nValid values are: Table, Plot, View, Editor\n\nFor Table tiles, valid specialized fields include: table_type, column_context, page_number,\ncolumn_order, hidden_columns, sorting, grouping, group_sorting, columns_pin_left,\ncolumns_pin_right, selected\n\nFor Plot tiles, valid specialized fields include: plot_type, plot_scale_x, plot_scale_y,\nplot_aggregate, x_axis, y_axis, plot_group_by, plot_group_by_colors, bin_count, regression_line\n\nFor View tiles, valid specialized fields include: base_index\n\nFor Editor tiles, valid specialized fields include: file_path, file_type, content",
                 "operationId": "patch_specialized_tile_v0_tile_specialized_patch",
                 "security": [
                     {
@@ -10172,8 +10161,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
