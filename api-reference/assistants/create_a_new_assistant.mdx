@@ -2,7 +2,7 @@
 title: 'Create a new assistant'
 api: 'POST /v0/assistant'
 ---
-Creates a new assistant for the authenticated user with the specified configuration.
+Creates a new assistant for the authenticated user with the specified configuration. This action will deduct credits from the user account.
 
 #### Authorizations
 
@@ -115,6 +115,12 @@ print(response.text)
         "email": "alice.smith@example.com",
         "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5"
     }
+}
+```
+
+```json 402
+{
+    "detail": "Insufficient credits to create an assistant."
 }
 ```
 

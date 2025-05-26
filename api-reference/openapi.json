@@ -1699,7 +1699,7 @@
                     "Assistants"
                 ],
                 "summary": "Create a new assistant",
-                "description": "Creates a new assistant for the authenticated user with the specified configuration.",
+                "description": "Creates a new assistant for the authenticated user with the specified configuration. This action will deduct credits from the user account.",
                 "operationId": "create_assistant_v0_assistant_post",
                 "security": [
                     {
@@ -1738,6 +1738,16 @@
                                         "email": "alice.smith@example.com",
                                         "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient credits",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Insufficient credits to create an assistant."
                                 }
                             }
                         }
@@ -1790,8 +1800,10 @@
                                     "type": "null"
                                 }
                             ],
+                            "description": "Only return assistants whose phone number matches this E.164-style value (leading '+' is URL-encoded).",
                             "title": "Phone"
-                        }
+                        },
+                        "description": "Only return assistants whose phone number matches this E.164-style value (leading '+' is URL-encoded)."
                     },
                     {
                         "name": "email",
@@ -1806,8 +1818,10 @@
                                     "type": "null"
                                 }
                             ],
+                            "description": "Only return assistants whose email address matches this value.",
                             "title": "Email"
-                        }
+                        },
+                        "description": "Only return assistants whose email address matches this value."
                     }
                 ],
                 "responses": {

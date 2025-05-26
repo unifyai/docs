@@ -13,11 +13,11 @@ Returns a list of all assistants belonging to the authenticated user.
 #### Query Parameters
 
 <ParamField query="phone" type="string | null" >
-
+Only return assistants whose phone number matches this E.164-style value (leading '+' is URL-encoded).
 </ParamField>
 
 <ParamField query="email" type="string | null" >
-
+Only return assistants whose email address matches this value.
 </ParamField>
 
 <RequestExample>
