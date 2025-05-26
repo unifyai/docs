@@ -1693,68 +1693,6 @@
             }
         },
         "/v0/assistant": {
-            "get": {
-                "tags": [
-                    "Assistants",
-                    "Assistants"
-                ],
-                "summary": "List all assistants",
-                "description": "Returns a list of all assistants belonging to the authenticated user.",
-                "operationId": "list_assistants_v0_assistant_get",
-                "responses": {
-                    "200": {
-                        "description": "List of assistants retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InfoResponse_List_AssistantRead__"
-                                },
-                                "example": {
-                                    "info": [
-                                        {
-                                            "agent_id": "123",
-                                            "first_name": "Alice",
-                                            "surname": "Smith",
-                                            "age": 25,
-                                            "weekly_limit": 40.0,
-                                            "max_parallel": 3,
-                                            "phone": "+1-555-123-4567",
-                                            "email": "alice.smith@example.com",
-                                            "region": "North America",
-                                            "profile_photo": "https://example.com/photos/alice.jpg",
-                                            "about": "Mathematician and writer known for work on Analytical Engine",
-                                            "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
-                                            "created_at": "2025-04-25T12:00:00Z",
-                                            "updated_at": "2025-04-25T12:00:00Z"
-                                        },
-                                        {
-                                            "agent_id": "456",
-                                            "first_name": "Bob",
-                                            "surname": "Jones",
-                                            "age": 30,
-                                            "weekly_limit": 35.5,
-                                            "max_parallel": 2,
-                                            "phone": "+1-555-987-6543",
-                                            "email": "bob.jones@example.com",
-                                            "region": "South America",
-                                            "profile_photo": "https://example.com/photos/bob.jpg",
-                                            "about": "Machine learning expert with focus on computer vision",
-                                            "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
-                                            "created_at": "2025-04-24T10:30:00Z",
-                                            "updated_at": "2025-04-24T10:30:00Z"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            },
             "post": {
                 "tags": [
                     "Assistants",
@@ -1763,15 +1701,20 @@
                 "summary": "Create a new assistant",
                 "description": "Creates a new assistant for the authenticated user with the specified configuration.",
                 "operationId": "create_assistant_v0_assistant_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/AssistantCreate"
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -1818,12 +1761,113 @@
                             }
                         }
                     }
-                },
+                }
+            },
+            "get": {
+                "tags": [
+                    "Assistants",
+                    "Assistants"
+                ],
+                "summary": "List all assistants",
+                "description": "Returns a list of all assistants belonging to the authenticated user.",
+                "operationId": "list_assistants_v0_assistant_get",
                 "security": [
                     {
                         "HTTPBearer": []
                     }
-                ]
+                ],
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Phone"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of assistants retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_List_AssistantRead__"
+                                },
+                                "example": {
+                                    "info": [
+                                        {
+                                            "agent_id": "123",
+                                            "first_name": "Alice",
+                                            "surname": "Smith",
+                                            "age": 25,
+                                            "weekly_limit": 40.0,
+                                            "max_parallel": 3,
+                                            "phone": "+1-555-123-4567",
+                                            "email": "alice.smith@example.com",
+                                            "region": "North America",
+                                            "profile_photo": "https://example.com/photos/alice.jpg",
+                                            "about": "Mathematician and writer known for work on Analytical Engine",
+                                            "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+                                            "created_at": "2025-04-25T12:00:00Z",
+                                            "updated_at": "2025-04-25T12:00:00Z"
+                                        },
+                                        {
+                                            "agent_id": "456",
+                                            "first_name": "Bob",
+                                            "surname": "Jones",
+                                            "age": 30,
+                                            "weekly_limit": 35.5,
+                                            "max_parallel": 2,
+                                            "phone": "+1-555-987-6543",
+                                            "email": "bob.jones@example.com",
+                                            "region": "South America",
+                                            "profile_photo": "https://example.com/photos/bob.jpg",
+                                            "about": "Machine learning expert with focus on computer vision",
+                                            "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+                                            "created_at": "2025-04-24T10:30:00Z",
+                                            "updated_at": "2025-04-24T10:30:00Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/v0/assistant/{assistant_id}": {
@@ -9576,6 +9620,19 @@
                         "description": "Email address for the assistant",
                         "example": "ada.lovelace@example.com"
                     },
+                    "whatsapp_sid": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Whatsapp Sid",
+                        "description": "WhatsApp SID for Twilio integration",
+                        "example": "whatsapp:+1234567890"
+                    },
                     "voice_id": {
                         "anyOf": [
                             {
@@ -9726,6 +9783,19 @@
                         "description": "Email address for the assistant",
                         "example": "ada.lovelace@example.com"
                     },
+                    "whatsapp_sid": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Whatsapp Sid",
+                        "description": "WhatsApp SID for Twilio integration",
+                        "example": "whatsapp:+1234567890"
+                    },
                     "voice_id": {
                         "anyOf": [
                             {
@@ -9841,6 +9911,19 @@
                         "title": "Email",
                         "description": "Email address for the assistant",
                         "example": "ada.lovelace@newdomain.com"
+                    },
+                    "whatsapp_sid": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Whatsapp Sid",
+                        "description": "WhatsApp SID for Twilio integration",
+                        "example": "whatsapp:+1234567890"
                     },
                     "voice_id": {
                         "anyOf": [

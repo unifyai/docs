@@ -10,18 +10,28 @@ Returns a list of all assistants belonging to the authenticated user.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
+#### Query Parameters
+
+<ParamField query="phone" type="string | null" >
+
+</ParamField>
+
+<ParamField query="email" type="string | null" >
+
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/assistant' \
+  --url 'https://api.unify.ai/v0/assistant?phone=None&email=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/assistant"
+url = "https://api.unify.ai/v0/assistant?phone=None&email=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -67,6 +77,20 @@ print(response.text)
             "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
             "created_at": "2025-04-24T10:30:00Z",
             "updated_at": "2025-04-24T10:30:00Z"
+        }
+    ]
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
         }
     ]
 }
