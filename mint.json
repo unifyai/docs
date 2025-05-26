@@ -446,8 +446,8 @@
                         {
                             "group": "Assistants",
                             "pages": [
-                                "api-reference/assistants/list_all_assistants",
                                 "api-reference/assistants/create_a_new_assistant",
+                                "api-reference/assistants/list_all_assistants",
                                 "api-reference/assistants/delete_an_assistant",
                                 "api-reference/assistants/update_assistant_configuration",
                                 "api-reference/assistants/add_a_call_recording_for_an_assistant",
