@@ -1,0 +1,43 @@
+---
+title: 'Request Assistant Hiring Approval'
+api: 'POST /v0/user/assistant-hiring-approval'
+---
+
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/user/assistant-hiring-approval' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/user/assistant-hiring-approval"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "message": "string",
+    "assistant_hiring_approval": "string | null"
+}
+```
+
+</ResponseExample>

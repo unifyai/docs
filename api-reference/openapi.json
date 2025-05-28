@@ -73,6 +73,78 @@
                 ]
             }
         },
+        "/v0/user/assistant-hiring-approval": {
+            "post": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Request Assistant Hiring Approval",
+                "operationId": "request_assistant_hiring_approval_v0_user_assistant_hiring_approval_post",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssistantHiringApprovalResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/user/claim-assistant-hiring-one-time-link": {
+            "post": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Claim Assistant Hiring One Time Link",
+                "operationId": "claim_assistant_hiring_one_time_link_v0_user_claim_assistant_hiring_one_time_link_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssistantHiringOneTimeLinkClaimTokenRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssistantHiringApprovalResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/providers": {
             "get": {
                 "tags": [
@@ -9665,6 +9737,44 @@
                 "title": "AssistantCreate",
                 "description": "Schema for creating a new assistant."
             },
+            "AssistantHiringApprovalResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "assistant_hiring_approval": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Assistant Hiring Approval"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "message",
+                    "assistant_hiring_approval"
+                ],
+                "title": "AssistantHiringApprovalResponse"
+            },
+            "AssistantHiringOneTimeLinkClaimTokenRequest": {
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "title": "Token"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "token"
+                ],
+                "title": "AssistantHiringOneTimeLinkClaimTokenRequest"
+            },
             "AssistantRead": {
                 "properties": {
                     "first_name": {
@@ -10258,8 +10368,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
