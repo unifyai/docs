@@ -574,7 +574,9 @@
                             "group": "Query Logging",
                             "pages": [
                                 "api-reference/query_logging/get_query_logging_status",
-                                "api-reference/query_logging/update_query_logging_status"
+                                "api-reference/query_logging/update_query_logging_status",
+                                "api-reference/query_logging/request_assistant_hiring_approval",
+                                "api-reference/query_logging/claim_assistant_hiring_one_time_link"
                             ]
                         }
                     ]
