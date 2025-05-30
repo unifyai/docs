@@ -30,6 +30,10 @@ Maximum number of parallel tasks the assistant can handle
 Brief description about the assistant
 </ParamField>
 
+<ParamField body="user_phone" type="string | null" >
+Contact phone number of the user
+</ParamField>
+
 <ParamField body="phone" type="string | null" >
 Contact phone number for the assistant
 </ParamField>
@@ -57,7 +61,8 @@ curl --request PATCH \
     "weekly_limit": 20.5,
     "max_parallel": 3,
     "about": "Award-winning mathematician specializing in algorithm development",
-    "phone": "+1-555-987-6543",
+    "user_phone": "+15551234567",
+    "phone": "+15559876543",
     "email": "ada.lovelace@newdomain.com",
     "whatsapp_sid": "whatsapp:+1234567890",
     "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5"
@@ -71,7 +76,7 @@ url = "https://api.unify.ai/v0/assistant/<assistant_id>/config"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"weekly_limit": 20.5, "max_parallel": 3, "about": "Award-winning mathematician specializing in algorithm development", "phone": "+1-555-987-6543", "email": "ada.lovelace@newdomain.com", "whatsapp_sid": "whatsapp:+1234567890", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5"}
+json_input = {"weekly_limit": 20.5, "max_parallel": 3, "about": "Award-winning mathematician specializing in algorithm development", "user_phone": "+15551234567", "phone": "+15559876543", "email": "ada.lovelace@newdomain.com", "whatsapp_sid": "whatsapp:+1234567890", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5"}
 
 response = requests.request("PATCH", url, json=json_input, headers=headers)
 
