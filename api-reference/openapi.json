@@ -9680,19 +9680,6 @@
                         "description": "Brief description about the assistant",
                         "example": "Mathematician and writer known for work on Analytical Engine"
                     },
-                    "phone": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Phone",
-                        "description": "Contact phone number for the assistant",
-                        "example": "+1-555-123-4567"
-                    },
                     "email": {
                         "anyOf": [
                             {
@@ -9703,21 +9690,8 @@
                             }
                         ],
                         "title": "Email",
-                        "description": "Email address for the assistant",
-                        "example": "ada.lovelace@example.com"
-                    },
-                    "whatsapp_sid": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Whatsapp Sid",
-                        "description": "WhatsApp SID for Twilio integration",
-                        "example": "whatsapp:+1234567890"
+                        "description": "Email of the assistant",
+                        "example": "ada.lovelace@unify.ai"
                     },
                     "voice_id": {
                         "anyOf": [
@@ -9731,6 +9705,19 @@
                         "title": "Voice Id",
                         "description": "Id of the voice (Cartesia ID) to use for the assistant",
                         "example": "bf0a246a-8642-498a-9950-80c35e9276b5"
+                    },
+                    "user_phone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Phone",
+                        "description": "Contact phone number of the user",
+                        "example": "+15551234567"
                     }
                 },
                 "type": "object",
@@ -9881,19 +9868,6 @@
                         "description": "Brief description about the assistant",
                         "example": "Mathematician and writer known for work on Analytical Engine"
                     },
-                    "phone": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Phone",
-                        "description": "Contact phone number for the assistant",
-                        "example": "+1-555-123-4567"
-                    },
                     "email": {
                         "anyOf": [
                             {
@@ -9904,21 +9878,8 @@
                             }
                         ],
                         "title": "Email",
-                        "description": "Email address for the assistant",
-                        "example": "ada.lovelace@example.com"
-                    },
-                    "whatsapp_sid": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Whatsapp Sid",
-                        "description": "WhatsApp SID for Twilio integration",
-                        "example": "whatsapp:+1234567890"
+                        "description": "Email of the assistant",
+                        "example": "ada.lovelace@unify.ai"
                     },
                     "voice_id": {
                         "anyOf": [
@@ -9932,6 +9893,19 @@
                         "title": "Voice Id",
                         "description": "Id of the voice (Cartesia ID) to use for the assistant",
                         "example": "bf0a246a-8642-498a-9950-80c35e9276b5"
+                    },
+                    "user_phone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Phone",
+                        "description": "Contact phone number of the user",
+                        "example": "+15551234567"
                     },
                     "agent_id": {
                         "type": "string",
@@ -10010,6 +9984,19 @@
                         "description": "Brief description about the assistant",
                         "example": "Award-winning mathematician specializing in algorithm development"
                     },
+                    "user_phone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Phone",
+                        "description": "Contact phone number of the user",
+                        "example": "+15551234567"
+                    },
                     "phone": {
                         "anyOf": [
                             {
@@ -10021,7 +10008,7 @@
                         ],
                         "title": "Phone",
                         "description": "Contact phone number for the assistant",
-                        "example": "+1-555-987-6543"
+                        "example": "+15559876543"
                     },
                     "email": {
                         "anyOf": [
@@ -10368,8 +10355,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
