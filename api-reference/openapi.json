@@ -9718,6 +9718,20 @@
                         "title": "User Phone",
                         "description": "Contact phone number of the user",
                         "example": "+15551234567"
+                    },
+                    "create_infra": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Create Infra",
+                        "description": "Whether to create the infrastructure for the assistant",
+                        "default": true,
+                        "example": true
                     }
                 },
                 "type": "object",
@@ -9906,6 +9920,20 @@
                         "title": "User Phone",
                         "description": "Contact phone number of the user",
                         "example": "+15551234567"
+                    },
+                    "create_infra": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Create Infra",
+                        "description": "Whether to create the infrastructure for the assistant",
+                        "default": true,
+                        "example": true
                     },
                     "agent_id": {
                         "type": "string",
