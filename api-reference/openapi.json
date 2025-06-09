@@ -9400,8 +9400,19 @@
                         ],
                         "title": "Create Infra",
                         "description": "Whether to create the infrastructure for the assistant",
-                        "default": true,
-                        "example": true
+                        "default": true
+                    },
+                    "phone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Phone",
+                        "description": "Phone number of the assistant (just for testing purposes)"
                     }
                 },
                 "type": "object",
@@ -9602,8 +9613,20 @@
                         ],
                         "title": "Create Infra",
                         "description": "Whether to create the infrastructure for the assistant",
-                        "default": true,
-                        "example": true
+                        "default": true
+                    },
+                    "phone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Phone",
+                        "description": "Phone number of the assistant",
+                        "example": "+15551234567"
                     },
                     "agent_id": {
                         "type": "string",
@@ -9631,19 +9654,6 @@
                         "title": "Updated At",
                         "description": "Timestamp when the assistant was last updated",
                         "example": "2025-04-26T14:15:00Z"
-                    },
-                    "phone": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Phone",
-                        "description": "Phone number of the assistant",
-                        "example": "+15551234567"
                     }
                 },
                 "type": "object",
@@ -10066,8 +10076,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
