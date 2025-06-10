@@ -1695,7 +1695,7 @@
                     "Assistants"
                 ],
                 "summary": "Update assistant configuration",
-                "description": "Updates the configuration parameters of an existing assistant.",
+                "description": "Updates the configuration parameters of an existing assistant. Profile photo cannot be updated via this endpoint.",
                 "operationId": "update_assistant_config_v0_assistant__assistant_id__config_patch",
                 "security": [
                     {
@@ -2015,8 +2015,8 @@
                     "Assistants",
                     "Voices"
                 ],
-                "summary": "List all assistant voices for the user.",
-                "description": "Returns a list of all assistant voices created available for the user.",
+                "summary": "List all voices for the user and global presets",
+                "description": "Returns a list of all voices created or registered by the user, and all globally registered preset voices.",
                 "operationId": "list_voices_v0_assistant_voice_get",
                 "responses": {
                     "200": {
@@ -2069,9 +2069,9 @@
                     "Assistants",
                     "Voices"
                 ],
-                "summary": "Create a new voice record",
-                "description": "Create a voice that can be used my any assistant during TTS.",
-                "operationId": "create_voice_v0_assistant_voice_post",
+                "summary": "Register an existing Cartesia voice",
+                "description": "Registers an existing Cartesia voice (e.g., a preset) in the Orchestra DB. The voice must already exist in Cartesia.",
+                "operationId": "register_cartesia_voice_v0_assistant_voice_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2136,14 +2136,110 @@
                 ]
             }
         },
+        "/v0/assistant/voice/clone": {
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Voices"
+                ],
+                "summary": "Clone a new voice",
+                "description": "Clones a new voice using an audio file, registers it with Cartesia, and saves it to the database.",
+                "operationId": "clone_voice_endpoint_v0_assistant_voice_clone_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_clone_voice_endpoint_v0_assistant_voice_clone_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_VoiceRead_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/assistant/voice/localize": {
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Voices"
+                ],
+                "summary": "Localize an existing voice",
+                "description": "Localizes an existing Cartesia voice to a new language, registers the new version with Cartesia, and saves it to the database.",
+                "operationId": "localize_voice_endpoint_v0_assistant_voice_localize_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VoiceLocalizeRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_VoiceRead_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/assistant/voice/{voice_id}": {
             "delete": {
                 "tags": [
                     "Assistants",
                     "Voices"
                 ],
-                "summary": "Delete a user's voice record",
-                "description": "Deletes a specific voice record by its Cartesia ID for the authenticated user. This does NOT delete the voice from Cartesia itself, that should be a separate Cartesia API call if needed.",
+                "summary": "Delete a user's voice record and from Cartesia if applicable",
+                "description": "Deletes a specific voice record by its Cartesia ID for the authenticated user. If the voice is not a preset, it will also be deleted from Cartesia.",
                 "operationId": "delete_voice_v0_assistant_voice__voice_id__delete",
                 "security": [
                     {
@@ -2196,6 +2292,55 @@
                         }
                     }
                 }
+            }
+        },
+        "/v0/assistant/photo/upload": {
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Assistants",
+                    "Storage"
+                ],
+                "summary": "Upload an assistant profile photo",
+                "description": "Uploads a profile photo for an assistant to GCS and returns the GCS URL.",
+                "operationId": "upload_assistant_photo_v0_assistant_photo_upload_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_assistant_photo_v0_assistant_photo_upload_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_AssistantPhotoUploadResponse_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/v0/project/{project}/contexts/{context_name}/artifacts": {
@@ -8871,10 +9016,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Type of tile to patch (Table, Plot, View, Editor)",
+                            "description": "Type of tile to patch (Table, Plot, View, Editor, Terminal)",
                             "title": "Tile Type"
                         },
-                        "description": "Type of tile to patch (Table, Plot, View, Editor)"
+                        "description": "Type of tile to patch (Table, Plot, View, Editor, Terminal)"
                     },
                     {
                         "name": "tile_id",
@@ -9009,7 +9154,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Invalid tile_type. Must be one of Table, Plot, View, Editor"
+                                    "detail": "Invalid tile_type. Must be one of Table, Plot, View, Editor, Terminal"
                                 }
                             }
                         }
@@ -9146,6 +9291,51 @@
                         }
                     }
                 }
+            }
+        },
+        "/v0/recharge": {
+            "post": {
+                "tags": [
+                    "Credits"
+                ],
+                "summary": "Create Recharge",
+                "description": "Create a recharge - either prepaid or auto-recharge.",
+                "operationId": "create_recharge_v0_recharge_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RechargeCreateSchema"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/metrics": {
@@ -9456,6 +9646,21 @@
                     "token"
                 ],
                 "title": "AssistantHiringOneTimeLinkClaimTokenRequest"
+            },
+            "AssistantPhotoUploadResponse": {
+                "properties": {
+                    "gcs_url": {
+                        "type": "string",
+                        "title": "Gcs Url",
+                        "description": "GCS URL of the uploaded photo",
+                        "example": "gs://your-bucket-name/user_id/image_uuid.jpg"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "gcs_url"
+                ],
+                "title": "AssistantPhotoUploadResponse"
             },
             "AssistantRead": {
                 "properties": {
@@ -9775,6 +9980,41 @@
                 "title": "AssistantUpdate",
                 "description": "Schema for updating an existing assistant.\nOnly includes fields that can be updated."
             },
+            "Body_clone_voice_endpoint_v0_assistant_voice_clone_post": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "language": {
+                        "type": "string",
+                        "title": "Language"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "language",
+                    "file"
+                ],
+                "title": "Body_clone_voice_endpoint_v0_assistant_voice_clone_post"
+            },
             "Body_log_query_v0_queries_post": {
                 "properties": {
                     "endpoint": {
@@ -9871,6 +10111,20 @@
                     "query_body"
                 ],
                 "title": "Body_log_query_v0_queries_post"
+            },
+            "Body_upload_assistant_photo_v0_assistant_photo_upload_post": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file"
+                ],
+                "title": "Body_upload_assistant_photo_v0_assistant_photo_upload_post"
             },
             "ChatCompletionRequest": {
                 "properties": {
@@ -10983,6 +11237,16 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "terminal_tile": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/TerminalTileSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     }
                 },
                 "additionalProperties": false,
@@ -11261,7 +11525,7 @@
                         ],
                         "title": "Tile Id"
                     },
-                    "file_path": {
+                    "file_name": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -11270,7 +11534,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "File Path"
+                        "title": "File Name"
                     },
                     "file_type": {
                         "anyOf": [
@@ -11524,6 +11788,18 @@
                 },
                 "type": "object",
                 "title": "HTTPValidationError"
+            },
+            "InfoResponse_AssistantPhotoUploadResponse_": {
+                "properties": {
+                    "info": {
+                        "$ref": "#/components/schemas/AssistantPhotoUploadResponse"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[AssistantPhotoUploadResponse]"
             },
             "InfoResponse_AssistantRead_": {
                 "properties": {
@@ -12113,7 +12389,7 @@
                         ],
                         "title": "Regression Line"
                     },
-                    "file_path": {
+                    "file_name": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -12122,7 +12398,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "File Path"
+                        "title": "File Name"
                     },
                     "file_type": {
                         "anyOf": [
@@ -12457,6 +12733,56 @@
                     "name"
                 ],
                 "title": "ProjectConfig"
+            },
+            "RechargeCreateSchema": {
+                "properties": {
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "title": "Quantity"
+                    },
+                    "amount_usd": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "title": "Amount Usd"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "auto",
+                            "payment"
+                        ],
+                        "title": "Type"
+                    },
+                    "transaction_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Transaction Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "user_id",
+                    "quantity",
+                    "amount_usd",
+                    "type"
+                ],
+                "title": "RechargeCreateSchema"
             },
             "RecordingCreate": {
                 "properties": {
@@ -12794,6 +13120,45 @@
                 "type": "object",
                 "title": "TableTileSchema"
             },
+            "TerminalTileSchema": {
+                "properties": {
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id"
+                    },
+                    "tile_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tile Id"
+                    },
+                    "shell_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Shell Type"
+                    }
+                },
+                "type": "object",
+                "title": "TerminalTileSchema"
+            },
             "TilePosition": {
                 "properties": {
                     "x": {
@@ -13070,6 +13435,16 @@
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/EditorTileSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "terminal_tile": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/TerminalTileSchema"
                             },
                             {
                                 "type": "null"
@@ -13740,6 +14115,16 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "terminal_tile": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/TerminalTileSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     }
                 },
                 "additionalProperties": false,
@@ -13849,6 +14234,20 @@
                         "title": "Language",
                         "description": "Language code of the voice",
                         "example": "en"
+                    },
+                    "is_preset": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Is Preset",
+                        "description": "Whether this voice is a Cartesia preset or user-created.",
+                        "default": false,
+                        "example": true
                     }
                 },
                 "type": "object",
@@ -13860,7 +14259,63 @@
                     "language"
                 ],
                 "title": "VoiceCreate",
-                "description": "Schema for creating a new assistant voice entry in our DB.\nThe voice_id is provided by Cartesia after a successful clone/localize."
+                "description": "Schema for creating a new assistant voice entry in our DB.\nThe voice_id is provided by Cartesia after a successful clone/localize, or is a known preset ID."
+            },
+            "VoiceLocalizeRequest": {
+                "properties": {
+                    "base_cartesia_voice_id": {
+                        "type": "string",
+                        "title": "Base Cartesia Voice Id",
+                        "description": "Cartesia Voice ID of the voice to localize"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Name for the new localized voice"
+                    },
+                    "target_language": {
+                        "type": "string",
+                        "title": "Target Language",
+                        "description": "Target language for localization (e.g., 'es')"
+                    },
+                    "original_speaker_gender": {
+                        "type": "string",
+                        "title": "Original Speaker Gender",
+                        "description": "Gender of the original speaker ('female' or 'male')"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description for the voice"
+                    },
+                    "dialect": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dialect",
+                        "description": "Optional dialect for localization"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "base_cartesia_voice_id",
+                    "name",
+                    "target_language",
+                    "original_speaker_gender"
+                ],
+                "title": "VoiceLocalizeRequest"
             },
             "VoiceRead": {
                 "properties": {
@@ -13893,6 +14348,20 @@
                         "title": "Language",
                         "description": "Language code of the voice",
                         "example": "en"
+                    },
+                    "is_preset": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Is Preset",
+                        "description": "Whether this voice is a Cartesia preset or user-created.",
+                        "default": false,
+                        "example": true
                     }
                 },
                 "type": "object",
