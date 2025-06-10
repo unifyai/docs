@@ -1,0 +1,86 @@
+---
+title: "Localize an existing voice"
+api: 'POST /v0/assistant/voice/localize'
+---
+Localizes an existing Cartesia voice to a new language, registers the new version with Cartesia, and saves it to the database.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="base_cartesia_voice_id" type="string" required="true">
+Cartesia Voice ID of the voice to localize
+</ParamField>
+
+<ParamField body="name" type="string" required="true">
+Name for the new localized voice
+</ParamField>
+
+<ParamField body="target_language" type="string" required="true">
+Target language for localization (e.g., 'es')
+</ParamField>
+
+<ParamField body="original_speaker_gender" type="string" required="true">
+Gender of the original speaker ('female' or 'male')
+</ParamField>
+
+<ParamField body="description" type="string | null" >
+Optional description for the voice
+</ParamField>
+
+<ParamField body="dialect" type="string | null" >
+Optional dialect for localization
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/assistant/voice/localize' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/voice/localize"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "info": "object"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

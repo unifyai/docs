@@ -13,7 +13,7 @@ api: 'PATCH /v0/tile/specialized'
 #### Query Parameters
 
 <ParamField query="tile_type" type="string" required="true">
-Type of tile to patch (Table, Plot, View, Editor)
+Type of tile to patch (Table, Plot, View, Editor, Terminal)
 </ParamField>
 
 <ParamField query="tile_id" type="string | null" >
@@ -115,7 +115,7 @@ print(response.text)
 
 ```json 400
 {
-    "detail": "Invalid tile_type. Must be one of Table, Plot, View, Editor"
+    "detail": "Invalid tile_type. Must be one of Table, Plot, View, Editor, Terminal"
 }
 ```
 

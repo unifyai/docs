@@ -1,8 +1,8 @@
 ---
-title: "Create a new voice record"
+title: "Register an existing Cartesia voice"
 api: 'POST /v0/assistant/voice'
 ---
-Create a voice that can be used my any assistant during TTS.
+Registers an existing Cartesia voice (e.g., a preset) in the Orchestra DB. The voice must already exist in Cartesia.
 
 #### Authorizations
 
@@ -32,6 +32,10 @@ Gender of the voice
 Language code of the voice
 </ParamField>
 
+<ParamField body="is_preset" type="boolean | null"  default="false">
+Whether this voice is a Cartesia preset or user-created.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -44,7 +48,8 @@ curl --request POST \
     "name": "English Woman Calm 1",
     "description": "Calm and relaxing voice of an english-speaking woman",
     "gender": "female",
-    "language": "en"
+    "language": "en",
+    "is_preset": true
 }'
 ```
 
@@ -55,7 +60,7 @@ url = "https://api.unify.ai/v0/assistant/voice"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "name": "English Woman Calm 1", "description": "Calm and relaxing voice of an english-speaking woman", "gender": "female", "language": "en"}
+json_input = {"voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "name": "English Woman Calm 1", "description": "Calm and relaxing voice of an english-speaking woman", "gender": "female", "language": "en", "is_preset": True}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

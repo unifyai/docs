@@ -1,0 +1,81 @@
+---
+title: "Clone a new voice"
+api: 'POST /v0/assistant/voice/clone'
+---
+Clones a new voice using an audio file, registers it with Cartesia, and saves it to the database.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="name" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="language" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="description" type="string | null" >
+
+</ParamField>
+
+<ParamField body="file" type="binary" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/assistant/voice/clone' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: multipart/form-data' \
+  --form 'file=@/path/to/your/file.ext'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/voice/clone"
+
+headers = {"Authorization": "Bearer <token>"}
+
+data = {}
+
+file_path = "/path/to/your/file.ext"
+with open(file_path, "rb") as file:
+   files = {"file": file}
+   response = requests.request("POST", url, files=files, data=data, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "info": "object"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
