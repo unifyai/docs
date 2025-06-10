@@ -1,5 +1,5 @@
 ---
-title: 'Delete Logs'
+title: "Delete Logs"
 api: 'DELETE /v0/logs'
 ---
 Deletes log entries based on specified criteria. Can delete both base logs and derived logs.
@@ -34,15 +34,15 @@ Optional context path to update for the logs. Can use '/' for nested contexts (e
 List of tuples of log ID(s) and field(s) to delete, either as an individual item or a list of items. A log ID of None indicates that the field should be deleted from all logs. Can also use a dict of filter arguments to select logs. The filter dict should be a key:value pair where the key is the field to filter on and the value is the value to filter on.
 </ParamField>
 
-<ParamField body="source_type" type="string"  default={"all"}>
+<ParamField body="source_type" type="string"  default="all">
 Specifies which type of logs to delete. Can be 'base' for base logs only, 'derived' for derived logs only, or 'all' to delete from both types.
 </ParamField>
 
-<ParamField body="delete_empty_logs" type="boolean"  default={false}>
+<ParamField body="delete_empty_logs" type="boolean"  default="false">
 Whether to delete logs which end up being empty as a result of the field deletion.
 </ParamField>
 
-<ParamField body="delete_empty_fields" type="boolean"  default={true}>
+<ParamField body="delete_empty_fields" type="boolean"  default="true">
 Whether to delete fields that have no data after log deletion.
 </ParamField>
 

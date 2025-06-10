@@ -1,5 +1,5 @@
 ---
-title: 'Add Logs To Context'
+title: "Add Logs To Context"
 api: 'POST /v0/project/{project_name}/contexts/add_logs'
 ---
 Adds existing logs to a context within a project. The logs must already exist
@@ -38,7 +38,7 @@ List of log IDs to add to the context. At least one log ID must be provided.
 Dictionary of arguments (e.g. filter_expr) to select logs by criteria.
 </ParamField>
 
-<ParamField body="copy" type="boolean"  default={false}>
+<ParamField body="copy" type="boolean"  default="false">
 If True, a copy of each log is created and then added to the context. If False, the existing log associations are simply used.
 </ParamField>
 

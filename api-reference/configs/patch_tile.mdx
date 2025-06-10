@@ -1,5 +1,5 @@
 ---
-title: 'Patch Tile'
+title: "Patch Tile"
 api: 'PATCH /v0/tile/'
 ---
 
@@ -24,27 +24,11 @@ The tab ID the tile belongs to
 The name of the tile to patch
 </ParamField>
 
-<ParamField query="checkpoint" type="boolean"  default=false>
+<ParamField query="checkpoint" type="boolean"  default="false">
 Whether this is a checkpoint update (manual save)
 </ParamField>
 
 #### Body
-
-<ParamField body="tile_id" type="string | null" >
-The ID of the tile to patch
-</ParamField>
-
-<ParamField body="tab_id" type="string | null" >
-The tab ID the tile belongs to
-</ParamField>
-
-<ParamField body="name" type="string | null" >
-The name of the tile to patch
-</ParamField>
-
-<ParamField body="checkpoint" type="boolean"  default={ default=false}>
-Whether this is a checkpoint update (manual save)
-</ParamField>
 
 <RequestExample>
 
