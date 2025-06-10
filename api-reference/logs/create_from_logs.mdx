@@ -1,5 +1,5 @@
 ---
-title: 'Create From Logs'
+title: "Create From Logs"
 api: 'POST /v0/logs/derived'
 ---
 Creates one or more entries based on `body.equation` and `body.referenced_logs`.
@@ -42,7 +42,7 @@ The equation for computing the value of each derived entry.
 The logs to use for each newly created derived entry, either as a list of log ids or as a set of arguments for the get_logs endpoint.
 </ParamField>
 
-<ParamField body="derived" type="boolean"  default={true}>
+<ParamField body="derived" type="boolean"  default="true">
 Whether to create derived logs (True) or static entries in base logs (False).
 </ParamField>
 

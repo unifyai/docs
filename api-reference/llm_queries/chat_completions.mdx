@@ -1,5 +1,5 @@
 ---
-title: 'Chat Completions'
+title: "Chat Completions"
 api: 'POST /v0/chat/completions'
 ---
 OpenAI compatible `/chat/completions` endpoint for LLM inference.
@@ -41,11 +41,11 @@ The total length of input tokens and generated tokens is limited by the model's 
 Up to 4 sequences where the API will stop generating further tokens.
 </ParamField>
 
-<ParamField body="stream" type="boolean"  default={false}>
+<ParamField body="stream" type="boolean"  default="false">
 If set, partial message deltas will be sent. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a `data: [DONE]` message.
 </ParamField>
 
-<ParamField body="temperature" type="number | null"  default={1.0}>
+<ParamField body="temperature" type="number | null"  default="1.0">
 What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
 
 Generally recommended to alter this or `top_p`, but not both.
@@ -117,7 +117,7 @@ Controls which (if any) tool is called by the model. `none` means the model will
 `none` is the default when no tools are present. `auto` is the default if tools are present.
 </ParamField>
 
-<ParamField body="parallel_tool_calls" type="boolean | null"  default={true}>
+<ParamField body="parallel_tool_calls" type="boolean | null"  default="true">
 Whether to enable parallel function calling during tool use.
 </ParamField>
 
@@ -143,7 +143,7 @@ Whether or not to use custom API keys with the specified provider, meaning that 
 Comma-separated list of tags to associate with the corresponding prompt.
 </ParamField>
 
-<ParamField body="drop_params" type="boolean"  default={true}>
+<ParamField body="drop_params" type="boolean"  default="true">
 Whether or not to drop unsupported OpenAI params by the provider you're using
 </ParamField>
 
@@ -151,11 +151,11 @@ Whether or not to drop unsupported OpenAI params by the provider you're using
 A string used to represent the region where the endpoint is accessed. This is only relevant for certain providers like `vertex-ai` and `aws-bedrock`, where the endpoint is being accessed through a specified region.
 </ParamField>
 
-<ParamField body="log_query_body" type="boolean | null"  default={true}>
+<ParamField body="log_query_body" type="boolean | null"  default="true">
 Whether to log the contents of the query json body.
 </ParamField>
 
-<ParamField body="log_response_body" type="boolean | null"  default={true}>
+<ParamField body="log_response_body" type="boolean | null"  default="true">
 Whether to log the contents of the response json body.
 </ParamField>
 
@@ -194,8 +194,8 @@ curl --request POST \
     "response_format": "{ \"type\": \"json_mode\"}",
     "seed": 11,
     "stream_options": [
-        "include_usage",
-        true
+        true,
+        "include_usage"
     ],
     "top_p": 0.5,
     "tool_choice": "{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}",
@@ -218,7 +218,7 @@ url = "https://api.unify.ai/v0/chat/completions"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"messages": [{"content": "Tell me a joke", "role": "user"}], "model": "gpt-4o-mini@openai", "max_tokens": 1024, "stop": ["The End.", " is the answer."], "stream": False, "temperature": 0.9, "frequency_penalty": 1.5, "logit_bias": {"0": 10, "1": -75, "2": 90}, "logprobs": False, "top_logprobs": 15, "n": 15, "presence_penalty": -1.1, "response_format": "{ "type": "json_mode"}", "seed": 11, "stream_options": ["include_usage", True], "top_p": 0.5, "tool_choice": "{"type": "function", "function": {"name": "my_function"}}", "parallel_tool_calls": True, "user": "some_user", "signature": "python", "use_custom_keys": True, "tags": ["user123", "CompanyABC"], "drop_params": True}
+json_input = {"messages": [{"content": "Tell me a joke", "role": "user"}], "model": "gpt-4o-mini@openai", "max_tokens": 1024, "stop": ["The End.", " is the answer."], "stream": False, "temperature": 0.9, "frequency_penalty": 1.5, "logit_bias": {"0": 10, "1": -75, "2": 90}, "logprobs": False, "top_logprobs": 15, "n": 15, "presence_penalty": -1.1, "response_format": "{ "type": "json_mode"}", "seed": 11, "stream_options": [True, "include_usage"], "top_p": 0.5, "tool_choice": "{"type": "function", "function": {"name": "my_function"}}", "parallel_tool_calls": True, "user": "some_user", "signature": "python", "use_custom_keys": True, "tags": ["user123", "CompanyABC"], "drop_params": True}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

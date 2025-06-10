@@ -1,12 +1,12 @@
 ---
-title: 'Create Custom Endpoint'
+title: "Create Custom Endpoint"
 api: 'POST /v0/custom_endpoint'
 ---
 Creates a custom endpoint. This endpoint must either be a fine-tuned model from one
 of the supported providers (`/v0/providers`), in which case the "provider" argument
 must be set accordingly. Otherwise, the endpoint must support the OpenAI
 `/chat/completions` format. To query your custom endpoint, replace your endpoint
-string with `<endpoint_name>@custom` when querying any general custom endpoint. You
+string with `&lt;endpoint_name&gt;@custom` when querying any general custom endpoint. You
 can show all *custom* endpoints by querying `/v0/endpoints` and passing `custom` as
 the `provider` argument.
 

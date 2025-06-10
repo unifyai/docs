@@ -1,5 +1,5 @@
 ---
-title: 'Update Logs'
+title: "Update Logs"
 api: 'PUT /v0/logs'
 ---
 Updates multiple logs with the provided entries. Each entry will be either added
@@ -32,15 +32,15 @@ Name of the project. Required when using filter dict in `logs`. Omit when passin
 Optional context path to update for the logs. Can use '/' for nested contexts (e.g. 'training/batch1'). Can be a string (which will be interpreted with description=None and is_versioned=False) or a ContextCreateRequest object. Required when using filter dict in `logs` if project is not provided.
 </ParamField>
 
-<ParamField body="params" type="object | array"  default={{}}>
+<ParamField body="params" type="object | array"  default="{}">
 Dictionary or list of dictionaries of key-value parameter pairs to add or update in the logs.
 </ParamField>
 
-<ParamField body="entries" type="object | array"  default={{}}>
+<ParamField body="entries" type="object | array"  default="{}">
 Dictionary or list of dictionaries of key-value entry pairs to add or update in the logs. Supports nested path syntax using dot notation for object properties (e.g., 'metadata.author') and bracket notation for array indices (e.g., 'results[0]'). Complex paths like 'results[0].scores.accuracy' are also supported for deep updates.
 </ParamField>
 
-<ParamField body="overwrite" type="boolean"  default={false}>
+<ParamField body="overwrite" type="boolean"  default="false">
 Whether to overwrite existing logs
 </ParamField>
 

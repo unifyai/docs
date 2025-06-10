@@ -1,5 +1,5 @@
 ---
-title: 'Create Context'
+title: "Create Context"
 api: 'POST /v0/project/{project_name}/contexts'
 ---
 Creates a new context within a project. Contexts can be used to organize logs
@@ -33,11 +33,11 @@ Context name, can be nested using '/' (e.g., 'parent/child'). Must contain only 
 Optional description of the context
 </ParamField>
 
-<ParamField body="is_versioned" type="boolean"  default={false}>
+<ParamField body="is_versioned" type="boolean"  default="false">
 Whether the context should be versioned. If True, the context will be versioned and mutable. 
 </ParamField>
 
-<ParamField body="allow_duplicates" type="boolean"  default={true}>
+<ParamField body="allow_duplicates" type="boolean"  default="true">
 Whether duplicate log entries are allowed in this context. If False, attempts to add duplicate logs will be ignored.
 </ParamField>
 
