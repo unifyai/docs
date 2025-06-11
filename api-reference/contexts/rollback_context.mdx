@@ -1,8 +1,8 @@
 ---
-title: "Rename Project"
-api: 'PATCH /v0/project/{project_name}'
+title: "Rollback Context"
+api: 'POST /v0/project/{project_name}/contexts/{context_name}/rollback'
 ---
-Renames a project from `name` to `new_name` in your account.
+Rolls back a context to a specific version.
 
 #### Authorizations
 
@@ -13,41 +13,43 @@ Renames a project from `name` to `new_name` in your account.
 #### Path Parameters
 
 <ParamField query="project_name" type="string" required="true">
-Project name, may contain slashes
+Name of the project to create context in.
+</ParamField>
+
+<ParamField query="context_name" type="string" required="true">
+Name of the context to rollback.
 </ParamField>
 
 #### Body
 
-<ParamField body="name" type="string" required="true">
-A unique, user-defined name used when referencing  the project.
+<ParamField body="version" type="integer | null" >
+
 </ParamField>
 
-<ParamField body="is_versioned" type="boolean"  default="false">
-Whether the project is versioned
+<ParamField body="commit_hash" type="string | null" >
+
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request PATCH \
-  --url 'https://api.unify.ai/v0/project/proj/a' \
+curl --request POST \
+  --url 'https://api.unify.ai/v0/project/my_project/contexts/my_context/rollback' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
-  --data '{
-    "name": "eval-project"
-}'
+  --data '{}'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/proj/a"
+url = "https://api.unify.ai/v0/project/my_project/contexts/my_context/rollback"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"name": "eval-project"}
+json_input = {}
 
-response = requests.request("PATCH", url, json=json_input, headers=headers)
+response = requests.request("POST", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
@@ -57,13 +59,19 @@ print(response.text)
 
 ```json 200
 {
-    "info": "Project renamed successfully!"
+    "info": "Context rolled back successfully!"
 }
 ```
 
 ```json 404
 {
-    "detail": "Project <name> not found."
+    "detail": "Project, context or version not found."
+}
+```
+
+```json 400
+{
+    "detail": "Context is not versioned."
 }
 ```
 
