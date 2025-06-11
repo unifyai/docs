@@ -2988,100 +2988,6 @@
                 }
             }
         },
-        "/v0/project/{project_name}/contexts/{context_name}/rollback": {
-            "post": {
-                "tags": [
-                    "Contexts"
-                ],
-                "summary": "Rollback Context",
-                "description": "Rolls back a context to a specific version.",
-                "operationId": "rollback_context_v0_project__project_name__contexts__context_name__rollback_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to create context in.",
-                            "title": "Project Name"
-                        },
-                        "description": "Name of the project to create context in.",
-                        "example": "my_project"
-                    },
-                    {
-                        "name": "context_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the context to rollback.",
-                            "title": "Context Name"
-                        },
-                        "description": "Name of the context to rollback.",
-                        "example": "my_context"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ContextRollbackRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Context rolled back successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project, Context or Version Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project, context or version not found."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Context is not versioned."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v0/project/{project_name}/contexts/add_logs": {
             "post": {
                 "tags": [
@@ -3452,171 +3358,6 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Artifact <key> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/project/{project_name}/commit": {
-            "post": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Commit Project",
-                "description": "Creates a new version of a project.",
-                "operationId": "commit_project_v0_project__project_name__commit_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Project name, may contain slashes",
-                            "title": "Project Name"
-                        },
-                        "description": "Project name, may contain slashes",
-                        "example": "proj/a"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProjectCommitRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Project committed successfully!",
-                                    "commit_hash": "..."
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <name> not found."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project is not versioned."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/project/{project_name}/rollback": {
-            "post": {
-                "tags": [
-                    "Projects"
-                ],
-                "summary": "Rollback Project",
-                "description": "Rolls back a project to a specific version.",
-                "operationId": "rollback_project_v0_project__project_name__rollback_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Project name, may contain slashes",
-                            "title": "Project Name"
-                        },
-                        "description": "Project name, may contain slashes",
-                        "example": "proj/a"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProjectRollbackRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Project rolled back successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project or Commit Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project or commit not found."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project is not versioned."
                                 }
                             }
                         }
@@ -10589,8 +10330,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -10875,34 +10616,6 @@
                 ],
                 "title": "ContextCreateRequest",
                 "description": "Request model for creating a new context within a project."
-            },
-            "ContextRollbackRequest": {
-                "properties": {
-                    "version": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Version"
-                    },
-                    "commit_hash": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Commit Hash"
-                    }
-                },
-                "type": "object",
-                "title": "ContextRollbackRequest"
             },
             "CreateDerivedEntriesConfig": {
                 "properties": {
@@ -13002,23 +12715,6 @@
                 "type": "object",
                 "title": "PlotTileSchema"
             },
-            "ProjectCommitRequest": {
-                "properties": {
-                    "commit_message": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Commit Message"
-                    }
-                },
-                "type": "object",
-                "title": "ProjectCommitRequest"
-            },
             "ProjectConfig": {
                 "properties": {
                     "name": {
@@ -13030,12 +12726,6 @@
                         "description": "A unique, user-defined name used when referencing  the project.",
                         "example": "eval-project",
                         "pattern_description": "Only letters, numbers, underscores, slashes, and hyphens are allowed"
-                    },
-                    "is_versioned": {
-                        "type": "boolean",
-                        "title": "Is Versioned",
-                        "description": "Whether the project is versioned",
-                        "default": false
                     }
                 },
                 "type": "object",
@@ -13043,19 +12733,6 @@
                     "name"
                 ],
                 "title": "ProjectConfig"
-            },
-            "ProjectRollbackRequest": {
-                "properties": {
-                    "commit_hash": {
-                        "type": "string",
-                        "title": "Commit Hash"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "commit_hash"
-                ],
-                "title": "ProjectRollbackRequest"
             },
             "RechargeCreateSchema": {
                 "properties": {
