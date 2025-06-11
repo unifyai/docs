@@ -1,8 +1,8 @@
 ---
-title: "Rename Project"
-api: 'PATCH /v0/project/{project_name}'
+title: "Rollback Project"
+api: 'POST /v0/project/{project_name}/rollback'
 ---
-Renames a project from `name` to `new_name` in your account.
+Rolls back a project to a specific version.
 
 #### Authorizations
 
@@ -18,36 +18,30 @@ Project name, may contain slashes
 
 #### Body
 
-<ParamField body="name" type="string" required="true">
-A unique, user-defined name used when referencing  the project.
-</ParamField>
+<ParamField body="commit_hash" type="string" required="true">
 
-<ParamField body="is_versioned" type="boolean"  default="false">
-Whether the project is versioned
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request PATCH \
-  --url 'https://api.unify.ai/v0/project/proj/a' \
+curl --request POST \
+  --url 'https://api.unify.ai/v0/project/proj/a/rollback' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
-  --data '{
-    "name": "eval-project"
-}'
+  --data '{}'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/proj/a"
+url = "https://api.unify.ai/v0/project/proj/a/rollback"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"name": "eval-project"}
+json_input = {}
 
-response = requests.request("PATCH", url, json=json_input, headers=headers)
+response = requests.request("POST", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
@@ -57,13 +51,19 @@ print(response.text)
 
 ```json 200
 {
-    "info": "Project renamed successfully!"
+    "info": "Project rolled back successfully!"
 }
 ```
 
 ```json 404
 {
-    "detail": "Project <name> not found."
+    "detail": "Project or commit not found."
+}
+```
+
+```json 400
+{
+    "detail": "Project is not versioned."
 }
 ```
 
