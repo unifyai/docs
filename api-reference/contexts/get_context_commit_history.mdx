@@ -1,9 +1,8 @@
 ---
-title: "Get Contexts"
-api: 'GET /v0/project/{project_name}/contexts'
+title: "Get context commit history"
+api: 'GET /v0/project/{project_name}/contexts/{context_name}/commits'
 ---
-Get a list of contexts within a project.
-Returns information about each context including its versioning status and current version.
+Retrieves the commit history for a versioned context.
 
 #### Authorizations
 
@@ -14,27 +13,25 @@ Returns information about each context including its versioning status and curre
 #### Path Parameters
 
 <ParamField query="project_name" type="string" required="true">
-Name of the project to create context in.
+
 </ParamField>
 
-#### Query Parameters
+<ParamField query="context_name" type="string" required="true">
 
-<ParamField query="prefix" type="string | null" >
-Optional prefix to filter contexts by name
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/project/my_project/contexts?prefix=experiment1/' \
+  --url 'https://api.unify.ai/v0/project/<project_name>/contexts/<context_name>/commits' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/my_project/contexts?prefix=experiment1/"
+url = "https://api.unify.ai/v0/project/<project_name>/contexts/<context_name>/commits"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -47,23 +44,11 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-[
-    {
-        "name": "context1",
-        "description": "description1",
-        "is_versioned": true
-    },
-    {
-        "name": "context2",
-        "description": "description2",
-        "is_versioned": false
-    }
-]
-```
-
-```json 404
 {
-    "detail": "Project not found."
+    "commit_hash": "string",
+    "commit_message": "string | null",
+    "created_at": "string",
+    "type": "string"
 }
 ```
 

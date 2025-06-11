@@ -468,6 +468,9 @@
                             "group": "Projects",
                             "pages": [
                                 "api-reference/projects/delete_project_contexts",
+                                "api-reference/projects/commit_project",
+                                "api-reference/projects/rollback_project",
+                                "api-reference/projects/get_project_commit_history",
                                 "api-reference/projects/get_favorites",
                                 "api-reference/projects/create_favorite",
                                 "api-reference/projects/get_favorite",
@@ -493,10 +496,13 @@
                             "pages": [
                                 "api-reference/contexts/create_context",
                                 "api-reference/contexts/get_contexts",
+                                "api-reference/contexts/get_context_commit_history",
                                 "api-reference/contexts/get_context",
                                 "api-reference/contexts/delete_context",
                                 "api-reference/contexts/add_logs_to_context",
-                                "api-reference/contexts/rename_context"
+                                "api-reference/contexts/rename_context",
+                                "api-reference/contexts/commit_a_context_version",
+                                "api-reference/contexts/rollback_a_context_to_a_version"
                             ]
                         },
                         {
