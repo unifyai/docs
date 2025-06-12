@@ -1,0 +1,82 @@
+---
+title: 'TracerCallCollector'
+---
+
+```python
+class TracerCallCollector
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a2098e0862b3d5c8c4182b8fccd5dcb8894d5122/unify/logging/logs.py#L479)</p>
+
+
+
+### \_\_init\_\_
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a2098e0862b3d5c8c4182b8fccd5dcb8894d5122/unify/logging/logs.py#L480)</p>
+
+```python
+def __init__(self, main_function_name):
+```
+
+
+
+## methods
+
+---
+
+### get\_external\_call\_names
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a2098e0862b3d5c8c4182b8fccd5dcb8894d5122/unify/logging/logs.py#L504)</p>
+
+```python
+def get_external_call_names(self):
+```
+
+
+
+---
+
+### get\_local\_function\_names
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a2098e0862b3d5c8c4182b8fccd5dcb8894d5122/unify/logging/logs.py#L507)</p>
+
+```python
+def get_local_function_names(self):
+```
+
+
+
+---
+
+### visit\_AsyncFunctionDef
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a2098e0862b3d5c8c4182b8fccd5dcb8894d5122/unify/logging/logs.py#L490)</p>
+
+```python
+def visit_AsyncFunctionDef(self, node):
+```
+
+
+
+---
+
+### visit\_Call
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a2098e0862b3d5c8c4182b8fccd5dcb8894d5122/unify/logging/logs.py#L495)</p>
+
+```python
+def visit_Call(self, node):
+```
+
+
+
+---
+
+### visit\_FunctionDef
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a2098e0862b3d5c8c4182b8fccd5dcb8894d5122/unify/logging/logs.py#L485)</p>
+
+```python
+def visit_FunctionDef(self, node):
+```
+

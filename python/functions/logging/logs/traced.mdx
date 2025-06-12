@@ -9,12 +9,14 @@ def traced(
     prune_empty: bool = True,
     span_type: str = "function",
     name: Optional[str] = None,
-    trace_contexts: Optional[List[str]] = None,
-    trace_dirs: Optional[List[str]] = None,
     filter: Optional[Callable[[callable], bool]] = None,
     fn_type: Optional[str] = None,
+    recursive: bool = False,  # Only valid for Functions.
+    depth: Optional[int] = None,
+    skip_modules: Optional[List[ModuleType]] = None,
+    skip_functions: Optional[List[Callable]] = None,
 ):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/fbb548073fb0dc9f0cc0f67e28220011cbf9ec5b/unify/logging/logs.py#L1005)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a2098e0862b3d5c8c4182b8fccd5dcb8894d5122/unify/logging/logs.py#L1262)</p>
 
