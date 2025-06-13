@@ -6,7 +6,7 @@ title: 'create_context'
 def create_context(
     name: str,
     description: str = None,
-    is_versioned: bool = False,
+    is_versioned: bool = True,
     allow_duplicates: bool = True,
     *,
     project: Optional[str] = None,
@@ -14,7 +14,7 @@ def create_context(
 ) -> None:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/a2098e0862b3d5c8c4182b8fccd5dcb8894d5122/unify/logging/utils/contexts.py#L17)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/d0888c8a36ccfa6cf5d613366f51ff4c912e3b96/unify/logging/utils/contexts.py#L17)</p>
 
 Create a context.
 
@@ -22,7 +22,7 @@ Create a context.
 
 - `name` - Name of the context to create.
 - `description` - Description of the context to create.
-- `is_versioned` - Whether the context is versioned.
+- `is_versioned` - Whether the context is tracked via version control.
 - `allow_duplicates` - Whether to allow duplicates in the context.
 - `project` - Name of the project the context belongs to.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
