@@ -1,0 +1,28 @@
+---
+title: 'commit_project'
+---
+
+```python
+def commit_project(
+    name: str,
+    commit_message: str,
+    *,
+    api_key: Optional[str] = None,
+) -> Dict[str, str]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/d0888c8a36ccfa6cf5d613366f51ff4c912e3b96/unify/logging/utils/projects.py#L184)</p>
+
+Creates a commit for the entire project, saving a snapshot of all versioned contexts.
+
+**Arguments**:
+
+- `name` - Name of the project to commit.
+- `commit_message` - A description of the changes being saved.
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+A dictionary containing the new commit_hash.
