@@ -463,7 +463,9 @@
                                 "api-reference/assistants/clone_a_new_voice",
                                 "api-reference/assistants/localize_an_existing_voice",
                                 "api-reference/assistants/delete_a_user's_voice_record_and_from_cartesia_if_applicable",
-                                "api-reference/assistants/upload_an_assistant_profile_photo"
+                                "api-reference/assistants/upload_an_assistant_profile_photo",
+                                "api-reference/assistants/generate_an_assistant_profile_photo_from_text",
+                                "api-reference/assistants/edit_an_assistant_profile_photo_from_text"
                             ]
                         }
                     ]

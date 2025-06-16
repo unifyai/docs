@@ -41,6 +41,14 @@ Whether the context should be versioned. If True, the context will be versioned 
 Whether duplicate log entries are allowed in this context. If False, attempts to add duplicate logs will be ignored.
 </ParamField>
 
+<ParamField body="unique_id_column" type="boolean"  default="false">
+Whether to create a unique, sequential ID for each log in this context.
+</ParamField>
+
+<ParamField body="unique_id_name" type="string"  default="row_id">
+The name of the unique ID column.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL

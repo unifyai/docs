@@ -16,13 +16,15 @@ The context parameter can be:
 An "explicit_types" dictionary can be passed as part of the `entries`.
 If present, any matching key inside this dictionary will override the
 inferred type of that particular entry. The explicit_types dictionary
-can also specify if a field is mutable via a 'mutable' boolean flag:
+can also specify if a field is mutable via a 'mutable' boolean flag
+and if a field is unique via a 'unique' boolean flag:
 
 ```json
 {
     "field_name": {
         "type": "str",
-        "mutable": false  # Makes the field immutable
+        "mutable": false,  # Makes the field immutable
+        "unique": true     # Makes the field unique
     }
 }
 ```
@@ -50,11 +52,11 @@ Optional context path to update for the logs. Can use '/' for nested contexts (e
 </ParamField>
 
 <ParamField body="params" type="object | array"  default="{}">
-Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).
+Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).
 </ParamField>
 
 <ParamField body="entries" type="object | array"  default="{}">
-Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).
+Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).
 </ParamField>
 
 <RequestExample>
