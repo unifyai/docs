@@ -9,6 +9,7 @@ Each field entry contains:
 - data_type: The data type of the field (int, str, etc)
 - field_type: Whether it's an entry, param, or derived_entry
 - mutable: Whether the field can be modified
+- unique: Whether the field enforces uniqueness
 - created_at: When the field was first created
 - artifacts: For derived entries, contains the equation
 
@@ -57,6 +58,7 @@ print(response.text)
         "data_type": "string",
         "field_type": "entry",
         "mutable": "true",
+        "unique": "false",
         "created_at": "2025-02-14T10:00:00Z",
         "artifacts": ""
     }

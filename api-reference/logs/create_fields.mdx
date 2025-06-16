@@ -25,7 +25,7 @@ Optional context path for the fields.
 </ParamField>
 
 <ParamField body="fields" type="object" required="true">
-Dictionary mapping field names to their types (or None if no type is specified).
+Dictionary mapping field names to their type definitions.
 </ParamField>
 
 <RequestExample>
@@ -39,6 +39,10 @@ curl --request POST \
     "project": "eval-project",
     "context": "experiment1/trial1",
     "fields": {
+        "email": {
+            "type": "str",
+            "unique": true
+        },
         "score": "int"
     }
 }'
@@ -51,7 +55,7 @@ url = "https://api.unify.ai/v0/logs/fields"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1", "fields": {"score": "int"}}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "fields": {"email": {"type": "str", "unique": True}, "score": "int"}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

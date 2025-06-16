@@ -2343,6 +2343,104 @@
                 ]
             }
         },
+        "/v0/assistant/photo/generate": {
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Assistants",
+                    "Storage"
+                ],
+                "summary": "Generate an assistant profile photo from text",
+                "description": "Generates a new photo using a text prompt via Replicate and returns the image URL. This action will deduct credits.",
+                "operationId": "generate_assistant_photo_v0_assistant_photo_generate_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PhotoGenerateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_str_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/assistant/photo/edit": {
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Assistants",
+                    "Storage"
+                ],
+                "summary": "Edit an assistant profile photo from text",
+                "description": "Edits a photo using a text prompt and an input image (URL or file) via Replicate, and returns the new image URL. This action will deduct credits.",
+                "operationId": "edit_assistant_photo_v0_assistant_photo_edit_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_edit_assistant_photo_v0_assistant_photo_edit_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_str_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/project/{project}/contexts/{context_name}/artifacts": {
             "post": {
                 "tags": [
@@ -4385,7 +4483,7 @@
                     "Logs"
                 ],
                 "summary": "Create Logs",
-                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nIf a context is specified and it is versioned, all logs will be versioned\nand mutable. The context version will be incremented automatically when\nlogs are added, updated, or removed.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties\n\nAn \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry. The explicit_types dictionary\ncan also specify if a field is mutable via a 'mutable' boolean flag:\n\n```json\n{\n    \"field_name\": {\n        \"type\": \"str\",\n        \"mutable\": false  # Makes the field immutable\n    }\n}\n```\n\nBy default, all fields are immmutable unless specified otherwise.\nOnce a field is marked as mutable, only then can it be modified through\nthe update endpoint.\n\nThis method returns the ids of the new stored logs.",
+                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nIf a context is specified and it is versioned, all logs will be versioned\nand mutable. The context version will be incremented automatically when\nlogs are added, updated, or removed.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties\n\nAn \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry. The explicit_types dictionary\ncan also specify if a field is mutable via a 'mutable' boolean flag\nand if a field is unique via a 'unique' boolean flag:\n\n```json\n{\n    \"field_name\": {\n        \"type\": \"str\",\n        \"mutable\": false,  # Makes the field immutable\n        \"unique\": true     # Makes the field unique\n    }\n}\n```\n\nBy default, all fields are immmutable unless specified otherwise.\nOnce a field is marked as mutable, only then can it be modified through\nthe update endpoint.\n\nThis method returns the ids of the new stored logs.",
                 "operationId": "create_logs_v0_logs_post",
                 "security": [
                     {
@@ -5860,7 +5958,7 @@
                     "Logs"
                 ],
                 "summary": "Get Fields",
-                "description": "Returns a dictionary of fields names and their types for the specified project.\nIf a context is provided, returns only fields associated with that context.\n\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation",
+                "description": "Returns a dictionary of fields names and their types for the specified project.\nIf a context is provided, returns only fields associated with that context.\n\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- unique: Whether the field enforces uniqueness\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation",
                 "operationId": "get_fields_v0_logs_fields_get",
                 "security": [
                     {
@@ -5912,6 +6010,7 @@
                                         "data_type": "string",
                                         "field_type": "entry",
                                         "mutable": "true",
+                                        "unique": "false",
                                         "created_at": "2025-02-14T10:00:00Z",
                                         "artifacts": ""
                                     }
@@ -10422,6 +10521,57 @@
                 ],
                 "title": "Body_clone_voice_endpoint_v0_assistant_voice_clone_post"
             },
+            "Body_edit_assistant_photo_v0_assistant_photo_edit_post": {
+                "properties": {
+                    "prompt": {
+                        "type": "string",
+                        "title": "Prompt"
+                    },
+                    "input_image_url": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Input Image Url"
+                    },
+                    "input_image_file": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "binary"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Input Image File"
+                    },
+                    "aspect_ratio": {
+                        "type": "string",
+                        "title": "Aspect Ratio",
+                        "default": "match_input_image"
+                    },
+                    "output_format": {
+                        "type": "string",
+                        "title": "Output Format",
+                        "default": "jpg"
+                    },
+                    "safety_tolerance": {
+                        "type": "number",
+                        "title": "Safety Tolerance",
+                        "default": 2.0
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "prompt"
+                ],
+                "title": "Body_edit_assistant_photo_v0_assistant_photo_edit_post"
+            },
             "Body_log_query_v0_queries_post": {
                 "properties": {
                     "endpoint": {
@@ -10737,8 +10887,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -11070,6 +11220,18 @@
                         "description": "Whether duplicate log entries are allowed in this context. If False, attempts to add duplicate logs will be ignored.",
                         "default": true,
                         "example": true
+                    },
+                    "unique_id_column": {
+                        "type": "boolean",
+                        "title": "Unique Id Column",
+                        "description": "Whether to create a unique, sequential ID for each log in this context.",
+                        "default": false
+                    },
+                    "unique_id_name": {
+                        "type": "string",
+                        "title": "Unique Id Name",
+                        "description": "The name of the unique ID column.",
+                        "default": "row_id"
                     }
                 },
                 "type": "object",
@@ -11198,6 +11360,12 @@
                         "additionalProperties": {
                             "anyOf": [
                                 {
+                                    "$ref": "#/components/schemas/StandardFieldDefinition"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/EnumType"
+                                },
+                                {
                                     "type": "string"
                                 },
                                 {
@@ -11207,8 +11375,12 @@
                         },
                         "type": "object",
                         "title": "Fields",
-                        "description": "Dictionary mapping field names to their types (or None if no type is specified).",
+                        "description": "Dictionary mapping field names to their type definitions.",
                         "example": {
+                            "email": {
+                                "type": "str",
+                                "unique": true
+                            },
                             "score": "int"
                         }
                     }
@@ -11298,7 +11470,7 @@
                             }
                         ],
                         "title": "Params",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Parameters will be automatically versioned based on their values. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).",
                         "default": {},
                         "examples": [
                             {
@@ -11318,7 +11490,8 @@
                                     },
                                     "system-prompt": {
                                         "mutable": true,
-                                        "type": "str"
+                                        "type": "str",
+                                        "unique": false
                                     }
                                 },
                                 "function_definition": "...",
@@ -11347,14 +11520,15 @@
                             }
                         ],
                         "title": "Entries",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).",
                         "default": {},
                         "examples": [
                             {
                                 "explicit_types": {
                                     "input": {
                                         "mutable": true,
-                                        "type": "Image"
+                                        "type": "Image",
+                                        "unique": true
                                     },
                                     "status": {
                                         "restrict": true,
@@ -12036,6 +12210,46 @@
                 },
                 "type": "object",
                 "title": "EditorTileSchema"
+            },
+            "EnumType": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "enum",
+                        "title": "Type"
+                    },
+                    "values": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Values"
+                    },
+                    "restrict": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Restrict",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type"
+                ],
+                "title": "EnumType"
             },
             "FavoriteProjectIn": {
                 "properties": {
@@ -13052,6 +13266,85 @@
                 "title": "LegacyInterfaceConfig",
                 "description": "Legacy Interface configuration schema for backward compatibility"
             },
+            "PhotoGenerateRequest": {
+                "properties": {
+                    "prompt": {
+                        "type": "string",
+                        "title": "Prompt",
+                        "description": "Text prompt for image generation."
+                    },
+                    "aspect_ratio": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Aspect Ratio",
+                        "description": "Aspect ratio of the generated image.",
+                        "default": "1:1"
+                    },
+                    "output_format": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Output Format",
+                        "description": "Format of the output image.",
+                        "default": "webp"
+                    },
+                    "output_quality": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Output Quality",
+                        "description": "Quality of the output image (1-100).",
+                        "default": 80
+                    },
+                    "safety_tolerance": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Safety Tolerance",
+                        "description": "Safety tolerance for generation.",
+                        "default": 2.0
+                    },
+                    "prompt_upsampling": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Prompt Upsampling",
+                        "description": "Whether to use prompt upsampling.",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "prompt"
+                ],
+                "title": "PhotoGenerateRequest"
+            },
             "PlotTileSchema": {
                 "properties": {
                     "id": {
@@ -13437,6 +13730,29 @@
                     "new_field_name"
                 ],
                 "title": "RenameFieldRequest"
+            },
+            "StandardFieldDefinition": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "title": "Type"
+                    },
+                    "mutable": {
+                        "type": "boolean",
+                        "title": "Mutable",
+                        "default": false
+                    },
+                    "unique": {
+                        "type": "boolean",
+                        "title": "Unique",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type"
+                ],
+                "title": "StandardFieldDefinition"
             },
             "TabSchema": {
                 "properties": {
