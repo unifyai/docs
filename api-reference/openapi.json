@@ -5622,7 +5622,7 @@
                     "Logs"
                 ],
                 "summary": "Get Fields",
-                "description": "Returns a dictionary of fields names and their types for the specified project.\nIf a context is provided, returns only fields associated with that context.\n\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- unique: Whether the field enforces uniqueness\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation",
+                "description": "Returns a dictionary of fields names and their types for the specified project.\nIf a context is provided, returns only fields associated with that context.\n\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- unique: Whether the field enforces uniqueness\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation\n- description: The description of the field",
                 "operationId": "get_fields_v0_logs_fields_get",
                 "security": [
                     {
@@ -5676,7 +5676,8 @@
                                         "mutable": "true",
                                         "unique": "false",
                                         "created_at": "2025-02-14T10:00:00Z",
-                                        "artifacts": ""
+                                        "artifacts": "",
+                                        "description": "this field is a dummy field"
                                     }
                                 }
                             }
