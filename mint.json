@@ -489,16 +489,9 @@
                                 "api-reference/projects/create_project",
                                 "api-reference/projects/delete_project_logs",
                                 "api-reference/projects/delete_project",
-                                "api-reference/projects/rename_project",
+                                "api-reference/projects/update_project",
+                                "api-reference/projects/get_project",
                                 "api-reference/projects/list_projects"
-                            ]
-                        },
-                        {
-                            "group": "Project Artifacts",
-                            "pages": [
-                                "api-reference/project_artifacts/create_artifacts",
-                                "api-reference/project_artifacts/list_artifacts",
-                                "api-reference/project_artifacts/delete_artifact"
                             ]
                         },
                         {
@@ -513,14 +506,6 @@
                                 "api-reference/contexts/rename_context",
                                 "api-reference/contexts/commit_a_context_version",
                                 "api-reference/contexts/rollback_a_context_to_a_version"
-                            ]
-                        },
-                        {
-                            "group": "Context Artifacts",
-                            "pages": [
-                                "api-reference/context_artifacts/create_context_artifacts",
-                                "api-reference/context_artifacts/list_context_artifacts",
-                                "api-reference/context_artifacts/delete_context_artifact"
                             ]
                         },
                         {

@@ -1,8 +1,8 @@
 ---
-title: "List Context Artifacts"
-api: 'GET /v0/project/{project}/contexts/{context_name}/artifacts'
+title: "Get Project"
+api: 'GET /v0/project/{project_name}'
 ---
-Returns the key-value pairs of all artifacts in a context.
+Returns detailed information about a specific project.
 
 #### Authorizations
 
@@ -12,26 +12,22 @@ Returns the key-value pairs of all artifacts in a context.
 
 #### Path Parameters
 
-<ParamField query="project" type="string" required="true">
-Name of the project containing the context.
-</ParamField>
-
-<ParamField query="context_name" type="string" required="true">
-Name of the context to list artifacts from.
+<ParamField query="project_name" type="string" required="true">
+Project name, may contain slashes
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/project/eval-project/contexts/training/artifacts' \
+  --url 'https://api.unify.ai/v0/project/proj/a' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/eval-project/contexts/training/artifacts"
+url = "https://api.unify.ai/v0/project/proj/a"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -45,14 +41,17 @@ print(response.text)
 
 ```json 200
 {
-    "artifact_1": "value_1",
-    "artifact_2": "value_2"
+    "name": "my-project",
+    "description": "A sample project for evaluation",
+    "is_versioned": true,
+    "created_at": "2023-01-01T00:00:00Z",
+    "updated_at": "2023-01-02T00:00:00Z"
 }
 ```
 
 ```json 404
 {
-    "detail": "Project <project> or context <context> not found."
+    "detail": "Project <name> not found."
 }
 ```
 
