@@ -2015,8 +2015,8 @@
                     "Assistants",
                     "Voices"
                 ],
-                "summary": "List all voices for the user and global presets",
-                "description": "Returns a list of all voices created or registered by the user, and all globally registered preset voices.",
+                "summary": "List voices",
+                "description": "Returns a list of all assistant voices created, and all globally registered preset voices.",
                 "operationId": "list_voices_v0_assistant_voice_get",
                 "responses": {
                     "200": {
@@ -2069,8 +2069,8 @@
                     "Assistants",
                     "Voices"
                 ],
-                "summary": "Register an existing Cartesia voice",
-                "description": "Registers an existing Cartesia voice (e.g., a preset) in the Orchestra DB. The voice must already exist in Cartesia.",
+                "summary": "Register voice",
+                "description": "Register a preset assistant voice.",
                 "operationId": "register_cartesia_voice_v0_assistant_voice_post",
                 "requestBody": {
                     "content": {
@@ -2142,8 +2142,8 @@
                     "Assistants",
                     "Voices"
                 ],
-                "summary": "Clone a new voice",
-                "description": "Clones a new voice using an audio file, registers it with Cartesia, and saves it to the database.",
+                "summary": "Clone voice",
+                "description": "Create a new assistant voice by cloning a voice from an audio file.",
                 "operationId": "clone_voice_endpoint_v0_assistant_voice_clone_post",
                 "requestBody": {
                     "content": {
@@ -2190,8 +2190,8 @@
                     "Assistants",
                     "Voices"
                 ],
-                "summary": "Localize an existing voice",
-                "description": "Localizes an existing Cartesia voice to a new language, registers the new version with Cartesia, and saves it to the database.",
+                "summary": "Localize voice",
+                "description": "Create a new assistant voice by localizing an existing voice to a new language.",
                 "operationId": "localize_voice_endpoint_v0_assistant_voice_localize_post",
                 "requestBody": {
                     "content": {
@@ -2238,8 +2238,8 @@
                     "Assistants",
                     "Voices"
                 ],
-                "summary": "Delete a user's voice record and from Cartesia if applicable",
-                "description": "Deletes a specific voice record by its Cartesia ID for the authenticated user. If the voice is not a preset, it will also be deleted from Cartesia.",
+                "summary": "Delete voice",
+                "description": "Deletes a specific assistant voice.",
                 "operationId": "delete_voice_v0_assistant_voice__voice_id__delete",
                 "security": [
                     {
@@ -2301,8 +2301,8 @@
                     "Assistants",
                     "Storage"
                 ],
-                "summary": "Upload an assistant profile photo",
-                "description": "Uploads a profile photo for an assistant to GCS and returns the GCS URL.",
+                "summary": "Upload photo",
+                "description": "Uploads a profile photo for an assistant and return the storage URL.",
                 "operationId": "upload_assistant_photo_v0_assistant_photo_upload_post",
                 "requestBody": {
                     "content": {
@@ -2350,8 +2350,8 @@
                     "Assistants",
                     "Storage"
                 ],
-                "summary": "Generate an assistant profile photo from text",
-                "description": "Generates a new photo using a text prompt via Replicate and returns the image URL. This action will deduct credits.",
+                "summary": "Generate photo",
+                "description": "Generates a new photo using a text prompt and returns the image URL. This action costs credits.",
                 "operationId": "generate_assistant_photo_v0_assistant_photo_generate_post",
                 "requestBody": {
                     "content": {
@@ -2399,8 +2399,8 @@
                     "Assistants",
                     "Storage"
                 ],
-                "summary": "Edit an assistant profile photo from text",
-                "description": "Edits a photo using a text prompt and an input image (URL or file) via Replicate, and returns the new image URL. This action will deduct credits.",
+                "summary": "Edit photo",
+                "description": "Edits a photo using a text prompt and an input image (URL or file), and returns the image URL. This action costs credits.",
                 "operationId": "edit_assistant_photo_v0_assistant_photo_edit_post",
                 "requestBody": {
                     "content": {
@@ -2411,6 +2411,55 @@
                         }
                     },
                     "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_str_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/assistant/photo/animate": {
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Assistants",
+                    "Storage",
+                    "Video"
+                ],
+                "summary": "Animate photo",
+                "description": "Generates an animated video of the assistant using an input image and audio. Inputs can be URLs or file uploads. This action costs credits.",
+                "operationId": "animate_video_endpoint_v0_assistant_photo_animate_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_animate_video_endpoint_v0_assistant_photo_animate_post"
+                            }
+                        }
+                    }
                 },
                 "responses": {
                     "201": {
@@ -10485,6 +10534,117 @@
                 "type": "object",
                 "title": "AssistantUpdate",
                 "description": "Schema for updating an existing assistant.\nOnly includes fields that can be updated."
+            },
+            "Body_animate_video_endpoint_v0_assistant_photo_animate_post": {
+                "properties": {
+                    "image_url": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Image Url"
+                    },
+                    "image_file": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "binary"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Image File"
+                    },
+                    "audio_url": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Audio Url"
+                    },
+                    "audio_file": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "binary"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Audio File"
+                    },
+                    "seed": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Seed"
+                    },
+                    "dynamic_scale": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dynamic Scale",
+                        "default": 1.0
+                    },
+                    "min_resolution": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Min Resolution",
+                        "default": 512
+                    },
+                    "inference_steps": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Inference Steps",
+                        "default": 25
+                    },
+                    "keep_resolution": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Keep Resolution",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "title": "Body_animate_video_endpoint_v0_assistant_photo_animate_post"
             },
             "Body_clone_voice_endpoint_v0_assistant_voice_clone_post": {
                 "properties": {

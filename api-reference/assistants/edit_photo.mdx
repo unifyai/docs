@@ -1,8 +1,8 @@
 ---
-title: "Clone a new voice"
-api: 'POST /v0/assistant/voice/clone'
+title: "Edit photo"
+api: 'POST /v0/assistant/photo/edit'
 ---
-Clones a new voice using an audio file, registers it with Cartesia, and saves it to the database.
+Edits a photo using a text prompt and an input image (URL or file), and returns the image URL. This action costs credits.
 
 #### Authorizations
 
@@ -12,19 +12,27 @@ Clones a new voice using an audio file, registers it with Cartesia, and saves it
 
 #### Body
 
-<ParamField body="name" type="string" required="true">
+<ParamField body="prompt" type="string" required="true">
 
 </ParamField>
 
-<ParamField body="language" type="string" required="true">
+<ParamField body="input_image_url" type="string | null" >
 
 </ParamField>
 
-<ParamField body="description" type="string | null" >
+<ParamField body="input_image_file" type="string | null" >
 
 </ParamField>
 
-<ParamField body="file" type="binary" required="true">
+<ParamField body="aspect_ratio" type="string"  default="match_input_image">
+
+</ParamField>
+
+<ParamField body="output_format" type="string"  default="jpg">
+
+</ParamField>
+
+<ParamField body="safety_tolerance" type="number"  default="2.0">
 
 </ParamField>
 
@@ -32,24 +40,24 @@ Clones a new voice using an audio file, registers it with Cartesia, and saves it
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/assistant/voice/clone' \
+  --url 'https://api.unify.ai/v0/assistant/photo/edit' \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: multipart/form-data' \
-  --form 'file=@/path/to/your/file.ext'
+  --form 'input_image_file=@/path/to/your/file.ext'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/assistant/voice/clone"
+url = "https://api.unify.ai/v0/assistant/photo/edit"
 
 headers = {"Authorization": "Bearer <token>"}
 
 data = {}
 
 file_path_0 = "/path/to/your/file.ext"
-# Optional: Include file if needed
-# files["file"] = open(file_path_0, "rb")
+# Optional: Include input_image_file if needed
+# files["input_image_file"] = open(file_path_0, "rb")
 files = {}
 response = requests.request("POST", url, files=files, data=data, headers=headers)
 
@@ -61,7 +69,7 @@ print(response.text)
 
 ```json 201
 {
-    "info": "object"
+    "info": "string"
 }
 ```
 
