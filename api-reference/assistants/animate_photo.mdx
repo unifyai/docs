@@ -1,0 +1,98 @@
+---
+title: "Animate photo"
+api: 'POST /v0/assistant/photo/animate'
+---
+Generates an animated video of the assistant using an input image and audio. Inputs can be URLs or file uploads. This action costs credits.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="image_url" type="string | null" >
+
+</ParamField>
+
+<ParamField body="image_file" type="string | null" >
+
+</ParamField>
+
+<ParamField body="audio_url" type="string | null" >
+
+</ParamField>
+
+<ParamField body="audio_file" type="string | null" >
+
+</ParamField>
+
+<ParamField body="seed" type="integer | null" >
+
+</ParamField>
+
+<ParamField body="dynamic_scale" type="number | null"  default="1.0">
+
+</ParamField>
+
+<ParamField body="min_resolution" type="integer | null"  default="512">
+
+</ParamField>
+
+<ParamField body="inference_steps" type="integer | null"  default="25">
+
+</ParamField>
+
+<ParamField body="keep_resolution" type="boolean | null"  default="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/assistant/photo/animate' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: multipart/form-data' \
+
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/photo/animate"
+
+headers = {"Authorization": "Bearer <token>"}
+
+data = {}
+
+response = requests.request("POST", url, data=data, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "info": "string"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
