@@ -2879,12 +2879,18 @@
                                     {
                                         "name": "context1",
                                         "description": "description1",
-                                        "is_versioned": true
+                                        "is_versioned": true,
+                                        "allow_duplicates": true,
+                                        "unique_id_column": false,
+                                        "unique_id_name": "row_id"
                                     },
                                     {
                                         "name": "context2",
                                         "description": "description2",
-                                        "is_versioned": false
+                                        "is_versioned": false,
+                                        "allow_duplicates": true,
+                                        "unique_id_column": false,
+                                        "unique_id_name": "my_id"
                                     }
                                 ]
                             }
@@ -3082,7 +3088,10 @@
                                 "example": {
                                     "name": "context1",
                                     "description": "description1",
-                                    "is_versioned": true
+                                    "is_versioned": true,
+                                    "allow_duplicates": true,
+                                    "unique_id_column": false,
+                                    "unique_id_name": "row_id"
                                 }
                             }
                         }
@@ -11047,8 +11056,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
