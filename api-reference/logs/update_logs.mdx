@@ -57,6 +57,7 @@ curl --request PUT \
     "params": {
         "explicit_types": {
             "category": {
+                "description": "Task category",
                 "restrict": false,
                 "type": "enum",
                 "values": [
@@ -69,6 +70,7 @@ curl --request PUT \
                 "type": "enum"
             },
             "system-prompt": {
+                "description": "System prompt for the model",
                 "mutable": true,
                 "type": "str"
             }
@@ -79,6 +81,7 @@ curl --request PUT \
     "entries": {
         "explicit_types": {
             "input": {
+                "description": "Input data for processing",
                 "mutable": true,
                 "type": "Image"
             },
@@ -86,6 +89,7 @@ curl --request PUT \
                 "type": "enum"
             },
             "status": {
+                "description": "Current processing status",
                 "restrict": true,
                 "type": "enum",
                 "values": [
@@ -109,7 +113,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1", "params": {"explicit_types": {"category": {"restrict": False, "type": "enum", "values": ["A", "B", "C"]}, "priority": {"type": "enum"}, "system-prompt": {"mutable": True, "type": "str"}}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": {"mutable": True, "type": "Image"}, "label": {"type": "enum"}, "status": {"restrict": True, "type": "enum", "values": ["pending", "completed", "failed"]}}, "input": "...", "score-test-1": "..."}, "overwrite": False}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "params": {"explicit_types": {"category": {"description": "Task category", "restrict": False, "type": "enum", "values": ["A", "B", "C"]}, "priority": {"type": "enum"}, "system-prompt": {"description": "System prompt for the model", "mutable": True, "type": "str"}}, "function_definition": "...", "system-prompt": "..."}, "entries": {"explicit_types": {"input": {"description": "Input data for processing", "mutable": True, "type": "Image"}, "label": {"type": "enum"}, "status": {"description": "Current processing status", "restrict": True, "type": "enum", "values": ["pending", "completed", "failed"]}}, "input": "...", "score-test-1": "..."}, "overwrite": False}
 
 response = requests.request("PUT", url, json=json_input, headers=headers)
 

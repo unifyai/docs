@@ -2490,249 +2490,6 @@
                 ]
             }
         },
-        "/v0/project/{project}/contexts/{context_name}/artifacts": {
-            "post": {
-                "tags": [
-                    "Context Artifacts"
-                ],
-                "summary": "Create Context Artifacts",
-                "description": "Creates one or more artifacts associated to a context within a project.",
-                "operationId": "create_context_artifacts_v0_project__project__contexts__context_name__artifacts_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project the context belongs to.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project the context belongs to.",
-                        "example": "eval-project"
-                    },
-                    {
-                        "name": "context_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the context to create artifacts in.",
-                            "title": "Context Name"
-                        },
-                        "description": "Name of the context to create artifacts in.",
-                        "example": "experiment1/trial1"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ContextArtifactCreateRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Context artifact(s) created successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project or Context Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> or context <context> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Context Artifacts"
-                ],
-                "summary": "List Context Artifacts",
-                "description": "Returns the key-value pairs of all artifacts in a context.",
-                "operationId": "list_context_artifacts_v0_project__project__contexts__context_name__artifacts_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project containing the context.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project containing the context.",
-                        "example": "eval-project"
-                    },
-                    {
-                        "name": "context_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the context to list artifacts from.",
-                            "title": "Context Name"
-                        },
-                        "description": "Name of the context to list artifacts from.",
-                        "example": "training"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "artifact_1": "value_1",
-                                    "artifact_2": "value_2"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project or Context Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> or context <context> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/project/{project}/contexts/{context}/artifacts/{key}": {
-            "delete": {
-                "tags": [
-                    "Context Artifacts"
-                ],
-                "summary": "Delete Context Artifact",
-                "description": "Deletes an artifact from a context within a project.",
-                "operationId": "delete_context_artifact_v0_project__project__contexts__context__artifacts__key__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project containing the context.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project containing the context.",
-                        "example": "eval-project"
-                    },
-                    {
-                        "name": "context",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the context to delete an artifact from.",
-                            "title": "Context"
-                        },
-                        "description": "Name of the context to delete an artifact from.",
-                        "example": "training"
-                    },
-                    {
-                        "name": "key",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Key of the artifact to delete.",
-                            "title": "Key"
-                        },
-                        "description": "Key of the artifact to delete.",
-                        "example": "context-description"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Context artifact deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project, Context, or Artifact Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project>, context <context>, or artifact <key> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v0/project/{project_name}/contexts": {
             "post": {
                 "tags": [
@@ -3501,223 +3258,6 @@
                 }
             }
         },
-        "/v0/project/{project}/artifacts": {
-            "post": {
-                "tags": [
-                    "Project Artifacts"
-                ],
-                "summary": "Create Artifacts",
-                "description": "Creates one or more artifacts associated to a project. Artifacts are\nproject-level metadata that don't depend on other variables.",
-                "operationId": "create_artifacts_v0_project__project__artifacts_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project the artifacts belong to.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project the artifacts belong to.",
-                        "example": "eval-project"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ArtifactConfig"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Artifact(s) created successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Project Artifacts"
-                ],
-                "summary": "List Artifacts",
-                "description": "Returns the key-value pairs of all artifacts in a project.",
-                "operationId": "list_artifacts_v0_project__project__artifacts_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to delete an artifact from.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project to delete an artifact from.",
-                        "example": "eval-project"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "artifact_1": "value_1",
-                                    "artifact_2": "value_2"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/project/{project}/artifacts/{key}": {
-            "delete": {
-                "tags": [
-                    "Project Artifacts"
-                ],
-                "summary": "Delete Artifact",
-                "description": "Deletes an artifact from a project.",
-                "operationId": "delete_artifact_v0_project__project__artifacts__key__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Name of the project to delete an artifact from.",
-                            "title": "Project"
-                        },
-                        "description": "Name of the project to delete an artifact from.",
-                        "example": "eval-project"
-                    },
-                    {
-                        "name": "key",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Key of the artifact to delete.",
-                            "title": "Key"
-                        },
-                        "description": "Key of the artifact to delete.",
-                        "example": "project-description"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Artifact deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "4041": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> not found."
-                                }
-                            }
-                        }
-                    },
-                    "4042": {
-                        "description": "Artifact Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Artifact <key> not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v0/project/{project_name}/commit": {
             "post": {
                 "tags": [
@@ -4297,8 +3837,8 @@
                         "description": "Validation Error",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                "example": {
+                                    "detail": "Description must be 256 characters or less."
                                 }
                             }
                         }
@@ -4438,9 +3978,9 @@
                 "tags": [
                     "Projects"
                 ],
-                "summary": "Rename Project",
-                "description": "Renames a project from `name` to `new_name` in your account.",
-                "operationId": "rename_project_v0_project__project_name__patch",
+                "summary": "Update Project",
+                "description": "Updates a project's name and/or description in your account.",
+                "operationId": "update_project_v0_project__project_name__patch",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -4465,7 +4005,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ProjectConfig"
+                                "$ref": "#/components/schemas/ProjectUpdate"
                             }
                         }
                     }
@@ -4477,7 +4017,73 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "info": "Project renamed successfully!"
+                                    "info": "Project updated successfully!"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <name> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Description must be 256 characters or less."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get Project",
+                "description": "Returns detailed information about a specific project.",
+                "operationId": "get_project_v0_project__project_name__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Project name, may contain slashes",
+                            "title": "Project Name"
+                        },
+                        "description": "Project name, may contain slashes",
+                        "example": "proj/a"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProjectOut"
+                                },
+                                "example": {
+                                    "name": "my-project",
+                                    "description": "A sample project for evaluation",
+                                    "is_versioned": true,
+                                    "created_at": "2023-01-01T00:00:00Z",
+                                    "updated_at": "2023-01-02T00:00:00Z"
                                 }
                             }
                         }
@@ -9980,24 +9586,6 @@
                 "title": "AddLogsToContextRequest",
                 "description": "Request model for adding existing logs to a context."
             },
-            "ArtifactConfig": {
-                "properties": {
-                    "artifacts": {
-                        "type": "object",
-                        "title": "Artifacts",
-                        "description": "Dictionary containing one or more key:value pairs that will be stored as artifacts within a project.",
-                        "example": {
-                            "dataset": "high-jump-data",
-                            "world-record": 2.45
-                        }
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "artifacts"
-                ],
-                "title": "ArtifactConfig"
-            },
             "AssistantCreate": {
                 "properties": {
                     "first_name": {
@@ -11056,8 +10644,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -11280,25 +10868,6 @@
                 ],
                 "title": "ChatCompletionResponse",
                 "description": "Response model for chat completion based language model.\n\nAttributes:\n    model (str): The model identifier.\n    created (int): Timestamp indicating when the response was created.\n    id (str): Identifier for the completion response.\n    object (str): The type of object, defaults to \"chat.completion\".\n    usage (dict): Usage statistics or additional information.\n    choices (List[Dict]): List of completion choices."
-            },
-            "ContextArtifactCreateRequest": {
-                "properties": {
-                    "artifacts": {
-                        "type": "object",
-                        "title": "Artifacts",
-                        "description": "Dictionary containing one or more key:value pairs that will be stored as artifacts within a project.",
-                        "example": {
-                            "dataset": "high-jump-data",
-                            "world-record": 2.45
-                        }
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "artifacts"
-                ],
-                "title": "ContextArtifactCreateRequest",
-                "description": "Request model for creating a new context artifact within a context."
             },
             "ContextCommit": {
                 "properties": {
@@ -11547,6 +11116,7 @@
                         "description": "Dictionary mapping field names to their type definitions.",
                         "example": {
                             "email": {
+                                "description": "User email address",
                                 "type": "str",
                                 "unique": true
                             },
@@ -11645,6 +11215,7 @@
                             {
                                 "explicit_types": {
                                     "category": {
+                                        "description": "Classification category",
                                         "restrict": true,
                                         "type": "enum",
                                         "values": [
@@ -11658,6 +11229,7 @@
                                         "type": "enum"
                                     },
                                     "system-prompt": {
+                                        "description": "The system prompt used for generation",
                                         "mutable": true,
                                         "type": "str",
                                         "unique": false
@@ -11695,11 +11267,13 @@
                             {
                                 "explicit_types": {
                                     "input": {
+                                        "description": "Input image for processing",
                                         "mutable": true,
                                         "type": "Image",
                                         "unique": true
                                     },
                                     "status": {
+                                        "description": "Processing status",
                                         "restrict": true,
                                         "type": "enum",
                                         "values": [
@@ -12412,6 +11986,19 @@
                         ],
                         "title": "Restrict",
                         "default": false
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 256
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description for the enum field type"
                     }
                 },
                 "type": "object",
@@ -13715,6 +13302,19 @@
                         "title": "Is Versioned",
                         "description": "Whether the project is versioned",
                         "default": false
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 256
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description of the project"
                     }
                 },
                 "type": "object",
@@ -13722,6 +13322,65 @@
                     "name"
                 ],
                 "title": "ProjectConfig"
+            },
+            "ProjectOut": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "The name of the project"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Description of the project"
+                    },
+                    "is_versioned": {
+                        "type": "boolean",
+                        "title": "Is Versioned",
+                        "description": "Whether the project is versioned"
+                    },
+                    "created_at": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Created At",
+                        "description": "When the project was created"
+                    },
+                    "updated_at": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Updated At",
+                        "description": "When the project was last updated"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "is_versioned",
+                    "created_at",
+                    "updated_at"
+                ],
+                "title": "ProjectOut",
+                "description": "Response model for detailed project data."
             },
             "ProjectRollbackRequest": {
                 "properties": {
@@ -13735,6 +13394,56 @@
                     "commit_hash"
                 ],
                 "title": "ProjectRollbackRequest"
+            },
+            "ProjectUpdate": {
+                "properties": {
+                    "name": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 255,
+                                "minLength": 1,
+                                "pattern": "^[a-zA-Z0-9_\\-/]+$"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "pattern": "^[a-zA-Z0-9_\\-/]+$",
+                        "title": "Name",
+                        "description": "A unique, user-defined name used when referencing  the project.",
+                        "example": "eval-project",
+                        "pattern_description": "Only letters, numbers, underscores, slashes, and hyphens are allowed"
+                    },
+                    "is_versioned": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Is Versioned",
+                        "description": "Whether the project is versioned"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 256
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description of the project"
+                    }
+                },
+                "type": "object",
+                "title": "ProjectUpdate",
+                "description": "Request model for updating a project."
             },
             "RechargeCreateSchema": {
                 "properties": {
@@ -13915,6 +13624,19 @@
                         "type": "boolean",
                         "title": "Unique",
                         "default": false
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 256
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description for the field definition"
                     }
                 },
                 "type": "object",
@@ -14732,6 +14454,7 @@
                         "example": {
                             "explicit_types": {
                                 "category": {
+                                    "description": "Task category",
                                     "restrict": false,
                                     "type": "enum",
                                     "values": [
@@ -14744,6 +14467,7 @@
                                     "type": "enum"
                                 },
                                 "system-prompt": {
+                                    "description": "System prompt for the model",
                                     "mutable": true,
                                     "type": "str"
                                 }
@@ -14770,6 +14494,7 @@
                         "example": {
                             "explicit_types": {
                                 "input": {
+                                    "description": "Input data for processing",
                                     "mutable": true,
                                     "type": "Image"
                                 },
@@ -14777,6 +14502,7 @@
                                     "type": "enum"
                                 },
                                 "status": {
+                                    "description": "Current processing status",
                                     "restrict": true,
                                     "type": "enum",
                                     "values": [

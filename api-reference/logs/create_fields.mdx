@@ -40,6 +40,7 @@ curl --request POST \
     "context": "experiment1/trial1",
     "fields": {
         "email": {
+            "description": "User email address",
             "type": "str",
             "unique": true
         },
@@ -55,7 +56,7 @@ url = "https://api.unify.ai/v0/logs/fields"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1", "fields": {"email": {"type": "str", "unique": True}, "score": "int"}}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "fields": {"email": {"description": "User email address", "type": "str", "unique": True}, "score": "int"}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
