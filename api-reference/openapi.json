@@ -4320,11 +4320,14 @@
                                         102,
                                         103
                                     ],
-                                    "row_ids": [
-                                        0,
-                                        1,
-                                        2
-                                    ]
+                                    "row_ids": {
+                                        "name": "row_id",
+                                        "ids": [
+                                            0,
+                                            1,
+                                            2
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -4730,7 +4733,7 @@
                             "anyOf": [
                                 {
                                     "type": "integer",
-                                    "maximum": 200,
+                                    "maximum": 1000,
                                     "minimum": 1
                                 },
                                 {
@@ -5292,7 +5295,7 @@
                             "anyOf": [
                                 {
                                     "type": "integer",
-                                    "maximum": 200,
+                                    "maximum": 1000,
                                     "minimum": 1
                                 },
                                 {
