@@ -4316,9 +4316,14 @@
                                 "example": {
                                     "info": "Logs created successfully!",
                                     "log_event_ids": [
+                                        101,
+                                        102,
+                                        103
+                                    ],
+                                    "row_ids": [
+                                        0,
                                         1,
-                                        2,
-                                        3
+                                        2
                                     ]
                                 }
                             }
@@ -6737,10 +6742,11 @@
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "Interface deleted successfully",
                         "content": {
                             "application/json": {
+                                "schema": {},
                                 "example": {
                                     "info": "Interface deleted successfully"
                                 }
@@ -7744,10 +7750,11 @@
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "Tab deleted successfully",
                         "content": {
                             "application/json": {
+                                "schema": {},
                                 "example": {
                                     "info": "Tab deleted successfully"
                                 }
@@ -8846,10 +8853,11 @@
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "Tile deleted successfully",
                         "content": {
                             "application/json": {
+                                "schema": {},
                                 "example": {
                                     "info": "Tile deleted successfully"
                                 }
@@ -11196,8 +11204,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
