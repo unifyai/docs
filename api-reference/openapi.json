@@ -4141,6 +4141,149 @@
                 ]
             }
         },
+        "/v0/project/export_template": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Export Project Template",
+                "description": "Export project interfaces as a reusable template.",
+                "operationId": "export_project_template_v0_project_export_template_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExportProjectTemplateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Project template exported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TemplateExportResponse"
+                                },
+                                "example": {
+                                    "template": {
+                                        "interfaces": [
+                                            {
+                                                "name": "Analytics Dashboard",
+                                                "tabs": [
+                                                    {
+                                                        "name": "Overview",
+                                                        "tiles": [
+                                                            {
+                                                                "name": "Data Table",
+                                                                "type": "Table",
+                                                                "position": {
+                                                                    "x": 0,
+                                                                    "y": 0,
+                                                                    "width": 6,
+                                                                    "height": 4
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "metadata": {
+                                        "exported_at": "2024-01-01T12:00:00Z"
+                                    },
+                                    "export_stats": {
+                                        "interfaces": 1,
+                                        "tabs": 1,
+                                        "tiles": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/project/import_template": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Import Project Template",
+                "description": "Import a project template into a project.",
+                "operationId": "import_project_template_v0_project_import_template_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImportProjectTemplateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Project template imported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TemplateImportResponse"
+                                },
+                                "example": {
+                                    "success": true,
+                                    "import_stats": {
+                                        "interfaces": 2,
+                                        "tabs": 4,
+                                        "tiles": 10
+                                    },
+                                    "created_ids": {
+                                        "interface_ids": [
+                                            "abc123",
+                                            "def456"
+                                        ]
+                                    },
+                                    "warnings": []
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/logs": {
             "post": {
                 "tags": [
@@ -6995,6 +7138,146 @@
                 }
             }
         },
+        "/v0/interfaces/export_template": {
+            "post": {
+                "tags": [
+                    "Configs",
+                    "interface",
+                    "interfaces"
+                ],
+                "summary": "Export Interface Template",
+                "description": "Export an interface as a reusable template.",
+                "operationId": "export_interface_template_v0_interfaces_export_template_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExportInterfaceTemplateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Interface template exported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TemplateExportResponse"
+                                },
+                                "example": {
+                                    "template": {
+                                        "name": "Analytics Dashboard",
+                                        "tabs": [
+                                            {
+                                                "name": "Overview",
+                                                "tiles": [
+                                                    {
+                                                        "name": "Data Table",
+                                                        "type": "Table",
+                                                        "position": {
+                                                            "x": 0,
+                                                            "y": 0,
+                                                            "width": 6,
+                                                            "height": 4
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "template_version": "1.0"
+                                    },
+                                    "metadata": {
+                                        "exported_at": "2024-01-01T12:00:00Z"
+                                    },
+                                    "export_stats": {
+                                        "tabs": 1,
+                                        "tiles": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/interfaces/import_template": {
+            "post": {
+                "tags": [
+                    "Configs",
+                    "interface",
+                    "interfaces"
+                ],
+                "summary": "Import Interface Template",
+                "description": "Import an interface template into a project.",
+                "operationId": "import_interface_template_v0_interfaces_import_template_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImportInterfaceTemplateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Interface template imported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TemplateImportResponse"
+                                },
+                                "example": {
+                                    "success": true,
+                                    "import_stats": {
+                                        "interfaces": 1,
+                                        "tabs": 2,
+                                        "tiles": 5
+                                    },
+                                    "created_ids": {
+                                        "interface_id": "abc123"
+                                    },
+                                    "warnings": []
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/tab/": {
             "post": {
                 "tags": [
@@ -7904,6 +8187,139 @@
                         }
                     }
                 }
+            }
+        },
+        "/v0/tab/export_template": {
+            "post": {
+                "tags": [
+                    "Configs",
+                    "interface",
+                    "tab"
+                ],
+                "summary": "Export Tab Template",
+                "description": "Export a tab as a reusable template.",
+                "operationId": "export_tab_template_v0_tab_export_template_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExportTabTemplateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tab template exported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TemplateExportResponse"
+                                },
+                                "example": {
+                                    "template": {
+                                        "name": "Overview Tab",
+                                        "tiles": [
+                                            {
+                                                "name": "Data Table",
+                                                "type": "Table",
+                                                "position": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "width": 6,
+                                                    "height": 4
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "metadata": {
+                                        "exported_at": "2024-01-01T12:00:00Z"
+                                    },
+                                    "export_stats": {
+                                        "tabs": 1,
+                                        "tiles": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/tab/import_template": {
+            "post": {
+                "tags": [
+                    "Configs",
+                    "interface",
+                    "tab"
+                ],
+                "summary": "Import Tab Template",
+                "description": "Import a tab template into an interface.",
+                "operationId": "import_tab_template_v0_tab_import_template_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImportTabTemplateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tab template imported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TemplateImportResponse"
+                                },
+                                "example": {
+                                    "success": true,
+                                    "import_stats": {
+                                        "tabs": 1,
+                                        "tiles": 3
+                                    },
+                                    "created_ids": {
+                                        "tab_id": "def456"
+                                    },
+                                    "warnings": []
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/v0/tile/": {
@@ -9174,6 +9590,7 @@
                     "tile"
                 ],
                 "summary": "Patch Specialized Tile",
+                "description": "Update the specialized data for a specific tile type.",
                 "operationId": "patch_specialized_tile_v0_tile_specialized_patch",
                 "security": [
                     {
@@ -9341,6 +9758,140 @@
                         }
                     }
                 }
+            }
+        },
+        "/v0/tile/export_template": {
+            "post": {
+                "tags": [
+                    "Configs",
+                    "interface",
+                    "tile"
+                ],
+                "summary": "Export Tile Template",
+                "description": "Export a tile as a reusable template.",
+                "operationId": "export_tile_template_v0_tile_export_template_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExportTileTemplateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tile template exported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TemplateExportResponse"
+                                },
+                                "example": {
+                                    "template": {
+                                        "name": "Data Table",
+                                        "type": "Table",
+                                        "position": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "width": 6,
+                                            "height": 4
+                                        },
+                                        "table_tile": {
+                                            "table_type": "Data Table",
+                                            "column_order": [
+                                                "id",
+                                                "name",
+                                                "value"
+                                            ]
+                                        }
+                                    },
+                                    "metadata": {
+                                        "exported_at": "2024-01-01T12:00:00Z"
+                                    },
+                                    "export_stats": {
+                                        "tiles": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/tile/import_template": {
+            "post": {
+                "tags": [
+                    "Configs",
+                    "interface",
+                    "tile"
+                ],
+                "summary": "Import Tile Template",
+                "description": "Import a tile template into a tab.",
+                "operationId": "import_tile_template_v0_tile_import_template_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImportTileTemplateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tile template imported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TemplateImportResponse"
+                                },
+                                "example": {
+                                    "success": true,
+                                    "import_stats": {
+                                        "tiles": 1
+                                    },
+                                    "created_ids": {
+                                        "tile_id": "ghi789"
+                                    },
+                                    "warnings": []
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/v0/credits": {
@@ -11116,6 +11667,11 @@
                         "title": "Fields",
                         "description": "Dictionary mapping field names to their type definitions.",
                         "example": {
+                            "comment": {
+                                "description": "User comment",
+                                "mutable": true,
+                                "type": "str"
+                            },
                             "email": {
                                 "description": "User email address",
                                 "type": "str",
@@ -11130,25 +11686,11 @@
                     "project",
                     "fields"
                 ],
-                "title": "CreateFieldsRequest"
+                "title": "CreateFieldsRequest",
+                "description": "Request model for creating fields in a project context.\n\nFields can be defined with various properties including mutability. The `mutable` flag\ndetermines whether field values can be updated after creation via update endpoints.\nImmutable fields (mutable=False) provide data integrity guarantees once set."
             },
             "CreateInterfaceRequest": {
                 "properties": {
-                    "interface_id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Interface Id"
-                    },
-                    "project": {
-                        "type": "string",
-                        "title": "Project"
-                    },
                     "name": {
                         "type": "string",
                         "title": "Name"
@@ -11163,15 +11705,31 @@
                             }
                         ],
                         "title": "Color"
+                    },
+                    "interface_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Id"
+                    },
+                    "project": {
+                        "type": "string",
+                        "title": "Project"
                     }
                 },
                 "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "project",
-                    "name"
+                    "name",
+                    "project"
                 ],
-                "title": "CreateInterfaceRequest"
+                "title": "CreateInterfaceRequest",
+                "description": "Request to create an interface - inherits common fields from base template schema"
             },
             "CreateLogConfig": {
                 "properties": {
@@ -11311,21 +11869,6 @@
             },
             "CreateTabRequest": {
                 "properties": {
-                    "tab_id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Tab Id"
-                    },
-                    "interface_id": {
-                        "type": "string",
-                        "title": "Interface Id"
-                    },
                     "name": {
                         "type": "string",
                         "title": "Name"
@@ -11366,19 +11909,8 @@
                             }
                         ],
                         "title": "Color"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "interface_id",
-                    "name"
-                ],
-                "title": "CreateTabRequest"
-            },
-            "CreateTileRequest": {
-                "properties": {
-                    "tile_id": {
+                    },
+                    "tab_id": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -11387,12 +11919,24 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Tile Id"
-                    },
-                    "tab_id": {
-                        "type": "string",
                         "title": "Tab Id"
                     },
+                    "interface_id": {
+                        "type": "string",
+                        "title": "Interface Id"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "name",
+                    "interface_id"
+                ],
+                "title": "CreateTabRequest",
+                "description": "Request to create a tab - inherits common fields from base template schema"
+            },
+            "CreateTileRequest": {
+                "properties": {
                     "name": {
                         "type": "string",
                         "title": "Name"
@@ -11434,50 +11978,22 @@
                         "title": "Minh"
                     },
                     "visible": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "boolean",
                         "title": "Visible",
                         "default": true
                     },
                     "locked": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "boolean",
                         "title": "Locked",
                         "default": false
                     },
                     "moved": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "boolean",
                         "title": "Moved",
                         "default": false
                     },
                     "static": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "boolean",
                         "title": "Static",
                         "default": false
                     },
@@ -11640,16 +12156,32 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "tile_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tile Id"
+                    },
+                    "tab_id": {
+                        "type": "string",
+                        "title": "Tab Id"
                     }
                 },
                 "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "tab_id",
                     "name",
-                    "position"
+                    "position",
+                    "tab_id"
                 ],
-                "title": "CreateTileRequest"
+                "title": "CreateTileRequest",
+                "description": "Request to create a tile - inherits common fields from base template schema"
             },
             "CreditsResponse": {
                 "properties": {
@@ -12008,6 +12540,314 @@
                 ],
                 "title": "EnumType"
             },
+            "ExportInterfaceTemplateRequest": {
+                "properties": {
+                    "include_metadata": {
+                        "type": "boolean",
+                        "title": "Include Metadata",
+                        "default": true
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
+                        "default": []
+                    },
+                    "template_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Template Name"
+                    },
+                    "interface_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Id"
+                    },
+                    "project": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Project"
+                    },
+                    "interface_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Name"
+                    },
+                    "checkpoint": {
+                        "type": "boolean",
+                        "title": "Checkpoint",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "title": "ExportInterfaceTemplateRequest",
+                "description": "Request to export an interface template"
+            },
+            "ExportProjectTemplateRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project"
+                    },
+                    "interface_names": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Names"
+                    },
+                    "checkpoint": {
+                        "type": "boolean",
+                        "title": "Checkpoint",
+                        "default": false
+                    },
+                    "include_metadata": {
+                        "type": "boolean",
+                        "title": "Include Metadata",
+                        "default": true
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
+                        "default": []
+                    },
+                    "template_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Template Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project"
+                ],
+                "title": "ExportProjectTemplateRequest",
+                "description": "Request to export a project template."
+            },
+            "ExportTabTemplateRequest": {
+                "properties": {
+                    "include_metadata": {
+                        "type": "boolean",
+                        "title": "Include Metadata",
+                        "default": true
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
+                        "default": []
+                    },
+                    "template_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Template Name"
+                    },
+                    "tab_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tab Id"
+                    },
+                    "interface_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Id"
+                    },
+                    "tab_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tab Name"
+                    },
+                    "checkpoint": {
+                        "type": "boolean",
+                        "title": "Checkpoint",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "title": "ExportTabTemplateRequest",
+                "description": "Request to export a tab template"
+            },
+            "ExportTileTemplateRequest": {
+                "properties": {
+                    "include_metadata": {
+                        "type": "boolean",
+                        "title": "Include Metadata",
+                        "default": true
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
+                        "default": []
+                    },
+                    "template_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Template Name"
+                    },
+                    "tile_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tile Id"
+                    },
+                    "tab_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tab Id"
+                    },
+                    "tile_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tile Name"
+                    },
+                    "checkpoint": {
+                        "type": "boolean",
+                        "title": "Checkpoint",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "title": "ExportTileTemplateRequest",
+                "description": "Request to export a tile template"
+            },
             "FavoriteProjectIn": {
                 "properties": {
                     "project": {
@@ -12235,6 +13075,237 @@
                 "type": "object",
                 "title": "HTTPValidationError"
             },
+            "ImportInterfaceTemplateRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project"
+                    },
+                    "validate_first": {
+                        "type": "boolean",
+                        "title": "Validate First",
+                        "default": true
+                    },
+                    "auto_sanitize": {
+                        "type": "boolean",
+                        "title": "Auto Sanitize",
+                        "default": true
+                    },
+                    "overwrite_existing": {
+                        "type": "boolean",
+                        "title": "Overwrite Existing",
+                        "default": false
+                    },
+                    "template": {
+                        "$ref": "#/components/schemas/InterfaceTemplateSchema"
+                    },
+                    "new_interface_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "New Interface Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "template"
+                ],
+                "title": "ImportInterfaceTemplateRequest",
+                "description": "Request to import an interface template"
+            },
+            "ImportProjectTemplateRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project"
+                    },
+                    "template": {
+                        "$ref": "#/components/schemas/ProjectTemplateSchema"
+                    },
+                    "validate_first": {
+                        "type": "boolean",
+                        "title": "Validate First",
+                        "default": true
+                    },
+                    "auto_sanitize": {
+                        "type": "boolean",
+                        "title": "Auto Sanitize",
+                        "default": true
+                    },
+                    "overwrite_existing": {
+                        "type": "boolean",
+                        "title": "Overwrite Existing",
+                        "default": false
+                    },
+                    "interface_name_prefix": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Name Prefix"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "template"
+                ],
+                "title": "ImportProjectTemplateRequest",
+                "description": "Request to import a project template."
+            },
+            "ImportTabTemplateRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project"
+                    },
+                    "validate_first": {
+                        "type": "boolean",
+                        "title": "Validate First",
+                        "default": true
+                    },
+                    "auto_sanitize": {
+                        "type": "boolean",
+                        "title": "Auto Sanitize",
+                        "default": true
+                    },
+                    "overwrite_existing": {
+                        "type": "boolean",
+                        "title": "Overwrite Existing",
+                        "default": false
+                    },
+                    "template": {
+                        "$ref": "#/components/schemas/TabTemplateSchema"
+                    },
+                    "interface_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Id"
+                    },
+                    "interface_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Name"
+                    },
+                    "new_tab_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "New Tab Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "template"
+                ],
+                "title": "ImportTabTemplateRequest",
+                "description": "Request to import a tab template"
+            },
+            "ImportTileTemplateRequest": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project"
+                    },
+                    "validate_first": {
+                        "type": "boolean",
+                        "title": "Validate First",
+                        "default": true
+                    },
+                    "auto_sanitize": {
+                        "type": "boolean",
+                        "title": "Auto Sanitize",
+                        "default": true
+                    },
+                    "overwrite_existing": {
+                        "type": "boolean",
+                        "title": "Overwrite Existing",
+                        "default": false
+                    },
+                    "template": {
+                        "$ref": "#/components/schemas/TileTemplateSchema"
+                    },
+                    "tab_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tab Id"
+                    },
+                    "interface_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Interface Id"
+                    },
+                    "tab_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tab Name"
+                    },
+                    "new_tile_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "New Tile Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "template"
+                ],
+                "title": "ImportTileTemplateRequest",
+                "description": "Request to import a tile template"
+            },
             "InfoResponse_AssistantPhotoUploadResponse_": {
                 "properties": {
                     "info": {
@@ -12346,9 +13417,28 @@
             },
             "InterfaceSchema": {
                 "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "color": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Color"
+                    },
                     "id": {
                         "type": "string",
                         "title": "Id"
+                    },
+                    "project_id": {
+                        "type": "integer",
+                        "title": "Project Id"
                     },
                     "created_at": {
                         "anyOf": [
@@ -12377,14 +13467,6 @@
                         "title": "Is Checkpoint",
                         "default": false
                     },
-                    "name": {
-                        "type": "string",
-                        "title": "Name"
-                    },
-                    "project_id": {
-                        "type": "integer",
-                        "title": "Project Id"
-                    },
                     "tabs": {
                         "items": {
                             "$ref": "#/components/schemas/TabSchema"
@@ -12403,6 +13485,22 @@
                             }
                         ],
                         "title": "Active Tab Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "id",
+                    "project_id"
+                ],
+                "title": "InterfaceSchema",
+                "description": "Complete Interface schema - now inherits from base"
+            },
+            "InterfaceTemplateSchema": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
                     },
                     "color": {
                         "anyOf": [
@@ -12414,15 +13512,68 @@
                             }
                         ],
                         "title": "Color"
+                    },
+                    "tabs": {
+                        "items": {
+                            "$ref": "#/components/schemas/TabTemplateSchema"
+                        },
+                        "type": "array",
+                        "title": "Tabs",
+                        "default": []
+                    },
+                    "active_tab_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Active Tab Name"
+                    },
+                    "template_version": {
+                        "type": "string",
+                        "title": "Template Version",
+                        "default": "1.0"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "created_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Created By"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
+                        "default": []
                     }
                 },
                 "type": "object",
                 "required": [
-                    "id",
-                    "name",
-                    "project_id"
+                    "name"
                 ],
-                "title": "InterfaceSchema"
+                "title": "InterfaceTemplateSchema",
+                "description": "Template schema for a detached interface"
             },
             "Item": {
                 "properties": {
@@ -13396,6 +14547,56 @@
                 ],
                 "title": "ProjectRollbackRequest"
             },
+            "ProjectTemplateSchema": {
+                "properties": {
+                    "interfaces": {
+                        "items": {
+                            "$ref": "#/components/schemas/InterfaceTemplateSchema"
+                        },
+                        "type": "array",
+                        "title": "Interfaces",
+                        "default": []
+                    },
+                    "template_version": {
+                        "type": "string",
+                        "title": "Template Version",
+                        "default": "1.0"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "created_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Created By"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
+                        "default": []
+                    }
+                },
+                "type": "object",
+                "title": "ProjectTemplateSchema",
+                "description": "Template schema for multiple interfaces from a project"
+            },
             "ProjectUpdate": {
                 "properties": {
                     "name": {
@@ -13619,6 +14820,7 @@
                     "mutable": {
                         "type": "boolean",
                         "title": "Mutable",
+                        "description": "If true, entries under this field can be updated via update endpoints; otherwise they are immutable after creation (default false).",
                         "default": false
                     },
                     "unique": {
@@ -13644,13 +14846,59 @@
                 "required": [
                     "type"
                 ],
-                "title": "StandardFieldDefinition"
+                "title": "StandardFieldDefinition",
+                "description": "Defines a standard field with type information and behavioral flags.\n\nThe `type` field specifies the data type of the field.\nThe `mutable` flag controls whether the field can later be modified via update endpoints.\nThe `unique` flag controls whether the field can only have one value per log.\nThe `description` field provides an optional human-readable description of the field."
             },
             "TabSchema": {
                 "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "visible": {
+                        "type": "boolean",
+                        "title": "Visible",
+                        "default": true
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "title": "Active",
+                        "default": false
+                    },
+                    "order": {
+                        "type": "integer",
+                        "title": "Order",
+                        "default": 0
+                    },
+                    "global_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Global Context"
+                    },
+                    "color": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Color"
+                    },
                     "id": {
                         "type": "string",
                         "title": "Id"
+                    },
+                    "interface_id": {
+                        "type": "string",
+                        "title": "Interface Id"
                     },
                     "created_at": {
                         "anyOf": [
@@ -13679,10 +14927,26 @@
                         "title": "Is Checkpoint",
                         "default": false
                     },
-                    "interface_id": {
-                        "type": "string",
-                        "title": "Interface Id"
-                    },
+                    "tiles": {
+                        "items": {
+                            "$ref": "#/components/schemas/TileSchema"
+                        },
+                        "type": "array",
+                        "title": "Tiles",
+                        "default": []
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "id",
+                    "interface_id"
+                ],
+                "title": "TabSchema",
+                "description": "Complete Tab schema - now inherits from base"
+            },
+            "TabTemplateSchema": {
+                "properties": {
                     "name": {
                         "type": "string",
                         "title": "Name"
@@ -13726,20 +14990,54 @@
                     },
                     "tiles": {
                         "items": {
-                            "$ref": "#/components/schemas/TileSchema"
+                            "$ref": "#/components/schemas/TileTemplateSchema"
                         },
                         "type": "array",
                         "title": "Tiles",
+                        "default": []
+                    },
+                    "template_version": {
+                        "type": "string",
+                        "title": "Template Version",
+                        "default": "1.0"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "created_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Created By"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
                         "default": []
                     }
                 },
                 "type": "object",
                 "required": [
-                    "id",
-                    "interface_id",
                     "name"
                 ],
-                "title": "TabSchema"
+                "title": "TabTemplateSchema",
+                "description": "Template schema for a detached tab"
             },
             "TableTileSchema": {
                 "properties": {
@@ -13868,6 +15166,85 @@
                 "type": "object",
                 "title": "TableTileSchema"
             },
+            "TemplateExportResponse": {
+                "properties": {
+                    "template": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ProjectTemplateSchema"
+                            },
+                            {
+                                "$ref": "#/components/schemas/InterfaceTemplateSchema"
+                            },
+                            {
+                                "$ref": "#/components/schemas/TabTemplateSchema"
+                            },
+                            {
+                                "$ref": "#/components/schemas/TileTemplateSchema"
+                            }
+                        ],
+                        "title": "Template"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata"
+                    },
+                    "export_stats": {
+                        "type": "object",
+                        "title": "Export Stats"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "template",
+                    "metadata",
+                    "export_stats"
+                ],
+                "title": "TemplateExportResponse",
+                "description": "Response from exporting a template"
+            },
+            "TemplateImportResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "title": "Success"
+                    },
+                    "validation_result": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ValidationResultSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "import_stats": {
+                        "type": "object",
+                        "title": "Import Stats"
+                    },
+                    "created_ids": {
+                        "type": "object",
+                        "title": "Created Ids"
+                    },
+                    "warnings": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Warnings",
+                        "default": []
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "success",
+                    "import_stats",
+                    "created_ids"
+                ],
+                "title": "TemplateImportResponse",
+                "description": "Response from importing a template"
+            },
             "TerminalTileSchema": {
                 "properties": {
                     "id": {
@@ -13937,44 +15314,6 @@
             },
             "TileSchema": {
                 "properties": {
-                    "id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Id"
-                    },
-                    "created_at": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Created At"
-                    },
-                    "updated_at": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Updated At"
-                    },
-                    "is_checkpoint": {
-                        "type": "boolean",
-                        "title": "Is Checkpoint",
-                        "default": false
-                    },
                     "name": {
                         "type": "string",
                         "title": "Name"
@@ -14145,9 +15484,279 @@
                         ],
                         "title": "Grouping"
                     },
+                    "table_tile": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/TableTileSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "plot_tile": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/PlotTileSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "view_tile": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ViewTileSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "editor_tile": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EditorTileSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "terminal_tile": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/TerminalTileSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id"
+                    },
                     "tab_id": {
                         "type": "string",
                         "title": "Tab Id"
+                    },
+                    "created_at": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Created At"
+                    },
+                    "updated_at": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Updated At"
+                    },
+                    "is_checkpoint": {
+                        "type": "boolean",
+                        "title": "Is Checkpoint",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "position",
+                    "tab_id"
+                ],
+                "title": "TileSchema",
+                "description": "Complete Tile schema with type-specific properties - now inherits from base"
+            },
+            "TileTemplateSchema": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "position": {
+                        "$ref": "#/components/schemas/TilePosition"
+                    },
+                    "type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Type"
+                    },
+                    "minW": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Minw"
+                    },
+                    "minH": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Minh"
+                    },
+                    "visible": {
+                        "type": "boolean",
+                        "title": "Visible",
+                        "default": true
+                    },
+                    "locked": {
+                        "type": "boolean",
+                        "title": "Locked",
+                        "default": false
+                    },
+                    "moved": {
+                        "type": "boolean",
+                        "title": "Moved",
+                        "default": false
+                    },
+                    "static": {
+                        "type": "boolean",
+                        "title": "Static",
+                        "default": false
+                    },
+                    "color": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Color"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context"
+                    },
+                    "table": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Table"
+                    },
+                    "auto_update": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Auto Update"
+                    },
+                    "freeze": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Freeze"
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filters"
+                    },
+                    "common_filter": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Common Filter"
+                    },
+                    "metric": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metric"
+                    },
+                    "column_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Context"
+                    },
+                    "grouping": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Grouping"
                     },
                     "table_tile": {
                         "anyOf": [
@@ -14198,16 +15807,50 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "template_version": {
+                        "type": "string",
+                        "title": "Template Version",
+                        "default": "1.0"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "created_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Created By"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags",
+                        "default": []
                     }
                 },
                 "type": "object",
                 "required": [
                     "name",
-                    "position",
-                    "tab_id"
+                    "position"
                 ],
-                "title": "TileSchema",
-                "description": "Complete Tile schema with type-specific properties"
+                "title": "TileTemplateSchema",
+                "description": "Template schema for a detached tile - inherits all fields from base"
             },
             "UpdateDerivedEntriesConfig": {
                 "properties": {
@@ -14365,7 +16008,8 @@
                 },
                 "additionalProperties": false,
                 "type": "object",
-                "title": "UpdateInterfaceRequest"
+                "title": "UpdateInterfaceRequest",
+                "description": "Request to update an interface - only includes fields that can be updated"
             },
             "UpdateLogRequest": {
                 "properties": {
@@ -14616,7 +16260,8 @@
                 },
                 "additionalProperties": false,
                 "type": "object",
-                "title": "UpdateTabRequest"
+                "title": "UpdateTabRequest",
+                "description": "Request to update a tab - only includes fields that can be updated"
             },
             "UpdateTileRequest": {
                 "properties": {
@@ -14881,7 +16526,8 @@
                 },
                 "additionalProperties": false,
                 "type": "object",
-                "title": "UpdateTileRequest"
+                "title": "UpdateTileRequest",
+                "description": "Request to update a tile - only includes fields that can be updated"
             },
             "ValidationError": {
                 "properties": {
@@ -14915,6 +16561,98 @@
                     "type"
                 ],
                 "title": "ValidationError"
+            },
+            "ValidationIssue": {
+                "properties": {
+                    "level": {
+                        "type": "string",
+                        "title": "Level"
+                    },
+                    "component": {
+                        "type": "string",
+                        "title": "Component"
+                    },
+                    "component_name": {
+                        "type": "string",
+                        "title": "Component Name"
+                    },
+                    "issue_type": {
+                        "type": "string",
+                        "title": "Issue Type"
+                    },
+                    "message": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "suggested_fix": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Suggested Fix"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "level",
+                    "component",
+                    "component_name",
+                    "issue_type",
+                    "message"
+                ],
+                "title": "ValidationIssue",
+                "description": "Individual validation issue"
+            },
+            "ValidationResultSchema": {
+                "properties": {
+                    "is_valid": {
+                        "type": "boolean",
+                        "title": "Is Valid"
+                    },
+                    "issues": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationIssue"
+                        },
+                        "type": "array",
+                        "title": "Issues",
+                        "default": []
+                    },
+                    "can_sanitize": {
+                        "type": "boolean",
+                        "title": "Can Sanitize"
+                    },
+                    "sanitized_template": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ProjectTemplateSchema"
+                            },
+                            {
+                                "$ref": "#/components/schemas/InterfaceTemplateSchema"
+                            },
+                            {
+                                "$ref": "#/components/schemas/TabTemplateSchema"
+                            },
+                            {
+                                "$ref": "#/components/schemas/TileTemplateSchema"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sanitized Template"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "is_valid",
+                    "can_sanitize"
+                ],
+                "title": "ValidationResultSchema",
+                "description": "Result of validating a template against a project"
             },
             "ViewTileSchema": {
                 "properties": {
