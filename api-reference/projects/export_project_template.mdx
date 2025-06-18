@@ -1,0 +1,121 @@
+---
+title: "Export Project Template"
+api: 'POST /v0/project/export_template'
+---
+Export project interfaces as a reusable template.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="project" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="interface_names" type="array | null" >
+
+</ParamField>
+
+<ParamField body="checkpoint" type="boolean"  default="false">
+
+</ParamField>
+
+<ParamField body="include_metadata" type="boolean"  default="true">
+
+</ParamField>
+
+<ParamField body="description" type="string | null" >
+
+</ParamField>
+
+<ParamField body="tags" type="[string]"  default="[]">
+
+</ParamField>
+
+<ParamField body="template_name" type="string | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/project/export_template' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/project/export_template"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "template": {
+        "interfaces": [
+            {
+                "name": "Analytics Dashboard",
+                "tabs": [
+                    {
+                        "name": "Overview",
+                        "tiles": [
+                            {
+                                "name": "Data Table",
+                                "type": "Table",
+                                "position": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "width": 6,
+                                    "height": 4
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "metadata": {
+        "exported_at": "2024-01-01T12:00:00Z"
+    },
+    "export_stats": {
+        "interfaces": 1,
+        "tabs": 1,
+        "tiles": 1
+    }
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

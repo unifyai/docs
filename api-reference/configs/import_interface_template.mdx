@@ -1,0 +1,95 @@
+---
+title: "Import Interface Template"
+api: 'POST /v0/interfaces/import_template'
+---
+Import an interface template into a project.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="project" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="validate_first" type="boolean"  default="true">
+
+</ParamField>
+
+<ParamField body="auto_sanitize" type="boolean"  default="true">
+
+</ParamField>
+
+<ParamField body="overwrite_existing" type="boolean"  default="false">
+
+</ParamField>
+
+<ParamField body="template" type="object" required="true">
+
+</ParamField>
+
+<ParamField body="new_interface_name" type="string | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/interfaces/import_template' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/interfaces/import_template"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "success": true,
+    "import_stats": {
+        "interfaces": 1,
+        "tabs": 2,
+        "tiles": 5
+    },
+    "created_ids": {
+        "interface_id": "abc123"
+    },
+    "warnings": []
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
