@@ -159,14 +159,6 @@
                             "group": "utils",
                             "pages": [
                                 {
-                                    "group": "artifacts",
-                                    "pages": [
-                                        "python/functions/logging/utils/artifacts/add_project_artifacts",
-                                        "python/functions/logging/utils/artifacts/delete_project_artifact",
-                                        "python/functions/logging/utils/artifacts/get_project_artifacts"
-                                    ]
-                                },
-                                {
                                     "group": "async_logger",
                                     "pages": [
                                         "python/classes/logging/utils/async_logger/AsyncLoggerManager"
@@ -340,15 +332,6 @@
                                         "python/functions/universal_api/utils/custom_endpoints/delete_custom_endpoint",
                                         "python/functions/universal_api/utils/custom_endpoints/list_custom_endpoints",
                                         "python/functions/universal_api/utils/custom_endpoints/rename_custom_endpoint"
-                                    ]
-                                },
-                                {
-                                    "group": "endpoint_metrics",
-                                    "pages": [
-                                        "python/classes/universal_api/utils/endpoint_metrics/Metrics",
-                                        "python/functions/universal_api/utils/endpoint_metrics/delete_endpoint_metrics",
-                                        "python/functions/universal_api/utils/endpoint_metrics/get_endpoint_metrics",
-                                        "python/functions/universal_api/utils/endpoint_metrics/log_endpoint_metric"
                                     ]
                                 },
                                 {
