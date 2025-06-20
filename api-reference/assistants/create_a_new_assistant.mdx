@@ -44,6 +44,10 @@ URL to the assistant's profile photo
 Brief description about the assistant
 </ParamField>
 
+<ParamField body="country" type="string | null" >
+Country code for phone number provisioning (e.g., US, GB)
+</ParamField>
+
 <ParamField body="email" type="string | null" >
 Email of the assistant
 </ParamField>
@@ -80,6 +84,7 @@ curl --request POST \
     "region": "North America",
     "profile_photo": "https://example.com/photos/ada.jpg",
     "about": "Mathematician and writer known for work on Analytical Engine",
+    "country": "US",
     "email": "ada.lovelace@unify.ai",
     "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
     "user_phone": "+15551234567"
@@ -93,7 +98,7 @@ url = "https://api.unify.ai/v0/assistant"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2, "region": "North America", "profile_photo": "https://example.com/photos/ada.jpg", "about": "Mathematician and writer known for work on Analytical Engine", "email": "ada.lovelace@unify.ai", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "user_phone": "+15551234567"}
+json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2, "region": "North America", "profile_photo": "https://example.com/photos/ada.jpg", "about": "Mathematician and writer known for work on Analytical Engine", "country": "US", "email": "ada.lovelace@unify.ai", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "user_phone": "+15551234567"}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
@@ -116,7 +121,8 @@ print(response.text)
         "updated_at": "2025-04-25T12:00:00Z",
         "phone": "+1-555-123-4567",
         "email": "alice.smith@example.com",
-        "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5"
+        "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+        "country": "US"
     }
 }
 ```
