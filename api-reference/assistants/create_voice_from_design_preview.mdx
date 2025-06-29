@@ -1,8 +1,8 @@
 ---
-title: "Localize voice"
-api: 'POST /v0/assistant/voice/localize'
+title: "Create Voice from Design Preview"
+api: 'POST /v0/assistant/voice/design/create'
 ---
-Create a new assistant voice by localizing an existing voice to a new language.
+Creates a full voice from a generated preview voice id.
 
 #### Authorizations
 
@@ -12,35 +12,35 @@ Create a new assistant voice by localizing an existing voice to a new language.
 
 #### Body
 
-<ParamField body="base_cartesia_voice_id" type="string" required="true">
-Cartesia Voice ID of the voice to localize
+<ParamField body="generated_voice_id" type="string" required="true">
+The 'generated_voice_id' obtained from the '/design/preview'.
 </ParamField>
 
-<ParamField body="name" type="string" required="true">
-Name for the new localized voice
+<ParamField body="voice_name" type="string" required="true">
+Name for the new voice.
 </ParamField>
 
-<ParamField body="target_language" type="string" required="true">
-Target language for localization (e.g., 'es')
+<ParamField body="voice_description" type="string" required="true">
+Description for the new voice.
 </ParamField>
 
-<ParamField body="original_speaker_gender" type="string" required="true">
-Gender of the original speaker ('female' or 'male')
+<ParamField body="labels" type="object | null" >
+Optional labels for ElevenLabs when creating the voice.
 </ParamField>
 
-<ParamField body="description" type="string | null" >
-Optional description for the voice
+<ParamField body="language" type="string" required="true">
+Language of the voice.
 </ParamField>
 
-<ParamField body="dialect" type="string | null" >
-Optional dialect for localization
+<ParamField body="gender" type="string | null" >
+Gender of the voice.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/assistant/voice/localize' \
+  --url 'https://api.unify.ai/v0/assistant/voice/design/create' \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -49,7 +49,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/assistant/voice/localize"
+url = "https://api.unify.ai/v0/assistant/voice/design/create"
 
 headers = {"Authorization": "Bearer <token>"}
 

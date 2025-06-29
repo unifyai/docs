@@ -24,12 +24,16 @@ User-given name for the voice
 Description of the voice
 </ParamField>
 
-<ParamField body="gender" type="string" required="true">
+<ParamField body="gender" type="string | null" >
 Gender of the voice
 </ParamField>
 
 <ParamField body="language" type="string" required="true">
 Language code of the voice
+</ParamField>
+
+<ParamField body="provider" type="string"  default="cartesia">
+Provider of the voice (cartesia or elevenlabs)
 </ParamField>
 
 <ParamField body="is_preset" type="boolean | null"  default="false">
@@ -49,6 +53,7 @@ curl --request POST \
     "description": "Calm and relaxing voice of an english-speaking woman",
     "gender": "female",
     "language": "en",
+    "provider": "cartesia",
     "is_preset": true
 }'
 ```
@@ -60,7 +65,7 @@ url = "https://api.unify.ai/v0/assistant/voice"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "name": "English Woman Calm 1", "description": "Calm and relaxing voice of an english-speaking woman", "gender": "female", "language": "en", "is_preset": True}
+json_input = {"voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "name": "English Woman Calm 1", "description": "Calm and relaxing voice of an english-speaking woman", "gender": "female", "language": "en", "provider": "cartesia", "is_preset": True}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
@@ -83,7 +88,9 @@ print(response.text)
         "name": "English Woman Calm 1",
         "description": "Calm and relaxting voice of an english-speaking woman",
         "gender": "female",
-        "language": "en"
+        "language": "en",
+        "provider": "cartesia",
+        "is_preset": true
     }
 }
 ```

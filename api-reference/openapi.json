@@ -2037,14 +2037,18 @@
                                             "name": "English Woman Calm 1",
                                             "description": "Calm and relaxting voice of an english-speaking woman",
                                             "gender": "female",
-                                            "language": "en"
+                                            "language": "en",
+                                            "provider": "cartesia",
+                                            "is_preset": true
                                         },
                                         {
                                             "voice_id": "c99d36f3-5ffd-4253-803a-535c1bc9c306",
                                             "name": "English Male Deep 1",
                                             "description": "A deep, smoooth British man's voice perfect for narration.",
                                             "gender": "male",
-                                            "language": "en"
+                                            "language": "en",
+                                            "provider": "elevenlabs",
+                                            "is_preset": false
                                         }
                                     ]
                                 }
@@ -2075,7 +2079,7 @@
                 ],
                 "summary": "Register voice",
                 "description": "Register a preset assistant voice.",
-                "operationId": "register_cartesia_voice_v0_assistant_voice_post",
+                "operationId": "register_voice_v0_assistant_voice_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2107,7 +2111,9 @@
                                         "name": "English Woman Calm 1",
                                         "description": "Calm and relaxting voice of an english-speaking woman",
                                         "gender": "female",
-                                        "language": "en"
+                                        "language": "en",
+                                        "provider": "cartesia",
+                                        "is_preset": true
                                     }
                                 }
                             }
@@ -2148,60 +2154,12 @@
                 ],
                 "summary": "Clone voice",
                 "description": "Create a new assistant voice by cloning a voice from an audio file.",
-                "operationId": "clone_voice_endpoint_v0_assistant_voice_clone_post",
+                "operationId": "clone_voice_v0_assistant_voice_clone_post",
                 "requestBody": {
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/Body_clone_voice_endpoint_v0_assistant_voice_clone_post"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InfoResponse_VoiceRead_"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/assistant/voice/localize": {
-            "post": {
-                "tags": [
-                    "Assistants",
-                    "Voices"
-                ],
-                "summary": "Localize voice",
-                "description": "Create a new assistant voice by localizing an existing voice to a new language.",
-                "operationId": "localize_voice_endpoint_v0_assistant_voice_localize_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/VoiceLocalizeRequest"
+                                "$ref": "#/components/schemas/Body_clone_voice_v0_assistant_voice_clone_post"
                             }
                         }
                     },
@@ -2296,6 +2254,171 @@
                         }
                     }
                 }
+            }
+        },
+        "/v0/assistant/voice/generate": {
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Voices",
+                    "TTS"
+                ],
+                "summary": "Generate speech from text",
+                "description": "Generates audio from text using the specified provider and voice.",
+                "operationId": "generate_speech_v0_assistant_voice_generate_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VoiceGenerateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Audio generated successfully. Content-Type will be audio/mpeg, audio/wav, etc.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request (e.g., invalid provider, provider API error)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Provider API error: ..."
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Service unavailable (e.g. provider API down)",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "TTS provider unavailable."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/assistant/voice/design/preview": {
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Voices",
+                    "TTS Design"
+                ],
+                "summary": "Design Voice Previews",
+                "description": "Generates voice design previews from a text description.",
+                "operationId": "design_voice_generate_previews_endpoint_v0_assistant_voice_design_preview_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VoiceDesignGeneratePreviewsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_VoiceDesignGeneratePreviewsAPIResponse_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/assistant/voice/design/create": {
+            "post": {
+                "tags": [
+                    "Assistants",
+                    "Voices",
+                    "TTS Design"
+                ],
+                "summary": "Create Voice from Design Preview",
+                "description": "Creates a full voice from a generated preview voice id.",
+                "operationId": "design_voice_create_from_preview_endpoint_v0_assistant_voice_design_create_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VoiceDesignCreateFromPreviewRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_VoiceRead_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/v0/assistant/photo/upload": {
@@ -2643,7 +2766,7 @@
                                         "is_versioned": true,
                                         "allow_duplicates": true,
                                         "unique_id_column": false,
-                                        "unique_id_name": "row_id"
+                                        "unique_id_names": "row_id"
                                     },
                                     {
                                         "name": "context2",
@@ -2651,7 +2774,7 @@
                                         "is_versioned": false,
                                         "allow_duplicates": true,
                                         "unique_id_column": false,
-                                        "unique_id_name": "my_id"
+                                        "unique_id_names": "my_id"
                                     }
                                 ]
                             }
@@ -2852,7 +2975,7 @@
                                     "is_versioned": true,
                                     "allow_duplicates": true,
                                     "unique_id_column": false,
-                                    "unique_id_name": "row_id"
+                                    "unique_id_names": "row_id"
                                 }
                             }
                         }
@@ -10849,7 +10972,7 @@
                 "type": "object",
                 "title": "Body_animate_video_endpoint_v0_assistant_photo_animate_post"
             },
-            "Body_clone_voice_endpoint_v0_assistant_voice_clone_post": {
+            "Body_clone_voice_v0_assistant_voice_clone_post": {
                 "properties": {
                     "name": {
                         "type": "string",
@@ -10870,6 +10993,22 @@
                         ],
                         "title": "Description"
                     },
+                    "gender": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Gender"
+                    },
+                    "provider": {
+                        "type": "string",
+                        "title": "Provider",
+                        "default": "cartesia"
+                    },
                     "file": {
                         "type": "string",
                         "format": "binary",
@@ -10882,7 +11021,7 @@
                     "language",
                     "file"
                 ],
-                "title": "Body_clone_voice_endpoint_v0_assistant_voice_clone_post"
+                "title": "Body_clone_voice_v0_assistant_voice_clone_post"
             },
             "Body_edit_assistant_photo_v0_assistant_photo_edit_post": {
                 "properties": {
@@ -11250,8 +11389,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -11571,11 +11710,25 @@
                         "description": "Whether to create a unique, sequential ID for each log in this context.",
                         "default": false
                     },
-                    "unique_id_name": {
-                        "type": "string",
-                        "title": "Unique Id Name",
-                        "description": "The name of the unique ID column.",
-                        "default": "row_id"
+                    "unique_id_names": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            }
+                        ],
+                        "title": "Unique Id Names",
+                        "description": "Name(s) of the unique ID column(s). Can be a string for a single column or a list for nested unique IDs.",
+                        "default": "row_id",
+                        "example": [
+                            "task_id",
+                            "instance_id"
+                        ]
                     }
                 },
                 "type": "object",
@@ -11913,6 +12066,32 @@
                                 }
                             ]
                         ]
+                    },
+                    "unique_id_parents": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "anyOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "integer"
+                                        }
+                                    ]
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Unique Id Parents",
+                        "description": "Parent IDs for generating a nested unique ID. The keys must match the parent columns in the unique ID list.",
+                        "example": {
+                            "session": 4,
+                            "user": 100
+                        }
                     }
                 },
                 "type": "object",
@@ -13443,6 +13622,18 @@
                     "info"
                 ],
                 "title": "InfoResponse[RecordingInfo]"
+            },
+            "InfoResponse_VoiceDesignGeneratePreviewsAPIResponse_": {
+                "properties": {
+                    "info": {
+                        "$ref": "#/components/schemas/VoiceDesignGeneratePreviewsAPIResponse"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[VoiceDesignGeneratePreviewsAPIResponse]"
             },
             "InfoResponse_VoiceRead_": {
                 "properties": {
@@ -16768,7 +16959,14 @@
                         "example": "Calm and relaxing voice of an english-speaking woman"
                     },
                     "gender": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Gender",
                         "description": "Gender of the voice",
                         "example": "female"
@@ -16778,6 +16976,17 @@
                         "title": "Language",
                         "description": "Language code of the voice",
                         "example": "en"
+                    },
+                    "provider": {
+                        "type": "string",
+                        "enum": [
+                            "cartesia",
+                            "elevenlabs"
+                        ],
+                        "title": "Provider",
+                        "description": "Provider of the voice (cartesia or elevenlabs)",
+                        "default": "cartesia",
+                        "example": "cartesia"
                     },
                     "is_preset": {
                         "anyOf": [
@@ -16799,35 +17008,49 @@
                     "voice_id",
                     "name",
                     "description",
-                    "gender",
                     "language"
                 ],
                 "title": "VoiceCreate",
                 "description": "Schema for creating a new assistant voice entry in our DB.\nThe voice_id is provided by Cartesia after a successful clone/localize, or is a known preset ID."
             },
-            "VoiceLocalizeRequest": {
+            "VoiceDesignCreateFromPreviewRequest": {
                 "properties": {
-                    "base_cartesia_voice_id": {
+                    "generated_voice_id": {
                         "type": "string",
-                        "title": "Base Cartesia Voice Id",
-                        "description": "Cartesia Voice ID of the voice to localize"
+                        "title": "Generated Voice Id",
+                        "description": "The 'generated_voice_id' obtained from the '/design/preview'."
                     },
-                    "name": {
+                    "voice_name": {
                         "type": "string",
-                        "title": "Name",
-                        "description": "Name for the new localized voice"
+                        "title": "Voice Name",
+                        "description": "Name for the new voice."
                     },
-                    "target_language": {
+                    "voice_description": {
                         "type": "string",
-                        "title": "Target Language",
-                        "description": "Target language for localization (e.g., 'es')"
+                        "title": "Voice Description",
+                        "description": "Description for the new voice."
                     },
-                    "original_speaker_gender": {
+                    "labels": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Labels",
+                        "description": "Optional labels for ElevenLabs when creating the voice."
+                    },
+                    "language": {
                         "type": "string",
-                        "title": "Original Speaker Gender",
-                        "description": "Gender of the original speaker ('female' or 'male')"
+                        "title": "Language",
+                        "description": "Language of the voice."
                     },
-                    "description": {
+                    "gender": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -16836,30 +17059,269 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Description",
-                        "description": "Optional description for the voice"
-                    },
-                    "dialect": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Dialect",
-                        "description": "Optional dialect for localization"
+                        "title": "Gender",
+                        "description": "Gender of the voice."
                     }
                 },
                 "type": "object",
                 "required": [
-                    "base_cartesia_voice_id",
-                    "name",
-                    "target_language",
-                    "original_speaker_gender"
+                    "generated_voice_id",
+                    "voice_name",
+                    "voice_description",
+                    "language"
                 ],
-                "title": "VoiceLocalizeRequest"
+                "title": "VoiceDesignCreateFromPreviewRequest"
+            },
+            "VoiceDesignGeneratePreviewsAPIResponse": {
+                "properties": {
+                    "previews": {
+                        "items": {
+                            "$ref": "#/components/schemas/VoiceDesignPreviewItem"
+                        },
+                        "type": "array",
+                        "title": "Previews"
+                    },
+                    "text": {
+                        "type": "string",
+                        "title": "Text"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "previews",
+                    "text"
+                ],
+                "title": "VoiceDesignGeneratePreviewsAPIResponse"
+            },
+            "VoiceDesignGeneratePreviewsRequest": {
+                "properties": {
+                    "voice_description": {
+                        "type": "string",
+                        "maxLength": 1000,
+                        "minLength": 20,
+                        "title": "Voice Description",
+                        "description": "Text prompt describing the desired voice characteristics (e.g., 'A deep, resonant male voice with a British accent, suitable for narration.')."
+                    },
+                    "text": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 1000,
+                                "minLength": 100
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Text",
+                        "description": "Optional: Text to be spoken in the generated voice previews. If not provided, and auto_generate_text is false, ElevenLabs might use a default or generic text."
+                    },
+                    "auto_generate_text": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Auto Generate Text",
+                        "description": "Optional: Whether to automatically generate a text suitable for the voice description if 'text' is not provided. Defaults to false by ElevenLabs."
+                    },
+                    "model_id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "eleven_multilingual_ttv_v2",
+                                    "eleven_ttv_v3"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Model Id",
+                        "description": "Optional: Model to use for voice generation."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "voice_description"
+                ],
+                "title": "VoiceDesignGeneratePreviewsRequest"
+            },
+            "VoiceDesignPreviewItem": {
+                "properties": {
+                    "audio_base_64": {
+                        "type": "string",
+                        "title": "Audio Base 64",
+                        "description": "Base64 encoded audio sample of the generated voice preview."
+                    },
+                    "generated_voice_id": {
+                        "type": "string",
+                        "title": "Generated Voice Id",
+                        "description": "Temporary ID for this generated voice preview, used to create the full voice."
+                    },
+                    "media_type": {
+                        "type": "string",
+                        "title": "Media Type",
+                        "description": "MIME type of the audio sample, e.g., 'audio/mpeg'."
+                    },
+                    "duration_secs": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Duration Secs",
+                        "description": "Duration of the audio sample in seconds."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "audio_base_64",
+                    "generated_voice_id",
+                    "media_type"
+                ],
+                "title": "VoiceDesignPreviewItem"
+            },
+            "VoiceGenerateRequest": {
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "title": "Text",
+                        "description": "Text to synthesize."
+                    },
+                    "provider": {
+                        "type": "string",
+                        "enum": [
+                            "cartesia",
+                            "elevenlabs"
+                        ],
+                        "title": "Provider",
+                        "description": "TTS provider."
+                    },
+                    "voice_id": {
+                        "type": "string",
+                        "title": "Voice Id",
+                        "description": "Provider-specific voice ID for the speech."
+                    },
+                    "model_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Model Id",
+                        "description": "Provider-specific model ID (e.g., 'sonic-2' for Cartesia, 'eleven_multilingual_v2' for ElevenLabs)."
+                    },
+                    "output_format": {
+                        "type": "string",
+                        "enum": [
+                            "mp3",
+                            "wav",
+                            "flac",
+                            "pcm_s16le",
+                            "pcm_mulaw"
+                        ],
+                        "title": "Output Format",
+                        "description": "Desired audio output format. This will determine the Content-Type of the response.",
+                        "default": "mp3"
+                    },
+                    "cartesia_language": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Cartesia Language",
+                        "description": "Language code for Cartesia TTS (e.g., 'en'). If None, Cartesia attempts auto-detection.",
+                        "default": "en"
+                    },
+                    "cartesia_sample_rate": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Cartesia Sample Rate",
+                        "description": "Optional sample rate for Cartesia (e.g., 24000, 44100). Provider defaults used if None."
+                    },
+                    "cartesia_bit_rate": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Cartesia Bit Rate",
+                        "description": "Optional bit rate for Cartesia lossy formats like MP3 (e.g., 128000). Provider defaults used if None. Not for PCM."
+                    },
+                    "elevenlabs_optimize_streaming_latency": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "maximum": 4.0,
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Elevenlabs Optimize Streaming Latency",
+                        "description": "0-4. Optimize for streaming latency for ElevenLabs."
+                    },
+                    "elevenlabs_voice_settings_stability": {
+                        "anyOf": [
+                            {
+                                "type": "number",
+                                "maximum": 1.0,
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Elevenlabs Voice Settings Stability",
+                        "description": "Stability for ElevenLabs voice settings."
+                    },
+                    "elevenlabs_voice_settings_similarity_boost": {
+                        "anyOf": [
+                            {
+                                "type": "number",
+                                "maximum": 1.0,
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Elevenlabs Voice Settings Similarity Boost",
+                        "description": "Similarity boost for ElevenLabs voice settings."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "text",
+                    "provider",
+                    "voice_id"
+                ],
+                "title": "VoiceGenerateRequest"
             },
             "VoiceRead": {
                 "properties": {
@@ -16882,7 +17344,14 @@
                         "example": "Calm and relaxing voice of an english-speaking woman"
                     },
                     "gender": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Gender",
                         "description": "Gender of the voice",
                         "example": "female"
@@ -16892,6 +17361,17 @@
                         "title": "Language",
                         "description": "Language code of the voice",
                         "example": "en"
+                    },
+                    "provider": {
+                        "type": "string",
+                        "enum": [
+                            "cartesia",
+                            "elevenlabs"
+                        ],
+                        "title": "Provider",
+                        "description": "Provider of the voice (cartesia or elevenlabs)",
+                        "default": "cartesia",
+                        "example": "cartesia"
                     },
                     "is_preset": {
                         "anyOf": [
@@ -16913,7 +17393,6 @@
                     "voice_id",
                     "name",
                     "description",
-                    "gender",
                     "language"
                 ],
                 "title": "VoiceRead",
