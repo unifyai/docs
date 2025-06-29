@@ -59,6 +59,10 @@ Dictionary containing one or more key:value pairs that will be logged into the p
 Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).
 </ParamField>
 
+<ParamField body="unique_id_parents" type="object | null" >
+Parent IDs for generating a nested unique ID. The keys must match the parent columns in the unique ID list.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -68,7 +72,11 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
     "project": "eval-project",
-    "context": "experiment1/trial1"
+    "context": "experiment1/trial1",
+    "unique_id_parents": {
+        "session": 4,
+        "user": 100
+    }
 }'
 ```
 
@@ -79,7 +87,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1"}
+json_input = {"project": "eval-project", "context": "experiment1/trial1", "unique_id_parents": {"session": 4, "user": 100}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

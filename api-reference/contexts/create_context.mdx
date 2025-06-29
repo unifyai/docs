@@ -45,8 +45,8 @@ Whether duplicate log entries are allowed in this context. If False, attempts to
 Whether to create a unique, sequential ID for each log in this context.
 </ParamField>
 
-<ParamField body="unique_id_name" type="string"  default="row_id">
-The name of the unique ID column.
+<ParamField body="unique_id_names" type="string | array"  default="row_id">
+Name(s) of the unique ID column(s). Can be a string for a single column or a list for nested unique IDs.
 </ParamField>
 
 <RequestExample>
@@ -60,7 +60,11 @@ curl --request POST \
     "name": "experiment1/trial1",
     "description": "Context for experiment 1 trial 1",
     "is_versioned": true,
-    "allow_duplicates": true
+    "allow_duplicates": true,
+    "unique_id_names": [
+        "task_id",
+        "instance_id"
+    ]
 }'
 ```
 
@@ -71,7 +75,7 @@ url = "https://api.unify.ai/v0/project/my_project/contexts"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True, "allow_duplicates": True}
+json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True, "allow_duplicates": True, "unique_id_names": ["task_id", "instance_id"]}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
