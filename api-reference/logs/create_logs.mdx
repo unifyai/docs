@@ -52,15 +52,11 @@ Optional context path to update for the logs. Can use '/' for nested contexts (e
 </ParamField>
 
 <ParamField body="params" type="object | array"  default="{}">
-Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).
+Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding). For contexts with nested unique IDs, parent ID values for the leftmost N-1 unique columns can be supplied as normal param keys. The rightmost column is always auto-incremented. For example, if unique columns are ['user', 'session', 'step'], you can provide 'user' and 'session' values in params, and 'step' will be auto-generated.
 </ParamField>
 
 <ParamField body="entries" type="object | array"  default="{}">
-Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).
-</ParamField>
-
-<ParamField body="unique_id_parents" type="object | null" >
-Parent IDs for generating a nested unique ID. The keys must match the parent columns in the unique ID list.
+Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding). For contexts with nested unique IDs, parent ID values for the leftmost N-1 unique columns can be supplied as normal entry keys. The rightmost column is always auto-incremented. For example, if unique columns are ['user', 'session', 'step'], you can provide 'user' and 'session' values in entries, and 'step' will be auto-generated.
 </ParamField>
 
 <RequestExample>
@@ -72,11 +68,7 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
     "project": "eval-project",
-    "context": "experiment1/trial1",
-    "unique_id_parents": {
-        "session": 4,
-        "user": 100
-    }
+    "context": "experiment1/trial1"
 }'
 ```
 
@@ -87,7 +79,7 @@ url = "https://api.unify.ai/v0/logs"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"project": "eval-project", "context": "experiment1/trial1", "unique_id_parents": {"session": 4, "user": 100}}
+json_input = {"project": "eval-project", "context": "experiment1/trial1"}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 

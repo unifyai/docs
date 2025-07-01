@@ -28,8 +28,8 @@ Description for the new voice.
 Optional labels for ElevenLabs when creating the voice.
 </ParamField>
 
-<ParamField body="language" type="string" required="true">
-Language of the voice.
+<ParamField body="language" type="string | null" >
+Language of the voice. If not provided, it will be auto-detected from the voice_description.
 </ParamField>
 
 <ParamField body="gender" type="string | null" >

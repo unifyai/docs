@@ -8538,6 +8538,7 @@
                                             "value"
                                         ],
                                         "hidden_columns": [],
+                                        "default_hidden_columns": true,
                                         "columns_pin_left": [],
                                         "columns_pin_right": []
                                     },
@@ -8700,6 +8701,7 @@
                                             "value"
                                         ],
                                         "hidden_columns": [],
+                                        "default_hidden_columns": true,
                                         "columns_pin_left": [],
                                         "columns_pin_right": []
                                     },
@@ -8872,6 +8874,7 @@
                                             "value"
                                         ],
                                         "hidden_columns": [],
+                                        "default_hidden_columns": true,
                                         "columns_pin_left": [],
                                         "columns_pin_right": []
                                     },
@@ -9168,6 +9171,7 @@
                                             "value"
                                         ],
                                         "hidden_columns": [],
+                                        "default_hidden_columns": true,
                                         "columns_pin_left": [],
                                         "columns_pin_right": []
                                     },
@@ -9340,6 +9344,7 @@
                                                 "value"
                                             ],
                                             "hidden_columns": [],
+                                            "default_hidden_columns": true,
                                             "columns_pin_left": [],
                                             "columns_pin_right": []
                                         },
@@ -9518,6 +9523,7 @@
                                             "value"
                                         ],
                                         "hidden_columns": [],
+                                        "default_hidden_columns": true,
                                         "columns_pin_left": [],
                                         "columns_pin_right": []
                                     },
@@ -9678,6 +9684,7 @@
                                             "value"
                                         ],
                                         "hidden_columns": [],
+                                        "default_hidden_columns": true,
                                         "columns_pin_left": [],
                                         "columns_pin_right": []
                                     },
@@ -9850,6 +9857,7 @@
                                         "hidden_columns": [
                                             "id"
                                         ],
+                                        "default_hidden_columns": true,
                                         "sorting": {
                                             "column": "name",
                                             "direction": "asc"
@@ -10979,7 +10987,14 @@
                         "title": "Name"
                     },
                     "language": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Language"
                     },
                     "description": {
@@ -11018,7 +11033,6 @@
                 "type": "object",
                 "required": [
                     "name",
-                    "language",
                     "file"
                 ],
                 "title": "Body_clone_voice_v0_assistant_voice_clone_post"
@@ -11389,8 +11403,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -11704,27 +11718,20 @@
                         "default": true,
                         "example": true
                     },
-                    "unique_id_column": {
-                        "type": "boolean",
-                        "title": "Unique Id Column",
-                        "description": "Whether to create a unique, sequential ID for each log in this context.",
-                        "default": false
-                    },
-                    "unique_id_names": {
+                    "unique_column_ids": {
                         "anyOf": [
-                            {
-                                "type": "string"
-                            },
                             {
                                 "items": {
                                     "type": "string"
                                 },
                                 "type": "array"
+                            },
+                            {
+                                "type": "null"
                             }
                         ],
-                        "title": "Unique Id Names",
-                        "description": "Name(s) of the unique ID column(s). Can be a string for a single column or a list for nested unique IDs.",
-                        "default": "row_id",
+                        "title": "Unique Column Ids",
+                        "description": "List of unique column names for nested unique IDs. Leftmost is most major, rightmost is most minor. If None or empty, no unique IDs are generated.",
                         "example": [
                             "task_id",
                             "instance_id"
@@ -11975,7 +11982,7 @@
                             }
                         ],
                         "title": "Params",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding). For contexts with nested unique IDs, parent ID values for the leftmost N-1 unique columns can be supplied as normal param keys. The rightmost column is always auto-incremented. For example, if unique columns are ['user', 'session', 'step'], you can provide 'user' and 'session' values in params, and 'step' will be auto-generated.",
                         "default": {},
                         "examples": [
                             {
@@ -12011,6 +12018,18 @@
                                 {
                                     "system-prompt": "prompt2"
                                 }
+                            ],
+                            [
+                                {
+                                    "session": 4,
+                                    "system-prompt": "prompt1",
+                                    "user": 100
+                                },
+                                {
+                                    "session": 4,
+                                    "system-prompt": "prompt2",
+                                    "user": 100
+                                }
                             ]
                         ]
                     },
@@ -12027,7 +12046,7 @@
                             }
                         ],
                         "title": "Entries",
-                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding).",
+                        "description": "Dictionary containing one or more key:value pairs that will be logged into the platform. Can be either a single dictionary or a list of dictionaries for batch processing. When using lists for both params and entries, their lengths must match. Values must be JSON serializable. If a `explicit_types` dictionary is present, its values will override the inferred types of the entries. The explicit_types dictionary can also specify if a field is mutable via a 'mutable' boolean flag, or unique via a 'unique' boolean flag. For enum types, use the EnumType model with 'values' list and optional 'restrict' flag. Omit 'values' to create an open enum (auto-seeding). For contexts with nested unique IDs, parent ID values for the leftmost N-1 unique columns can be supplied as normal entry keys. The rightmost column is always auto-incremented. For example, if unique columns are ['user', 'session', 'step'], you can provide 'user' and 'session' values in entries, and 'step' will be auto-generated.",
                         "default": {},
                         "examples": [
                             {
@@ -12064,34 +12083,20 @@
                                     "input": "test2",
                                     "score": 0.9
                                 }
+                            ],
+                            [
+                                {
+                                    "data": "step1",
+                                    "session": 4,
+                                    "user": 100
+                                },
+                                {
+                                    "data": "step2",
+                                    "session": 4,
+                                    "user": 100
+                                }
                             ]
                         ]
-                    },
-                    "unique_id_parents": {
-                        "anyOf": [
-                            {
-                                "additionalProperties": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string"
-                                        },
-                                        {
-                                            "type": "integer"
-                                        }
-                                    ]
-                                },
-                                "type": "object"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Unique Id Parents",
-                        "description": "Parent IDs for generating a nested unique ID. The keys must match the parent columns in the unique ID list.",
-                        "example": {
-                            "session": 4,
-                            "user": 100
-                        }
                     }
                 },
                 "type": "object",
@@ -14044,6 +14049,17 @@
                         ],
                         "title": "Hidden Columns"
                     },
+                    "default_hidden_columns": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Default Hidden Columns"
+                    },
                     "sorting": {
                         "anyOf": [
                             {
@@ -15351,6 +15367,17 @@
                             }
                         ],
                         "title": "Hidden Columns"
+                    },
+                    "default_hidden_columns": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Default Hidden Columns"
                     },
                     "sorting": {
                         "anyOf": [
@@ -17046,9 +17073,16 @@
                         "description": "Optional labels for ElevenLabs when creating the voice."
                     },
                     "language": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Language",
-                        "description": "Language of the voice."
+                        "description": "Language of the voice. If not provided, it will be auto-detected from the voice_description."
                     },
                     "gender": {
                         "anyOf": [
@@ -17067,8 +17101,7 @@
                 "required": [
                     "generated_voice_id",
                     "voice_name",
-                    "voice_description",
-                    "language"
+                    "voice_description"
                 ],
                 "title": "VoiceDesignCreateFromPreviewRequest"
             },

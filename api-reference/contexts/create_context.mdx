@@ -41,12 +41,8 @@ Whether the context should be versioned. If True, the context will be versioned 
 Whether duplicate log entries are allowed in this context. If False, attempts to add duplicate logs will be ignored.
 </ParamField>
 
-<ParamField body="unique_id_column" type="boolean"  default="false">
-Whether to create a unique, sequential ID for each log in this context.
-</ParamField>
-
-<ParamField body="unique_id_names" type="string | array"  default="row_id">
-Name(s) of the unique ID column(s). Can be a string for a single column or a list for nested unique IDs.
+<ParamField body="unique_column_ids" type="array | null" >
+List of unique column names for nested unique IDs. Leftmost is most major, rightmost is most minor. If None or empty, no unique IDs are generated.
 </ParamField>
 
 <RequestExample>
@@ -61,7 +57,7 @@ curl --request POST \
     "description": "Context for experiment 1 trial 1",
     "is_versioned": true,
     "allow_duplicates": true,
-    "unique_id_names": [
+    "unique_column_ids": [
         "task_id",
         "instance_id"
     ]
@@ -75,7 +71,7 @@ url = "https://api.unify.ai/v0/project/my_project/contexts"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True, "allow_duplicates": True, "unique_id_names": ["task_id", "instance_id"]}
+json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True, "allow_duplicates": True, "unique_column_ids": ["task_id", "instance_id"]}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
