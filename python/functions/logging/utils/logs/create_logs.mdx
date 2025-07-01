@@ -9,14 +9,13 @@ def create_logs(
     context: Optional[str] = None,
     params: Optional[Union[List[Dict[str, Any]], Dict[str, Any]]] = None,
     entries: Optional[Union[List[Dict[str, Any]], Dict[str, Any]]] = None,
-    unique_id_parents: Optional[Dict[str, Any]] = None,
     mutable: Optional[Union[bool, Dict[str, bool]]] = True,
     batched: Optional[bool] = None,
     api_key: Optional[str] = None,
 ) -> List[int]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/42057cd6c22d10c954925c3b4b0125a89ad88dd8/unify/logging/utils/logs.py#L892)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/3840355784bf0a5edaef321af85d2fc11905eb86/unify/logging/utils/logs.py#L892)</p>
 
 Creates one or more logs associated to a project.
 
@@ -24,10 +23,9 @@ Creates one or more logs associated to a project.
 
 - `project` - Name of the project the stored logs will be associated to.
 - `context` - Context for the logs.
-- `entries` - List of dictionaries with the entries to be logged.
+- `entries` - List of dictionaries with the entries to be logged. For contexts with
 - `params` - List of dictionaries with the params to be logged.
 - `mutable` - Either a boolean to apply uniform mutability for all fields, or a dictionary mapping field names to booleans for per-field control. Defaults to True.
-- `unique_id_parents` - A dictionary specifying the parent IDs to use when
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
 
