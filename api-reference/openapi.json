@@ -10442,6 +10442,19 @@
                         "description": "Contact phone number of the user",
                         "example": "+15551234567"
                     },
+                    "user_whatsapp_number": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Whatsapp Number",
+                        "description": "WhatsApp number of the user",
+                        "example": "+15551234567"
+                    },
                     "create_infra": {
                         "anyOf": [
                             {
@@ -10683,6 +10696,19 @@
                         "description": "Contact phone number of the user",
                         "example": "+15551234567"
                     },
+                    "user_whatsapp_number": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Whatsapp Number",
+                        "description": "WhatsApp number of the user",
+                        "example": "+15551234567"
+                    },
                     "create_infra": {
                         "anyOf": [
                             {
@@ -10735,6 +10761,19 @@
                         "title": "Updated At",
                         "description": "Timestamp when the assistant was last updated",
                         "example": "2025-04-26T14:15:00Z"
+                    },
+                    "assistant_whatsapp_number": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Assistant Whatsapp Number",
+                        "description": "WhatsApp number of the assistant",
+                        "example": "+15551234567"
                     }
                 },
                 "type": "object",
@@ -10825,7 +10864,7 @@
                         "description": "Email address for the assistant",
                         "example": "ada.lovelace@newdomain.com"
                     },
-                    "whatsapp_sid": {
+                    "user_whatsapp_number": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -10834,9 +10873,22 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Whatsapp Sid",
-                        "description": "WhatsApp SID for Twilio integration",
-                        "example": "whatsapp:+1234567890"
+                        "title": "User Whatsapp Number",
+                        "description": "WhatsApp number of the user",
+                        "example": "+15559876543"
+                    },
+                    "assistant_whatsapp_number": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Assistant Whatsapp Number",
+                        "description": "WhatsApp number of the assistant",
+                        "example": "+15559876543"
                     },
                     "voice_id": {
                         "anyOf": [
@@ -14333,21 +14385,21 @@
                     "columns": {
                         "anyOf": [
                             {
-                                "items": {
+                                "additionalProperties": {
                                     "type": "string"
                                 },
-                                "type": "array"
+                                "type": "object"
                             },
                             {
                                 "type": "null"
                             }
                         ],
                         "title": "Columns",
-                        "description": "Optional list of columns to include in the result",
-                        "example": [
-                            "A.user_id",
-                            "B.score"
-                        ]
+                        "description": "Optional dictionary mapping source columns to new column names for the result. The key is the source column (e.g., 'A.user_id') and the value is the desired alias in the new log (e.g., 'user_identifier'). If omitted, all columns will be selected and prefixed with 'A_' or 'B_'.",
+                        "example": {
+                            "A.user_id": "user_identifier",
+                            "B.score": "user_score"
+                        }
                     },
                     "project": {
                         "type": "string",

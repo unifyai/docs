@@ -44,8 +44,8 @@ Join type: 'inner', 'left', 'right', or 'outer'
 Name for the new context where joined logs will be stored
 </ParamField>
 
-<ParamField body="columns" type="array | null" >
-Optional list of columns to include in the result
+<ParamField body="columns" type="object | null" >
+Optional dictionary mapping source columns to new column names for the result. The key is the source column (e.g., 'A.user_id') and the value is the desired alias in the new log (e.g., 'user_identifier'). If omitted, all columns will be selected and prefixed with 'A_' or 'B_'.
 </ParamField>
 
 <ParamField body="project" type="string" required="true">
@@ -73,10 +73,10 @@ curl --request POST \
     "join_expr": "A.user_id == B.user_id",
     "mode": "inner",
     "new_context": "Derived/A_B",
-    "columns": [
-        "A.user_id",
-        "B.score"
-    ]
+    "columns": {
+        "A.user_id": "user_identifier",
+        "B.score": "user_score"
+    }
 }'
 ```
 
@@ -87,7 +87,7 @@ url = "https://api.unify.ai/v0/logs/join"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"pair_of_args": [{"context": "context_a", "filter_expr": "user_id == 1"}, {"context": "context_b", "filter_expr": "user_id == 2"}], "join_expr": "A.user_id == B.user_id", "mode": "inner", "new_context": "Derived/A_B", "columns": ["A.user_id", "B.score"]}
+json_input = {"pair_of_args": [{"context": "context_a", "filter_expr": "user_id == 1"}, {"context": "context_b", "filter_expr": "user_id == 2"}], "join_expr": "A.user_id == B.user_id", "mode": "inner", "new_context": "Derived/A_B", "columns": {"A.user_id": "user_identifier", "B.score": "user_score"}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
