@@ -42,8 +42,12 @@ Contact phone number for the assistant
 Email address for the assistant
 </ParamField>
 
-<ParamField body="whatsapp_sid" type="string | null" >
-WhatsApp SID for Twilio integration
+<ParamField body="user_whatsapp_number" type="string | null" >
+WhatsApp number of the user
+</ParamField>
+
+<ParamField body="assistant_whatsapp_number" type="string | null" >
+WhatsApp number of the assistant
 </ParamField>
 
 <ParamField body="voice_id" type="string | null" >
@@ -68,7 +72,8 @@ curl --request PATCH \
     "user_phone": "+15551234567",
     "phone": "+15559876543",
     "email": "ada.lovelace@newdomain.com",
-    "whatsapp_sid": "whatsapp:+1234567890",
+    "user_whatsapp_number": "+15559876543",
+    "assistant_whatsapp_number": "+15559876543",
     "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
     "country": "GB"
 }'
@@ -81,7 +86,7 @@ url = "https://api.unify.ai/v0/assistant/<assistant_id>/config"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"weekly_limit": 20.5, "max_parallel": 3, "about": "Award-winning mathematician specializing in algorithm development", "user_phone": "+15551234567", "phone": "+15559876543", "email": "ada.lovelace@newdomain.com", "whatsapp_sid": "whatsapp:+1234567890", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "country": "GB"}
+json_input = {"weekly_limit": 20.5, "max_parallel": 3, "about": "Award-winning mathematician specializing in algorithm development", "user_phone": "+15551234567", "phone": "+15559876543", "email": "ada.lovelace@newdomain.com", "user_whatsapp_number": "+15559876543", "assistant_whatsapp_number": "+15559876543", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "country": "GB"}
 
 response = requests.request("PATCH", url, json=json_input, headers=headers)
 

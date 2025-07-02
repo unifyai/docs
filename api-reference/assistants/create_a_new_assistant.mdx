@@ -60,6 +60,10 @@ Id of the voice (Cartesia ID) to use for the assistant
 Contact phone number of the user
 </ParamField>
 
+<ParamField body="user_whatsapp_number" type="string | null" >
+WhatsApp number of the user
+</ParamField>
+
 <ParamField body="create_infra" type="boolean | null"  default="true">
 Whether to create the infrastructure for the assistant
 </ParamField>
@@ -87,7 +91,8 @@ curl --request POST \
     "country": "US",
     "email": "ada.lovelace@unify.ai",
     "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
-    "user_phone": "+15551234567"
+    "user_phone": "+15551234567",
+    "user_whatsapp_number": "+15551234567"
 }'
 ```
 
@@ -98,7 +103,7 @@ url = "https://api.unify.ai/v0/assistant"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2, "region": "North America", "profile_photo": "https://example.com/photos/ada.jpg", "about": "Mathematician and writer known for work on Analytical Engine", "country": "US", "email": "ada.lovelace@unify.ai", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "user_phone": "+15551234567"}
+json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2, "region": "North America", "profile_photo": "https://example.com/photos/ada.jpg", "about": "Mathematician and writer known for work on Analytical Engine", "country": "US", "email": "ada.lovelace@unify.ai", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "user_phone": "+15551234567", "user_whatsapp_number": "+15551234567"}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
