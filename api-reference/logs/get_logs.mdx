@@ -19,7 +19,6 @@ Returns a list of filtered log entries from a project with various expressivenes
 
   3. **Return IDs only mode**:
      - If return_ids_only is True, returns only the log event ids.
-     - If return_versions is also True, returns a list of objects with both id and version information.
 
   4. **Dynamic expression sorting**:
      - In addition to static field-based sorting, you can use dynamic expressions for sorting.
@@ -30,16 +29,6 @@ The response always includes:
   - `count`: The total number of logs matching the query.
   - Additionally, it includes either `logs` (in monolithic or nested grouping mode) or `groups` (in flat grouping mode)
     as specified by the arguments.
-
-If return_versions=True:
-- Returns all versions of logs in versioned contexts
-- from_ids and exclude_ids must be provided as lists of objects with 'id' and 'version' keys
-- Each object must have format: `{"id": log_event_id, "version": version_number}`
-- This is only valid for logs in versioned contexts
-
-If return_versions=False (default):
-- Returns only the latest version of each log
-- from_ids and exclude_ids should be strings of '&'-separated log event IDs
 
 #### Authorizations
 
@@ -59,10 +48,6 @@ The context (prepending '/' seperated field names) from which to retrieve the lo
 
 <ParamField query="context" type="string | null" >
 Static context to filter logs by.
-</ParamField>
-
-<ParamField query="return_versions" type="boolean"  default="false">
-Whether to return all versions of logs. Only valid for versioned contexts.
 </ParamField>
 
 <ParamField query="group_threshold" type="integer | null" >
@@ -153,14 +138,14 @@ If provided, use this seed for deterministic random ordering instead of the defa
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&return_versions=None&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'timestamp':%20'descending',%20'round(score,%202)':%20'ascending'}&group_sorting={'entries/student':%20{'field':%20'score',%20'direction':%20'descending',%20'metric':%20'mean'}}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None&randomize=None&seed=None' \
+  --url 'https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'timestamp':%20'descending',%20'round(score,%202)':%20'ascending'}&group_sorting={'entries/student':%20{'field':%20'score',%20'direction':%20'descending',%20'metric':%20'mean'}}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None&randomize=None&seed=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&return_versions=None&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'timestamp':%20'descending',%20'round(score,%202)':%20'ascending'}&group_sorting={'entries/student':%20{'field':%20'score',%20'direction':%20'descending',%20'metric':%20'mean'}}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None&randomize=None&seed=None"
+url = "https://api.unify.ai/v0/logs?project=eval-project&column_context=subjects/science/physics&context=training&group_threshold=None&value_limit=None&filter_expr=len(output)%20>%20200%20and%20temperature%20==%200.5&sorting={'timestamp':%20'descending',%20'round(score,%202)':%20'ascending'}&group_sorting={'entries/student':%20{'field':%20'score',%20'direction':%20'descending',%20'metric':%20'mean'}}&from_ids=0&1&2&exclude_ids=0&1&2&from_fields=score&response&exclude_fields=score&response&limit=None&offset=None&group_by=['model',%20'temperature']&group_limit=None&group_offset=None&group_depth=None&nested_groups=None&groups_only=None&return_timestamps=None&return_ids_only=None&randomize=None&seed=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
