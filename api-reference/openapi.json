@@ -4608,7 +4608,7 @@
                     "Logs"
                 ],
                 "summary": "Get Logs",
-                "description": "Returns a list of filtered log entries from a project with various expressiveness options:\n\n  1. **Monolithic mode** (when group_by is not provided):\n     - Returns a flat list of log entries (with fields clipped if value_limit is set).\n     - Optionally factors out repeated fields into a grouped_entries field if group_threshold is set.\n\n  2. **Grouped mode** (when group_by is provided):\n     - Supports multi-level grouping of logs. The order of fields in group_by dictates the nesting order.\n     - Supports pagination at the group level using group_limit and group_offset.\n     - Supports limiting the nesting depth with group_depth.\n     - When nested_groups is True, returns a nested structure under the \"logs\" key.\n     - When nested_groups is False, returns flat per-field mappings under the \"groups\" key.\n     - When groups_only is True, the detailed log objects are omitted and leaves are simplified\n       to either lists of log ids (if return_timestamps is False) or mappings of `{log id: timestamp}` (if True).\n\n  3. **Return IDs only mode**:\n     - If return_ids_only is True, returns only the log event ids.\n     - If return_versions is also True, returns a list of objects with both id and version information.\n\n  4. **Dynamic expression sorting**:\n     - In addition to static field-based sorting, you can use dynamic expressions for sorting.\n     - The same grammar supported for `filter_expr` applies to sorting expressions.\n\nThe response always includes:\n  - `params`: The parameter versions used across the logs.\n  - `count`: The total number of logs matching the query.\n  - Additionally, it includes either `logs` (in monolithic or nested grouping mode) or `groups` (in flat grouping mode)\n    as specified by the arguments.\n\nIf return_versions=True:\n- Returns all versions of logs in versioned contexts\n- from_ids and exclude_ids must be provided as lists of objects with 'id' and 'version' keys\n- Each object must have format: `{\"id\": log_event_id, \"version\": version_number}`\n- This is only valid for logs in versioned contexts\n\nIf return_versions=False (default):\n- Returns only the latest version of each log\n- from_ids and exclude_ids should be strings of '&'-separated log event IDs",
+                "description": "Returns a list of filtered log entries from a project with various expressiveness options:\n\n  1. **Monolithic mode** (when group_by is not provided):\n     - Returns a flat list of log entries (with fields clipped if value_limit is set).\n     - Optionally factors out repeated fields into a grouped_entries field if group_threshold is set.\n\n  2. **Grouped mode** (when group_by is provided):\n     - Supports multi-level grouping of logs. The order of fields in group_by dictates the nesting order.\n     - Supports pagination at the group level using group_limit and group_offset.\n     - Supports limiting the nesting depth with group_depth.\n     - When nested_groups is True, returns a nested structure under the \"logs\" key.\n     - When nested_groups is False, returns flat per-field mappings under the \"groups\" key.\n     - When groups_only is True, the detailed log objects are omitted and leaves are simplified\n       to either lists of log ids (if return_timestamps is False) or mappings of `{log id: timestamp}` (if True).\n\n  3. **Return IDs only mode**:\n     - If return_ids_only is True, returns only the log event ids.\n\n  4. **Dynamic expression sorting**:\n     - In addition to static field-based sorting, you can use dynamic expressions for sorting.\n     - The same grammar supported for `filter_expr` applies to sorting expressions.\n\nThe response always includes:\n  - `params`: The parameter versions used across the logs.\n  - `count`: The total number of logs matching the query.\n  - Additionally, it includes either `logs` (in monolithic or nested grouping mode) or `groups` (in flat grouping mode)\n    as specified by the arguments.",
                 "operationId": "get_logs_v0_logs_get",
                 "security": [
                     {
@@ -4665,18 +4665,6 @@
                         },
                         "description": "Static context to filter logs by.",
                         "example": "training"
-                    },
-                    {
-                        "name": "return_versions",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "description": "Whether to return all versions of logs. Only valid for versioned contexts.",
-                            "default": false,
-                            "title": "Return Versions"
-                        },
-                        "description": "Whether to return all versions of logs. Only valid for versioned contexts."
                     },
                     {
                         "name": "group_threshold",
