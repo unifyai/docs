@@ -73,6 +73,168 @@
                 ]
             }
         },
+        "/v0/user/business-status": {
+            "get": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Get User Business Status",
+                "description": "Get the current user's business classification status.",
+                "operationId": "get_user_business_status_v0_user_business_status_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserBusinessStatusResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/user/account-type": {
+            "put": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Update User Account Type",
+                "description": "Update user account type (individual vs business).",
+                "operationId": "update_user_account_type_v0_user_account_type_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAccountTypeRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/user/business-info": {
+            "patch": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Update User Business Info",
+                "description": "Update business information for business accounts.",
+                "operationId": "update_user_business_info_v0_user_business_info_patch",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBusinessInfoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/user/create-with-business-info": {
+            "post": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Create User With Business Info",
+                "description": "Create a new user with business classification (for signup flow).",
+                "operationId": "create_user_with_business_info_v0_user_create_with_business_info_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAccountTypeRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/user/assistant-hiring-approval": {
             "post": {
                 "tags": [
@@ -134,6 +296,90 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/HTTPValidationError"
                                 }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/user/validate-tax-id": {
+            "post": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Validate Tax Id",
+                "description": "Validate a tax ID format for a specific country.",
+                "operationId": "validate_tax_id_v0_user_validate_tax_id_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "tax_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Tax ID to validate",
+                            "title": "Tax Id"
+                        },
+                        "description": "Tax ID to validate"
+                    },
+                    {
+                        "name": "country",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Two-letter country code",
+                            "title": "Country"
+                        },
+                        "description": "Two-letter country code"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/user/supported-tax-countries": {
+            "get": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Get Supported Tax Countries",
+                "description": "Get list of countries supported for tax ID validation.",
+                "operationId": "get_supported_tax_countries_v0_user_supported_tax_countries_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
                             }
                         }
                     }
@@ -10865,19 +11111,6 @@
                         "description": "WhatsApp number of the user",
                         "example": "+15559876543"
                     },
-                    "assistant_whatsapp_number": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Assistant Whatsapp Number",
-                        "description": "WhatsApp number of the assistant",
-                        "example": "+15559876543"
-                    },
                     "voice_id": {
                         "anyOf": [
                             {
@@ -11238,6 +11471,102 @@
                     "file"
                 ],
                 "title": "Body_upload_assistant_photo_v0_assistant_photo_upload_post"
+            },
+            "BusinessAddress": {
+                "properties": {
+                    "address_line1": {
+                        "type": "string",
+                        "title": "Address Line1"
+                    },
+                    "address_line2": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Address Line2"
+                    },
+                    "city": {
+                        "type": "string",
+                        "title": "City"
+                    },
+                    "state": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "State"
+                    },
+                    "country": {
+                        "type": "string",
+                        "title": "Country"
+                    },
+                    "postal_code": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Postal Code"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "address_line1",
+                    "city",
+                    "country"
+                ],
+                "title": "BusinessAddress",
+                "description": "Business address information for tax purposes."
+            },
+            "BusinessInfo": {
+                "properties": {
+                    "business_name": {
+                        "type": "string",
+                        "title": "Business Name"
+                    },
+                    "tax_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Id"
+                    },
+                    "business_type": {
+                        "type": "string",
+                        "title": "Business Type"
+                    },
+                    "business_address": {
+                        "$ref": "#/components/schemas/BusinessAddress"
+                    },
+                    "tax_exempt": {
+                        "type": "boolean",
+                        "title": "Tax Exempt",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "business_name",
+                    "business_type",
+                    "business_address"
+                ],
+                "title": "BusinessInfo",
+                "description": "Business information for B2B accounts."
             },
             "ChatCompletionRequest": {
                 "properties": {
@@ -16164,6 +16493,128 @@
                 "title": "TileTemplateSchema",
                 "description": "Template schema for a detached tile - inherits all fields from base"
             },
+            "UpdateAccountTypeRequest": {
+                "properties": {
+                    "account_type": {
+                        "type": "string",
+                        "enum": [
+                            "individual",
+                            "business"
+                        ],
+                        "title": "Account Type"
+                    },
+                    "business_info": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/BusinessInfo"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Email"
+                    },
+                    "name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Name"
+                    },
+                    "last_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Last Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "account_type"
+                ],
+                "title": "UpdateAccountTypeRequest",
+                "description": "Request to update user account type."
+            },
+            "UpdateBusinessInfoRequest": {
+                "properties": {
+                    "business_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Business Name"
+                    },
+                    "tax_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Id"
+                    },
+                    "business_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Business Type"
+                    },
+                    "business_address": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/BusinessAddress"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "tax_exempt": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Exempt"
+                    }
+                },
+                "type": "object",
+                "title": "UpdateBusinessInfoRequest",
+                "description": "Request to update business information."
+            },
             "UpdateDerivedEntriesConfig": {
                 "properties": {
                     "project": {
@@ -16840,6 +17291,84 @@
                 "type": "object",
                 "title": "UpdateTileRequest",
                 "description": "Request to update a tile - only includes fields that can be updated"
+            },
+            "UserBusinessStatusResponse": {
+                "properties": {
+                    "account_type": {
+                        "type": "string",
+                        "title": "Account Type"
+                    },
+                    "business_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Business Name"
+                    },
+                    "tax_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Id"
+                    },
+                    "business_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Business Type"
+                    },
+                    "business_verified": {
+                        "type": "boolean",
+                        "title": "Business Verified"
+                    },
+                    "tax_exempt": {
+                        "type": "boolean",
+                        "title": "Tax Exempt"
+                    },
+                    "tax_jurisdiction": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Jurisdiction"
+                    },
+                    "business_address": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/BusinessAddress"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "account_type",
+                    "business_verified",
+                    "tax_exempt"
+                ],
+                "title": "UserBusinessStatusResponse",
+                "description": "Response containing user's business classification status."
             },
             "ValidationError": {
                 "properties": {
