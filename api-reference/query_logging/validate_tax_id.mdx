@@ -1,0 +1,64 @@
+---
+title: "Validate Tax Id"
+api: 'POST /v0/user/validate-tax-id'
+---
+Validate a tax ID format for a specific country.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="tax_id" type="string" required="true">
+Tax ID to validate
+</ParamField>
+
+<ParamField query="country" type="string" required="true">
+Two-letter country code
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/user/validate-tax-id?tax_id=None&country=None' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/user/validate-tax-id?tax_id=None&country=None"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

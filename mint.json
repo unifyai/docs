@@ -571,8 +571,14 @@
                             "pages": [
                                 "api-reference/query_logging/get_query_logging_status",
                                 "api-reference/query_logging/update_query_logging_status",
+                                "api-reference/query_logging/get_user_business_status",
+                                "api-reference/query_logging/update_user_account_type",
+                                "api-reference/query_logging/update_user_business_info",
+                                "api-reference/query_logging/create_user_with_business_info",
                                 "api-reference/query_logging/request_assistant_hiring_approval",
-                                "api-reference/query_logging/claim_assistant_hiring_one_time_link"
+                                "api-reference/query_logging/claim_assistant_hiring_one_time_link",
+                                "api-reference/query_logging/validate_tax_id",
+                                "api-reference/query_logging/get_supported_tax_countries"
                             ]
                         }
                     ]
