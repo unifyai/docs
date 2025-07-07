@@ -12069,6 +12069,25 @@
                             "context"
                         ],
                         "title": "Type"
+                    },
+                    "prev_commit_hash": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Prev Commit Hash"
+                    },
+                    "next_commit_hash": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Next Commit Hash",
+                        "default": []
                     }
                 },
                 "type": "object",
@@ -15068,6 +15087,25 @@
                     "created_at": {
                         "type": "string",
                         "title": "Created At"
+                    },
+                    "prev_commit_hash": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Prev Commit Hash"
+                    },
+                    "next_commit_hash": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Next Commit Hash",
+                        "default": []
                     }
                 },
                 "type": "object",
