@@ -11008,6 +11008,33 @@
                         "title": "Assistant Whatsapp Number",
                         "description": "WhatsApp number of the assistant",
                         "example": "+15551234567"
+                    },
+                    "tts_provider": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tts Provider",
+                        "description": "TTS provider of the assistant",
+                        "default": "cartesia",
+                        "example": "cartesia"
+                    },
+                    "api_key": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Api Key",
+                        "description": "API key of the assistant",
+                        "example": "1234567890"
                     }
                 },
                 "type": "object",
