@@ -10635,6 +10635,7 @@
                         ],
                         "title": "Country",
                         "description": "Country code for phone number provisioning (e.g., US, GB)",
+                        "default": "US",
                         "example": "US"
                     },
                     "email": {
@@ -10889,6 +10890,7 @@
                         ],
                         "title": "Country",
                         "description": "Country code for phone number provisioning (e.g., US, GB)",
+                        "default": "US",
                         "example": "US"
                     },
                     "email": {
