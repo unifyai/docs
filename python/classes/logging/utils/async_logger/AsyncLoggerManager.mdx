@@ -6,19 +6,19 @@ title: 'AsyncLoggerManager'
 class AsyncLoggerManager
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/519e45a0580d81c795c4e4644e015ae2d6bccfbe/unify/logging/utils/async_logger.py#L21)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a434544c8d802fe1edbc16b0198ac0c003a608b7/unify/logging/utils/async_logger.py#L19)</p>
 
 
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/519e45a0580d81c795c4e4644e015ae2d6bccfbe/unify/logging/utils/async_logger.py#L22)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a434544c8d802fe1edbc16b0198ac0c003a608b7/unify/logging/utils/async_logger.py#L20)</p>
 
 ```python
 def __init__(
         self,
         *,
-        name: str = "",
+        name: str = "unknown",
         base_url: str = BASE_URL,
         api_key: str = os.getenv("UNIFY_KEY"),
         num_consumers: int = 256,
@@ -34,7 +34,7 @@ def __init__(
 
 ### clear\_callbacks
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/519e45a0580d81c795c4e4644e015ae2d6bccfbe/unify/logging/utils/async_logger.py#L69)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a434544c8d802fe1edbc16b0198ac0c003a608b7/unify/logging/utils/async_logger.py#L70)</p>
 
 ```python
 def clear_callbacks(self):
@@ -46,7 +46,7 @@ def clear_callbacks(self):
 
 ### join
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/519e45a0580d81c795c4e4644e015ae2d6bccfbe/unify/logging/utils/async_logger.py#L79)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a434544c8d802fe1edbc16b0198ac0c003a608b7/unify/logging/utils/async_logger.py#L80)</p>
 
 ```python
 def join(self):
@@ -58,7 +58,7 @@ def join(self):
 
 ### log\_create
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/519e45a0580d81c795c4e4644e015ae2d6bccfbe/unify/logging/utils/async_logger.py#L157)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a434544c8d802fe1edbc16b0198ac0c003a608b7/unify/logging/utils/async_logger.py#L166)</p>
 
 ```python
 def log_create(
@@ -76,7 +76,7 @@ def log_create(
 
 ### log\_update
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/519e45a0580d81c795c4e4644e015ae2d6bccfbe/unify/logging/utils/async_logger.py#L178)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a434544c8d802fe1edbc16b0198ac0c003a608b7/unify/logging/utils/async_logger.py#L187)</p>
 
 ```python
 def log_update(
@@ -96,7 +96,7 @@ def log_update(
 
 ### register\_callback
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/519e45a0580d81c795c4e4644e015ae2d6bccfbe/unify/logging/utils/async_logger.py#L66)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a434544c8d802fe1edbc16b0198ac0c003a608b7/unify/logging/utils/async_logger.py#L67)</p>
 
 ```python
 def register_callback(self, fn):
@@ -108,7 +108,7 @@ def register_callback(self, fn):
 
 ### stop\_sync
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/519e45a0580d81c795c4e4644e015ae2d6bccfbe/unify/logging/utils/async_logger.py#L199)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a434544c8d802fe1edbc16b0198ac0c003a608b7/unify/logging/utils/async_logger.py#L208)</p>
 
 ```python
 def stop_sync(self, immediate=False):
