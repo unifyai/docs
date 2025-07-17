@@ -391,6 +391,76 @@
                 ]
             }
         },
+        "/v0/user/onboarding-status": {
+            "get": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Get Onboarding Status",
+                "description": "Get the current user's onboarding status.",
+                "operationId": "get_onboarding_status_v0_user_onboarding_status_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OnboardingStatusResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Update Onboarding Status",
+                "description": "Update the current user's onboarding status.",
+                "operationId": "update_onboarding_status_v0_user_onboarding_status_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateOnboardingStatusRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/providers": {
             "get": {
                 "tags": [
@@ -2266,7 +2336,7 @@
                     "Voices"
                 ],
                 "summary": "List voices",
-                "description": "Returns a list of all assistant voices created, and all globally registered preset voices.",
+                "description": "Returns a list of all assistant voices created for the user.",
                 "operationId": "list_voices_v0_assistant_voice_get",
                 "responses": {
                     "200": {
@@ -11037,6 +11107,45 @@
                         "title": "Api Key",
                         "description": "API key of the assistant",
                         "example": "1234567890"
+                    },
+                    "user_first_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User First Name",
+                        "description": "First name of the user",
+                        "example": "Ada"
+                    },
+                    "user_last_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Last Name",
+                        "description": "Last name of the user",
+                        "example": "Lovelace"
+                    },
+                    "user_email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Email",
+                        "description": "Email of the user",
+                        "example": "ada.lovelace@unify.ai"
                     }
                 },
                 "type": "object",
@@ -14852,6 +14961,20 @@
                 "title": "LegacyInterfaceConfig",
                 "description": "Legacy Interface configuration schema for backward compatibility"
             },
+            "OnboardingStatusResponse": {
+                "properties": {
+                    "onboarded": {
+                        "type": "boolean",
+                        "title": "Onboarded"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "onboarded"
+                ],
+                "title": "OnboardingStatusResponse",
+                "description": "Response containing user's onboarding status."
+            },
             "PhotoGenerateRequest": {
                 "properties": {
                     "prompt": {
@@ -17005,6 +17128,20 @@
                 ],
                 "title": "UpdateLogRequest"
             },
+            "UpdateOnboardingStatusRequest": {
+                "properties": {
+                    "onboarded": {
+                        "type": "boolean",
+                        "title": "Onboarded"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "onboarded"
+                ],
+                "title": "UpdateOnboardingStatusRequest",
+                "description": "Request to update user's onboarding status."
+            },
             "UpdateQueryLoggingRequest": {
                 "properties": {
                     "enabled": {
@@ -17693,6 +17830,30 @@
                         "title": "Voice Description",
                         "description": "Description for the new voice."
                     },
+                    "audio_base_64": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Audio Base 64",
+                        "description": "Base64 encoded audio sample from the selected voice preview. If provided, it's used for language detection."
+                    },
+                    "media_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Media Type",
+                        "description": "MIME type of the audio sample, e.g., 'audio/mpeg'. Assumed 'audio/mpeg' if sample is provided but this is omitted."
+                    },
                     "labels": {
                         "anyOf": [
                             {
@@ -17718,7 +17879,7 @@
                             }
                         ],
                         "title": "Language",
-                        "description": "Language of the voice. If not provided, it will be auto-detected from the voice_description."
+                        "description": "Language of the voice. If not provided, it will be auto-detected from the provided audio preview, or from the description if no audio is provided."
                     },
                     "gender": {
                         "anyOf": [
@@ -17765,11 +17926,30 @@
             "VoiceDesignGeneratePreviewsRequest": {
                 "properties": {
                     "voice_description": {
-                        "type": "string",
-                        "maxLength": 1000,
-                        "minLength": 20,
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 1000,
+                                "minLength": 20
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Voice Description",
-                        "description": "Text prompt describing the desired voice characteristics (e.g., 'A deep, resonant male voice with a British accent, suitable for narration.')."
+                        "description": "Text prompt describing the desired voice characteristics (e.g., 'A deep, resonant male voice with a British accent, suitable for narration.'). If `bio` is provided, this field can be used to add more specific voice instructions. At least one of bio or voice_description should be provided."
+                    },
+                    "bio": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bio",
+                        "description": "A biography or background of the character to generate a voice description from. Used with `voice_description` to generate a richer prompt for the TTS provider. At least one of bio or voice_description should be provided."
                     },
                     "text": {
                         "anyOf": [
@@ -17815,9 +17995,6 @@
                     }
                 },
                 "type": "object",
-                "required": [
-                    "voice_description"
-                ],
                 "title": "VoiceDesignGeneratePreviewsRequest"
             },
             "VoiceDesignPreviewItem": {

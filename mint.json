@@ -578,7 +578,9 @@
                                 "api-reference/query_logging/request_assistant_hiring_approval",
                                 "api-reference/query_logging/claim_assistant_hiring_one_time_link",
                                 "api-reference/query_logging/validate_tax_id",
-                                "api-reference/query_logging/get_supported_tax_countries"
+                                "api-reference/query_logging/get_supported_tax_countries",
+                                "api-reference/query_logging/get_onboarding_status",
+                                "api-reference/query_logging/update_onboarding_status"
                             ]
                         }
                     ]
