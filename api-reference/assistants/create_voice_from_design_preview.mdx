@@ -24,12 +24,20 @@ Name for the new voice.
 Description for the new voice.
 </ParamField>
 
+<ParamField body="audio_base_64" type="string | null" >
+Base64 encoded audio sample from the selected voice preview. If provided, it's used for language detection.
+</ParamField>
+
+<ParamField body="media_type" type="string | null" >
+MIME type of the audio sample, e.g., 'audio/mpeg'. Assumed 'audio/mpeg' if sample is provided but this is omitted.
+</ParamField>
+
 <ParamField body="labels" type="object | null" >
 Optional labels for ElevenLabs when creating the voice.
 </ParamField>
 
 <ParamField body="language" type="string | null" >
-Language of the voice. If not provided, it will be auto-detected from the voice_description.
+Language of the voice. If not provided, it will be auto-detected from the provided audio preview, or from the description if no audio is provided.
 </ParamField>
 
 <ParamField body="gender" type="string | null" >
