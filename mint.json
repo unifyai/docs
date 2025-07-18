@@ -385,26 +385,40 @@
                     "group": "Assistants",
                     "pages": [
                         {
-                            "group": "Assistants",
+                            "group": "Assistant Management",
                             "pages": [
-                                "api-reference/assistants/create_a_new_assistant",
-                                "api-reference/assistants/list_all_assistants",
-                                "api-reference/assistants/delete_an_assistant",
-                                "api-reference/assistants/update_assistant_configuration",
-                                "api-reference/assistants/add_a_call_recording_for_an_assistant",
-                                "api-reference/assistants/list_all_recordings_for_an_assistant",
-                                "api-reference/assistants/delete_a_recording",
-                                "api-reference/assistants/list_voices",
-                                "api-reference/assistants/register_voice",
-                                "api-reference/assistants/clone_voice",
-                                "api-reference/assistants/delete_voice",
-                                "api-reference/assistants/generate_speech_from_text",
-                                "api-reference/assistants/design_voice_previews",
-                                "api-reference/assistants/create_voice_from_design_preview",
-                                "api-reference/assistants/upload_photo",
-                                "api-reference/assistants/generate_photo",
-                                "api-reference/assistants/edit_photo",
-                                "api-reference/assistants/animate_photo"
+                                "api-reference/assistant_management/create_a_new_assistant",
+                                "api-reference/assistant_management/list_all_assistants",
+                                "api-reference/assistant_management/delete_an_assistant",
+                                "api-reference/assistant_management/update_assistant_configuration"
+                            ]
+                        },
+                        {
+                            "group": "Voices",
+                            "pages": [
+                                "api-reference/voices/list_voices",
+                                "api-reference/voices/register_voice",
+                                "api-reference/voices/clone_voice",
+                                "api-reference/voices/delete_voice",
+                                "api-reference/voices/generate_speech_from_text",
+                                "api-reference/voices/design_voice_previews",
+                                "api-reference/voices/create_voice_from_design_preview"
+                            ]
+                        },
+                        {
+                            "group": "Media",
+                            "pages": [
+                                "api-reference/media/upload_photo",
+                                "api-reference/media/generate_photo",
+                                "api-reference/media/edit_photo",
+                                "api-reference/media/animate_photo"
+                            ]
+                        },
+                        {
+                            "group": "Recordings",
+                            "pages": [
+                                "api-reference/recordings/add_a_call_recording_for_an_assistant",
+                                "api-reference/recordings/list_all_recordings_for_an_assistant"
                             ]
                         }
                     ]

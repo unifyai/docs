@@ -1753,8 +1753,7 @@
         "/v0/assistant": {
             "post": {
                 "tags": [
-                    "Assistants",
-                    "Assistants"
+                    "Assistant Management"
                 ],
                 "summary": "Create a new assistant",
                 "description": "Creates a new assistant for the authenticated user with the specified configuration. This action will deduct credits from the user account.",
@@ -1834,8 +1833,7 @@
             },
             "get": {
                 "tags": [
-                    "Assistants",
-                    "Assistants"
+                    "Assistant Management"
                 ],
                 "summary": "List all assistants",
                 "description": "Returns a list of all assistants belonging to the authenticated user.",
@@ -1948,8 +1946,7 @@
         "/v0/assistant/{assistant_id}": {
             "delete": {
                 "tags": [
-                    "Assistants",
-                    "Assistants"
+                    "Assistant Management"
                 ],
                 "summary": "Delete an assistant",
                 "description": "Deletes a specific assistant by ID for the authenticated user.",
@@ -2010,8 +2007,7 @@
         "/v0/assistant/{assistant_id}/config": {
             "patch": {
                 "tags": [
-                    "Assistants",
-                    "Assistants"
+                    "Assistant Management"
                 ],
                 "summary": "Update assistant configuration",
                 "description": "Updates the configuration parameters of an existing assistant. Profile photo cannot be updated via this endpoint.",
@@ -2107,7 +2103,7 @@
         "/v0/assistant/{assistant_id}/recordings": {
             "post": {
                 "tags": [
-                    "Assistants"
+                    "Recordings"
                 ],
                 "summary": "Add a call recording for an assistant",
                 "description": "Uploads a new call recording for the specified assistant.",
@@ -2190,7 +2186,7 @@
             },
             "get": {
                 "tags": [
-                    "Assistants"
+                    "Recordings"
                 ],
                 "summary": "List all recordings for an assistant",
                 "description": "Returns a list of all call recordings for the specified assistant.",
@@ -2261,9 +2257,6 @@
         },
         "/v0/assistant/{assistant_id}/recordings/{recording_id}": {
             "delete": {
-                "tags": [
-                    "Assistants"
-                ],
                 "summary": "Delete a recording",
                 "description": "Deletes a specific call recording by ID for the specified assistant.",
                 "operationId": "delete_recording_v0_assistant__assistant_id__recordings__recording_id__delete",
@@ -2332,7 +2325,6 @@
         "/v0/assistant/voice": {
             "get": {
                 "tags": [
-                    "Assistants",
                     "Voices"
                 ],
                 "summary": "List voices",
@@ -2390,7 +2382,6 @@
             },
             "post": {
                 "tags": [
-                    "Assistants",
                     "Voices"
                 ],
                 "summary": "Register voice",
@@ -2465,7 +2456,6 @@
         "/v0/assistant/voice/clone": {
             "post": {
                 "tags": [
-                    "Assistants",
                     "Voices"
                 ],
                 "summary": "Clone voice",
@@ -2513,7 +2503,6 @@
         "/v0/assistant/voice/{voice_id}": {
             "delete": {
                 "tags": [
-                    "Assistants",
                     "Voices"
                 ],
                 "summary": "Delete voice",
@@ -2575,9 +2564,7 @@
         "/v0/assistant/voice/generate": {
             "post": {
                 "tags": [
-                    "Assistants",
-                    "Voices",
-                    "TTS"
+                    "Voices"
                 ],
                 "summary": "Generate speech from text",
                 "description": "Generates audio from text using the specified provider and voice.",
@@ -2642,7 +2629,6 @@
         "/v0/assistant/voice/design/preview": {
             "post": {
                 "tags": [
-                    "Assistants",
                     "Voices",
                     "TTS Design"
                 ],
@@ -2691,7 +2677,6 @@
         "/v0/assistant/voice/design/create": {
             "post": {
                 "tags": [
-                    "Assistants",
                     "Voices",
                     "TTS Design"
                 ],
@@ -2740,9 +2725,7 @@
         "/v0/assistant/photo/upload": {
             "post": {
                 "tags": [
-                    "Assistants",
-                    "Assistants",
-                    "Storage"
+                    "Media"
                 ],
                 "summary": "Upload photo",
                 "description": "Uploads a profile photo for an assistant and return the storage URL.",
@@ -2789,9 +2772,7 @@
         "/v0/assistant/photo/generate": {
             "post": {
                 "tags": [
-                    "Assistants",
-                    "Assistants",
-                    "Storage"
+                    "Media"
                 ],
                 "summary": "Generate photo",
                 "description": "Generates a new photo using a text prompt and returns the image URL. This action costs credits.",
@@ -2838,9 +2819,7 @@
         "/v0/assistant/photo/edit": {
             "post": {
                 "tags": [
-                    "Assistants",
-                    "Assistants",
-                    "Storage"
+                    "Media"
                 ],
                 "summary": "Edit photo",
                 "description": "Edits a photo using a text prompt and an input image (URL or file), and returns the image URL. This action costs credits.",
@@ -2887,10 +2866,7 @@
         "/v0/assistant/photo/animate": {
             "post": {
                 "tags": [
-                    "Assistants",
-                    "Assistants",
-                    "Storage",
-                    "Video"
+                    "Media"
                 ],
                 "summary": "Animate photo",
                 "description": "Generates an animated video of the assistant using an input image and audio. Inputs can be URLs or file uploads. This action costs credits.",
@@ -11910,8 +11886,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
