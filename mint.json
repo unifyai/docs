@@ -382,6 +382,34 @@
             "group": "",
             "pages": [
                 {
+                    "group": "Assistants",
+                    "pages": [
+                        {
+                            "group": "Assistants",
+                            "pages": [
+                                "api-reference/assistants/create_a_new_assistant",
+                                "api-reference/assistants/list_all_assistants",
+                                "api-reference/assistants/delete_an_assistant",
+                                "api-reference/assistants/update_assistant_configuration",
+                                "api-reference/assistants/add_a_call_recording_for_an_assistant",
+                                "api-reference/assistants/list_all_recordings_for_an_assistant",
+                                "api-reference/assistants/delete_a_recording",
+                                "api-reference/assistants/list_voices",
+                                "api-reference/assistants/register_voice",
+                                "api-reference/assistants/clone_voice",
+                                "api-reference/assistants/delete_voice",
+                                "api-reference/assistants/generate_speech_from_text",
+                                "api-reference/assistants/design_voice_previews",
+                                "api-reference/assistants/create_voice_from_design_preview",
+                                "api-reference/assistants/upload_photo",
+                                "api-reference/assistants/generate_photo",
+                                "api-reference/assistants/edit_photo",
+                                "api-reference/assistants/animate_photo"
+                            ]
+                        }
+                    ]
+                },
+                {
                     "group": "Universal API",
                     "pages": [
                         {
@@ -430,29 +458,6 @@
                             "group": "Endpoint Metrics",
                             "pages": [
                                 "api-reference/endpoint_metrics/get_endpoint_details"
-                            ]
-                        },
-                        {
-                            "group": "Assistants",
-                            "pages": [
-                                "api-reference/assistants/create_a_new_assistant",
-                                "api-reference/assistants/list_all_assistants",
-                                "api-reference/assistants/delete_an_assistant",
-                                "api-reference/assistants/update_assistant_configuration",
-                                "api-reference/assistants/add_a_call_recording_for_an_assistant",
-                                "api-reference/assistants/list_all_recordings_for_an_assistant",
-                                "api-reference/assistants/delete_a_recording",
-                                "api-reference/assistants/list_voices",
-                                "api-reference/assistants/register_voice",
-                                "api-reference/assistants/clone_voice",
-                                "api-reference/assistants/delete_voice",
-                                "api-reference/assistants/generate_speech_from_text",
-                                "api-reference/assistants/design_voice_previews",
-                                "api-reference/assistants/create_voice_from_design_preview",
-                                "api-reference/assistants/upload_photo",
-                                "api-reference/assistants/generate_photo",
-                                "api-reference/assistants/edit_photo",
-                                "api-reference/assistants/animate_photo"
                             ]
                         }
                     ]
