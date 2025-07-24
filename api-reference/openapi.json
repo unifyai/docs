@@ -73,6 +73,31 @@
                 ]
             }
         },
+        "/v0/user/basic-info": {
+            "get": {
+                "tags": [
+                    "Query Logging"
+                ],
+                "summary": "Get User Basic Info",
+                "description": "Get basic information for the authenticated user.",
+                "operationId": "get_user_basic_info_v0_user_basic_info_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/user/business-status": {
             "get": {
                 "tags": [
@@ -2101,89 +2126,6 @@
             }
         },
         "/v0/assistant/{assistant_id}/recordings": {
-            "post": {
-                "tags": [
-                    "Recordings"
-                ],
-                "summary": "Add a call recording for an assistant",
-                "description": "Uploads a new call recording for the specified assistant.",
-                "operationId": "create_recording_v0_assistant__assistant_id__recordings_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "assistant_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Assistant Id"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RecordingCreate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Recording added successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InfoResponse_RecordingInfo_"
-                                },
-                                "example": {
-                                    "info": {
-                                        "id": 123,
-                                        "url": "https://storage.example.com/recordings/call_123.mp3",
-                                        "created_at": "2025-05-08T14:30:00Z"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Assistant Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Assistant not found."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Recording Error",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Error processing recording."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "get": {
                 "tags": [
                     "Recordings"
@@ -11023,6 +10965,12 @@
                         "description": "Unique identifier for the assistant",
                         "example": "12345"
                     },
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id",
+                        "description": "ID of the user to associate the assistant with",
+                        "example": "123"
+                    },
                     "created_at": {
                         "type": "string",
                         "format": "date-time",
@@ -11127,6 +11075,7 @@
                 "type": "object",
                 "required": [
                     "agent_id",
+                    "user_id",
                     "created_at"
                 ],
                 "title": "AssistantRead",
@@ -11886,8 +11835,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -14118,18 +14067,6 @@
                 ],
                 "title": "InfoResponse[List[VoiceRead]]"
             },
-            "InfoResponse_RecordingInfo_": {
-                "properties": {
-                    "info": {
-                        "$ref": "#/components/schemas/RecordingInfo"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "info"
-                ],
-                "title": "InfoResponse[RecordingInfo]"
-            },
             "InfoResponse_VoiceDesignGeneratePreviewsAPIResponse_": {
                 "properties": {
                     "info": {
@@ -15492,34 +15429,6 @@
                     "type"
                 ],
                 "title": "RechargeCreateSchema"
-            },
-            "RecordingCreate": {
-                "properties": {
-                    "recording_raw": {
-                        "type": "string",
-                        "title": "Recording Raw",
-                        "description": "Base64-encoded audio payload",
-                        "example": "UklGRiSAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQyAAAAA..."
-                    },
-                    "content_type": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Content Type",
-                        "description": "Content type of the audio file",
-                        "example": "audio/wav"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "recording_raw"
-                ],
-                "title": "RecordingCreate"
             },
             "RecordingInfo": {
                 "properties": {
