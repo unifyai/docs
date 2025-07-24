@@ -417,7 +417,6 @@
                         {
                             "group": "Recordings",
                             "pages": [
-                                "api-reference/recordings/add_a_call_recording_for_an_assistant",
                                 "api-reference/recordings/list_all_recordings_for_an_assistant"
                             ]
                         }
@@ -590,6 +589,7 @@
                             "pages": [
                                 "api-reference/query_logging/get_query_logging_status",
                                 "api-reference/query_logging/update_query_logging_status",
+                                "api-reference/query_logging/get_user_basic_info",
                                 "api-reference/query_logging/get_user_business_status",
                                 "api-reference/query_logging/update_user_account_type",
                                 "api-reference/query_logging/update_user_business_info",
