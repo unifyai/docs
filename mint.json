@@ -409,6 +409,7 @@
                             "group": "Media",
                             "pages": [
                                 "api-reference/media/upload_photo",
+                                "api-reference/media/upload_video",
                                 "api-reference/media/generate_photo",
                                 "api-reference/media/edit_photo",
                                 "api-reference/media/animate_photo"
@@ -496,6 +497,7 @@
                                 "api-reference/projects/update_project",
                                 "api-reference/projects/get_project",
                                 "api-reference/projects/list_projects",
+                                "api-reference/projects/list_projects_tree",
                                 "api-reference/projects/export_project_template",
                                 "api-reference/projects/import_project_template"
                             ]
