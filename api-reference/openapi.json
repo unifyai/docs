@@ -1835,6 +1835,16 @@
                             }
                         }
                     },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "An assistant with the name 'Alice Smith' already exists for this user."
+                                }
+                            }
+                        }
+                    },
                     "422": {
                         "description": "Validation Error",
                         "content": {
@@ -1927,6 +1937,7 @@
                                             "email": "alice.smith@example.com",
                                             "region": "North America",
                                             "profile_photo": "https://example.com/photos/alice.jpg",
+                                            "profile_video": "https://example.com/videos/alice.mp4",
                                             "about": "Mathematician and writer known for work on Analytical Engine",
                                             "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
                                             "country": "US",
@@ -1944,6 +1955,7 @@
                                             "email": "bob.jones@example.com",
                                             "region": "South America",
                                             "profile_photo": "https://example.com/photos/bob.jpg",
+                                            "profile_video": "https://example.com/videos/bob.mp4",
                                             "about": "Machine learning expert with focus on computer vision",
                                             "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
                                             "country": "CA",
@@ -2084,6 +2096,7 @@
                                         "email": "alice.smith@example.com",
                                         "region": "North America",
                                         "profile_photo": "https://example.com/photos/alice.jpg",
+                                        "profile_video": "https://example.com/videos/alice.mp4",
                                         "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
                                         "country": "US",
                                         "created_at": "2025-04-25T12:00:00Z",
@@ -2689,6 +2702,53 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/InfoResponse_AssistantPhotoUploadResponse_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/assistant/video/upload": {
+            "post": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Upload video",
+                "description": "Uploads a profile video for an assistant and returns the storage URL.",
+                "operationId": "upload_assistant_video_v0_assistant_video_upload_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_assistant_video_v0_assistant_video_upload_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_AssistantVideoUploadResponse_"
                                 }
                             }
                         }
@@ -4491,6 +4551,37 @@
                                     "project_b",
                                     "project_c"
                                 ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/projects/tree": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "List Projects Tree",
+                "description": "Return all projects the user can access with their icons and interface names.",
+                "operationId": "list_projects_tree_v0_projects_tree_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProjectTreeItem"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Projects Tree V0 Projects Tree Get"
+                                }
                             }
                         }
                     }
@@ -10599,6 +10690,19 @@
                         "description": "URL to the assistant's profile photo",
                         "example": "https://example.com/photos/ada.jpg"
                     },
+                    "profile_video": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Profile Video",
+                        "description": "URL to the assistant's profile video",
+                        "example": "https://example.com/videos/ada.mp4"
+                    },
                     "about": {
                         "anyOf": [
                             {
@@ -10853,6 +10957,19 @@
                         "title": "Profile Photo",
                         "description": "URL to the assistant's profile photo",
                         "example": "https://example.com/photos/ada.jpg"
+                    },
+                    "profile_video": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Profile Video",
+                        "description": "URL to the assistant's profile video",
+                        "example": "https://example.com/videos/ada.mp4"
                     },
                     "about": {
                         "anyOf": [
@@ -11109,6 +11226,32 @@
                         "description": "Maximum number of parallel tasks the assistant can handle",
                         "example": 3
                     },
+                    "profile_photo": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Profile Photo",
+                        "description": "URL to the assistant's profile photo",
+                        "example": "https://example.com/photos/ada.jpg"
+                    },
+                    "profile_video": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Profile Video",
+                        "description": "URL to the assistant's profile video",
+                        "example": "https://example.com/videos/ada_new.mp4"
+                    },
                     "about": {
                         "anyOf": [
                             {
@@ -11204,6 +11347,21 @@
                 "type": "object",
                 "title": "AssistantUpdate",
                 "description": "Schema for updating an existing assistant.\nOnly includes fields that can be updated."
+            },
+            "AssistantVideoUploadResponse": {
+                "properties": {
+                    "gcs_url": {
+                        "type": "string",
+                        "title": "Gcs Url",
+                        "description": "GCS URL of the uploaded video",
+                        "example": "gs://your-bucket-name/user_id/video_uuid.mp4"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "gcs_url"
+                ],
+                "title": "AssistantVideoUploadResponse"
             },
             "Body_animate_video_endpoint_v0_assistant_photo_animate_post": {
                 "properties": {
@@ -11534,6 +11692,20 @@
                     "file"
                 ],
                 "title": "Body_upload_assistant_photo_v0_assistant_photo_upload_post"
+            },
+            "Body_upload_assistant_video_v0_assistant_video_upload_post": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file"
+                ],
+                "title": "Body_upload_assistant_video_v0_assistant_video_upload_post"
             },
             "BusinessAddress": {
                 "properties": {
@@ -13544,11 +13716,6 @@
                         "title": "Project",
                         "description": "The name of the project to favorite"
                     },
-                    "icon": {
-                        "type": "string",
-                        "title": "Icon",
-                        "description": "Icon identifier for the favorite project"
-                    },
                     "position": {
                         "type": "integer",
                         "title": "Position",
@@ -13558,7 +13725,6 @@
                 "type": "object",
                 "required": [
                     "project",
-                    "icon",
                     "position"
                 ],
                 "title": "FavoriteProjectIn",
@@ -13570,11 +13736,6 @@
                         "type": "string",
                         "title": "Project",
                         "description": "The name of the project to favorite"
-                    },
-                    "icon": {
-                        "type": "string",
-                        "title": "Icon",
-                        "description": "Icon identifier for the favorite project"
                     },
                     "position": {
                         "type": "integer",
@@ -13590,7 +13751,6 @@
                 "type": "object",
                 "required": [
                     "project",
-                    "icon",
                     "position",
                     "id"
                 ],
@@ -13599,18 +13759,6 @@
             },
             "FavoriteProjectUpdate": {
                 "properties": {
-                    "icon": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Icon",
-                        "description": "Icon identifier for the favorite project"
-                    },
                     "position": {
                         "anyOf": [
                             {
@@ -14018,6 +14166,18 @@
                     "info"
                 ],
                 "title": "InfoResponse[AssistantRead]"
+            },
+            "InfoResponse_AssistantVideoUploadResponse_": {
+                "properties": {
+                    "info": {
+                        "$ref": "#/components/schemas/AssistantVideoUploadResponse"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[AssistantVideoUploadResponse]"
             },
             "InfoResponse_List_AssistantRead__": {
                 "properties": {
@@ -15188,6 +15348,18 @@
                         "description": "Whether the project is versioned",
                         "default": false
                     },
+                    "icon": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Icon",
+                        "description": "Icon identifier for the project"
+                    },
                     "description": {
                         "anyOf": [
                             {
@@ -15227,6 +15399,11 @@
                         "title": "Description",
                         "description": "Description of the project"
                     },
+                    "icon": {
+                        "type": "string",
+                        "title": "Icon",
+                        "description": "Icon identifier for the project"
+                    },
                     "is_versioned": {
                         "type": "boolean",
                         "title": "Is Versioned",
@@ -15260,6 +15437,7 @@
                 "type": "object",
                 "required": [
                     "name",
+                    "icon",
                     "is_versioned",
                     "created_at",
                     "updated_at"
@@ -15330,6 +15508,48 @@
                 "title": "ProjectTemplateSchema",
                 "description": "Template schema for multiple interfaces from a project"
             },
+            "ProjectTreeItem": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "title": "Icon"
+                    },
+                    "interfaces": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Interfaces"
+                    },
+                    "favorite": {
+                        "type": "boolean",
+                        "title": "Favorite",
+                        "default": false
+                    },
+                    "position": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Position"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project",
+                    "icon",
+                    "interfaces"
+                ],
+                "title": "ProjectTreeItem"
+            },
             "ProjectUpdate": {
                 "properties": {
                     "name": {
@@ -15361,6 +15581,18 @@
                         ],
                         "title": "Is Versioned",
                         "description": "Whether the project is versioned"
+                    },
+                    "icon": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Icon",
+                        "description": "Icon identifier for the project"
                     },
                     "description": {
                         "anyOf": [

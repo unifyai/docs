@@ -1,0 +1,66 @@
+---
+title: "Upload video"
+api: 'POST /v0/assistant/video/upload'
+---
+Uploads a profile video for an assistant and returns the storage URL.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="file" type="string" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/assistant/video/upload' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: multipart/form-data' \
+
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/video/upload"
+
+headers = {"Authorization": "Bearer <token>"}
+
+data = {}
+
+response = requests.request("POST", url, data=data, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "info": "object"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
