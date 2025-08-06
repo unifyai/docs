@@ -10474,51 +10474,6 @@
                 }
             }
         },
-        "/v0/recharge": {
-            "post": {
-                "tags": [
-                    "Credits"
-                ],
-                "summary": "Create Recharge",
-                "description": "Create a recharge - either prepaid or auto-recharge.",
-                "operationId": "create_recharge_v0_recharge_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RechargeCreateSchema"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
         "/metrics": {
             "get": {
                 "summary": "Metrics",
@@ -15611,56 +15566,6 @@
                 "type": "object",
                 "title": "ProjectUpdate",
                 "description": "Request model for updating a project."
-            },
-            "RechargeCreateSchema": {
-                "properties": {
-                    "user_id": {
-                        "type": "string",
-                        "title": "User Id"
-                    },
-                    "quantity": {
-                        "type": "integer",
-                        "title": "Quantity"
-                    },
-                    "amount_usd": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "string"
-                            }
-                        ],
-                        "title": "Amount Usd"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "auto",
-                            "payment"
-                        ],
-                        "title": "Type"
-                    },
-                    "transaction_id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Transaction Id"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "user_id",
-                    "quantity",
-                    "amount_usd",
-                    "type"
-                ],
-                "title": "RechargeCreateSchema"
             },
             "RecordingInfo": {
                 "properties": {

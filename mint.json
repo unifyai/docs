@@ -582,8 +582,7 @@
                             "group": "Credits",
                             "pages": [
                                 "api-reference/credits/get_credits",
-                                "api-reference/credits/promo_code",
-                                "api-reference/credits/create_recharge"
+                                "api-reference/credits/promo_code"
                             ]
                         },
                         {
