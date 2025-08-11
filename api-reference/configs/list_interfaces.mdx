@@ -1,6 +1,6 @@
 ---
 title: "List Interfaces"
-api: 'GET /v0/interfaces/list'
+api: 'GET /v0/interface/interfaces/list'
 ---
 List all interfaces for a project.
 
@@ -24,14 +24,14 @@ Whether to list checkpoint versions (manually saved)
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/interfaces/list?project=None&checkpoint=None' \
+  --url 'https://api.unify.ai/v0/interface/interfaces/list?project=None&checkpoint=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interfaces/list?project=None&checkpoint=None"
+url = "https://api.unify.ai/v0/interface/interfaces/list?project=None&checkpoint=None"
 
 headers = {"Authorization": "Bearer <token>"}
 

@@ -1,6 +1,6 @@
 ---
 title: "Create Interface"
-api: 'POST /v0/interfaces/'
+api: 'POST /v0/interface/interfaces/'
 ---
 Create a new interface in a project.
 
@@ -22,7 +22,15 @@ Whether to create a checkpoint interface (manual save)
 
 </ParamField>
 
+<ParamField body="icon" type="string | null" >
+
+</ParamField>
+
 <ParamField body="color" type="string | null" >
+
+</ParamField>
+
+<ParamField body="order" type="integer | null" >
 
 </ParamField>
 
@@ -38,7 +46,7 @@ Whether to create a checkpoint interface (manual save)
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/interfaces/?checkpoint=None' \
+  --url 'https://api.unify.ai/v0/interface/interfaces/?checkpoint=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -47,7 +55,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interfaces/?checkpoint=None"
+url = "https://api.unify.ai/v0/interface/interfaces/?checkpoint=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
