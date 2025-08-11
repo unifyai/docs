@@ -1,6 +1,6 @@
 ---
 title: "Update Tab"
-api: 'PUT /v0/tab/'
+api: 'PUT /v0/tab'
 ---
 Update a tab by ID or by interface_id and name.
 
@@ -54,11 +54,15 @@ Whether this is a checkpoint update (manual save)
 
 </ParamField>
 
+<ParamField body="icon" type="string | null" >
+
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request PUT \
-  --url 'https://api.unify.ai/v0/tab/?tab_id=None&interface_id=None&name=None&checkpoint=None' \
+  --url 'https://api.unify.ai/v0/tab?tab_id=None&interface_id=None&name=None&checkpoint=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -67,7 +71,7 @@ curl --request PUT \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/tab/?tab_id=None&interface_id=None&name=None&checkpoint=None"
+url = "https://api.unify.ai/v0/tab?tab_id=None&interface_id=None&name=None&checkpoint=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -82,32 +86,7 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{
-    "id": "123",
-    "interface_id": "456",
-    "name": "updated_tab_name",
-    "visible": true,
-    "active": true,
-    "order": 1,
-    "global_context": {},
-    "color": "red",
-    "is_checkpoint": false,
-    "tiles": [],
-    "created_at": "2024-01-01T12:00:00Z",
-    "updated_at": "2024-01-01T12:30:00Z"
-}
-```
-
-```json 404
-{
-    "detail": "Tab with ID 123 not found."
-}
-```
-
-```json 400
-{
-    "detail": "Either tab_id or both interface_id and name must be provided."
-}
+{}
 ```
 
 ```json 422

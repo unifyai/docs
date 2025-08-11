@@ -1,6 +1,6 @@
 ---
 title: "Get Interface"
-api: 'GET /v0/interfaces/'
+api: 'GET /v0/interface/interfaces/'
 ---
 Get a specific interface by ID or by project ID and name.
 
@@ -32,14 +32,14 @@ Whether to get a checkpoint version (manually saved)
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/interfaces/?interface_id=None&project=None&name=None&checkpoint=None' \
+  --url 'https://api.unify.ai/v0/interface/interfaces/?interface_id=None&project=None&name=None&checkpoint=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interfaces/?interface_id=None&project=None&name=None&checkpoint=None"
+url = "https://api.unify.ai/v0/interface/interfaces/?interface_id=None&project=None&name=None&checkpoint=None"
 
 headers = {"Authorization": "Bearer <token>"}
 

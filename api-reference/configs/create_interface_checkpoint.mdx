@@ -1,6 +1,6 @@
 ---
 title: "Create Interface Checkpoint"
-api: 'POST /v0/interfaces/checkpoint'
+api: 'POST /v0/interface/interfaces/checkpoint'
 ---
 Create a manual checkpoint (save) of an interface by ID or by project ID and name.
 
@@ -28,14 +28,14 @@ The name of the interface to checkpoint
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/interfaces/checkpoint?interface_id=None&project=None&name=None' \
+  --url 'https://api.unify.ai/v0/interface/interfaces/checkpoint?interface_id=None&project=None&name=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interfaces/checkpoint?interface_id=None&project=None&name=None"
+url = "https://api.unify.ai/v0/interface/interfaces/checkpoint?interface_id=None&project=None&name=None"
 
 headers = {"Authorization": "Bearer <token>"}
 
