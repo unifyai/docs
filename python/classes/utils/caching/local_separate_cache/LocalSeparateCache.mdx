@@ -1,0 +1,187 @@
+---
+title: 'LocalSeparateCache'
+---
+
+```python
+class LocalSeparateCache
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L8)</p>
+
+Local cache with separate read and write storage for better performance.
+
+## setters
+
+---
+
+### set\_cache\_name
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L18)</p>
+
+```python
+def set_cache_name(cls, name: str) -> None:
+```
+
+Set the cache names and reset both caches.
+
+## methods
+
+---
+
+### get\_cache\_filepath
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L31)</p>
+
+```python
+def get_cache_filepath(cls, name: str = None) -> str:
+```
+
+Get the full filepath for the cache file.
+
+---
+
+### get\_cache\_name
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L26)</p>
+
+```python
+def get_cache_name(cls) -> str:
+```
+
+Get the current read cache name.
+
+---
+
+### has\_key
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L127)</p>
+
+```python
+def has_key(cls, key: str) -> bool:
+```
+
+Check if a key exists in either cache.
+
+---
+
+### initialize\_cache
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L67)</p>
+
+```python
+def initialize_cache(cls, name: str = None) -> None:
+```
+
+Initialize both read and write caches.
+
+---
+
+### is\_enabled
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L38)</p>
+
+```python
+def is_enabled(cls) -> bool:
+```
+
+Check if the cache is enabled.
+
+---
+
+### list\_keys
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L92)</p>
+
+```python
+def list_keys(cls) -> List[str]:
+```
+
+
+
+---
+
+### remove\_entry
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L134)</p>
+
+```python
+def remove_entry(cls, key: str) -> None:
+```
+
+Remove an entry from both caches.
+
+---
+
+### retrieve\_entry
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L96)</p>
+
+```python
+def retrieve_entry(cls, key: str) -> tuple[Optional[Any], Optional[Dict[str, Any]]]:
+```
+
+Retrieve a value from the cache, checking write cache first.
+
+**Returns**:
+
+Tuple of (value, res_types) or (None, None) if not found
+
+---
+
+### serialize\_object
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/base_cache.py#L18)</p>
+
+```python
+def serialize_object(
+        obj: Any,
+        cached_types: Dict[str, str] = None,
+        idx: List[Union[str, int]] = None,
+        indent: int = None,
+    ) -> Any:
+```
+
+Serialize an object to a JSON-serializable format.
+
+**Arguments**:
+
+- `obj` - Object to serialize
+- `type_registry` - Dictionary to track object types for reconstruction
+- `path` - Current path in the object structure
+- `indent` - JSON indentation level
+
+
+
+**Returns**:
+
+Serialized object or JSON string if at root level
+
+---
+
+### store\_entry
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L43)</p>
+
+```python
+def store_entry(
+        cls,
+        *,
+        key: str,
+        value: Any,
+        res_types: Optional[Dict[str, Any]] = None,
+    ) -> None:
+```
+
+Store a key-value pair in the write cache.
+
+---
+
+### write
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/9452679814f94283e3def5cabb8c87796d31a0db/unify/utils/caching/local_separate_cache.py#L57)</p>
+
+```python
+def write(cls, filename: str = None) -> None:
+```
+
+Write the write cache to disk.

@@ -336,6 +336,13 @@
                                     ]
                                 },
                                 {
+                                    "group": "httpx_logging",
+                                    "pages": [
+                                        "python/functions/universal_api/utils/httpx_logging/make_async_httpx_client_for_unify_logging",
+                                        "python/functions/universal_api/utils/httpx_logging/make_httpx_client_for_unify_logging"
+                                    ]
+                                },
+                                {
                                     "group": "queries",
                                     "pages": [
                                         "python/functions/universal_api/utils/queries/get_queries",
@@ -359,6 +366,35 @@
                 {
                     "group": "utils",
                     "pages": [
+                        {
+                            "group": "caching",
+                            "pages": [
+                                {
+                                    "group": "base_cache",
+                                    "pages": [
+                                        "python/classes/utils/caching/base_cache/BaseCache"
+                                    ]
+                                },
+                                {
+                                    "group": "local_cache",
+                                    "pages": [
+                                        "python/classes/utils/caching/local_cache/LocalCache"
+                                    ]
+                                },
+                                {
+                                    "group": "local_separate_cache",
+                                    "pages": [
+                                        "python/classes/utils/caching/local_separate_cache/LocalSeparateCache"
+                                    ]
+                                },
+                                {
+                                    "group": "remote_cache",
+                                    "pages": [
+                                        "python/classes/utils/caching/remote_cache/RemoteCache"
+                                    ]
+                                }
+                            ]
+                        },
                         {
                             "group": "helpers",
                             "pages": [
