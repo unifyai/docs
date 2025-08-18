@@ -376,6 +376,16 @@
                                     ]
                                 },
                                 {
+                                    "group": "cache_benchmark",
+                                    "pages": [
+                                        "python/classes/utils/caching/cache_benchmark/CacheStats",
+                                        "python/functions/utils/caching/cache_benchmark/get_cache_stats",
+                                        "python/functions/utils/caching/cache_benchmark/record_get_cache",
+                                        "python/functions/utils/caching/cache_benchmark/record_write_to_cache",
+                                        "python/functions/utils/caching/cache_benchmark/reset_cache_stats"
+                                    ]
+                                },
+                                {
                                     "group": "local_cache",
                                     "pages": [
                                         "python/classes/utils/caching/local_cache/LocalCache"
