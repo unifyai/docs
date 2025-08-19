@@ -6,7 +6,7 @@ title: 'install_tracing_hook'
 def install_tracing_hook(targets: List[str], filter: Callable = None):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/fc32bfd01cdb5e6aea95576b216fe2fac95bff97/unify/logging/utils/tracing.py#L49)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e15a26d212f3e05b682e5d613636a7c232d3b72a/unify/logging/utils/tracing.py#L49)</p>
 
 Install an import hook that wraps imported modules with the traced decorator.This function adds a TraceFinder to sys.meta_path that will intercept module imports
 and wrap them with the traced decorator. The hook will only be installed if one
