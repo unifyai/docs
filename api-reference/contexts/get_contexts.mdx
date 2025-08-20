@@ -53,16 +53,19 @@ print(response.text)
         "description": "description1",
         "is_versioned": true,
         "allow_duplicates": true,
-        "unique_id_column": false,
-        "unique_id_names": "row_id"
+        "unique_keys": [
+            "row_id"
+        ]
     },
     {
         "name": "context2",
         "description": "description2",
         "is_versioned": false,
         "allow_duplicates": true,
-        "unique_id_column": false,
-        "unique_id_names": "my_id"
+        "unique_keys": [
+            "user_id",
+            "session_id"
+        ]
     }
 ]
 ```

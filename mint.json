@@ -458,7 +458,9 @@
                                 "api-reference/media/upload_video",
                                 "api-reference/media/generate_photo",
                                 "api-reference/media/edit_photo",
-                                "api-reference/media/animate_photo"
+                                "api-reference/media/animate_photo",
+                                "api-reference/media/get_animation_prediction_status",
+                                "api-reference/media/cancel_animation_prediction"
                             ]
                         },
                         {

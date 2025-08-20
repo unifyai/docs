@@ -3,7 +3,7 @@ title: "Delete Fields"
 api: 'DELETE /v0/logs/fields'
 ---
 Deletes one or more fields from a project. This will:
-1. Delete all log events with the specified field names (which cascades to logs and derived logs)
+1. Delete all Log and DerivedLog entries with the specified field names (not the entire LogEvent)
 2. Delete the field type records for those fields
 
 This operation cannot be undone, so use with caution.

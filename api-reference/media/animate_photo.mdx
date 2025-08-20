@@ -2,7 +2,7 @@
 title: "Animate photo"
 api: 'POST /v0/assistant/photo/animate'
 ---
-Generates an animated video of the assistant using an input image and audio. Inputs can be URLs or file uploads. This action costs credits.
+Starts a job to generate an animated video of the assistant using an input image and audio. This action costs credits.
 
 #### Authorizations
 
@@ -75,9 +75,9 @@ print(response.text)
 </RequestExample>
 <ResponseExample>
 
-```json 201
+```json 202
 {
-    "info": "string"
+    "info": "object"
 }
 ```
 

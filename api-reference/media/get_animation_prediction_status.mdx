@@ -1,8 +1,8 @@
 ---
-title: "Get Context"
-api: 'GET /v0/project/{project_name}/contexts/{context_name}'
+title: "Get animation prediction status"
+api: 'GET /v0/assistant/photo/animate/{prediction_id}'
 ---
-Get information about a specific context including its versioning status and current version.
+Retrieves the status and result of a video animation job.
 
 #### Authorizations
 
@@ -12,26 +12,22 @@ Get information about a specific context including its versioning status and cur
 
 #### Path Parameters
 
-<ParamField query="project_name" type="string" required="true">
-Name of the project containing the context.
-</ParamField>
+<ParamField query="prediction_id" type="string" required="true">
 
-<ParamField query="context_name" type="string" required="true">
-Name of the context to retrieve.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/project/my_project/contexts/my_context' \
+  --url 'https://api.unify.ai/v0/assistant/photo/animate/<prediction_id>' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/project/my_project/contexts/my_context"
+url = "https://api.unify.ai/v0/assistant/photo/animate/<prediction_id>"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -45,19 +41,7 @@ print(response.text)
 
 ```json 200
 {
-    "name": "context1",
-    "description": "description1",
-    "is_versioned": true,
-    "allow_duplicates": true,
-    "unique_keys": [
-        "row_id"
-    ]
-}
-```
-
-```json 404
-{
-    "detail": "Project or context not found."
+    "info": "object"
 }
 ```
 
