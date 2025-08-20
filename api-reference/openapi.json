@@ -2871,7 +2871,7 @@
                     "Media"
                 ],
                 "summary": "Animate photo",
-                "description": "Generates an animated video of the assistant using an input image and audio. Inputs can be URLs or file uploads. This action costs credits.",
+                "description": "Starts a job to generate an animated video of the assistant using an input image and audio. This action costs credits.",
                 "operationId": "animate_video_endpoint_v0_assistant_photo_animate_post",
                 "requestBody": {
                     "content": {
@@ -2883,12 +2883,12 @@
                     }
                 },
                 "responses": {
-                    "201": {
+                    "202": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/InfoResponse_str_"
+                                    "$ref": "#/components/schemas/InfoResponse_ReplicatePredictionResponse_"
                                 }
                             }
                         }
@@ -2909,6 +2909,102 @@
                         "HTTPBearer": []
                     }
                 ]
+            }
+        },
+        "/v0/assistant/photo/animate/{prediction_id}": {
+            "get": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Get animation prediction status",
+                "description": "Retrieves the status and result of a video animation job.",
+                "operationId": "get_animation_prediction_v0_assistant_photo_animate__prediction_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "prediction_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Prediction Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_ReplicatePredictionResponse_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/photo/animate/{prediction_id}/cancel": {
+            "post": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Cancel animation prediction",
+                "description": "Cancels a running video animation job.",
+                "operationId": "cancel_animation_prediction_v0_assistant_photo_animate__prediction_id__cancel_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "prediction_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Prediction Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_ReplicatePredictionResponse_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/v0/project/{project_name}/contexts": {
@@ -3059,16 +3155,19 @@
                                         "description": "description1",
                                         "is_versioned": true,
                                         "allow_duplicates": true,
-                                        "unique_id_column": false,
-                                        "unique_id_names": "row_id"
+                                        "unique_keys": [
+                                            "row_id"
+                                        ]
                                     },
                                     {
                                         "name": "context2",
                                         "description": "description2",
                                         "is_versioned": false,
                                         "allow_duplicates": true,
-                                        "unique_id_column": false,
-                                        "unique_id_names": "my_id"
+                                        "unique_keys": [
+                                            "user_id",
+                                            "session_id"
+                                        ]
                                     }
                                 ]
                             }
@@ -3268,8 +3367,9 @@
                                     "description": "description1",
                                     "is_versioned": true,
                                     "allow_duplicates": true,
-                                    "unique_id_column": false,
-                                    "unique_id_names": "row_id"
+                                    "unique_keys": [
+                                        "row_id"
+                                    ]
                                 }
                             }
                         }
@@ -6357,7 +6457,7 @@
                     "Logs"
                 ],
                 "summary": "Delete Fields",
-                "description": "Deletes one or more fields from a project. This will:\n1. Delete all log events with the specified field names (which cascades to logs and derived logs)\n2. Delete the field type records for those fields\n\nThis operation cannot be undone, so use with caution.",
+                "description": "Deletes one or more fields from a project. This will:\n1. Delete all Log and DerivedLog entries with the specified field names (not the entire LogEvent)\n2. Delete the field type records for those fields\n\nThis operation cannot be undone, so use with caution.",
                 "operationId": "delete_fields_v0_logs_fields_delete",
                 "security": [
                     {
@@ -13175,8 +13275,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -13402,6 +13502,11 @@
             },
             "ChatMessage": {
                 "properties": {
+                    "message_id": {
+                        "type": "integer",
+                        "title": "Message Id",
+                        "description": "Unique identifier for the message in the exchange"
+                    },
                     "medium": {
                         "type": "string",
                         "title": "Medium",
@@ -13413,10 +13518,13 @@
                         "title": "Sender Id",
                         "description": "ID of the sender"
                     },
-                    "receiver_id": {
-                        "type": "integer",
-                        "title": "Receiver Id",
-                        "description": "ID of the receiver"
+                    "receiver_ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "title": "Receiver Ids",
+                        "description": "List of receiver IDs"
                     },
                     "timestamp": {
                         "type": "string",
@@ -13437,8 +13545,9 @@
                 },
                 "type": "object",
                 "required": [
+                    "message_id",
                     "sender_id",
-                    "receiver_id",
+                    "receiver_ids",
                     "timestamp",
                     "content",
                     "exchange_id"
@@ -13554,24 +13663,26 @@
                         "default": true,
                         "example": true
                     },
-                    "unique_column_ids": {
+                    "unique_keys": {
                         "anyOf": [
                             {
-                                "items": {
+                                "additionalProperties": {
                                     "type": "string"
                                 },
-                                "type": "array"
+                                "type": "object"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Unique Column Ids",
-                        "description": "List of unique column names for nested unique IDs. Leftmost is most major, rightmost is most minor. If None or empty, no unique IDs are generated.",
-                        "example": [
-                            "task_id",
-                            "instance_id"
-                        ]
+                        "title": "Unique Keys",
+                        "description": "Composite unique key definition. Keys are column names, values are types ('counting' for auto-increment, 'str', 'int', 'float', 'bool', 'datetime', 'time', 'date', 'timedelta', 'dict', 'list').",
+                        "example": {
+                            "company_id": "counting",
+                            "department_id": "counting",
+                            "first_name": "str",
+                            "last_name": "str"
+                        }
                     }
                 },
                 "type": "object",
@@ -13729,6 +13840,13 @@
                             },
                             "score": "int"
                         }
+                    },
+                    "backfill_logs": {
+                        "type": "boolean",
+                        "title": "Backfill Logs",
+                        "description": "Whether to backfill existing logs in the context with None values for the new fields. When True, all existing logs will get the new fields with None values, ensuring all rows can participate in derived equations without errors.",
+                        "default": true,
+                        "example": true
                     }
                 },
                 "type": "object",
@@ -15479,6 +15597,18 @@
                 ],
                 "title": "InfoResponse[List[VoiceRead]]"
             },
+            "InfoResponse_ReplicatePredictionResponse_": {
+                "properties": {
+                    "info": {
+                        "$ref": "#/components/schemas/ReplicatePredictionResponse"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[ReplicatePredictionResponse]"
+            },
             "InfoResponse_VoiceDesignGeneratePreviewsAPIResponse_": {
                 "properties": {
                     "info": {
@@ -16259,11 +16389,17 @@
                                 "type": "object"
                             },
                             {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
                                 "type": "null"
                             }
                         ],
                         "title": "Columns",
-                        "description": "Optional dictionary mapping source columns to new column names for the result. The key is the source column (e.g., 'A.user_id') and the value is the desired alias in the new log (e.g., 'user_identifier'). If omitted, all columns will be selected and prefixed with 'A_' or 'B_'.",
+                        "description": "Optional column specification for the joined result. Can be either:\n1. A dictionary mapping source columns to aliases (only supported when copy=True):    {'A.user_id': 'user_identifier', 'B.score': 'user_score'}\n2. A list of source columns to include (required format when copy=False):    ['A.user_id', 'A.score', 'B.category']\nNote: When copy=False (pass-by-reference), aliases are not supported and the original column names will be preserved. Use the list format in this case.\nIf omitted, all columns will be selected and prefixed with 'A_' or 'B_'.",
                         "example": {
                             "A.user_id": "user_identifier",
                             "B.score": "user_score"
@@ -16273,6 +16409,12 @@
                         "type": "string",
                         "title": "Project",
                         "description": "Name of the project"
+                    },
+                    "copy": {
+                        "type": "boolean",
+                        "title": "Copy",
+                        "description": "If True, a copy of each log is created and then added to the context. If False, the existing log associations are simply used. If omitted, defaults to True.",
+                        "default": true
                     }
                 },
                 "type": "object",
@@ -17079,6 +17221,101 @@
                     "new_field_name"
                 ],
                 "title": "RenameFieldRequest"
+            },
+            "ReplicatePredictionResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "model": {
+                        "type": "string",
+                        "title": "Model"
+                    },
+                    "version": {
+                        "type": "string",
+                        "title": "Version"
+                    },
+                    "input": {
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Input"
+                    },
+                    "output": {
+                        "anyOf": [
+                            {},
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Output"
+                    },
+                    "logs": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Logs"
+                    },
+                    "error": {
+                        "anyOf": [
+                            {},
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Error"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "title": "Created At"
+                    },
+                    "completed_at": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Completed At"
+                    },
+                    "urls": {
+                        "anyOf": [
+                            {
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Urls"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "model",
+                    "version",
+                    "status",
+                    "created_at"
+                ],
+                "title": "ReplicatePredictionResponse"
             },
             "StandardFieldDefinition": {
                 "properties": {

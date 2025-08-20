@@ -44,12 +44,20 @@ Join type: 'inner', 'left', 'right', or 'outer'
 Name for the new context where joined logs will be stored
 </ParamField>
 
-<ParamField body="columns" type="object | null" >
-Optional dictionary mapping source columns to new column names for the result. The key is the source column (e.g., 'A.user_id') and the value is the desired alias in the new log (e.g., 'user_identifier'). If omitted, all columns will be selected and prefixed with 'A_' or 'B_'.
+<ParamField body="columns" type="object | array | null" >
+Optional column specification for the joined result. Can be either:
+1. A dictionary mapping source columns to aliases (only supported when copy=True):    {'A.user_id': 'user_identifier', 'B.score': 'user_score'}
+2. A list of source columns to include (required format when copy=False):    ['A.user_id', 'A.score', 'B.category']
+Note: When copy=False (pass-by-reference), aliases are not supported and the original column names will be preserved. Use the list format in this case.
+If omitted, all columns will be selected and prefixed with 'A_' or 'B_'.
 </ParamField>
 
 <ParamField body="project" type="string" required="true">
 Name of the project
+</ParamField>
+
+<ParamField body="copy" type="boolean"  default="true">
+If True, a copy of each log is created and then added to the context. If False, the existing log associations are simply used. If omitted, defaults to True.
 </ParamField>
 
 <RequestExample>
