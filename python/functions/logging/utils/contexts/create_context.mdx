@@ -9,13 +9,14 @@ def create_context(
     is_versioned: bool = True,
     allow_duplicates: bool = True,
     unique_keys: Optional[Dict[str, str]] = None,
+    auto_counting: Optional[Dict[str, Optional[str]]] = None,
     *,
     project: Optional[str] = None,
     api_key: Optional[str] = None,
 ) -> None:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e15a26d212f3e05b682e5d613636a7c232d3b72a/unify/logging/utils/contexts.py#L17)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/c04635abb5fc70bb280378789549e2bc597fd3b1/unify/logging/utils/contexts.py#L17)</p>
 
 Create a context.
 
@@ -25,7 +26,8 @@ Create a context.
 - `description` - Description of the context to create.
 - `is_versioned` - Whether the context is tracked via version control.
 - `allow_duplicates` - Whether to allow duplicates in the context.
-- `unique_keys` - Composite unique key definition. Keys are column names, values are types
+- `unique_keys` - Unique key definition. Keys are column names, values are types
+- `auto_counting` - Auto-counting configuration. Keys are column names to auto-increment,
 - `project` - Name of the project the context belongs to.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
