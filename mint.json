@@ -276,6 +276,12 @@
                             "group": "clients",
                             "pages": [
                                 {
+                                    "group": "base",
+                                    "pages": [
+                                        "python/functions/universal_api/clients/base/set_client_direct_mode"
+                                    ]
+                                },
+                                {
                                     "group": "multi_llm",
                                     "pages": [
                                         "python/classes/universal_api/clients/multi_llm/AsyncMultiUnify",
