@@ -11,10 +11,11 @@ def log_query(
     tags: Optional[List[str]] = None,
     timestamp: Optional[Union[datetime.datetime, str]] = None,
     api_key: Optional[str] = None,
+    consume_credits: bool = False,
 ):
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/64d82479153c12f9fc21b573e386e6e20b05233d/unify/universal_api/utils/queries.py#L102)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ee929f02c3acdb05a6b56ed42c20027312283bac/unify/universal_api/utils/queries.py#L102)</p>
 
 Log a query (and optionally response) for a locally deployed (non-Unify-registered)
 model, with tagging (default None) and timestamp (default datetime.now() also
