@@ -2,14 +2,17 @@
 title: "Create Context"
 api: 'POST /v0/project/{project_name}/contexts'
 ---
-Creates a new context within a project. Contexts can be used to organize logs
+Creates one or more contexts within a project. Contexts can be used to organize logs
 and artifacts within a project.
 
 If is_versioned=True, all logs in this context will be versioned and mutable.
 The context version will increment automatically when logs are added, updated, or removed.
 
-The context can be provided as a string (which will be used as the name with no description)
-or as an object with name and description fields.
+The context can be provided as:
+- A string (which will be used as the name with no description)
+- A ContextCreateRequest object with name and description fields
+- A list of strings for batch creation
+- A list of ContextCreateRequest objects for batch creation
 
 #### Authorizations
 
@@ -42,7 +45,11 @@ Whether duplicate log entries are allowed in this context. If False, attempts to
 </ParamField>
 
 <ParamField body="unique_keys" type="object | null" >
-Composite unique key definition. Keys are column names, values are types ('counting' for auto-increment, 'str', 'int', 'float', 'bool', 'datetime', 'time', 'date', 'timedelta', 'dict', 'list').
+Unique key definition. Keys are column names, values are types ('str', 'int', 'float', 'bool', 'datetime', 'time', 'date', 'timedelta', 'dict', 'list').
+</ParamField>
+
+<ParamField body="auto_counting" type="object | null" >
+Auto-counting configuration. Keys are column names to auto-increment, values are parent counter names (None for independent counters).
 </ParamField>
 
 <RequestExample>
@@ -58,10 +65,13 @@ curl --request POST \
     "is_versioned": true,
     "allow_duplicates": true,
     "unique_keys": {
-        "company_id": "counting",
-        "department_id": "counting",
+        "company_id": "int",
+        "department_id": "int",
         "first_name": "str",
         "last_name": "str"
+    },
+    "auto_counting": {
+        "company_id": "department_id"
     }
 }'
 ```
@@ -73,7 +83,7 @@ url = "https://api.unify.ai/v0/project/my_project/contexts"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True, "allow_duplicates": True, "unique_keys": {"company_id": "counting", "department_id": "counting", "first_name": "str", "last_name": "str"}}
+json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True, "allow_duplicates": True, "unique_keys": {"company_id": "int", "department_id": "int", "first_name": "str", "last_name": "str"}, "auto_counting": {"company_id": "department_id"}}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
@@ -84,17 +94,11 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{
-    "name": "experiment1/trial1",
-    "description": "Context for experiment 1 trial 1",
-    "is_versioned": true
-}
+{}
 ```
 
 ```json 400
-{
-    "detail": "A context with this name already exists in the project."
-}
+{}
 ```
 
 ```json 404
