@@ -55,7 +55,8 @@ print(response.text)
         "allow_duplicates": true,
         "unique_keys": [
             "row_id"
-        ]
+        ],
+        "auto_counting": {}
     },
     {
         "name": "context2",
@@ -65,7 +66,10 @@ print(response.text)
         "unique_keys": [
             "user_id",
             "session_id"
-        ]
+        ],
+        "auto_counting": {
+            "session_id": "user_id"
+        }
     }
 ]
 ```

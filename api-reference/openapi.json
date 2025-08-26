@@ -3013,7 +3013,7 @@
                     "Contexts"
                 ],
                 "summary": "Create Context",
-                "description": "Creates a new context within a project. Contexts can be used to organize logs\nand artifacts within a project.\n\nIf is_versioned=True, all logs in this context will be versioned and mutable.\nThe context version will increment automatically when logs are added, updated, or removed.\n\nThe context can be provided as a string (which will be used as the name with no description)\nor as an object with name and description fields.",
+                "description": "Creates one or more contexts within a project. Contexts can be used to organize logs\nand artifacts within a project.\n\nIf is_versioned=True, all logs in this context will be versioned and mutable.\nThe context version will increment automatically when logs are added, updated, or removed.\n\nThe context can be provided as:\n- A string (which will be used as the name with no description)\n- A ContextCreateRequest object with name and description fields\n- A list of strings for batch creation\n- A list of ContextCreateRequest objects for batch creation",
                 "operationId": "create_context_v0_project__project_name__contexts_post",
                 "security": [
                     {
@@ -3045,6 +3045,22 @@
                                     },
                                     {
                                         "type": "string"
+                                    },
+                                    {
+                                        "type": "array",
+                                        "items": {
+                                            "anyOf": [
+                                                {
+                                                    "$ref": "#/components/schemas/ContextCreateRequest"
+                                                },
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "object"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ],
                                 "title": "Request"
@@ -3058,20 +3074,62 @@
                         "content": {
                             "application/json": {
                                 "schema": {},
-                                "example": {
-                                    "name": "experiment1/trial1",
-                                    "description": "Context for experiment 1 trial 1",
-                                    "is_versioned": true
+                                "examples": {
+                                    "single": {
+                                        "summary": "Single context creation",
+                                        "value": {
+                                            "info": "Context created successfully."
+                                        }
+                                    },
+                                    "batch": {
+                                        "summary": "Batch context creation",
+                                        "value": {
+                                            "info": "Created 3 context(s) successfully.",
+                                            "created": [
+                                                "experiment1",
+                                                "experiment2",
+                                                "experiment3"
+                                            ]
+                                        }
+                                    },
+                                    "batch_with_errors": {
+                                        "summary": "Batch creation with some errors",
+                                        "value": {
+                                            "info": "Created 2 context(s) successfully.",
+                                            "created": [
+                                                "experiment1",
+                                                "experiment3"
+                                            ],
+                                            "errors": [
+                                                {
+                                                    "index": 1,
+                                                    "name": "experiment2",
+                                                    "error": "A context with this name already exists in the project."
+                                                }
+                                            ]
+                                        }
+                                    }
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "Already Existing Context",
+                        "description": "Bad Request",
                         "content": {
                             "application/json": {
-                                "example": {
-                                    "detail": "A context with this name already exists in the project."
+                                "examples": {
+                                    "already_exists": {
+                                        "summary": "Context already exists",
+                                        "value": {
+                                            "detail": "A context with this name already exists in the project."
+                                        }
+                                    },
+                                    "invalid_name": {
+                                        "summary": "Invalid context name",
+                                        "value": {
+                                            "detail": "Invalid context name. Names can only contain alphanumeric characters, underscores, dashes, and forward slashes. Consecutive slashes are not allowed."
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3157,7 +3215,8 @@
                                         "allow_duplicates": true,
                                         "unique_keys": [
                                             "row_id"
-                                        ]
+                                        ],
+                                        "auto_counting": {}
                                     },
                                     {
                                         "name": "context2",
@@ -3167,7 +3226,10 @@
                                         "unique_keys": [
                                             "user_id",
                                             "session_id"
-                                        ]
+                                        ],
+                                        "auto_counting": {
+                                            "session_id": "user_id"
+                                        }
                                     }
                                 ]
                             }
@@ -3369,7 +3431,8 @@
                                     "allow_duplicates": true,
                                     "unique_keys": [
                                         "row_id"
-                                    ]
+                                    ],
+                                    "auto_counting": {}
                                 }
                             }
                         }
@@ -13676,12 +13739,37 @@
                             }
                         ],
                         "title": "Unique Keys",
-                        "description": "Composite unique key definition. Keys are column names, values are types ('counting' for auto-increment, 'str', 'int', 'float', 'bool', 'datetime', 'time', 'date', 'timedelta', 'dict', 'list').",
+                        "description": "Unique key definition. Keys are column names, values are types ('str', 'int', 'float', 'bool', 'datetime', 'time', 'date', 'timedelta', 'dict', 'list').",
                         "example": {
-                            "company_id": "counting",
-                            "department_id": "counting",
+                            "company_id": "int",
+                            "department_id": "int",
                             "first_name": "str",
                             "last_name": "str"
+                        }
+                    },
+                    "auto_counting": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "anyOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Auto Counting",
+                        "description": "Auto-counting configuration. Keys are column names to auto-increment, values are parent counter names (None for independent counters).",
+                        "example": {
+                            "company_id": "department_id"
                         }
                     }
                 },
