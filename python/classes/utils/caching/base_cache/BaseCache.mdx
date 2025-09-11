@@ -6,7 +6,7 @@ title: 'BaseCache'
 class BaseCache
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L15)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L15)</p>
 
 Abstract base class for cache implementations.
 
@@ -16,7 +16,7 @@ Abstract base class for cache implementations.
 
 ### set\_cache\_name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L73)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L73)</p>
 
 ```python
 def set_cache_name(cls, name: str) -> None:
@@ -30,7 +30,7 @@ Set the cache identifier/name.
 
 ### get\_cache\_name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L78)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L78)</p>
 
 ```python
 def get_cache_name(cls) -> str:
@@ -42,7 +42,7 @@ Get the current cache identifier/name.
 
 ### has\_key
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L114)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L114)</p>
 
 ```python
 def has_key(cls, key: str) -> bool:
@@ -54,7 +54,7 @@ Check if a key exists in the cache.
 
 ### initialize\_cache
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L94)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L94)</p>
 
 ```python
 def initialize_cache(cls, name: str = None) -> None:
@@ -66,7 +66,7 @@ Initialize or load the cache from storage.
 
 ### list\_keys
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L99)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L99)</p>
 
 ```python
 def list_keys(cls) -> List[str]:
@@ -78,7 +78,7 @@ Get a list of all cache keys.
 
 ### remove\_entry
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L119)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L119)</p>
 
 ```python
 def remove_entry(cls, key: str) -> None:
@@ -90,7 +90,7 @@ Remove an entry from the cache.
 
 ### retrieve\_entry
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L104)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L104)</p>
 
 ```python
 def retrieve_entry(cls, key: str) -> tuple[Optional[Any], Optional[Dict[str, Any]]]:
@@ -106,7 +106,7 @@ Tuple of (value, res_types) or (None, None) if not found
 
 ### serialize\_object
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L18)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L18)</p>
 
 ```python
 def serialize_object(
@@ -136,7 +136,7 @@ Serialized object or JSON string if at root level
 
 ### store\_entry
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/79f172809520aa3d1f64864c22569c24883a3dfd/unify/utils/caching/base_cache.py#L83)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/7e142717516efd4a366354c2272b00dcee8c209d/unify/utils/caching/base_cache.py#L83)</p>
 
 ```python
 def store_entry(
