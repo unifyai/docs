@@ -62,6 +62,10 @@ Id of the voice (Cartesia ID) to use for the assistant
 Country code for phone number provisioning (e.g., US, GB)
 </ParamField>
 
+<ParamField body="create_infra" type="boolean | null"  default="true">
+Whether to create infrastructure for the assistant during update (e.g., phone, email). Set to false for testing.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL

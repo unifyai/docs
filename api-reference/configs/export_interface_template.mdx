@@ -1,6 +1,6 @@
 ---
 title: "Export Interface Template"
-api: 'POST /v0/interface/interfaces/export_template'
+api: 'POST /v0/interfaces/export_template'
 ---
 Export an interface as a reusable template.
 
@@ -48,7 +48,7 @@ Export an interface as a reusable template.
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/interface/interfaces/export_template' \
+  --url 'https://api.unify.ai/v0/interfaces/export_template' \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -57,7 +57,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interface/interfaces/export_template"
+url = "https://api.unify.ai/v0/interfaces/export_template"
 
 headers = {"Authorization": "Bearer <token>"}
 

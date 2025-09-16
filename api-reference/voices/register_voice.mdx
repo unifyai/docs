@@ -13,7 +13,7 @@ Register a preset assistant voice.
 #### Body
 
 <ParamField body="voice_id" type="string" required="true">
-Cartesia Voice ID
+Provider Voice ID
 </ParamField>
 
 <ParamField body="name" type="string" required="true">
@@ -33,11 +33,11 @@ Language code of the voice
 </ParamField>
 
 <ParamField body="provider" type="string"  default="cartesia">
-Provider of the voice (cartesia or elevenlabs)
+Provider of the voice (cartesia, elevenlabs or openai)
 </ParamField>
 
 <ParamField body="is_preset" type="boolean | null"  default="false">
-Whether this voice is a Cartesia preset or user-created.
+Whether this voice is a preset or user-created voice.
 </ParamField>
 
 <RequestExample>

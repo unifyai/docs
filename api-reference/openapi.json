@@ -6576,359 +6576,6 @@
                 }
             }
         },
-        "/v0/interface": {
-            "post": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interface"
-                ],
-                "summary": "Create Interface",
-                "description": "Create a new interface in a project.",
-                "operationId": "create_interface_v0_interface_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "checkpoint",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "description": "Whether to create a checkpoint interface (manual save)",
-                            "default": false,
-                            "title": "Checkpoint"
-                        },
-                        "description": "Whether to create a checkpoint interface (manual save)"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateInterfaceRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interface"
-                ],
-                "summary": "Update Interface",
-                "description": "Update an interface by ID or by project ID and name.",
-                "operationId": "update_interface_v0_interface_put",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "interface_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The ID of the interface to update",
-                            "title": "Interface Id"
-                        },
-                        "description": "The ID of the interface to update"
-                    },
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The project ID the interface belongs to",
-                            "title": "Project"
-                        },
-                        "description": "The project ID the interface belongs to"
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The name of the interface to update",
-                            "title": "Name"
-                        },
-                        "description": "The name of the interface to update"
-                    },
-                    {
-                        "name": "checkpoint",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "description": "Whether this is a checkpoint update (manual save)",
-                            "default": false,
-                            "title": "Checkpoint"
-                        },
-                        "description": "Whether this is a checkpoint update (manual save)"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateInterfaceRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Configs",
-                    "interface"
-                ],
-                "summary": "Get Interfaces",
-                "operationId": "get_interfaces_v0_interface_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "title": "Name"
-                        }
-                    },
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "title": "Project"
-                        }
-                    },
-                    {
-                        "name": "temporary",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "default": false,
-                            "title": "Temporary"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Interface retrieved.",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": [
-                                    {
-                                        "name": "tab1",
-                                        "project": "my_project",
-                                        "items": [
-                                            {
-                                                "i": "n0",
-                                                "x": 0,
-                                                "y": 0,
-                                                "w": 3,
-                                                "h": 3
-                                            },
-                                            {
-                                                "i": "n1",
-                                                "x": 0,
-                                                "y": 3,
-                                                "w": 2,
-                                                "h": 3,
-                                                "tab": "Plot_1"
-                                            }
-                                        ],
-                                        "new_counter": 2
-                                    }
-                                ]
-                            }
-                        }
-                    },
-                    "4041": {
-                        "description": "Project Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project <project> not found."
-                                }
-                            }
-                        }
-                    },
-                    "4042": {
-                        "description": "Interface Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": "Interface not added yet. Create it first."
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Configs",
-                    "interface"
-                ],
-                "summary": "Delete Interface",
-                "operationId": "delete_interface_v0_interface_delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "title": "Name"
-                        }
-                    },
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "title": "Project"
-                        }
-                    },
-                    {
-                        "name": "temporary",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "default": false,
-                            "title": "Temporary"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Interface deleted.",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Interface deleted successfully!"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Interface Not Found",
-                        "content": {
-                            "application/json": {
-                                "example": "Interface not added yet. Create it first."
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v0/interfaces/": {
             "post": {
                 "tags": [
@@ -7968,7 +7615,7 @@
                                     "visible": true,
                                     "active": true,
                                     "order": 1,
-                                    "global_context": {},
+                                    "context": {},
                                     "color": "blue",
                                     "is_checkpoint": false,
                                     "tiles": [],
@@ -8107,7 +7754,7 @@
                                     "visible": true,
                                     "active": true,
                                     "order": 1,
-                                    "global_context": {},
+                                    "context": {},
                                     "color": "blue",
                                     "is_checkpoint": false,
                                     "tiles": [
@@ -8267,7 +7914,7 @@
                                     "visible": true,
                                     "active": true,
                                     "order": 1,
-                                    "global_context": {},
+                                    "context": {},
                                     "color": "red",
                                     "is_checkpoint": false,
                                     "tiles": [],
@@ -8512,7 +8159,7 @@
                                         "visible": true,
                                         "active": true,
                                         "order": 1,
-                                        "global_context": {},
+                                        "context": {},
                                         "color": "blue",
                                         "is_checkpoint": false,
                                         "tiles": [],
@@ -8526,7 +8173,7 @@
                                         "visible": true,
                                         "active": false,
                                         "order": 2,
-                                        "global_context": {},
+                                        "context": {},
                                         "color": "green",
                                         "is_checkpoint": false,
                                         "tiles": [],
@@ -8646,7 +8293,7 @@
                                     "visible": true,
                                     "active": true,
                                     "order": 1,
-                                    "global_context": {},
+                                    "context": {},
                                     "color": "blue",
                                     "is_checkpoint": true,
                                     "tiles": [],
@@ -8783,7 +8430,7 @@
                                     "visible": true,
                                     "active": true,
                                     "order": 1,
-                                    "global_context": {},
+                                    "context": {},
                                     "color": "blue",
                                     "is_checkpoint": true,
                                     "tiles": [],
@@ -10540,991 +10187,6 @@
                 ]
             }
         },
-        "/v0/interface/interfaces/": {
-            "post": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interfaces"
-                ],
-                "summary": "Create Interface",
-                "description": "Create a new interface in a project.",
-                "operationId": "create_interface_v0_interface_interfaces__post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "checkpoint",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "description": "Whether to create a checkpoint interface (manual save)",
-                            "default": false,
-                            "title": "Checkpoint"
-                        },
-                        "description": "Whether to create a checkpoint interface (manual save)"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateInterfaceRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Interface created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InterfaceSchema"
-                                },
-                                "example": {
-                                    "id": "123",
-                                    "name": "my_interface",
-                                    "project_id": "proj_abc",
-                                    "tabs": [],
-                                    "color": "blue",
-                                    "is_checkpoint": false,
-                                    "created_at": "2024-01-01T12:00:00Z",
-                                    "updated_at": "2024-01-01T12:00:00Z"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project my_project not found or you don't have access."
-                                }
-                            }
-                        }
-                    },
-                    "409": {
-                        "description": "Interface with this name already exists",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Interface with name my_interface already exists in this project."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interfaces"
-                ],
-                "summary": "Get Interface",
-                "description": "Get a specific interface by ID or by project ID and name.",
-                "operationId": "get_interface_v0_interface_interfaces__get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "interface_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The ID of the interface to retrieve",
-                            "title": "Interface Id"
-                        },
-                        "description": "The ID of the interface to retrieve"
-                    },
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The project ID the interface belongs to",
-                            "title": "Project"
-                        },
-                        "description": "The project ID the interface belongs to"
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The name of the interface to retrieve",
-                            "title": "Name"
-                        },
-                        "description": "The name of the interface to retrieve"
-                    },
-                    {
-                        "name": "checkpoint",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "description": "Whether to get a checkpoint version (manually saved)",
-                            "default": false,
-                            "title": "Checkpoint"
-                        },
-                        "description": "Whether to get a checkpoint version (manually saved)"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Interface details retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InterfaceSchema"
-                                },
-                                "example": {
-                                    "id": "123",
-                                    "name": "my_interface",
-                                    "project_id": "proj_abc",
-                                    "tabs": [],
-                                    "color": "blue",
-                                    "is_checkpoint": false,
-                                    "created_at": "2024-01-01T12:00:00Z",
-                                    "updated_at": "2024-01-01T12:00:00Z"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Interface not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Interface with ID 123 not found."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Missing required parameters",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Either interface_id or both project and name must be provided."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interfaces"
-                ],
-                "summary": "Update Interface",
-                "description": "Update an interface by ID or by project ID and name.",
-                "operationId": "update_interface_v0_interface_interfaces__put",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "interface_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The ID of the interface to update",
-                            "title": "Interface Id"
-                        },
-                        "description": "The ID of the interface to update"
-                    },
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The project ID the interface belongs to",
-                            "title": "Project"
-                        },
-                        "description": "The project ID the interface belongs to"
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The name of the interface to update",
-                            "title": "Name"
-                        },
-                        "description": "The name of the interface to update"
-                    },
-                    {
-                        "name": "checkpoint",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "description": "Whether this is a checkpoint update (manual save)",
-                            "default": false,
-                            "title": "Checkpoint"
-                        },
-                        "description": "Whether this is a checkpoint update (manual save)"
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateInterfaceRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Interface updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InterfaceSchema"
-                                },
-                                "example": {
-                                    "id": "123",
-                                    "name": "my_interface",
-                                    "project_id": "proj_abc",
-                                    "tabs": [],
-                                    "color": "blue",
-                                    "is_checkpoint": false,
-                                    "created_at": "2024-01-01T12:00:00Z",
-                                    "updated_at": "2024-01-01T12:00:00Z"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Interface not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Interface with ID 123 not found."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Missing required parameters",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Either interface_id or both project and name must be provided."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interfaces"
-                ],
-                "summary": "Delete Interface",
-                "description": "Delete an interface by ID or by project ID and name.",
-                "operationId": "delete_interface_v0_interface_interfaces__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "interface_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The ID of the interface to delete",
-                            "title": "Interface Id"
-                        },
-                        "description": "The ID of the interface to delete"
-                    },
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The project ID the interface belongs to",
-                            "title": "Project"
-                        },
-                        "description": "The project ID the interface belongs to"
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The name of the interface to delete",
-                            "title": "Name"
-                        },
-                        "description": "The name of the interface to delete"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Interface deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "info": "Interface deleted successfully"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Interface not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Interface with ID 123 not found."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Missing required parameters",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Either interface_id or both project and name must be provided."
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to delete interface",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Failed to delete interface."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/interface/interfaces/list": {
-            "get": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interfaces"
-                ],
-                "summary": "List Interfaces",
-                "description": "List all interfaces for a project.",
-                "operationId": "list_interfaces_v0_interface_interfaces_list_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "The project ID to list interfaces for",
-                            "title": "Project"
-                        },
-                        "description": "The project ID to list interfaces for"
-                    },
-                    {
-                        "name": "checkpoint",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "description": "Whether to list checkpoint versions (manually saved)",
-                            "default": false,
-                            "title": "Checkpoint"
-                        },
-                        "description": "Whether to list checkpoint versions (manually saved)"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Interfaces list retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/InterfaceSchema"
-                                    },
-                                    "title": "Response List Interfaces V0 Interface Interfaces List Get"
-                                },
-                                "example": [
-                                    {
-                                        "id": "123",
-                                        "name": "my_interface",
-                                        "project_id": "proj_abc",
-                                        "tabs": [],
-                                        "color": "blue",
-                                        "is_checkpoint": false,
-                                        "created_at": "2024-01-01T12:00:00Z",
-                                        "updated_at": "2024-01-01T12:00:00Z"
-                                    }
-                                ]
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Project not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Project my_project not found or you don't have access."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/interface/interfaces/checkpoint": {
-            "post": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interfaces"
-                ],
-                "summary": "Create Interface Checkpoint",
-                "description": "Create a manual checkpoint (save) of an interface by ID or by project ID and name.",
-                "operationId": "create_interface_checkpoint_v0_interface_interfaces_checkpoint_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "interface_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The ID of the interface to checkpoint",
-                            "title": "Interface Id"
-                        },
-                        "description": "The ID of the interface to checkpoint"
-                    },
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The project ID the interface belongs to",
-                            "title": "Project"
-                        },
-                        "description": "The project ID the interface belongs to"
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The name of the interface to checkpoint",
-                            "title": "Name"
-                        },
-                        "description": "The name of the interface to checkpoint"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Interface checkpoint created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InterfaceSchema"
-                                },
-                                "example": {
-                                    "id": "123",
-                                    "name": "my_interface",
-                                    "project_id": "proj_abc",
-                                    "tabs": [],
-                                    "color": "blue",
-                                    "is_checkpoint": true,
-                                    "created_at": "2024-01-01T12:00:00Z",
-                                    "updated_at": "2024-01-01T12:00:00Z"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Interface not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Interface with ID 123 not found."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Missing required parameters",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Either interface_id or both project and name must be provided."
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to create checkpoint",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Failed to create or update checkpoint interface."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interfaces"
-                ],
-                "summary": "Get Interface Checkpoint",
-                "description": "Get the latest checkpoint (manual save) for an interface by ID or by project ID and name.",
-                "operationId": "get_interface_checkpoint_v0_interface_interfaces_checkpoint_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "interface_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The ID of the interface to get checkpoint for",
-                            "title": "Interface Id"
-                        },
-                        "description": "The ID of the interface to get checkpoint for"
-                    },
-                    {
-                        "name": "project",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The project ID the interface belongs to",
-                            "title": "Project"
-                        },
-                        "description": "The project ID the interface belongs to"
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "The name of the interface to get checkpoint for",
-                            "title": "Name"
-                        },
-                        "description": "The name of the interface to get checkpoint for"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Interface checkpoint retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InterfaceSchema"
-                                },
-                                "example": {
-                                    "id": "123",
-                                    "name": "my_interface",
-                                    "project_id": "proj_abc",
-                                    "tabs": [],
-                                    "color": "blue",
-                                    "is_checkpoint": true,
-                                    "created_at": "2024-01-01T12:00:00Z",
-                                    "updated_at": "2024-01-01T12:00:00Z"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Interface or checkpoint not found",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "No checkpoint found for the specified interface."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Missing required parameters",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "Either interface_id or both project and name must be provided."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/interface/interfaces/export_template": {
-            "post": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interfaces"
-                ],
-                "summary": "Export Interface Template",
-                "description": "Export an interface as a reusable template.",
-                "operationId": "export_interface_template_v0_interface_interfaces_export_template_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ExportInterfaceTemplateRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Interface template exported successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/TemplateExportResponse"
-                                },
-                                "example": {
-                                    "template": {
-                                        "name": "Analytics Dashboard",
-                                        "tabs": [
-                                            {
-                                                "name": "Overview",
-                                                "tiles": [
-                                                    {
-                                                        "name": "Data Table",
-                                                        "type": "Table",
-                                                        "position": {
-                                                            "x": 0,
-                                                            "y": 0,
-                                                            "width": 6,
-                                                            "height": 4
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ],
-                                        "template_version": "1.0"
-                                    },
-                                    "metadata": {
-                                        "exported_at": "2024-01-01T12:00:00Z"
-                                    },
-                                    "export_stats": {
-                                        "tabs": 1,
-                                        "tiles": 1
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/interface/interfaces/import_template": {
-            "post": {
-                "tags": [
-                    "Configs",
-                    "interface",
-                    "interfaces"
-                ],
-                "summary": "Import Interface Template",
-                "description": "Import an interface template into a project.",
-                "operationId": "import_interface_template_v0_interface_interfaces_import_template_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ImportInterfaceTemplateRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Interface template imported successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/TemplateImportResponse"
-                                },
-                                "example": {
-                                    "success": true,
-                                    "import_stats": {
-                                        "interfaces": 1,
-                                        "tabs": 2,
-                                        "tiles": 5
-                                    },
-                                    "created_ids": {
-                                        "interface_id": "abc123"
-                                    },
-                                    "warnings": []
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
         "/v0/tab": {
             "post": {
                 "tags": [
@@ -12673,6 +11335,19 @@
                         "title": "Country",
                         "description": "Country code for phone number provisioning (e.g., US, GB)",
                         "example": "GB"
+                    },
+                    "create_infra": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Create Infra",
+                        "description": "Whether to create infrastructure for the assistant during update (e.g., phone, email). Set to false for testing.",
+                        "default": true
                     }
                 },
                 "type": "object",
@@ -14004,6 +12679,17 @@
                     "project": {
                         "type": "string",
                         "title": "Project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context"
                     }
                 },
                 "additionalProperties": false,
@@ -14202,7 +12888,7 @@
                         ],
                         "title": "Order"
                     },
-                    "global_context": {
+                    "context": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -14211,7 +12897,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Global Context"
+                        "title": "Context"
                     },
                     "color": {
                         "anyOf": [
@@ -15811,6 +14497,17 @@
                         "type": "integer",
                         "title": "Project Id"
                     },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context"
+                    },
                     "created_at": {
                         "anyOf": [
                             {
@@ -15969,473 +14666,6 @@
                 "title": "InterfaceTemplateSchema",
                 "description": "Template schema for a detached interface"
             },
-            "Item": {
-                "properties": {
-                    "i": {
-                        "type": "string",
-                        "title": "I"
-                    },
-                    "x": {
-                        "type": "number",
-                        "title": "X"
-                    },
-                    "y": {
-                        "type": "number",
-                        "title": "Y"
-                    },
-                    "w": {
-                        "type": "number",
-                        "title": "W"
-                    },
-                    "h": {
-                        "type": "number",
-                        "title": "H"
-                    },
-                    "minW": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Minw"
-                    },
-                    "minH": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Minh"
-                    },
-                    "moved": {
-                        "type": "boolean",
-                        "title": "Moved",
-                        "default": false
-                    },
-                    "static": {
-                        "type": "boolean",
-                        "title": "Static",
-                        "default": false
-                    },
-                    "visible": {
-                        "type": "boolean",
-                        "title": "Visible",
-                        "default": true
-                    },
-                    "color": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Color"
-                    },
-                    "tab": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Tab"
-                    },
-                    "table": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Table"
-                    },
-                    "table_type": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Table Type"
-                    },
-                    "auto_update": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Auto Update"
-                    },
-                    "freeze": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Freeze"
-                    },
-                    "context": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Context"
-                    },
-                    "column_context": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Column Context"
-                    },
-                    "prev_context": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Prev Context"
-                    },
-                    "filters": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Filters"
-                    },
-                    "common_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Common Filter"
-                    },
-                    "page_number": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Page Number"
-                    },
-                    "metric": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Metric"
-                    },
-                    "column_order": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Column Order"
-                    },
-                    "hidden_columns": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Hidden Columns"
-                    },
-                    "default_hidden_columns": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Default Hidden Columns"
-                    },
-                    "sorting": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Sorting"
-                    },
-                    "grouping": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Grouping"
-                    },
-                    "group_sorting": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Group Sorting"
-                    },
-                    "columns_pin_left": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Columns Pin Left"
-                    },
-                    "columns_pin_right": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Columns Pin Right"
-                    },
-                    "selected": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Selected"
-                    },
-                    "base_index": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Base Index"
-                    },
-                    "plot_type": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Plot Type"
-                    },
-                    "plot_scale_x": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Plot Scale X"
-                    },
-                    "plot_scale_y": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Plot Scale Y"
-                    },
-                    "plot_aggregate": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Plot Aggregate"
-                    },
-                    "x_axis": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "X Axis"
-                    },
-                    "y_axis": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Y Axis"
-                    },
-                    "plot_group_by": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Plot Group By"
-                    },
-                    "plot_group_by_colors": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Plot Group By Colors"
-                    },
-                    "bin_count": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Bin Count"
-                    },
-                    "regression_line": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Regression Line"
-                    },
-                    "file_name": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "File Name"
-                    },
-                    "file_type": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "File Type"
-                    },
-                    "content": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Content"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "i",
-                    "x",
-                    "y",
-                    "w",
-                    "h"
-                ],
-                "title": "Item",
-                "description": "Legacy Item schema for backward compatibility"
-            },
             "JoinLogsRequest": {
                 "properties": {
                     "pair_of_args": {
@@ -16520,108 +14750,6 @@
                     "project"
                 ],
                 "title": "JoinLogsRequest"
-            },
-            "LegacyInterfaceConfig": {
-                "properties": {
-                    "name": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Name"
-                    },
-                    "project": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Project"
-                    },
-                    "items": {
-                        "items": {
-                            "$ref": "#/components/schemas/Item"
-                        },
-                        "type": "array",
-                        "title": "Items",
-                        "default": []
-                    },
-                    "new_counter": {
-                        "type": "integer",
-                        "title": "New Counter",
-                        "default": 0
-                    },
-                    "temporary": {
-                        "type": "boolean",
-                        "title": "Temporary",
-                        "default": false
-                    },
-                    "new_name": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "New Name"
-                    },
-                    "context": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Context"
-                    },
-                    "color": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Color"
-                    },
-                    "icon": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Icon"
-                    },
-                    "order": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Order"
-                    }
-                },
-                "type": "object",
-                "title": "LegacyInterfaceConfig",
-                "description": "Legacy Interface configuration schema for backward compatibility"
             },
             "OnboardingStatusResponse": {
                 "properties": {
@@ -17499,7 +15627,7 @@
                         ],
                         "title": "Order"
                     },
-                    "global_context": {
+                    "context": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -17508,7 +15636,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Global Context"
+                        "title": "Context"
                     },
                     "color": {
                         "anyOf": [
@@ -17606,7 +15734,7 @@
                         ],
                         "title": "Order"
                     },
-                    "global_context": {
+                    "context": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -17615,7 +15743,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Global Context"
+                        "title": "Context"
                     },
                     "color": {
                         "anyOf": [
@@ -18810,6 +16938,17 @@
                             }
                         ],
                         "title": "Icon"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context"
                     }
                 },
                 "additionalProperties": false,
@@ -19055,7 +17194,7 @@
                         ],
                         "title": "Order"
                     },
-                    "global_context": {
+                    "context": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -19064,7 +17203,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Global Context"
+                        "title": "Context"
                     },
                     "color": {
                         "anyOf": [
@@ -19607,7 +17746,7 @@
                     "voice_id": {
                         "type": "string",
                         "title": "Voice Id",
-                        "description": "Cartesia Voice ID",
+                        "description": "Provider Voice ID",
                         "example": "bf0a246a-8642-498a-9950-80c35e9276b5"
                     },
                     "name": {
@@ -19645,10 +17784,11 @@
                         "type": "string",
                         "enum": [
                             "cartesia",
-                            "elevenlabs"
+                            "elevenlabs",
+                            "openai"
                         ],
                         "title": "Provider",
-                        "description": "Provider of the voice (cartesia or elevenlabs)",
+                        "description": "Provider of the voice (cartesia, elevenlabs or openai)",
                         "default": "cartesia",
                         "example": "cartesia"
                     },
@@ -19662,7 +17802,7 @@
                             }
                         ],
                         "title": "Is Preset",
-                        "description": "Whether this voice is a Cartesia preset or user-created.",
+                        "description": "Whether this voice is a preset or user-created voice.",
                         "default": false,
                         "example": true
                     }
@@ -19675,7 +17815,7 @@
                     "language"
                 ],
                 "title": "VoiceCreate",
-                "description": "Schema for creating a new assistant voice entry in our DB.\nThe voice_id is provided by Cartesia after a successful clone/localize, or is a known preset ID."
+                "description": "Schema for creating a new assistant voice entry in our DB.\nThe voice_id is provided by the provider."
             },
             "VoiceDesignCreateFromPreviewRequest": {
                 "properties": {
@@ -19910,7 +18050,8 @@
                         "type": "string",
                         "enum": [
                             "cartesia",
-                            "elevenlabs"
+                            "elevenlabs",
+                            "openai"
                         ],
                         "title": "Provider",
                         "description": "TTS provider."
@@ -19930,7 +18071,7 @@
                             }
                         ],
                         "title": "Model Id",
-                        "description": "Provider-specific model ID (e.g., 'sonic-2' for Cartesia, 'eleven_multilingual_v2' for ElevenLabs)."
+                        "description": "Provider-specific model ID (e.g., 'sonic-2' for Cartesia, 'eleven_multilingual_v2' for ElevenLabs, 'gpt-4o-mini-tts' for OpenAI)."
                     },
                     "output_format": {
                         "type": "string",
@@ -20038,7 +18179,7 @@
                     "voice_id": {
                         "type": "string",
                         "title": "Voice Id",
-                        "description": "Cartesia Voice ID",
+                        "description": "Provider Voice ID",
                         "example": "bf0a246a-8642-498a-9950-80c35e9276b5"
                     },
                     "name": {
@@ -20076,10 +18217,11 @@
                         "type": "string",
                         "enum": [
                             "cartesia",
-                            "elevenlabs"
+                            "elevenlabs",
+                            "openai"
                         ],
                         "title": "Provider",
-                        "description": "Provider of the voice (cartesia or elevenlabs)",
+                        "description": "Provider of the voice (cartesia, elevenlabs or openai)",
                         "default": "cartesia",
                         "example": "cartesia"
                     },
@@ -20093,7 +18235,7 @@
                             }
                         ],
                         "title": "Is Preset",
-                        "description": "Whether this voice is a Cartesia preset or user-created.",
+                        "description": "Whether this voice is a preset or user-created voice.",
                         "default": false,
                         "example": true
                     }

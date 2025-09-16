@@ -1,6 +1,6 @@
 ---
 title: "Update Interface"
-api: 'PUT /v0/interface/interfaces/'
+api: 'PUT /v0/interfaces/'
 ---
 Update an interface by ID or by project ID and name.
 
@@ -50,11 +50,15 @@ Whether this is a checkpoint update (manual save)
 
 </ParamField>
 
+<ParamField body="context" type="string | null" >
+
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request PUT \
-  --url 'https://api.unify.ai/v0/interface/interfaces/?interface_id=None&project=None&name=None&checkpoint=None' \
+  --url 'https://api.unify.ai/v0/interfaces/?interface_id=None&project=None&name=None&checkpoint=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -63,7 +67,7 @@ curl --request PUT \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interface/interfaces/?interface_id=None&project=None&name=None&checkpoint=None"
+url = "https://api.unify.ai/v0/interfaces/?interface_id=None&project=None&name=None&checkpoint=None"
 
 headers = {"Authorization": "Bearer <token>"}
 

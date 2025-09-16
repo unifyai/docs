@@ -1,6 +1,6 @@
 ---
 title: "Import Interface Template"
-api: 'POST /v0/interface/interfaces/import_template'
+api: 'POST /v0/interfaces/import_template'
 ---
 Import an interface template into a project.
 
@@ -40,7 +40,7 @@ Import an interface template into a project.
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/interface/interfaces/import_template' \
+  --url 'https://api.unify.ai/v0/interfaces/import_template' \
   --header "Authorization: Bearer $UNIFY_KEY" \
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -49,7 +49,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/interface/interfaces/import_template"
+url = "https://api.unify.ai/v0/interfaces/import_template"
 
 headers = {"Authorization": "Bearer <token>"}
 
