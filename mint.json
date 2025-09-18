@@ -204,6 +204,7 @@
                                     "pages": [
                                         "python/functions/logging/utils/logs/add_log_entries",
                                         "python/functions/logging/utils/logs/add_log_params",
+                                        "python/functions/logging/utils/logs/create_derived_logs",
                                         "python/functions/logging/utils/logs/create_fields",
                                         "python/functions/logging/utils/logs/create_logs",
                                         "python/functions/logging/utils/logs/delete_fields",
