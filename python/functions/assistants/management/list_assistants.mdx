@@ -1,0 +1,16 @@
+---
+title: 'list_assistants'
+---
+
+```python
+def list_assistants(
+    *,
+    phone: Optional[str] = None,
+    email: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/77d306c1a6f926077584206f19d1943a2b1ffa2e/unify/assistants/management.py#L64)</p>
+
+List all assistants. Returns the API response JSON.Optional filters: phone, email.

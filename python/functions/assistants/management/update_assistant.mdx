@@ -1,0 +1,32 @@
+---
+title: 'update_assistant'
+---
+
+```python
+def update_assistant(
+    assistant_id: Union[int, str],
+    *,
+    first_name: Optional[str] = None,
+    surname: Optional[str] = None,
+    age: Optional[int] = None,
+    weekly_limit: Optional[float] = None,
+    max_parallel: Optional[int] = None,
+    region: Optional[str] = None,
+    profile_photo: Optional[str] = None,
+    profile_video: Optional[str] = None,
+    about: Optional[str] = None,
+    country: Optional[str] = None,
+    email: Optional[str] = None,
+    voice_id: Optional[str] = None,
+    user_phone: Optional[str] = None,
+    user_whatsapp_number: Optional[str] = None,
+    create_infra: Optional[bool] = None,
+    phone: Optional[str] = None,
+    pre_hire_chat: Optional[List[Dict[str, Any]]] = None,
+    api_key: Optional[str] = None,
+) -> Dict[str, Any]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/77d306c1a6f926077584206f19d1943a2b1ffa2e/unify/assistants/management.py#L89)</p>
+
+Update an assistant configuration. Returns the API response JSON.
