@@ -1,0 +1,33 @@
+---
+title: 'create_derived_logs'
+---
+
+```python
+def create_derived_logs(
+    *,
+    key: str,
+    equation: str,
+    referenced_logs,
+    derived: Optional[bool] = True,
+    project: Optional[str] = None,
+    context: Optional[str] = None,
+    api_key: Optional[str] = None,
+) -> Dict[str, Any]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a10ab920f773eab7636cb8a05ab45087ac7bb832/unify/logging/utils/logs.py#L1723)</p>
+
+Creates one or more entries based on equation and referenced_logs.
+
+**Arguments**:
+
+- `key` - The name of the entry.
+- `equation` - The equation for computing the value of each derived entry.
+- `referenced_logs` - The logs to use for each newly created derived entry,
+- `derived` - Whether to create derived logs (True) or static entries in base logs (False).
+
+
+
+**Returns**:
+
+A message indicating whether the derived logs were successfully created.
