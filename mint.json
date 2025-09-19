@@ -422,7 +422,6 @@
                         {
                             "group": "helpers",
                             "pages": [
-                                "python/classes/utils/helpers/RequestError",
                                 "python/functions/utils/helpers/flexible_deepcopy"
                             ]
                         },
