@@ -427,6 +427,21 @@
                             ]
                         },
                         {
+                            "group": "http",
+                            "pages": [
+                                "python/classes/utils/http/RequestError",
+                                "python/classes/utils/http/ResponseDecodeError",
+                                "python/functions/utils/http/delete",
+                                "python/functions/utils/http/get",
+                                "python/functions/utils/http/head",
+                                "python/functions/utils/http/options",
+                                "python/functions/utils/http/patch",
+                                "python/functions/utils/http/post",
+                                "python/functions/utils/http/put",
+                                "python/functions/utils/http/request"
+                            ]
+                        },
+                        {
                             "group": "map",
                             "pages": [
                                 "python/functions/utils/map/get_map_mode",
