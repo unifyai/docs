@@ -429,7 +429,6 @@
                             "group": "http",
                             "pages": [
                                 "python/classes/utils/http/RequestError",
-                                "python/classes/utils/http/ResponseDecodeError",
                                 "python/functions/utils/http/delete",
                                 "python/functions/utils/http/get",
                                 "python/functions/utils/http/head",
