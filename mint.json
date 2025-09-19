@@ -366,6 +366,12 @@
                                         "python/functions/universal_api/utils/supported_endpoints/list_models",
                                         "python/functions/universal_api/utils/supported_endpoints/list_providers"
                                     ]
+                                },
+                                {
+                                    "group": "user",
+                                    "pages": [
+                                        "python/functions/universal_api/utils/user/get_user_basic_info"
+                                    ]
                                 }
                             ]
                         }
