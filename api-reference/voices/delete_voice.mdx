@@ -16,18 +16,24 @@ Deletes a specific assistant voice.
 
 </ParamField>
 
+#### Query Parameters
+
+<ParamField query="provider" type="string" required="true">
+The provider of the voice to delete
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/assistant/voice/<voice_id>' \
+  --url 'https://api.unify.ai/v0/assistant/voice/<voice_id>?provider=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/assistant/voice/<voice_id>"
+url = "https://api.unify.ai/v0/assistant/voice/<voice_id>?provider=None"
 
 headers = {"Authorization": "Bearer <token>"}
 

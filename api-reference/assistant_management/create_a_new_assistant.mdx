@@ -44,6 +44,14 @@ URL to the assistant's profile photo
 URL to the assistant's profile video
 </ParamField>
 
+<ParamField body="desktop_url" type="string | null" >
+URL to the assistant's desktop profile/page
+</ParamField>
+
+<ParamField body="user_local_desktop" type="string | null" >
+User's local desktop operating system
+</ParamField>
+
 <ParamField body="about" type="string | null" >
 Brief description about the assistant
 </ParamField>
@@ -57,7 +65,11 @@ Email of the assistant
 </ParamField>
 
 <ParamField body="voice_id" type="string | null" >
-Id of the voice (Cartesia ID) to use for the assistant
+Id of the provider voice to use for the assistant
+</ParamField>
+
+<ParamField body="voice_provider" type="string | null"  default="elevenlabs">
+Provider of the selected voice (e.g., 'elevenlabs', 'openai')
 </ParamField>
 
 <ParamField body="user_phone" type="string | null" >
@@ -96,10 +108,13 @@ curl --request POST \
     "region": "North America",
     "profile_photo": "https://example.com/photos/ada.jpg",
     "profile_video": "https://example.com/videos/ada.mp4",
+    "desktop_url": "https://app.example.com/assistants/ada",
+    "user_local_desktop": "windows",
     "about": "Mathematician and writer known for work on Analytical Engine",
     "country": "US",
     "email": "ada.lovelace@unify.ai",
     "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+    "voice_provider": "elevenlabs",
     "user_phone": "+15551234567",
     "user_whatsapp_number": "+15551234567"
 }'
@@ -112,7 +127,7 @@ url = "https://api.unify.ai/v0/assistant"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2, "region": "North America", "profile_photo": "https://example.com/photos/ada.jpg", "profile_video": "https://example.com/videos/ada.mp4", "about": "Mathematician and writer known for work on Analytical Engine", "country": "US", "email": "ada.lovelace@unify.ai", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "user_phone": "+15551234567", "user_whatsapp_number": "+15551234567"}
+json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "weekly_limit": 15.75, "max_parallel": 2, "region": "North America", "profile_photo": "https://example.com/photos/ada.jpg", "profile_video": "https://example.com/videos/ada.mp4", "desktop_url": "https://app.example.com/assistants/ada", "user_local_desktop": "windows", "about": "Mathematician and writer known for work on Analytical Engine", "country": "US", "email": "ada.lovelace@unify.ai", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "voice_provider": "elevenlabs", "user_phone": "+15551234567", "user_whatsapp_number": "+15551234567"}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
