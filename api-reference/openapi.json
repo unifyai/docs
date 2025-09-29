@@ -6146,6 +6146,25 @@
                         "example": "system_prompt"
                     },
                     {
+                        "name": "context",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Static context to filter logs by.",
+                            "title": "Context"
+                        },
+                        "description": "Static context to filter logs by.",
+                        "example": "training"
+                    },
+                    {
                         "name": "filter_expr",
                         "in": "query",
                         "required": false,
@@ -12153,8 +12172,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
