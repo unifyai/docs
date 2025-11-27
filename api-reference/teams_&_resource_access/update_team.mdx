@@ -1,0 +1,94 @@
+---
+title: "Update Team"
+api: 'PATCH /v0/organizations/{organization_id}/teams/{team_id}'
+---
+Update a team.
+
+Only organization owners can update teams.
+
+:param request_fastapi: FastAPI request object.
+:param organization_id: Organization ID.
+:param team_id: Team ID.
+:param team_data: Team update data.
+:param session: Database session.
+:return: Updated team.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="team_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="name" type="string | null" >
+
+</ParamField>
+
+<ParamField body="description" type="string | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/teams/<team_id>' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/teams/<team_id>"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("PATCH", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "integer",
+    "name": "string",
+    "description": "string | null",
+    "organization_id": "integer",
+    "created_at": "string",
+    "member_count": "integer | null"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

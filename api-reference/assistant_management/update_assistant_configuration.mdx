@@ -54,6 +54,10 @@ Contact phone number of the user
 Contact phone number for the assistant
 </ParamField>
 
+<ParamField body="phone_country" type="string | null" >
+Country code for phone number provisioning (e.g., US, GB)
+</ParamField>
+
 <ParamField body="email" type="string | null" >
 Email address for the assistant
 </ParamField>
@@ -70,8 +74,12 @@ Id of the voice (Cartesia ID) to use for the assistant
 Provider of the selected voice (e.g., 'elevenlabs', 'openai')
 </ParamField>
 
-<ParamField body="country" type="string | null" >
-Country code for phone number provisioning (e.g., US, GB)
+<ParamField body="voice_mode" type="string | null" >
+The type of voice interaction, either text-to-speech (tts) or speech-to-speech (sts).
+</ParamField>
+
+<ParamField body="timezone" type="string | null" >
+Timezone of the assistant in IANA format
 </ParamField>
 
 <ParamField body="create_infra" type="boolean | null"  default="true">
@@ -95,11 +103,13 @@ curl --request PATCH \
     "about": "Award-winning mathematician specializing in algorithm development",
     "user_phone": "+15551234567",
     "phone": "+15559876543",
+    "phone_country": "GB",
     "email": "ada.lovelace@newdomain.com",
     "user_whatsapp_number": "+15559876543",
     "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
     "voice_provider": "elevenlabs",
-    "country": "GB"
+    "voice_mode": "tts",
+    "timezone": "Europe/London"
 }'
 ```
 
@@ -110,7 +120,7 @@ url = "https://api.unify.ai/v0/assistant/<assistant_id>/config"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"weekly_limit": 20.5, "max_parallel": 3, "profile_photo": "https://example.com/photos/ada.jpg", "profile_video": "https://example.com/videos/ada_new.mp4", "desktop_url": "https://app.example.com/assistants/ada", "user_local_desktop": "macos", "about": "Award-winning mathematician specializing in algorithm development", "user_phone": "+15551234567", "phone": "+15559876543", "email": "ada.lovelace@newdomain.com", "user_whatsapp_number": "+15559876543", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "voice_provider": "elevenlabs", "country": "GB"}
+json_input = {"weekly_limit": 20.5, "max_parallel": 3, "profile_photo": "https://example.com/photos/ada.jpg", "profile_video": "https://example.com/videos/ada_new.mp4", "desktop_url": "https://app.example.com/assistants/ada", "user_local_desktop": "macos", "about": "Award-winning mathematician specializing in algorithm development", "user_phone": "+15551234567", "phone": "+15559876543", "phone_country": "GB", "email": "ada.lovelace@newdomain.com", "user_whatsapp_number": "+15559876543", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "voice_provider": "elevenlabs", "voice_mode": "tts", "timezone": "Europe/London"}
 
 response = requests.request("PATCH", url, json=json_input, headers=headers)
 
@@ -132,12 +142,14 @@ print(response.text)
         "about": "Award-winning mathematician specializing in algorithm development",
         "phone": "+1-555-987-6543",
         "email": "alice.smith@example.com",
-        "region": "North America",
+        "nationality": "United States",
         "profile_photo": "https://example.com/photos/alice.jpg",
         "profile_video": "https://example.com/videos/alice.mp4",
         "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
         "voice_provider": "cartesia",
-        "country": "US",
+        "voice_mode": "tts",
+        "phone_country": "US",
+        "timezone": "America/New_York",
         "created_at": "2025-04-25T12:00:00Z",
         "updated_at": "2025-04-25T14:30:00Z"
     }

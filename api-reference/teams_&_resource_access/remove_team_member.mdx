@@ -1,0 +1,84 @@
+---
+title: "Remove Team Member"
+api: 'DELETE /v0/organizations/{organization_id}/teams/{team_id}/members/{user_id_to_remove}'
+---
+Remove a member from a team.
+
+Only organization owners can remove members from teams.
+
+:param request_fastapi: FastAPI request object.
+:param organization_id: Organization ID.
+:param team_id: Team ID.
+:param user_id_to_remove: User ID to remove.
+:param session: Database session.
+:return: Updated team with members.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="team_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="user_id_to_remove" type="string" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/teams/<team_id>/members/<user_id_to_remove>' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/teams/<team_id>/members/<user_id_to_remove>"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("DELETE", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "integer",
+    "name": "string",
+    "description": "string | null",
+    "organization_id": "integer",
+    "created_at": "string",
+    "members": "[string]"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -476,6 +476,7 @@
                             "pages": [
                                 "api-reference/assistant_management/create_a_new_assistant",
                                 "api-reference/assistant_management/list_all_assistants",
+                                "api-reference/assistant_management/remove_a_contact_method_from_an_assistant",
                                 "api-reference/assistant_management/delete_an_assistant",
                                 "api-reference/assistant_management/update_assistant_configuration"
                             ]
@@ -585,6 +586,8 @@
                                 "api-reference/projects/delete_project",
                                 "api-reference/projects/update_project",
                                 "api-reference/projects/get_project",
+                                "api-reference/projects/transfer_project_to_organization",
+                                "api-reference/projects/transfer_project_to_personal",
                                 "api-reference/projects/list_projects",
                                 "api-reference/projects/list_projects_tree",
                                 "api-reference/projects/export_project_template",
@@ -614,6 +617,7 @@
                                 "api-reference/logs/get_logs",
                                 "api-reference/logs/update_derived_log",
                                 "api-reference/logs/create_from_logs",
+                                "api-reference/logs/query_logs_post",
                                 "api-reference/logs/get_logs_latest_timestamp",
                                 "api-reference/logs/get_logs_metric",
                                 "api-reference/logs/get_log_groups",
@@ -688,6 +692,27 @@
                                 "api-reference/query_logging/get_supported_tax_countries",
                                 "api-reference/query_logging/get_onboarding_status",
                                 "api-reference/query_logging/update_onboarding_status"
+                            ]
+                        },
+                        {
+                            "group": "Organizations",
+                            "pages": [
+                                "api-reference/organizations/list_organizations",
+                                "api-reference/organizations/create_organization",
+                                "api-reference/organizations/get_organization",
+                                "api-reference/organizations/update_organization",
+                                "api-reference/organizations/delete_organization",
+                                "api-reference/organizations/add_organization_member",
+                                "api-reference/organizations/list_organization_members",
+                                "api-reference/organizations/remove_organization_member",
+                                "api-reference/organizations/update_member_role"
+                            ]
+                        },
+                        {
+                            "group": "API Keys",
+                            "pages": [
+                                "api-reference/api_keys/list_api_keys",
+                                "api-reference/api_keys/revoke_api_key"
                             ]
                         }
                     ]

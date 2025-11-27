@@ -6,34 +6,54 @@ title: 'get_logs_metric'
 def get_logs_metric(
     *,
     metric: str,
-    key: str,
-    filter: Optional[str] = None,
+    key: Union[str, List[str]],
+    filter: Optional[Union[str, Dict[str, str]]] = None,
     project: Optional[str] = None,
     context: Optional[str] = None,
-    from_ids: Optional[List[int]] = None,
-    exclude_ids: Optional[List[int]] = None,
+    from_ids: Optional[Union[List[int], Dict[str, str]]] = None,
+    exclude_ids: Optional[Union[List[int], Dict[str, str]]] = None,
+    group_by: Optional[Union[str, List[str]]] = None,
     api_key: Optional[str] = None,
-) -> Union[float, int, bool]:
+) -> Union[float, int, bool, str, Dict[str, Any]]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2c6d11b68f54f358a51d0df58e26a8599d209b34/unify/logging/utils/logs.py#L1478)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a1534e8f7848605fcd585bb6d78a055a53ba5514/unify/logging/utils/logs.py#L1522)</p>
 
-Retrieve a set of log metrics across a project, after applying the filtering.
+Retrieve a set of log metrics across a project, after applying the filtering.This endpoint supports three modes of operation:1. Single key, no grouping: Returns a single metric value
+Example:
+get_logs_metric(metric="mean", key="score")
+Response: 4.562. Multiple keys, no grouping: Returns a dict mapping keys to metric values
+Example:
+get_logs_metric(metric="mean", key=["score", "length"])
+Response: {"score": 4.56, "length": 120}3. With grouping: Returns metrics grouped by one or more fields
+Example:
+get_logs_metric(metric="mean", key="score", group_by="model")
+Response: {"gpt-4": 4.56, "gpt-3.5": 3.78}For nested grouping, provide a list of fields:
+Example:
+get_logs_metric(metric="mean", key="score", group_by=["model", "temperature"])
+Response: {"gpt-4": {"0.7": 4.56, "0.9": 4.23}, "gpt-3.5": {"0.7": 3.78, "0.9": 3.45}}
 
 **Arguments**:
 
-- `metric` - The reduction metric to compute for the specified key. Supported are:
-- `key` - The key to compute the reduction statistic for.
-- `filter` - The filtering to apply to the various log values, expressed as a string,
+- `metric` - The reduction metric to compute for the specified key(s). Supported are:
+- `key` - The key(s) to compute the reduction statistic for. Can be a single string
+- `filter` - The filtering to apply to the log values. Can be:
+- `{"score"` - "score > 0", "length": "length < 100"}
 - `project` - The id of the project to retrieve the logs for.
 - `context` - The context of the logs to retrieve the metrics for.
-- `from_ids` - A list of log IDs to include in the results.
-- `exclude_ids` - A list of log IDs to exclude from the results.
+- `from_ids` - Log IDs to include in the results. Can be:
+- `{"score"` - "1&2", "length": "3&4"}
+- `exclude_ids` - Log IDs to exclude from the results. Can be:
+- `{"score"` - "1&2", "length": "3&4"}
+- `group_by` - Field(s) to group the metrics by. Can be:
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
 
 
 **Returns**:
 
-The full set of reduced log metrics for the project, after optionally applying
-the optional filtering.
+The metric value(s) for the project, after optionally applying filtering and grouping.
+Return type depends on the mode:
+- Single key, no grouping: scalar (float, int, bool, or str)
+- Multiple keys, no grouping: dict mapping keys to scalar values
+- With grouping: dict with nested structure based on grouping levels

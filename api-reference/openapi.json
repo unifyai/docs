@@ -1072,7 +1072,8 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "type": "object"
+                                        "type": "object",
+                                        "additionalProperties": true
                                     },
                                     "title": "Response Get Query Metrics V0 Metrics Get"
                                 }
@@ -1775,6 +1776,53 @@
                 }
             }
         },
+        "/v0/assistant/message": {
+            "post": {
+                "tags": [
+                    "Assistant Interaction"
+                ],
+                "summary": "Send a message to an assistant and get a response",
+                "description": "Sends a message to a specified assistant and waits for the next reply from that assistant.",
+                "operationId": "message_assistant_v0_assistant_message_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UnifyMessage"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_str_"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/assistant": {
             "post": {
                 "tags": [
@@ -1819,7 +1867,7 @@
                                         "phone": "+1-555-123-4567",
                                         "email": "alice.smith@example.com",
                                         "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
-                                        "country": "US"
+                                        "phone_country": "US"
                                     }
                                 }
                             }
@@ -1935,13 +1983,15 @@
                                             "max_parallel": 3,
                                             "phone": "+1-555-123-4567",
                                             "email": "alice.smith@example.com",
-                                            "region": "North America",
+                                            "nationality": "United States",
                                             "profile_photo": "https://example.com/photos/alice.jpg",
                                             "profile_video": "https://example.com/videos/alice.mp4",
                                             "about": "Mathematician and writer known for work on Analytical Engine",
                                             "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
                                             "voice_provider": "cartesia",
-                                            "country": "US",
+                                            "voice_mode": "tts",
+                                            "phone_country": "US",
+                                            "timezone": "America/New_York",
                                             "created_at": "2025-04-25T12:00:00Z",
                                             "updated_at": "2025-04-25T12:00:00Z"
                                         },
@@ -1954,13 +2004,15 @@
                                             "max_parallel": 2,
                                             "phone": "+1-555-987-6543",
                                             "email": "bob.jones@example.com",
-                                            "region": "South America",
+                                            "nationality": "Mexico",
                                             "profile_photo": "https://example.com/photos/bob.jpg",
                                             "profile_video": "https://example.com/videos/bob.mp4",
                                             "about": "Machine learning expert with focus on computer vision",
                                             "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
                                             "voice_provider": "cartesia",
-                                            "country": "CA",
+                                            "voice_mode": "tts",
+                                            "phone_country": "CA",
+                                            "timezone": "America/Vancouver",
                                             "created_at": "2025-04-24T10:30:00Z",
                                             "updated_at": "2025-04-24T10:30:00Z"
                                         }
@@ -1968,6 +2020,70 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/{assistant_id}/contact": {
+            "delete": {
+                "tags": [
+                    "Assistant Management"
+                ],
+                "summary": "Remove a contact method from an assistant",
+                "description": "Removes a contact method (phone, email, or WhatsApp) from an assistant and deprovisions the associated infrastructure.",
+                "operationId": "delete_assistant_contact_v0_assistant__assistant_id__contact_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssistantContactRemoval"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contact method removed successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_AssistantRead_"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Assistant not found."
+                    },
+                    "400": {
+                        "description": "Invalid contact type or other error."
                     },
                     "422": {
                         "description": "Validation Error",
@@ -2096,12 +2212,14 @@
                                         "about": "Award-winning mathematician specializing in algorithm development",
                                         "phone": "+1-555-987-6543",
                                         "email": "alice.smith@example.com",
-                                        "region": "North America",
+                                        "nationality": "United States",
                                         "profile_photo": "https://example.com/photos/alice.jpg",
                                         "profile_video": "https://example.com/videos/alice.mp4",
                                         "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
                                         "voice_provider": "cartesia",
-                                        "country": "US",
+                                        "voice_mode": "tts",
+                                        "phone_country": "US",
+                                        "timezone": "America/New_York",
                                         "created_at": "2025-04-25T12:00:00Z",
                                         "updated_at": "2025-04-25T14:30:00Z"
                                     }
@@ -3071,7 +3189,8 @@
                                                     "type": "string"
                                                 },
                                                 {
-                                                    "type": "object"
+                                                    "type": "object",
+                                                    "additionalProperties": true
                                                 }
                                             ]
                                         }
@@ -4709,6 +4828,146 @@
                 }
             }
         },
+        "/v0/project/{project_id}/transfer-to-organization": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Transfer Project To Organization",
+                "description": "Transfer a personal project to an organization.\n\nRequirements:\n- User must own the personal project (project.user_id == user_id)\n- User must have org:write permission on target organization\n- Project must be personal (organization_id = NULL)\n\nProcess:\n- Sets project.organization_id = target org\n- Sets project.user_id = NULL (org-owned)\n- No ResourceAccess entries created (implicit membership handles access)",
+                "operationId": "transfer_project_to_organization_v0_project__project_id__transfer_to_organization_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Project Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TransferToOrganizationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Project transferred successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TransferResponse"
+                                },
+                                "example": {
+                                    "success": true,
+                                    "project_id": 123,
+                                    "project_name": "my-project",
+                                    "from_type": "personal",
+                                    "to_type": "organization",
+                                    "message": "Project successfully transferred to organization 'My Org'"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Project already in organization or invalid state"
+                    },
+                    "403": {
+                        "description": "Forbidden - User doesn't have required permissions"
+                    },
+                    "404": {
+                        "description": "Project or Organization Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/project/{project_id}/transfer-to-personal": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Transfer Project To Personal",
+                "description": "Transfer an organizational project to personal ownership.\n\nRequirements:\n- Project must be organizational (organization_id IS NOT NULL)\n- User must have project:delete permission OR be org owner\n\nProcess:\n- Sets project.user_id = requesting user\n- Sets project.organization_id = NULL\n- Deletes all ResourceAccess entries for this project\n- Deletes all team shares for this project\n\nWarning: This is a destructive operation that removes team sharing.",
+                "operationId": "transfer_project_to_personal_v0_project__project_id__transfer_to_personal_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Project Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project transferred successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TransferResponse"
+                                },
+                                "example": {
+                                    "success": true,
+                                    "project_id": 123,
+                                    "project_name": "my-project",
+                                    "from_type": "organization",
+                                    "to_type": "personal",
+                                    "message": "Project successfully transferred to personal ownership"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Project is already personal"
+                    },
+                    "403": {
+                        "description": "Forbidden - User doesn't have required permissions"
+                    },
+                    "404": {
+                        "description": "Project Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/projects": {
             "get": {
                 "tags": [
@@ -4919,7 +5178,7 @@
                     "Logs"
                 ],
                 "summary": "Create Logs",
-                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nIf a context is specified and it is versioned, all logs will be versioned\nand mutable. The context version will be incremented automatically when\nlogs are added, updated, or removed.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties\n\nAn \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry. The explicit_types dictionary\ncan also specify if a field is mutable via a 'mutable' boolean flag\nand if a field is unique via a 'unique' boolean flag:\n\n```json\n{\n    \"field_name\": {\n        \"type\": \"str\",\n        \"mutable\": false,  # Makes the field immutable\n        \"unique\": true     # Makes the field unique\n    }\n}\n```\n\nBy default, all fields are immmutable unless specified otherwise.\nOnce a field is marked as mutable, only then can it be modified through\nthe update endpoint.\n\nThis method returns the ids of the new stored logs.",
+                "description": "Creates one or more logs associated to a project. Logs are\nLLM-call-level data that might depend on other variables.\n\nIf a context is specified and it is versioned, all logs will be versioned\nand mutable. The context version will be incremented automatically when\nlogs are added, updated, or removed.\n\nThe context parameter can be:\n- A string: Uses the string as the context name with default values (description=None, is_versioned=False)\n- An object: Uses the object's name, description, and is_versioned properties\n\nAn \"explicit_types\" dictionary can be passed as part of the `entries`.\nIf present, any matching key inside this dictionary will override the\ninferred type of that particular entry. The explicit_types dictionary\ncan also specify if a field is mutable via a 'mutable' boolean flag\nand if a field is unique via a 'unique' boolean flag:\n\n```json\n{\n    \"field_name\": {\n        \"type\": \"str\",\n        \"mutable\": false,  # Makes the field immutable\n        \"unique\": true     # Makes the field unique\n    }\n}\n```\n\nBy default, all fields are immmutable unless specified otherwise.\nOnce a field is marked as mutable, only then can it be modified through\nthe update endpoint.\n\n**Response includes:**\n- `log_event_ids`: List of created log event IDs\n- `row_ids`: Object with `names` (unique key column names) and `ids` (nested list of values)\n- `auto_counting`: Dictionary mapping auto-counting column names to their generated/provided values.\n  Empty dict `{}` when no auto-counting is configured.\n\nThis method returns the ids of the new stored logs along with any auto-counting values.",
                 "operationId": "create_logs_v0_logs_post",
                 "security": [
                     {
@@ -4950,8 +5209,28 @@
                                         103
                                     ],
                                     "row_ids": {
-                                        "name": "row_id",
+                                        "names": [
+                                            "row_id"
+                                        ],
                                         "ids": [
+                                            [
+                                                0
+                                            ],
+                                            [
+                                                1
+                                            ],
+                                            [
+                                                2
+                                            ]
+                                        ]
+                                    },
+                                    "auto_counting": {
+                                        "row_id": [
+                                            0,
+                                            1,
+                                            2
+                                        ],
+                                        "exchange_id": [
                                             0,
                                             1,
                                             2
@@ -5723,6 +6002,77 @@
                 ]
             }
         },
+        "/v0/logs/query": {
+            "post": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Query Logs Post",
+                "description": "Query logs via POST request.\n\nThis endpoint accepts the exact same parameters as GET /logs, but via request body\ninstead of query parameters. This is useful for:\n- Large filter expressions that would exceed URL length limits\n- Filter expressions containing base64-encoded images (e.g., embed_image('data:image/png;base64,...'))\n- Complex sorting expressions\n\nExample with image embedding:\n```json\n{\n    \"project\": \"my-project\",\n    \"filter_expr\": \"cosine(image_embedding, embed_image('data:image/png;base64,iVBORw0KG...')) < 0.3\",\n    \"limit\": 10\n}\n```",
+                "operationId": "query_logs_post_v0_logs_query_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/QueryLogsPostBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "params": {},
+                                    "logs": [
+                                        {
+                                            "id": "0",
+                                            "ts": "2024-10-30 12:20:03",
+                                            "entries": {
+                                                "key1": "a",
+                                                "key2": 1.0
+                                            },
+                                            "derived_entries": {},
+                                            "params": {}
+                                        }
+                                    ],
+                                    "count": 1
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project Not Found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Project <project> not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/logs/latest_timestamp": {
             "get": {
                 "tags": [
@@ -6060,7 +6410,8 @@
                                 "schema": {
                                     "anyOf": [
                                         {
-                                            "type": "object"
+                                            "type": "object",
+                                            "additionalProperties": true
                                         },
                                         {
                                             "type": "number"
@@ -6229,6 +6580,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
+                                    "additionalProperties": true,
                                     "title": "Response Get Log Groups V0 Logs Groups Get"
                                 },
                                 "example": [
@@ -6409,7 +6761,7 @@
                     "Logs"
                 ],
                 "summary": "Get Fields",
-                "description": "Returns a dictionary of fields names and their types for the specified project.\nIf a context is provided, returns only fields associated with that context.\n\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- unique: Whether the field enforces uniqueness\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation\n- description: The description of the field",
+                "description": "Returns field definitions and their types for the specified project.\n\nContext handling:\n- If no context is provided (or an empty string), returns a flat mapping of field\n  name \u2192 metadata for the default context.\n- If a specific context name is provided, returns a flat mapping of field\n  name \u2192 metadata for that context.\n- If context is '*', returns a nested mapping of context_name \u2192 {field_name \u2192 metadata}\n  containing fields from all contexts in the project.\n\nEach field entry contains:\n- data_type: The data type of the field (int, str, etc)\n- field_type: Whether it's an entry, param, or derived_entry\n- mutable: Whether the field can be modified\n- unique: Whether the field enforces uniqueness\n- created_at: When the field was first created\n- artifacts: For derived entries, contains the equation\n- description: The description of the field",
                 "operationId": "get_fields_v0_logs_fields_get",
                 "security": [
                     {
@@ -6442,11 +6794,11 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Optional context name to filter fields types",
+                            "description": "Optional context name to filter field types. Use '*' to return fields from all contexts in the project.",
                             "default": "",
                             "title": "Context"
                         },
-                        "description": "Optional context name to filter fields types",
+                        "description": "Optional context name to filter field types. Use '*' to return fields from all contexts in the project.",
                         "example": "training"
                     }
                 ],
@@ -9306,6 +9658,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "additionalProperties": true,
                                 "title": "Update Data"
                             }
                         }
@@ -9989,6 +10342,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "additionalProperties": true,
                                 "title": "Update Data"
                             }
                         }
@@ -10515,6 +10869,1657 @@
                 }
             }
         },
+        "/v0/organizations": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "List Organizations",
+                "description": "List all organizations the authenticated user has access to.\n\nThis includes organizations where the user is:\n- The owner\n- A member",
+                "operationId": "list_organizations_v0_organizations_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrganizationResponse"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Organizations V0 Organizations Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Create Organization",
+                "description": "Create a new organization.\n\nThe authenticated user will be the owner of the organization.\nIf billing_user_id is not provided, it defaults to the owner.",
+                "operationId": "create_organization_v0_organizations_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/organizations/{organization_id}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Get Organization",
+                "description": "Get details of a specific organization.",
+                "operationId": "get_organization_v0_organizations__organization_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Update Organization",
+                "description": "Update an organization.\n\nRequires org:write permission.",
+                "operationId": "update_organization_v0_organizations__organization_id__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Delete Organization",
+                "description": "Delete an organization.\n\nRequires org:delete permission (typically only Owner role has this).\nThis will also delete all associated data (projects, members, etc.).",
+                "operationId": "delete_organization_v0_organizations__organization_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/members": {
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Add Organization Member",
+                "description": "Add a member to an organization.\n\nRequires org:write permission.\nAutomatically creates an organization-specific API key for the new member.",
+                "operationId": "add_organization_member_v0_organizations__organization_id__members_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationMemberAdd"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Add Organization Member V0 Organizations  Organization Id  Members Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "List Organization Members",
+                "description": "List all members of an organization with their roles.\n\nRequires org:read permission.",
+                "operationId": "list_organization_members_v0_organizations__organization_id__members_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrganizationMemberResponse"
+                                    },
+                                    "title": "Response List Organization Members V0 Organizations  Organization Id  Members Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/members/{user_id}": {
+            "delete": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Remove Organization Member",
+                "description": "Remove a member from an organization.\n\nRequires org:write permission.\nAutomatically revokes all organization-specific API keys for the member.\nPersonal API keys are NOT affected.",
+                "operationId": "remove_organization_member_v0_organizations__organization_id__members__user_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "User Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/members/{member_user_id}/role": {
+            "patch": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Update Member Role",
+                "description": "Update an organization member's RBAC role.\n\nRequires org:write permission.",
+                "operationId": "update_member_role_v0_organizations__organization_id__members__member_user_id__role_patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "member_user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Member User Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationMemberRoleUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizationMemberResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/permissions": {
+            "get": {
+                "tags": [
+                    "Roles & Permissions"
+                ],
+                "summary": "List Permissions",
+                "description": "List all available permissions, optionally filtered by resource type.\n\n:param resource_type: Optional filter by resource type (e.g., 'project', 'interface').\n:param session: Database session.\n:return: List of permissions.",
+                "operationId": "list_permissions_v0_permissions_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "resource_type",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Resource Type"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PermissionResponse"
+                                    },
+                                    "title": "Response List Permissions V0 Permissions Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/roles": {
+            "get": {
+                "tags": [
+                    "Roles & Permissions"
+                ],
+                "summary": "List Organization Roles",
+                "description": "List all roles available to an organization (system roles + custom roles).\n\nOnly organization members can view roles.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param session: Database session.\n:return: List of roles.",
+                "operationId": "list_organization_roles_v0_organizations__organization_id__roles_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RoleResponse"
+                                    },
+                                    "title": "Response List Organization Roles V0 Organizations  Organization Id  Roles Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Roles & Permissions"
+                ],
+                "summary": "Create Custom Role",
+                "description": "Create a custom role for an organization.\n\nOnly organization owners can create custom roles.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param role_data: Role creation data.\n:param session: Database session.\n:return: Created role.",
+                "operationId": "create_custom_role_v0_organizations__organization_id__roles_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/roles/{role_id}": {
+            "get": {
+                "tags": [
+                    "Roles & Permissions"
+                ],
+                "summary": "Get Role",
+                "description": "Get details of a specific role.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param role_id: Role ID.\n:param session: Database session.\n:return: Role details.",
+                "operationId": "get_role_v0_organizations__organization_id__roles__role_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Role Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Roles & Permissions"
+                ],
+                "summary": "Update Role",
+                "description": "Update a custom role (name and description only).\n\nOnly organization owners can update custom roles.\nCannot update system roles.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param role_id: Role ID.\n:param role_data: Role update data.\n:param session: Database session.\n:return: Updated role.",
+                "operationId": "update_role_v0_organizations__organization_id__roles__role_id__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Role Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Roles & Permissions"
+                ],
+                "summary": "Delete Role",
+                "description": "Delete a custom role.\n\nOnly organization owners can delete custom roles.\nCannot delete system roles.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param role_id: Role ID.\n:param session: Database session.",
+                "operationId": "delete_role_v0_organizations__organization_id__roles__role_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Role Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/roles/{role_id}/permissions": {
+            "post": {
+                "tags": [
+                    "Roles & Permissions"
+                ],
+                "summary": "Add Permissions To Role",
+                "description": "Add permissions to a custom role.\n\nOnly organization owners can modify role permissions.\nCannot modify system roles.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param role_id: Role ID.\n:param permission_data: Permissions to add.\n:param session: Database session.\n:return: Updated role.",
+                "operationId": "add_permissions_to_role_v0_organizations__organization_id__roles__role_id__permissions_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Role Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RolePermissionAdd"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/roles/{role_id}/permissions/{permission_id}": {
+            "delete": {
+                "tags": [
+                    "Roles & Permissions"
+                ],
+                "summary": "Remove Permission From Role",
+                "description": "Remove a permission from a custom role.\n\nOnly organization owners can modify role permissions.\nCannot modify system roles.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param role_id: Role ID.\n:param permission_id: Permission ID to remove.\n:param session: Database session.\n:return: Updated role.",
+                "operationId": "remove_permission_from_role_v0_organizations__organization_id__roles__role_id__permissions__permission_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Role Id"
+                        }
+                    },
+                    {
+                        "name": "permission_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Permission Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/teams": {
+            "post": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Create Team",
+                "description": "Create a new team in an organization.\n\nOnly organization owners can create teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_data: Team creation data.\n:param session: Database session.\n:return: Created team.",
+                "operationId": "create_team_v0_organizations__organization_id__teams_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TeamCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TeamResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "List Teams",
+                "description": "List all teams in an organization.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param session: Database session.\n:return: List of teams.",
+                "operationId": "list_teams_v0_organizations__organization_id__teams_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TeamResponse"
+                                    },
+                                    "title": "Response List Teams V0 Organizations  Organization Id  Teams Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/teams/{team_id}": {
+            "get": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Get Team",
+                "description": "Get team details including members.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param session: Database session.\n:return: Team details with members.",
+                "operationId": "get_team_v0_organizations__organization_id__teams__team_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "team_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Team Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TeamWithMembersResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Update Team",
+                "description": "Update a team.\n\nOnly organization owners can update teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param team_data: Team update data.\n:param session: Database session.\n:return: Updated team.",
+                "operationId": "update_team_v0_organizations__organization_id__teams__team_id__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "team_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Team Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TeamUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TeamResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Delete Team",
+                "description": "Delete a team.\n\nOnly organization owners can delete teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param session: Database session.",
+                "operationId": "delete_team_v0_organizations__organization_id__teams__team_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "team_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Team Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/teams/{team_id}/members": {
+            "post": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Add Team Members",
+                "description": "Add members to a team.\n\nOnly organization owners can add members to teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param member_data: Members to add.\n:param session: Database session.\n:return: Updated team with members.",
+                "operationId": "add_team_members_v0_organizations__organization_id__teams__team_id__members_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "team_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Team Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TeamMemberAdd"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TeamWithMembersResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/teams/{team_id}/members/{user_id_to_remove}": {
+            "delete": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Remove Team Member",
+                "description": "Remove a member from a team.\n\nOnly organization owners can remove members from teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param user_id_to_remove: User ID to remove.\n:param session: Database session.\n:return: Updated team with members.",
+                "operationId": "remove_team_member_v0_organizations__organization_id__teams__team_id__members__user_id_to_remove__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "team_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Team Id"
+                        }
+                    },
+                    {
+                        "name": "user_id_to_remove",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "User Id To Remove"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TeamWithMembersResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/resources/{resource_type}/{resource_id}/access": {
+            "post": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Grant Resource Access",
+                "description": "Grant access to a resource (project or org).\n\nOnly works for organizational resources. Personal resources cannot be shared.\nUser must have appropriate permissions on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param access_data: Access grant data.\n:param session: Database session.\n:return: Created access entry.",
+                "operationId": "grant_resource_access_v0_resources__resource_type___resource_id__access_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "resource_type",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Resource Type"
+                        }
+                    },
+                    {
+                        "name": "resource_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Resource Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResourceAccessGrant"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceAccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Revoke Resource Access",
+                "description": "Revoke access to a resource (project or org).\n\nUser must have appropriate permissions on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param access_data: Access revoke data.\n:param session: Database session.",
+                "operationId": "revoke_resource_access_v0_resources__resource_type___resource_id__access_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "resource_type",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Resource Type"
+                        }
+                    },
+                    {
+                        "name": "resource_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Resource Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResourceAccessRevoke"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "List Resource Access",
+                "description": "List all access entries for a resource (project or org).\n\nUser must have read permission on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param session: Database session.\n:return: List of access entries.",
+                "operationId": "list_resource_access_v0_resources__resource_type___resource_id__access_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "resource_type",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Resource Type"
+                        }
+                    },
+                    {
+                        "name": "resource_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Resource Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceAccessListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/resources/{resource_type}/{resource_id}/access/{access_id}": {
+            "patch": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Update Resource Access",
+                "description": "Update an existing resource access grant (change role).\n\nThis is a more atomic alternative to revoking and re-granting access.\nPreserves the access ID and created_at timestamp.\n\nUser must have write permission on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param access_id: ResourceAccess ID to update.\n:param update_data: Update data containing new role_id.\n:param session: Database session.\n:return: Updated access entry.",
+                "operationId": "update_resource_access_v0_resources__resource_type___resource_id__access__access_id__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "resource_type",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Resource Type"
+                        }
+                    },
+                    {
+                        "name": "resource_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Resource Id"
+                        }
+                    },
+                    {
+                        "name": "access_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Access Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResourceAccessUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResourceAccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/api-keys": {
+            "get": {
+                "tags": [
+                    "API Keys"
+                ],
+                "summary": "List Api Keys",
+                "description": "List all API keys for the authenticated user.\n\nReturns both personal API keys and organization-specific API keys,\ngrouped by organization.",
+                "operationId": "list_api_keys_v0_api_keys_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiKeysListResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/api-keys/{key_id}": {
+            "delete": {
+                "tags": [
+                    "API Keys"
+                ],
+                "summary": "Revoke Api Key",
+                "description": "Revoke (delete) an API key.\n\nUsers can only revoke their own keys. Organization keys can only be revoked\nif the user is still a member of that organization.",
+                "operationId": "revoke_api_key_v0_api_keys__key_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "key_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Key Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/metrics": {
             "get": {
                 "summary": "Metrics",
@@ -10567,6 +12572,7 @@
                     "log_args": {
                         "anyOf": [
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
@@ -10592,6 +12598,109 @@
                 ],
                 "title": "AddLogsToContextRequest",
                 "description": "Request model for adding existing logs to a context."
+            },
+            "ApiKeyResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "key_prefix": {
+                        "type": "string",
+                        "title": "Key Prefix",
+                        "description": "First 8 characters of the key for identification"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    },
+                    "organization_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Organization Id"
+                    },
+                    "organization_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Organization Name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "key_prefix",
+                    "created_at"
+                ],
+                "title": "ApiKeyResponse",
+                "description": "Response model for an API key."
+            },
+            "ApiKeysListResponse": {
+                "properties": {
+                    "personal_keys": {
+                        "items": {
+                            "$ref": "#/components/schemas/ApiKeyResponse"
+                        },
+                        "type": "array",
+                        "title": "Personal Keys"
+                    },
+                    "organization_keys": {
+                        "additionalProperties": {
+                            "items": {
+                                "$ref": "#/components/schemas/ApiKeyResponse"
+                            },
+                            "type": "array"
+                        },
+                        "type": "object",
+                        "title": "Organization Keys",
+                        "description": "Organization keys grouped by organization name"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "personal_keys",
+                    "organization_keys"
+                ],
+                "title": "ApiKeysListResponse",
+                "description": "Response model for listing API keys."
+            },
+            "AssistantContactRemoval": {
+                "properties": {
+                    "contact_type": {
+                        "type": "string",
+                        "enum": [
+                            "phone",
+                            "email",
+                            "whatsapp"
+                        ],
+                        "title": "Contact Type",
+                        "description": "The type of contact information to remove.",
+                        "example": "email"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "contact_type"
+                ],
+                "title": "AssistantContactRemoval",
+                "description": "Schema for removing a contact method from an assistant."
             },
             "AssistantCreate": {
                 "properties": {
@@ -10660,7 +12769,7 @@
                         "description": "Maximum number of parallel tasks the assistant can handle",
                         "example": 2
                     },
-                    "region": {
+                    "nationality": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -10669,8 +12778,8 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Region",
-                        "description": "Geographic region of the assistant",
+                        "title": "Nationality",
+                        "description": "Assistant's nationality",
                         "example": "North America"
                     },
                     "profile_photo": {
@@ -10743,20 +12852,6 @@
                         "description": "Brief description about the assistant",
                         "example": "Mathematician and writer known for work on Analytical Engine"
                     },
-                    "country": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Country",
-                        "description": "Country code for phone number provisioning (e.g., US, GB)",
-                        "default": "US",
-                        "example": "US"
-                    },
                     "email": {
                         "anyOf": [
                             {
@@ -10794,8 +12889,24 @@
                         ],
                         "title": "Voice Provider",
                         "description": "Provider of the selected voice (e.g., 'elevenlabs', 'openai')",
-                        "default": "elevenlabs",
                         "example": "elevenlabs"
+                    },
+                    "voice_mode": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "tts",
+                                    "sts"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Voice Mode",
+                        "description": "The type of voice interaction, either text-to-speech (tts) or speech-to-speech (sts).",
+                        "example": "tts"
                     },
                     "user_phone": {
                         "anyOf": [
@@ -10848,6 +12959,20 @@
                         "title": "Phone",
                         "description": "Phone number of the assistant (just for testing purposes)"
                     },
+                    "phone_country": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Phone Country",
+                        "description": "Country code for phone number provisioning (e.g., US, GB)",
+                        "default": "US",
+                        "example": "US"
+                    },
                     "pre_hire_chat": {
                         "anyOf": [
                             {
@@ -10862,6 +12987,19 @@
                         ],
                         "title": "Pre Hire Chat",
                         "description": "A list of chat messages from the pre-hire conversation to be logged."
+                    },
+                    "timezone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Timezone",
+                        "description": "Timezone of the assistant in IANA format",
+                        "example": "America/New_York"
                     }
                 },
                 "type": "object",
@@ -10988,7 +13126,7 @@
                         "description": "Maximum number of parallel tasks the assistant can handle",
                         "example": 2
                     },
-                    "region": {
+                    "nationality": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -10997,8 +13135,8 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Region",
-                        "description": "Geographic region of the assistant",
+                        "title": "Nationality",
+                        "description": "Assistant's nationality",
                         "example": "North America"
                     },
                     "profile_photo": {
@@ -11071,20 +13209,6 @@
                         "description": "Brief description about the assistant",
                         "example": "Mathematician and writer known for work on Analytical Engine"
                     },
-                    "country": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Country",
-                        "description": "Country code for phone number provisioning (e.g., US, GB)",
-                        "default": "US",
-                        "example": "US"
-                    },
                     "email": {
                         "anyOf": [
                             {
@@ -11122,8 +13246,24 @@
                         ],
                         "title": "Voice Provider",
                         "description": "Provider of the selected voice (e.g., 'elevenlabs', 'openai')",
-                        "default": "elevenlabs",
                         "example": "elevenlabs"
+                    },
+                    "voice_mode": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "tts",
+                                    "sts"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Voice Mode",
+                        "description": "The type of voice interaction, either text-to-speech (tts) or speech-to-speech (sts).",
+                        "example": "tts"
                     },
                     "user_phone": {
                         "anyOf": [
@@ -11177,6 +13317,20 @@
                         "description": "Phone number of the assistant",
                         "example": "+15551234567"
                     },
+                    "phone_country": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Phone Country",
+                        "description": "Country code for phone number provisioning (e.g., US, GB)",
+                        "default": "US",
+                        "example": "US"
+                    },
                     "pre_hire_chat": {
                         "anyOf": [
                             {
@@ -11191,6 +13345,19 @@
                         ],
                         "title": "Pre Hire Chat",
                         "description": "A list of chat messages from the pre-hire conversation to be logged."
+                    },
+                    "timezone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Timezone",
+                        "description": "Timezone of the assistant in IANA format",
+                        "example": "America/New_York"
                     },
                     "agent_id": {
                         "type": "string",
@@ -11424,6 +13591,19 @@
                         "description": "Contact phone number for the assistant",
                         "example": "+15559876543"
                     },
+                    "phone_country": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Phone Country",
+                        "description": "Country code for phone number provisioning (e.g., US, GB)",
+                        "example": "GB"
+                    },
                     "email": {
                         "anyOf": [
                             {
@@ -11476,7 +13656,24 @@
                         "description": "Provider of the selected voice (e.g., 'elevenlabs', 'openai')",
                         "example": "elevenlabs"
                     },
-                    "country": {
+                    "voice_mode": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "tts",
+                                    "sts"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Voice Mode",
+                        "description": "The type of voice interaction, either text-to-speech (tts) or speech-to-speech (sts).",
+                        "example": "tts"
+                    },
+                    "timezone": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -11485,9 +13682,9 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Country",
-                        "description": "Country code for phone number provisioning (e.g., US, GB)",
-                        "example": "GB"
+                        "title": "Timezone",
+                        "description": "Timezone of the assistant in IANA format",
+                        "example": "Europe/London"
                     },
                     "create_infra": {
                         "anyOf": [
@@ -11750,6 +13947,7 @@
                         "example": "llama-3.1-8b-chat_ollama@external"
                     },
                     "query_body": {
+                        "additionalProperties": true,
                         "type": "object",
                         "title": "Query Body",
                         "description": "A JSON object containing the body of the request",
@@ -11772,6 +13970,7 @@
                     "response_body": {
                         "anyOf": [
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
@@ -11972,6 +14171,7 @@
                 "properties": {
                     "messages": {
                         "items": {
+                            "additionalProperties": true,
                             "type": "object"
                         },
                         "type": "array",
@@ -12134,6 +14334,7 @@
                     "response_format": {
                         "anyOf": [
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
@@ -12377,11 +14578,13 @@
                         "default": "chat.completion"
                     },
                     "usage": {
+                        "additionalProperties": true,
                         "type": "object",
                         "title": "Usage"
                     },
                     "choices": {
                         "items": {
+                            "additionalProperties": true,
                             "type": "object"
                         },
                         "type": "array",
@@ -12399,55 +14602,27 @@
             },
             "ChatMessage": {
                 "properties": {
-                    "message_id": {
-                        "type": "integer",
-                        "title": "Message Id",
-                        "description": "Unique identifier for the message in the exchange"
-                    },
-                    "medium": {
+                    "role": {
                         "type": "string",
-                        "title": "Medium",
-                        "description": "Communication medium",
-                        "default": "unify_chat"
+                        "enum": [
+                            "user",
+                            "assistant"
+                        ],
+                        "title": "Role",
+                        "description": "The role of the message sender.",
+                        "example": "assistant"
                     },
-                    "sender_id": {
-                        "type": "integer",
-                        "title": "Sender Id",
-                        "description": "ID of the sender"
-                    },
-                    "receiver_ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "type": "array",
-                        "title": "Receiver Ids",
-                        "description": "List of receiver IDs"
-                    },
-                    "timestamp": {
+                    "msg": {
                         "type": "string",
-                        "format": "date-time",
-                        "title": "Timestamp",
-                        "description": "Timestamp of the message"
-                    },
-                    "content": {
-                        "type": "string",
-                        "title": "Content",
-                        "description": "Content of the message"
-                    },
-                    "exchange_id": {
-                        "type": "integer",
-                        "title": "Exchange Id",
-                        "description": "ID of the exchange"
+                        "title": "Msg",
+                        "description": "The content of the message.",
+                        "example": "Hello, how can I help you?"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "message_id",
-                    "sender_id",
-                    "receiver_ids",
-                    "timestamp",
-                    "content",
-                    "exchange_id"
+                    "role",
+                    "msg"
                 ],
                 "title": "ChatMessage"
             },
@@ -12605,6 +14780,30 @@
                         "example": {
                             "company_id": "department_id"
                         }
+                    },
+                    "foreign_keys": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/ForeignKeyConfig"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Foreign Keys",
+                        "description": "Foreign key definitions for referential integrity",
+                        "example": [
+                            {
+                                "default": 0,
+                                "name": "department_id",
+                                "on_delete": "SET DEFAULT",
+                                "on_update": "CASCADE",
+                                "references": "Departments.id"
+                            }
+                        ]
                     }
                 },
                 "type": "object",
@@ -12673,6 +14872,7 @@
                                     "type": "array"
                                 },
                                 {
+                                    "additionalProperties": true,
                                     "type": "object"
                                 }
                             ]
@@ -12881,10 +15081,12 @@
                     "params": {
                         "anyOf": [
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
                                 "items": {
+                                    "additionalProperties": true,
                                     "type": "object"
                                 },
                                 "type": "array"
@@ -12945,10 +15147,12 @@
                     "entries": {
                         "anyOf": [
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
                                 "items": {
+                                    "additionalProperties": true,
                                     "type": "object"
                                 },
                                 "type": "array"
@@ -13489,6 +15693,7 @@
                                             "type": "array"
                                         },
                                         {
+                                            "additionalProperties": true,
                                             "type": "object"
                                         },
                                         {
@@ -14078,6 +16283,94 @@
                 "type": "object",
                 "title": "FavoriteProjectUpdate",
                 "description": "Request model for updating a favorite project."
+            },
+            "ForeignKeyConfig": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Column name or path to nested field that references another context. Supports:\n  - Simple column: 'department_id'\n  - Array elements: 'images[*].image_id'\n  - Nested object: 'metadata.user.user_id'\n  - Mixed nesting: 'teams[*].members[*].user_id'",
+                        "example": "department_id"
+                    },
+                    "references": {
+                        "type": "string",
+                        "title": "References",
+                        "description": "Referenced context and column in format 'ContextName.column_name'",
+                        "example": "Departments.id"
+                    },
+                    "on_delete": {
+                        "type": "string",
+                        "enum": [
+                            "CASCADE",
+                            "SET NULL",
+                            "SET DEFAULT",
+                            "RESTRICT",
+                            "NO ACTION"
+                        ],
+                        "title": "On Delete",
+                        "description": "Action to perform when referenced row is deleted",
+                        "default": "CASCADE"
+                    },
+                    "on_update": {
+                        "type": "string",
+                        "enum": [
+                            "CASCADE",
+                            "SET NULL",
+                            "SET DEFAULT",
+                            "RESTRICT",
+                            "NO ACTION"
+                        ],
+                        "title": "On Update",
+                        "description": "Action to perform when referenced row is updated",
+                        "default": "CASCADE"
+                    },
+                    "default": {
+                        "anyOf": [
+                            {},
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Default",
+                        "description": "Default value to use for SET DEFAULT action. Required when on_delete or on_update is SET DEFAULT.",
+                        "example": 0
+                    },
+                    "is_nested": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Is Nested",
+                        "description": "Auto-set: True if this FK uses a nested path (contains . or [])"
+                    },
+                    "path_segments": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "additionalProperties": true,
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Path Segments",
+                        "description": "Auto-set: Parsed path structure for nested FKs"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "references"
+                ],
+                "title": "ForeignKeyConfig",
+                "description": "Foreign key configuration for referential integrity."
             },
             "GetLogsMetricRequest": {
                 "properties": {
@@ -14823,6 +17116,7 @@
                 "properties": {
                     "pair_of_args": {
                         "items": {
+                            "additionalProperties": true,
                             "type": "object"
                         },
                         "type": "array",
@@ -14917,6 +17211,243 @@
                 ],
                 "title": "OnboardingStatusResponse",
                 "description": "Response containing user's onboarding status."
+            },
+            "OrganizationCreate": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "billing_user_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Billing User Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "OrganizationCreate",
+                "description": "Schema for creating an organization."
+            },
+            "OrganizationMemberAdd": {
+                "properties": {
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id"
+                    },
+                    "level": {
+                        "type": "string",
+                        "title": "Level",
+                        "default": "user"
+                    },
+                    "role_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Role Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "user_id"
+                ],
+                "title": "OrganizationMemberAdd",
+                "description": "Schema for adding a member to an organization."
+            },
+            "OrganizationMemberResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id"
+                    },
+                    "organization_id": {
+                        "type": "integer",
+                        "title": "Organization Id"
+                    },
+                    "level": {
+                        "type": "string",
+                        "title": "Level"
+                    },
+                    "role_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Role Id"
+                    },
+                    "role_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Role Name"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "user_id",
+                    "organization_id",
+                    "level",
+                    "role_id",
+                    "created_at"
+                ],
+                "title": "OrganizationMemberResponse",
+                "description": "Schema for organization member response."
+            },
+            "OrganizationMemberRoleUpdate": {
+                "properties": {
+                    "role_id": {
+                        "type": "integer",
+                        "title": "Role Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "role_id"
+                ],
+                "title": "OrganizationMemberRoleUpdate",
+                "description": "Schema for updating a member's role."
+            },
+            "OrganizationResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "owner_id": {
+                        "type": "string",
+                        "title": "Owner Id"
+                    },
+                    "billing_user_id": {
+                        "type": "string",
+                        "title": "Billing User Id"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "owner_id",
+                    "billing_user_id",
+                    "created_at"
+                ],
+                "title": "OrganizationResponse",
+                "description": "Schema for organization response."
+            },
+            "OrganizationUpdate": {
+                "properties": {
+                    "name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Name"
+                    },
+                    "billing_user_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Billing User Id"
+                    }
+                },
+                "type": "object",
+                "title": "OrganizationUpdate",
+                "description": "Schema for updating an organization."
+            },
+            "PermissionResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "resource_type": {
+                        "type": "string",
+                        "title": "Resource Type"
+                    },
+                    "action": {
+                        "type": "string",
+                        "title": "Action"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "resource_type",
+                    "action",
+                    "created_at"
+                ],
+                "title": "PermissionResponse",
+                "description": "Schema for permission response."
             },
             "PhotoGenerateRequest": {
                 "properties": {
@@ -15511,6 +18042,278 @@
                 "title": "ProjectUpdate",
                 "description": "Request model for updating a project."
             },
+            "QueryLogsPostBody": {
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "title": "Project",
+                        "description": "Project name",
+                        "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "Context name",
+                        "example": "training"
+                    },
+                    "column_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Context",
+                        "description": "The context (prepending '/' seperated field names) from which to retrieve the logs.",
+                        "example": "subjects/science/physics"
+                    },
+                    "filter_expr": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filter Expr",
+                        "description": "Boolean string to filter entries. Supports embed_image() for image similarity queries.",
+                        "example": "len(output) > 200 and temperature == 0.5"
+                    },
+                    "sorting": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sorting",
+                        "description": "JSON-encoded dict mapping either static column names (e.g. `timestamp`) or full Python2SQL expressions (e.g. `cosine(embed('search text'), embedding_vector)`) to sort directions (`\"ascending\"` or `\"descending\"`). The first key is the primary sort field; subsequent keys break ties.",
+                        "example": "{\"timestamp\": \"descending\", \"round(score, 2)\": \"ascending\"}"
+                    },
+                    "group_sorting": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group Sorting",
+                        "description": "Sorting configuration for groups when using group_by",
+                        "example": {
+                            "entries/student": {
+                                "direction": "descending",
+                                "field": "score",
+                                "metric": "mean"
+                            }
+                        }
+                    },
+                    "from_ids": {
+                        "anyOf": [
+                            {},
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From Ids",
+                        "description": "Log IDs to include",
+                        "example": "0&1&2"
+                    },
+                    "exclude_ids": {
+                        "anyOf": [
+                            {},
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Exclude Ids",
+                        "description": "Log IDs to exclude",
+                        "example": "0&1&2"
+                    },
+                    "from_fields": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From Fields",
+                        "description": "Fields to include",
+                        "example": "score&response"
+                    },
+                    "exclude_fields": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Exclude Fields",
+                        "description": "Fields to exclude",
+                        "example": "score&response"
+                    },
+                    "limit": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "maximum": 1000.0,
+                                "minimum": 1.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Limit"
+                    },
+                    "offset": {
+                        "type": "integer",
+                        "minimum": 0.0,
+                        "title": "Offset",
+                        "default": 0
+                    },
+                    "group_by": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group By",
+                        "description": "Fields to group by",
+                        "example": [
+                            "model",
+                            "temperature"
+                        ]
+                    },
+                    "group_limit": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "minimum": 1.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group Limit",
+                        "description": "Maximum number of groups to return at each level"
+                    },
+                    "group_offset": {
+                        "type": "integer",
+                        "minimum": 0.0,
+                        "title": "Group Offset",
+                        "description": "Number of groups to skip at each level",
+                        "default": 0
+                    },
+                    "group_depth": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group Depth",
+                        "description": "Maximum depth of nested groups to return"
+                    },
+                    "nested_groups": {
+                        "type": "boolean",
+                        "title": "Nested Groups",
+                        "description": "If True, groups are returned as a nested structure",
+                        "default": true
+                    },
+                    "groups_only": {
+                        "type": "boolean",
+                        "title": "Groups Only",
+                        "description": "If True, only return groups without full logs list",
+                        "default": false
+                    },
+                    "return_timestamps": {
+                        "type": "boolean",
+                        "title": "Return Timestamps",
+                        "description": "When groups_only is True, return timestamps with log IDs",
+                        "default": false
+                    },
+                    "return_ids_only": {
+                        "type": "boolean",
+                        "title": "Return Ids Only",
+                        "description": "If True, return only log IDs instead of full entries",
+                        "default": false
+                    },
+                    "randomize": {
+                        "type": "boolean",
+                        "title": "Randomize",
+                        "description": "If true, return logs in a deterministic random order",
+                        "default": false
+                    },
+                    "seed": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Seed",
+                        "description": "Seed for deterministic random ordering",
+                        "default": "42"
+                    },
+                    "value_limit": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Value Limit",
+                        "description": "Maximum number of characters to return for string values"
+                    },
+                    "group_threshold": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group Threshold",
+                        "description": "When set, entries that appear in at least this many logs will be grouped together"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project"
+                ],
+                "title": "QueryLogsPostBody",
+                "description": "Request body for POST /logs/query endpoint.\n\nAccepts the same parameters as GET /logs, but via request body instead of query parameters.\nThis is useful for queries with large filter expressions or base64-encoded images that\nwould exceed URL length limits.\n\nExample with image embedding:\n```json\n{\n    \"project\": \"my-project\",\n    \"filter_expr\": \"cosine(image_embedding, embed_image('data:image/png;base64,iVBORw0KG...')) < 0.3\"\n}\n```"
+            },
             "RecordingInfo": {
                 "properties": {
                     "id": {
@@ -15614,6 +18417,7 @@
                     "input": {
                         "anyOf": [
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
@@ -15673,6 +18477,7 @@
                     "urls": {
                         "anyOf": [
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
@@ -15691,6 +18496,301 @@
                     "created_at"
                 ],
                 "title": "ReplicatePredictionResponse"
+            },
+            "ResourceAccessGrant": {
+                "properties": {
+                    "role_id": {
+                        "type": "integer",
+                        "title": "Role Id"
+                    },
+                    "grantee_type": {
+                        "type": "string",
+                        "title": "Grantee Type"
+                    },
+                    "grantee_id": {
+                        "type": "string",
+                        "title": "Grantee Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "role_id",
+                    "grantee_type",
+                    "grantee_id"
+                ],
+                "title": "ResourceAccessGrant",
+                "description": "Schema for granting resource access."
+            },
+            "ResourceAccessListResponse": {
+                "properties": {
+                    "resource_type": {
+                        "type": "string",
+                        "title": "Resource Type"
+                    },
+                    "resource_id": {
+                        "type": "integer",
+                        "title": "Resource Id"
+                    },
+                    "access_entries": {
+                        "items": {
+                            "$ref": "#/components/schemas/ResourceAccessResponse"
+                        },
+                        "type": "array",
+                        "title": "Access Entries"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "resource_type",
+                    "resource_id",
+                    "access_entries"
+                ],
+                "title": "ResourceAccessListResponse",
+                "description": "Schema for listing resource access."
+            },
+            "ResourceAccessResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "resource_type": {
+                        "type": "string",
+                        "title": "Resource Type"
+                    },
+                    "resource_id": {
+                        "type": "integer",
+                        "title": "Resource Id"
+                    },
+                    "role_id": {
+                        "type": "integer",
+                        "title": "Role Id"
+                    },
+                    "role_name": {
+                        "type": "string",
+                        "title": "Role Name"
+                    },
+                    "grantee_type": {
+                        "type": "string",
+                        "title": "Grantee Type"
+                    },
+                    "grantee_id": {
+                        "type": "string",
+                        "title": "Grantee Id"
+                    },
+                    "grantee_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Grantee Name"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "resource_type",
+                    "resource_id",
+                    "role_id",
+                    "role_name",
+                    "grantee_type",
+                    "grantee_id",
+                    "created_at"
+                ],
+                "title": "ResourceAccessResponse",
+                "description": "Schema for resource access response."
+            },
+            "ResourceAccessRevoke": {
+                "properties": {
+                    "grantee_type": {
+                        "type": "string",
+                        "title": "Grantee Type"
+                    },
+                    "grantee_id": {
+                        "type": "string",
+                        "title": "Grantee Id"
+                    },
+                    "role_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Role Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "grantee_type",
+                    "grantee_id"
+                ],
+                "title": "ResourceAccessRevoke",
+                "description": "Schema for revoking resource access."
+            },
+            "ResourceAccessUpdate": {
+                "properties": {
+                    "role_id": {
+                        "type": "integer",
+                        "title": "Role Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "role_id"
+                ],
+                "title": "ResourceAccessUpdate",
+                "description": "Schema for updating resource access (changing role)."
+            },
+            "RoleCreate": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "permission_ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "title": "Permission Ids",
+                        "default": []
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "RoleCreate",
+                "description": "Schema for creating a custom role."
+            },
+            "RolePermissionAdd": {
+                "properties": {
+                    "permission_ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "title": "Permission Ids"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "permission_ids"
+                ],
+                "title": "RolePermissionAdd",
+                "description": "Schema for adding permissions to a role."
+            },
+            "RoleResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "organization_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Organization Id"
+                    },
+                    "is_system_role": {
+                        "type": "boolean",
+                        "title": "Is System Role"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    },
+                    "permissions": {
+                        "items": {
+                            "$ref": "#/components/schemas/PermissionResponse"
+                        },
+                        "type": "array",
+                        "title": "Permissions",
+                        "default": []
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "is_system_role",
+                    "created_at"
+                ],
+                "title": "RoleResponse",
+                "description": "Schema for role response."
+            },
+            "RoleUpdate": {
+                "properties": {
+                    "name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    }
+                },
+                "type": "object",
+                "title": "RoleUpdate",
+                "description": "Schema for updating a custom role."
             },
             "StandardFieldDefinition": {
                 "properties": {
@@ -16109,6 +19209,180 @@
                 "type": "object",
                 "title": "TableTileSchema"
             },
+            "TeamCreate": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "title": "TeamCreate",
+                "description": "Schema for creating a team."
+            },
+            "TeamMemberAdd": {
+                "properties": {
+                    "user_ids": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "User Ids"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "user_ids"
+                ],
+                "title": "TeamMemberAdd",
+                "description": "Schema for adding members to a team."
+            },
+            "TeamResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "organization_id": {
+                        "type": "integer",
+                        "title": "Organization Id"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    },
+                    "member_count": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Member Count"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "organization_id",
+                    "created_at"
+                ],
+                "title": "TeamResponse",
+                "description": "Schema for team response."
+            },
+            "TeamUpdate": {
+                "properties": {
+                    "name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    }
+                },
+                "type": "object",
+                "title": "TeamUpdate",
+                "description": "Schema for updating a team."
+            },
+            "TeamWithMembersResponse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "organization_id": {
+                        "type": "integer",
+                        "title": "Organization Id"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    },
+                    "members": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Members"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "organization_id",
+                    "created_at",
+                    "members"
+                ],
+                "title": "TeamWithMembersResponse",
+                "description": "Schema for team response with members list."
+            },
             "TemplateExportResponse": {
                 "properties": {
                     "template": {
@@ -16129,10 +19403,12 @@
                         "title": "Template"
                     },
                     "metadata": {
+                        "additionalProperties": true,
                         "type": "object",
                         "title": "Metadata"
                     },
                     "export_stats": {
+                        "additionalProperties": true,
                         "type": "object",
                         "title": "Export Stats"
                     }
@@ -16163,10 +19439,12 @@
                         ]
                     },
                     "import_stats": {
+                        "additionalProperties": true,
                         "type": "object",
                         "title": "Import Stats"
                     },
                     "created_ids": {
+                        "additionalProperties": true,
                         "type": "object",
                         "title": "Created Ids"
                     },
@@ -16795,6 +20073,87 @@
                 "title": "TileTemplateSchema",
                 "description": "Template schema for a detached tile - inherits all fields from base"
             },
+            "TransferResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "title": "Success"
+                    },
+                    "project_id": {
+                        "type": "integer",
+                        "title": "Project Id"
+                    },
+                    "project_name": {
+                        "type": "string",
+                        "title": "Project Name"
+                    },
+                    "from_type": {
+                        "type": "string",
+                        "title": "From Type"
+                    },
+                    "to_type": {
+                        "type": "string",
+                        "title": "To Type"
+                    },
+                    "message": {
+                        "type": "string",
+                        "title": "Message"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "success",
+                    "project_id",
+                    "project_name",
+                    "from_type",
+                    "to_type",
+                    "message"
+                ],
+                "title": "TransferResponse",
+                "description": "Response model for project transfer operations."
+            },
+            "TransferToOrganizationRequest": {
+                "properties": {
+                    "organization_id": {
+                        "type": "integer",
+                        "title": "Organization Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "organization_id"
+                ],
+                "title": "TransferToOrganizationRequest",
+                "description": "Request model for transferring a personal project to an organization."
+            },
+            "UnifyMessage": {
+                "properties": {
+                    "assistant_id": {
+                        "type": "integer",
+                        "title": "Assistant Id",
+                        "description": "The ID of the assistant to message."
+                    },
+                    "contact_id": {
+                        "type": "integer",
+                        "title": "Contact Id",
+                        "description": "The ID of the contact sending the message. Currently only '1' (the user) is supported.",
+                        "example": 1
+                    },
+                    "message": {
+                        "type": "string",
+                        "title": "Message",
+                        "description": "The message content.",
+                        "example": "Hello!"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "assistant_id",
+                    "contact_id",
+                    "message"
+                ],
+                "title": "UnifyMessage"
+            },
             "UpdateAccountTypeRequest": {
                 "properties": {
                     "account_type": {
@@ -16950,6 +20309,7 @@
                                 "type": "array"
                             },
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             }
                         ],
@@ -17004,6 +20364,7 @@
                                             "type": "array"
                                         },
                                         {
+                                            "additionalProperties": true,
                                             "type": "object"
                                         }
                                     ]
@@ -17120,6 +20481,7 @@
                                 "type": "array"
                             },
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             }
                         ],
@@ -17182,10 +20544,12 @@
                     "params": {
                         "anyOf": [
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
                                 "items": {
+                                    "additionalProperties": true,
                                     "type": "object"
                                 },
                                 "type": "array"
@@ -17222,10 +20586,12 @@
                     "entries": {
                         "anyOf": [
                             {
+                                "additionalProperties": true,
                                 "type": "object"
                             },
                             {
                                 "items": {
+                                    "additionalProperties": true,
                                     "type": "object"
                                 },
                                 "type": "array"

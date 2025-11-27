@@ -1,0 +1,213 @@
+---
+title: "Query Logs Post"
+api: 'POST /v0/logs/query'
+---
+Query logs via POST request.
+
+This endpoint accepts the exact same parameters as GET /logs, but via request body
+instead of query parameters. This is useful for:
+- Large filter expressions that would exceed URL length limits
+- Filter expressions containing base64-encoded images (e.g., embed_image('data:image/png;base64,...'))
+- Complex sorting expressions
+
+Example with image embedding:
+```json
+{
+    "project": "my-project",
+    "filter_expr": "cosine(image_embedding, embed_image('data:image/png;base64,iVBORw0KG...')) < 0.3",
+    "limit": 10
+}
+```
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="project" type="string" required="true">
+Project name
+</ParamField>
+
+<ParamField body="context" type="string | null" >
+Context name
+</ParamField>
+
+<ParamField body="column_context" type="string | null" >
+The context (prepending '/' seperated field names) from which to retrieve the logs.
+</ParamField>
+
+<ParamField body="filter_expr" type="string | null" >
+Boolean string to filter entries. Supports embed_image() for image similarity queries.
+</ParamField>
+
+<ParamField body="sorting" type="string | null" >
+JSON-encoded dict mapping either static column names (e.g. `timestamp`) or full Python2SQL expressions (e.g. `cosine(embed('search text'), embedding_vector)`) to sort directions (`"ascending"` or `"descending"`). The first key is the primary sort field; subsequent keys break ties.
+</ParamField>
+
+<ParamField body="group_sorting" type="string | null" >
+Sorting configuration for groups when using group_by
+</ParamField>
+
+<ParamField body="from_ids" type="any | null" >
+Log IDs to include
+</ParamField>
+
+<ParamField body="exclude_ids" type="any | null" >
+Log IDs to exclude
+</ParamField>
+
+<ParamField body="from_fields" type="string | null" >
+Fields to include
+</ParamField>
+
+<ParamField body="exclude_fields" type="string | null" >
+Fields to exclude
+</ParamField>
+
+<ParamField body="limit" type="integer | null" >
+
+</ParamField>
+
+<ParamField body="offset" type="integer"  default="0">
+
+</ParamField>
+
+<ParamField body="group_by" type="array | null" >
+Fields to group by
+</ParamField>
+
+<ParamField body="group_limit" type="integer | null" >
+Maximum number of groups to return at each level
+</ParamField>
+
+<ParamField body="group_offset" type="integer"  default="0">
+Number of groups to skip at each level
+</ParamField>
+
+<ParamField body="group_depth" type="integer | null" >
+Maximum depth of nested groups to return
+</ParamField>
+
+<ParamField body="nested_groups" type="boolean"  default="true">
+If True, groups are returned as a nested structure
+</ParamField>
+
+<ParamField body="groups_only" type="boolean"  default="false">
+If True, only return groups without full logs list
+</ParamField>
+
+<ParamField body="return_timestamps" type="boolean"  default="false">
+When groups_only is True, return timestamps with log IDs
+</ParamField>
+
+<ParamField body="return_ids_only" type="boolean"  default="false">
+If True, return only log IDs instead of full entries
+</ParamField>
+
+<ParamField body="randomize" type="boolean"  default="false">
+If true, return logs in a deterministic random order
+</ParamField>
+
+<ParamField body="seed" type="string | null"  default="42">
+Seed for deterministic random ordering
+</ParamField>
+
+<ParamField body="value_limit" type="integer | null" >
+Maximum number of characters to return for string values
+</ParamField>
+
+<ParamField body="group_threshold" type="integer | null" >
+When set, entries that appear in at least this many logs will be grouped together
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/logs/query' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "project": "eval-project",
+    "context": "training",
+    "column_context": "subjects/science/physics",
+    "filter_expr": "len(output) > 200 and temperature == 0.5",
+    "sorting": "{\"timestamp\": \"descending\", \"round(score, 2)\": \"ascending\"}",
+    "group_sorting": {
+        "entries/student": {
+            "direction": "descending",
+            "field": "score",
+            "metric": "mean"
+        }
+    },
+    "from_ids": "0&1&2",
+    "exclude_ids": "0&1&2",
+    "from_fields": "score&response",
+    "exclude_fields": "score&response",
+    "group_by": [
+        "model",
+        "temperature"
+    ]
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs/query"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"project": "eval-project", "context": "training", "column_context": "subjects/science/physics", "filter_expr": "len(output) > 200 and temperature == 0.5", "sorting": "{"timestamp": "descending", "round(score, 2)": "ascending"}", "group_sorting": {"entries/student": {"direction": "descending", "field": "score", "metric": "mean"}}, "from_ids": "0&1&2", "exclude_ids": "0&1&2", "from_fields": "score&response", "exclude_fields": "score&response", "group_by": ["model", "temperature"]}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "params": {},
+    "logs": [
+        {
+            "id": "0",
+            "ts": "2024-10-30 12:20:03",
+            "entries": {
+                "key1": "a",
+                "key2": 1.0
+            },
+            "derived_entries": {},
+            "params": {}
+        }
+    ],
+    "count": 1
+}
+```
+
+```json 404
+{
+    "detail": "Project <project> not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

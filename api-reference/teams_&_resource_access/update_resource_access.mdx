@@ -1,0 +1,101 @@
+---
+title: "Update Resource Access"
+api: 'PATCH /v0/resources/{resource_type}/{resource_id}/access/{access_id}'
+---
+Update an existing resource access grant (change role).
+
+This is a more atomic alternative to revoking and re-granting access.
+Preserves the access ID and created_at timestamp.
+
+User must have write permission on the resource.
+
+:param request_fastapi: FastAPI request object.
+:param resource_type: Type of resource ("project" or "org").
+:param resource_id: Resource ID.
+:param access_id: ResourceAccess ID to update.
+:param update_data: Update data containing new role_id.
+:param session: Database session.
+:return: Updated access entry.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="resource_type" type="string" required="true">
+
+</ParamField>
+
+<ParamField query="resource_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="access_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="role_id" type="integer" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access/<access_id>' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access/<access_id>"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("PATCH", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "integer",
+    "resource_type": "string",
+    "resource_id": "integer",
+    "role_id": "integer",
+    "role_name": "string",
+    "grantee_type": "string",
+    "grantee_id": "string",
+    "grantee_name": "string | null",
+    "created_at": "string"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

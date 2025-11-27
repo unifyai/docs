@@ -1,0 +1,77 @@
+---
+title: "Create Organization"
+api: 'POST /v0/organizations'
+---
+Create a new organization.
+
+The authenticated user will be the owner of the organization.
+If billing_user_id is not provided, it defaults to the owner.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="name" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="billing_user_id" type="string | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/organizations' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "id": "integer",
+    "name": "string",
+    "owner_id": "string",
+    "billing_user_id": "string",
+    "created_at": "string"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,90 @@
+---
+title: "Revoke Resource Access"
+api: 'DELETE /v0/resources/{resource_type}/{resource_id}/access'
+---
+Revoke access to a resource (project or org).
+
+User must have appropriate permissions on the resource.
+
+:param request_fastapi: FastAPI request object.
+:param resource_type: Type of resource ("project" or "org").
+:param resource_id: Resource ID.
+:param access_data: Access revoke data.
+:param session: Database session.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="resource_type" type="string" required="true">
+
+</ParamField>
+
+<ParamField query="resource_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="grantee_type" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="grantee_id" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="role_id" type="integer | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("DELETE", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 204
+// No Content
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

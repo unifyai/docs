@@ -10,13 +10,14 @@ def create_context(
     allow_duplicates: bool = True,
     unique_keys: Optional[Dict[str, str]] = None,
     auto_counting: Optional[Dict[str, Optional[str]]] = None,
+    foreign_keys: Optional[List[Dict[str, Any]]] = None,
     *,
     project: Optional[str] = None,
     api_key: Optional[str] = None,
 ) -> None:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2c6d11b68f54f358a51d0df58e26a8599d209b34/unify/logging/utils/contexts.py#L13)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/a1534e8f7848605fcd585bb6d78a055a53ba5514/unify/logging/utils/contexts.py#L13)</p>
 
 Create a context.
 
@@ -28,6 +29,9 @@ Create a context.
 - `allow_duplicates` - Whether to allow duplicates in the context.
 - `unique_keys` - Unique key definition. Keys are column names, values are types
 - `auto_counting` - Auto-counting configuration. Keys are column names to auto-increment,
+- `foreign_keys` - Foreign key definitions for referential integrity. Each foreign key is a
+- `Example` - [{"name": "department_id", "references": "Departments.id",
+- `"on_delete"` - "CASCADE", "on_update": "CASCADE"}]
 - `project` - Name of the project the context belongs to.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
@@ -36,3 +40,121 @@ Create a context.
 **Returns**:
 
 A message indicating whether the context was successfully created.
+Example:
+# Simple foreign key (direct column reference)
+create_context(
+name="Departments",
+unique_keys={"id": "int"},
+auto_counting={"id": None},
+project="my_project"
+)
+create_context(
+name="Employees",
+foreign_keys=[
+{
+"name": "department_id",  # Simple column
+"references": "Departments.id",
+"on_delete": "CASCADE",
+"on_update": "CASCADE"
+}
+],
+project="my_project"
+)
+# Flat array FK - references array of primitive values
+create_context(
+name="Categories",
+unique_keys={"category_id": "int"},
+auto_counting={"category_id": None},
+project="my_project"
+)
+create_context(
+name="Products",
+foreign_keys=[
+{
+"name": "category_ids[*]",  # All values in array of primitives
+"references": "Categories.category_id",
+"on_delete": "CASCADE",
+"on_update": "CASCADE"
+}
+],
+project="my_project"
+)
+# Nested array FK - references field in array of objects
+create_context(
+name="Images",
+unique_keys={"image_id": "int"},
+auto_counting={"image_id": None},
+project="my_project"
+)
+create_context(
+name="Transcripts",
+foreign_keys=[
+{
+"name": "images[*].image_id",  # Field in array of objects
+"references": "Images.image_id",
+"on_delete": "CASCADE",
+"on_update": "CASCADE"
+}
+],
+project="my_project"
+)
+# Nested object FK - deep object path navigation
+create_context(
+name="Users",
+unique_keys={"user_id": "int"},
+auto_counting={"user_id": None},
+project="my_project"
+)
+create_context(
+name="Records",
+foreign_keys=[
+{
+"name": "metadata.user.user_id",  # Nested through objects
+"references": "Users.user_id",
+"on_delete": "SET NULL",
+"on_update": "CASCADE"
+}
+],
+project="my_project"
+)
+# Mixed nesting - combining arrays and objects
+create_context(
+name="Projects",
+foreign_keys=[
+{
+"name": "teams[*].members[*].user_id",  # Multiple array levels
+"references": "Users.user_id",
+"on_delete": "CASCADE",
+"on_update": "CASCADE"
+}
+],
+project="my_project"
+)
+- `unique_keys={"id"` - "int"},
+- `auto_counting={"id"` - None},
+- `"name"` - "department_id",  # Simple column
+- `"references"` - "Departments.id",
+- `"on_delete"` - "CASCADE",
+- `"on_update"` - "CASCADE"
+- `unique_keys={"category_id"` - "int"},
+- `auto_counting={"category_id"` - None},
+- `"name"` - "category_ids[*]",  # All values in array of primitives
+- `"references"` - "Categories.category_id",
+- `"on_delete"` - "CASCADE",
+- `"on_update"` - "CASCADE"
+- `unique_keys={"image_id"` - "int"},
+- `auto_counting={"image_id"` - None},
+- `"name"` - "images[*].image_id",  # Field in array of objects
+- `"references"` - "Images.image_id",
+- `"on_delete"` - "CASCADE",
+- `"on_update"` - "CASCADE"
+- `unique_keys={"user_id"` - "int"},
+- `auto_counting={"user_id"` - None},
+- `"name"` - "metadata.user.user_id",  # Nested through objects
+- `"references"` - "Users.user_id",
+- `"on_delete"` - "SET NULL",
+- `"on_update"` - "CASCADE"
+- `"name"` - "teams[*].members[*].user_id",  # Multiple array levels
+- `"references"` - "Users.user_id",
+- `"on_delete"` - "CASCADE",
+- `"on_update"` - "CASCADE"
