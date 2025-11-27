@@ -1,0 +1,102 @@
+---
+title: "Grant Resource Access"
+api: 'POST /v0/resources/{resource_type}/{resource_id}/access'
+---
+Grant access to a resource (project or org).
+
+Only works for organizational resources. Personal resources cannot be shared.
+User must have appropriate permissions on the resource.
+
+:param request_fastapi: FastAPI request object.
+:param resource_type: Type of resource ("project" or "org").
+:param resource_id: Resource ID.
+:param access_data: Access grant data.
+:param session: Database session.
+:return: Created access entry.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="resource_type" type="string" required="true">
+
+</ParamField>
+
+<ParamField query="resource_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="role_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField body="grantee_type" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="grantee_id" type="string" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "id": "integer",
+    "resource_type": "string",
+    "resource_id": "integer",
+    "role_id": "integer",
+    "role_name": "string",
+    "grantee_type": "string",
+    "grantee_id": "string",
+    "grantee_name": "string | null",
+    "created_at": "string"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

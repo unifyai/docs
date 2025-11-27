@@ -1,0 +1,84 @@
+---
+title: "Update Member Role"
+api: 'PATCH /v0/organizations/{organization_id}/members/{member_user_id}/role'
+---
+Update an organization member's RBAC role.
+
+Requires org:write permission.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="member_user_id" type="string" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="role_id" type="integer" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members/<member_user_id>/role' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/members/<member_user_id>/role"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("PATCH", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "integer",
+    "user_id": "string",
+    "organization_id": "integer",
+    "level": "string",
+    "role_id": "integer | null",
+    "role_name": "string | null",
+    "created_at": "string"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

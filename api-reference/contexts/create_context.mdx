@@ -52,6 +52,10 @@ Unique key definition. Keys are column names, values are types ('str', 'int', 'f
 Auto-counting configuration. Keys are column names to auto-increment, values are parent counter names (None for independent counters).
 </ParamField>
 
+<ParamField body="foreign_keys" type="array | null" >
+Foreign key definitions for referential integrity
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
@@ -72,7 +76,16 @@ curl --request POST \
     },
     "auto_counting": {
         "company_id": "department_id"
-    }
+    },
+    "foreign_keys": [
+        {
+            "default": 0,
+            "name": "department_id",
+            "on_delete": "SET DEFAULT",
+            "on_update": "CASCADE",
+            "references": "Departments.id"
+        }
+    ]
 }'
 ```
 
@@ -83,7 +96,7 @@ url = "https://api.unify.ai/v0/project/my_project/contexts"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True, "allow_duplicates": True, "unique_keys": {"company_id": "int", "department_id": "int", "first_name": "str", "last_name": "str"}, "auto_counting": {"company_id": "department_id"}}
+json_input = {"name": "experiment1/trial1", "description": "Context for experiment 1 trial 1", "is_versioned": True, "allow_duplicates": True, "unique_keys": {"company_id": "int", "department_id": "int", "first_name": "str", "last_name": "str"}, "auto_counting": {"company_id": "department_id"}, "foreign_keys": [{"default": 0, "name": "department_id", "on_delete": "SET DEFAULT", "on_update": "CASCADE", "references": "Departments.id"}]}
 
 response = requests.request("POST", url, json=json_input, headers=headers)
 
@@ -98,7 +111,7 @@ print(response.text)
 ```
 
 ```json 400
-{}
+// No Content
 ```
 
 ```json 404

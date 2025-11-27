@@ -1,0 +1,72 @@
+---
+title: "Delete Role"
+api: 'DELETE /v0/organizations/{organization_id}/roles/{role_id}'
+---
+Delete a custom role.
+
+Only organization owners can delete custom roles.
+Cannot delete system roles.
+
+:param request_fastapi: FastAPI request object.
+:param organization_id: Organization ID.
+:param role_id: Role ID.
+:param session: Database session.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="role_id" type="integer" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/roles/<role_id>' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/roles/<role_id>"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("DELETE", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 204
+// No Content
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,89 @@
+---
+title: "Create Team"
+api: 'POST /v0/organizations/{organization_id}/teams'
+---
+Create a new team in an organization.
+
+Only organization owners can create teams.
+
+:param request_fastapi: FastAPI request object.
+:param organization_id: Organization ID.
+:param team_data: Team creation data.
+:param session: Database session.
+:return: Created team.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="name" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="description" type="string | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/teams' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/teams"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "id": "integer",
+    "name": "string",
+    "description": "string | null",
+    "organization_id": "integer",
+    "created_at": "string",
+    "member_count": "integer | null"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

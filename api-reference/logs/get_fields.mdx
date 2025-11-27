@@ -2,8 +2,15 @@
 title: "Get Fields"
 api: 'GET /v0/logs/fields'
 ---
-Returns a dictionary of fields names and their types for the specified project.
-If a context is provided, returns only fields associated with that context.
+Returns field definitions and their types for the specified project.
+
+Context handling:
+- If no context is provided (or an empty string), returns a flat mapping of field
+  name → metadata for the default context.
+- If a specific context name is provided, returns a flat mapping of field
+  name → metadata for that context.
+- If context is '*', returns a nested mapping of context_name → {field_name → metadata}
+  containing fields from all contexts in the project.
 
 Each field entry contains:
 - data_type: The data type of the field (int, str, etc)
@@ -27,7 +34,7 @@ Name of the project to get fields and their types for.
 </ParamField>
 
 <ParamField query="context" type="string | null"  default="">
-Optional context name to filter fields types
+Optional context name to filter field types. Use '*' to return fields from all contexts in the project.
 </ParamField>
 
 <RequestExample>

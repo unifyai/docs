@@ -1,0 +1,72 @@
+---
+title: "List Teams"
+api: 'GET /v0/organizations/{organization_id}/teams'
+---
+List all teams in an organization.
+
+:param request_fastapi: FastAPI request object.
+:param organization_id: Organization ID.
+:param session: Database session.
+:return: List of teams.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/teams' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/teams"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "integer",
+    "name": "string",
+    "description": "string | null",
+    "organization_id": "integer",
+    "created_at": "string",
+    "member_count": "integer | null"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

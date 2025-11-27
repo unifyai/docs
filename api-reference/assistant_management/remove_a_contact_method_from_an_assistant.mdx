@@ -1,0 +1,82 @@
+---
+title: "Remove a contact method from an assistant"
+api: 'DELETE /v0/assistant/{assistant_id}/contact'
+---
+Removes a contact method (phone, email, or WhatsApp) from an assistant and deprovisions the associated infrastructure.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="assistant_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="contact_type" type="string" required="true">
+The type of contact information to remove.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/assistant/<assistant_id>/contact' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{
+    "contact_type": "email"
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/<assistant_id>/contact"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"contact_type": "email"}
+
+response = requests.request("DELETE", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "object"
+}
+```
+
+```json 404
+// No Content
+```
+
+```json 400
+// No Content
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

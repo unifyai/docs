@@ -1,0 +1,71 @@
+---
+title: "List Permissions"
+api: 'GET /v0/permissions'
+---
+List all available permissions, optionally filtered by resource type.
+
+:param resource_type: Optional filter by resource type (e.g., 'project', 'interface').
+:param session: Database session.
+:return: List of permissions.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="resource_type" type="string | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/permissions?resource_type=None' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/permissions?resource_type=None"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "integer",
+    "name": "string",
+    "description": "string | null",
+    "resource_type": "string",
+    "action": "string",
+    "created_at": "string"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

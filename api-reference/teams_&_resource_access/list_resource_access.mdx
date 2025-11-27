@@ -1,0 +1,76 @@
+---
+title: "List Resource Access"
+api: 'GET /v0/resources/{resource_type}/{resource_id}/access'
+---
+List all access entries for a resource (project or org).
+
+User must have read permission on the resource.
+
+:param request_fastapi: FastAPI request object.
+:param resource_type: Type of resource ("project" or "org").
+:param resource_id: Resource ID.
+:param session: Database session.
+:return: List of access entries.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="resource_type" type="string" required="true">
+
+</ParamField>
+
+<ParamField query="resource_id" type="integer" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "resource_type": "string",
+    "resource_id": "integer",
+    "access_entries": "[Any]"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
