@@ -9,18 +9,6 @@ def apply_provider_preprocessing(
 ) -> Dict[str, Any]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/f9cdf2e53054097d485d787daa51b4f704c9025c/unify/universal_api/utils/provider_preprocessing.py#L229)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/ef1859c36161796cd4f05aac60cb09539d3a4d4d/unify/universal_api/utils/provider_preprocessing.py#L75)</p>
 
-Apply provider-specific preprocessing to the keyword arguments dict.This modifies the 'messages' key in the kw dict if preprocessing is needed.
-The kw dict is modified in place and also returned.
-
-**Arguments**:
-
-- `kw` - The keyword arguments dictionary containing 'messages'.
-- `provider` - The provider string.
-
-
-
-**Returns**:
-
-The modified kw dict.
+Apply provider-specific preprocessing to messages in kw dict (mutates kw).

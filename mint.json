@@ -353,9 +353,7 @@
                                 {
                                     "group": "provider_preprocessing",
                                     "pages": [
-                                        "python/functions/universal_api/utils/provider_preprocessing/apply_provider_preprocessing",
-                                        "python/functions/universal_api/utils/provider_preprocessing/preprocess_messages_for_anthropic",
-                                        "python/functions/universal_api/utils/provider_preprocessing/preprocess_messages_for_provider"
+                                        "python/functions/universal_api/utils/provider_preprocessing/apply_provider_preprocessing"
                                     ]
                                 },
                                 {
