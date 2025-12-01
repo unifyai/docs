@@ -1,0 +1,25 @@
+---
+title: 'preprocess_messages_for_anthropic'
+---
+
+```python
+def preprocess_messages_for_anthropic(
+    messages: List[Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e3c23aaf78ba4d9e06a11e7b9e7ce88fa8f53661/unify/universal_api/utils/provider_preprocessing.py#L132)</p>
+
+Apply Anthropic-specific preprocessing to messages.This performs two transformations:
+1. Move all system messages to the beginning of the list
+2. Combine adjacent user messages into content array format
+
+**Arguments**:
+
+- `messages` - List of message dictionaries.
+
+
+
+**Returns**:
+
+Preprocessed messages (a new list, original is not modified).
