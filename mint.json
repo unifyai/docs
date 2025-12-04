@@ -299,6 +299,18 @@
                             ]
                         },
                         {
+                            "group": "endpoints",
+                            "pages": [
+                                {
+                                    "group": "utils",
+                                    "pages": [
+                                        "python/functions/universal_api/endpoints/utils/get_model_alias",
+                                        "python/functions/universal_api/endpoints/utils/register_model_alias_map"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
                             "group": "types",
                             "pages": [
                                 {
