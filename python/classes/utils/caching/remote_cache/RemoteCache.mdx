@@ -6,7 +6,7 @@ title: 'RemoteCache'
 class RemoteCache
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L13)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L13)</p>
 
 Remote cache implementation using the logging system.
 
@@ -16,7 +16,7 @@ Remote cache implementation using the logging system.
 
 ### set\_cache\_name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L23)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L23)</p>
 
 ```python
 def set_cache_name(cls, name: str) -> None:
@@ -30,7 +30,7 @@ Set the remote context name for the cache.
 
 ### get\_cache\_name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L28)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L28)</p>
 
 ```python
 def get_cache_name(cls) -> str:
@@ -42,7 +42,7 @@ Get the current remote context name.
 
 ### has\_key
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L107)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L107)</p>
 
 ```python
 def has_key(cls, key: str) -> bool:
@@ -54,7 +54,7 @@ Check if a key exists in the remote cache.
 
 ### initialize\_cache
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L64)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L64)</p>
 
 ```python
 def initialize_cache(cls, name: str = None) -> None:
@@ -66,7 +66,7 @@ Ensure the remote context exists.
 
 ### list\_keys
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L72)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L72)</p>
 
 ```python
 def list_keys(cls) -> List[str]:
@@ -78,7 +78,7 @@ Get a list of all cache keys from the remote context.
 
 ### remove\_entry
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L119)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L119)</p>
 
 ```python
 def remove_entry(cls, key: str) -> None:
@@ -90,7 +90,7 @@ Remove an entry from the remote cache.
 
 ### retrieve\_entry
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L80)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L80)</p>
 
 ```python
 def retrieve_entry(cls, key: str) -> tuple[Optional[Any], Optional[Dict[str, Any]]]:
@@ -106,7 +106,7 @@ Tuple of (value, res_types) or (None, None) if not found
 
 ### serialize\_object
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/base_cache.py#L18)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/base_cache.py#L18)</p>
 
 ```python
 def serialize_object(
@@ -136,7 +136,7 @@ Serialized object or JSON string if at root level
 
 ### store\_entry
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L33)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L33)</p>
 
 ```python
 def store_entry(
@@ -154,7 +154,7 @@ Store a key-value pair in the remote cache.
 
 ### write
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/3536df30cd6727763936e6b60fd9f3e27b1860a3/unify/utils/caching/remote_cache.py#L60)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/remote_cache.py#L60)</p>
 
 ```python
 def write(cls, filename: str = None) -> None:
