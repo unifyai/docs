@@ -6,7 +6,7 @@ title: 'LocalSeparateCache'
 class LocalSeparateCache
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L11)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L11)</p>
 
 Local cache with separate read and write storage for better performance.
 
@@ -16,7 +16,7 @@ Local cache with separate read and write storage for better performance.
 
 ### set\_cache\_name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L21)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L21)</p>
 
 ```python
 def set_cache_name(cls, name: str) -> None:
@@ -30,7 +30,7 @@ Set the cache names and reset both caches.
 
 ### get\_cache\_filepath
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L34)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L34)</p>
 
 ```python
 def get_cache_filepath(cls, name: str = None) -> str:
@@ -42,7 +42,7 @@ Get the full filepath for the cache file.
 
 ### get\_cache\_name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L29)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L29)</p>
 
 ```python
 def get_cache_name(cls) -> str:
@@ -54,7 +54,7 @@ Get the current read cache name.
 
 ### has\_key
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L118)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L118)</p>
 
 ```python
 def has_key(cls, key: str) -> bool:
@@ -66,7 +66,7 @@ Check if a key exists in either cache.
 
 ### initialize\_cache
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L64)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L64)</p>
 
 ```python
 def initialize_cache(cls, name: str = None) -> None:
@@ -78,7 +78,7 @@ Initialize both read and write caches.
 
 ### is\_enabled
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L41)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L41)</p>
 
 ```python
 def is_enabled(cls) -> bool:
@@ -90,7 +90,7 @@ Check if the cache is enabled.
 
 ### list\_keys
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L84)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L84)</p>
 
 ```python
 def list_keys(cls) -> List[str]:
@@ -102,7 +102,7 @@ def list_keys(cls) -> List[str]:
 
 ### remove\_entry
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L125)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L125)</p>
 
 ```python
 def remove_entry(cls, key: str) -> None:
@@ -114,7 +114,7 @@ Remove an entry from both caches.
 
 ### retrieve\_entry
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L88)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L88)</p>
 
 ```python
 def retrieve_entry(cls, key: str) -> tuple[Optional[Any], Optional[Dict[str, Any]]]:
@@ -130,7 +130,7 @@ Tuple of (value, res_types) or (None, None) if not found
 
 ### serialize\_object
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/base_cache.py#L18)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/base_cache.py#L18)</p>
 
 ```python
 def serialize_object(
@@ -160,7 +160,7 @@ Serialized object or JSON string if at root level
 
 ### store\_entry
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/e65ab01a5b919b973d28ea0ae493ff965d2afb39/unify/utils/caching/local_separate_cache.py#L46)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/aea139c856aa39031cf710062c728ab7b322c2d4/unify/utils/caching/local_separate_cache.py#L46)</p>
 
 ```python
 def store_entry(
