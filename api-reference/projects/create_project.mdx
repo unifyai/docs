@@ -2,8 +2,11 @@
 title: "Create Project"
 api: 'POST /v0/project'
 ---
-Creates a logging project and adds this to your account. This project will
-have a set of logs associated with it.
+Creates a logging project and adds this to your account.
+
+If using an organization API key, the project will be created as an
+organizational project (requires project:write permission in the org).
+If using a personal API key, the project will be a personal project.
 
 #### Authorizations
 

@@ -1,11 +1,17 @@
 ---
-title: "Update Organization"
-api: 'PATCH /v0/organizations/{organization_id}'
+title: "Transfer Organization Ownership"
+api: 'POST /v0/organizations/{organization_id}/transfer-ownership'
 ---
-Update an organization.
+Transfer organization ownership to another member.
 
-Requires org:write permission.
-Note: To change owner or billing_user_id, use the transfer-ownership endpoint.
+Only the current owner can transfer ownership.
+The new owner must already be a member of the organization.
+
+Changes applied:
+- org.owner_id → new_owner_id
+- org.billing_user_id → new_owner_id (billing always follows owner)
+- new_owner's role → Owner
+- old_owner's role → Admin
 
 #### Authorizations
 
@@ -21,15 +27,15 @@ Note: To change owner or billing_user_id, use the transfer-ownership endpoint.
 
 #### Body
 
-<ParamField body="name" type="string | null" >
+<ParamField body="new_owner_id" type="string" required="true">
 
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request PATCH \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>' \
+curl --request POST \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/transfer-ownership' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -38,13 +44,13 @@ curl --request PATCH \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>"
+url = "https://api.unify.ai/v0/organizations/<organization_id>/transfer-ownership"
 
 headers = {"Authorization": "Bearer <token>"}
 
 json_input = {}
 
-response = requests.request("PATCH", url, json=json_input, headers=headers)
+response = requests.request("POST", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
