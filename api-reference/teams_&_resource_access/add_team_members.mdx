@@ -4,7 +4,7 @@ api: 'POST /v0/organizations/{organization_id}/teams/{team_id}/members'
 ---
 Add members to a team.
 
-Only organization owners can add members to teams.
+Requires org:write permission (Owner and Admin roles have this).
 
 :param request_fastapi: FastAPI request object.
 :param organization_id: Organization ID.

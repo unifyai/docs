@@ -723,7 +723,8 @@
                                 "api-reference/organizations/add_organization_member",
                                 "api-reference/organizations/list_organization_members",
                                 "api-reference/organizations/remove_organization_member",
-                                "api-reference/organizations/update_member_role"
+                                "api-reference/organizations/update_member_role",
+                                "api-reference/organizations/transfer_organization_ownership"
                             ]
                         },
                         {

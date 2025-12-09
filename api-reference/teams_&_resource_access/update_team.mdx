@@ -4,7 +4,7 @@ api: 'PATCH /v0/organizations/{organization_id}/teams/{team_id}'
 ---
 Update a team.
 
-Only organization owners can update teams.
+Requires org:write permission (Owner and Admin roles have this).
 
 :param request_fastapi: FastAPI request object.
 :param organization_id: Organization ID.

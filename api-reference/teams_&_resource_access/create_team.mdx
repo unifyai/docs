@@ -4,7 +4,7 @@ api: 'POST /v0/organizations/{organization_id}/teams'
 ---
 Create a new team in an organization.
 
-Only organization owners can create teams.
+Requires org:write permission (Owner and Admin roles have this).
 
 :param request_fastapi: FastAPI request object.
 :param organization_id: Organization ID.

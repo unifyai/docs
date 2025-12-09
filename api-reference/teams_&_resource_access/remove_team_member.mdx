@@ -4,7 +4,7 @@ api: 'DELETE /v0/organizations/{organization_id}/teams/{team_id}/members/{user_i
 ---
 Remove a member from a team.
 
-Only organization owners can remove members from teams.
+Requires org:write permission (Owner and Admin roles have this).
 
 :param request_fastapi: FastAPI request object.
 :param organization_id: Organization ID.

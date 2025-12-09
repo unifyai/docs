@@ -5,7 +5,8 @@ api: 'POST /v0/organizations'
 Create a new organization.
 
 The authenticated user will be the owner of the organization.
-If billing_user_id is not provided, it defaults to the owner.
+billing_user_id is always set to the owner (billing follows ownership).
+Returns the organization details and the owner's organization API key.
 
 #### Authorizations
 
@@ -16,10 +17,6 @@ If billing_user_id is not provided, it defaults to the owner.
 #### Body
 
 <ParamField body="name" type="string" required="true">
-
-</ParamField>
-
-<ParamField body="billing_user_id" type="string | null" >
 
 </ParamField>
 
@@ -51,13 +48,7 @@ print(response.text)
 <ResponseExample>
 
 ```json 201
-{
-    "id": "integer",
-    "name": "string",
-    "owner_id": "string",
-    "billing_user_id": "string",
-    "created_at": "string"
-}
+{}
 ```
 
 ```json 422

@@ -1776,53 +1776,6 @@
                 }
             }
         },
-        "/v0/assistant/message": {
-            "post": {
-                "tags": [
-                    "Assistant Interaction"
-                ],
-                "summary": "Send a message to an assistant and get a response",
-                "description": "Sends a message to a specified assistant and waits for the next reply from that assistant.",
-                "operationId": "message_assistant_v0_assistant_message_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UnifyMessage"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InfoResponse_str_"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
         "/v0/assistant": {
             "post": {
                 "tags": [
@@ -4516,7 +4469,7 @@
                     "Projects"
                 ],
                 "summary": "Create Project",
-                "description": "Creates a logging project and adds this to your account. This project will\nhave a set of logs associated with it.",
+                "description": "Creates a logging project and adds this to your account.\n\nIf using an organization API key, the project will be created as an\norganizational project (requires project:write permission in the org).\nIf using a personal API key, the project will be a personal project.",
                 "operationId": "create_project_v0_project_post",
                 "requestBody": {
                     "content": {
@@ -4834,7 +4787,7 @@
                     "Projects"
                 ],
                 "summary": "Transfer Project To Organization",
-                "description": "Transfer a personal project to an organization.\n\nRequirements:\n- User must own the personal project (project.user_id == user_id)\n- User must have org:write permission on target organization\n- Project must be personal (organization_id = NULL)\n\nProcess:\n- Sets project.organization_id = target org\n- Sets project.user_id = NULL (org-owned)\n- No ResourceAccess entries created (implicit membership handles access)",
+                "description": "Transfer a personal project to an organization.\n\nRequirements:\n- User must own the personal project (project.user_id == user_id)\n- User must have org:write permission on target organization\n- Project must be personal (organization_id = NULL)\n\nProcess:\n- Sets project.organization_id = target org\n- Sets project.user_id = NULL (org-owned)\n- Creates explicit Owner ResourceAccess grant for the transferring user",
                 "operationId": "transfer_project_to_organization_v0_project__project_id__transfer_to_organization_post",
                 "security": [
                     {
@@ -10904,7 +10857,7 @@
                     "Organizations"
                 ],
                 "summary": "Create Organization",
-                "description": "Create a new organization.\n\nThe authenticated user will be the owner of the organization.\nIf billing_user_id is not provided, it defaults to the owner.",
+                "description": "Create a new organization.\n\nThe authenticated user will be the owner of the organization.\nbilling_user_id is always set to the owner (billing follows ownership).\nReturns the organization details and the owner's organization API key.",
                 "operationId": "create_organization_v0_organizations_post",
                 "requestBody": {
                     "content": {
@@ -10922,7 +10875,9 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OrganizationResponse"
+                                    "additionalProperties": true,
+                                    "type": "object",
+                                    "title": "Response Create Organization V0 Organizations Post"
                                 }
                             }
                         }
@@ -10997,7 +10952,7 @@
                     "Organizations"
                 ],
                 "summary": "Update Organization",
-                "description": "Update an organization.\n\nRequires org:write permission.",
+                "description": "Update an organization.\n\nRequires org:write permission.\nNote: To change owner or billing_user_id, use the transfer-ownership endpoint.",
                 "operationId": "update_organization_v0_organizations__organization_id__patch",
                 "security": [
                     {
@@ -11298,6 +11253,64 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/OrganizationMemberResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/transfer-ownership": {
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Transfer Organization Ownership",
+                "description": "Transfer organization ownership to another member.\n\nOnly the current owner can transfer ownership.\nThe new owner must already be a member of the organization.\n\nChanges applied:\n- org.owner_id \u2192 new_owner_id\n- org.billing_user_id \u2192 new_owner_id (billing always follows owner)\n- new_owner's role \u2192 Owner\n- old_owner's role \u2192 Admin",
+                "operationId": "transfer_organization_ownership_v0_organizations__organization_id__transfer_ownership_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationOwnershipTransfer"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizationResponse"
                                 }
                             }
                         }
@@ -11791,7 +11804,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Create Team",
-                "description": "Create a new team in an organization.\n\nOnly organization owners can create teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_data: Team creation data.\n:param session: Database session.\n:return: Created team.",
+                "description": "Create a new team in an organization.\n\nRequires org:write permission (Owner and Admin roles have this).\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_data: Team creation data.\n:param session: Database session.\n:return: Created team.",
                 "operationId": "create_team_v0_organizations__organization_id__teams_post",
                 "security": [
                     {
@@ -11954,7 +11967,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Update Team",
-                "description": "Update a team.\n\nOnly organization owners can update teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param team_data: Team update data.\n:param session: Database session.\n:return: Updated team.",
+                "description": "Update a team.\n\nRequires org:write permission (Owner and Admin roles have this).\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param team_data: Team update data.\n:param session: Database session.\n:return: Updated team.",
                 "operationId": "update_team_v0_organizations__organization_id__teams__team_id__patch",
                 "security": [
                     {
@@ -12019,7 +12032,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Delete Team",
-                "description": "Delete a team.\n\nOnly organization owners can delete teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param session: Database session.",
+                "description": "Delete a team.\n\nRequires org:write permission (Owner and Admin roles have this).\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param session: Database session.",
                 "operationId": "delete_team_v0_organizations__organization_id__teams__team_id__delete",
                 "security": [
                     {
@@ -12069,7 +12082,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Add Team Members",
-                "description": "Add members to a team.\n\nOnly organization owners can add members to teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param member_data: Members to add.\n:param session: Database session.\n:return: Updated team with members.",
+                "description": "Add members to a team.\n\nRequires org:write permission (Owner and Admin roles have this).\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param member_data: Members to add.\n:param session: Database session.\n:return: Updated team with members.",
                 "operationId": "add_team_members_v0_organizations__organization_id__teams__team_id__members_post",
                 "security": [
                     {
@@ -12136,7 +12149,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Remove Team Member",
-                "description": "Remove a member from a team.\n\nOnly organization owners can remove members from teams.\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param user_id_to_remove: User ID to remove.\n:param session: Database session.\n:return: Updated team with members.",
+                "description": "Remove a member from a team.\n\nRequires org:write permission (Owner and Admin roles have this).\n\n:param request_fastapi: FastAPI request object.\n:param organization_id: Organization ID.\n:param team_id: Team ID.\n:param user_id_to_remove: User ID to remove.\n:param session: Database session.\n:return: Updated team with members.",
                 "operationId": "remove_team_member_v0_organizations__organization_id__teams__team_id__members__user_id_to_remove__delete",
                 "security": [
                     {
@@ -12609,10 +12622,10 @@
                         "type": "string",
                         "title": "Name"
                     },
-                    "key_prefix": {
+                    "key": {
                         "type": "string",
-                        "title": "Key Prefix",
-                        "description": "First 8 characters of the key for identification"
+                        "title": "Key",
+                        "description": "The full API key"
                     },
                     "created_at": {
                         "type": "string",
@@ -12646,7 +12659,7 @@
                 "required": [
                     "id",
                     "name",
-                    "key_prefix",
+                    "key",
                     "created_at"
                 ],
                 "title": "ApiKeyResponse",
@@ -13778,19 +13791,7 @@
                         ],
                         "title": "Seed"
                     },
-                    "dynamic_scale": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Dynamic Scale",
-                        "default": 1.0
-                    },
-                    "min_resolution": {
+                    "duration": {
                         "anyOf": [
                             {
                                 "type": "integer"
@@ -13799,32 +13800,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Min Resolution",
-                        "default": 512
-                    },
-                    "inference_steps": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Inference Steps",
-                        "default": 25
-                    },
-                    "keep_resolution": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Keep Resolution",
-                        "default": true
+                        "title": "Duration"
                     }
                 },
                 "type": "object",
@@ -17217,17 +17193,6 @@
                     "name": {
                         "type": "string",
                         "title": "Name"
-                    },
-                    "billing_user_id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Billing User Id"
                     }
                 },
                 "type": "object",
@@ -17339,6 +17304,20 @@
                 "title": "OrganizationMemberRoleUpdate",
                 "description": "Schema for updating a member's role."
             },
+            "OrganizationOwnershipTransfer": {
+                "properties": {
+                    "new_owner_id": {
+                        "type": "string",
+                        "title": "New Owner Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "new_owner_id"
+                ],
+                "title": "OrganizationOwnershipTransfer",
+                "description": "Schema for transferring organization ownership."
+            },
             "OrganizationResponse": {
                 "properties": {
                     "id": {
@@ -17386,17 +17365,6 @@
                             }
                         ],
                         "title": "Name"
-                    },
-                    "billing_user_id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Billing User Id"
                     }
                 },
                 "type": "object",
@@ -20125,34 +20093,6 @@
                 ],
                 "title": "TransferToOrganizationRequest",
                 "description": "Request model for transferring a personal project to an organization."
-            },
-            "UnifyMessage": {
-                "properties": {
-                    "assistant_id": {
-                        "type": "integer",
-                        "title": "Assistant Id",
-                        "description": "The ID of the assistant to message."
-                    },
-                    "contact_id": {
-                        "type": "integer",
-                        "title": "Contact Id",
-                        "description": "The ID of the contact sending the message. Currently only '1' (the user) is supported.",
-                        "example": 1
-                    },
-                    "message": {
-                        "type": "string",
-                        "title": "Message",
-                        "description": "The message content.",
-                        "example": "Hello!"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "assistant_id",
-                    "contact_id",
-                    "message"
-                ],
-                "title": "UnifyMessage"
             },
             "UpdateAccountTypeRequest": {
                 "properties": {
