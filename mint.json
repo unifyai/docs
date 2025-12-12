@@ -724,7 +724,13 @@
                                 "api-reference/organizations/list_organization_members",
                                 "api-reference/organizations/remove_organization_member",
                                 "api-reference/organizations/update_member_role",
-                                "api-reference/organizations/transfer_organization_ownership"
+                                "api-reference/organizations/transfer_organization_ownership",
+                                "api-reference/organizations/invite_user_to_organization",
+                                "api-reference/organizations/list_organization_invites",
+                                "api-reference/organizations/cancel_organization_invite",
+                                "api-reference/organizations/list_my_pending_invites",
+                                "api-reference/organizations/accept_invite",
+                                "api-reference/organizations/decline_invite"
                             ]
                         },
                         {

@@ -1,10 +1,11 @@
 ---
-title: "List Organization Members"
-api: 'GET /v0/organizations/{organization_id}/members'
+title: "Accept Invite"
+api: 'POST /v0/invites/{token}/accept'
 ---
-List all members of an organization with their roles.
+Accept an organization invite.
 
-Requires org:read permission.
+The invite must be pending and not expired.
+The current user's email must match the invite email.
 
 #### Authorizations
 
@@ -14,26 +15,26 @@ Requires org:read permission.
 
 #### Path Parameters
 
-<ParamField query="organization_id" type="integer" required="true">
+<ParamField query="token" type="string" required="true">
 
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request GET \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members' \
+curl --request POST \
+  --url 'https://api.unify.ai/v0/invites/<token>/accept' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members"
+url = "https://api.unify.ai/v0/invites/<token>/accept"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("GET", url, headers=headers)
+response = requests.request("POST", url, headers=headers)
 
 print(response.text)
 ```
@@ -43,16 +44,10 @@ print(response.text)
 
 ```json 200
 {
-    "id": "integer",
-    "user_id": "string",
+    "message": "string",
     "organization_id": "integer",
-    "level": "string",
-    "role_id": "integer | null",
-    "role_name": "string | null",
-    "created_at": "string",
-    "name": "string | null",
-    "email": "string | null",
-    "image": "string | null"
+    "organization_name": "string",
+    "api_key": "string"
 }
 ```
 

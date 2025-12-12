@@ -1,10 +1,10 @@
 ---
-title: "List Organization Members"
-api: 'GET /v0/organizations/{organization_id}/members'
+title: "Cancel Organization Invite"
+api: 'DELETE /v0/organizations/{organization_id}/invites/{invite_id}'
 ---
-List all members of an organization with their roles.
+Cancel a pending invite.
 
-Requires org:read permission.
+Requires org:write permission.
 
 #### Authorizations
 
@@ -18,22 +18,26 @@ Requires org:read permission.
 
 </ParamField>
 
+<ParamField query="invite_id" type="string" required="true">
+
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
-curl --request GET \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members' \
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/invites/<invite_id>' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members"
+url = "https://api.unify.ai/v0/organizations/<organization_id>/invites/<invite_id>"
 
 headers = {"Authorization": "Bearer <token>"}
 
-response = requests.request("GET", url, headers=headers)
+response = requests.request("DELETE", url, headers=headers)
 
 print(response.text)
 ```
@@ -41,19 +45,8 @@ print(response.text)
 </RequestExample>
 <ResponseExample>
 
-```json 200
-{
-    "id": "integer",
-    "user_id": "string",
-    "organization_id": "integer",
-    "level": "string",
-    "role_id": "integer | null",
-    "role_name": "string | null",
-    "created_at": "string",
-    "name": "string | null",
-    "email": "string | null",
-    "image": "string | null"
-}
+```json 204
+// No Content
 ```
 
 ```json 422
