@@ -11328,6 +11328,283 @@
                 }
             }
         },
+        "/v0/organizations/{organization_id}/invites": {
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Invite User To Organization",
+                "description": "Invite a user to join an organization via email.\n\nRequires org:write permission.\nSends an email with an invite link to the specified email address.",
+                "operationId": "invite_user_to_organization_v0_organizations__organization_id__invites_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InviteUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InviteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "List Organization Invites",
+                "description": "List pending invites for an organization.\n\nRequires org:read permission.\nAll invites returned are pending (not expired).",
+                "operationId": "list_organization_invites_v0_organizations__organization_id__invites_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InviteListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/invites/{invite_id}": {
+            "delete": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Cancel Organization Invite",
+                "description": "Cancel a pending invite.\n\nRequires org:write permission.",
+                "operationId": "cancel_organization_invite_v0_organizations__organization_id__invites__invite_id__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    },
+                    {
+                        "name": "invite_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Invite Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/invites/pending": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "List My Pending Invites",
+                "description": "List all pending invites for the current user's email.",
+                "operationId": "list_my_pending_invites_v0_invites_pending_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InviteListResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/invites/{token}/accept": {
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Accept Invite",
+                "description": "Accept an organization invite.\n\nThe invite must be pending and not expired.\nThe current user's email must match the invite email.",
+                "operationId": "accept_invite_v0_invites__token__accept_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Token"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AcceptInviteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/invites/{token}/decline": {
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Decline Invite",
+                "description": "Decline an organization invite.",
+                "operationId": "decline_invite_v0_invites__token__decline_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Token"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeclineInviteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/permissions": {
             "get": {
                 "tags": [
@@ -12553,6 +12830,35 @@
     },
     "components": {
         "schemas": {
+            "AcceptInviteResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "organization_id": {
+                        "type": "integer",
+                        "title": "Organization Id"
+                    },
+                    "organization_name": {
+                        "type": "string",
+                        "title": "Organization Name"
+                    },
+                    "api_key": {
+                        "type": "string",
+                        "title": "Api Key"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "message",
+                    "organization_id",
+                    "organization_name",
+                    "api_key"
+                ],
+                "title": "AcceptInviteResponse",
+                "description": "Schema for accepting an invite."
+            },
             "AddLogsToContextRequest": {
                 "properties": {
                     "context_name": {
@@ -14349,8 +14655,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -15591,6 +15897,20 @@
                     "key"
                 ],
                 "title": "CustomEndpointModelResponse"
+            },
+            "DeclineInviteResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "title": "Message"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "message"
+                ],
+                "title": "DeclineInviteResponse",
+                "description": "Schema for declining an invite."
             },
             "DeleteFieldsRequest": {
                 "properties": {
@@ -17088,6 +17408,141 @@
                 "title": "InterfaceTemplateSchema",
                 "description": "Template schema for a detached interface"
             },
+            "InviteListResponse": {
+                "properties": {
+                    "invites": {
+                        "items": {
+                            "$ref": "#/components/schemas/InviteResponse"
+                        },
+                        "type": "array",
+                        "title": "Invites"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "invites"
+                ],
+                "title": "InviteListResponse",
+                "description": "Schema for listing organization invites."
+            },
+            "InviteResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "token": {
+                        "type": "string",
+                        "title": "Token"
+                    },
+                    "organization_id": {
+                        "type": "integer",
+                        "title": "Organization Id"
+                    },
+                    "organization_name": {
+                        "type": "string",
+                        "title": "Organization Name"
+                    },
+                    "invitee_email": {
+                        "type": "string",
+                        "title": "Invitee Email"
+                    },
+                    "invited_by_user_id": {
+                        "type": "string",
+                        "title": "Invited By User Id"
+                    },
+                    "invited_by_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Invited By Name"
+                    },
+                    "role_id": {
+                        "type": "integer",
+                        "title": "Role Id"
+                    },
+                    "role_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Role Name"
+                    },
+                    "level": {
+                        "type": "string",
+                        "title": "Level"
+                    },
+                    "expires_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Expires At"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "token",
+                    "organization_id",
+                    "organization_name",
+                    "invitee_email",
+                    "invited_by_user_id",
+                    "role_id",
+                    "level",
+                    "expires_at",
+                    "created_at"
+                ],
+                "title": "InviteResponse",
+                "description": "Schema for organization invite response.\n\nAll invites in the system are pending - they are deleted when accepted/declined."
+            },
+            "InviteUserRequest": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "title": "Email"
+                    },
+                    "role_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Role Id"
+                    },
+                    "level": {
+                        "type": "string",
+                        "title": "Level",
+                        "default": "user"
+                    },
+                    "expires_in_days": {
+                        "type": "integer",
+                        "title": "Expires In Days",
+                        "default": 7
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "email"
+                ],
+                "title": "InviteUserRequest",
+                "description": "Schema for inviting a user to an organization."
+            },
             "JoinLogsRequest": {
                 "properties": {
                     "pair_of_args": {
@@ -17276,6 +17731,39 @@
                         "type": "string",
                         "format": "date-time",
                         "title": "Created At"
+                    },
+                    "name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Name"
+                    },
+                    "email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Email"
+                    },
+                    "image": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Image"
                     }
                 },
                 "type": "object",
@@ -17763,6 +18251,11 @@
             },
             "ProjectOut": {
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id",
+                        "description": "The unique identifier of the project"
+                    },
                     "name": {
                         "type": "string",
                         "title": "Name",
@@ -17817,6 +18310,7 @@
                 },
                 "type": "object",
                 "required": [
+                    "id",
                     "name",
                     "icon",
                     "is_versioned",

@@ -1,10 +1,11 @@
 ---
-title: "List Organization Members"
-api: 'GET /v0/organizations/{organization_id}/members'
+title: "List Organization Invites"
+api: 'GET /v0/organizations/{organization_id}/invites'
 ---
-List all members of an organization with their roles.
+List pending invites for an organization.
 
 Requires org:read permission.
+All invites returned are pending (not expired).
 
 #### Authorizations
 
@@ -22,14 +23,14 @@ Requires org:read permission.
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members' \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/invites' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members"
+url = "https://api.unify.ai/v0/organizations/<organization_id>/invites"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -43,16 +44,7 @@ print(response.text)
 
 ```json 200
 {
-    "id": "integer",
-    "user_id": "string",
-    "organization_id": "integer",
-    "level": "string",
-    "role_id": "integer | null",
-    "role_name": "string | null",
-    "created_at": "string",
-    "name": "string | null",
-    "email": "string | null",
-    "image": "string | null"
+    "invites": "[Any]"
 }
 ```
 

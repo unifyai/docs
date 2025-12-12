@@ -1,0 +1,98 @@
+---
+title: "Invite User To Organization"
+api: 'POST /v0/organizations/{organization_id}/invites'
+---
+Invite a user to join an organization via email.
+
+Requires org:write permission.
+Sends an email with an invite link to the specified email address.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="email" type="string" required="true">
+
+</ParamField>
+
+<ParamField body="role_id" type="integer | null" >
+
+</ParamField>
+
+<ParamField body="level" type="string"  default="user">
+
+</ParamField>
+
+<ParamField body="expires_in_days" type="integer"  default="7">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/invites' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/invites"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "id": "string",
+    "token": "string",
+    "organization_id": "integer",
+    "organization_name": "string",
+    "invitee_email": "string",
+    "invited_by_user_id": "string",
+    "invited_by_name": "string | null",
+    "role_id": "integer",
+    "role_name": "string | null",
+    "level": "string",
+    "expires_at": "string",
+    "created_at": "string"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
