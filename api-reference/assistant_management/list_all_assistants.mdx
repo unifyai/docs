@@ -20,18 +20,22 @@ Only return assistants whose phone number matches this E.164-style value (leadin
 Only return assistants whose email address matches this value.
 </ParamField>
 
+<ParamField query="list_all_org" type="boolean"  default="false">
+If True and using an org API key, list ALL assistants in the organization (not just those created by the current user). Requires assistant:read permission.
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/assistant?phone=None&email=None' \
+  --url 'https://api.unify.ai/v0/assistant?phone=None&email=None&list_all_org=None' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/assistant?phone=None&email=None"
+url = "https://api.unify.ai/v0/assistant?phone=None&email=None&list_all_org=None"
 
 headers = {"Authorization": "Bearer <token>"}
 

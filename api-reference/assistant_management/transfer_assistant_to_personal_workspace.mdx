@@ -1,11 +1,8 @@
 ---
-title: "Add Organization Member"
-api: 'POST /v0/organizations/{organization_id}/members'
+title: "Transfer assistant to personal workspace"
+api: 'POST /v0/assistant/{assistant_id}/transfer/to-personal'
 ---
-Add a member to an organization.
-
-Requires org:write permission.
-Automatically creates an organization-specific API key for the new member.
+Transfers an organizational assistant to the user's personal workspace.
 
 #### Authorizations
 
@@ -15,25 +12,21 @@ Automatically creates an organization-specific API key for the new member.
 
 #### Path Parameters
 
-<ParamField query="organization_id" type="integer" required="true">
+<ParamField query="assistant_id" type="integer" required="true">
 
 </ParamField>
 
 #### Body
 
-<ParamField body="user_id" type="string" required="true">
-
-</ParamField>
-
-<ParamField body="role_id" type="integer | null" >
-
+<ParamField body="delete_logs" type="boolean"  default="true">
+Whether to delete related logs from the org 'Assistants' project.
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
 curl --request POST \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members' \
+  --url 'https://api.unify.ai/v0/assistant/<assistant_id>/transfer/to-personal' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -42,7 +35,7 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members"
+url = "https://api.unify.ai/v0/assistant/<assistant_id>/transfer/to-personal"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -56,8 +49,22 @@ print(response.text)
 </RequestExample>
 <ResponseExample>
 
-```json 201
-{}
+```json 200
+{
+    "info": "object"
+}
+```
+
+```json 403
+// No Content
+```
+
+```json 404
+// No Content
+```
+
+```json 400
+// No Content
 ```
 
 ```json 422

@@ -1915,6 +1915,18 @@
                             "title": "Email"
                         },
                         "description": "Only return assistants whose email address matches this value."
+                    },
+                    {
+                        "name": "list_all_org",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If True and using an org API key, list ALL assistants in the organization (not just those created by the current user). Requires assistant:read permission.",
+                            "default": false,
+                            "title": "List All Org"
+                        },
+                        "description": "If True and using an org API key, list ALL assistants in the organization (not just those created by the current user). Requires assistant:read permission."
                     }
                 ],
                 "responses": {
@@ -2205,6 +2217,140 @@
                                             "type": "value_error.email"
                                         }
                                     ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/{assistant_id}/transfer/to-org": {
+            "post": {
+                "tags": [
+                    "Assistant Management"
+                ],
+                "summary": "Transfer assistant to organization",
+                "description": "Transfers a personal assistant to an organizational workspace.",
+                "operationId": "transfer_assistant_to_org_v0_assistant__assistant_id__transfer_to_org_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssistantTransferToOrgRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assistant transferred successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_AssistantTransferResponse_"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Permission denied"
+                    },
+                    "404": {
+                        "description": "Assistant not found"
+                    },
+                    "400": {
+                        "description": "Invalid transfer request"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/{assistant_id}/transfer/to-personal": {
+            "post": {
+                "tags": [
+                    "Assistant Management"
+                ],
+                "summary": "Transfer assistant to personal workspace",
+                "description": "Transfers an organizational assistant to the user's personal workspace.",
+                "operationId": "transfer_assistant_to_personal_v0_assistant__assistant_id__transfer_to_personal_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssistantTransferToPersonalRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assistant transferred successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_AssistantTransferResponse_"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Permission denied"
+                    },
+                    "404": {
+                        "description": "Assistant not found"
+                    },
+                    "400": {
+                        "description": "Invalid transfer request"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
                                 }
                             }
                         }
@@ -4927,7 +5073,7 @@
                     "Projects"
                 ],
                 "summary": "List Projects",
-                "description": "Returns the names of all projects stored in your account.",
+                "description": "Returns the names of all projects stored in your account.\n\nWhen using a personal API key, returns only personal projects.\nWhen using an organization API key, returns only that organization's projects.",
                 "operationId": "list_projects_v0_projects_get",
                 "responses": {
                     "200": {
@@ -4957,7 +5103,7 @@
                     "Projects"
                 ],
                 "summary": "List Projects Tree",
-                "description": "Return all projects the user can access with their icons and interface names.",
+                "description": "Return all projects the user can access with their icons and interface names.\n\nWhen using a personal API key, returns only personal projects.\nWhen using an organization API key, returns only that organization's projects.",
                 "operationId": "list_projects_tree_v0_projects_tree_get",
                 "responses": {
                     "200": {
@@ -5449,10 +5595,10 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Boolean string to filter entries. TODO: Detailed page.",
+                            "description": "Boolean string to filter entries.",
                             "title": "Filter Expr"
                         },
-                        "description": "Boolean string to filter entries. TODO: Detailed page.",
+                        "description": "Boolean string to filter entries.",
                         "example": "len(output) > 200 and temperature == 0.5"
                     },
                     {
@@ -6103,10 +6249,10 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Boolean string to filter entries. TODO: Detailed page.",
+                            "description": "Boolean string to filter entries.",
                             "title": "Filter Expr"
                         },
-                        "description": "Boolean string to filter entries. TODO: Detailed page.",
+                        "description": "Boolean string to filter entries.",
                         "example": "len(output) > 200 and temperature == 0.5"
                     },
                     {
@@ -11605,6 +11751,277 @@
                 }
             }
         },
+        "/v0/organizations/{organization_id}/billing": {
+            "get": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Get Organization Billing",
+                "description": "Get billing information for an organization.\n\nReturns billing mode (delegated or direct), credits, and billing settings.\nRequires billing:read permission.",
+                "operationId": "get_organization_billing_v0_organizations__organization_id__billing_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Get Organization Billing V0 Organizations  Organization Id  Billing Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Update Organization Billing",
+                "description": "Update billing settings for an organization.\n\nRequires billing:write permission.\nOwners and Admins have this permission by default.",
+                "operationId": "update_organization_billing_v0_organizations__organization_id__billing_patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationBillingUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Update Organization Billing V0 Organizations  Organization Id  Billing Patch"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/billing/credits": {
+            "get": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Get Organization Credits",
+                "description": "Get credit balance for an organization.\n\nFor direct billing orgs, returns the org's credit balance.\nFor delegated billing orgs, returns the billing user's credit balance.\nRequires billing:read permission.",
+                "operationId": "get_organization_credits_v0_organizations__organization_id__billing_credits_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Get Organization Credits V0 Organizations  Organization Id  Billing Credits Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/billing/business-profile": {
+            "get": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Get Organization Business Profile",
+                "description": "Get business profile for an organization (invoicing information).\n\nRequires billing:read permission.",
+                "operationId": "get_organization_business_profile_v0_organizations__organization_id__billing_business_profile_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Get Organization Business Profile V0 Organizations  Organization Id  Billing Business Profile Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Update Organization Business Profile",
+                "description": "Update business profile for an organization.\n\nRequires billing:write permission.\nOwners and Admins have this permission by default.",
+                "operationId": "update_organization_business_profile_v0_organizations__organization_id__billing_business_profile_patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationBusinessProfileUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Update Organization Business Profile V0 Organizations  Organization Id  Billing Business Profile Patch"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/permissions": {
             "get": {
                 "tags": [
@@ -12492,7 +12909,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Grant Resource Access",
-                "description": "Grant access to a resource (project or org).\n\nOnly works for organizational resources. Personal resources cannot be shared.\nUser must have appropriate permissions on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param access_data: Access grant data.\n:param session: Database session.\n:return: Created access entry.",
+                "description": "Grant access to a resource (project).\n\nOnly works for organizational resources. Personal resources cannot be shared.\nUser must have appropriate permissions on the resource.\n\nNote: For org-level permissions, use OrganizationMember roles instead.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param access_data: Access grant data.\n:param session: Database session.\n:return: Created access entry.",
                 "operationId": "grant_resource_access_v0_resources__resource_type___resource_id__access_post",
                 "security": [
                     {
@@ -12557,7 +12974,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Revoke Resource Access",
-                "description": "Revoke access to a resource (project or org).\n\nUser must have appropriate permissions on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param access_data: Access revoke data.\n:param session: Database session.",
+                "description": "Revoke access to a resource (project).\n\nUser must have appropriate permissions on the resource.\n\nNote: For org-level permissions, use OrganizationMember roles instead.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param access_data: Access revoke data.\n:param session: Database session.",
                 "operationId": "revoke_resource_access_v0_resources__resource_type___resource_id__access_delete",
                 "security": [
                     {
@@ -12615,7 +13032,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "List Resource Access",
-                "description": "List all access entries for a resource (project or org).\n\nUser must have read permission on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param session: Database session.\n:return: List of access entries.",
+                "description": "List all access entries for a resource (project).\n\nUser must have read permission on the resource.\n\nNote: For org-level permissions, use the /organizations/{id}/members endpoint instead.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param session: Database session.\n:return: List of access entries.",
                 "operationId": "list_resource_access_v0_resources__resource_type___resource_id__access_get",
                 "security": [
                     {
@@ -12672,7 +13089,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Update Resource Access",
-                "description": "Update an existing resource access grant (change role).\n\nThis is a more atomic alternative to revoking and re-granting access.\nPreserves the access ID and created_at timestamp.\n\nUser must have write permission on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param access_id: ResourceAccess ID to update.\n:param update_data: Update data containing new role_id.\n:param session: Database session.\n:return: Updated access entry.",
+                "description": "Update an existing resource access grant (change role).\n\nThis is a more atomic alternative to revoking and re-granting access.\nPreserves the access ID and created_at timestamp.\n\nUser must have write permission on the resource.\n\nNote: For org-level permissions, use OrganizationMember roles instead.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param access_id: ResourceAccess ID to update.\n:param update_data: Update data containing new role_id.\n:param session: Database session.\n:return: Updated access entry.",
                 "operationId": "update_resource_access_v0_resources__resource_type___resource_id__access__access_id__patch",
                 "security": [
                     {
@@ -12725,6 +13142,72 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ResourceAccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/resources/{resource_type}/{resource_id}/access/user/{user_id}": {
+            "get": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Get User Resource Access",
+                "description": "Get a specific user's access entries for a resource.\n\nReturns all access entries (direct user grants + team-based grants)\nand the effective role (highest permission level).\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param user_id: User ID to check access for.\n:param session: Database session.\n:return: User's access entries and effective role.",
+                "operationId": "get_user_resource_access_v0_resources__resource_type___resource_id__access_user__user_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "resource_type",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Resource Type"
+                        }
+                    },
+                    {
+                        "name": "resource_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Resource Id"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "User Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResourceAccessResponse"
                                 }
                             }
                         }
@@ -13687,8 +14170,20 @@
                     "user_id": {
                         "type": "string",
                         "title": "User Id",
-                        "description": "ID of the user to associate the assistant with",
+                        "description": "ID of the user who created/owns the assistant",
                         "example": "123"
+                    },
+                    "organization_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Organization Id",
+                        "description": "Organization ID if this is an organizational assistant, None for personal assistants"
                     },
                     "created_at": {
                         "type": "string",
@@ -13734,7 +14229,7 @@
                             }
                         ],
                         "title": "Api Key",
-                        "description": "API key of the assistant",
+                        "description": "API key associated with this assistant (personal or org key)",
                         "example": "1234567890"
                     },
                     "user_first_name": {
@@ -13785,6 +14280,98 @@
                 ],
                 "title": "AssistantRead",
                 "description": "Schema for reading assistant data, extends AssistantCreate with additional fields."
+            },
+            "AssistantTransferResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "title": "Message",
+                        "description": "Success message describing the transfer result."
+                    },
+                    "agent_id": {
+                        "type": "integer",
+                        "title": "Agent Id",
+                        "description": "ID of the transferred assistant."
+                    },
+                    "transferred_from": {
+                        "type": "string",
+                        "title": "Transferred From",
+                        "description": "Source workspace type ('personal' or 'organization')."
+                    },
+                    "transferred_to": {
+                        "type": "string",
+                        "title": "Transferred To",
+                        "description": "Target workspace type ('personal' or 'organization')."
+                    },
+                    "logs_transferred": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Logs Transferred",
+                        "description": "Whether logs were transferred (only for personal->org transfers)."
+                    },
+                    "logs_deleted": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Logs Deleted",
+                        "description": "Whether logs were deleted (only for org->personal transfers)."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "message",
+                    "agent_id",
+                    "transferred_from",
+                    "transferred_to"
+                ],
+                "title": "AssistantTransferResponse",
+                "description": "Response schema for assistant transfer operations."
+            },
+            "AssistantTransferToOrgRequest": {
+                "properties": {
+                    "organization_id": {
+                        "type": "integer",
+                        "title": "Organization Id",
+                        "description": "Target organization ID to transfer the assistant to.",
+                        "example": 123
+                    },
+                    "transfer_logs": {
+                        "type": "boolean",
+                        "title": "Transfer Logs",
+                        "description": "Whether to transfer existing logs from personal 'Assistants' project to org 'Assistants' project.",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "organization_id"
+                ],
+                "title": "AssistantTransferToOrgRequest",
+                "description": "Schema for transferring an assistant from personal to organizational workspace."
+            },
+            "AssistantTransferToPersonalRequest": {
+                "properties": {
+                    "delete_logs": {
+                        "type": "boolean",
+                        "title": "Delete Logs",
+                        "description": "Whether to delete related logs from the org 'Assistants' project.",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "title": "AssistantTransferToPersonalRequest",
+                "description": "Schema for transferring an assistant from organizational to personal workspace."
             },
             "AssistantUpdate": {
                 "properties": {
@@ -14037,6 +14624,120 @@
                     "gcs_url"
                 ],
                 "title": "AssistantVideoUploadResponse"
+            },
+            "BillingAddress": {
+                "properties": {
+                    "country": {
+                        "type": "string",
+                        "title": "Country"
+                    },
+                    "formatted": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Formatted"
+                    },
+                    "line1": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Line1"
+                    },
+                    "line2": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Line2"
+                    },
+                    "city": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "City"
+                    },
+                    "state": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "State"
+                    },
+                    "postal_code": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Postal Code"
+                    },
+                    "locality": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Locality"
+                    },
+                    "district": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "District"
+                    },
+                    "sublocality": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sublocality"
+                    }
+                },
+                "additionalProperties": true,
+                "type": "object",
+                "required": [
+                    "country"
+                ],
+                "title": "BillingAddress",
+                "description": "Flexible international billing address.\n\nSupports various address formats worldwide.\nThe `country` field is required for tax calculations.\nOther fields are optional to accommodate different country formats."
             },
             "Body_animate_video_endpoint_v0_assistant_photo_animate_post": {
                 "properties": {
@@ -14655,8 +15356,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            true,
-                            "include_usage"
+                            "include_usage",
+                            true
                         ]
                     },
                     "top_p": {
@@ -17059,6 +17760,18 @@
                 ],
                 "title": "InfoResponse[AssistantRead]"
             },
+            "InfoResponse_AssistantTransferResponse_": {
+                "properties": {
+                    "info": {
+                        "$ref": "#/components/schemas/AssistantTransferResponse"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[AssistantTransferResponse]"
+            },
             "InfoResponse_AssistantVideoUploadResponse_": {
                 "properties": {
                     "info": {
@@ -17477,10 +18190,6 @@
                         ],
                         "title": "Role Name"
                     },
-                    "level": {
-                        "type": "string",
-                        "title": "Level"
-                    },
                     "expires_at": {
                         "type": "string",
                         "format": "date-time",
@@ -17501,7 +18210,6 @@
                     "invitee_email",
                     "invited_by_user_id",
                     "role_id",
-                    "level",
                     "expires_at",
                     "created_at"
                 ],
@@ -17524,11 +18232,6 @@
                             }
                         ],
                         "title": "Role Id"
-                    },
-                    "level": {
-                        "type": "string",
-                        "title": "Level",
-                        "default": "user"
                     },
                     "expires_in_days": {
                         "type": "integer",
@@ -17643,6 +18346,96 @@
                 "title": "OnboardingStatusResponse",
                 "description": "Response containing user's onboarding status."
             },
+            "OrganizationBillingUpdate": {
+                "properties": {
+                    "autorecharge": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Autorecharge"
+                    },
+                    "autorecharge_threshold": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Autorecharge Threshold"
+                    },
+                    "autorecharge_qty": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Autorecharge Qty"
+                    }
+                },
+                "type": "object",
+                "title": "OrganizationBillingUpdate",
+                "description": "Schema for updating organization billing settings."
+            },
+            "OrganizationBusinessProfileUpdate": {
+                "properties": {
+                    "billing_email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Billing Email"
+                    },
+                    "business_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Business Name"
+                    },
+                    "tax_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Id"
+                    },
+                    "billing_address": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/BillingAddress"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "OrganizationBusinessProfileUpdate",
+                "description": "Schema for updating organization business profile."
+            },
             "OrganizationCreate": {
                 "properties": {
                     "name": {
@@ -17662,11 +18455,6 @@
                     "user_id": {
                         "type": "string",
                         "title": "User Id"
-                    },
-                    "level": {
-                        "type": "string",
-                        "title": "Level",
-                        "default": "user"
                     },
                     "role_id": {
                         "anyOf": [
@@ -17701,19 +18489,8 @@
                         "type": "integer",
                         "title": "Organization Id"
                     },
-                    "level": {
-                        "type": "string",
-                        "title": "Level"
-                    },
                     "role_id": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "integer",
                         "title": "Role Id"
                     },
                     "role_name": {
@@ -17771,7 +18548,6 @@
                     "id",
                     "user_id",
                     "organization_id",
-                    "level",
                     "role_id",
                     "created_at"
                 ],
@@ -18306,6 +19082,30 @@
                         ],
                         "title": "Updated At",
                         "description": "When the project was last updated"
+                    },
+                    "user_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Id",
+                        "description": "The ID of the user who owns the project"
+                    },
+                    "organization_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Organization Id",
+                        "description": "The ID of the organization that owns the project"
                     }
                 },
                 "type": "object",
@@ -21529,6 +22329,119 @@
                 ],
                 "title": "UserBusinessStatusResponse",
                 "description": "Response containing user's business classification status."
+            },
+            "UserResourceAccessEntry": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "role_id": {
+                        "type": "integer",
+                        "title": "Role Id"
+                    },
+                    "role_name": {
+                        "type": "string",
+                        "title": "Role Name"
+                    },
+                    "permissions": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Permissions"
+                    },
+                    "grantee_type": {
+                        "type": "string",
+                        "title": "Grantee Type"
+                    },
+                    "source": {
+                        "type": "string",
+                        "title": "Source"
+                    },
+                    "team_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Team Id"
+                    },
+                    "team_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Team Name"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "role_id",
+                    "role_name",
+                    "permissions",
+                    "grantee_type",
+                    "source",
+                    "created_at"
+                ],
+                "title": "UserResourceAccessEntry",
+                "description": "Schema for a single user access entry with source info."
+            },
+            "UserResourceAccessResponse": {
+                "properties": {
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id"
+                    },
+                    "resource_type": {
+                        "type": "string",
+                        "title": "Resource Type"
+                    },
+                    "resource_id": {
+                        "type": "integer",
+                        "title": "Resource Id"
+                    },
+                    "access_entries": {
+                        "items": {
+                            "$ref": "#/components/schemas/UserResourceAccessEntry"
+                        },
+                        "type": "array",
+                        "title": "Access Entries"
+                    },
+                    "effective_role": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Effective Role"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "user_id",
+                    "resource_type",
+                    "resource_id",
+                    "access_entries"
+                ],
+                "title": "UserResourceAccessResponse",
+                "description": "Schema for a user's access on a specific resource."
             },
             "ValidationError": {
                 "properties": {

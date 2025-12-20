@@ -1,10 +1,11 @@
 ---
-title: "List Organization Members"
-api: 'GET /v0/organizations/{organization_id}/members'
+title: "Get Organization Billing"
+api: 'GET /v0/organizations/{organization_id}/billing'
 ---
-List all members of an organization with their roles.
+Get billing information for an organization.
 
-Requires org:read permission.
+Returns billing mode (delegated or direct), credits, and billing settings.
+Requires billing:read permission.
 
 #### Authorizations
 
@@ -22,14 +23,14 @@ Requires org:read permission.
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members' \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/billing' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members"
+url = "https://api.unify.ai/v0/organizations/<organization_id>/billing"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -42,17 +43,7 @@ print(response.text)
 <ResponseExample>
 
 ```json 200
-{
-    "id": "integer",
-    "user_id": "string",
-    "organization_id": "integer",
-    "role_id": "integer",
-    "role_name": "string | null",
-    "created_at": "string",
-    "name": "string | null",
-    "email": "string | null",
-    "image": "string | null"
-}
+{}
 ```
 
 ```json 422

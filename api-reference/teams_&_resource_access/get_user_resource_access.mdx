@@ -1,18 +1,18 @@
 ---
-title: "List Resource Access"
-api: 'GET /v0/resources/{resource_type}/{resource_id}/access'
+title: "Get User Resource Access"
+api: 'GET /v0/resources/{resource_type}/{resource_id}/access/user/{user_id}'
 ---
-List all access entries for a resource (project).
+Get a specific user's access entries for a resource.
 
-User must have read permission on the resource.
-
-Note: For org-level permissions, use the /organizations/{id}/members endpoint instead.
+Returns all access entries (direct user grants + team-based grants)
+and the effective role (highest permission level).
 
 :param request_fastapi: FastAPI request object.
 :param resource_type: Type of resource ("project").
 :param resource_id: Resource ID.
+:param user_id: User ID to check access for.
 :param session: Database session.
-:return: List of access entries.
+:return: User's access entries and effective role.
 
 #### Authorizations
 
@@ -30,18 +30,22 @@ Note: For org-level permissions, use the /organizations/{id}/members endpoint in
 
 </ParamField>
 
+<ParamField query="user_id" type="string" required="true">
+
+</ParamField>
+
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access' \
+  --url 'https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access/user/<user_id>' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access"
+url = "https://api.unify.ai/v0/resources/<resource_type>/<resource_id>/access/user/<user_id>"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -55,9 +59,11 @@ print(response.text)
 
 ```json 200
 {
+    "user_id": "string",
     "resource_type": "string",
     "resource_id": "integer",
-    "access_entries": "[Any]"
+    "access_entries": "[Any]",
+    "effective_role": "string | null"
 }
 ```
 

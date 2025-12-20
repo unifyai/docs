@@ -1,11 +1,11 @@
 ---
-title: "Add Organization Member"
-api: 'POST /v0/organizations/{organization_id}/members'
+title: "Update Organization Business Profile"
+api: 'PATCH /v0/organizations/{organization_id}/billing/business-profile'
 ---
-Add a member to an organization.
+Update business profile for an organization.
 
-Requires org:write permission.
-Automatically creates an organization-specific API key for the new member.
+Requires billing:write permission.
+Owners and Admins have this permission by default.
 
 #### Authorizations
 
@@ -21,19 +21,27 @@ Automatically creates an organization-specific API key for the new member.
 
 #### Body
 
-<ParamField body="user_id" type="string" required="true">
+<ParamField body="billing_email" type="string | null" >
 
 </ParamField>
 
-<ParamField body="role_id" type="integer | null" >
+<ParamField body="business_name" type="string | null" >
+
+</ParamField>
+
+<ParamField body="tax_id" type="string | null" >
+
+</ParamField>
+
+<ParamField body="billing_address" type="any | null" >
 
 </ParamField>
 
 <RequestExample>
 
 ```bash cURL
-curl --request POST \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members' \
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/billing/business-profile' \
   --header "Authorization: Bearer $UNIFY_KEY"
   --header 'Content-Type: application/json' \
   --data '{}'
@@ -42,13 +50,13 @@ curl --request POST \
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members"
+url = "https://api.unify.ai/v0/organizations/<organization_id>/billing/business-profile"
 
 headers = {"Authorization": "Bearer <token>"}
 
 json_input = {}
 
-response = requests.request("POST", url, json=json_input, headers=headers)
+response = requests.request("PATCH", url, json=json_input, headers=headers)
 
 print(response.text)
 ```
@@ -56,7 +64,7 @@ print(response.text)
 </RequestExample>
 <ResponseExample>
 
-```json 201
+```json 200
 {}
 ```
 
