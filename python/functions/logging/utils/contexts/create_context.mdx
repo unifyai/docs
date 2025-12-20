@@ -11,13 +11,14 @@ def create_context(
     unique_keys: Optional[Dict[str, str]] = None,
     auto_counting: Optional[Dict[str, Optional[str]]] = None,
     foreign_keys: Optional[List[Dict[str, Any]]] = None,
+    exist_ok: bool = True,
     *,
     project: Optional[str] = None,
     api_key: Optional[str] = None,
 ) -> None:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/9a6d5d3bc061301d3319ca4deb1f8d8f0c305d10/unify/logging/utils/contexts.py#L13)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/775eed4372758c8f73fe7e4654d91c28e639c841/unify/logging/utils/contexts.py#L14)</p>
 
 Create a context.
 
@@ -32,6 +33,7 @@ Create a context.
 - `foreign_keys` - Foreign key definitions for referential integrity. Each foreign key is a
 - `Example` - [{"name": "department_id", "references": "Departments.id",
 - `"on_delete"` - "CASCADE", "on_update": "CASCADE"}]
+- `exist_ok` - If True (default), silently succeeds when the context already exists.
 - `project` - Name of the project the context belongs to.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
