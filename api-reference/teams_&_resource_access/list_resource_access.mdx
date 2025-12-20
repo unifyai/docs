@@ -2,14 +2,12 @@
 title: "List Resource Access"
 api: 'GET /v0/resources/{resource_type}/{resource_id}/access'
 ---
-List all access entries for a resource (project).
+List all access entries for a resource (project or org).
 
 User must have read permission on the resource.
 
-Note: For org-level permissions, use the /organizations/{id}/members endpoint instead.
-
 :param request_fastapi: FastAPI request object.
-:param resource_type: Type of resource ("project").
+:param resource_type: Type of resource ("project" or "org").
 :param resource_id: Resource ID.
 :param session: Database session.
 :return: List of access entries.
