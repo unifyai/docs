@@ -498,7 +498,9 @@
                                 "api-reference/assistant_management/list_all_assistants",
                                 "api-reference/assistant_management/remove_a_contact_method_from_an_assistant",
                                 "api-reference/assistant_management/delete_an_assistant",
-                                "api-reference/assistant_management/update_assistant_configuration"
+                                "api-reference/assistant_management/update_assistant_configuration",
+                                "api-reference/assistant_management/transfer_assistant_to_organization",
+                                "api-reference/assistant_management/transfer_assistant_to_personal_workspace"
                             ]
                         },
                         {
@@ -732,7 +734,12 @@
                                 "api-reference/organizations/cancel_organization_invite",
                                 "api-reference/organizations/list_my_pending_invites",
                                 "api-reference/organizations/accept_invite",
-                                "api-reference/organizations/decline_invite"
+                                "api-reference/organizations/decline_invite",
+                                "api-reference/organizations/get_organization_billing",
+                                "api-reference/organizations/update_organization_billing",
+                                "api-reference/organizations/get_organization_credits",
+                                "api-reference/organizations/get_organization_business_profile",
+                                "api-reference/organizations/update_organization_business_profile"
                             ]
                         },
                         {
