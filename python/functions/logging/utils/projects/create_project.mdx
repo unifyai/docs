@@ -5,6 +5,7 @@ title: 'create_project'
 ```python
 def create_project(
     name: str,
+    exist_ok: bool = True,
     *,
     overwrite: Union[bool, str] = False,
     api_key: Optional[str] = None,
@@ -12,7 +13,7 @@ def create_project(
 ) -> Dict[str, str]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/757ec8aaf0af9c152f3d425d04e3ca9937d35a1e/unify/logging/utils/projects.py#L12)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/5b280c67d8ed6969b43464a0208650d4cb97f9f9/unify/logging/utils/projects.py#L13)</p>
 
 Creates a logging project and adds this to your account. This project will have
 a set of logs associated with it.
@@ -20,6 +21,7 @@ a set of logs associated with it.
 **Arguments**:
 
 - `name` - A unique, user-defined name used when referencing the project.
+- `exist_ok` - If True (default), silently succeeds when the project already exists.
 - `overwrite` - Controls how to handle existing projects with the same name.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 - `is_versioned` - Whether the project is tracked via version control.
