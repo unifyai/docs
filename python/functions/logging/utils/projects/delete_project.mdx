@@ -6,17 +6,19 @@ title: 'delete_project'
 def delete_project(
     name: str,
     *,
+    missing_ok: bool = True,
     api_key: Optional[str] = None,
 ) -> str:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/15e67f64a8f14feea5d09c5e9bd1bd8ff5dacac7/unify/logging/utils/projects.py#L100)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1634ae3458cec1c171bdf33676d685f12611d3da/unify/logging/utils/projects.py#L100)</p>
 
 Deletes a project from your account.
 
 **Arguments**:
 
 - `name` - Name of the project to delete.
+- `missing_ok` - If True (default), silently succeeds when the project does not exist.
 - `api_key` - If specified, unify API key to be used. Defaults to the value in the
 
 
