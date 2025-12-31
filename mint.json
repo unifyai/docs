@@ -466,6 +466,14 @@
                                 "python/functions/utils/map/map",
                                 "python/functions/utils/map/set_map_mode"
                             ]
+                        },
+                        {
+                            "group": "storage",
+                            "pages": [
+                                "python/functions/utils/storage/download_object",
+                                "python/functions/utils/storage/get_object_info",
+                                "python/functions/utils/storage/get_signed_url"
+                            ]
                         }
                     ]
                 },

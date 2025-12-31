@@ -1,0 +1,35 @@
+---
+title: 'get_signed_url'
+---
+
+```python
+def get_signed_url(
+    gcs_uri: str,
+    *,
+    expiration_minutes: int = 60,
+    api_key: Optional[str] = None,
+) -> str:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/5a98e74379bbffd322c539afe5e218657d1843fc/unify/utils/storage.py#L16)</p>
+
+Generate a signed URL for a GCS object.Creates a time-limited, publicly accessible URL for downloading
+a Google Cloud Storage object without requiring authentication.
+
+**Arguments**:
+
+- `gcs_uri` - The GCS URI of the object (e.g., "gs://bucket-name/path/to/object").
+- `expiration_minutes` - How long the signed URL should remain valid, in minutes.
+- `api_key` - If specified, unify API key to be used. Defaults to the value
+
+
+
+**Returns**:
+
+A signed URL string that can be used to download the object via HTTP GET.
+
+
+
+**Raises**:
+
+- `RequestError`: If the request fails (e.g., object not found, invalid URI).
