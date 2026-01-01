@@ -1,0 +1,15 @@
+---
+title: 'get_traceparent'
+---
+
+```python
+def get_traceparent() -> Optional[str]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/62585cc40e7cb260f8ec94fd605cfc7845160b68/unify/utils/http.py#L259)</p>
+
+Get the current traceparent header value, if an OTel span is active.
+
+**Returns**:
+
+The traceparent header string, or None if no active span.
