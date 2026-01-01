@@ -452,6 +452,7 @@
                                 "python/functions/utils/http/configure_log_dir",
                                 "python/functions/utils/http/delete",
                                 "python/functions/utils/http/get",
+                                "python/functions/utils/http/get_traceparent",
                                 "python/functions/utils/http/get_tracer",
                                 "python/functions/utils/http/head",
                                 "python/functions/utils/http/is_otel_enabled",
