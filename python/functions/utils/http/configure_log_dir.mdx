@@ -1,0 +1,22 @@
+---
+title: 'configure_log_dir'
+---
+
+```python
+def configure_log_dir(log_dir: Optional[str] = None) -> Optional[Path]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/3a9611c633dd8e01bde66e4c79ee371a7f43c66d/unify/utils/http.py#L48)</p>
+
+Configure or reconfigure the HTTP trace log directory.Call this after setting UNIFY_HTTP_LOG_DIR if the env var was set
+after this module was imported.
+
+**Arguments**:
+
+- `log_dir` - Explicit log directory path. If None, reads from
+
+
+
+**Returns**:
+
+The configured log directory Path, or None if disabled.

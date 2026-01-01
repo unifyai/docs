@@ -449,6 +449,7 @@
                             "group": "http",
                             "pages": [
                                 "python/classes/utils/http/RequestError",
+                                "python/functions/utils/http/configure_log_dir",
                                 "python/functions/utils/http/delete",
                                 "python/functions/utils/http/get",
                                 "python/functions/utils/http/head",
