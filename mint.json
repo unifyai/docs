@@ -145,13 +145,9 @@
                                 "python/classes/logging/logs/LogGroup",
                                 "python/classes/logging/logs/LogTransformer",
                                 "python/classes/logging/logs/Params",
-                                "python/classes/logging/logs/Traced",
-                                "python/classes/logging/logs/TracerCallCollector",
-                                "python/classes/logging/logs/TracerCallTransformer",
                                 "python/functions/logging/logs/get_active_context",
                                 "python/functions/logging/logs/log_decorator",
                                 "python/functions/logging/logs/set_context",
-                                "python/functions/logging/logs/traced",
                                 "python/functions/logging/logs/unset_context"
                             ]
                         },
@@ -217,15 +213,11 @@
                                         "python/functions/logging/utils/logs/get_logs",
                                         "python/functions/logging/utils/logs/get_logs_latest_timestamp",
                                         "python/functions/logging/utils/logs/get_logs_metric",
-                                        "python/functions/logging/utils/logs/get_trace_context",
                                         "python/functions/logging/utils/logs/initialize_async_logger",
-                                        "python/functions/logging/utils/logs/initialize_trace_logger",
                                         "python/functions/logging/utils/logs/join_logs",
                                         "python/functions/logging/utils/logs/log",
-                                        "python/functions/logging/utils/logs/mark_spans_as_done",
                                         "python/functions/logging/utils/logs/rename_field",
                                         "python/functions/logging/utils/logs/set_jsonb_mode",
-                                        "python/functions/logging/utils/logs/set_trace_context",
                                         "python/functions/logging/utils/logs/set_user_logging",
                                         "python/functions/logging/utils/logs/shutdown_async_logger",
                                         "python/functions/logging/utils/logs/update_derived_log",
@@ -244,15 +236,6 @@
                                         "python/functions/logging/utils/projects/list_projects",
                                         "python/functions/logging/utils/projects/rename_project",
                                         "python/functions/logging/utils/projects/rollback_project"
-                                    ]
-                                },
-                                {
-                                    "group": "tracing",
-                                    "pages": [
-                                        "python/classes/logging/utils/tracing/TraceFinder",
-                                        "python/classes/logging/utils/tracing/TraceLoader",
-                                        "python/functions/logging/utils/tracing/disable_tracing_hook",
-                                        "python/functions/logging/utils/tracing/install_tracing_hook"
                                     ]
                                 }
                             ]
