@@ -8,7 +8,6 @@ def log(
     *,
     project: Optional[str] = None,
     context: Optional[str] = None,
-    params: Dict[str, Any] = None,
     new: bool = False,
     overwrite: bool = False,
     mutable: Optional[Union[bool, Dict[str, bool]]] = True,
@@ -17,7 +16,7 @@ def log(
 ) -> Union[unify.Log, Callable]:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/2c995626b7b81d503b59a30a7f531b84b3defd5b/unify/logging/utils/logs.py#L340)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1265787cc436a07c1a68beb84331db5520afc809/unify/logging/utils/logs.py#L328)</p>
 
 Can be used either as a regular function to create logs or as a decorator to log function inputs, intermediates and outputs.When used as a regular function:
 Creates one or more logs associated to a project. unify.Logs are LLM-call-level data
@@ -29,7 +28,6 @@ Logs function inputs and intermediate values.
 - `fn` - When used as a decorator, this is the function to be wrapped.
 - `project` - Name of the project the stored logs will be associated to.
 - `context` - Context for the logs.
-- `params` - Dictionary containing one or more key:value pairs that will be
 - `new` - Whether to create a new log if there is a currently active global log.
 - `overwrite` - If adding to an existing log, dictates whether or not to overwrite
 - `mutable` - Either a boolean to apply uniform mutability for all fields, or a dictionary mapping field names to booleans for per-field control. Defaults to True.
