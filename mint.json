@@ -136,9 +136,7 @@
                                 "python/classes/logging/logs/Entries",
                                 "python/classes/logging/logs/Log",
                                 "python/classes/logging/logs/LogGroup",
-                                "python/classes/logging/logs/LogTransformer",
                                 "python/functions/logging/logs/get_active_context",
-                                "python/functions/logging/logs/log_decorator",
                                 "python/functions/logging/logs/set_context",
                                 "python/functions/logging/logs/unset_context"
                             ]
