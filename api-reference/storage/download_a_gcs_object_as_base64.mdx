@@ -1,0 +1,84 @@
+---
+title: "Download a GCS object as base64"
+api: 'POST /v0/storage/download'
+---
+Downloads the content of a Google Cloud Storage object and returns it
+as a base64-encoded string.
+
+This is useful for retrieving binary content (images, files) through
+the API without requiring direct GCS access.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="gcs_uri" type="string" required="true">
+GCS URI of the object (e.g., gs://bucket-name/path/to/object)
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/storage/download' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/storage/download"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "content_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+    "content_type": "image/png",
+    "size_bytes": 68
+}
+```
+
+```json 400
+{
+    "detail": "Invalid GCS URI format. Expected gs://bucket-name/object-path"
+}
+```
+
+```json 404
+{
+    "detail": "Object not found: gs://bucket/path"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

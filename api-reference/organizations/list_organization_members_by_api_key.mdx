@@ -1,10 +1,11 @@
 ---
-title: "List Organization Members"
-api: 'GET /v0/organizations/{organization_id}/members'
+title: "List Organization Members By API Key"
+api: 'GET /v0/organizations/members'
 ---
-List all members of an organization with their roles.
+List all members of the organization associated with the API key.
 
-Requires org:read permission.
+For org API key: Returns all members with their roles.
+For personal API key: Returns empty list.
 
 #### Authorizations
 
@@ -12,24 +13,18 @@ Requires org:read permission.
   Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
 </ParamField>
 
-#### Path Parameters
-
-<ParamField query="organization_id" type="integer" required="true">
-
-</ParamField>
-
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members' \
+  --url 'https://api.unify.ai/v0/organizations/members' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members"
+url = "https://api.unify.ai/v0/organizations/members"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -55,20 +50,6 @@ print(response.text)
     "bio": "string | null",
     "timezone": "string | null",
     "phone_number": "string | null"
-}
-```
-
-```json 422
-{
-    "detail": [
-        {
-            "loc": [
-                "string"
-            ],
-            "msg": "string",
-            "type": "string"
-        }
-    ]
 }
 ```
 

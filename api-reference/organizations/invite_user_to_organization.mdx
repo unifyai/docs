@@ -29,10 +29,6 @@ Sends an email with an invite link to the specified email address.
 
 </ParamField>
 
-<ParamField body="level" type="string"  default="user">
-
-</ParamField>
-
 <ParamField body="expires_in_days" type="integer"  default="7">
 
 </ParamField>
@@ -75,7 +71,6 @@ print(response.text)
     "invited_by_name": "string | null",
     "role_id": "integer",
     "role_name": "string | null",
-    "level": "string",
     "expires_at": "string",
     "created_at": "string"
 }

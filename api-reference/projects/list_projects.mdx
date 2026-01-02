@@ -4,6 +4,9 @@ api: 'GET /v0/projects'
 ---
 Returns the names of all projects stored in your account.
 
+When using a personal API key, returns only personal projects.
+When using an organization API key, returns only that organization's projects.
+
 #### Authorizations
 
 <ParamField header="Authorization" type="string" required="true">

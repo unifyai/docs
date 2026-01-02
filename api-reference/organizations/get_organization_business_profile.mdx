@@ -1,11 +1,10 @@
 ---
-title: "Add Organization Member"
-api: 'POST /v0/organizations/{organization_id}/members'
+title: "Get Organization Business Profile"
+api: 'GET /v0/organizations/{organization_id}/billing/business-profile'
 ---
-Add a member to an organization.
+Get business profile for an organization (invoicing information).
 
-Requires org:write permission.
-Automatically creates an organization-specific API key for the new member.
+Requires billing:read permission.
 
 #### Authorizations
 
@@ -19,36 +18,22 @@ Automatically creates an organization-specific API key for the new member.
 
 </ParamField>
 
-#### Body
-
-<ParamField body="user_id" type="string" required="true">
-
-</ParamField>
-
-<ParamField body="role_id" type="integer | null" >
-
-</ParamField>
-
 <RequestExample>
 
 ```bash cURL
-curl --request POST \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members' \
+curl --request GET \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/billing/business-profile' \
   --header "Authorization: Bearer $UNIFY_KEY"
-  --header 'Content-Type: application/json' \
-  --data '{}'
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members"
+url = "https://api.unify.ai/v0/organizations/<organization_id>/billing/business-profile"
 
 headers = {"Authorization": "Bearer <token>"}
 
-json_input = {}
-
-response = requests.request("POST", url, json=json_input, headers=headers)
+response = requests.request("GET", url, headers=headers)
 
 print(response.text)
 ```
@@ -56,7 +41,7 @@ print(response.text)
 </RequestExample>
 <ResponseExample>
 
-```json 201
+```json 200
 {}
 ```
 

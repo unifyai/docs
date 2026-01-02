@@ -1915,6 +1915,18 @@
                             "title": "Email"
                         },
                         "description": "Only return assistants whose email address matches this value."
+                    },
+                    {
+                        "name": "list_all_org",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "If True and using an org API key, list ALL assistants in the organization (not just those created by the current user). Requires assistant:read permission.",
+                            "default": false,
+                            "title": "List All Org"
+                        },
+                        "description": "If True and using an org API key, list ALL assistants in the organization (not just those created by the current user). Requires assistant:read permission."
                     }
                 ],
                 "responses": {
@@ -2205,6 +2217,140 @@
                                             "type": "value_error.email"
                                         }
                                     ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/{assistant_id}/transfer/to-org": {
+            "post": {
+                "tags": [
+                    "Assistant Management"
+                ],
+                "summary": "Transfer assistant to organization",
+                "description": "Transfers a personal assistant to an organizational workspace.",
+                "operationId": "transfer_assistant_to_org_v0_assistant__assistant_id__transfer_to_org_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssistantTransferToOrgRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assistant transferred successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_AssistantTransferResponse_"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Permission denied"
+                    },
+                    "404": {
+                        "description": "Assistant not found"
+                    },
+                    "400": {
+                        "description": "Invalid transfer request"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/{assistant_id}/transfer/to-personal": {
+            "post": {
+                "tags": [
+                    "Assistant Management"
+                ],
+                "summary": "Transfer assistant to personal workspace",
+                "description": "Transfers an organizational assistant to the user's personal workspace.",
+                "operationId": "transfer_assistant_to_personal_v0_assistant__assistant_id__transfer_to_personal_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssistantTransferToPersonalRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assistant transferred successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_AssistantTransferResponse_"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Permission denied"
+                    },
+                    "404": {
+                        "description": "Assistant not found"
+                    },
+                    "400": {
+                        "description": "Invalid transfer request"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
                                 }
                             }
                         }
@@ -2760,6 +2906,198 @@
                         "HTTPBearer": []
                     }
                 ]
+            }
+        },
+        "/v0/assistant/{assistant_id}/secret": {
+            "post": {
+                "tags": [
+                    "Secrets"
+                ],
+                "summary": "Create or update a secret",
+                "description": "Creates a new secret for an assistant or updates an existing one. Secrets are used to store API keys and tokens for external services.",
+                "operationId": "create_secret_v0_assistant__assistant_id__secret_post",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SecretCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_SecretRead_"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Assistant not found"
+                    },
+                    "409": {
+                        "description": "Secret already exists (use PUT to update)"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/assistant/{assistant_id}/secret/{secret_name}": {
+            "put": {
+                "tags": [
+                    "Secrets"
+                ],
+                "summary": "Update secret",
+                "description": "Updates an existing secret's value and/or description.",
+                "operationId": "update_secret_v0_assistant__assistant_id__secret__secret_name__put",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    },
+                    {
+                        "name": "secret_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Secret Name"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SecretUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_SecretRead_"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Assistant or secret not found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Secrets"
+                ],
+                "summary": "Delete secret",
+                "description": "Deletes a specific secret from an assistant.",
+                "operationId": "delete_secret_v0_assistant__assistant_id__secret__secret_name__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "assistant_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Assistant Id"
+                        }
+                    },
+                    {
+                        "name": "secret_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Secret Name"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfoResponse_dict_"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Assistant or secret not found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/v0/assistant/photo/upload": {
@@ -3550,7 +3888,7 @@
                     "Contexts"
                 ],
                 "summary": "Delete Context",
-                "description": "Deletes a context from a project. This will not delete the logs or artifacts\nwithin the context, but will remove their association with this context.",
+                "description": "Deletes a context from a project. This will not delete the logs or artifacts\nwithin the context, but will remove their association with this context.\n\nWhen include_children is True (default), all child contexts sharing the same\nprefix will also be deleted. For Assistants/UnityTests projects, logs that\nexist in sibling contexts (All/X, User/All/X) will also have their associations\ncleaned up.",
                 "operationId": "delete_context_v0_project__project_name__contexts__context_name__delete",
                 "security": [
                     {
@@ -3564,10 +3902,10 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Name of the project to create context in.",
+                            "description": "Name of the project to delete context from.",
                             "title": "Project Name"
                         },
-                        "description": "Name of the project to create context in.",
+                        "description": "Name of the project to delete context from.",
                         "example": "my_project"
                     },
                     {
@@ -3581,6 +3919,18 @@
                         },
                         "description": "Name of the context to delete.",
                         "example": "my_context"
+                    },
+                    {
+                        "name": "include_children",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "Whether to delete child contexts (which share the same '/' separated prefix). When True, deleting 'experiments' will also delete 'experiments/trial1', 'experiments/trial2', etc. The parent context does not need to exist for children to be deleted.",
+                            "default": true,
+                            "title": "Include Children"
+                        },
+                        "description": "Whether to delete child contexts (which share the same '/' separated prefix). When True, deleting 'experiments' will also delete 'experiments/trial1', 'experiments/trial2', etc. The parent context does not need to exist for children to be deleted."
                     }
                 ],
                 "responses": {
@@ -3589,8 +3939,24 @@
                         "content": {
                             "application/json": {
                                 "schema": {},
-                                "example": {
-                                    "info": "Context deleted successfully!"
+                                "examples": {
+                                    "single": {
+                                        "summary": "Single context deleted",
+                                        "value": {
+                                            "info": "Context deleted successfully!"
+                                        }
+                                    },
+                                    "with_children": {
+                                        "summary": "Context and children deleted",
+                                        "value": {
+                                            "info": "Deleted 3 context(s) successfully!",
+                                            "deleted": [
+                                                "experiments",
+                                                "experiments/trial1",
+                                                "experiments/trial2"
+                                            ]
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4927,7 +5293,7 @@
                     "Projects"
                 ],
                 "summary": "List Projects",
-                "description": "Returns the names of all projects stored in your account.",
+                "description": "Returns the names of all projects stored in your account.\n\nWhen using a personal API key, returns only personal projects.\nWhen using an organization API key, returns only that organization's projects.",
                 "operationId": "list_projects_v0_projects_get",
                 "responses": {
                     "200": {
@@ -4957,7 +5323,7 @@
                     "Projects"
                 ],
                 "summary": "List Projects Tree",
-                "description": "Return all projects the user can access with their icons and interface names.",
+                "description": "Return all projects the user can access with their icons and interface names.\n\nWhen using a personal API key, returns only personal projects.\nWhen using an organization API key, returns only that organization's projects.",
                 "operationId": "list_projects_tree_v0_projects_tree_get",
                 "responses": {
                     "200": {
@@ -5449,10 +5815,10 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Boolean string to filter entries. TODO: Detailed page.",
+                            "description": "Boolean string to filter entries.",
                             "title": "Filter Expr"
                         },
-                        "description": "Boolean string to filter entries. TODO: Detailed page.",
+                        "description": "Boolean string to filter entries.",
                         "example": "len(output) > 200 and temperature == 0.5"
                     },
                     {
@@ -6103,10 +6469,10 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Boolean string to filter entries. TODO: Detailed page.",
+                            "description": "Boolean string to filter entries.",
                             "title": "Filter Expr"
                         },
-                        "description": "Boolean string to filter entries. TODO: Detailed page.",
+                        "description": "Boolean string to filter entries.",
                         "example": "len(output) > 200 and temperature == 0.5"
                     },
                     {
@@ -6900,6 +7266,351 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/logs/plot": {
+            "post": {
+                "tags": [
+                    "Plots"
+                ],
+                "summary": "Create Plot",
+                "description": "Create a new shareable plot.\n\nSupports two modes:\n1. Direct config: Provide explicit plot_config\n2. Description-based: Provide natural language description for LLM inference\n\nRequires project:read permission on the target project.\nLLM inference (if used) is billed to the caller's account.",
+                "operationId": "create_plot_v0_logs_plot_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreatePlotRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Plot created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlotResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "403": {
+                        "description": "Access denied to project"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/logs/plots": {
+            "get": {
+                "tags": [
+                    "Plots"
+                ],
+                "summary": "List Plots",
+                "description": "List plots accessible to the user.\n\nFor personal API keys: Returns plots for personal projects.\nFor organization API keys: Returns plots for org projects with access.",
+                "operationId": "list_plots_v0_logs_plots_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "project_name",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Filter by project name",
+                            "title": "Project Name"
+                        },
+                        "description": "Filter by project name"
+                    },
+                    {
+                        "name": "context",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Filter by context (stored in project_config)",
+                            "title": "Context"
+                        },
+                        "description": "Filter by context (stored in project_config)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of plots",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlotListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Plots"
+                ],
+                "summary": "Delete Plots By Project",
+                "description": "Delete all plots for a project, optionally filtered by context.\n\nRequires project:write permission on the target project.",
+                "operationId": "delete_plots_by_project_v0_logs_plots_delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeletePlotsByProjectRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Plots deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Delete Plots By Project V0 Logs Plots Delete"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Access denied to project"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/logs/plots/{token}": {
+            "get": {
+                "tags": [
+                    "Plots"
+                ],
+                "summary": "Get Plot",
+                "description": "Get a plot by token.\n\nRequires project:read permission on the plot's project.",
+                "operationId": "get_plot_v0_logs_plots__token__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Token"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Plot details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlotResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "404": {
+                        "description": "Plot not found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Plots"
+                ],
+                "summary": "Update Plot",
+                "description": "Update a plot.\n\nRequires project:write permission on the plot's project.",
+                "operationId": "update_plot_v0_logs_plots__token__patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Token"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePlotRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Plot updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlotResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "404": {
+                        "description": "Plot not found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Plots"
+                ],
+                "summary": "Delete Plot",
+                "description": "Delete a plot.\n\nRequires project:write permission on the plot's project.",
+                "operationId": "delete_plot_v0_logs_plots__token__delete",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Token"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Plot deleted"
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "404": {
+                        "description": "Plot not found"
                     },
                     "422": {
                         "description": "Validation Error",
@@ -10900,6 +11611,37 @@
                 ]
             }
         },
+        "/v0/organizations/members": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "List Organization Members By Api Key",
+                "description": "List all members of the organization associated with the API key.\n\nFor org API key: Returns all members with their roles.\nFor personal API key: Returns empty list.",
+                "operationId": "list_organization_members_by_api_key_v0_organizations_members_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrganizationMemberResponse"
+                                    },
+                                    "type": "array",
+                                    "title": "Response List Organization Members By Api Key V0 Organizations Members Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/organizations/{organization_id}": {
             "get": {
                 "tags": [
@@ -11159,7 +11901,7 @@
                     "Organizations"
                 ],
                 "summary": "Remove Organization Member",
-                "description": "Remove a member from an organization.\n\nRequires org:write permission.\nAutomatically revokes all organization-specific API keys for the member.\nPersonal API keys are NOT affected.",
+                "description": "Remove a member from an organization.\n\nPermission: self-removal OR org:write permission.\n- Any member can remove themselves (leave the organization)\n- Users with org:write permission can remove other members\n\nAutomatically revokes all organization-specific API keys for the member.\nPersonal API keys are NOT affected.",
                 "operationId": "remove_organization_member_v0_organizations__organization_id__members__user_id__delete",
                 "security": [
                     {
@@ -11588,6 +12330,277 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/DeclineInviteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/billing": {
+            "get": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Get Organization Billing",
+                "description": "Get billing information for an organization.\n\nReturns billing mode (delegated or direct), credits, and billing settings.\nRequires billing:read permission.",
+                "operationId": "get_organization_billing_v0_organizations__organization_id__billing_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Get Organization Billing V0 Organizations  Organization Id  Billing Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Update Organization Billing",
+                "description": "Update billing settings for an organization.\n\nRequires billing:write permission.\nOwners and Admins have this permission by default.",
+                "operationId": "update_organization_billing_v0_organizations__organization_id__billing_patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationBillingUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Update Organization Billing V0 Organizations  Organization Id  Billing Patch"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/billing/credits": {
+            "get": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Get Organization Credits",
+                "description": "Get credit balance for an organization.\n\nFor direct billing orgs, returns the org's credit balance.\nFor delegated billing orgs, returns the billing user's credit balance.\nRequires billing:read permission.",
+                "operationId": "get_organization_credits_v0_organizations__organization_id__billing_credits_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Get Organization Credits V0 Organizations  Organization Id  Billing Credits Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/organizations/{organization_id}/billing/business-profile": {
+            "get": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Get Organization Business Profile",
+                "description": "Get business profile for an organization (invoicing information).\n\nRequires billing:read permission.",
+                "operationId": "get_organization_business_profile_v0_organizations__organization_id__billing_business_profile_get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Get Organization Business Profile V0 Organizations  Organization Id  Billing Business Profile Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Organizations",
+                    "organization-billing"
+                ],
+                "summary": "Update Organization Business Profile",
+                "description": "Update business profile for an organization.\n\nRequires billing:write permission.\nOwners and Admins have this permission by default.",
+                "operationId": "update_organization_business_profile_v0_organizations__organization_id__billing_business_profile_patch",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Organization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrganizationBusinessProfileUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "title": "Response Update Organization Business Profile V0 Organizations  Organization Id  Billing Business Profile Patch"
                                 }
                             }
                         }
@@ -12492,7 +13505,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Grant Resource Access",
-                "description": "Grant access to a resource (project or org).\n\nOnly works for organizational resources. Personal resources cannot be shared.\nUser must have appropriate permissions on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param access_data: Access grant data.\n:param session: Database session.\n:return: Created access entry.",
+                "description": "Grant access to a resource (project).\n\nOnly works for organizational resources. Personal resources cannot be shared.\nUser must have appropriate permissions on the resource.\n\nNote: For org-level permissions, use OrganizationMember roles instead.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param access_data: Access grant data.\n:param session: Database session.\n:return: Created access entry.",
                 "operationId": "grant_resource_access_v0_resources__resource_type___resource_id__access_post",
                 "security": [
                     {
@@ -12557,7 +13570,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Revoke Resource Access",
-                "description": "Revoke access to a resource (project or org).\n\nUser must have appropriate permissions on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param access_data: Access revoke data.\n:param session: Database session.",
+                "description": "Revoke access to a resource (project).\n\nUser must have appropriate permissions on the resource.\n\nNote: For org-level permissions, use OrganizationMember roles instead.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param access_data: Access revoke data.\n:param session: Database session.",
                 "operationId": "revoke_resource_access_v0_resources__resource_type___resource_id__access_delete",
                 "security": [
                     {
@@ -12615,7 +13628,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "List Resource Access",
-                "description": "List all access entries for a resource (project or org).\n\nUser must have read permission on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param session: Database session.\n:return: List of access entries.",
+                "description": "List all access entries for a resource (project).\n\nUser must have read permission on the resource.\n\nNote: For org-level permissions, use the /organizations/{id}/members endpoint instead.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param session: Database session.\n:return: List of access entries.",
                 "operationId": "list_resource_access_v0_resources__resource_type___resource_id__access_get",
                 "security": [
                     {
@@ -12672,7 +13685,7 @@
                     "Teams & Resource Access"
                 ],
                 "summary": "Update Resource Access",
-                "description": "Update an existing resource access grant (change role).\n\nThis is a more atomic alternative to revoking and re-granting access.\nPreserves the access ID and created_at timestamp.\n\nUser must have write permission on the resource.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\" or \"org\").\n:param resource_id: Resource ID.\n:param access_id: ResourceAccess ID to update.\n:param update_data: Update data containing new role_id.\n:param session: Database session.\n:return: Updated access entry.",
+                "description": "Update an existing resource access grant (change role).\n\nThis is a more atomic alternative to revoking and re-granting access.\nPreserves the access ID and created_at timestamp.\n\nUser must have write permission on the resource.\n\nNote: For org-level permissions, use OrganizationMember roles instead.\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param access_id: ResourceAccess ID to update.\n:param update_data: Update data containing new role_id.\n:param session: Database session.\n:return: Updated access entry.",
                 "operationId": "update_resource_access_v0_resources__resource_type___resource_id__access__access_id__patch",
                 "security": [
                     {
@@ -12725,6 +13738,72 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ResourceAccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/resources/{resource_type}/{resource_id}/access/user/{user_id}": {
+            "get": {
+                "tags": [
+                    "Teams & Resource Access"
+                ],
+                "summary": "Get User Resource Access",
+                "description": "Get a specific user's access entries for a resource.\n\nReturns all access entries (direct user grants + team-based grants)\nand the effective role (highest permission level).\n\n:param request_fastapi: FastAPI request object.\n:param resource_type: Type of resource (\"project\").\n:param resource_id: Resource ID.\n:param user_id: User ID to check access for.\n:param session: Database session.\n:return: User's access entries and effective role.",
+                "operationId": "get_user_resource_access_v0_resources__resource_type___resource_id__access_user__user_id__get",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "resource_type",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Resource Type"
+                        }
+                    },
+                    {
+                        "name": "resource_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Resource Id"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "User Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResourceAccessResponse"
                                 }
                             }
                         }
@@ -12808,6 +13887,149 @@
                         }
                     }
                 }
+            }
+        },
+        "/v0/storage/signed-url": {
+            "post": {
+                "tags": [
+                    "Storage"
+                ],
+                "summary": "Generate a signed URL for a GCS object",
+                "description": "Generates a temporary signed URL that provides time-limited access to a\nGoogle Cloud Storage object without requiring authentication.\n\nThe signed URL can be used to download the object directly via HTTP GET.",
+                "operationId": "generate_signed_url_v0_storage_signed_url_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignedUrlRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Signed URL generated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignedUrlResponse"
+                                },
+                                "example": {
+                                    "signed_url": "https://storage.googleapis.com/bucket/object?X-Goog-Algorithm=...",
+                                    "expires_in_minutes": 60
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid GCS URI format",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid GCS URI format. Expected gs://bucket-name/object-path"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Object not found in GCS",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Object not found: gs://bucket/path"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/storage/download": {
+            "post": {
+                "tags": [
+                    "Storage"
+                ],
+                "summary": "Download a GCS object as base64",
+                "description": "Downloads the content of a Google Cloud Storage object and returns it\nas a base64-encoded string.\n\nThis is useful for retrieving binary content (images, files) through\nthe API without requiring direct GCS access.",
+                "operationId": "download_object_v0_storage_download_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DownloadRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Object content downloaded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DownloadResponse"
+                                },
+                                "example": {
+                                    "content_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+                                    "content_type": "image/png",
+                                    "size_bytes": 68
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid GCS URI format",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Invalid GCS URI format. Expected gs://bucket-name/object-path"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Object not found in GCS",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Object not found: gs://bucket/path"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/metrics": {
@@ -13687,8 +14909,20 @@
                     "user_id": {
                         "type": "string",
                         "title": "User Id",
-                        "description": "ID of the user to associate the assistant with",
+                        "description": "ID of the user who created/owns the assistant",
                         "example": "123"
+                    },
+                    "organization_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Organization Id",
+                        "description": "Organization ID if this is an organizational assistant, None for personal assistants"
                     },
                     "created_at": {
                         "type": "string",
@@ -13734,7 +14968,7 @@
                             }
                         ],
                         "title": "Api Key",
-                        "description": "API key of the assistant",
+                        "description": "API key associated with this assistant (personal or org key)",
                         "example": "1234567890"
                     },
                     "user_first_name": {
@@ -13775,6 +15009,24 @@
                         "title": "User Email",
                         "description": "Email of the user",
                         "example": "ada.lovelace@unify.ai"
+                    },
+                    "secrets": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Secrets",
+                        "description": "Dictionary of secret names to values. Only returned via admin endpoints.",
+                        "example": {
+                            "openai_api_key": "sk-..."
+                        }
                     }
                 },
                 "type": "object",
@@ -13785,6 +15037,98 @@
                 ],
                 "title": "AssistantRead",
                 "description": "Schema for reading assistant data, extends AssistantCreate with additional fields."
+            },
+            "AssistantTransferResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "title": "Message",
+                        "description": "Success message describing the transfer result."
+                    },
+                    "agent_id": {
+                        "type": "integer",
+                        "title": "Agent Id",
+                        "description": "ID of the transferred assistant."
+                    },
+                    "transferred_from": {
+                        "type": "string",
+                        "title": "Transferred From",
+                        "description": "Source workspace type ('personal' or 'organization')."
+                    },
+                    "transferred_to": {
+                        "type": "string",
+                        "title": "Transferred To",
+                        "description": "Target workspace type ('personal' or 'organization')."
+                    },
+                    "logs_transferred": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Logs Transferred",
+                        "description": "Whether logs were transferred (only for personal->org transfers)."
+                    },
+                    "logs_deleted": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Logs Deleted",
+                        "description": "Whether logs were deleted (only for org->personal transfers)."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "message",
+                    "agent_id",
+                    "transferred_from",
+                    "transferred_to"
+                ],
+                "title": "AssistantTransferResponse",
+                "description": "Response schema for assistant transfer operations."
+            },
+            "AssistantTransferToOrgRequest": {
+                "properties": {
+                    "organization_id": {
+                        "type": "integer",
+                        "title": "Organization Id",
+                        "description": "Target organization ID to transfer the assistant to.",
+                        "example": 123
+                    },
+                    "transfer_logs": {
+                        "type": "boolean",
+                        "title": "Transfer Logs",
+                        "description": "Whether to transfer existing logs from personal 'Assistants' project to org 'Assistants' project.",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "organization_id"
+                ],
+                "title": "AssistantTransferToOrgRequest",
+                "description": "Schema for transferring an assistant from personal to organizational workspace."
+            },
+            "AssistantTransferToPersonalRequest": {
+                "properties": {
+                    "delete_logs": {
+                        "type": "boolean",
+                        "title": "Delete Logs",
+                        "description": "Whether to delete related logs from the org 'Assistants' project.",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "title": "AssistantTransferToPersonalRequest",
+                "description": "Schema for transferring an assistant from organizational to personal workspace."
             },
             "AssistantUpdate": {
                 "properties": {
@@ -14037,6 +15381,120 @@
                     "gcs_url"
                 ],
                 "title": "AssistantVideoUploadResponse"
+            },
+            "BillingAddress": {
+                "properties": {
+                    "country": {
+                        "type": "string",
+                        "title": "Country"
+                    },
+                    "formatted": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Formatted"
+                    },
+                    "line1": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Line1"
+                    },
+                    "line2": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Line2"
+                    },
+                    "city": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "City"
+                    },
+                    "state": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "State"
+                    },
+                    "postal_code": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Postal Code"
+                    },
+                    "locality": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Locality"
+                    },
+                    "district": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "District"
+                    },
+                    "sublocality": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sublocality"
+                    }
+                },
+                "additionalProperties": true,
+                "type": "object",
+                "required": [
+                    "country"
+                ],
+                "title": "BillingAddress",
+                "description": "Flexible international billing address.\n\nSupports various address formats worldwide.\nThe `country` field is required for tax calculations.\nOther fields are optional to accommodate different country formats."
             },
             "Body_animate_video_endpoint_v0_assistant_photo_animate_post": {
                 "properties": {
@@ -14655,8 +16113,8 @@
                         "title": "Stream Options",
                         "description": "Options for streaming response. Only set this when you set `stream: true`.",
                         "example": [
-                            "include_usage",
-                            true
+                            true,
+                            "include_usage"
                         ]
                     },
                     "top_p": {
@@ -15500,6 +16958,55 @@
                 ],
                 "title": "CreateLogConfig"
             },
+            "CreatePlotRequest": {
+                "properties": {
+                    "plot_config": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/PlotConfigInput"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Direct plot configuration"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Natural language description for LLM inference"
+                    },
+                    "project_config": {
+                        "$ref": "#/components/schemas/ProjectConfigInput",
+                        "description": "Project and logs configuration"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Optional title for the plot"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project_config"
+                ],
+                "title": "CreatePlotRequest",
+                "description": "Request to create a new plot."
+            },
             "CreateTabRequest": {
                 "properties": {
                     "name": {
@@ -16090,6 +17597,84 @@
                     "ids_and_fields"
                 ],
                 "title": "DeleteLogEntryRequest"
+            },
+            "DeletePlotsByProjectRequest": {
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "title": "Project Name",
+                        "description": "Name of the project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "Optional context to filter by (deletes all if not specified)"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project_name"
+                ],
+                "title": "DeletePlotsByProjectRequest",
+                "description": "Request to delete all plots for a project/context pair."
+            },
+            "DownloadRequest": {
+                "properties": {
+                    "gcs_uri": {
+                        "type": "string",
+                        "title": "Gcs Uri",
+                        "description": "GCS URI of the object (e.g., gs://bucket-name/path/to/object)",
+                        "examples": [
+                            "gs://my-bucket/images/photo.jpg"
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "gcs_uri"
+                ],
+                "title": "DownloadRequest",
+                "description": "Request body for downloading object content."
+            },
+            "DownloadResponse": {
+                "properties": {
+                    "content_base64": {
+                        "type": "string",
+                        "title": "Content Base64",
+                        "description": "Base64-encoded content of the object"
+                    },
+                    "content_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Content Type",
+                        "description": "MIME type of the object if available"
+                    },
+                    "size_bytes": {
+                        "type": "integer",
+                        "title": "Size Bytes",
+                        "description": "Size of the object in bytes"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "content_base64",
+                    "size_bytes"
+                ],
+                "title": "DownloadResponse",
+                "description": "Response body containing the object content."
             },
             "EditorTileSchema": {
                 "properties": {
@@ -17035,6 +18620,201 @@
                 "title": "ImportTileTemplateRequest",
                 "description": "Request to import a tile template"
             },
+            "InferredConfigResponse": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "title": "Type",
+                        "description": "Inferred plot type"
+                    },
+                    "x_axis": {
+                        "type": "string",
+                        "title": "X Axis",
+                        "description": "Inferred x-axis field"
+                    },
+                    "y_axis": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Y Axis",
+                        "description": "Inferred y-axis field"
+                    },
+                    "group_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group By",
+                        "description": "Inferred group by field"
+                    },
+                    "aggregate": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Aggregate",
+                        "description": "Inferred aggregation function"
+                    },
+                    "scale_x": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Scale X",
+                        "description": "Inferred x-axis scale"
+                    },
+                    "scale_y": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Scale Y",
+                        "description": "Inferred y-axis scale"
+                    },
+                    "metric": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metric",
+                        "description": "Inferred metric"
+                    },
+                    "bin_count": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bin Count",
+                        "description": "Inferred bin count (histogram)"
+                    },
+                    "show_regression": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Show Regression",
+                        "description": "Inferred show regression (scatter)"
+                    },
+                    "sort_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sort By",
+                        "description": "Inferred sort field (bar)"
+                    },
+                    "sort_order": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sort Order",
+                        "description": "Inferred sort order (bar)"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "LLM-suggested plot title"
+                    },
+                    "x_label": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "X Label",
+                        "description": "LLM-suggested x-axis label"
+                    },
+                    "y_label": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Y Label",
+                        "description": "LLM-suggested y-axis label"
+                    },
+                    "confidence": {
+                        "type": "number",
+                        "title": "Confidence",
+                        "description": "Confidence score 0-1"
+                    },
+                    "reasoning": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Reasoning",
+                        "description": "Explanation of inference"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "x_axis",
+                    "confidence"
+                ],
+                "title": "InferredConfigResponse",
+                "description": "Response for LLM-inferred configuration."
+            },
             "InfoResponse_AssistantPhotoUploadResponse_": {
                 "properties": {
                     "info": {
@@ -17058,6 +18838,18 @@
                     "info"
                 ],
                 "title": "InfoResponse[AssistantRead]"
+            },
+            "InfoResponse_AssistantTransferResponse_": {
+                "properties": {
+                    "info": {
+                        "$ref": "#/components/schemas/AssistantTransferResponse"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[AssistantTransferResponse]"
             },
             "InfoResponse_AssistantVideoUploadResponse_": {
                 "properties": {
@@ -17131,6 +18923,18 @@
                 ],
                 "title": "InfoResponse[ReplicatePredictionResponse]"
             },
+            "InfoResponse_SecretRead_": {
+                "properties": {
+                    "info": {
+                        "$ref": "#/components/schemas/SecretRead"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[SecretRead]"
+            },
             "InfoResponse_VoiceDesignGeneratePreviewsAPIResponse_": {
                 "properties": {
                     "info": {
@@ -17154,6 +18958,20 @@
                     "info"
                 ],
                 "title": "InfoResponse[VoiceRead]"
+            },
+            "InfoResponse_dict_": {
+                "properties": {
+                    "info": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Info"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "info"
+                ],
+                "title": "InfoResponse[dict]"
             },
             "InfoResponse_str_": {
                 "properties": {
@@ -17477,10 +19295,6 @@
                         ],
                         "title": "Role Name"
                     },
-                    "level": {
-                        "type": "string",
-                        "title": "Level"
-                    },
                     "expires_at": {
                         "type": "string",
                         "format": "date-time",
@@ -17501,7 +19315,6 @@
                     "invitee_email",
                     "invited_by_user_id",
                     "role_id",
-                    "level",
                     "expires_at",
                     "created_at"
                 ],
@@ -17524,11 +19337,6 @@
                             }
                         ],
                         "title": "Role Id"
-                    },
-                    "level": {
-                        "type": "string",
-                        "title": "Level",
-                        "default": "user"
                     },
                     "expires_in_days": {
                         "type": "integer",
@@ -17643,6 +19451,96 @@
                 "title": "OnboardingStatusResponse",
                 "description": "Response containing user's onboarding status."
             },
+            "OrganizationBillingUpdate": {
+                "properties": {
+                    "autorecharge": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Autorecharge"
+                    },
+                    "autorecharge_threshold": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Autorecharge Threshold"
+                    },
+                    "autorecharge_qty": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Autorecharge Qty"
+                    }
+                },
+                "type": "object",
+                "title": "OrganizationBillingUpdate",
+                "description": "Schema for updating organization billing settings."
+            },
+            "OrganizationBusinessProfileUpdate": {
+                "properties": {
+                    "billing_email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Billing Email"
+                    },
+                    "business_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Business Name"
+                    },
+                    "tax_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Id"
+                    },
+                    "billing_address": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/BillingAddress"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "OrganizationBusinessProfileUpdate",
+                "description": "Schema for updating organization business profile."
+            },
             "OrganizationCreate": {
                 "properties": {
                     "name": {
@@ -17662,11 +19560,6 @@
                     "user_id": {
                         "type": "string",
                         "title": "User Id"
-                    },
-                    "level": {
-                        "type": "string",
-                        "title": "Level",
-                        "default": "user"
                     },
                     "role_id": {
                         "anyOf": [
@@ -17701,19 +19594,8 @@
                         "type": "integer",
                         "title": "Organization Id"
                     },
-                    "level": {
-                        "type": "string",
-                        "title": "Level"
-                    },
                     "role_id": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "integer",
                         "title": "Role Id"
                     },
                     "role_name": {
@@ -17764,6 +19646,39 @@
                             }
                         ],
                         "title": "Image"
+                    },
+                    "bio": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bio"
+                    },
+                    "timezone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Timezone"
+                    },
+                    "phone_number": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Phone Number"
                     }
                 },
                 "type": "object",
@@ -17771,7 +19686,6 @@
                     "id",
                     "user_id",
                     "organization_id",
-                    "level",
                     "role_id",
                     "created_at"
                 ],
@@ -17983,6 +19897,389 @@
                     "prompt"
                 ],
                 "title": "PhotoGenerateRequest"
+            },
+            "PlotConfigInput": {
+                "properties": {
+                    "type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Type",
+                        "description": "Plot type: scatter, bar, histogram, or line"
+                    },
+                    "x_axis": {
+                        "type": "string",
+                        "title": "X Axis",
+                        "description": "Field name for the x-axis"
+                    },
+                    "y_axis": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Y Axis",
+                        "description": "Field name for the y-axis (not required for histogram)"
+                    },
+                    "group_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group By",
+                        "description": "Field name to group data by"
+                    },
+                    "aggregate": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Aggregate",
+                        "description": "Aggregation function: sum, mean, count, min, max"
+                    },
+                    "scale_x": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Scale X",
+                        "description": "X-axis scale: linear or log",
+                        "default": "linear"
+                    },
+                    "scale_y": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Scale Y",
+                        "description": "Y-axis scale: linear or log",
+                        "default": "linear"
+                    },
+                    "metric": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metric",
+                        "description": "Metric for aggregation: mean, sum, count, min, max",
+                        "default": "mean"
+                    },
+                    "bin_count": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "maximum": 100.0,
+                                "minimum": 1.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bin Count",
+                        "description": "Number of bins for histogram",
+                        "default": 10
+                    },
+                    "show_regression": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Show Regression",
+                        "description": "Show regression line (scatter plots)",
+                        "default": false
+                    },
+                    "colors": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Colors",
+                        "description": "Custom colors for groups: {group_value: hex_color}"
+                    },
+                    "sort_by": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sort By",
+                        "description": "Field to sort by: x, y, value, name, count (bar charts)"
+                    },
+                    "sort_order": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sort Order",
+                        "description": "Sort order: asc or desc"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Title for the plot (can be inferred by LLM)"
+                    },
+                    "x_label": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "X Label",
+                        "description": "Label for the x-axis (can be inferred by LLM)"
+                    },
+                    "y_label": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Y Label",
+                        "description": "Label for the y-axis (can be inferred by LLM)"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "x_axis"
+                ],
+                "title": "PlotConfigInput",
+                "description": "Plot configuration input from user."
+            },
+            "PlotListItem": {
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "title": "Token",
+                        "description": "Unique plot token"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Plot title"
+                    },
+                    "project_name": {
+                        "type": "string",
+                        "title": "Project Name",
+                        "description": "Name of the project"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At",
+                        "description": "When the plot was created"
+                    },
+                    "created_by": {
+                        "type": "string",
+                        "title": "Created By",
+                        "description": "User ID of the creator"
+                    },
+                    "url": {
+                        "type": "string",
+                        "title": "Url",
+                        "description": "Shareable URL to view the plot"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "token",
+                    "project_name",
+                    "created_at",
+                    "created_by",
+                    "url"
+                ],
+                "title": "PlotListItem",
+                "description": "Plot item for list responses (metadata only)."
+            },
+            "PlotListResponse": {
+                "properties": {
+                    "plots": {
+                        "items": {
+                            "$ref": "#/components/schemas/PlotListItem"
+                        },
+                        "type": "array",
+                        "title": "Plots",
+                        "description": "List of plots"
+                    },
+                    "count": {
+                        "type": "integer",
+                        "title": "Count",
+                        "description": "Total count of plots"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "plots",
+                    "count"
+                ],
+                "title": "PlotListResponse",
+                "description": "Response for list plots endpoint."
+            },
+            "PlotMetadata": {
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "title": "Token",
+                        "description": "Unique plot token"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Plot title"
+                    },
+                    "project_name": {
+                        "type": "string",
+                        "title": "Project Name",
+                        "description": "Name of the project"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At",
+                        "description": "When the plot was created"
+                    },
+                    "created_by": {
+                        "type": "string",
+                        "title": "Created By",
+                        "description": "User ID of the creator"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "token",
+                    "project_name",
+                    "created_at",
+                    "created_by"
+                ],
+                "title": "PlotMetadata",
+                "description": "Metadata about a plot."
+            },
+            "PlotResponse": {
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "title": "Url",
+                        "description": "Shareable URL to view the plot"
+                    },
+                    "token": {
+                        "type": "string",
+                        "title": "Token",
+                        "description": "Unique plot token"
+                    },
+                    "plot_config": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Plot Config",
+                        "description": "Plot configuration"
+                    },
+                    "project_config": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Project Config",
+                        "description": "Project configuration"
+                    },
+                    "plot_metadata": {
+                        "$ref": "#/components/schemas/PlotMetadata",
+                        "description": "Plot metadata"
+                    },
+                    "user_metadata": {
+                        "$ref": "#/components/schemas/UserMetadata",
+                        "description": "User/org context"
+                    },
+                    "inferred_config": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InferredConfigResponse"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "LLM-inferred configuration (if description was used)"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "url",
+                    "token",
+                    "plot_config",
+                    "project_config",
+                    "plot_metadata",
+                    "user_metadata"
+                ],
+                "title": "PlotResponse",
+                "description": "Full plot response."
             },
             "PlotTileSchema": {
                 "properties": {
@@ -18249,6 +20546,270 @@
                 ],
                 "title": "ProjectConfig"
             },
+            "ProjectConfigInput": {
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "title": "Project Name",
+                        "description": "Name of the project to fetch logs from"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "Static context to filter logs by"
+                    },
+                    "column_context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Column Context",
+                        "description": "Column context for field resolution"
+                    },
+                    "filter_expr": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filter Expr",
+                        "description": "Boolean expression to filter entries"
+                    },
+                    "from_ids": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From Ids",
+                        "description": "Log IDs to include (ampersand-separated)"
+                    },
+                    "exclude_ids": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Exclude Ids",
+                        "description": "Log IDs to exclude (ampersand-separated)"
+                    },
+                    "from_fields": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From Fields",
+                        "description": "Fields to include (ampersand-separated)"
+                    },
+                    "exclude_fields": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Exclude Fields",
+                        "description": "Fields to exclude (ampersand-separated)"
+                    },
+                    "limit": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "maximum": 10000.0,
+                                "minimum": 1.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Limit",
+                        "description": "Maximum number of logs to fetch",
+                        "default": 1000
+                    },
+                    "offset": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Offset",
+                        "description": "Number of logs to skip"
+                    },
+                    "group_by": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group By",
+                        "description": "Fields to group results by"
+                    },
+                    "group_limit": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "minimum": 1.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group Limit",
+                        "description": "Maximum number of groups at each level"
+                    },
+                    "group_offset": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "minimum": 0.0
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group Offset",
+                        "description": "Number of groups to skip"
+                    },
+                    "group_depth": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group Depth",
+                        "description": "Maximum depth of nested groups"
+                    },
+                    "groups_only": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Groups Only",
+                        "description": "Return only groups without full logs"
+                    },
+                    "nested_groups": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Nested Groups",
+                        "description": "Return groups as nested structure"
+                    },
+                    "sorting": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sorting",
+                        "description": "JSON-encoded sorting configuration"
+                    },
+                    "group_sorting": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Group Sorting",
+                        "description": "JSON-encoded group sorting configuration"
+                    },
+                    "value_limit": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Value Limit",
+                        "description": "Maximum characters for string values"
+                    },
+                    "randomize": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Randomize",
+                        "description": "Return logs in random order"
+                    },
+                    "seed": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Seed",
+                        "description": "Seed for random ordering"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project_name"
+                ],
+                "title": "ProjectConfigInput",
+                "description": "Project/logs configuration for fetching data."
+            },
             "ProjectOut": {
                 "properties": {
                     "id": {
@@ -18306,6 +20867,30 @@
                         ],
                         "title": "Updated At",
                         "description": "When the project was last updated"
+                    },
+                    "user_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Id",
+                        "description": "The ID of the user who owns the project"
+                    },
+                    "organization_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Organization Id",
+                        "description": "The ID of the organization that owns the project"
                     }
                 },
                 "type": "object",
@@ -19253,6 +21838,181 @@
                 "type": "object",
                 "title": "RoleUpdate",
                 "description": "Schema for updating a custom role."
+            },
+            "SecretCreate": {
+                "properties": {
+                    "secret_name": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "minLength": 1,
+                        "title": "Secret Name",
+                        "description": "Unique name/key for the secret (e.g., 'openai_api_key', 'github_token').",
+                        "example": "openai_api_key"
+                    },
+                    "secret_value": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Secret Value",
+                        "description": "The secret value (API key, token, etc.).",
+                        "example": "sk-..."
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Optional description of what this secret is used for.",
+                        "example": "OpenAI API key for GPT-4 access"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "secret_name",
+                    "secret_value"
+                ],
+                "title": "SecretCreate",
+                "description": "Schema for creating or updating an assistant secret."
+            },
+            "SecretRead": {
+                "properties": {
+                    "secret_name": {
+                        "type": "string",
+                        "title": "Secret Name",
+                        "description": "The name/key of the secret.",
+                        "example": "openai_api_key"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Description of what this secret is used for.",
+                        "example": "OpenAI API key for GPT-4 access"
+                    },
+                    "created_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Created At",
+                        "description": "When the secret was created."
+                    },
+                    "updated_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Updated At",
+                        "description": "When the secret was last updated."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "secret_name"
+                ],
+                "title": "SecretRead",
+                "description": "Schema for reading secret metadata (value is masked)."
+            },
+            "SecretUpdate": {
+                "properties": {
+                    "secret_value": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "minLength": 1
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Secret Value",
+                        "description": "New secret value.",
+                        "example": "sk-new-..."
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "New description for the secret.",
+                        "example": "Updated OpenAI API key"
+                    }
+                },
+                "type": "object",
+                "title": "SecretUpdate",
+                "description": "Schema for updating an existing secret."
+            },
+            "SignedUrlRequest": {
+                "properties": {
+                    "gcs_uri": {
+                        "type": "string",
+                        "title": "Gcs Uri",
+                        "description": "GCS URI of the object (e.g., gs://bucket-name/path/to/object)",
+                        "examples": [
+                            "gs://my-bucket/images/photo.jpg"
+                        ]
+                    },
+                    "expiration_minutes": {
+                        "type": "integer",
+                        "maximum": 10080.0,
+                        "minimum": 1.0,
+                        "title": "Expiration Minutes",
+                        "description": "URL expiration time in minutes (1-10080, default 60)",
+                        "default": 60
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "gcs_uri"
+                ],
+                "title": "SignedUrlRequest",
+                "description": "Request body for generating a signed URL."
+            },
+            "SignedUrlResponse": {
+                "properties": {
+                    "signed_url": {
+                        "type": "string",
+                        "title": "Signed Url",
+                        "description": "Temporary signed URL for accessing the object"
+                    },
+                    "expires_in_minutes": {
+                        "type": "integer",
+                        "title": "Expires In Minutes",
+                        "description": "URL expiration time in minutes"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "signed_url",
+                    "expires_in_minutes"
+                ],
+                "title": "SignedUrlResponse",
+                "description": "Response body containing the signed URL."
             },
             "StandardFieldDefinition": {
                 "properties": {
@@ -21087,6 +23847,47 @@
                 "title": "UpdateOnboardingStatusRequest",
                 "description": "Request to update user's onboarding status."
             },
+            "UpdatePlotRequest": {
+                "properties": {
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "New title for the plot"
+                    },
+                    "plot_config": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/PlotConfigInput"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "New plot configuration"
+                    },
+                    "project_config": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ProjectConfigInput"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "New project configuration"
+                    }
+                },
+                "type": "object",
+                "title": "UpdatePlotRequest",
+                "description": "Request to update an existing plot."
+            },
             "UpdateQueryLoggingRequest": {
                 "properties": {
                     "enabled": {
@@ -21529,6 +24330,146 @@
                 ],
                 "title": "UserBusinessStatusResponse",
                 "description": "Response containing user's business classification status."
+            },
+            "UserMetadata": {
+                "properties": {
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id",
+                        "description": "User ID of the plot creator"
+                    },
+                    "organization_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Organization Id",
+                        "description": "Organization ID (null for personal plots)"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "user_id"
+                ],
+                "title": "UserMetadata",
+                "description": "User/organization context for the plot."
+            },
+            "UserResourceAccessEntry": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "title": "Id"
+                    },
+                    "role_id": {
+                        "type": "integer",
+                        "title": "Role Id"
+                    },
+                    "role_name": {
+                        "type": "string",
+                        "title": "Role Name"
+                    },
+                    "permissions": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Permissions"
+                    },
+                    "grantee_type": {
+                        "type": "string",
+                        "title": "Grantee Type"
+                    },
+                    "source": {
+                        "type": "string",
+                        "title": "Source"
+                    },
+                    "team_id": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Team Id"
+                    },
+                    "team_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Team Name"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "role_id",
+                    "role_name",
+                    "permissions",
+                    "grantee_type",
+                    "source",
+                    "created_at"
+                ],
+                "title": "UserResourceAccessEntry",
+                "description": "Schema for a single user access entry with source info."
+            },
+            "UserResourceAccessResponse": {
+                "properties": {
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id"
+                    },
+                    "resource_type": {
+                        "type": "string",
+                        "title": "Resource Type"
+                    },
+                    "resource_id": {
+                        "type": "integer",
+                        "title": "Resource Id"
+                    },
+                    "access_entries": {
+                        "items": {
+                            "$ref": "#/components/schemas/UserResourceAccessEntry"
+                        },
+                        "type": "array",
+                        "title": "Access Entries"
+                    },
+                    "effective_role": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Effective Role"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "user_id",
+                    "resource_type",
+                    "resource_id",
+                    "access_entries"
+                ],
+                "title": "UserResourceAccessResponse",
+                "description": "Schema for a user's access on a specific resource."
             },
             "ValidationError": {
                 "properties": {

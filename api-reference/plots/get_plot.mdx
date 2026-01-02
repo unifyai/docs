@@ -1,10 +1,10 @@
 ---
-title: "List Organization Members"
-api: 'GET /v0/organizations/{organization_id}/members'
+title: "Get Plot"
+api: 'GET /v0/logs/plots/{token}'
 ---
-List all members of an organization with their roles.
+Get a plot by token.
 
-Requires org:read permission.
+Requires project:read permission on the plot's project.
 
 #### Authorizations
 
@@ -14,7 +14,7 @@ Requires org:read permission.
 
 #### Path Parameters
 
-<ParamField query="organization_id" type="integer" required="true">
+<ParamField query="token" type="string" required="true">
 
 </ParamField>
 
@@ -22,14 +22,14 @@ Requires org:read permission.
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members' \
+  --url 'https://api.unify.ai/v0/logs/plots/<token>' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members"
+url = "https://api.unify.ai/v0/logs/plots/<token>"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -43,19 +43,22 @@ print(response.text)
 
 ```json 200
 {
-    "id": "integer",
-    "user_id": "string",
-    "organization_id": "integer",
-    "role_id": "integer",
-    "role_name": "string | null",
-    "created_at": "string",
-    "name": "string | null",
-    "email": "string | null",
-    "image": "string | null",
-    "bio": "string | null",
-    "timezone": "string | null",
-    "phone_number": "string | null"
+    "url": "string",
+    "token": "string",
+    "plot_config": "object",
+    "project_config": "object",
+    "plot_metadata": "object",
+    "user_metadata": "object",
+    "inferred_config": "any | null"
 }
+```
+
+```json 403
+// No Content
+```
+
+```json 404
+// No Content
 ```
 
 ```json 422

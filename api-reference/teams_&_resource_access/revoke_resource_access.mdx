@@ -2,12 +2,14 @@
 title: "Revoke Resource Access"
 api: 'DELETE /v0/resources/{resource_type}/{resource_id}/access'
 ---
-Revoke access to a resource (project or org).
+Revoke access to a resource (project).
 
 User must have appropriate permissions on the resource.
 
+Note: For org-level permissions, use OrganizationMember roles instead.
+
 :param request_fastapi: FastAPI request object.
-:param resource_type: Type of resource ("project" or "org").
+:param resource_type: Type of resource ("project").
 :param resource_id: Resource ID.
 :param access_data: Access revoke data.
 :param session: Database session.
