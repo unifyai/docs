@@ -1,0 +1,32 @@
+---
+title: 'get_custom_api_key'
+---
+
+```python
+def get_custom_api_key(
+    name: str,
+    *,
+    api_key: Optional[str] = None,
+) -> Dict[str, Any]:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/platform/custom_api_keys.py#L40)</p>
+
+Get the value of a custom API key.
+
+**Arguments**:
+
+- `name` - Name of the API key to get the value for.
+- `api_key` - If specified, unify API key to be used. Defaults
+
+
+
+**Returns**:
+
+A dictionary containing the custom API key information.
+
+
+
+**Raises**:
+
+- `requests.HTTPError`: If the request fails.
