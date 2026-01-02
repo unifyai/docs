@@ -1,0 +1,24 @@
+---
+title: 'get_credits'
+---
+
+```python
+def get_credits(*, api_key: Optional[str] = None) -> float:
+```
+
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/platform/credits.py#L9)</p>
+
+Returns the credits remaining in the user account, in USD.
+
+**Arguments**:
+
+- `api_key` - If specified, unify API key to be used. Defaults to the value in the
+
+
+
+**Returns**:
+
+The credits remaining in USD.
+Raises:
+ValueError: If there was an HTTP error.
+- `ValueError` - If there was an HTTP error.

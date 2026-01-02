@@ -6,13 +6,13 @@ title: 'Dataset'
 class Dataset
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L20)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L18)</p>
 
 
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L21)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L19)</p>
 
 ```python
 def __init__(
@@ -46,7 +46,7 @@ Initialize a local dataset.
 
 ### allow\_duplicates
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L74)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L72)</p>
 
 ```python
 def allow_duplicates(self) -> bool:
@@ -58,7 +58,7 @@ Whether to allow duplicates in the dataset.
 
 ### data
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L81)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L79)</p>
 
 ```python
 def data(self):
@@ -70,7 +70,7 @@ Dataset entries.
 
 ### name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L67)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L65)</p>
 
 ```python
 def name(self) -> str:
@@ -84,7 +84,7 @@ Name of the dataset.
 
 ### set\_allow\_duplicates
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L107)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L105)</p>
 
 ```python
 def set_allow_duplicates(self, allow_duplicates: bool) -> Self:
@@ -106,7 +106,7 @@ This dataset, useful for chaining methods.
 
 ### set\_name
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L94)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L92)</p>
 
 ```python
 def set_name(self, name: str) -> Self:
@@ -130,7 +130,7 @@ This dataset, useful for chaining methods.
 
 ### add
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L266)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L264)</p>
 
 ```python
 def add(
@@ -139,9 +139,8 @@ def add(
             Dataset,
             str,
             Dict,
-            Prompt,
             int,
-            List[Union[str, Dict, Prompt]],
+            List[Union[str, Dict]],
         ],
     ) -> Self:
 ```
@@ -163,7 +162,7 @@ The new dataset following the addition.
 
 ### download
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L181)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L179)</p>
 
 ```python
 def download(self, overwrite: bool = False) -> Self:
@@ -188,7 +187,7 @@ This dataset after the in-place download, useful for chaining methods.
 
 ### from\_upstream
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L120)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L118)</p>
 
 ```python
 def from_upstream(
@@ -220,7 +219,7 @@ The dataset, with contents downloaded from upstream.
 
 ### inplace\_add
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L315)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L312)</p>
 
 ```python
 def inplace_add(
@@ -229,9 +228,8 @@ def inplace_add(
             Dataset,
             str,
             Dict,
-            Prompt,
             int,
-            List[Union[str, Dict, Prompt]],
+            List[Union[str, Dict]],
         ],
     ) -> Self:
 ```
@@ -253,12 +251,12 @@ This dataset following the in-place addition.
 
 ### inplace\_sub
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L342)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L338)</p>
 
 ```python
 def inplace_sub(
         self,
-        other: Union[Dataset, str, Dict, Prompt, List[Union[str, Dict, Prompt]]],
+        other: Union[Dataset, str, Dict, List[Union[str, Dict]]],
     ) -> Self:
 ```
 
@@ -279,12 +277,12 @@ This dataset following the in-place subtraction.
 
 ### sub
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L293)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L290)</p>
 
 ```python
 def sub(
         self,
-        other: Union[Dataset, str, Dict, Prompt, List[Union[str, Dict, Prompt]]],
+        other: Union[Dataset, str, Dict, List[Union[str, Dict]]],
     ) -> Self:
 ```
 
@@ -305,7 +303,7 @@ The new dataset following the subtraction.
 
 ### sync
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L228)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L226)</p>
 
 ```python
 def sync(self) -> Self:
@@ -322,7 +320,7 @@ This dataset after the in-place sync, useful for chaining methods.
 
 ### upload
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L156)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L154)</p>
 
 ```python
 def upload(self, overwrite: bool = False) -> Self:
@@ -347,7 +345,7 @@ This dataset, useful for chaining methods.
 
 ### upstream\_diff
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L240)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L238)</p>
 
 ```python
 def upstream_diff(self) -> Self:
@@ -365,12 +363,12 @@ This dataset after printing the diff, useful for chaining methods.
 
 ### \_\_add\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L364)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L360)</p>
 
 ```python
 def __add__(
         self,
-        other: Union[Dataset, str, Dict, Prompt, List[Union[str, Dict, Prompt]]],
+        other: Union[Dataset, str, Dict, List[Union[str, Dict]]],
     ) -> Self:
 ```
 
@@ -392,12 +390,12 @@ The new dataset following the addition.
 
 ### \_\_contains\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L485)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L480)</p>
 
 ```python
 def __contains__(
         self,
-        item: Union[Dataset, str, Dict, Prompt, List[Union[str, Dict, Prompt]]],
+        item: Union[Dataset, str, Dict, List[Union[str, Dict]]],
     ) -> bool:
 ```
 
@@ -419,7 +417,7 @@ Boolean, whether the passed Dataset is a subset of this one.
 
 ### \_\_getitem\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L535)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L530)</p>
 
 ```python
 def __getitem__(self, item: Union[int, slice]) -> Union[Any, Dataset]:
@@ -443,12 +441,12 @@ An individual item or Dataset slice, for int and slice queries respectively.
 
 ### \_\_iadd\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L408)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L403)</p>
 
 ```python
 def __iadd__(
         self,
-        other: Union[Dataset, str, Dict, Prompt, List[Union[str, Dict, Prompt]]],
+        other: Union[Dataset, str, Dict, List[Union[str, Dict]]],
     ) -> Self:
 ```
 
@@ -469,12 +467,12 @@ This dataset following the in-place addition.
 
 ### \_\_isub\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L459)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L454)</p>
 
 ```python
 def __isub__(
         self,
-        other: Union[Dataset, str, Dict, Prompt, List[Union[str, Dict, Prompt]]],
+        other: Union[Dataset, str, Dict, List[Union[str, Dict]]],
     ) -> Self:
 ```
 
@@ -495,7 +493,7 @@ This dataset following the in-place subtraction.
 
 ### \_\_iter\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L475)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L470)</p>
 
 ```python
 def __iter__(self) -> Any:
@@ -511,7 +509,7 @@ The next instance in the dataset.
 
 ### \_\_len\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L526)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L521)</p>
 
 ```python
 def __len__(self) -> int:
@@ -527,7 +525,7 @@ The number of entries in the dataset.
 
 ### \_\_radd\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L381)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L377)</p>
 
 ```python
 def __radd__(
@@ -536,9 +534,8 @@ def __radd__(
             Dataset,
             str,
             Dict,
-            Prompt,
             int,
-            List[Union[str, Dict, Prompt]],
+            List[Union[str, Dict]],
         ],
     ) -> Self:
 ```
@@ -562,7 +559,7 @@ The new dataset following the addition.
 
 ### \_\_repr\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L578)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L573)</p>
 
 ```python
 def __repr__(self):
@@ -574,12 +571,12 @@ def __repr__(self):
 
 ### \_\_rsub\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L441)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L436)</p>
 
 ```python
 def __rsub__(
         self,
-        other: Union[Dataset, str, Dict, Prompt, List[Union[str, Dict, Prompt]]],
+        other: Union[Dataset, str, Dict, List[Union[str, Dict]]],
     ) -> Self:
 ```
 
@@ -602,7 +599,7 @@ The new dataset following the subtraction.
 
 ### \_\_setitem\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L556)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L551)</p>
 
 ```python
 def __setitem__(self, item: Union[int, slice], value: Union[Any, Dataset]):
@@ -614,12 +611,12 @@ def __setitem__(self, item: Union[int, slice], value: Union[Any, Dataset]):
 
 ### \_\_sub\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/b6603377dfc64cb29a1e4a7c1414c501c680598e/unify/logging/dataset.py#L424)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/1d7c839406dc8394e41461de7c5d630520b9d160/unify/logging/dataset.py#L419)</p>
 
 ```python
 def __sub__(
         self,
-        other: Union[Dataset, str, Dict, Prompt, List[Union[str, Dict, Prompt]]],
+        other: Union[Dataset, str, Dict, List[Union[str, Dict]]],
     ) -> Self:
 ```
 

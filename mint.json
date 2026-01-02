@@ -243,144 +243,6 @@
                     ]
                 },
                 {
-                    "group": "universal_api",
-                    "pages": [
-                        {
-                            "group": "casting",
-                            "pages": [
-                                "python/functions/universal_api/casting/cast",
-                                "python/functions/universal_api/casting/try_cast"
-                            ]
-                        },
-                        {
-                            "group": "chatbot",
-                            "pages": [
-                                "python/classes/universal_api/chatbot/ChatBot"
-                            ]
-                        },
-                        {
-                            "group": "clients",
-                            "pages": [
-                                {
-                                    "group": "base",
-                                    "pages": [
-                                        "python/functions/universal_api/clients/base/set_client_direct_mode"
-                                    ]
-                                },
-                                {
-                                    "group": "multi_llm",
-                                    "pages": [
-                                        "python/classes/universal_api/clients/multi_llm/AsyncMultiUnify",
-                                        "python/classes/universal_api/clients/multi_llm/MultiUnify"
-                                    ]
-                                },
-                                {
-                                    "group": "uni_llm",
-                                    "pages": [
-                                        "python/classes/universal_api/clients/uni_llm/AsyncUnify",
-                                        "python/classes/universal_api/clients/uni_llm/Unify"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "group": "endpoints",
-                            "pages": [
-                                {
-                                    "group": "utils",
-                                    "pages": [
-                                        "python/functions/universal_api/endpoints/utils/get_model_alias",
-                                        "python/functions/universal_api/endpoints/utils/register_model_alias_map"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "group": "types",
-                            "pages": [
-                                {
-                                    "group": "prompt",
-                                    "pages": [
-                                        "python/classes/universal_api/types/prompt/Prompt"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "group": "usage",
-                            "pages": [
-                                "python/functions/universal_api/usage/with_logging"
-                            ]
-                        },
-                        {
-                            "group": "utils",
-                            "pages": [
-                                {
-                                    "group": "credits",
-                                    "pages": [
-                                        "python/functions/universal_api/utils/credits/get_credits"
-                                    ]
-                                },
-                                {
-                                    "group": "custom_api_keys",
-                                    "pages": [
-                                        "python/functions/universal_api/utils/custom_api_keys/create_custom_api_key",
-                                        "python/functions/universal_api/utils/custom_api_keys/delete_custom_api_key",
-                                        "python/functions/universal_api/utils/custom_api_keys/get_custom_api_key",
-                                        "python/functions/universal_api/utils/custom_api_keys/list_custom_api_keys",
-                                        "python/functions/universal_api/utils/custom_api_keys/rename_custom_api_key"
-                                    ]
-                                },
-                                {
-                                    "group": "custom_endpoints",
-                                    "pages": [
-                                        "python/functions/universal_api/utils/custom_endpoints/create_custom_endpoint",
-                                        "python/functions/universal_api/utils/custom_endpoints/delete_custom_endpoint",
-                                        "python/functions/universal_api/utils/custom_endpoints/list_custom_endpoints",
-                                        "python/functions/universal_api/utils/custom_endpoints/rename_custom_endpoint"
-                                    ]
-                                },
-                                {
-                                    "group": "httpx_logging",
-                                    "pages": [
-                                        "python/functions/universal_api/utils/httpx_logging/make_async_httpx_client_for_unify_logging",
-                                        "python/functions/universal_api/utils/httpx_logging/make_httpx_client_for_unify_logging"
-                                    ]
-                                },
-                                {
-                                    "group": "provider_preprocessing",
-                                    "pages": [
-                                        "python/functions/universal_api/utils/provider_preprocessing/apply_provider_preprocessing"
-                                    ]
-                                },
-                                {
-                                    "group": "queries",
-                                    "pages": [
-                                        "python/functions/universal_api/utils/queries/get_queries",
-                                        "python/functions/universal_api/utils/queries/get_query_metrics",
-                                        "python/functions/universal_api/utils/queries/get_query_tags",
-                                        "python/functions/universal_api/utils/queries/log_query"
-                                    ]
-                                },
-                                {
-                                    "group": "supported_endpoints",
-                                    "pages": [
-                                        "python/functions/universal_api/utils/supported_endpoints/list_endpoints",
-                                        "python/functions/universal_api/utils/supported_endpoints/list_models",
-                                        "python/functions/universal_api/utils/supported_endpoints/list_providers"
-                                    ]
-                                },
-                                {
-                                    "group": "user",
-                                    "pages": [
-                                        "python/functions/universal_api/utils/user/get_user_basic_info"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "group": "utils",
                     "pages": [
                         {
@@ -476,6 +338,65 @@
                                 "python/functions/assistants/management/delete_assistant",
                                 "python/functions/assistants/management/list_assistants",
                                 "python/functions/assistants/management/update_assistant"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "group": "platform",
+                    "pages": [
+                        {
+                            "group": "credits",
+                            "pages": [
+                                "python/functions/platform/credits/get_credits"
+                            ]
+                        },
+                        {
+                            "group": "custom_api_keys",
+                            "pages": [
+                                "python/functions/platform/custom_api_keys/create_custom_api_key",
+                                "python/functions/platform/custom_api_keys/delete_custom_api_key",
+                                "python/functions/platform/custom_api_keys/get_custom_api_key",
+                                "python/functions/platform/custom_api_keys/list_custom_api_keys",
+                                "python/functions/platform/custom_api_keys/rename_custom_api_key"
+                            ]
+                        },
+                        {
+                            "group": "custom_endpoints",
+                            "pages": [
+                                "python/functions/platform/custom_endpoints/create_custom_endpoint",
+                                "python/functions/platform/custom_endpoints/delete_custom_endpoint",
+                                "python/functions/platform/custom_endpoints/list_custom_endpoints",
+                                "python/functions/platform/custom_endpoints/rename_custom_endpoint"
+                            ]
+                        },
+                        {
+                            "group": "queries",
+                            "pages": [
+                                "python/functions/platform/queries/get_queries",
+                                "python/functions/platform/queries/get_query_metrics",
+                                "python/functions/platform/queries/get_query_tags",
+                                "python/functions/platform/queries/log_query"
+                            ]
+                        },
+                        {
+                            "group": "supported_endpoints",
+                            "pages": [
+                                "python/functions/platform/supported_endpoints/list_endpoints",
+                                "python/functions/platform/supported_endpoints/list_models",
+                                "python/functions/platform/supported_endpoints/list_providers"
+                            ]
+                        },
+                        {
+                            "group": "usage",
+                            "pages": [
+                                "python/functions/platform/usage/with_logging"
+                            ]
+                        },
+                        {
+                            "group": "user",
+                            "pages": [
+                                "python/functions/platform/user/get_user_basic_info"
                             ]
                         }
                     ]
