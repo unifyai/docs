@@ -9,8 +9,10 @@ Preserves the access ID and created_at timestamp.
 
 User must have write permission on the resource.
 
+Note: For org-level permissions, use OrganizationMember roles instead.
+
 :param request_fastapi: FastAPI request object.
-:param resource_type: Type of resource ("project" or "org").
+:param resource_type: Type of resource ("project").
 :param resource_id: Resource ID.
 :param access_id: ResourceAccess ID to update.
 :param update_data: Update data containing new role_id.

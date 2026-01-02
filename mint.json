@@ -322,7 +322,9 @@
                                 "api-reference/assistant_management/list_all_assistants",
                                 "api-reference/assistant_management/remove_a_contact_method_from_an_assistant",
                                 "api-reference/assistant_management/delete_an_assistant",
-                                "api-reference/assistant_management/update_assistant_configuration"
+                                "api-reference/assistant_management/update_assistant_configuration",
+                                "api-reference/assistant_management/transfer_assistant_to_organization",
+                                "api-reference/assistant_management/transfer_assistant_to_personal_workspace"
                             ]
                         },
                         {
@@ -473,6 +475,17 @@
                             ]
                         },
                         {
+                            "group": "Plots",
+                            "pages": [
+                                "api-reference/plots/create_plot",
+                                "api-reference/plots/list_plots",
+                                "api-reference/plots/delete_plots_by_project",
+                                "api-reference/plots/get_plot",
+                                "api-reference/plots/update_plot",
+                                "api-reference/plots/delete_plot"
+                            ]
+                        },
+                        {
                             "group": "Configs",
                             "pages": [
                                 "api-reference/configs/create_interface",
@@ -511,6 +524,18 @@
                     ]
                 },
                 {
+                    "group": "Storage",
+                    "pages": [
+                        {
+                            "group": "Storage",
+                            "pages": [
+                                "api-reference/storage/generate_a_signed_url_for_a_gcs_object",
+                                "api-reference/storage/download_a_gcs_object_as_base64"
+                            ]
+                        }
+                    ]
+                },
+                {
                     "group": "Account",
                     "pages": [
                         {
@@ -543,6 +568,7 @@
                             "pages": [
                                 "api-reference/organizations/list_organizations",
                                 "api-reference/organizations/create_organization",
+                                "api-reference/organizations/list_organization_members_by_api_key",
                                 "api-reference/organizations/get_organization",
                                 "api-reference/organizations/update_organization",
                                 "api-reference/organizations/delete_organization",
@@ -556,7 +582,12 @@
                                 "api-reference/organizations/cancel_organization_invite",
                                 "api-reference/organizations/list_my_pending_invites",
                                 "api-reference/organizations/accept_invite",
-                                "api-reference/organizations/decline_invite"
+                                "api-reference/organizations/decline_invite",
+                                "api-reference/organizations/get_organization_billing",
+                                "api-reference/organizations/update_organization_billing",
+                                "api-reference/organizations/get_organization_credits",
+                                "api-reference/organizations/get_organization_business_profile",
+                                "api-reference/organizations/update_organization_business_profile"
                             ]
                         },
                         {

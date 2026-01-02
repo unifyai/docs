@@ -1,0 +1,103 @@
+---
+title: "Create Plot"
+api: 'POST /v0/logs/plot'
+---
+Create a new shareable plot.
+
+Supports two modes:
+1. Direct config: Provide explicit plot_config
+2. Description-based: Provide natural language description for LLM inference
+
+Requires project:read permission on the target project.
+LLM inference (if used) is billed to the caller's account.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="plot_config" type="any | null" >
+Direct plot configuration
+</ParamField>
+
+<ParamField body="description" type="string | null" >
+Natural language description for LLM inference
+</ParamField>
+
+<ParamField body="project_config" type="object" required="true">
+Project and logs configuration
+</ParamField>
+
+<ParamField body="title" type="string | null" >
+Optional title for the plot
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/logs/plot' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs/plot"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "url": "string",
+    "token": "string",
+    "plot_config": "object",
+    "project_config": "object",
+    "plot_metadata": "object",
+    "user_metadata": "object",
+    "inferred_config": "any | null"
+}
+```
+
+```json 400
+// No Content
+```
+
+```json 403
+// No Content
+```
+
+```json 404
+// No Content
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

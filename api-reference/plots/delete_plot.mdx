@@ -1,15 +1,10 @@
 ---
-title: "Remove Organization Member"
-api: 'DELETE /v0/organizations/{organization_id}/members/{user_id}'
+title: "Delete Plot"
+api: 'DELETE /v0/logs/plots/{token}'
 ---
-Remove a member from an organization.
+Delete a plot.
 
-Permission: self-removal OR org:write permission.
-- Any member can remove themselves (leave the organization)
-- Users with org:write permission can remove other members
-
-Automatically revokes all organization-specific API keys for the member.
-Personal API keys are NOT affected.
+Requires project:write permission on the plot's project.
 
 #### Authorizations
 
@@ -19,11 +14,7 @@ Personal API keys are NOT affected.
 
 #### Path Parameters
 
-<ParamField query="organization_id" type="integer" required="true">
-
-</ParamField>
-
-<ParamField query="user_id" type="string" required="true">
+<ParamField query="token" type="string" required="true">
 
 </ParamField>
 
@@ -31,14 +22,14 @@ Personal API keys are NOT affected.
 
 ```bash cURL
 curl --request DELETE \
-  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members/<user_id>' \
+  --url 'https://api.unify.ai/v0/logs/plots/<token>' \
   --header "Authorization: Bearer $UNIFY_KEY"
 ```
 
 ```python Python
 import requests
 
-url = "https://api.unify.ai/v0/organizations/<organization_id>/members/<user_id>"
+url = "https://api.unify.ai/v0/logs/plots/<token>"
 
 headers = {"Authorization": "Bearer <token>"}
 
@@ -51,6 +42,14 @@ print(response.text)
 <ResponseExample>
 
 ```json 204
+// No Content
+```
+
+```json 403
+// No Content
+```
+
+```json 404
 // No Content
 ```
 

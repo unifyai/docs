@@ -4,6 +4,9 @@ api: 'GET /v0/projects/tree'
 ---
 Return all projects the user can access with their icons and interface names.
 
+When using a personal API key, returns only personal projects.
+When using an organization API key, returns only that organization's projects.
+
 #### Authorizations
 
 <ParamField header="Authorization" type="string" required="true">
