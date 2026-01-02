@@ -4,7 +4,6 @@ title: 'log'
 
 ```python
 def log(
-    fn: Optional[Callable] = None,
     *,
     project: Optional[str] = None,
     context: Optional[str] = None,
@@ -13,19 +12,16 @@ def log(
     mutable: Optional[Union[bool, Dict[str, bool]]] = True,
     api_key: Optional[str] = None,
     **entries,
-) -> Union[unify.Log, Callable]:
+) -> unify.Log:
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/1d5c0aeb9a924beffd09e2e551536e33e31f3d5d/unify/logging/utils/logs.py#L328)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/2679d1daf93d9974b8a4678dd331b5f13ef73076/unify/logging/utils/logs.py#L328)</p>
 
-Can be used either as a regular function to create logs or as a decorator to log function inputs, intermediates and outputs.When used as a regular function:
 Creates one or more logs associated to a project. unify.Logs are LLM-call-level data
-that might depend on other variables.When used as a decorator:
-Logs function inputs and intermediate values.
+that might depend on other variables.
 
 **Arguments**:
 
-- `fn` - When used as a decorator, this is the function to be wrapped.
 - `project` - Name of the project the stored logs will be associated to.
 - `context` - Context for the logs.
 - `new` - Whether to create a new log if there is a currently active global log.
@@ -38,5 +34,4 @@ Logs function inputs and intermediate values.
 
 **Returns**:
 
-When used as a regular function: The unique id of newly created log.
-When used as a decorator: The wrapped function.
+The unique id of newly created log.
