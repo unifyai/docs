@@ -346,51 +346,9 @@
                     "group": "platform",
                     "pages": [
                         {
-                            "group": "credits",
-                            "pages": [
-                                "python/functions/platform/credits/get_credits"
-                            ]
-                        },
-                        {
-                            "group": "custom_api_keys",
-                            "pages": [
-                                "python/functions/platform/custom_api_keys/create_custom_api_key",
-                                "python/functions/platform/custom_api_keys/delete_custom_api_key",
-                                "python/functions/platform/custom_api_keys/get_custom_api_key",
-                                "python/functions/platform/custom_api_keys/list_custom_api_keys",
-                                "python/functions/platform/custom_api_keys/rename_custom_api_key"
-                            ]
-                        },
-                        {
-                            "group": "custom_endpoints",
-                            "pages": [
-                                "python/functions/platform/custom_endpoints/create_custom_endpoint",
-                                "python/functions/platform/custom_endpoints/delete_custom_endpoint",
-                                "python/functions/platform/custom_endpoints/list_custom_endpoints",
-                                "python/functions/platform/custom_endpoints/rename_custom_endpoint"
-                            ]
-                        },
-                        {
                             "group": "queries",
                             "pages": [
-                                "python/functions/platform/queries/get_queries",
-                                "python/functions/platform/queries/get_query_metrics",
-                                "python/functions/platform/queries/get_query_tags",
                                 "python/functions/platform/queries/log_query"
-                            ]
-                        },
-                        {
-                            "group": "supported_endpoints",
-                            "pages": [
-                                "python/functions/platform/supported_endpoints/list_endpoints",
-                                "python/functions/platform/supported_endpoints/list_models",
-                                "python/functions/platform/supported_endpoints/list_providers"
-                            ]
-                        },
-                        {
-                            "group": "usage",
-                            "pages": [
-                                "python/functions/platform/usage/with_logging"
                             ]
                         },
                         {
