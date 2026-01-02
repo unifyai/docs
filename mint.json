@@ -129,12 +129,6 @@
                     "group": "logging",
                     "pages": [
                         {
-                            "group": "dataset",
-                            "pages": [
-                                "python/classes/logging/dataset/Dataset"
-                            ]
-                        },
-                        {
                             "group": "logs",
                             "pages": [
                                 "python/classes/logging/logs/ColumnContext",
@@ -183,16 +177,6 @@
                                         "python/functions/logging/utils/contexts/get_contexts",
                                         "python/functions/logging/utils/contexts/rename_context",
                                         "python/functions/logging/utils/contexts/rollback_context"
-                                    ]
-                                },
-                                {
-                                    "group": "datasets",
-                                    "pages": [
-                                        "python/functions/logging/utils/datasets/add_dataset_entries",
-                                        "python/functions/logging/utils/datasets/delete_dataset",
-                                        "python/functions/logging/utils/datasets/download_dataset",
-                                        "python/functions/logging/utils/datasets/list_datasets",
-                                        "python/functions/logging/utils/datasets/upload_dataset"
                                     ]
                                 },
                                 {
