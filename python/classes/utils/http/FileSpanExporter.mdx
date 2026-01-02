@@ -6,7 +6,7 @@ title: 'FileSpanExporter'
 class FileSpanExporter
 ```
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/220eb33240a14b7bec3f3dc87949374131e7af42/unify/utils/http.py#L69)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/967cc7098ed63b173066988b757583b1fa64591d/unify/utils/http.py#L69)</p>
 
 Exports spans to JSONL files, one file per trace_id.
 
@@ -16,7 +16,7 @@ Exports spans to JSONL files, one file per trace_id.
 
 ### \_\_init\_\_
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/220eb33240a14b7bec3f3dc87949374131e7af42/unify/utils/http.py#L76)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/967cc7098ed63b173066988b757583b1fa64591d/unify/utils/http.py#L76)</p>
 
 ```python
 def __init__(self, log_dir: Path, service_name: str = "unify"):
@@ -30,7 +30,7 @@ def __init__(self, log_dir: Path, service_name: str = "unify"):
 
 ### export
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/220eb33240a14b7bec3f3dc87949374131e7af42/unify/utils/http.py#L82)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/967cc7098ed63b173066988b757583b1fa64591d/unify/utils/http.py#L82)</p>
 
 ```python
 def export(self, spans) -> int:
@@ -42,7 +42,7 @@ Export a batch of spans to files.
 
 ### force\_flush
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/220eb33240a14b7bec3f3dc87949374131e7af42/unify/utils/http.py#L141)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/967cc7098ed63b173066988b757583b1fa64591d/unify/utils/http.py#L141)</p>
 
 ```python
 def force_flush(self, timeout_millis: int = 30000) -> bool:
@@ -54,7 +54,7 @@ Force flush any buffered spans (no-op for file exporter).
 
 ### shutdown
 
-<p align="right">[source code](https://github.com/unifyai/unify/tree/220eb33240a14b7bec3f3dc87949374131e7af42/unify/utils/http.py#L138)</p>
+<p align="right">[source code](https://github.com/unifyai/unify/tree/967cc7098ed63b173066988b757583b1fa64591d/unify/utils/http.py#L138)</p>
 
 ```python
 def shutdown(self) -> None:

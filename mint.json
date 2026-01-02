@@ -174,12 +174,10 @@
                                         "python/functions/logging/utils/logs/get_groups",
                                         "python/functions/logging/utils/logs/get_logs",
                                         "python/functions/logging/utils/logs/get_logs_metric",
-                                        "python/functions/logging/utils/logs/initialize_async_logger",
                                         "python/functions/logging/utils/logs/join_logs",
                                         "python/functions/logging/utils/logs/log",
                                         "python/functions/logging/utils/logs/rename_field",
                                         "python/functions/logging/utils/logs/set_user_logging",
-                                        "python/functions/logging/utils/logs/shutdown_async_logger",
                                         "python/functions/logging/utils/logs/update_logs"
                                     ]
                                 },
