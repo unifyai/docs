@@ -134,7 +134,6 @@
                                 "python/classes/logging/logs/ColumnContext",
                                 "python/classes/logging/logs/Context",
                                 "python/classes/logging/logs/Entries",
-                                "python/classes/logging/logs/Experiment",
                                 "python/classes/logging/logs/Log",
                                 "python/classes/logging/logs/LogGroup",
                                 "python/classes/logging/logs/LogTransformer",
@@ -151,14 +150,6 @@
                                     "group": "async_logger",
                                     "pages": [
                                         "python/classes/logging/utils/async_logger/AsyncLoggerManager"
-                                    ]
-                                },
-                                {
-                                    "group": "compositions",
-                                    "pages": [
-                                        "python/functions/logging/utils/compositions/get_experiment_name",
-                                        "python/functions/logging/utils/compositions/get_experiment_version",
-                                        "python/functions/logging/utils/compositions/get_source"
                                     ]
                                 },
                                 {
