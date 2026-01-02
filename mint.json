@@ -297,10 +297,7 @@
                         {
                             "group": "management",
                             "pages": [
-                                "python/functions/assistants/management/create_assistant",
-                                "python/functions/assistants/management/delete_assistant",
-                                "python/functions/assistants/management/list_assistants",
-                                "python/functions/assistants/management/update_assistant"
+                                "python/functions/assistants/management/list_assistants"
                             ]
                         }
                     ]
