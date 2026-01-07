@@ -1,6 +1,6 @@
 FROM node:bookworm
 
-WORKDIR /unify-docs
+WORKDIR /docs
 
 RUN npm install -g mintlify
 

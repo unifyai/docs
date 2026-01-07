@@ -21,7 +21,7 @@ jobs:
 
   pytest:
     runs-on: ubuntu-latest
-    environment: unify-docs-testing
+    environment: docs-testing
     steps:
     - uses: actions/checkout@v2
     - name: Setup Python
@@ -35,6 +35,6 @@ jobs:
         POETRY_VIRTUALENVS_CREATE: false
 
     - name: Run Tests
-      run: poetry run pytest -vv --cov="unify-docs" -n 4 .
+      run: poetry run pytest -vv --cov="docs" -n 4 .
       env:
         UNIFY_KEY: ${{ secrets.AUTH_ACCOUNT_API_KEY }}

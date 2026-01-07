@@ -23,7 +23,7 @@ def test_all():
     else:
         for mdx_filepath in mdx_filepaths:
             python_results, shell_results, all_passed = run_test(mdx_filepath)
-            mdx_filepath_short = mdx_filepath.split("unify-docs/")[-1].split(".mdx")[0]
+            mdx_filepath_short = mdx_filepath.split("docs/")[-1].split(".mdx")[0]
             results[mdx_filepath_short] = {
                 "python": python_results,
                 "shell": shell_results,
