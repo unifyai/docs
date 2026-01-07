@@ -27,9 +27,9 @@ Just a few notes while making changes to the docs,
 13. There are a few endpoints on the docs where either the description of the parameters or the description of the responses with different error codes might be missing, adding those to the above mentioned places should get them working.
 
 14. Finally, given that we’re doing the markdown writing ourselves rather than relying on mintlify, this has lead to some brittleness with the doc building code, so I’d highly recommend setting up the docs locally, which would require
-    1. cloning the `unify-docs` repo, followed by `npm i -g mintlify` (also prolly installing `npm` and `node` if not done already), then go inside the `unify-docs` folder and do `npm i` followed by `mintlify dev`. This should run the docs on a local server where you can test how your changes
-    2. Copy over the `mint.json` from the latest version of `unify-docs` inside the `unify` folder
-    3. in order to build the docs, you’d need to go inside the orchestra folder and do `python docs/main.py` which should build the mdx files, you’d then need to move the `api-reference` folder and replace the `unify-docs/api-reference` folder with that one instead, and also replace the updated `mint.json` in the `unify-doc`s folder. This should give you a preview of how your changes impacted the docs
+    1. cloning the `docs` repo, followed by `npm i -g mintlify` (also prolly installing `npm` and `node` if not done already), then go inside the `docs` folder and do `npm i` followed by `mintlify dev`. This should run the docs on a local server where you can test how your changes
+    2. Copy over the `mint.json` from the latest version of `docs` inside the `unify` folder
+    3. in order to build the docs, you’d need to go inside the orchestra folder and do `python docs/main.py` which should build the mdx files, you’d then need to move the `api-reference` folder and replace the `docs/api-reference` folder with that one instead, and also replace the updated `mint.json` in the `unify-doc`s folder. This should give you a preview of how your changes impacted the docs
 
     OR
 
@@ -42,6 +42,6 @@ Just a few notes while making changes to the docs,
     4. run the command `pydoc-markdown | tee output/result.txt`
     5. Then you should move the `generate_docs.py` script inside the `output` folder
     6. Run `python output/generate_docs.py`
-    7. Once the script is complete, you can copy the `.mdx` files inside the `output` folder inside the `python` folder of the `unify-docs` repo.
+    7. Once the script is complete, you can copy the `.mdx` files inside the `output` folder inside the `python` folder of the `docs` repo.
 
 16. In case there's a submodule in the python client that docs shouldn't be built for, that submodule should be added to [this](https://github.com/unifyai/unify/blob/28384abae3863ee54ea16672f83a02be1a3673aa/generate_docs.py#L13) list.

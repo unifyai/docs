@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Python tests for test_all.test_all" type="tests" factoryName="Autodetect" nameIsGenerated="true">
-    <module name="unify-docs" />
+    <module name="docs" />
     <option name="ENV_FILES" value="$PROJECT_DIR$/.env" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
