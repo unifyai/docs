@@ -37,4 +37,4 @@ jobs:
     - name: Run Tests
       run: poetry run pytest -vv --cov="docs" -n 4 .
       env:
-        UNIFY_KEY: ${{ secrets.AUTH_ACCOUNT_API_KEY }}
+        UNIFY_KEY: ${{ secrets.UNIFY_API_KEY }}
