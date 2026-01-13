@@ -21,7 +21,6 @@ jobs:
 
   pytest:
     runs-on: ubuntu-latest
-    environment: docs-testing
     steps:
     - uses: actions/checkout@v2
     - name: Setup Python
