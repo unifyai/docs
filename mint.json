@@ -25,92 +25,11 @@
         "name": "Console",
         "url": "https://console.unify.ai"
     },
-    "api": {
-        "baseUrl": "https://api.unify.ai",
-        "playground": {
-            "mode": "simple"
-        }
-    },
-    "primaryTab": {
-        "name": "Walkthrough"
-    },
-    "tabs": [],
     "navigation": [
         {
             "group": "",
             "pages": [
-                {
-                    "group": "Basics",
-                    "pages": [
-                        "basics/welcome",
-                        "basics/quickstart",
-                        "basics/billing"
-                    ]
-                },
-                {
-                    "group": "Case Study",
-                    "pages": [
-                        "case_study/the_app",
-                        "case_study/usage_dashboard",
-                        "case_study/upload_datasets",
-                        {
-                            "group": "Optimize Agent",
-                            "pages": [
-                                "case_study/optimize_agent/data_flywheel",
-                                "case_study/optimize_agent/iteration_0",
-                                "case_study/optimize_agent/iteration_1",
-                                "case_study/optimize_agent/iteration_2",
-                                "case_study/optimize_agent/iteration_3",
-                                "case_study/optimize_agent/iteration_4",
-                                "case_study/optimize_agent/iteration_5",
-                                "case_study/optimize_agent/iteration_6",
-                                "case_study/optimize_agent/iteration_7",
-                                "case_study/optimize_agent/iteration_8",
-                                "case_study/optimize_agent/iteration_9",
-                                "case_study/optimize_agent/iteration_10"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "group": "Universal API",
-                    "pages": [
-                        "universal_api/overview",
-                        "universal_api/queries",
-                        "universal_api/caching",
-                        "universal_api/fallbacks",
-                        "universal_api/routing",
-                        "universal_api/comparisons",
-                        "universal_api/chatbot"
-                    ]
-                },
-                {
-                    "group": "Logging",
-                    "pages": [
-                        "logging/overview",
-                        "logging/projects",
-                        "logging/logs",
-                        "logging/contexts",
-                        "logging/datasets",
-                        "logging/column_contexts",
-                        "logging/entries",
-                        "logging/parameters",
-                        "logging/experiments",
-                        "logging/traces"
-                    ]
-                },
-                {
-                    "group": "Interfaces",
-                    "pages": [
-                        "interfaces/overview",
-                        "interfaces/basics",
-                        "interfaces/editors",
-                        "interfaces/tables",
-                        "interfaces/views",
-                        "interfaces/plots"
-                    ]
-                },
-                "on_prem/overview"
+                "basics/welcome"
             ]
         }
     ],
