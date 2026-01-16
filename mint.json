@@ -1,11 +1,11 @@
 {
     "name": "Unify Documentation",
     "logo": {
-        "dark": "https://raw.githubusercontent.com/unifyai/.github/main/unify_logo_only.png",
-        "light": "https://raw.githubusercontent.com/unifyai/.github/main/unify_logo_only.png",
+        "dark": "https://raw.githubusercontent.com/unifyai/.github/main/public_images/unify_logo_only.png",
+        "light": "https://raw.githubusercontent.com/unifyai/.github/main/public_images/unify_logo_only.png",
         "href": "https://unify.ai"
     },
-    "favicon": "https://raw.githubusercontent.com/unifyai/.github/main/unify_logo_only.png",
+    "favicon": "https://raw.githubusercontent.com/unifyai/.github/main/public_images/unify_logo_only.png",
     "colors": {
         "primary": "#009600",
         "light": "#009600",
