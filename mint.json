@@ -1,11 +1,11 @@
 {
     "name": "Unify Documentation",
     "logo": {
-        "dark": "https://raw.githubusercontent.com/unifyai/.github/main/public_images/unify_logo_only.png",
-        "light": "https://raw.githubusercontent.com/unifyai/.github/main/public_images/unify_logo_only.png",
+        "dark": "/images/unify_logo_only.png",
+        "light": "/images/unify_logo_only.png",
         "href": "https://unify.ai"
     },
-    "favicon": "https://raw.githubusercontent.com/unifyai/.github/main/public_images/unify_logo_only.png",
+    "favicon": "/images/unify_logo_only.png",
     "colors": {
         "primary": "#009600",
         "light": "#009600",
@@ -15,12 +15,7 @@
             "to": "#009600"
         }
     },
-    "topbarLinks": [
-        {
-            "name": "Contact",
-            "url": "https://unify.ai/contact"
-        }
-    ],
+    "topbarLinks": [],
     "topbarCtaButton": {
         "name": "Console",
         "url": "https://console.unify.ai"
@@ -31,6 +26,24 @@
             "pages": [
                 "basics/welcome"
             ]
+        },
+        {
+            "group": "",
+            "pages": [
+                {
+                    "group": "Assistants",
+                    "pages": [
+                        {
+                            "group": "Messages",
+                            "pages": [
+                                "api-reference/messages/upload_a_file_attachment_for_use_in_a_message",
+                                "api-reference/messages/send_a_message_to_an_assistant",
+                                "api-reference/messages/poll_for_a_message_response"
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "footerSocials": {
@@ -39,5 +52,20 @@
         "youtube": "https://youtube.com/@unifyai",
         "linkedin": "https://www.linkedin.com/company/unifyai",
         "github": "https://github.com/unifyai"
-    }
+    },
+    "api": {
+        "baseUrl": "https://api.unify.ai",
+        "playground": {
+            "mode": "simple"
+        }
+    },
+    "primaryTab": {
+        "name": "Welcome"
+    },
+    "tabs": [
+        {
+            "name": "REST API",
+            "url": "api-reference"
+        }
+    ]
 }
