@@ -1,0 +1,81 @@
+---
+title: "Send a message to an assistant"
+api: 'POST /v0/messages'
+---
+Send a programmatic message to an assistant. Returns a message_id that can be polled via GET /messages/{message_id} for the response.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="assistant_id" type="integer" required="true">
+The ID of the assistant to send the message to.
+</ParamField>
+
+<ParamField body="message" type="string" required="true">
+The message content.
+</ParamField>
+
+<ParamField body="tags" type="[string]" >
+Optional tags for routing and context (e.g. ['source:slack', 'channel:#general']).
+</ParamField>
+
+<ParamField body="attachments" type="[Any]" >
+File attachments previously uploaded via POST /messages/attachments.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/messages' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "assistant_id": 42,
+    "message": "Add milk to my shopping list."
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/messages"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"assistant_id": 42, "message": "Add milk to my shopping list."}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 201
+{
+    "info": "object"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
