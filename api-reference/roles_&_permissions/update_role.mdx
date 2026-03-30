@@ -1,0 +1,96 @@
+---
+title: "Update Role"
+api: 'PATCH /v0/organizations/{organization_id}/roles/{role_id}'
+---
+Update a custom role (name and description only).
+
+Only organization owners can update custom roles.
+Cannot update system roles.
+
+:param request_fastapi: FastAPI request object.
+:param organization_id: Organization ID.
+:param role_id: Role ID.
+:param role_data: Role update data.
+:param session: Database session.
+:return: Updated role.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="role_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="name" type="string | null" >
+
+</ParamField>
+
+<ParamField body="description" type="string | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/roles/<role_id>' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/roles/<role_id>"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("PATCH", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "integer",
+    "name": "string",
+    "description": "string | null",
+    "organization_id": "integer | null",
+    "is_system_role": "boolean",
+    "created_at": "string",
+    "permissions": "[Any]"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

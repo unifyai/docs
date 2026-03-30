@@ -8,7 +8,7 @@
         "/v0/user/photo/upload": {
             "post": {
                 "tags": [
-                    "Query Logging",
+                    "User",
                     "Users"
                 ],
                 "summary": "Upload user profile photo",
@@ -53,7 +53,7 @@
         "/v0/user/photo": {
             "delete": {
                 "tags": [
-                    "Query Logging",
+                    "User",
                     "Users"
                 ],
                 "summary": "Remove user profile photo",
@@ -78,7 +78,7 @@
         "/v0/user/query-logging": {
             "get": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Get Query Logging Status",
                 "description": "Get the current query logging status for the authenticated user.",
@@ -101,7 +101,7 @@
             },
             "patch": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Update Query Logging Status",
                 "description": "Update the query logging status for the authenticated user.",
@@ -146,7 +146,7 @@
         "/v0/user/basic-info": {
             "get": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Get User Basic Info",
                 "description": "Get basic information for the authenticated user.",
@@ -168,60 +168,13 @@
                 ]
             }
         },
-        "/v0/user/claim-assistant-hiring-one-time-link": {
-            "post": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": "Claim Credit Grant Link",
-                "description": "Claim a one-time credit grant link.\n\nCredits are applied to the billing account that corresponds to the\ncaller's active workspace:\n- Personal API key \u2192 user's BillingAccount\n- Organization API key \u2192 organization's BillingAccount\n\nGuards:\n- Per-link: each link can only be claimed once.\n- Per-user: each user can only benefit from one link ever.\n- Per-org: each organization can only benefit from one link ever.",
-                "operationId": "claim_credit_grant_link_v0_user_claim_assistant_hiring_one_time_link_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreditGrantLinkClaimRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CreditGrantClaimResponse"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
         "/v0/user/claim-credit-grant-link": {
             "post": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Claim Credit Grant Link",
-                "description": "Claim a one-time credit grant link.\n\nCredits are applied to the billing account that corresponds to the\ncaller's active workspace:\n- Personal API key \u2192 user's BillingAccount\n- Organization API key \u2192 organization's BillingAccount\n\nGuards:\n- Per-link: each link can only be claimed once.\n- Per-user: each user can only benefit from one link ever.\n- Per-org: each organization can only benefit from one link ever.",
+                "description": "Claim a credit grant link.\n\nCredits are applied to the billing account that corresponds to the\ncaller's active workspace:\n- Personal API key \u2192 user's BillingAccount\n- Organization API key \u2192 organization's BillingAccount\n\nGuards:\n- Per-link budget: number of claims must stay below max_claims.\n- Per-user lifetime: a user can only benefit from one link ever.\n- Per-org lifetime: an organization can only benefit from one link ever.",
                 "operationId": "claim_credit_grant_link_v0_user_claim_credit_grant_link_post",
                 "requestBody": {
                     "content": {
@@ -262,178 +215,10 @@
                 ]
             }
         },
-        "/v0/user/validate-tax-id": {
-            "post": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": "Validate Tax Id",
-                "description": "Validate a tax ID format for a specific country.",
-                "operationId": "validate_tax_id_v0_user_validate_tax_id_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "tax_id",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Tax ID to validate",
-                            "title": "Tax Id"
-                        },
-                        "description": "Tax ID to validate"
-                    },
-                    {
-                        "name": "country",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Two-letter country code",
-                            "title": "Country"
-                        },
-                        "description": "Two-letter country code"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/billing/validate-tax-id": {
-            "post": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": "Validate Tax Id",
-                "description": "Validate a tax ID format for a specific country.",
-                "operationId": "validate_tax_id_v0_billing_validate_tax_id_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "tax_id",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Tax ID to validate",
-                            "title": "Tax Id"
-                        },
-                        "description": "Tax ID to validate"
-                    },
-                    {
-                        "name": "country",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "description": "Two-letter country code",
-                            "title": "Country"
-                        },
-                        "description": "Two-letter country code"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/user/supported-tax-countries": {
-            "get": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": "Get Supported Tax Countries",
-                "description": "Get list of countries supported for tax ID validation.",
-                "operationId": "get_supported_tax_countries_v0_user_supported_tax_countries_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/billing/supported-tax-countries": {
-            "get": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": "Get Supported Tax Countries",
-                "description": "Get list of countries supported for tax ID validation.",
-                "operationId": "get_supported_tax_countries_v0_billing_supported_tax_countries_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
         "/v0/user/onboarding-status": {
             "get": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Get Onboarding Status",
                 "description": "Get the current user's onboarding status (derived from OnboardingStatus table).",
@@ -458,7 +243,7 @@
             },
             "put": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Update Onboarding Status",
                 "description": "Update the current user's onboarding status (syncs to OnboardingStatus table).",
@@ -503,7 +288,7 @@
         "/v0/user/onboarding": {
             "get": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Get Onboarding Progress",
                 "description": "Get the current user's detailed onboarding progress.\n\nReturns the current step and step-specific data that can be used\nto resume onboarding from where the user left off.",
@@ -528,7 +313,7 @@
             },
             "put": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Update Onboarding Progress",
                 "description": "Update the current user's onboarding progress.\n\nThe step_data is validated based on the current_step to ensure\nonly valid fields are stored.",
@@ -573,7 +358,7 @@
             },
             "delete": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Reset Onboarding Progress",
                 "description": "Reset the current user's onboarding progress.\n\nThis can be used if the user wants to restart the onboarding flow.",
@@ -598,7 +383,7 @@
         "/v0/user/can-delete-account": {
             "get": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Can Delete Account",
                 "description": "Pre-flight check for account deletion.\n\nReturns whether the current user can delete their account,\nand if not, the reasons why (pending bills, org ownership, etc.).",
@@ -625,7 +410,7 @@
         "/v0/user/delete-account": {
             "delete": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Delete Own Account",
                 "description": "Delete the current user's account (self-service).\n\nRequires email confirmation to prevent accidental deletion.\nPermanently removes all user data - this action cannot be undone.\n\nBlocked if:\n- User has pending bills\n- User owns organizations (must transfer ownership first)",
@@ -672,7 +457,7 @@
         "/v0/user/spending-limit": {
             "get": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Get User Spending Limit",
                 "description": "Get the monthly spending limit for the current user's personal usage.",
@@ -697,7 +482,7 @@
             },
             "put": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": "Set User Spending Limit",
                 "description": "Set the monthly spending limit for the current user's personal usage.\n\nThis limit applies when using the user's personal API key (not org API keys).\nWhen the limit is lowered, personal assistant limits that exceed the new limit\nwill be automatically capped.",
@@ -741,239 +526,10 @@
                 ]
             }
         },
-        "/v0/user/billing/checkout": {
-            "post": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": "Create User Checkout Session",
-                "description": "Create a Stripe checkout session for purchasing credits for the current user.\n\nThis endpoint creates a one-time payment checkout session for the\nauthenticated user's personal workspace. Upon successful payment,\ncredits will be added to the user's balance via webhook.\n\nIf the user doesn't have a Stripe customer ID yet, one will be\ncreated during the checkout process.\n\nArgs:\n    amount: Amount of credits to purchase (1 credit = $1, min 5, max 10000)\n    success_url: URL to redirect to on successful payment\n    cancel_url: URL to redirect to on cancelled payment\n\nReturns:\n    - checkout_url: URL to redirect the user to for payment\n    - session_id: Stripe checkout session ID",
-                "operationId": "create_user_checkout_session_v0_user_billing_checkout_post",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserCheckoutRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Checkout session created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserCheckoutResponse"
-                                },
-                                "example": {
-                                    "checkout_url": "https://checkout.stripe.com/...",
-                                    "session_id": "cs_test_..."
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request"
-                    },
-                    "500": {
-                        "description": "Failed to create checkout session"
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/user/billing/billing-profile": {
-            "get": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": "Get user business profile",
-                "description": "Get the current user's billing/business profile information.",
-                "operationId": "get_user_billing_profile_v0_user_billing_billing_profile_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserBillingProfileResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            },
-            "patch": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": "Update user business profile",
-                "description": "Update the current user's billing/business profile information.",
-                "operationId": "update_user_billing_profile_v0_user_billing_billing_profile_patch",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserBillingProfileUpdate"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserBillingProfileResponse"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/user/assistant-hiring-approval": {
-            "post": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": " Compat Request Assistant Hiring Approval",
-                "description": "Backward-compat stub: always returns 'approved' (approval flow removed).",
-                "operationId": "_compat_request_assistant_hiring_approval_v0_user_assistant_hiring_approval_post",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/user/business-status": {
-            "get": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": " Compat Get User Business Status",
-                "description": "Backward-compat stub: returns business profile data mapped to old schema.",
-                "operationId": "_compat_get_user_business_status_v0_user_business_status_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/user/account-type": {
-            "put": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": " Compat Update User Account Type",
-                "description": "Backward-compat stub: no-op (account-type concept removed).",
-                "operationId": "_compat_update_user_account_type_v0_user_account_type_put",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
-        "/v0/user/business-info": {
-            "patch": {
-                "tags": [
-                    "Query Logging"
-                ],
-                "summary": " Compat Update User Business Info",
-                "description": "Backward-compat stub: no-op (use PATCH /user/billing/billing-profile instead).",
-                "operationId": "_compat_update_user_business_info_v0_user_business_info_patch",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ]
-            }
-        },
         "/v0/user/create-with-business-info": {
             "post": {
                 "tags": [
-                    "Query Logging"
+                    "User"
                 ],
                 "summary": " Compat Create User With Business Info",
                 "description": "Backward-compat stub: no-op (use POST /user with standard flow instead).",
@@ -1051,16 +607,6 @@
                             "application/json": {
                                 "example": {
                                     "detail": "Insufficient credits to create an assistant."
-                                }
-                            }
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "An assistant with the name 'Alice Smith' already exists for this user."
                                 }
                             }
                         }
@@ -2182,198 +1728,6 @@
                         "HTTPBearer": []
                     }
                 ]
-            }
-        },
-        "/v0/assistant/{assistant_id}/secret": {
-            "post": {
-                "tags": [
-                    "Secrets"
-                ],
-                "summary": "Create or update a secret",
-                "description": "Creates a new secret for an assistant or updates an existing one. Secrets are used to store API keys and tokens for external services.",
-                "operationId": "create_secret_v0_assistant__assistant_id__secret_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "assistant_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Assistant Id"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SecretCreate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InfoResponse_SecretRead_"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Assistant not found"
-                    },
-                    "409": {
-                        "description": "Secret already exists (use PUT to update)"
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/assistant/{assistant_id}/secret/{secret_name}": {
-            "put": {
-                "tags": [
-                    "Secrets"
-                ],
-                "summary": "Update secret",
-                "description": "Updates an existing secret's value and/or description.",
-                "operationId": "update_secret_v0_assistant__assistant_id__secret__secret_name__put",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "assistant_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Assistant Id"
-                        }
-                    },
-                    {
-                        "name": "secret_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "title": "Secret Name"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SecretUpdate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InfoResponse_SecretRead_"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Assistant or secret not found"
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Secrets"
-                ],
-                "summary": "Delete secret",
-                "description": "Deletes a specific secret from an assistant.",
-                "operationId": "delete_secret_v0_assistant__assistant_id__secret__secret_name__delete",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "assistant_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Assistant Id"
-                        }
-                    },
-                    {
-                        "name": "secret_name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "title": "Secret Name"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InfoResponse_dict_"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Assistant or secret not found"
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/v0/assistant/photo/upload": {
@@ -6861,6 +6215,64 @@
                 }
             }
         },
+        "/v0/logs/update_field": {
+            "patch": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Update Field",
+                "description": "Updates an existing field.\n\nFor now this is intentionally metadata-only and only supports updating the\nfield description. It does not modify log payloads, derived templates, field\nnames, mutability, or data types.",
+                "operationId": "update_field_v0_logs_update_field_patch",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateFieldRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Field updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "info": "Field updated successfully."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project, context, or field not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "detail": "Field 'score' not found."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
         "/v0/credits": {
             "get": {
                 "tags": [
@@ -6898,7 +6310,7 @@
                     "Credits"
                 ],
                 "summary": "Deduct Credits",
-                "description": "Deducts credits from the user's account.\n\nThe amount must be positive and cannot exceed the user's available credits.\nThis endpoint can only deduct credits, not add them.",
+                "description": "Deducts credits from the user's account.\n\nThe amount must be positive. The balance is allowed to go negative so\nthat the spending-limit hook (which checks ``credit_balance <= 0``)\nwill correctly block subsequent LLM calls. If auto-recharge is\nconfigured, it is triggered after the deduction.",
                 "operationId": "deduct_credits_v0_credits_deduct_post",
                 "requestBody": {
                     "content": {
@@ -6927,11 +6339,11 @@
                         }
                     },
                     "400": {
-                        "description": "Invalid request or insufficient credits",
+                        "description": "Invalid request (billing not set up)",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "detail": "Insufficient credits. Available: 5.0, requested: 10.0"
+                                    "detail": "Billing is not set up"
                                 }
                             }
                         }
@@ -6954,14 +6366,110 @@
                 ]
             }
         },
-        "/v0/promo": {
+        "/v0/billing/account-info": {
+            "get": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Get Account Info",
+                "description": "Return billing account information for the authenticated user / org.\n\nThe response includes credit balance, Stripe customer status,\naccount status, and auto-recharge settings.  Context (personal vs org)\nis derived from the API key.",
+                "operationId": "get_account_info_v0_billing_account_info_get",
+                "responses": {
+                    "200": {
+                        "description": "Billing account information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountInfoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Billing not set up"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/billing/checkout-session": {
             "post": {
                 "tags": [
-                    "Credits"
+                    "Billing"
                 ],
-                "summary": "Promo Code",
-                "description": "Activates a promotional code.",
-                "operationId": "promo_code_v0_promo_post",
+                "summary": "Create Checkout Session",
+                "description": "Create a Stripe Checkout session for the authenticated user / org.\n\nResolves billing context from the API key, fetches user & billing data,\ncreates a Stripe Checkout Session, and returns the redirect URL + session\nID.",
+                "operationId": "create_checkout_session_v0_billing_checkout_session_post",
+                "responses": {
+                    "200": {
+                        "description": "Checkout session created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CheckoutSessionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "500": {
+                        "description": "Stripe configuration error"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/billing/portal-session": {
+            "post": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Create Portal Session",
+                "description": "Create a Stripe Customer Portal session for the authenticated user / org.\n\nReturns the portal URL.  The caller must have previously completed a\ncheckout (i.e. a Stripe customer must exist on the billing account).",
+                "operationId": "create_portal_session_v0_billing_portal_session_post",
+                "responses": {
+                    "200": {
+                        "description": "Portal session created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PortalSessionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No Stripe customer found"
+                    },
+                    "500": {
+                        "description": "Stripe configuration error"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/billing/checkout-status": {
+            "get": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Get Checkout Status",
+                "description": "Retrieve the status of a Stripe Checkout session.\n\nSecurity: verifies the session belongs to the authenticated user / org\nby cross-checking the Stripe customer or ``client_reference_id``.",
+                "operationId": "get_checkout_status_v0_billing_checkout_status_get",
                 "security": [
                     {
                         "HTTPBearer": []
@@ -6969,64 +6477,246 @@
                 ],
                 "parameters": [
                     {
-                        "name": "code",
+                        "name": "session_id",
                         "in": "query",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "Promo code to be activated.",
-                            "title": "Code"
-                        },
-                        "description": "Promo code to be activated.",
-                        "example": "sample_code"
-                    },
-                    {
-                        "name": "user",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "description": "ID of the user that receives the credits,defaults to the user making the request.",
-                            "title": "User"
-                        },
-                        "description": "ID of the user that receives the credits,defaults to the user making the request.",
-                        "example": "sample_user_id"
+                            "title": "Session Id"
+                        }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "Checkout session status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CheckoutStatusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing or invalid sessionId"
+                    },
+                    "403": {
+                        "description": "Session does not belong to caller"
+                    },
+                    "500": {
+                        "description": "Stripe configuration error"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/billing/auto-recharge": {
+            "get": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Get Auto Recharge",
+                "description": "Return auto-recharge settings **and** eligibility in a single call.\n\nThe response includes:\n- Current settings (``enabled``, ``threshold``, ``qty``).\n- Eligibility data (``eligible``, ``total_spending``,\n  ``minimum_spend_required``, ``remaining_spend_needed``).\n\nContext (personal vs org) is derived from the API key.",
+                "operationId": "get_auto_recharge_v0_billing_auto_recharge_get",
+                "responses": {
+                    "200": {
+                        "description": "Auto-recharge settings and eligibility",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AutoRechargeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Billing not set up"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Update Auto Recharge",
+                "description": "Update auto-recharge settings atomically.\n\n- ``enabled`` (required) \u2013 enable or disable auto-recharge.\n- ``threshold`` (optional) \u2013 the credit balance that triggers a top-up.\n- ``qty`` (optional) \u2013 the amount of credits to add per top-up.\n\nWhen *enabling*, the account must have met the minimum spending\nthreshold (fraud-prevention measure).  ``qty`` must be \u2265 $25.\n\nContext (personal vs org) is derived from the API key.\nReturns the updated settings + eligibility (same shape as GET).",
+                "operationId": "update_auto_recharge_v0_billing_auto_recharge_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AutoRechargeUpdateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Auto-recharge settings updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AutoRechargeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error or eligibility not met"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/billing/validate-tax-id": {
+            "post": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Validate Tax Id",
+                "description": "Validate a tax ID format for a specific country.",
+                "operationId": "validate_tax_id_v0_billing_validate_tax_id_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaxIdValidationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/billing/supported-tax-countries": {
+            "get": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Get Supported Tax Countries",
+                "description": "Get list of countries supported for tax ID validation.\n\nReturns structured data per country including the human-readable tax ID\nname and expected format, so frontends don't need to parse description\nstrings.",
+                "operationId": "get_supported_tax_countries_v0_billing_supported_tax_countries_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/v0/billing/billing-profile": {
+            "get": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Get billing profile",
+                "description": "Get the billing profile for the current workspace. Context (personal vs org) is derived from the API key.",
+                "operationId": "get_billing_profile_v0_billing_billing_profile_get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    },
-                                    "title": "Response Promo Code V0 Promo Post"
-                                },
-                                "example": {
-                                    "info": "Code {code} activated successfully!"
+                                    "$ref": "#/components/schemas/BillingProfileResponse"
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Already activated code",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "detail": "This code has already been activated."
-                                }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Billing"
+                ],
+                "summary": "Update billing profile",
+                "description": "Update the billing profile for the current workspace. Context (personal vs org) is derived from the API key.",
+                "operationId": "update_billing_profile_v0_billing_billing_profile_patch",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BillingProfileUpdate"
                             }
                         }
                     },
-                    "404": {
-                        "description": "Code Not Found",
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "example": {
-                                    "detail": "Invalid code."
+                                "schema": {
+                                    "$ref": "#/components/schemas/BillingProfileResponse"
                                 }
                             }
                         }
@@ -7041,7 +6731,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
             }
         },
         "/v0/organizations": {
@@ -7960,277 +7655,6 @@
                 }
             }
         },
-        "/v0/organizations/{organization_id}/billing": {
-            "get": {
-                "tags": [
-                    "Organizations",
-                    "organization-billing"
-                ],
-                "summary": "Get Organization Billing",
-                "description": "Get billing information for an organization.\n\nReturns credits, billing settings, and account status.\nRequires billing:read permission.",
-                "operationId": "get_organization_billing_v0_organizations__organization_id__billing_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "organization_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Organization Id"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": true,
-                                    "title": "Response Get Organization Billing V0 Organizations  Organization Id  Billing Get"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "tags": [
-                    "Organizations",
-                    "organization-billing"
-                ],
-                "summary": "Update Organization Billing",
-                "description": "Update billing settings for an organization.\n\nRequires billing:write permission.\nOwners and Admins have this permission by default.",
-                "operationId": "update_organization_billing_v0_organizations__organization_id__billing_patch",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "organization_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Organization Id"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/OrganizationBillingUpdate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": true,
-                                    "title": "Response Update Organization Billing V0 Organizations  Organization Id  Billing Patch"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/organizations/{organization_id}/billing/credits": {
-            "get": {
-                "tags": [
-                    "Organizations",
-                    "organization-billing"
-                ],
-                "summary": "Get Organization Credits",
-                "description": "Get credit balance for an organization.\n\nFor direct billing orgs, returns the org's credit balance.\nFor orgs without billing configured, returns 0.\nRequires billing:read permission.",
-                "operationId": "get_organization_credits_v0_organizations__organization_id__billing_credits_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "organization_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Organization Id"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": true,
-                                    "title": "Response Get Organization Credits V0 Organizations  Organization Id  Billing Credits Get"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/organizations/{organization_id}/billing/billing-profile": {
-            "get": {
-                "tags": [
-                    "Organizations",
-                    "organization-billing"
-                ],
-                "summary": "Get Organization Billing Profile",
-                "description": "Get business profile for an organization (invoicing information).\n\nRequires billing:read permission.",
-                "operationId": "get_organization_billing_profile_v0_organizations__organization_id__billing_billing_profile_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "organization_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Organization Id"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": true,
-                                    "title": "Response Get Organization Billing Profile V0 Organizations  Organization Id  Billing Billing Profile Get"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "tags": [
-                    "Organizations",
-                    "organization-billing"
-                ],
-                "summary": "Update Organization Billing Profile",
-                "description": "Update business profile for an organization.\n\nRequires billing:write permission.\nOwners and Admins have this permission by default.",
-                "operationId": "update_organization_billing_profile_v0_organizations__organization_id__billing_billing_profile_patch",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "organization_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Organization Id"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/OrganizationBusinessProfileUpdate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": true,
-                                    "title": "Response Update Organization Billing Profile V0 Organizations  Organization Id  Billing Billing Profile Patch"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v0/organizations/{organization_id}/spending-limit": {
             "get": {
                 "tags": [
@@ -8490,184 +7914,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/MemberSpendingLimitResponse"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/organizations/{organization_id}/billing/stripe-customer": {
-            "post": {
-                "tags": [
-                    "Organizations",
-                    "organization-billing"
-                ],
-                "summary": "Ensure Organization Stripe Customer",
-                "description": "Ensure a Stripe customer exists for an organization.\n\nThis endpoint creates a Stripe customer for the organization if one doesn't\nexist, or returns the existing customer ID. This enables direct billing\nfor the organization.\n\nRequires billing:write permission (Owners and Admins).\n\nThe organization must have a billing_email set (either in business profile\nor provided in the request body) for Stripe customer creation.\n\nReturns:\n    - organization_id: The organization's ID\n    - stripe_customer_id: The Stripe customer ID\n    - is_new: True if the customer was just created, False if it existed",
-                "operationId": "ensure_organization_stripe_customer_v0_organizations__organization_id__billing_stripe_customer_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "organization_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Organization Id"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/OrganizationStripeCustomerCreateRequest"
-                                    },
-                                    {
-                                        "type": "null"
-                                    }
-                                ],
-                                "title": "Body"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": true,
-                                    "title": "Response Ensure Organization Stripe Customer V0 Organizations  Organization Id  Billing Stripe Customer Post"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Organizations",
-                    "organization-billing"
-                ],
-                "summary": "Get Organization Stripe Customer",
-                "description": "Get the Stripe customer ID for an organization.\n\nReturns the Stripe customer ID if one exists, or indicates if direct\nbilling is not yet set up.\n\nRequires billing:read permission.",
-                "operationId": "get_organization_stripe_customer_v0_organizations__organization_id__billing_stripe_customer_get",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "organization_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Organization Id"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": true,
-                                    "title": "Response Get Organization Stripe Customer V0 Organizations  Organization Id  Billing Stripe Customer Get"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v0/organizations/{organization_id}/billing/checkout": {
-            "post": {
-                "tags": [
-                    "Organizations",
-                    "organization-billing"
-                ],
-                "summary": "Create Organization Checkout Session",
-                "description": "Create a Stripe checkout session for purchasing credits for an organization.\n\nThis endpoint creates a one-time payment checkout session. Upon successful\npayment, credits will be added to the organization's balance.\n\nThe organization must have a Stripe customer set up first (via the\nensure-stripe-customer endpoint).\n\nRequires billing:write permission (Owners and Admins).\n\nArgs:\n    amount: Amount of credits to purchase (1 credit = $1)\n    success_url: URL to redirect to on successful payment\n    cancel_url: URL to redirect to on cancelled payment\n\nReturns:\n    - checkout_url: URL to redirect the user to for payment\n    - session_id: Stripe checkout session ID",
-                "operationId": "create_organization_checkout_session_v0_organizations__organization_id__billing_checkout_post",
-                "security": [
-                    {
-                        "HTTPBearer": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "organization_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "title": "Organization Id"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/OrganizationCheckoutRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": true,
-                                    "title": "Response Create Organization Checkout Session V0 Organizations  Organization Id  Billing Checkout Post"
                                 }
                             }
                         }
@@ -10436,6 +9682,56 @@
                 "title": "AccountDeletionResponse",
                 "description": "Response after account deletion attempt."
             },
+            "AccountInfoResponse": {
+                "properties": {
+                    "billing_account_id": {
+                        "type": "integer",
+                        "title": "Billing Account Id"
+                    },
+                    "credits": {
+                        "type": "number",
+                        "title": "Credits",
+                        "default": 0.0
+                    },
+                    "account_status": {
+                        "type": "string",
+                        "title": "Account Status",
+                        "default": "ACTIVE"
+                    },
+                    "last_recharge_at": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Last Recharge At"
+                    },
+                    "autorecharge": {
+                        "type": "boolean",
+                        "title": "Autorecharge",
+                        "default": false
+                    },
+                    "autorecharge_threshold": {
+                        "type": "number",
+                        "title": "Autorecharge Threshold",
+                        "default": 0.0
+                    },
+                    "autorecharge_qty": {
+                        "type": "number",
+                        "title": "Autorecharge Qty",
+                        "default": 25.0
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "billing_account_id"
+                ],
+                "title": "AccountInfoResponse",
+                "description": "Response from ``GET /billing/account-info``.\n\nReturns the key billing account fields needed by the frontend:\ncredit balance, billing history indicator, auto-recharge settings,\nand account status.  Context (personal vs org) is derived from\nthe API key."
+            },
             "AddLogsToContextRequest": {
                 "properties": {
                     "context_name": {
@@ -11092,6 +10388,19 @@
                         "description": "Whether this is a local assistant (runs unity locally instead of on GKE). Local assistants skip wakeup calls and GKE job management in the adapters.",
                         "default": false
                     },
+                    "deploy_env": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "const": "preview"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Deploy Env",
+                        "description": "Set to 'preview' to route this assistant to the preview runtime stack. Leave null for native assistants (routed to this Orchestra's own environment)."
+                    },
                     "pre_hire_chat": {
                         "anyOf": [
                             {
@@ -11355,6 +10664,19 @@
                         "title": "Is Local",
                         "description": "Whether this is a local assistant (runs unity locally instead of on GKE)."
                     },
+                    "deploy_env": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "const": "preview"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Deploy Env",
+                        "description": "Set to 'preview' to route this assistant to the preview runtime stack. Leave null for native assistants (routed to this Orchestra's own environment)."
+                    },
                     "pre_hire_chat": {
                         "anyOf": [
                             {
@@ -11596,24 +10918,6 @@
                         "title": "User Image",
                         "description": "Profile image URL of the user (owner/supervisor)"
                     },
-                    "secrets": {
-                        "anyOf": [
-                            {
-                                "additionalProperties": {
-                                    "type": "string"
-                                },
-                                "type": "object"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Secrets",
-                        "description": "Dictionary of secret names to values. Only returned via admin endpoints.",
-                        "example": {
-                            "openai_api_key": "sk-..."
-                        }
-                    },
                     "monthly_spending_cap": {
                         "anyOf": [
                             {
@@ -11638,6 +10942,18 @@
                         ],
                         "title": "Demo Id",
                         "description": "ID of demo metadata if this is a demo assistant, None for regular assistants."
+                    },
+                    "desktop_filesync_sshkey": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Desktop Filesync Sshkey",
+                        "description": "SSH private key for desktop filesystem sync. Only returned via admin endpoints."
                     },
                     "team_ids": {
                         "items": {
@@ -11792,6 +11108,58 @@
             },
             "AssistantUpdate": {
                 "properties": {
+                    "first_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "First Name",
+                        "description": "First name of the assistant",
+                        "example": "Ada"
+                    },
+                    "surname": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Surname",
+                        "description": "Surname of the assistant",
+                        "example": "Lovelace"
+                    },
+                    "age": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Age",
+                        "description": "Age of the assistant",
+                        "example": 28
+                    },
+                    "nationality": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Nationality",
+                        "description": "Assistant's nationality",
+                        "example": "North America"
+                    },
                     "weekly_limit": {
                         "anyOf": [
                             {
@@ -12042,6 +11410,20 @@
                         "title": "Monthly Spending Cap",
                         "description": "Monthly spending limit in dollars. Set to null to remove the limit.",
                         "example": 100.0
+                    },
+                    "deploy_env": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "const": "preview"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Deploy Env",
+                        "description": "Set to 'preview' to route this assistant to the preview runtime stack. Set to null to revert to native routing.",
+                        "example": "preview"
                     }
                 },
                 "type": "object",
@@ -12278,13 +11660,54 @@
                 "title": "AttachmentRef",
                 "description": "Reference to a previously uploaded file attachment."
             },
-            "BillingAddress": {
+            "AutoRechargeResponse": {
                 "properties": {
-                    "country": {
-                        "type": "string",
-                        "title": "Country"
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "Enabled",
+                        "default": false
                     },
-                    "formatted": {
+                    "threshold": {
+                        "type": "number",
+                        "title": "Threshold",
+                        "default": 0.0
+                    },
+                    "qty": {
+                        "type": "number",
+                        "title": "Qty",
+                        "default": 25.0
+                    },
+                    "min_recharge_amount": {
+                        "type": "number",
+                        "title": "Min Recharge Amount",
+                        "default": 25.0
+                    },
+                    "eligible": {
+                        "type": "boolean",
+                        "title": "Eligible",
+                        "default": false
+                    },
+                    "total_spending": {
+                        "type": "number",
+                        "title": "Total Spending",
+                        "default": 0.0
+                    },
+                    "minimum_spend_required": {
+                        "type": "number",
+                        "title": "Minimum Spend Required",
+                        "default": 0.0
+                    },
+                    "remaining_spend_needed": {
+                        "type": "number",
+                        "title": "Remaining Spend Needed",
+                        "default": 0.0
+                    },
+                    "has_payment_method": {
+                        "type": "boolean",
+                        "title": "Has Payment Method",
+                        "default": false
+                    },
+                    "blocked_reason": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -12293,104 +11716,177 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Formatted"
-                    },
-                    "line1": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Line1"
-                    },
-                    "line2": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Line2"
-                    },
-                    "city": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "City"
-                    },
-                    "state": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "State"
-                    },
-                    "postal_code": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Postal Code"
-                    },
-                    "locality": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Locality"
-                    },
-                    "district": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "District"
-                    },
-                    "sublocality": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Sublocality"
+                        "title": "Blocked Reason"
                     }
                 },
-                "additionalProperties": true,
+                "type": "object",
+                "title": "AutoRechargeResponse",
+                "description": "Combined auto-recharge settings and eligibility.\n\nReturned by ``GET /billing/auto-recharge``."
+            },
+            "AutoRechargeUpdateRequest": {
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "Enabled"
+                    },
+                    "threshold": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Threshold"
+                    },
+                    "qty": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Qty"
+                    }
+                },
                 "type": "object",
                 "required": [
-                    "country"
+                    "enabled"
                 ],
-                "title": "BillingAddress",
-                "description": "Flexible international billing address.\n\nSupports various address formats worldwide.\nThe `country` field is required for tax calculations.\nOther fields are optional to accommodate different country formats."
+                "title": "AutoRechargeUpdateRequest",
+                "description": "Request body for ``PUT /billing/auto-recharge``.\n\nOnly ``enabled`` is required.  ``threshold`` and ``qty`` are optional\nso callers can toggle the feature on/off without re-sending the amounts."
+            },
+            "BillingProfileResponse": {
+                "properties": {
+                    "billing_email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Billing Email"
+                    },
+                    "name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Name"
+                    },
+                    "tax_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Id"
+                    },
+                    "tax_id_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Id Type"
+                    },
+                    "billing_address": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Billing Address"
+                    },
+                    "billing_setup_complete": {
+                        "type": "boolean",
+                        "title": "Billing Setup Complete",
+                        "default": false
+                    },
+                    "is_business": {
+                        "type": "boolean",
+                        "title": "Is Business",
+                        "default": false
+                    }
+                },
+                "type": "object",
+                "title": "BillingProfileResponse",
+                "description": "Unified billing profile response for both personal and org contexts.\n\nReturned by ``GET /billing/billing-profile``.\nContext (personal vs org) is derived from the API key."
+            },
+            "BillingProfileUpdate": {
+                "properties": {
+                    "billing_email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Billing Email"
+                    },
+                    "name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Name"
+                    },
+                    "tax_id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Id"
+                    },
+                    "tax_id_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tax Id Type"
+                    },
+                    "billing_address": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": true,
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Billing Address"
+                    }
+                },
+                "type": "object",
+                "title": "BillingProfileUpdate",
+                "description": "Unified billing profile update for both personal and org contexts.\n\nAccepted by ``PATCH /billing/billing-profile``."
             },
             "Body_animate_video_endpoint_v0_assistant_photo_animate_post": {
                 "properties": {
@@ -12450,17 +11946,6 @@
                             }
                         ],
                         "title": "Seed"
-                    },
-                    "duration": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Duration"
                     }
                 },
                 "type": "object",
@@ -12720,6 +12205,54 @@
                     "msg"
                 ],
                 "title": "ChatMessage"
+            },
+            "CheckoutSessionResponse": {
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "title": "Url"
+                    },
+                    "session_id": {
+                        "type": "string",
+                        "title": "Session Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "url",
+                    "session_id"
+                ],
+                "title": "CheckoutSessionResponse",
+                "description": "Response from the checkout-session endpoint."
+            },
+            "CheckoutStatusResponse": {
+                "properties": {
+                    "status": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Status"
+                    },
+                    "payment_status": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Payment Status"
+                    }
+                },
+                "type": "object",
+                "title": "CheckoutStatusResponse",
+                "description": "Response from the checkout-status endpoint."
             },
             "ContextCommit": {
                 "properties": {
@@ -13179,6 +12712,12 @@
                                 "score": 42
                             }
                         ]
+                    },
+                    "recompute_derived": {
+                        "type": "boolean",
+                        "title": "Recompute Derived",
+                        "description": "If True, recompute derived columns for the newly created logs using active ActiveDerivedLog templates. Suitable for small batches; for large ingestion workflows, leave False and rely on periodic backfill.",
+                        "default": false
                     }
                 },
                 "type": "object",
@@ -13235,7 +12774,7 @@
                     "token"
                 ],
                 "title": "CreditGrantLinkClaimRequest",
-                "description": "Request to claim a one-time credit grant link."
+                "description": "Request to claim a credit grant link."
             },
             "CreditsResponse": {
                 "properties": {
@@ -14184,18 +13723,6 @@
                 ],
                 "title": "InfoResponse[ReplicatePredictionResponse]"
             },
-            "InfoResponse_SecretRead_": {
-                "properties": {
-                    "info": {
-                        "$ref": "#/components/schemas/SecretRead"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "info"
-                ],
-                "title": "InfoResponse[SecretRead]"
-            },
             "InfoResponse_VoiceDesignGeneratePreviewsAPIResponse_": {
                 "properties": {
                     "info": {
@@ -14219,20 +13746,6 @@
                     "info"
                 ],
                 "title": "InfoResponse[VoiceRead]"
-            },
-            "InfoResponse_dict_": {
-                "properties": {
-                    "info": {
-                        "additionalProperties": true,
-                        "type": "object",
-                        "title": "Info"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "info"
-                ],
-                "title": "InfoResponse[dict]"
             },
             "InfoResponse_list_AssistantContactRead__": {
                 "properties": {
@@ -14506,6 +14019,17 @@
                             }
                         ],
                         "title": "Role Id"
+                    },
+                    "role_name": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Role Name"
                     },
                     "expires_in_days": {
                         "type": "integer",
@@ -15084,120 +14608,6 @@
                 "title": "OrgSpendingLimitResponse",
                 "description": "Response for setting organization spending limit."
             },
-            "OrganizationBillingUpdate": {
-                "properties": {
-                    "autorecharge": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Autorecharge"
-                    },
-                    "autorecharge_threshold": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Autorecharge Threshold"
-                    },
-                    "autorecharge_qty": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Autorecharge Qty"
-                    }
-                },
-                "type": "object",
-                "title": "OrganizationBillingUpdate",
-                "description": "Schema for updating organization billing settings."
-            },
-            "OrganizationBusinessProfileUpdate": {
-                "properties": {
-                    "billing_email": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Billing Email"
-                    },
-                    "business_name": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Business Name"
-                    },
-                    "tax_id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Tax Id"
-                    },
-                    "billing_address": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/BillingAddress"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    }
-                },
-                "type": "object",
-                "title": "OrganizationBusinessProfileUpdate",
-                "description": "Schema for updating organization business profile."
-            },
-            "OrganizationCheckoutRequest": {
-                "properties": {
-                    "amount": {
-                        "type": "integer",
-                        "title": "Amount"
-                    },
-                    "success_url": {
-                        "type": "string",
-                        "title": "Success Url"
-                    },
-                    "cancel_url": {
-                        "type": "string",
-                        "title": "Cancel Url"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "amount",
-                    "success_url",
-                    "cancel_url"
-                ],
-                "title": "OrganizationCheckoutRequest",
-                "description": "Schema for creating a checkout session."
-            },
             "OrganizationCreate": {
                 "properties": {
                     "name": {
@@ -15424,6 +14834,11 @@
                         ],
                         "title": "Timezone"
                     },
+                    "free_trial": {
+                        "type": "boolean",
+                        "title": "Free Trial",
+                        "default": false
+                    },
                     "created_at": {
                         "type": "string",
                         "format": "date-time",
@@ -15439,35 +14854,6 @@
                 ],
                 "title": "OrganizationResponse",
                 "description": "Schema for organization response."
-            },
-            "OrganizationStripeCustomerCreateRequest": {
-                "properties": {
-                    "business_name": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Business Name"
-                    },
-                    "billing_email": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Billing Email"
-                    }
-                },
-                "type": "object",
-                "title": "OrganizationStripeCustomerCreateRequest",
-                "description": "Schema for creating/ensuring organization Stripe customer."
             },
             "OrganizationUpdate": {
                 "properties": {
@@ -15760,6 +15146,20 @@
                 },
                 "type": "object",
                 "title": "PlotTileSchema"
+            },
+            "PortalSessionResponse": {
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "title": "Url"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "url"
+                ],
+                "title": "PortalSessionResponse",
+                "description": "Response from the portal-session endpoint."
             },
             "ProjectCommitHistory": {
                 "properties": {
@@ -16890,134 +16290,6 @@
                 "title": "RoleUpdate",
                 "description": "Schema for updating a custom role."
             },
-            "SecretCreate": {
-                "properties": {
-                    "secret_name": {
-                        "type": "string",
-                        "maxLength": 255,
-                        "minLength": 1,
-                        "title": "Secret Name",
-                        "description": "Unique name/key for the secret (e.g., 'openai_api_key', 'github_token').",
-                        "example": "openai_api_key"
-                    },
-                    "secret_value": {
-                        "type": "string",
-                        "minLength": 1,
-                        "title": "Secret Value",
-                        "description": "The secret value (API key, token, etc.).",
-                        "example": "sk-..."
-                    },
-                    "description": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Description",
-                        "description": "Optional description of what this secret is used for.",
-                        "example": "OpenAI API key for GPT-4 access"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "secret_name",
-                    "secret_value"
-                ],
-                "title": "SecretCreate",
-                "description": "Schema for creating or updating an assistant secret."
-            },
-            "SecretRead": {
-                "properties": {
-                    "secret_name": {
-                        "type": "string",
-                        "title": "Secret Name",
-                        "description": "The name/key of the secret.",
-                        "example": "openai_api_key"
-                    },
-                    "description": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Description",
-                        "description": "Description of what this secret is used for.",
-                        "example": "OpenAI API key for GPT-4 access"
-                    },
-                    "created_at": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "format": "date-time"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Created At",
-                        "description": "When the secret was created."
-                    },
-                    "updated_at": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "format": "date-time"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Updated At",
-                        "description": "When the secret was last updated."
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "secret_name"
-                ],
-                "title": "SecretRead",
-                "description": "Schema for reading secret metadata (value is masked)."
-            },
-            "SecretUpdate": {
-                "properties": {
-                    "secret_value": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "minLength": 1
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Secret Value",
-                        "description": "New secret value.",
-                        "example": "sk-new-..."
-                    },
-                    "description": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Description",
-                        "description": "New description for the secret.",
-                        "example": "Updated OpenAI API key"
-                    }
-                },
-                "type": "object",
-                "title": "SecretUpdate",
-                "description": "Schema for updating an existing secret."
-            },
             "SignedUrlRequest": {
                 "properties": {
                     "gcs_uri": {
@@ -17416,6 +16688,27 @@
                 },
                 "type": "object",
                 "title": "TableTileSchema"
+            },
+            "TaxIdValidationRequest": {
+                "properties": {
+                    "tax_id": {
+                        "type": "string",
+                        "title": "Tax Id",
+                        "description": "Tax ID to validate"
+                    },
+                    "country": {
+                        "type": "string",
+                        "title": "Country",
+                        "description": "Two-letter country code"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "tax_id",
+                    "country"
+                ],
+                "title": "TaxIdValidationRequest",
+                "description": "Request body for ``POST /billing/validate-tax-id``."
             },
             "TeamCreate": {
                 "properties": {
@@ -18194,6 +17487,57 @@
                 ],
                 "title": "UpdateDerivedEntriesConfig"
             },
+            "UpdateFieldRequest": {
+                "properties": {
+                    "project_name": {
+                        "type": "string",
+                        "title": "Project Name",
+                        "description": "Name of the project the field belongs to.",
+                        "example": "eval-project"
+                    },
+                    "context": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Context",
+                        "description": "The context of the field to update.",
+                        "default": "",
+                        "example": "test-context"
+                    },
+                    "field_name": {
+                        "type": "string",
+                        "title": "Field Name",
+                        "description": "The name of the field to update.",
+                        "example": "score"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 256
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Field description. This is the only supported field update. Use null to clear the description.",
+                        "example": "Human-readable score for this log entry"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "project_name",
+                    "field_name",
+                    "description"
+                ],
+                "title": "UpdateFieldRequest"
+            },
             "UpdateLogRequest": {
                 "properties": {
                     "logs": {
@@ -18348,195 +17692,6 @@
                     "enabled"
                 ],
                 "title": "UpdateQueryLoggingRequest"
-            },
-            "UserBillingProfileResponse": {
-                "properties": {
-                    "billing_email": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Billing Email"
-                    },
-                    "individual_name": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Individual Name"
-                    },
-                    "business_name": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Business Name"
-                    },
-                    "tax_id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Tax Id"
-                    },
-                    "tax_id_type": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Tax Id Type"
-                    },
-                    "billing_address": {
-                        "additionalProperties": true,
-                        "type": "object",
-                        "title": "Billing Address"
-                    },
-                    "billing_setup_complete": {
-                        "type": "boolean",
-                        "title": "Billing Setup Complete",
-                        "default": false
-                    }
-                },
-                "type": "object",
-                "title": "UserBillingProfileResponse",
-                "description": "Schema for user billing profile response."
-            },
-            "UserBillingProfileUpdate": {
-                "properties": {
-                    "billing_email": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Billing Email"
-                    },
-                    "individual_name": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Individual Name"
-                    },
-                    "business_name": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Business Name"
-                    },
-                    "tax_id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Tax Id"
-                    },
-                    "tax_id_type": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Tax Id Type"
-                    },
-                    "billing_address": {
-                        "anyOf": [
-                            {
-                                "additionalProperties": true,
-                                "type": "object"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Billing Address"
-                    }
-                },
-                "type": "object",
-                "title": "UserBillingProfileUpdate",
-                "description": "Schema for updating user billing profile.\n\nAccepts ``individual_name`` (preferred) or ``business_name``\n(backward-compat alias).  If both are provided, ``individual_name``\ntakes precedence."
-            },
-            "UserCheckoutRequest": {
-                "properties": {
-                    "amount": {
-                        "type": "integer",
-                        "title": "Amount"
-                    },
-                    "success_url": {
-                        "type": "string",
-                        "title": "Success Url"
-                    },
-                    "cancel_url": {
-                        "type": "string",
-                        "title": "Cancel Url"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "amount",
-                    "success_url",
-                    "cancel_url"
-                ],
-                "title": "UserCheckoutRequest",
-                "description": "Request model for creating a Stripe checkout session for user credits.\n\nAttributes:\n    amount (int): Amount of credits to purchase (1 credit = $1, minimum 5, max 10000).\n    success_url (str): URL to redirect to on successful payment.\n    cancel_url (str): URL to redirect to on cancelled payment."
-            },
-            "UserCheckoutResponse": {
-                "properties": {
-                    "checkout_url": {
-                        "type": "string",
-                        "title": "Checkout Url"
-                    },
-                    "session_id": {
-                        "type": "string",
-                        "title": "Session Id"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "checkout_url",
-                    "session_id"
-                ],
-                "title": "UserCheckoutResponse",
-                "description": "Response model for user checkout session creation.\n\nAttributes:\n    checkout_url (str): URL to redirect user to for payment.\n    session_id (str): Stripe checkout session ID."
             },
             "UserResourceAccessEntry": {
                 "properties": {

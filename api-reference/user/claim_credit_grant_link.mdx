@@ -1,0 +1,78 @@
+---
+title: "Claim Credit Grant Link"
+api: 'POST /v0/user/claim-credit-grant-link'
+---
+Claim a credit grant link.
+
+Credits are applied to the billing account that corresponds to the
+caller's active workspace:
+- Personal API key → user's BillingAccount
+- Organization API key → organization's BillingAccount
+
+Guards:
+- Per-link budget: number of claims must stay below max_claims.
+- Per-user lifetime: a user can only benefit from one link ever.
+- Per-org lifetime: an organization can only benefit from one link ever.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="token" type="string" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/user/claim-credit-grant-link' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/user/claim-credit-grant-link"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "message": "string",
+    "credits_granted": "number | null",
+    "credited_to": "string | null"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,62 @@
+---
+title: "Get Auto Recharge"
+api: 'GET /v0/billing/auto-recharge'
+---
+Return auto-recharge settings **and** eligibility in a single call.
+
+The response includes:
+- Current settings (``enabled``, ``threshold``, ``qty``).
+- Eligibility data (``eligible``, ``total_spending``,
+  ``minimum_spend_required``, ``remaining_spend_needed``).
+
+Context (personal vs org) is derived from the API key.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/billing/auto-recharge' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/billing/auto-recharge"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "enabled": "boolean",
+    "threshold": "number",
+    "qty": "number",
+    "min_recharge_amount": "number",
+    "eligible": "boolean",
+    "total_spending": "number",
+    "minimum_spend_required": "number",
+    "remaining_spend_needed": "number",
+    "has_payment_method": "boolean",
+    "blocked_reason": "string | null"
+}
+```
+
+```json 400
+// No Content
+```
+
+</ResponseExample>

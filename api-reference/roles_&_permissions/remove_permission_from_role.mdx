@@ -1,0 +1,86 @@
+---
+title: "Remove Permission From Role"
+api: 'DELETE /v0/organizations/{organization_id}/roles/{role_id}/permissions/{permission_id}'
+---
+Remove a permission from a custom role.
+
+Only organization owners can modify role permissions.
+Cannot modify system roles.
+
+:param request_fastapi: FastAPI request object.
+:param organization_id: Organization ID.
+:param role_id: Role ID.
+:param permission_id: Permission ID to remove.
+:param session: Database session.
+:return: Updated role.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="role_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="permission_id" type="integer" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request DELETE \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/roles/<role_id>/permissions/<permission_id>' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/roles/<role_id>/permissions/<permission_id>"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("DELETE", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "id": "integer",
+    "name": "string",
+    "description": "string | null",
+    "organization_id": "integer | null",
+    "is_system_role": "boolean",
+    "created_at": "string",
+    "permissions": "[Any]"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

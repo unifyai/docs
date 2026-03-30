@@ -1,0 +1,74 @@
+---
+title: "Set User Spending Limit"
+api: 'PUT /v0/user/spending-limit'
+---
+Set the monthly spending limit for the current user's personal usage.
+
+This limit applies when using the user's personal API key (not org API keys).
+When the limit is lowered, personal assistant limits that exceed the new limit
+will be automatically capped.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="monthly_spending_cap" type="number | null" required="true">
+Monthly spending limit in dollars for personal usage. Set to null for no limit.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PUT \
+  --url 'https://api.unify.ai/v0/user/spending-limit' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "monthly_spending_cap": 200.0
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/user/spending-limit"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"monthly_spending_cap": 200.0}
+
+response = requests.request("PUT", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "user_id": "string",
+    "monthly_spending_cap": "number | null",
+    "assistants_capped": "integer"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,49 @@
+---
+title: "Get Onboarding Progress"
+api: 'GET /v0/user/onboarding'
+---
+Get the current user's detailed onboarding progress.
+
+Returns the current step and step-specific data that can be used
+to resume onboarding from where the user left off.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/user/onboarding' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/user/onboarding"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "user_id": "string",
+    "current_step": "string",
+    "step_data": "object",
+    "created_at": "string",
+    "updated_at": "string | null"
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,207 @@
+---
+title: "Update assistant configuration"
+api: 'PATCH /v0/assistant/{assistant_id}/config'
+---
+Updates the configuration parameters of an existing assistant. Profile photo cannot be updated via this endpoint.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="assistant_id" type="integer" required="true">
+
+</ParamField>
+
+#### Body
+
+<ParamField body="first_name" type="string | null" >
+First name of the assistant
+</ParamField>
+
+<ParamField body="surname" type="string | null" >
+Surname of the assistant
+</ParamField>
+
+<ParamField body="age" type="integer | null" >
+Age of the assistant
+</ParamField>
+
+<ParamField body="nationality" type="string | null" >
+Assistant's nationality
+</ParamField>
+
+<ParamField body="weekly_limit" type="number | null" >
+Weekly time limit for the assistant in hours
+</ParamField>
+
+<ParamField body="max_parallel" type="integer | null" >
+Maximum number of parallel tasks the assistant can handle
+</ParamField>
+
+<ParamField body="profile_photo" type="string | null" >
+URL to the assistant's profile photo
+</ParamField>
+
+<ParamField body="profile_video" type="string | null" >
+URL to the assistant's profile video
+</ParamField>
+
+<ParamField body="desktop_mode" type="string | null" >
+Desktop operating system mode for VM type
+</ParamField>
+
+<ParamField body="user_desktop_id" type="integer | null" >
+ID of the registered user desktop to assign to this assistant
+</ParamField>
+
+<ParamField body="user_desktop_filesys_sync" type="boolean | null" >
+Whether to enable filesystem sync with user's desktop
+</ParamField>
+
+<ParamField body="about" type="string | null" >
+Brief description about the assistant
+</ParamField>
+
+<ParamField body="user_phone" type="string | null" >
+DEPRECATED – use POST /assistant/{id}/contact instead.
+</ParamField>
+
+<ParamField body="phone" type="string | null" >
+DEPRECATED – use POST /assistant/{id}/contact instead.
+</ParamField>
+
+<ParamField body="phone_country" type="string | null" >
+DEPRECATED – use POST /assistant/{id}/contact instead.
+</ParamField>
+
+<ParamField body="email" type="string | null" >
+DEPRECATED – use POST /assistant/{id}/contact instead.
+</ParamField>
+
+<ParamField body="user_whatsapp_number" type="string | null" >
+DEPRECATED – use POST /assistant/{id}/contact instead.
+</ParamField>
+
+<ParamField body="voice_id" type="string | null" >
+Id of the voice (Cartesia ID) to use for the assistant
+</ParamField>
+
+<ParamField body="voice_provider" type="string | null" >
+Provider of the selected voice (e.g., 'elevenlabs', 'openai')
+</ParamField>
+
+<ParamField body="timezone" type="string | null" >
+Timezone of the assistant in IANA format
+</ParamField>
+
+<ParamField body="create_infra" type="boolean | null"  default="true">
+Whether to create infrastructure for the assistant during update (e.g., phone, email). Set to false for testing.
+</ParamField>
+
+<ParamField body="is_local" type="boolean | null" >
+Whether this is a local assistant (runs unity locally instead of on GKE).
+</ParamField>
+
+<ParamField body="monthly_spending_cap" type="number | null" >
+Monthly spending limit in dollars. Set to null to remove the limit.
+</ParamField>
+
+<ParamField body="deploy_env" type="string | null" >
+Set to 'preview' to route this assistant to the preview runtime stack. Set to null to revert to native routing.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/assistant/<assistant_id>/config' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+  --header 'Content-Type: application/json' \
+  --data '{
+    "first_name": "Ada",
+    "surname": "Lovelace",
+    "age": 28,
+    "nationality": "North America",
+    "weekly_limit": 20.5,
+    "max_parallel": 3,
+    "profile_photo": "https://example.com/photos/ada.jpg",
+    "profile_video": "https://example.com/videos/ada_new.mp4",
+    "desktop_mode": "macos",
+    "user_desktop_id": 1,
+    "user_desktop_filesys_sync": false,
+    "about": "Award-winning mathematician specializing in algorithm development",
+    "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+    "voice_provider": "elevenlabs",
+    "timezone": "Europe/London",
+    "monthly_spending_cap": 100.0,
+    "deploy_env": "preview"
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/<assistant_id>/config"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"first_name": "Ada", "surname": "Lovelace", "age": 28, "nationality": "North America", "weekly_limit": 20.5, "max_parallel": 3, "profile_photo": "https://example.com/photos/ada.jpg", "profile_video": "https://example.com/videos/ada_new.mp4", "desktop_mode": "macos", "user_desktop_id": 1, "user_desktop_filesys_sync": False, "about": "Award-winning mathematician specializing in algorithm development", "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5", "voice_provider": "elevenlabs", "timezone": "Europe/London", "monthly_spending_cap": 100.0, "deploy_env": "preview"}
+
+response = requests.request("PATCH", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": {
+        "agent_id": "123",
+        "first_name": "Alice",
+        "surname": "Smith",
+        "age": 25,
+        "weekly_limit": 45.0,
+        "max_parallel": 4,
+        "about": "Award-winning mathematician specializing in algorithm development",
+        "phone": "+1-555-987-6543",
+        "email": "alice.smith@example.com",
+        "nationality": "United States",
+        "profile_photo": "https://example.com/photos/alice.jpg",
+        "profile_video": "https://example.com/videos/alice.mp4",
+        "voice_id": "bf0a246a-8642-498a-9950-80c35e9276b5",
+        "voice_provider": "cartesia",
+        "phone_country": "US",
+        "timezone": "America/New_York",
+        "created_at": "2025-04-25T12:00:00Z",
+        "updated_at": "2025-04-25T14:30:00Z"
+    }
+}
+```
+
+```json 404
+{
+    "detail": "Assistant not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,90 @@
+---
+title: "Animate photo"
+api: 'POST /v0/assistant/photo/animate'
+---
+Starts a job to generate an animated video of the assistant using an input image and audio. This action costs credits.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="image_url" type="string | null" >
+
+</ParamField>
+
+<ParamField body="image_file" type="string | null" >
+
+</ParamField>
+
+<ParamField body="audio_url" type="string | null" >
+
+</ParamField>
+
+<ParamField body="audio_file" type="string | null" >
+
+</ParamField>
+
+<ParamField body="seed" type="integer | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/assistant/photo/animate' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: multipart/form-data' \
+  --form 'image_file=@/path/to/your/file.ext'\
+  --form 'audio_file=@/path/to/your/file.ext'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/photo/animate"
+
+headers = {"Authorization": "Bearer <token>"}
+
+data = {}
+
+file_path_0 = "/path/to/your/file.ext"
+# Optional: Include image_file if needed
+# files["image_file"] = open(file_path_0, "rb")
+file_path_1 = "/path/to/your/file.ext"
+# Optional: Include audio_file if needed
+# files["audio_file"] = open(file_path_1, "rb")
+files = {}
+response = requests.request("POST", url, files=files, data=data, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 202
+{
+    "info": "object"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

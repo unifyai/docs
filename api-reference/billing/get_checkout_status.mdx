@@ -1,0 +1,78 @@
+---
+title: "Get Checkout Status"
+api: 'GET /v0/billing/checkout-status'
+---
+Retrieve the status of a Stripe Checkout session.
+
+Security: verifies the session belongs to the authenticated user / org
+by cross-checking the Stripe customer or ``client_reference_id``.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Query Parameters
+
+<ParamField query="session_id" type="string" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/billing/checkout-status?session_id=None' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/billing/checkout-status?session_id=None"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "status": "string | null",
+    "payment_status": "string | null"
+}
+```
+
+```json 400
+// No Content
+```
+
+```json 403
+// No Content
+```
+
+```json 500
+// No Content
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>
