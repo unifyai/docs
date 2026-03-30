@@ -1,0 +1,47 @@
+---
+title: "Overview"
+description: "AI virtual employees that learn on the job"
+---
+
+## What is Unify?
+
+Unify makes the leap from standalone AI agents to fully fledged virtual colleagues.
+
+These are not personal assistants you prompt and wait. These are colleagues — with their own name, personality, computer, and an ever-growing memory and skill set. You onboard them like any new hire: share your screen, walk them through your tools, hop on a call. They learn how your team works, ask follow-up questions, and improve over time.
+
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/qjSWiCd8Bq8"
+  title="Unify Launch Video"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+/>
+
+## How it works
+
+Your virtual colleague can simultaneously use their own computer, talk to you via voice, follow your live guided screenshare instructions, and consolidate new skills on-the-fly — just like a person would. They can be interrupted and redirected at any point.
+
+This is powered by a fundamentally different architecture:
+
+- **Steerable handles** — every operation returns a live handle you can pause, resume, interject into, or stop at any depth
+- **CodeAct** — the actor writes Python programs over typed primitives, not flat JSON tool calls
+- **Dual-brain voice** — a slow deliberation brain + a fast real-time voice agent, communicating over IPC
+- **Continuous memory** — contacts, knowledge, tasks, and relationships consolidated into structured, queryable tables
+
+## Open source
+
+The brain is open-source under MIT. Read the code, understand the architecture, or contribute.
+
+| Repository | Description |
+|-----------|-------------|
+| [unity](https://github.com/unifyai/unity) | The brain — steerable async tool loops, CodeAct, distributed state managers |
+| [unify](https://github.com/unifyai/unify) | Python SDK for persistence and logging |
+| [unillm](https://github.com/unifyai/unillm) | LLM abstraction — caching, tracing, cost tracking |
+
+For a deep technical walkthrough, see the [Architecture Guide](https://github.com/unifyai/unity/blob/staging/ARCHITECTURE.md).
+
+## Get started
+
+Sign up at [unify.ai](https://unify.ai) to meet your new virtual teammate, or explore the [REST API](/api-reference) to integrate programmatically.

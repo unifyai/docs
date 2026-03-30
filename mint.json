@@ -15,7 +15,12 @@
             "to": "#009600"
         }
     },
-    "topbarLinks": [],
+    "topbarLinks": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/unifyai/unity"
+        }
+    ],
     "topbarCtaButton": {
         "name": "Console",
         "url": "https://console.unify.ai"
@@ -24,6 +29,8 @@
         {
             "group": "",
             "pages": [
+                "basics/overview",
+                "basics/demos",
                 "basics/welcome"
             ]
         },
