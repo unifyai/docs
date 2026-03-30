@@ -1,0 +1,56 @@
+---
+title: "Get Account Info"
+api: 'GET /v0/billing/account-info'
+---
+Return billing account information for the authenticated user / org.
+
+The response includes credit balance, Stripe customer status,
+account status, and auto-recharge settings.  Context (personal vs org)
+is derived from the API key.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/billing/account-info' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/billing/account-info"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "billing_account_id": "integer",
+    "credits": "number",
+    "account_status": "string",
+    "last_recharge_at": "string | null",
+    "autorecharge": "boolean",
+    "autorecharge_threshold": "number",
+    "autorecharge_qty": "number"
+}
+```
+
+```json 400
+// No Content
+```
+
+</ResponseExample>

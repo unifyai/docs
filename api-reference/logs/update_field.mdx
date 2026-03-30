@@ -1,0 +1,93 @@
+---
+title: "Update Field"
+api: 'PATCH /v0/logs/update_field'
+---
+Updates an existing field.
+
+For now this is intentionally metadata-only and only supports updating the
+field description. It does not modify log payloads, derived templates, field
+names, mutability, or data types.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="project_name" type="string" required="true">
+Name of the project the field belongs to.
+</ParamField>
+
+<ParamField body="context" type="string | null"  default="">
+The context of the field to update.
+</ParamField>
+
+<ParamField body="field_name" type="string" required="true">
+The name of the field to update.
+</ParamField>
+
+<ParamField body="description" type="string | null" required="true">
+Field description. This is the only supported field update. Use null to clear the description.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PATCH \
+  --url 'https://api.unify.ai/v0/logs/update_field' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "project_name": "eval-project",
+    "context": "test-context",
+    "field_name": "score",
+    "description": "Human-readable score for this log entry"
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs/update_field"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"project_name": "eval-project", "context": "test-context", "field_name": "score", "description": "Human-readable score for this log entry"}
+
+response = requests.request("PATCH", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "Field updated successfully."
+}
+```
+
+```json 404
+{
+    "detail": "Field 'score' not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

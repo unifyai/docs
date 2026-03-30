@@ -1,0 +1,97 @@
+---
+title: "Update Auto Recharge"
+api: 'PUT /v0/billing/auto-recharge'
+---
+Update auto-recharge settings atomically.
+
+- ``enabled`` (required) – enable or disable auto-recharge.
+- ``threshold`` (optional) – the credit balance that triggers a top-up.
+- ``qty`` (optional) – the amount of credits to add per top-up.
+
+When *enabling*, the account must have met the minimum spending
+threshold (fraud-prevention measure).  ``qty`` must be ≥ $25.
+
+Context (personal vs org) is derived from the API key.
+Returns the updated settings + eligibility (same shape as GET).
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="enabled" type="boolean" required="true">
+
+</ParamField>
+
+<ParamField body="threshold" type="number | null" >
+
+</ParamField>
+
+<ParamField body="qty" type="number | null" >
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request PUT \
+  --url 'https://api.unify.ai/v0/billing/auto-recharge' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/billing/auto-recharge"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {}
+
+response = requests.request("PUT", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "enabled": "boolean",
+    "threshold": "number",
+    "qty": "number",
+    "min_recharge_amount": "number",
+    "eligible": "boolean",
+    "total_spending": "number",
+    "minimum_spend_required": "number",
+    "remaining_spend_needed": "number",
+    "has_payment_method": "boolean",
+    "blocked_reason": "string | null"
+}
+```
+
+```json 400
+// No Content
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

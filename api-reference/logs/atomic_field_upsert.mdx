@@ -1,0 +1,138 @@
+---
+title: "Atomic Field Upsert"
+api: 'POST /v0/logs/atomic'
+---
+Atomic find-or-create with atomic field update (upsert mode).
+
+This endpoint atomically:
+1. Ensures the context exists with correct unique_keys configuration
+2. Acquires an advisory lock on the unique key values (prevents race on first insert)
+3. Finds an existing log by unique_keys or creates it with initial_data
+4. Applies an atomic operation to the specified field
+5. If add_to_all_context=true, mirrors the log to the All/* archive context
+
+Required body fields for upsert mode:
+- project: Name of the project
+- context: Context path for the log
+- unique_keys: Key name to type mapping (e.g., {"_assistant_id": "str", "month": "str"})
+- initial_data: Data for new log entry (must include all unique key values)
+- operation: Atomic operation (+N, -N, *N, /N)
+
+This is race-safe for concurrent first inserts - only one request will create the log,
+and all concurrent requests will correctly increment the field.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Body
+
+<ParamField body="operation" type="string" required="true">
+Atomic operation to apply. Supported formats: +N, -N, *N, /N where N is a number.
+</ParamField>
+
+<ParamField body="field" type="string | null" >
+(Upsert mode) Name of the numeric field to update atomically.
+</ParamField>
+
+<ParamField body="project" type="string | null" >
+(Upsert mode) Name of the project.
+</ParamField>
+
+<ParamField body="context" type="string | null" >
+(Upsert mode) Context path for the log.
+</ParamField>
+
+<ParamField body="unique_keys" type="object | null" >
+(Upsert mode) Unique key configuration for the context. Maps key names to types (str, int, float).
+</ParamField>
+
+<ParamField body="initial_data" type="object | null" >
+(Upsert mode) Data to use when creating a new log entry. Must include all unique key values.
+</ParamField>
+
+<ParamField body="add_to_all_context" type="boolean"  default="false">
+(Upsert mode) If true, also adds the log to the 'All/*' archive context.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/logs/atomic' \
+  --header "Authorization: Bearer $UNIFY_KEY" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "operation": "+1",
+    "field": "cumulative_spend",
+    "project": "Assistants",
+    "context": "42/7/Spending/Monthly",
+    "unique_keys": {
+        "_assistant_id": "str",
+        "month": "str"
+    },
+    "initial_data": {
+        "_assistant_id": "123",
+        "_org_id": 456,
+        "month": "2026-01"
+    }
+}'
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/logs/atomic"
+
+headers = {"Authorization": "Bearer <token>"}
+
+json_input = {"operation": "+1", "field": "cumulative_spend", "project": "Assistants", "context": "42/7/Spending/Monthly", "unique_keys": {"_assistant_id": "str", "month": "str"}, "initial_data": {"_assistant_id": "123", "_org_id": 456, "month": "2026-01"}}
+
+response = requests.request("POST", url, json=json_input, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "log_id": 789,
+    "new_value": 83.5,
+    "created": false,
+    "mirrored_contexts": [
+        "All/Spending/Monthly"
+    ]
+}
+```
+
+```json 400
+{
+    "detail": "Invalid operation format. Use +N, -N, *N, /N where N is a number."
+}
+```
+
+```json 404
+{
+    "detail": "Project not found."
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

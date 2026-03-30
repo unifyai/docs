@@ -1,0 +1,66 @@
+---
+title: "List active contact details for an assistant"
+api: 'GET /v0/assistant/{assistant_id}/contacts'
+---
+Returns all active (non-deleted) contact details with billing metadata.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="assistant_id" type="integer" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/assistant/<assistant_id>/contacts' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/<assistant_id>/contacts"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "[Any]"
+}
+```
+
+```json 404
+// No Content
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

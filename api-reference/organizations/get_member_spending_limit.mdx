@@ -1,0 +1,69 @@
+---
+title: "Get Member Spending Limit"
+api: 'GET /v0/organizations/{organization_id}/members/{member_user_id}/spending-limit'
+---
+Get the monthly spending limit for a member within an organization.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="organization_id" type="integer" required="true">
+
+</ParamField>
+
+<ParamField query="member_user_id" type="string" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.unify.ai/v0/organizations/<organization_id>/members/<member_user_id>/spending-limit' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/organizations/<organization_id>/members/<member_user_id>/spending-limit"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "organization_id": "integer",
+    "user_id": "string",
+    "monthly_spending_cap": "number | null",
+    "assistants_capped": "integer"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

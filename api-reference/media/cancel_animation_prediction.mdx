@@ -1,0 +1,62 @@
+---
+title: "Cancel animation prediction"
+api: 'POST /v0/assistant/photo/animate/{prediction_id}/cancel'
+---
+Cancels a running video animation job.
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+#### Path Parameters
+
+<ParamField query="prediction_id" type="string" required="true">
+
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/assistant/photo/animate/<prediction_id>/cancel' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/assistant/photo/animate/<prediction_id>/cancel"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "info": "object"
+}
+```
+
+```json 422
+{
+    "detail": [
+        {
+            "loc": [
+                "string"
+            ],
+            "msg": "string",
+            "type": "string"
+        }
+    ]
+}
+```
+
+</ResponseExample>

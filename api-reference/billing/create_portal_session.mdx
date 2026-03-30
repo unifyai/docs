@@ -1,0 +1,53 @@
+---
+title: "Create Portal Session"
+api: 'POST /v0/billing/portal-session'
+---
+Create a Stripe Customer Portal session for the authenticated user / org.
+
+Returns the portal URL.  The caller must have previously completed a
+checkout (i.e. a Stripe customer must exist on the billing account).
+
+#### Authorizations
+
+<ParamField header="Authorization" type="string" required="true">
+  Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token.
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url 'https://api.unify.ai/v0/billing/portal-session' \
+  --header "Authorization: Bearer $UNIFY_KEY"
+```
+
+```python Python
+import requests
+
+url = "https://api.unify.ai/v0/billing/portal-session"
+
+headers = {"Authorization": "Bearer <token>"}
+
+response = requests.request("POST", url, headers=headers)
+
+print(response.text)
+```
+
+</RequestExample>
+<ResponseExample>
+
+```json 200
+{
+    "url": "string"
+}
+```
+
+```json 404
+// No Content
+```
+
+```json 500
+// No Content
+```
+
+</ResponseExample>
