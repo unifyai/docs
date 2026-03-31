@@ -32,37 +32,10 @@ This is powered by a fundamentally different architecture:
 
 ## Open source
 
-The brain is open-source under MIT. Read the code, understand the architecture, or contribute.
-
-| Repository | Description |
-|-----------|-------------|
-| [unity](https://github.com/unifyai/unity) | The brain — steerable async tool loops, CodeAct, distributed state managers |
-| [unify](https://github.com/unifyai/unify) | Python SDK for persistence and logging |
-| [unillm](https://github.com/unifyai/unillm) | LLM abstraction — caching, tracing, cost tracking |
-
-For a deep technical walkthrough, see the [Architecture Guide](https://github.com/unifyai/unity/blob/staging/ARCHITECTURE.md).
-
-## Running locally
-
 <Note>
-  **Coming soon.** We're actively decoupling Unity for full standalone local deployment. See the [roadmap](https://github.com/unifyai/unity#roadmap) for progress.
+  We're preparing to open-source the full brain under a permissive license. Source code, architecture docs, and contribution guidelines will be available soon. Join our [Discord](https://discord.com/invite/sXyFF8tDtm) to be notified when we launch.
 </Note>
-
-**What works today:** You can clone the repo, run the full test suite, and explore the architecture. Tests exercise the real system — steerable handles, CodeAct, manager composition, nested tool loops — against simulated backends with cached LLM responses.
-
-```bash
-git clone https://github.com/unifyai/unity.git
-cd unity
-pip install uv && uv sync --all-groups
-source .venv/bin/activate
-cp .env.example .env    # Add your OPENAI_API_KEY / ANTHROPIC_API_KEY
-tests/parallel_run.sh tests/
-```
-
-**Full local deployment (coming soon):** We're working toward a single `docker compose up` that runs the complete system on your machine — brain, local persistence (Orchestra + PostgreSQL), communication channels, and web console. The main work is replacing GCP-specific infrastructure (Pub/Sub, Cloud Functions, GCS) with portable alternatives. The brain itself is already infrastructure-agnostic.
-
-See the full [Running Locally](https://github.com/unifyai/unity#running-locally) section in the repo README for details on what's being decoupled.
 
 ## Get started
 
-Sign up at [unify.ai](https://unify.ai) to meet your new virtual teammate, or explore the [REST API](/api-reference) to integrate programmatically.
+Sign up at [unify.ai](https://unify.ai) to meet your new virtual teammate.
