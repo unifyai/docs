@@ -1,0 +1,74 @@
+---
+title: "Quickstart"
+description: "Get the assistant running in your terminal in 5 minutes"
+---
+
+## Prerequisites
+
+- **Python 3.12+**
+- **PortAudio** (for audio support)
+  - macOS: `brew install portaudio`
+  - Ubuntu/Debian: `sudo apt-get install portaudio19-dev python3-dev`
+- **A [Unify](https://unify.ai) account** — sign up free, grab your API key from the dashboard
+- **An LLM API key** — [OpenAI](https://platform.openai.com/api-keys) or [Anthropic](https://console.anthropic.com/)
+
+## Install
+
+Unity depends on two sibling repos. Clone all three as siblings:
+
+```bash
+git clone https://github.com/unifyai/unity.git
+git clone https://github.com/unifyai/unify.git
+git clone https://github.com/unifyai/unillm.git
+
+cd unity
+pip install uv && uv sync
+```
+
+## Configure
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and fill in:
+
+```bash
+UNIFY_KEY=your-unify-key
+OPENAI_API_KEY=sk-...        # and/or ANTHROPIC_API_KEY
+```
+
+Everything else has sensible defaults. The sandbox connects to Unify's hosted backend (`api.unify.ai`) for persistence — no local database needed.
+
+## Run
+
+```bash
+source .venv/bin/activate
+python -m sandboxes.conversation_manager.sandbox --project_name Sandbox --overwrite
+```
+
+Select **Mode 1** (`SandboxSimulatedActor`) at the configuration prompt. This runs the full ConversationManager brain with simulated backends.
+
+## Interact
+
+Once the REPL starts:
+
+```
+> msg Hey, can you help me organize my upcoming week?
+> sms I need to reschedule my meeting with Sarah to Thursday
+> email Project Update | Here are the Q3 numbers you asked for...
+```
+
+Commands: `msg` (Unify message), `sms` (SMS), `email` (email), `call` (phone call), `meet` (video meeting). Type `help` for the full list.
+
+## Going deeper
+
+Mode 1 simulates everything to show the ConversationManager's orchestration. For the real CodeAct architecture (where the Actor writes and executes Python plans against the manager APIs), select **Mode 2** at the configuration prompt.
+
+See the full sandbox docs at [`sandboxes/conversation_manager/README.md`](https://github.com/unifyai/unity/blob/main/sandboxes/conversation_manager/README.md).
+
+## Next steps
+
+- [Steerable Handles](/architecture/steerable-handles) — the core architectural pattern
+- [CodeAct](/architecture/codeact) — how the Actor writes programs, not tool calls
+- [Architecture overview](/architecture/managers) — the distributed manager system

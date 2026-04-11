@@ -1,11 +1,11 @@
 ---
 title: "Overview"
-description: "AI virtual employees that learn on the job"
+description: "Open-source brain for AI assistants — steerable async tool loops, CodeAct planning, and distributed manager orchestration"
 ---
 
-## What is Unify?
+## What is Unity?
 
-These are not personal assistants you prompt and wait. These are colleagues — with their own name, personality, computer, and an ever-growing memory and skill set. You onboard them like any new hire: share your screen, walk them through your tools, hop on a call. They learn how your team works, ask follow-up questions, and improve over time.
+Unity is the open-source brain of an AI assistant. It implements the assistant's intelligence through a distributed architecture of specialized **state managers** (ContactManager, TaskScheduler, KnowledgeManager, etc.), each orchestrated by a central **Actor** through code-first plans.
 
 <iframe
   width="100%"
@@ -17,23 +17,69 @@ These are not personal assistants you prompt and wait. These are colleagues — 
   allowFullScreen
 />
 
-## How it works
+## What makes it different
 
-Your virtual colleague can simultaneously use their own computer, talk to you via voice, follow your live guided screenshare instructions, and consolidate new skills on-the-fly — just like a person would. They can be interrupted and redirected at any point.
+Most agent frameworks work like this: one LLM, one loop, one tool call at a time. If you want to interrupt, you cancel and start over.
 
-This is powered by a fundamentally different architecture:
+Unity works differently. Every operation runs inside its own async LLM tool loop and returns a [**steerable handle**](/architecture/steerable-handles). These handles compose: the ConversationManager steers the Actor, the Actor steers the managers, and the user steers the ConversationManager. Steering propagates through the full depth.
 
-- **Steerable handles** — every operation returns a live handle you can pause, resume, interject into, or stop at any depth
-- **CodeAct** — the actor writes Python programs over typed primitives, not flat JSON tool calls
-- **Dual-brain voice** — a slow deliberation brain + a fast real-time voice agent, communicating over IPC
-- **Continuous memory** — contacts, knowledge, tasks, and relationships consolidated into structured, queryable tables
+This means the assistant can:
+- Run several things at once and let you steer each one independently
+- Accept corrections mid-task without restarting
+- Pause work, handle something urgent, and resume where it left off
+- Hold a real-time voice conversation while doing background work
+
+## Architecture at a glance
+
+```
+ConversationManager (dual-brain orchestration)
+    │
+    │   Slow Brain ◄── IPC ──► Fast Brain (real-time voice)
+    │
+    ▼
+CodeActActor (generates Python plans, calls primitives.* APIs)
+    │
+    ▼
+State Managers (each runs its own async LLM tool loop)
+    ├── ContactManager        — people and relationships
+    ├── KnowledgeManager      — domain facts
+    ├── TaskScheduler         — durable tasks and execution
+    ├── TranscriptManager     — conversation history
+    ├── GuidanceManager       — procedures and SOPs
+    ├── FileManager           — file parsing
+    ├── WebSearcher           — web research
+    ├── SecretManager         — encrypted secrets
+    └── ...more
+    │
+    ├── EventBus              — typed pub/sub backbone
+    └── MemoryManager         — offline knowledge consolidation
+```
+
+## Key concepts
+
+<CardGroup cols={2}>
+  <Card title="Steerable Handles" href="/architecture/steerable-handles">
+    The universal protocol for mid-flight control. Pause, resume, interject, and query any running operation at any depth.
+  </Card>
+  <Card title="CodeAct" href="/architecture/codeact">
+    The Actor writes Python programs over typed primitives — not flat JSON tool calls. Real variables, loops, and control flow.
+  </Card>
+  <Card title="Dual-Brain Voice" href="/architecture/dual-brain">
+    A slow deliberation brain and a fast real-time voice agent, communicating over IPC. The assistant keeps talking while working.
+  </Card>
+  <Card title="State Managers" href="/architecture/managers">
+    Distributed domain managers communicating through English-language APIs. Each runs its own LLM tool loop.
+  </Card>
+  <Card title="Memory" href="/architecture/memory">
+    Every 50 messages, conversations are consolidated into structured, queryable tables — contacts, knowledge, tasks, policies.
+  </Card>
+  <Card title="Running Tests" href="/guides/running-tests">
+    Real LLMs, cached responses, parallel execution. Never mocked.
+  </Card>
+</CardGroup>
 
 ## Open source
 
-<Note>
-  We're preparing to open-source the full brain under a permissive license. Source code, architecture docs, and contribution guidelines will be available soon. Join our [Discord](https://discord.com/invite/sXyFF8tDtm) to be notified when we launch.
-</Note>
+Unity, [UniLLM](https://github.com/unifyai/unillm), and the [Unify SDK](https://github.com/unifyai/unify) are MIT-licensed. The full product — with voice calls, messaging channels, and a management dashboard — runs on [Unify's platform](https://unify.ai).
 
-## Get started
-
-Sign up at [unify.ai](https://unify.ai) to meet your new virtual teammate.
+→ [Quickstart](/basics/quickstart) — get the sandbox running in 5 minutes
