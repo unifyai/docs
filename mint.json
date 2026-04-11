@@ -1,5 +1,5 @@
 {
-    "name": "Unify Documentation",
+    "name": "Unity Documentation",
     "logo": {
         "dark": "/images/unify_logo_only.png",
         "light": "/images/unify_logo_only.png",
@@ -15,16 +15,44 @@
             "to": "#009600"
         }
     },
+    "topbarLinks": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/unifyai/unity"
+        }
+    ],
     "topbarCtaButton": {
         "name": "Console",
         "url": "https://console.unify.ai"
     },
     "navigation": [
         {
-            "group": "",
+            "group": "Getting Started",
             "pages": [
                 "basics/overview",
-                "basics/demos",
+                "basics/quickstart",
+                "basics/demos"
+            ]
+        },
+        {
+            "group": "Architecture",
+            "pages": [
+                "architecture/steerable-handles",
+                "architecture/codeact",
+                "architecture/dual-brain",
+                "architecture/managers",
+                "architecture/memory"
+            ]
+        },
+        {
+            "group": "Guides",
+            "pages": [
+                "guides/running-tests"
+            ]
+        },
+        {
+            "group": "API Reference",
+            "pages": [
                 "basics/welcome"
             ]
         }
@@ -33,6 +61,7 @@
         "discord": "https://discord.com/invite/sXyFF8tDtm",
         "x": "https://twitter.com/letsunifyai",
         "youtube": "https://youtube.com/@unifyai",
-        "linkedin": "https://www.linkedin.com/company/unifyai"
+        "linkedin": "https://www.linkedin.com/company/unifyai",
+        "github": "https://github.com/unifyai/unity"
     }
 }

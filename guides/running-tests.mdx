@@ -1,0 +1,111 @@
+---
+title: "Running Tests"
+description: "Real LLMs, cached responses, and parallel execution"
+---
+
+## Philosophy
+
+Unity tests use **real LLM calls**, never mocked. Responses are cached after the first run, so subsequent runs replay instantly. This gives you the confidence of real inference with the speed of unit tests.
+
+```bash
+# First run: real LLM calls, responses cached
+tests/parallel_run.sh tests/contact_manager/
+
+# Subsequent runs: cached responses, milliseconds per test
+tests/parallel_run.sh tests/contact_manager/
+```
+
+## Quick start
+
+```bash
+# Install dev dependencies
+uv sync --all-groups
+source .venv/bin/activate
+
+# Run everything
+tests/parallel_run.sh tests/
+
+# Run one module
+tests/parallel_run.sh tests/actor/
+
+# Run specific tests
+tests/parallel_run.sh tests/contact_manager/test_ask.py::test_name
+```
+
+The test runner starts a local Orchestra instance automatically (requires Docker for PostgreSQL). Tests stream pass/fail results as they complete.
+
+## Symbolic vs. eval tests
+
+Tests fall on a spectrum between two paradigms:
+
+**Symbolic tests** use the LLM as a stub. The LLM receives minimal instructions designed to trigger specific code paths. Focus is on infrastructure: async tool loops, steering, state mutations. The LLM's "intelligence" is irrelevant. Failures indicate regressions in programmatic logic.
+
+**Eval tests** exercise the system end-to-end. We ask a question or give a directive, then verify the outcome. Internal tool calls don't matter. Failures may indicate prompt issues, tool design problems, or capability gaps.
+
+Most tests sit somewhere between these extremes. Mark eval-heavy files with:
+
+```python
+import pytest
+pytestmark = pytest.mark.eval
+```
+
+## Caching
+
+When `UNILLM_CACHE="true"` (the default), all LLM responses are cached per unique input:
+
+- **Cache key** = exact LLM input (prompts, tools, parameters)
+- **Cache hit** = identical input seen before → cached response replayed
+- **Cache miss** = new input → real LLM call, response stored
+
+If you modify prompts, tool docstrings, or system messages, the cache key changes automatically and you get fresh inference. You never need to manually clear the cache for code changes.
+
+```bash
+# Re-evaluate LLM behavior with fresh calls
+tests/parallel_run.sh --no-cache tests/contact_manager/
+
+# Run only eval tests
+tests/parallel_run.sh --eval-only tests/
+
+# Run only symbolic tests
+tests/parallel_run.sh --symbolic-only tests/
+```
+
+## Parallel execution
+
+By default, every test runs in its own tmux session concurrently. Each session is isolated — tests don't interfere with each other.
+
+```bash
+# Default: all tests concurrent (maximum speed)
+tests/parallel_run.sh tests/contact_manager/
+
+# Serial mode: one session per file (fewer total sessions)
+tests/parallel_run.sh -s tests/
+
+# With timeout
+tests/parallel_run.sh --timeout 300 tests/contact_manager/
+```
+
+## Reading failure logs
+
+When tests fail, read the log files — don't inspect tmux panes:
+
+```bash
+# Find the latest run's logs
+ls logs/pytest/
+
+# Read a specific failure
+cat logs/pytest/2026-04-11T14-30-45_unitypid73626/contact_manager-test_ask.txt
+```
+
+After investigating, clean up failed sessions:
+
+```bash
+tests/kill_failed.sh    # Kill failed sessions from your terminal
+tests/kill_server.sh    # Kill the entire tmux server
+```
+
+## For fork contributors
+
+The full test suite requires org-level secrets (API keys, backend access). Fork PRs run lint checks only. A maintainer will trigger the full suite after review.
+
+See [tests/README.md](https://github.com/unifyai/unity/blob/main/tests/README.md) for the complete testing documentation.
