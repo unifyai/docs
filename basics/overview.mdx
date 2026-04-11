@@ -1,11 +1,11 @@
 ---
 title: "Overview"
-description: "Open-source brain for AI assistants — steerable async tool loops, CodeAct planning, and distributed manager orchestration"
+description: "An AI agent you can steer while it works"
 ---
 
 ## What is Unity?
 
-Unity is the open-source brain of an AI assistant. It implements the assistant's intelligence through a distributed architecture of specialized **state managers** (ContactManager, TaskScheduler, KnowledgeManager, etc.), each orchestrated by a central **Actor** through code-first plans.
+Unity is an AI agent you can interrupt mid-task, redirect without restarting, talk to while it works, and run several things on at once. It's voice-native, with memory that compounds over time.
 
 <iframe
   width="100%"
@@ -19,15 +19,15 @@ Unity is the open-source brain of an AI assistant. It implements the assistant's
 
 ## What makes it different
 
-Most agent frameworks work like this: one LLM, one loop, one tool call at a time. If you want to interrupt, you cancel and start over.
+Most agent frameworks give you one loop: the model picks a tool, calls it, reads the result, picks the next. If you want to change course, you cancel and start over.
 
-Unity works differently. Every operation runs inside its own async LLM tool loop and returns a [**steerable handle**](/architecture/steerable-handles). These handles compose: the ConversationManager steers the Actor, the Actor steers the managers, and the user steers the ConversationManager. Steering propagates through the full depth.
+Unity gives every operation its own loop and returns a **live handle** you can steer. These handles nest — the user steers the ConversationManager, the ConversationManager steers the Actor, the Actor steers the managers. Corrections, pauses, and queries propagate through the full depth.
 
-This means the assistant can:
-- Run several things at once and let you steer each one independently
-- Accept corrections mid-task without restarting
-- Pause work, handle something urgent, and resume where it left off
-- Hold a real-time voice conversation while doing background work
+In practice:
+- "Also include Q2 numbers" mid-way through a report → the agent adjusts without restarting
+- "Pause that, something urgent" → work freezes and resumes exactly where it left off
+- "How's the flight search going?" → status update without disrupting the work
+- Three tasks running at once, each independently steerable
 
 ## Architecture at a glance
 
@@ -37,7 +37,7 @@ ConversationManager (dual-brain orchestration)
     │   Slow Brain ◄── IPC ──► Fast Brain (real-time voice)
     │
     ▼
-CodeActActor (generates Python plans, calls primitives.* APIs)
+CodeActActor (writes Python plans over typed primitives)
     │
     ▼
 State Managers (each runs its own async LLM tool loop)
@@ -55,17 +55,17 @@ State Managers (each runs its own async LLM tool loop)
     └── MemoryManager         — offline knowledge consolidation
 ```
 
-## Key concepts
+## Deep dives
 
 <CardGroup cols={2}>
   <Card title="Steerable Handles" href="/architecture/steerable-handles">
     The universal protocol for mid-flight control. Pause, resume, interject, and query any running operation at any depth.
   </Card>
   <Card title="CodeAct" href="/architecture/codeact">
-    The Actor writes Python programs over typed primitives — not flat JSON tool calls. Real variables, loops, and control flow.
+    The agent writes Python programs over typed primitives — not flat JSON tool calls. Real variables, loops, and control flow.
   </Card>
   <Card title="Dual-Brain Voice" href="/architecture/dual-brain">
-    A slow deliberation brain and a fast real-time voice agent, communicating over IPC. The assistant keeps talking while working.
+    A slow deliberation brain and a fast real-time voice agent, communicating over IPC. The agent keeps talking while working.
   </Card>
   <Card title="State Managers" href="/architecture/managers">
     Distributed domain managers communicating through English-language APIs. Each runs its own LLM tool loop.
@@ -78,8 +78,8 @@ State Managers (each runs its own async LLM tool loop)
   </Card>
 </CardGroup>
 
-## Open source
+## Get started
 
-Unity, [UniLLM](https://github.com/unifyai/unillm), and the [Unify SDK](https://github.com/unifyai/unify) are MIT-licensed. The full product — with voice calls, messaging channels, and a management dashboard — runs on [Unify's platform](https://unify.ai).
+→ [Quickstart](/basics/quickstart) — clone, install, run the sandbox in 5 minutes
 
-→ [Quickstart](/basics/quickstart) — get the sandbox running in 5 minutes
+All three repos ([unity](https://github.com/unifyai/unity), [unillm](https://github.com/unifyai/unillm), [unify](https://github.com/unifyai/unify)) are MIT-licensed. The full product — with voice calls, messaging channels, and a management dashboard — runs on [Unify's platform](https://unify.ai).
