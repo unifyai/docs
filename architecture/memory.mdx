@@ -17,6 +17,8 @@ Unity takes a different approach. Every 50 messages, the **MemoryManager** runs 
 
 This is stored in typed, queryable tables — not freeform text. After a month of use, the system has a working model of your world.
 
+This is continual learning at the agent layer, not model fine-tuning: Unity improves by updating durable structured state that future reasoning can query directly.
+
 ## How consolidation works
 
 The MemoryManager observes message events on the **EventBus** and runs extraction when the message count crosses a threshold:
