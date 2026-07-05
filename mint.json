@@ -1,5 +1,5 @@
 {
-    "name": "Unity",
+    "name": "Unify",
     "logo": {
         "dark": "/images/unify_logo_only.png",
         "light": "/images/unify_logo_only.png",
@@ -18,7 +18,7 @@
     "topbarLinks": [
         {
             "name": "GitHub",
-            "url": "https://github.com/unifyai/unity"
+            "url": "https://github.com/unifyai/unify"
         }
     ],
     "topbarCtaButton": {
@@ -29,31 +29,27 @@
         {
             "group": "Getting Started",
             "pages": [
-                "basics/overview",
-                "basics/quickstart",
-                "basics/demos"
+                "introduction"
             ]
         },
         {
-            "group": "Architecture",
+            "group": "Communication",
             "pages": [
-                "architecture/steerable-handles",
-                "architecture/codeact",
-                "architecture/dual-brain",
-                "architecture/managers",
-                "architecture/memory"
-            ]
-        },
-        {
-            "group": "Guides",
-            "pages": [
-                "guides/running-tests"
-            ]
-        },
-        {
-            "group": "API Reference",
-            "pages": [
-                "basics/welcome"
+                "communication/overview",
+                "communication/console-chat",
+                "communication/unify-meet",
+                "communication/phone-calls",
+                "communication/sms",
+                "communication/whatsapp",
+                "communication/email",
+                "communication/slack",
+                "communication/microsoft-teams",
+                "communication/discord",
+                "communication/meetings",
+                "communication/setup",
+                "communication/voice",
+                "communication/behavior",
+                "communication/recordings-and-transcripts"
             ]
         }
     ],
@@ -62,6 +58,6 @@
         "x": "https://twitter.com/letsunifyai",
         "youtube": "https://youtube.com/@unifyai",
         "linkedin": "https://www.linkedin.com/company/unifyai",
-        "github": "https://github.com/unifyai/unity"
+        "github": "https://github.com/unifyai/unify"
     }
 }
