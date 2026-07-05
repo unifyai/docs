@@ -51,6 +51,18 @@
                 "communication/behavior",
                 "communication/recordings-and-transcripts"
             ]
+        },
+        {
+            "group": "Workspace",
+            "pages": [
+                "workspace/overview",
+                "workspace/connecting",
+                "workspace/email",
+                "workspace/calendar",
+                "workspace/files",
+                "workspace/contacts-and-tasks",
+                "workspace/security"
+            ]
         }
     ],
     "footerSocials": {

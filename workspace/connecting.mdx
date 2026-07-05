@@ -1,0 +1,86 @@
+---
+title: "Connecting your workspace"
+description: "Link a Google or Microsoft account in about thirty seconds"
+---
+
+The **Workspace** dialog in the Console handles the whole connection. You can
+open it from several places — they all lead to the same dialog:
+
+- Your assistant's profile → the **Workspace** tile
+- **Contact Details** → Email → **Configure**
+- The onboarding checklist's workspace step
+- The hire form, when setting up a new assistant
+
+## The connect flow
+
+<Steps>
+  <Step title="Pick a provider">
+    Choose **Google Workspace** (Gmail, Calendar, Drive) or **Microsoft 365**
+    (Outlook, Teams, Calendar).
+  </Step>
+  <Step title="Choose what to grant">
+    Tick the features you want your assistant to have. Some are part of the
+    core connection and always included; the rest are up to you:
+
+    | Feature | Google | Microsoft 365 |
+    |---|---|---|
+    | Email | Always included | Always included |
+    | Drive / files | Always included | Always included |
+    | Teams | — | Always included |
+    | SharePoint | — | Always included |
+    | Calendar | Optional | Optional |
+    | Contacts | Optional | Optional |
+    | Tasks | Optional | Optional |
+  </Step>
+  <Step title="Sign in and approve">
+    Click **Connect**. A new tab opens with the familiar Google or Microsoft
+    sign-in, listing exactly the permissions you selected. Approve, and the
+    tab returns you to the Console — you'll see "Workspace connected" along
+    with which account is linked.
+  </Step>
+  <Step title="Choose file access (optional)">
+    If you granted file access, a **File access** picker appears so you can
+    decide which folders and files your assistant can see. See
+    [Files](/workspace/files) — by default it can access everything the
+    connected account can, until you set rules.
+  </Step>
+</Steps>
+
+<Note>
+  Connecting a workspace is **free** — unlike phone or WhatsApp channels,
+  there are no setup or monthly credit costs.
+</Note>
+
+## Changing what's granted
+
+Open the Workspace dialog any time to adjust:
+
+- **Add or remove features** — change the checkboxes and click
+  **Update Features**. You'll go through the provider's consent screen again
+  so the new permission set is explicitly approved by you.
+- **Change the account** — disconnect, then connect the other account.
+- **One account, one assistant** — a mailbox can only be connected to one
+  assistant at a time. If you see *"That mailbox is already connected to an
+  assistant"*, disconnect it there first.
+
+## Disconnecting
+
+Click **Disconnect** in the Workspace dialog. This revokes the platform's
+access, removes the stored connection, and your assistant immediately loses
+the ability to act on that account — inbox, calendar, files, all of it. You
+can reconnect whenever you like.
+
+You can also revoke access from the provider's side at any time: **Google
+Account → Security → Third-party access**, or **Microsoft Account → Apps &
+permissions**. See [Access & security](/workspace/security) for the full
+picture.
+
+## If you skip it
+
+Everything in [Communication](/communication/overview) that doesn't depend on
+a mailbox still works — Console chat, Unify Meet, phone, SMS, WhatsApp. But
+your assistant won't be able to read or send from the workspace mailbox,
+check the calendar, or reach files in Drive, OneDrive, or SharePoint until a
+workspace is connected. If you ask for something that needs it, your
+assistant will tell you what's missing and point you to the Workspace dialog
+— or walk you through it on a screen-share call.

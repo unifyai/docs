@@ -1,0 +1,52 @@
+---
+title: "Access & security"
+description: "What your assistant can reach, and how you stay in control"
+---
+
+Connecting a workspace grants meaningful access, so it's worth knowing
+exactly what that means — and how to change your mind.
+
+## Your assistant only gets what you approve
+
+The permissions are the ones you selected in the Workspace dialog, shown to
+you in plain terms on Google's or Microsoft's own consent screen before you
+approve. Nothing is granted silently:
+
+- Optional features (Calendar, Contacts, Tasks) are only included if you tick
+  them.
+- Adding a feature later means going through the consent screen again — you
+  re-approve the expanded permission set explicitly.
+- On top of the OAuth grant, [file access rules](/workspace/files) let you
+  narrow file visibility down to specific folders.
+
+## Where the connection lives
+
+Sign-in happens directly with Google or Microsoft — the platform never sees
+your password. The resulting access credentials are stored securely
+server-side, never in your browser, and your assistant's working environment
+uses them without ever exposing them: even the code your assistant writes and
+runs cannot read the raw credentials.
+
+## Two ways to pull the plug
+
+You're never locked in — access can be revoked from either side, at any time:
+
+1. **In the Console** — Workspace dialog → **Disconnect**. This revokes the
+   platform's access, stops inbox monitoring, and deletes the stored
+   connection. Your assistant immediately loses all workspace access.
+2. **At the provider** — remove the app from **Google Account → Security →
+   Third-party access** or **Microsoft Account → Apps & permissions**. This
+   kills access at the source, regardless of anything on the platform side.
+
+## Boundaries worth knowing
+
+- **One mailbox, one assistant.** A workspace account can only be connected
+  to one assistant at a time.
+- **The account's permissions are the ceiling.** Your assistant can never
+  reach anything the connected account itself can't — org-level sharing
+  rules, SharePoint permissions, and drive ACLs all still apply.
+- **T-W1N acts as you** on your connected account; hired assistants act as
+  **themselves** on their own accounts. If you're uneasy about an assistant
+  having some access, that's the knob to reach for: hired assistants get
+  their own account whose access your organization controls like any
+  employee's.
