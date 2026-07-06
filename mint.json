@@ -90,6 +90,15 @@
                 "learning/guidance-and-functions",
                 "learning/teaching"
             ]
+        },
+        {
+            "group": "Canvas",
+            "pages": [
+                "canvas/overview",
+                "canvas/data",
+                "canvas/dashboards",
+                "canvas/recipes"
+            ]
         }
     ],
     "footerSocials": {
