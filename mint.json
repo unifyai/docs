@@ -99,6 +99,15 @@
                 "canvas/dashboards",
                 "canvas/recipes"
             ]
+        },
+        {
+            "group": "Their Computer",
+            "pages": [
+                "their-computer/overview",
+                "their-computer/what-it-does",
+                "their-computer/watching-and-control",
+                "their-computer/the-machine"
+            ]
         }
     ],
     "footerSocials": {
