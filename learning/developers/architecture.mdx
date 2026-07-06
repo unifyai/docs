@@ -1,0 +1,134 @@
+---
+title: "Architecture"
+description: "How learning actually works in the open-source unify runtime"
+---
+
+This sub-section documents the learning machinery in the open-source
+[`unifyai/unify`](https://github.com/unifyai/unify) repo for developers
+reading, extending, or embedding the code. It covers the two skill
+libraries, the actor loop that reads and writes them, and the knowledge and
+memory subsystems — with symbol names and links into the source throughout.
+
+![The learning loop: ConversationManager dispatches act() to CodeActActor, whose Phase 1 doing loop is gated on FunctionManager and GuidanceManager discovery and whose Phase 2 StorageCheck writes back to both libraries](/images/developers/learning-loop.png)
+
+## The dual library
+
+Everything the assistant "learns" lands in one of two complementary stores,
+each a state manager with an abstract contract (`base.py`) and an
+Orchestra-backed implementation:
+
+| | [`FunctionManager`](https://github.com/unifyai/unify/blob/main/unify/function_manager/function_manager.py) | [`GuidanceManager`](https://github.com/unifyai/unify/blob/main/unify/guidance_manager/guidance_manager.py) |
+|---|---|---|
+| Stores | The **what** — executable functions (Python/shell), plus a searchable catalog of platform primitives | The **how** — procedural prose: SOPs, walkthroughs, composition recipes, pitfalls |
+| Row model | `Function` ([types/function.py](https://github.com/unifyai/unify/blob/main/unify/function_manager/types/function.py)) | `Guidance` ([types/guidance.py](https://github.com/unifyai/unify/blob/main/unify/guidance_manager/types/guidance.py)) |
+| Contexts | `Functions/Compositional`, `Functions/Primitives`, `Functions/VirtualEnvs`, `Functions/Meta` | `Guidance` (+ `Guidance/Meta` for builtins hashes) |
+| Cross-links | `Function.guidance_ids` | `Guidance.function_ids` |
+
+The two are deliberately linked: a stored workflow is typically a
+compositional **function** (the building block) plus a **guidance** entry
+that references it via `function_ids` (the recipe that says when and how to
+compose it).
+
+## The two-phase `act()`
+
+The learning loop lives in
+[`CodeActActor`](https://github.com/unifyai/unify/blob/main/unify/actor/code_act_actor.py).
+Every `act()` call is potentially two phases wrapped in one handle:
+
+1. **Phase 1 — the doing loop.** An async tool loop
+   (`start_async_tool_loop`) whose tool surface includes `execute_code`,
+   `execute_function`, the `FunctionManager_*` and `GuidanceManager_*`
+   tools, `request_clarification`, and (when storage is enabled)
+   `store_skills`. The `ConversationManager` dispatches into this via its
+   `act` tool and receives a `SteerableToolHandle`.
+2. **Phase 2 — StorageCheck.** When `can_store` is in effect (or a
+   `PostRunReviewContext` is present), the handle returned by `act()` is a
+   `_StorageCheckHandle` that runs a **separate** "skill librarian" LLM
+   loop after the doing loop completes — reviewing the trajectory and
+   deciding what, if anything, persists. Covered in depth in
+   [StorageCheck](/learning/developers/storage-check).
+
+The handle's semantics are the key design point: `result()` resolves at the
+end of **Phase 1**, so callers get the task's answer without waiting for
+storage; `done()` is true only after Phase 2 finishes. Learning never adds
+latency to answers.
+
+## The discovery-first gate
+
+Before the doing agent can execute anything, it must consult both
+libraries. This is enforced mechanically, not just prompted:
+
+- `CodeActActor._default_tool_policy()` returns a `ToolPolicyFn` that, on
+  each turn, checks whether any `FunctionManager_`-prefixed and any
+  `GuidanceManager_`-prefixed tool has been called. Until **both** are
+  satisfied, the loop exposes *only* the unsatisfied discovery tools with
+  `tool_choice="required"`.
+- The companion prompt constants — `_DISCOVERY_FIRST_POLICY` and
+  `_FUNCTION_AND_GUIDANCE_LIBRARY` in
+  [prompt_builders.py](https://github.com/unifyai/unify/blob/main/unify/actor/prompt_builders.py)
+  — explain the contract to the model, and
+  [prompt_examples.py](https://github.com/unifyai/unify/blob/main/unify/actor/prompt_examples.py)
+  ships an explicit anti-pattern example ("search is not permission to
+  jump into custom code").
+
+A subtle but important mechanic: the search wrappers call the manager with
+`_return_callable=True`, so discovered functions are **injected into the
+sandbox namespace** (registered via `SessionExecutor.register_fm_globals`)
+while the LLM sees only metadata. Discovery isn't advisory — it arms the
+sandbox.
+
+## Scopes: personal, team, builtins
+
+Both libraries (and Knowledge) read across every scope the assistant can
+see and write to exactly one:
+
+![Federated scopes: federated_ranked_search fans out to the personal root, team roots, and the read-only builtins catalogue, with ContextRegistry resolving read and write roots](/images/developers/federated-scopes.png)
+
+- [`ContextRegistry.read_roots`](https://github.com/unifyai/unify/blob/main/unify/common/context_registry.py)
+  returns the personal root first, then `Teams/{team_id}/…` for each id in
+  `SESSION_DETAILS.team_ids` (for tables listed in `SHARED_SCOPED_TABLES`
+  in [authorship.py](https://github.com/unifyai/unify/blob/main/unify/common/authorship.py)).
+- [`federated_ranked_search`](https://github.com/unifyai/unify/blob/main/unify/common/federated_search.py)
+  fans a semantic query out across one `FederatedSearchContext` per root —
+  plus the **builtins catalogue** on the public platform project (passed
+  via the `project` field) — and merges results globally by score.
+- `ContextRegistry.write_root` maps a `destination` (`"personal"` or
+  `"team:<id>"`) to a single concrete context, raising a
+  `ToolErrorException` (`error_kind: invalid_destination`) when the
+  assistant isn't a member of the named team. Tenant writes never target
+  the builtins project.
+
+## Embeddings
+
+Semantic search is backed by Orchestra-side derived vector columns, created
+lazily and shared by all scopes:
+
+- [`ensure_vector_column`](https://github.com/unifyai/unify/blob/main/unify/common/embed_utils.py)
+  issues a derived-column definition using `embed(...)` with
+  `EMBED_MODEL = "text-embedding-3-small"`.
+- Functions embed a synthesized `embedding_text` field (name + signature +
+  docstring) into `_embedding_text_emb`; guidance embeds `content` into
+  `_content_emb` (builtins additionally embed `title`). Each manager's
+  `warm_embeddings()` pre-creates its columns; searches also create them
+  on demand via `ensure_vector_for_source` in
+  [semantic_search.py](https://github.com/unifyai/unify/blob/main/unify/common/semantic_search.py).
+
+## Map of this sub-section
+
+<CardGroup cols={2}>
+  <Card title="FunctionManager" icon="braces" color="#2f9d97" href="/learning/developers/function-manager">
+    The executable library: primitives, compositional functions, venvs,
+    custom sync, and execution.
+  </Card>
+  <Card title="GuidanceManager" icon="compass" color="#cf9a3e" href="/learning/developers/guidance-manager">
+    The procedural library: CRUD semantics, previews, images, builtins.
+  </Card>
+  <Card title="StorageCheck" icon="box-archive" color="#c95f5a" href="/learning/developers/storage-check">
+    The post-run learning pass, store_skills, and task entrypoint
+    certification.
+  </Card>
+  <Card title="Knowledge & Memory" icon="book-open" color="#6e4a86" href="/learning/developers/knowledge-and-memory">
+    KnowledgeManager's NL tool loops and MemoryManager's background
+    consolidation.
+  </Card>
+</CardGroup>
