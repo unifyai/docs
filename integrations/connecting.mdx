@@ -3,11 +3,20 @@ title: "Connecting apps"
 description: "Browse the gallery, authorize, and manage your connected accounts"
 ---
 
-Open your assistant's **Integrations** tab to see the app gallery. Connected
-apps are pinned at the top, anything needing attention is flagged, and the
-full catalog scrolls below. Use the search box or filter by status
-(**Connected**, **Needs attention**, **Not connected**) and type (**Native**,
-**Third-party**) to find what you need.
+Open your assistant's **Integrations** tab to see the app gallery. It's
+organized into three sections:
+
+- **Connected apps** — everything already wired up, pinned at the top and
+  ready for your assistant to use.
+- **Needs attention** — apps that need a reconnect or configuration update
+  before they'll work again.
+- **Available apps** — the full catalog, scrolling below.
+
+Use the search box or the filters — status (**Connected**, **Needs
+attention**, **Not connected**) and type (**Native**, **Third-party**) — to
+narrow things down, and check the footer for the running tally of what's
+connected. Each card wears badges telling you how it authorizes (**OAuth**,
+**API key**) and how many tools it brings.
 
 ## Connecting an app
 
@@ -57,14 +66,41 @@ Use **Add account** in the app's detail view to connect another.
 ## Keeping connections healthy
 
 Each account row shows its health — **Healthy** or **Needs attention** — and
-you can hit **Test** any time to check a connection. When an app needs a
-refresh (an expired login, a revoked grant, new permissions), the gallery
-flags it under **Needs attention** and the card offers **Reconnect**.
+you can hit **Test** any time to check a connection. The card and account
+badges tell you exactly where things stand:
+
+| Badge | Meaning |
+|---|---|
+| **Connected** / **Configured** | Working — authorized (OAuth) or credentialed (API key) |
+| **Connecting** | Authorization in progress |
+| **Needs attention** / **Reconnect** | An expired login, revoked grant, or missing permission — reconnect to fix |
+| **Needs setup** | Something must be configured before connecting (see below) |
+| **Not connected** | Available in the catalog, not yet linked |
 
 Disconnecting removes the authorization for that assistant; you can reconnect
 later if you need the app again. For apps connected with your own OAuth app
 credentials, disconnecting keeps the client details saved so reconnecting is
 one click.
+
+## Bring your own OAuth (admins)
+
+Most OAuth apps connect with platform-managed credentials — click Connect
+and go. For organizations that want more control, each app's detail view
+has a **Bring your own OAuth** section (admin-only) where you can register
+your organization's own OAuth app instead. Reasons to bother:
+
+- **Your branding on the consent screen** — people authorizing see your
+  organization's app, not a generic one.
+- **Custom scopes** — request exactly the permissions your workflows need.
+- **Apps without managed credentials** — a few catalog apps can *only* be
+  connected this way. Their cards say so ("Custom OAuth app required") and
+  stay unconnectable until an admin sets one up.
+
+Setup is two steps: copy the **authorized redirect URI** shown in the
+Console into your provider's developer portal, then paste in your app's
+client ID and secret. The client secret is stored in the provider's secure
+vault — never by the platform itself — and the configuration can be removed
+again at any time.
 
 ## Apps not in the gallery
 
