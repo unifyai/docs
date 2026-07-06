@@ -117,6 +117,15 @@
                 "your-computer/files-and-terminal",
                 "your-computer/control-and-safety"
             ]
+        },
+        {
+            "group": "Teams",
+            "pages": [
+                "teams/overview",
+                "teams/membership",
+                "teams/shared-context",
+                "teams/managing"
+            ]
         }
     ],
     "footerSocials": {

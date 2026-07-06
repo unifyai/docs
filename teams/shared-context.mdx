@@ -1,0 +1,107 @@
+---
+title: "Shared context"
+description: "Personal by default, shared where it belongs — the heart of teams"
+---
+
+Everything an assistant accumulates — [knowledge and
+playbooks](/learning/overview), [skills](/learning/guidance-and-functions),
+[tasks](/tasks/overview), [data tables and
+dashboards](/canvas/overview), credentials — lives in a **memory pool**.
+Teams exist so that pool doesn't have to be all-or-nothing: every piece of
+context is either **personal** (belonging to one assistant) or **shared in
+a team** (accessible to every current member).
+
+## The two scopes
+
+<CardGroup cols={2}>
+  <Card title="Personal" icon="lock" color="#2f9d97">
+    Private to one assistant. Working notes, individual preferences,
+    personal credentials, anything whose audience is unclear. This is the
+    default — the **privacy floor**.
+  </Card>
+  <Card title="Team" icon="users" color="#cf9a3e">
+    Shared with every current member of one specific team — its people,
+    their T-W1Ns, and its specialist assistants. Team SOPs, shared
+    reference data, unit credentials, common workflows.
+  </Card>
+</CardGroup>
+
+Nearly everything can take either scope:
+
+| What | Personal example | Team example |
+|---|---|---|
+| **Knowledge** | Your private research notes | The team's operational reference data |
+| **Guidance** | How *you* like your reports | The SOP the whole unit follows |
+| **Functions** | A one-off helper script | The team's shared report-generation workflow |
+| **Tasks** | Your morning briefing | The team's weekly metrics run |
+| **Data & dashboards** | Your scratch analysis | The ops dashboard everyone checks at standup |
+| **Credentials** | Your personal API key | The team's shared service account |
+
+## How assistants choose a scope
+
+You don't file anything manually — assistants route content as they work,
+under strict rules:
+
+- **Personal is the default.** Anything private, ambiguous, or
+  individual-flavored stays personal.
+- **Team only when it clearly belongs.** Each team has a name and
+  description; content goes to a team pool only when it plainly matches
+  that team's domain.
+- **When unsure, they ask.** "Should this go in the Repairs team's shared
+  pool, or keep it just between us?" — a brief question rather than a guess
+  toward the wider audience.
+- **Credentials get extra caution.** Sharing a credential is harder to
+  undo than sharing it later, so the bar for putting one in a team pool is
+  highest of all.
+
+You can always direct scope explicitly: *"save this as team guidance for
+the repairs team"*, *"keep that analysis personal"*.
+
+## How shared context gets used
+
+Here's the payoff. Whenever an assistant works, it draws on **its personal
+memory plus every team it belongs to** — searching for relevant playbooks,
+skills, knowledge, and credentials across all of them at once:
+
+- A new member's T-W1N can follow the team SOP **on day one**, because the
+  playbook lives in the team pool, not in a veteran's head.
+- The expense workflow that one assistant [learned last
+  month](/learning/overview) runs identically for everyone on the team.
+- The team dashboard is fed by team data tables that any member's
+  assistant can update.
+
+Writing is the disciplined side: each saved item goes to **exactly one**
+scope — personal or one named team — never sprayed across pools.
+
+## The controls that make sharing safe
+
+This design deliberately avoids "everything visible to everyone in the
+org":
+
+- **Team pools are invisible to non-members.** An assistant that isn't on
+  the finance team cannot see finance's knowledge, data, or credentials —
+  they don't appear in its searches at all.
+- **Membership is current-members-only.** Remove someone and their access
+  ends [immediately](/teams/membership); the content stays for the rest of
+  the team.
+- **There is no org-wide memory view.** Nobody — including admins — has a
+  single pane showing every assistant's memory. Reviewing a team's shared
+  pool means being on that team; reviewing an assistant's personal memory
+  means being its owner.
+- **Sensitive stays scoped.** Elevated-access credentials,
+  division-specific data, confidential procedures — put them in the
+  narrowest team that needs them, and that's exactly how far they reach.
+
+## Seeing scopes in the Console
+
+Shared context is visible where you'd expect: **Guidance** and
+**Knowledge** entries carry scope badges showing whether they're personal
+or belong to a team, and the [Data pane](/canvas/data) groups team-owned
+tables under their team alongside the assistant's personal folders.
+
+<Tip>
+  A good habit when teaching an assistant something reusable: say who it's
+  for. "This is how *our team* handles refunds" routes the playbook to the
+  team pool; "this is how *I* like my summaries" keeps it personal. The
+  clearer the audience, the better the filing.
+</Tip>
