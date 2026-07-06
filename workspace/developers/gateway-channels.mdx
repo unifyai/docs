@@ -1,0 +1,184 @@
+---
+title: "Email & gateway channels"
+description: "WorkspaceEmailManager, the Gmail/Outlook channels, watches, and the file pickers"
+---
+
+This page covers the workspace *surfaces*: the trusted primitive for the
+user's connected mailbox, and the gateway channels that implement sending,
+inbox watches, and the Console's Drive/SharePoint file picker.
+
+## Two send identities
+
+Email is the place where the twin-vs-teammate identity split
+([user docs](/hiring/twin-vs-teammates)) becomes concrete in code — there
+are two entirely separate send paths:
+
+![Two email identities: primitives.workspace_email acts as the user through WorkspaceEmailManager calling Gmail API or Microsoft Graph directly with a trusted token; primitives.comms.send_email acts as the assistant through the gateway email channels to its managed mailbox; inbound email arrives via Gmail push to /email/gmail and Graph subscriptions to /microsoft/router, waking the assistant](/images/developers/workspace-email-identities.png)
+
+### `primitives.workspace_email` — acts as the user
+
+[`unify/workspace_email/workspace_email_manager.py`](https://github.com/unifyai/unify/blob/main/unify/workspace_email/workspace_email_manager.py)
+defines `WorkspaceEmailManager`, registered as a primitive surface (not a
+full state manager) in
+[`unify/function_manager/primitives/registry.py`](https://github.com/unifyai/unify/blob/main/unify/function_manager/primitives/registry.py)
+and reached as `primitives.workspace_email.*`. Its public API:
+
+| Method | Notes |
+|---|---|
+| `send(to, subject, body, cc, bcc, in_reply_to, thread_id)` | Sends **from the connected account** |
+| `list_messages(query, max_results)` | Newest-first summaries |
+| `search(query, max_results)` | Alias of `list_messages` |
+| `get_message(message_id)` | Full message with plain-text body |
+
+Implementation notes for anyone extending it:
+
+- **Provider detection** (`_provider`) checks for Google state (granted
+  scopes / in-memory token) first, then Microsoft.
+- It is **trusted code**: it calls `get_provider_access_token` for the
+  real token and talks to `gmail.googleapis.com` / `graph.microsoft.com`
+  **directly**, not through the provider proxy.
+- **Threading**: on Gmail, `in_reply_to` becomes RFC 5322
+  `In-Reply-To`/`References` headers and `thread_id` maps to Gmail's
+  `threadId`; the Microsoft path currently sends via Graph `sendMail`
+  without reply threading.
+- Errors surface as `WorkspaceEmailError` with user-actionable messages
+  (e.g. no connected account available).
+
+### `primitives.comms.send_email` — acts as the assistant
+
+The assistant's own mailbox goes the other way entirely: the runtime calls
+`send_email_via_address` in
+[`unify/conversation_manager/domains/comms_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/comms_utils.py),
+which POSTs to the gateway's provider-agnostic dispatcher
+[`unify/gateway/channels/email/views.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/email/views.py)
+(`POST /email/send`). `_is_outlook_assistant` routes to the Gmail or
+Outlook channel based on the assistant's `email_provider`
+(`"google_workspace"` vs `"microsoft_365"` on `AssistantDetails` in
+[`unify/session_details.py`](https://github.com/unifyai/unify/blob/main/unify/session_details.py))
+or the presence of a Microsoft token.
+
+## The Gmail channel
+
+[`unify/gateway/channels/gmail/views.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/gmail/views.py)
+(mounted at `/gmail`, admin-key auth like all channels):
+
+| Endpoint | Handler | Purpose |
+|---|---|---|
+| `POST /gmail/send` | `send_email` | MIME build + `users().messages().send` |
+| `POST /gmail/watch` | `watch_email` | Gmail `users().watch` → Pub/Sub topic |
+| `DELETE /gmail/watch` | `delete_gmail_watch` | `users().stop` (run before revoking a token) |
+| `GET /gmail/attachment` | `get_attachment` | Fetch an attachment by message + attachment id |
+| `DELETE /gmail/delete` | `delete_email_user` | Admin SDK Directory user deletion |
+
+Send builds a `MIMEMultipart` message (attachments via base64
+`content_base64`), resolves the display name with `_format_from_header`,
+and threads with both mechanisms: `In-Reply-To`/`References` headers
+(via `_as_message_id`) *and* Gmail's `threadId` in the send body.
+Credentials resolve through `_gmail_service_from_assistant` — a connected
+account's `GOOGLE_ACCESS_TOKEN` when present, else service-account
+delegation from `GCP_SA_KEY` (the platform-mailbox path).
+
+The watch targets the Pub/Sub topic from `_gmail_topic_path`
+(`gmail-notifications` + environment suffix); pushes land on the adapter's
+`POST /email/gmail` (`gmail_notification_processor` in
+[`unify/gateway/adapters/google.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/google.py)),
+which resolves the assistant by mailbox address, activates its runtime,
+and publishes an `email`-thread envelope carrying the Gmail `historyId`.
+
+## The Outlook channel
+
+[`unify/gateway/channels/outlook/views.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/outlook/views.py)
+mirrors the shape with Microsoft Graph, via the client helpers in
+[`unify/gateway/common/graph.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/common/graph.py)
+(`graph_client_from_assistant` prefers the connected account's
+`MICROSOFT_ACCESS_TOKEN`, falling back to app-only admin credentials):
+
+| Endpoint | Handler | Purpose |
+|---|---|---|
+| `POST /outlook/send` | `send_outlook_email` | Graph `sendMail`, or `reply`/`createReply` for threads |
+| `POST /outlook/watch` | `watch_outlook_email` | Graph subscription on the inbox (`changeType="created"`) |
+| `DELETE /outlook/watch` | `delete_outlook_watch` | Remove the subscription |
+| `GET /outlook/attachment` | `get_outlook_attachment` | Attachment fetch |
+
+Details that matter: `in_reply_to` here is a **Graph message id**, not an
+RFC Message-ID; replies with attachments use the two-step
+`createReply` → attach → `send` dance because Graph's one-shot `reply`
+can't carry attachments; and subscriptions authenticate their callbacks
+with a `clientState` of `{OUTLOOK_WEBHOOK_SECRET}::{user_email}`.
+
+Inbound Graph notifications — Outlook *and* Teams — converge on one
+adapter entry point: `microsoft_router` in
+[`unify/gateway/adapters/microsoft.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/microsoft.py)
+(`POST /microsoft/router`), which answers the validation handshake and
+dispatches each notification by resource shape to
+`outlook_notification_processor_from_payload` or the Teams equivalent.
+
+Graph subscriptions expire (3-day max) and Gmail watches need periodic
+re-arming — the renewal crons live in the hosted control plane, not in the
+OSS gateway; self-hosters re-arm via the watch endpoints.
+
+## Drive & SharePoint channels: the file picker's backend
+
+These two channels exist to power the Console's [file-access
+picker](/workspace/files) (and ancestry lookups). Both are read-mostly,
+BYOD-token surfaces:
+
+- [`unify/gateway/channels/drive/views.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/drive/views.py) —
+  `GET /drive/roots` (My Drive + shared drives via `drives().list`),
+  `/drive/children`, `/drive/item`, `/drive/search`. Items are identified
+  by the `(drive_id, item_id)` pair — the same shape the proxy's policy
+  decisions use, which is no coincidence.
+- [`unify/gateway/channels/sharepoint/views.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/sharepoint/views.py) —
+  sites (`/sharepoint/sites`), drives (`/sharepoint/drives` covers
+  OneDrive via the personal drive; `drive_id="me"` resolves through
+  `_drive_ref`), folder listings by id or path, content download, upload,
+  folder creation, deletion, and search.
+
+## Teams meetings (workspace-adjacent)
+
+Meeting creation lives in
+[`unify/gateway/channels/teams/create_meeting.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/teams/create_meeting.py):
+`create_instant_onlinemeeting` (Graph `/me/onlineMeetings`) and
+`create_scheduled_meeting_event` (Graph `/me/events` with
+`isOnlineMeeting=True`), exposed via `POST /teams/create_meeting`. Teams
+chat subscriptions follow the same watch pattern as Outlook
+(`_rebuild_teams_watches` in the teams channel). The rest of Teams is
+communication territory — see the
+[Communication developer docs](/communication/developers/gateway).
+
+## OAuth scopes
+
+The **feature → scope bundle** catalogue (what "Email", "Drive",
+"Calendar" grant) is intentionally *not* in the open-source repo — it
+lives in the hosted control plane, which builds the consent URL. What the
+OSS code holds instead:
+
+- Channel-local constants for its own clients — `_GMAIL_SCOPES` and
+  `_DIRECTORY_SCOPES` in the Gmail channel, `GRAPH_SCOPES`
+  (`.default`) in `common/graph.py`.
+- The **granted** scopes, persisted at callback time as
+  `GOOGLE_GRANTED_SCOPES` / `MICROSOFT_GRANTED_SCOPES` and consumed by the
+  [actor's scope-checking discipline](/workspace/developers/oauth-and-secrets#scope-awareness).
+
+## Self-host vs hosted
+
+The same channel and adapter code serves both deployments —
+`create_app(extra_routers=…)` in
+[`unify/gateway/app.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/app.py)
+lets the hosted comms app compose private infrastructure around it, and
+`GatewayContext`
+([`unify/gateway/context.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/context.py))
+injects the deployment-specific backends: envelope delivery
+(`HttpEnvelopeSink` to the local runtime vs a Pub/Sub transport), runtime
+activation (`LocalRuntimeActivator` no-op vs starting a cloud job), and
+public URL resolution for OAuth redirect URIs (`PublicUrlProvider`,
+surface `"adapters"`). Watch renewal and token-refresh crons are hosted
+concerns; a self-host stack polls or re-arms explicitly.
+
+## Tests
+
+Gateway-side behavior is pinned by `tests/gateway/common/test_graph.py`,
+`tests/gateway/channels/email/test_views.py`,
+`tests/gateway/channels/outlook/test_views.py`, and
+`tests/gateway/channels/teams/test_views.py`; the primitive surface is
+covered in `tests/function_manager/primitives/test_scope.py`.
