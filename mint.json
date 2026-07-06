@@ -63,6 +63,15 @@
                 "workspace/contacts-and-tasks",
                 "workspace/security"
             ]
+        },
+        {
+            "group": "Integrations",
+            "pages": [
+                "integrations/overview",
+                "integrations/connecting",
+                "integrations/permissions",
+                "integrations/using"
+            ]
         }
     ],
     "footerSocials": {

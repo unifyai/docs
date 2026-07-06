@@ -1,0 +1,75 @@
+---
+title: "Connecting apps"
+description: "Browse the gallery, authorize, and manage your connected accounts"
+---
+
+Open your assistant's **Integrations** tab to see the app gallery. Connected
+apps are pinned at the top, anything needing attention is flagged, and the
+full catalog scrolls below. Use the search box or filter by status
+(**Connected**, **Needs attention**, **Not connected**) and type (**Native**,
+**Third-party**) to find what you need.
+
+## Connecting an app
+
+<Steps>
+  <Step title="Open the app's card">
+    Click a card to see the details before connecting: a description, the
+    **access scopes** the app will ask for, and the full list of **tools**
+    your assistant would gain — so you know exactly what you're granting.
+  </Step>
+  <Step title="Click Connect and label the account">
+    You can add an optional label so the account is easy to recognize later —
+    "Work Slack", "Personal Gmail", "Client Discord". Labels matter most when
+    you connect more than one account to the same app.
+  </Step>
+  <Step title="Authorize">
+    How you authorize depends on the app:
+    - **OAuth** — a new tab opens with the app's own sign-in page. Approve,
+      and you're returned to the Console.
+    - **API key** — paste the key (or keys) into a short form; the connection
+      is live immediately.
+  </Step>
+</Steps>
+
+Right after connecting, the app's tools take a moment to sync — your
+assistant will mention if they're still warming up ("Slack tools are syncing
+and will be available shortly") and again when they're ready.
+
+<Tip>
+  Not sure how to get an API key, or where an app's settings live? Ask your
+  assistant. Guiding you through app setup — ideally on a screen-share call —
+  is one of the things it does best. Credentials are never shared through
+  chat; everything sensitive goes through the Integrations tab.
+</Tip>
+
+## Multiple accounts per app
+
+You can connect the same app more than once — a work HubSpot and a client
+HubSpot, say. Each connected account:
+
+- has its own label (rename any time),
+- has its **own tool permissions** (see
+  [Permissions & security](/integrations/permissions)),
+- can be tested, reconnected, or disconnected independently.
+
+Use **Add account** in the app's detail view to connect another.
+
+## Keeping connections healthy
+
+Each account row shows its health — **Healthy** or **Needs attention** — and
+you can hit **Test** any time to check a connection. When an app needs a
+refresh (an expired login, a revoked grant, new permissions), the gallery
+flags it under **Needs attention** and the card offers **Reconnect**.
+
+Disconnecting removes the authorization for that assistant; you can reconnect
+later if you need the app again. For apps connected with your own OAuth app
+credentials, disconnecting keeps the client details saved so reconnecting is
+one click.
+
+## Apps not in the gallery
+
+For services the gallery doesn't cover, there's a **Custom secret** option:
+store any key/value credential (like `stripe/prod/API_KEY`) with your
+assistant, and it can use that credential to work with the service's API
+directly. See [Using connected apps](/integrations/using) for how that plays
+out in practice.

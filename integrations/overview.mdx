@@ -1,0 +1,77 @@
+---
+title: "Overview"
+description: "Connect the apps your team already uses, and your assistant works inside them"
+---
+
+Real work happens inside apps — your CRM, your project tracker, your knowledge
+base, your code repos. **Integrations** connect those apps to your assistant so
+it can act through them: look up a customer in HubSpot, file a Jira ticket,
+update a Notion page, check a GitHub pull request.
+
+You'll find the app gallery in the **Integrations** tab (the plug icon) on
+your assistant's page in the Console. Connecting an app takes under a minute
+and costs nothing — there are no credit charges for integrations.
+
+## What connecting an app unlocks
+
+Once an app is connected, you just ask in plain language:
+
+- *"Any new HubSpot leads since Friday?"*
+- *"Create a Linear issue for the login bug and assign it to Sam."*
+- *"Summarize what changed in the Notion project doc this week."*
+- *"Post the weekly numbers to the #metrics channel."*
+
+Your assistant translates the request into the right actions in the right app
+— governed by [permissions you control](/integrations/permissions), with
+confirmation required for sensitive changes.
+
+## The kinds of apps you'll see
+
+Every app card in the gallery is labeled with its type:
+
+- **Third-party** — the broad catalog of SaaS apps (CRM, project management,
+  files, engineering tools, and more). You connect these yourself with a
+  sign-in or an API key.
+- **Native** — integrations built and operated by the platform, often
+  tailored for a specific organization. These show a **View** button rather
+  than Connect — they're enabled as part of your deployment.
+
+The catalog varies by organization, and it's large — search is the fastest
+way to find out whether an app is supported. If something you need isn't
+there, your assistant can often still work with it (see
+[Using connected apps](/integrations/using)).
+
+## How integrations relate to everything else
+
+The platform draws clear lines between three things that all involve
+"connecting accounts":
+
+| | Where it lives | What it's for |
+|---|---|---|
+| **Integrations** | Integrations tab | Apps your assistant *acts through* — CRM, tickets, docs, code |
+| [Workspace](/workspace/overview) | Workspace dialog | The Google/Microsoft suite — mailbox, calendar, Drive files |
+| [Communication channels](/communication/overview) | Contact Details | How you and your assistant *talk* — phone, WhatsApp, email |
+
+One example that trips people up: **Slack appears twice**, wearing different
+hats. Connecting Slack as a [communication
+channel](/communication/slack) lets your assistant chat in your workspace as
+itself. Connecting Slack in the Integrations gallery lets your assistant act
+in *your* Slack account — reading channels, posting as part of automations.
+You can use either or both.
+
+## What's in this section
+
+<CardGroup cols={2}>
+  <Card title="Connecting apps" icon="plug" color="#2f9d97" href="/integrations/connecting">
+    The gallery, OAuth and API-key flows, account labels, and multiple
+    accounts.
+  </Card>
+  <Card title="Permissions & security" icon="shield-check" color="#c95f5a" href="/integrations/permissions">
+    Per-tool permissions, approval for sensitive actions, and how credentials
+    are protected.
+  </Card>
+  <Card title="Using connected apps" icon="wand-magic-sparkles" color="#cf9a3e" href="/integrations/using">
+    Asking in plain language, recurring tasks, and apps that aren't in the
+    gallery.
+  </Card>
+</CardGroup>

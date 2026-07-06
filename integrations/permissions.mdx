@@ -1,0 +1,74 @@
+---
+title: "Permissions & security"
+description: "You decide exactly what your assistant can do in each app"
+---
+
+Connecting an app doesn't mean handing over the keys. Every connected account
+comes with a permission system that puts you in control of which actions your
+assistant can take — and which ones need your sign-off first.
+
+## Per-tool permissions
+
+Each app exposes a set of **tools** — the individual actions your assistant
+can perform (search contacts, send a message, delete a record…). For every
+tool, per connected account, you choose one of three policies:
+
+| Policy | Meaning |
+|---|---|
+| **Allow** | The tool runs when needed, without asking |
+| **Ask every time** | Your assistant must get your approval before each use |
+| **Block** | The tool is disabled entirely |
+
+Tools are tagged so you can see at a glance what they do: **Can change
+data**, **Destructive**, **Sensitive data**, **Bulk data**. Risky tools
+default to needing confirmation.
+
+### Presets
+
+Rather than setting dozens of tools one by one, apply a preset to the whole
+account:
+
+- **Allow read tools** — read-only tools run freely; anything that changes
+  data asks first.
+- **Confirm write actions** — ask before tools can change data.
+- **Block all tools** — disable everything, then re-enable just what you
+  want.
+- **Reset all to defaults** — back to the recommended policy.
+
+If you've connected multiple accounts to one app, each account has its own
+policy — your assistant might have free rein in a sandbox account but
+read-only access in production.
+
+## Approvals in practice
+
+When your assistant hits a tool set to **Ask every time**, it pauses and asks
+you before acting — "I'm ready to update these 14 HubSpot records, shall I go
+ahead?" — and proceeds only on your yes. Every integration action is also
+recorded, so there's always an answer to "what did the assistant actually do
+in that app?"
+
+## How credentials are handled
+
+- Sign-ins happen with the app itself (OAuth) — the platform never sees your
+  password, and API keys are stored in secure credential storage, not in
+  conversation history.
+- Credentials are kept **outside prompts** entirely: they're only used at the
+  moment your assistant invokes an allowed tool, and even the code your
+  assistant writes can't read the raw values.
+- Your assistant will never ask you to paste a password or API key into chat,
+  or to read one aloud on a call. Anything sensitive goes through the
+  Integrations tab.
+
+## Scopes: what the app grants
+
+Before you connect, the app's detail view lists the **access scopes** it will
+request — what the app may read or change. If your assistant later needs a
+permission you didn't grant, it won't fail silently: it tells you more access
+is needed and points you to **Reconnect**, where you approve the expanded
+permissions explicitly.
+
+## Revoking access
+
+Disconnect from the Integrations tab at any time, and the authorization is
+removed immediately. For OAuth apps you can also revoke from the app's own
+side (its connected-apps or security settings) — both routes kill access.
