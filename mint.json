@@ -81,6 +81,15 @@
                 "tasks/running",
                 "tasks/monitoring"
             ]
+        },
+        {
+            "group": "Learning",
+            "pages": [
+                "learning/overview",
+                "learning/watching-it-work",
+                "learning/guidance-and-functions",
+                "learning/teaching"
+            ]
         }
     ],
     "footerSocials": {
