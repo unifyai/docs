@@ -1,0 +1,104 @@
+---
+title: "Live dashboards"
+description: "Tiles and layouts your assistant builds on request"
+---
+
+A **dashboard** is a grid of **tiles** — individual live views — that your
+assistant composes for you. Ask for a chart and you get a tile; ask for "a
+board with our key numbers" and you get a dashboard arranged from several.
+
+## Asking for one
+
+Describe the view, not the configuration:
+
+> "Build me a dashboard for the repairs team: open work orders by priority,
+> a chart of completions per week, and the average time-to-fix as a big
+> number up top."
+
+Your assistant creates the tiles, sizes and arranges them on a 12-column
+grid, and shares the result. Refinements work the same way — "make the
+trend chart wider", "add a tile for overdue items", "retitle it Repairs
+Standup".
+
+## Tiles can be anything
+
+There's no fixed menu of widget types. A tile is whatever presents the data
+best:
+
+- **Charts** — bar, line, scatter, histogram, or anything more exotic the
+  data calls for.
+- **Tables** — sortable, styled, as compact or detailed as you like.
+- **KPI cards** — single big numbers with context.
+- **Custom views** — maps, timelines, progress boards; if it can render in
+  a browser, it can be a tile.
+
+## Live by design
+
+The best tiles are **live**: instead of baking numbers in, a tile is wired
+to [data tables](/canvas/data) and fetches fresh values every time it's
+viewed. Tiles with live wiring show a **Live** badge and a per-tile
+**Refresh data** button.
+
+That's what makes the canvas a monitoring surface rather than a report
+archive: a scheduled task appends today's rows to a table, and every tile
+built on that table is already up to date the next time you look.
+
+## The Dashboards pane
+
+The **Dashboards** tab on your assistant's page is the viewer for
+everything visual it has built — in the Console's words, *"live tiles and
+reports your teammate builds for you, on request."* Where the
+[Data pane](/canvas/data) shows the raw tables, this pane shows the views
+on top of them.
+
+**What it's for:**
+
+- **Your standing views, in one place.** Every dashboard and standalone
+  tile your assistant has built for you, ready to revisit — the morning
+  KPI board, the API monitor, last quarter's analysis.
+- **A live monitoring surface.** Data-bound tiles fetch fresh values when
+  viewed, so the pane doubles as your operations screen — glance rather
+  than ask.
+- **The handoff point.** Pop any view into its own tab for a shareable
+  link, or download tiles when you need to take a chart elsewhere.
+
+**How to use it:**
+
+1. **Pick a view.** The picker at the top switches between everything saved
+   for this assistant, in two groups: **Dashboards** (composed boards) and
+   **Tiles** (standalone views that aren't part of any board). Search by
+   title when the collection grows.
+2. **Read the summary card.** Each dashboard opens with its description,
+   tile count, and last-updated time — plus **Open in new tab** for a
+   full-screen, shareable version and **Download** to grab all tiles as a
+   bundle.
+3. **Work the tiles.** Tiles are laid out on the dashboard's grid; each
+   collapses and expands individually (or all at once from the toolbar).
+   Tiles wired to live data carry a **Live** badge and their own
+   **Refresh data** button; every tile can be downloaded or popped out
+   into its own tab.
+4. **Let it keep itself fresh.** While your assistant is actively working,
+   the pane polls automatically — a **Live** indicator and "Updated…"
+   timestamp in the footer show you're seeing current state. A refresh
+   button re-pulls everything on demand.
+
+If the pane says *"No dashboards yet — ask your teammate to build a view
+when there is data to track"*, that's exactly the right instruction — this
+pane only ever displays; [creating and changing views happens in
+chat](/canvas/dashboards#asking-for-one).
+
+## Sharing
+
+Every tile and dashboard has its own **link** — pop it out and the URL in
+your browser is shareable. Send a dashboard link to a colleague and they see
+the same live views, no Console tour required. Dashboards can also live in a
+[team's shared pool](/teams/shared-context), so a whole team works from the
+same board — a standup dashboard the entire repairs patch checks each
+morning, for example.
+
+## Changing and removing
+
+Like everything else, dashboard management is conversational: "update the
+KPI tile to use this quarter's target", "remove the old pipeline chart",
+"delete the test dashboard". Tiles and dashboards are independent — removing
+a dashboard doesn't destroy its tiles, so views can be recomposed freely.

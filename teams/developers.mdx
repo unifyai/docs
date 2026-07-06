@@ -1,0 +1,350 @@
+---
+title: "Developers"
+description: "How team scoping and shared context actually work inside the open-source unify runtime"
+---
+
+This page is for engineers reading, extending, or debugging the shared-team
+machinery in the open-source
+[`unifyai/unify`](https://github.com/unifyai/unify) repo. The pages above
+describe what users experience; this one describes the code — module by
+module, with the real symbol names.
+
+Team **membership** (who belongs to which team) is owned by the
+closed-source Orchestra backend. The `unify` runtime never decides
+membership; it *receives* it, and everything on this page is about what the
+runtime does with that fact: how a `team:<id>` destination becomes a
+concrete storage root, how writes are gated, how reads federate across
+every reachable scope, and how the assistant is taught to route content.
+
+## The core model: destinations, roots, and one registry
+
+Every state manager (guidance, knowledge, functions, tasks, data, secrets,
+dashboards…) stores rows in **contexts** — hierarchical, table-like
+namespaces addressed by path. Team sharing is implemented as a pure
+*namespace* concern: the same tables exist under multiple **roots**, and
+one class decides which root any given operation touches.
+
+![Two scopes, one registry: state managers pass a destination string to ContextRegistry, which resolves it to either the personal root or a membership-gated team root — with the same table names under every root](/images/developers/teams-scope-model.png)
+
+There are exactly two kinds of root:
+
+- **Personal root** — the assistant's own base context,
+  `{user_id}/{assistant_id}/…`. This is the *privacy floor*: content here
+  is visible to one assistant only.
+- **Team roots** — `Teams/{team_id}/…`, one per team the assistant belongs
+  to. Contexts under a team root are owned by the team, not by any
+  assistant, and are visible to every current member.
+
+The arbiter is `ContextRegistry` in
+[`unify/common/context_registry.py`](https://github.com/unifyai/unify/blob/main/unify/common/context_registry.py).
+It owns the vocabulary — `PERSONAL_DESTINATION = "personal"`,
+`TEAM_DESTINATION_PREFIX = "team:"`, `TEAM_CONTEXT_PREFIX = "Teams/"` — and
+the two resolution primitives everything else is built on:
+
+- **`ContextRegistry.write_root(manager, table_name, destination=...)`** —
+  resolves a public destination string to exactly one root, provisioning
+  the context (with its schema, unique keys, and foreign keys) on first
+  touch. Writes never fan out.
+- **`ContextRegistry.read_roots(manager, table_name)`** — returns the
+  ordered list of roots a read should span: the personal root first, then
+  every team in `SESSION_DETAILS.team_ids` (sorted), provisioning any that
+  don't exist yet. Reads always fan out.
+
+Destination parsing is centralized in
+`ContextRegistry.canonical_destination(...)`: `None` and `"personal"`
+normalize to the personal root; `"team:<id>"` is validated for shape
+(integer, non-negative) and canonicalized. Everything else raises a
+structured `ToolErrorException` with `error_kind="invalid_destination"` —
+the payload deliberately includes the caller's destination, the table name,
+and the assistant's *actual* `team_ids`, so an LLM-driven caller can
+self-correct instead of retrying blindly.
+
+Two further gates live in `_parse_destination`:
+
+1. **Table opt-in.** Only tables in `SHARED_SCOPED_TABLES` (see below) may
+   take a team destination at all; anything else fails with *"Table X does
+   not support team destinations."*
+2. **Membership.** `team_id not in SESSION_DETAILS.team_ids` fails with
+   *"Assistant is not a member of team {id}."* — this is the runtime
+   enforcement point for team isolation. There is no path to a team root
+   that bypasses it.
+
+### Which tables participate
+
+The authoritative list is `SHARED_SCOPED_TABLES` in
+[`unify/common/authorship.py`](https://github.com/unifyai/unify/blob/main/unify/common/authorship.py):
+`Tasks`, `Contacts`, `Secrets`, `Knowledge`, `Guidance`, the four
+`Functions/*` tables (`Compositional`, `Meta`, `Primitives`,
+`VirtualEnvs`), `FileRecords`, `Files`, `Data`, `BlackList`,
+`Dashboards/Tiles`, `Dashboards/Layouts`, `Transcripts`, `Exchanges`, and
+`Images`.
+
+Matching is prefix-aware: `ContextRegistry._is_shared_scoped` walks parent
+paths, so a dynamic table like `Data/Samsara/daily_snapshots` inherits
+shared-scoping from its `Data` ancestor. The prefixes that admit dynamic
+children are enumerated separately in `DYNAMIC_AUTHORED_TABLE_PREFIXES`
+(`Data`, `FileRecords`, `Files`, `Knowledge`).
+
+### Authorship stamping
+
+Shared rows need provenance: in a team context, "who wrote this?" is no
+longer implied by the namespace. The same `authorship.py` module handles
+this:
+
+- `fields_with_authoring(...)` injects an immutable
+  `authoring_assistant_id` column into every shared-scoped table's schema —
+  applied automatically by `ContextRegistry._get_contexts_for_manager`
+  whenever it provisions a shared-scoped context.
+- `stamp_authoring_assistant_id(entries)` stamps write payloads with the
+  active assistant's id (from `SESSION_DETAILS.assistant.agent_id`), and
+  `strip_authoring_assistant_id(entries)` removes caller-supplied values
+  from update payloads so authorship can't be forged after the fact.
+- `shared_table_for_context(context)` / `is_shared_authored_context(context)`
+  answer the reverse question — given a concrete context path, does it
+  store authored rows? — again with prefix-aware matching for dynamic
+  tables.
+
+## Writes and reads, end to end
+
+![Write path: a destination string is normalized, membership-gated, and resolved to exactly one root. Read path: read_roots fans out across the personal root and every member team, merged by federated search into one global window](/images/developers/teams-write-read-paths.png)
+
+### The write path
+
+Every manager exposes the same public parameter — `destination: str | None`
+— on its write methods (`GuidanceManager.add_guidance`,
+`KnowledgeManager`'s table/row operations, `FunctionManager.add_functions`,
+`DataManager.create_table`, `SecretManager.add_secret`,
+`DashboardManager.create_tile`, task creation in `TaskScheduler`, …). The
+manager passes it straight through to `write_root`, which:
+
+1. normalizes via `canonical_destination`,
+2. rejects non-shared tables and non-member teams,
+3. lazily provisions the context under the resolved root
+   (`_ensure_context` → `_create_context_wrapper`), registering explicit
+   ownership — `_owner_for_root` maps `Teams/{id}` roots to
+   `("team", id)` and personal roots to `("assistant", agent_id)`, which
+   is what lets the backend bulk-delete a team's entire tree when the team
+   is deleted,
+4. returns the single root context the write targets.
+
+A write therefore lands in **exactly one scope**. There is no "write to
+personal and team" — a deliberate invariant that keeps provenance and
+deletion semantics simple.
+
+**One exception, by design:** transcripts and images. Conversation history
+isn't authored *at* a destination — it happens — so
+`ContextRegistry.implicit_shared_destinations()` returns the full list of
+team destinations (or `[None]` when the assistant has no teams), and the
+transcript/screenshot publishing paths in
+[`unify/conversation_manager/domains/managers_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/managers_utils.py)
+and the screenshot capture path in
+[`unify/conversation_manager/conversation_manager.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/conversation_manager.py)
+fan conversation records out across them. This is what makes a shared
+team's transcript history legible to teammates.
+
+### The read path: federated search
+
+Reads never take a destination — they see everything the assistant can
+reach, merged as if it were one table. The engine is
+[`unify/common/federated_search.py`](https://github.com/unifyai/unify/blob/main/unify/common/federated_search.py),
+and it's worth understanding because every manager's search/list/reduce
+goes through it:
+
+- **`FederatedSearchContext`** — one participating context: the concrete
+  path, a `source` label, an optional `row_filter`, optional
+  `allowed_fields` projection, and an optional foreign `project` (used for
+  the read-only platform builtins catalogue, which lives outside the
+  active project).
+- **`federated_ranked_search(contexts, references, ...)`** — exact
+  federated top-k semantic search. Each context is fetched with a local
+  window of `offset + limit` (which makes the global merge provably
+  exact — a row outside its local window can't be in the global one),
+  merged by ascending embedding distance via `merge_ranked_batches`, and
+  sliced once. Optional `backfill` tops up short results with
+  deterministic recent rows.
+- **`federated_filter(contexts, filter=..., sorting=...)`** — exact
+  federated structured reads, with `SortSpec` handling the subtle
+  NULLs-ordering problem: the backend always sorts NULLs last, so a sort
+  key asking for `missing="first"` forces a full per-context fetch instead
+  of windowed fetching.
+- **`federated_reduce(contexts, metric=..., ...)`** — aggregations.
+  Decomposable ungrouped metrics (`count`, `sum`, `min`, `max`, `mean`)
+  are pushed down per context and combined exactly; grouped or
+  non-decomposable metrics (`median`, `mode`, `var`, `std`) fall back to
+  fetching merged rows and reducing client-side.
+- Missing contexts (404s — a table not yet provisioned under some root)
+  are tolerated everywhere via `is_missing_context_error`, so fan-out
+  reads don't require every root to be fully provisioned.
+
+Merged rows are annotated with `_federated_source` and
+`_federated_context` (and `_federated_score` for ranked reads), so callers
+— and ultimately the LLM — can tell which scope a result came from.
+
+Each manager builds its own context list from `read_roots`. Two
+representative examples: `GuidanceManager.search` in
+[`unify/guidance_manager/guidance_manager.py`](https://github.com/unifyai/unify/blob/main/unify/guidance_manager/guidance_manager.py)
+federates the personal root, every team root, *and* the platform builtins
+catalogue (via a foreign-project `FederatedSearchContext`); and
+`FunctionManager`'s search in
+[`unify/function_manager/function_manager.py`](https://github.com/unifyai/unify/blob/main/unify/function_manager/function_manager.py)
+federates all reachable `Functions/Compositional` contexts plus
+primitives. This is the mechanism behind the product-level promise that a
+new team member's assistant "knows the team SOP on day one" — retrieval
+simply spans the team root.
+
+### Scope semantics that differ by manager
+
+Most managers are pure write-one/read-all, but two have deliberately
+different semantics worth knowing:
+
+- **Secrets** —
+  [`unify/secret_manager/secret_manager.py`](https://github.com/unifyai/unify/blob/main/unify/secret_manager/secret_manager.py).
+  LLM-facing *reads* (listing, search) federate across the personal vault
+  and every team vault, but **runtime credential resolution does not
+  fall back across scopes**: a lookup targets exactly one vault, and a
+  missing credential raises instead of silently borrowing from another
+  scope. Personal credentials never leak into team memory; team
+  credentials never leak into the personal `.env` mirror.
+- **Tasks** —
+  [`unify/task_scheduler/task_scheduler.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/task_scheduler.py).
+  A team task lives in `Teams/{id}/Tasks` (the `Task` model carries its
+  `destination`), but *execution* belongs to the creating assistant.
+  Scheduled/offline runs export the task's vault as the ambient
+  destination so `primitives.secrets` calls inside the run inherit the
+  team scope — see the offline runner in
+  [`unify/task_scheduler/offline_runner.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/offline_runner.py).
+  If the owning assistant has left the team by fire time, activation is
+  refused (`destination_membership_revoked`).
+- **Dashboards** —
+  [`unify/dashboard_manager/base.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/base.py)
+  adds a second axis: a tile's *row* has a `destination`, but its live
+  data bindings take an independent `data_scope`, so a personal watch
+  tile can legitimately read a team's data.
+
+## How membership reaches the runtime
+
+![Membership flow: Orchestra owns team membership and delivers team_ids and team_summaries in the startup payload to SESSION_DETAILS, which feeds the system prompt block and worker env vars; a mid-session AssistantUpdateEvent refreshes membership live and forget_departed_team_roots drops cached roots](/images/developers/teams-membership-runtime.png)
+
+### Session state
+
+[`unify/session_details.py`](https://github.com/unifyai/unify/blob/main/unify/session_details.py)
+is the single source of runtime truth. `AssistantDetails` carries two
+team fields, surfaced as convenience properties on the global
+`SESSION_DETAILS`:
+
+- `team_ids: list[int]` — the memberships that gate writes and expand
+  reads.
+- `team_summaries: list[TeamSummary]` — display/routing metadata
+  (`team_id`, `name`, `description`) used to *teach* the model where
+  content belongs.
+
+Because actor plans and manager tool-loops can run in worker
+subprocesses, both fields round-trip through the environment:
+`export_team_ids_to_env` / `export_team_summaries_to_env` encode them into
+`TEAM_IDS` (CSV) and `TEAM_SUMMARIES` (JSON), and `SESSION_DETAILS`
+re-hydrates from those vars on the other side via
+`normalize_team_summaries`.
+
+### Live membership updates
+
+Membership can change mid-session — an admin removes someone from a team,
+a colleague is commissioned into a workspace. The runtime doesn't restart;
+it processes an `AssistantUpdateEvent` with `update_kind == "membership"`
+in
+[`unify/conversation_manager/domains/event_handlers.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/event_handlers.py),
+which:
+
+1. replaces `SESSION_DETAILS.team_ids` / `team_summaries` and re-exports
+   the env vars,
+2. calls `ContextRegistry.forget_departed_team_roots(team_ids)` — dropping
+   every cached registry entry whose root is a team the assistant no
+   longer belongs to, so the very next resolution re-validates against
+   current membership,
+3. resets the cached prompt context so the next turn renders the new
+   *Accessible shared teams* block.
+
+The result is the user-visible guarantee that revocation doesn't wait for
+the next session: a departed team's roots become unreachable immediately
+(writes fail the membership gate; reads stop fanning out to it).
+
+## Teaching the model: the prompt layer
+
+Enforcement without instruction would produce an assistant that constantly
+bounces off `invalid_destination` errors. The instruction side lives in
+[`unify/common/accessible_teams_block.py`](https://github.com/unifyai/unify/blob/main/unify/common/accessible_teams_block.py):
+`build_accessible_teams_block(team_summaries)` renders a block into every
+system prompt listing `personal` (explicitly framed as "the privacy
+floor") plus one bullet per team — `team:{id} "{name}" - {description}` —
+followed by the routing rules: default to personal, use a team only when
+content clearly matches its described domain, ask a brief clarifying
+question when the audience is unclear, never invent a team id, and never
+pass a `team:<id>` token where a `contact_id` belongs.
+
+Two design details matter here:
+
+- **Team descriptions are load-bearing.** The model routes content by
+  matching it against each team's description (truncated at
+  `ACCESSIBLE_TEAMS_MAX_DESCRIPTION_LENGTH`), which is why the user docs
+  push admins to write descriptions that name the team's domain.
+- **The privacy floor is repeated at the tool layer.** Each manager's
+  `destination` docstring restates it in domain-specific terms (see
+  `DataManager.create_table` or `SecretManager.add_secret` — the latter
+  adds *"sharing a credential is harder to undo than re-sharing later"*),
+  so the guidance survives even in contexts where the actor only sees a
+  single tool's schema.
+
+## Team lifecycle tools: the coordinator surface
+
+Creating teams and managing membership is an org-shaped power reserved for
+the coordinator (T-W1N) runtime, implemented in
+[`unify/coordinator_manager/coordinator_manager.py`](https://github.com/unifyai/unify/blob/main/unify/coordinator_manager/coordinator_manager.py)
+as thin, validated wrappers over Orchestra's API:
+
+- **`create_team(name=..., description=...)`** — creates the shared
+  workspace object; membership is deliberately a separate step.
+- **`add_team_member(team_id=..., assistant_id=... | member_user_id=...)`**
+  — exactly one selector: `assistant_id` adds a colleague assistant
+  directly; `member_user_id` adds a human org member, which (on the
+  Orchestra side) also enrolls that member's own coordinator — the
+  mechanism behind "your T-W1N follows you into your teams."
+- **`remove_team_member(team_id=..., assistant_id=...)`**,
+  **`list_teams()`**, **`list_teams_for_assistant(assistant_id=...)`** —
+  the audit/mutation counterparts, each returning structured
+  `ToolError` envelopes on failure rather than raising.
+
+After any successful mutation, Orchestra pushes the membership refresh
+described above to affected live runtimes.
+
+## Extending the system
+
+A few recipes that follow directly from the architecture:
+
+- **Making a new table team-shareable** is (almost) one line: add its name
+  to `SHARED_SCOPED_TABLES` in `authorship.py`. `ContextRegistry` will
+  start accepting `team:<id>` destinations for it, inject the authorship
+  column on provisioning, and include team roots in `read_roots` fan-out.
+  Then thread a `destination` parameter through your manager's write
+  methods (pass it to `write_root`) and build reads on the federated
+  helpers with `read_roots`. Add the docstring privacy-floor language so
+  the actor routes it sensibly.
+- **Adding a new read shape** (a new kind of federated query) belongs in
+  `federated_search.py` next to `federated_filter` /
+  `federated_ranked_search` / `federated_reduce` — the merge-exactness
+  arguments in those docstrings are the contract to preserve: fetch each
+  context with the full global window, merge once, slice once.
+- **Debugging a scope issue** almost always starts at one of three seams:
+  the `invalid_destination` payload (wrong token, non-shared table, or
+  stale membership — it tells you which), `SESSION_DETAILS.team_ids` vs.
+  the `TEAM_IDS` env var (a worker that didn't inherit the env), or a
+  cached registry entry that `forget_departed_team_roots` should have
+  dropped. `ContextRegistry.clear()` exists for test isolation; the
+  `_registry` cache is keyed `(manager_name, table_name, root_identity)`.
+
+<Note>
+  Everything on this page is the runtime's half of the story. The other
+  half — the `Team`/`TeamAssistantMembership` data model, membership
+  endpoints, coordinator auto-enrollment, org-wide sharing, and the purge
+  of `Teams/{id}/…` trees on team deletion — lives in the closed-source
+  Orchestra backend, which the runtime reaches through
+  [UniSDK](https://github.com/unifyai/unisdk).
+</Note>

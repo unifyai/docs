@@ -1,0 +1,116 @@
+---
+title: "Voice calls"
+description: "The dual-brain call architecture"
+---
+
+Live voice is where the architecture earns its keep: a call needs
+sub-second conversational reflexes *and* deep reasoning, and no single
+loop provides both. The runtime splits the job between two brains that
+share one conversation.
+
+![Voice call dual-brain architecture: the caller connects through a LiveKit room to the fast brain (Assistant agent with STT/VAD/TTS), which exchanges utterance events and FastBrainNotifications with the slow brain (ConversationManager), supported by fillers/barge-in handling and the LivekitCallManager](/images/developers/voice-dual-brain.png)
+
+## The two brains
+
+**The fast brain** is `Assistant(Agent)` in
+[`unify/conversation_manager/medium_scripts/call.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/medium_scripts/call.py)
+— a LiveKit Agents worker running in its own subprocess. It owns the
+real-time loop: Deepgram STT (with diarization), Silero VAD and turn
+detection, a lightweight LLM for conversational responses, and TTS through
+Cartesia or ElevenLabs depending on the assistant's `voice_provider`. Its
+job is to keep the conversation feeling human *right now*.
+
+**The slow brain** is the ordinary
+[`ConversationManager`](/communication/developers/conversation-manager)
+turn loop — same code as for text, now fed per-utterance events. It owns
+judgment: what to actually say, when to start work, when to end the call.
+
+They communicate over a Unix domain socket
+([`domains/ipc_socket.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/ipc_socket.py)):
+
+- **Upward:** each completed user turn publishes an inbound utterance
+  event (`InboundPhoneUtterance`, `InboundUnifyMeetUtterance`, …), which
+  schedules a slow-brain turn like any other message.
+- **Downward:** the slow brain speaks through its `guide_voice_agent`
+  tool, which publishes a `FastBrainNotification` — with
+  `should_speak=True` the fast brain delivers the message verbatim over
+  TTS, and an optional `fast_brain_guidance` field steers how it handles
+  the *next* few turns on its own.
+
+## Call lifecycle
+
+`LivekitCallManager`
+([`domains/call_manager.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/call_manager.py))
+owns session mechanics: it names rooms (`unity_{assistant_id}_{medium}`),
+prewarms a persistent worker subprocess, dispatches the agent into a room
+per call, and bridges broker events into the subprocess. On the gateway
+side, inbound phone calls arrive via `twilio_call_webhook`
+([`adapters/twilio.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/twilio.py)),
+which sets up the Twilio↔LiveKit SIP bridge; outbound calls go through the
+[`phone` channel](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/phone/views.py)
+(`send_call`, `dispatch_livekit_agent` — SIP trunks are created per
+provisioned number at purchase time). Unify Meet sessions skip telephony
+entirely: the Console joins the LiveKit room directly, rung via
+`ring_unify_meet()` on the `ConversationManager` (with its ~25-second
+no-answer fallback to text). Google Meet and Teams meetings are joined via
+browser automation rather than SIP.
+
+## The feel of a call, mechanically
+
+- **Fillers.** When a user turn needs the slow brain and it hasn't
+  answered yet, the fast brain schedules a short buffer phrase ("one
+  moment…") — `_schedule_buffer_filler` in `call.py` — suppressed if the
+  slow brain already responded.
+- **Turn classification.** Between full slow-brain turns, the fast brain
+  classifies each user turn (`select_fast_brain_turn` in
+  [`domains/fast_brain_turn.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/fast_brain_turn.py)):
+  smalltalk it can answer itself, silence, deferral to the slow brain, or
+  — when the hang-up gate is armed — a natural close.
+- **Barge-in.** If the user talks over TTS, a `VoiceInterrupt` event
+  records the `spoken_prefix` actually delivered and the
+  `unheard_remainder`, so the slow brain knows exactly what the user did
+  and didn't hear and can re-weave the rest.
+- **Urgency preemption.** If the user says something urgent while the slow
+  brain is mid-turn, `SpeechUrgencyEvaluator`
+  ([`domains/speech_urgency.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/speech_urgency.py))
+  can cancel the running turn in favor of the new input.
+- **Proactive speech.** During long silences while work runs,
+  `ProactiveSpeech`
+  ([`domains/proactive_speech.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/proactive_speech.py))
+  decides whether the assistant should say something unprompted.
+
+## Speakers and enrollment
+
+Diarized speakers who aren't engaged contacts are transcribed as context
+but don't get replies; the slow brain's `engage_speaker` /
+`disengage_speaker` tools flip that, mirrored in the call manager's
+engagement state. Voice profiles (`VoiceEnrollmentCaptured`,
+`VoiceEnrollmentSuggested`, and `speaker_id.SpeakerTracker` in
+[`medium_scripts/`](https://github.com/unifyai/unify/tree/main/unify/conversation_manager/medium_scripts))
+let known voices be pinned across calls — enrolled embeddings ride along
+in the dispatch metadata.
+
+## Hang-up semantics
+
+Ending a call is a two-brain negotiation with three tools:
+
+| Tool | Effect |
+|---|---|
+| `allow_hang_up(reason)` | Arms the hang-up gate on `LivekitCallManager` — the fast brain may now end the call at a natural close |
+| `withdraw_hang_up()` | Disarms the gate |
+| `hang_up()` | Immediate teardown — deferred just long enough for any pending spoken line to be delivered |
+
+This split is why short scripted calls (like onboarding channel tests) end
+gracefully on their own, while open-ended calls never end abruptly unless
+the slow brain explicitly decides to.
+
+## Screen share during Meet
+
+Screen-share state flows as events
+(`AssistantScreenShareStarted/Stopped`, `UserScreenShareStarted/Stopped`,
+webcam variants) from the Console through the internal adapter. Frames
+from shared user tracks are captured (`UserTrackCaptureManager` in
+`call.py`), buffered on the `ConversationManager`, and attached to the
+next slow-brain turn as vision input — which is how "look at my screen and
+tell me what's wrong" actually works. Screenshots also land on disk under
+`Screenshots/` for the Actor to reference during `act` work.

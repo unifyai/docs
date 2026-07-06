@@ -1,0 +1,70 @@
+---
+title: "Files & terminal"
+description: "Your home folder and shell, on your terms"
+---
+
+Beyond seeing and clicking, a linked machine can grant two deeper
+capabilities — each with its own guardrails.
+
+## Filesystem access
+
+On the linked machine's card in the Console you'll find the **Filesystem
+access** toggle. The disclosure next to it says exactly what it does:
+
+> Lets this assistant read files from your home folder on request and save
+> edited copies back — your originals are never overwritten. This exposes
+> your entire home directory over a secure connection; turn it off any time
+> to revoke access.
+
+With it enabled:
+
+- **Reading is on-request.** Your assistant doesn't crawl your disk. When
+  you ask it to work with a file — *"grab the Q3 contract from my
+  Documents"* — it browses to it and fetches that file over the secure
+  channel.
+- **Your originals are sacred.** When your assistant edits something, the
+  result is saved back **as a timestamped copy alongside the original**, in
+  a review location — never over the file you had. You look at the edited
+  copy and decide what to do with it.
+- **Sensitive corners are skipped.** Credential folders (`.ssh` keys and
+  the like) and machine noise (caches, dependency folders) are excluded
+  from what the assistant fetches.
+- **Off means off.** Flip the toggle any time; access is revoked and the
+  keys that enabled it are cleared — taking effect within about a minute,
+  even mid-session.
+
+<Tip>
+  Filesystem access pairs beautifully with everything else: a file from
+  your laptop can be summarized in chat, become a
+  [data table](/canvas/data), or be updated and emailed on — without you
+  ever moving it anywhere first.
+</Tip>
+
+## Terminal & shell commands
+
+Your assistant can also run **commands on your machine** — the newest
+addition to linked desktops:
+
+- *"Run the backup script in my projects folder."*
+- *"Check whether Docker is running and restart it if not."*
+- *"Show me what's eating disk space in my home directory."*
+
+Two firm rules govern this:
+
+1. **Only commands you ask for.** The shell is for things you explicitly
+   want executed on your machine. Your assistant won't run commands there
+   on its own initiative for its own convenience.
+2. **The shell is not a back door to your files.** Reading and fetching
+   your files always goes through the filesystem access channel above, with
+   its no-overwrite guarantees and exclusions — your assistant is expressly
+   forbidden from using shell commands to dump or copy your file contents
+   around them.
+
+## Whose rules apply where
+
+A quick contrast with [the assistant's own
+computer](/their-computer/overview), where none of this ceremony exists —
+it installs software, moves files, and runs commands freely on its own
+machine. On *your* machine the defaults invert: everything is on-request,
+originals are protected, and consent is checked continuously. Same
+assistant, very different manners — by design.

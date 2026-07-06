@@ -1,0 +1,174 @@
+---
+title: "The conversation runtime"
+description: "Events, mediums, the slow-brain loop, and outbound sends"
+---
+
+The `ConversationManager`
+([`unify/conversation_manager/conversation_manager.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/conversation_manager.py))
+is the live "front office": a singleton that holds in-memory conversation
+state, consumes events, runs the reasoning loop, and delegates outbound
+I/O. Its package README describes it as the layer that interfaces with
+users while delegating complex reasoning to the `Actor`.
+
+![Inbound event lifecycle: envelope → CommsManager → EventBroker → ConversationManager.wait_for_events → side effects → slow brain turn → comms tools / act / wait](/images/developers/event-lifecycle.png)
+
+## The event model
+
+Everything the runtime reacts to is a typed dataclass extending `Event`
+([`unify/conversation_manager/events.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/events.py)).
+Subclasses auto-register via `__init_subclass__`, serialize with
+`to_json()`/`from_dict()`, and carry behavioral flags — `loggable`
+(persist to transcripts), `prominent`, and `suppress_slow_brain_wake`
+(don't schedule a brain turn for this event).
+
+The catalogue is broad and symmetric: for most channels there's a
+`*Received` and a `*Sent` class (`SMSReceived`/`SMSSent`,
+`EmailReceived`/`EmailSent`, `UnifyMessageReceived`/`UnifyMessageSent`…),
+plus call-lifecycle events (`PhoneCallReceived`, `PhoneCallAnswered`,
+`PhoneCallEnded`, `UnifyMeetStarted`…), per-utterance voice events
+(`InboundPhoneUtterance`, `OutboundUnifyMeetUtterance`…), reactions,
+voice-control events (`FastBrainNotification`, `VoiceInterrupt`), and
+lifecycle events (`StartupEvent`, `TaskDue`, `InactivityFollowup`,
+`PreHireMessage`).
+
+Two mapping layers connect the world to handlers:
+
+1. **Thread → event class.** `CommsManager.events_map` in
+   [`comms_manager.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/comms_manager.py)
+   turns an envelope's `thread` key into an event instance, resolving the
+   sender to a contact via `MEDIUM_TO_CONTACT_FIELD` and publishing to the
+   in-process broker on `app:comms:*` topics.
+2. **Event class → handler.** `EventHandler` in
+   [`domains/event_handlers.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/event_handlers.py)
+   is a registry: handlers are declared with
+   `@EventHandler.register(EventClass)` and dispatched by
+   `EventHandler.handle_event(event, cm)`. A typical text-message handler
+   logs to transcripts, updates the live `ContactIndex`, pushes a
+   `NotificationBar` entry, and requests a brain run.
+
+## Mediums and modes
+
+[`cm_types/medium.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/cm_types/medium.py)
+defines the `Medium` enum — the single source of truth for channel types
+(`UNIFY_MESSAGE`, `EMAIL`, `SMS_MESSAGE`, `WHATSAPP_MESSAGE`,
+`WHATSAPP_CALL`, `PHONE_CALL`, `UNIFY_MEET`, `GOOGLE_MEET`, `TEAMS_MEET`,
+Slack/Discord/Teams variants…). Each medium registers a `MediumInfo` with a
+**mode**: `TEXT`, `CALL`, or `MEET`
+([`cm_types/mode.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/cm_types/mode.py)).
+Mode is what gates behavior — voice tools like `guide_voice_agent` only
+exist in voice sessions, and transcript rows pick their exchange from call
+state in voice modes. `MEDIUM_TO_CONTACT_FIELD` maps external mediums to
+the contact field used for identity resolution (`phone_number`,
+`whatsapp_number`, `email_address`, `slack_user_id`…).
+
+## The event loop and slow-brain scheduling
+
+`ConversationManager.wait_for_events()` subscribes to the in-memory broker
+(patterns `app:comms:*`, `app:actor:*`, and friends), deserializes each
+message back into an `Event`, and dispatches through `EventHandler`.
+Handlers never call the LLM directly — they call `request_llm_run()`,
+which queues a request; `flush_llm_requests()` coalesces the queue and
+submits through a `Debouncer`
+([`domains/utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/utils.py))
+with queue-of-2 semantics: at most one running turn plus one pending, with
+user-origin requests outranking background ones.
+
+A single turn (`_run_llm`) is assembled from pure parts:
+
+- `Renderer.render_state()`
+  ([`domains/renderer.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/renderer.py))
+  snapshots the conversation into prompt text (and computes incremental
+  diffs used when steering in-flight work);
+- `build_brain_spec()`
+  ([`domains/brain.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/brain.py))
+  materializes the full inputs for one run — deliberately a small explicit
+  structure so execution strategy can change without touching prompt
+  construction;
+- the tool surface merges read-only inspection tools
+  (`ConversationManagerBrainTools` in
+  [`domains/brain_tools.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/brain_tools.py)),
+  action tools (`ConversationManagerBrainActionTools` in
+  [`domains/brain_action_tools.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/brain_action_tools.py)
+  — every `send_*`, `make_call`, `start_unify_meet`, `act`, `wait`,
+  `guide_voice_agent`…), and **dynamic steering tools** generated per
+  in-flight action handle
+  ([`task_actions.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/task_actions.py):
+  `ask`/`stop`/`interject`/`pause`/`resume` per handle).
+
+The turn executes as a single tool-decision call; choosing `wait` ends the
+turn silently, which is how the assistant's default "don't spam" behavior
+is implemented.
+
+## The domains package
+
+The `domains/` directory is an ownership map — each module owns one
+concern:
+
+| Module | Owns |
+|---|---|
+| [`comms_manager.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/comms_manager.py) | Ingress bridge: envelopes → typed events → broker |
+| [`event_handlers.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/event_handlers.py) | All inbound event side effects |
+| [`call_manager.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/call_manager.py) | Voice session lifecycle — see [Voice calls](/communication/developers/voice) |
+| [`brain.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/brain.py) / `brain_tools.py` / `brain_action_tools.py` | The slow-brain spec and tool surfaces |
+| [`renderer.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/renderer.py) | State → prompt snapshots and diffs |
+| [`contact_index.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/contact_index.py) | Live per-medium message threads |
+| [`notifications.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/notifications.py) | The `NotificationBar` surfaced in prompts |
+| [`task_activation.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/task_activation.py) | `TaskDue` wake-ups and live task execution |
+| [`inactivity.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/inactivity.py) | Re-engagement follow-ups |
+| [`proactive_speech.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/proactive_speech.py) / [`speech_urgency.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/speech_urgency.py) | Breaking silence on calls / preempting the slow brain for urgent speech |
+| [`comms_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/comms_utils.py) | HTTP calls to the gateway's channel endpoints |
+| [`managers_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/managers_utils.py) | Manager init and `log_message()` → transcripts |
+
+## Outbound: CommsPrimitives
+
+[`unify/comms/primitives.py`](https://github.com/unifyai/unify/blob/main/unify/comms/primitives.py)
+is **the single implementation of assistant-owned outbound
+communication** — the same `CommsPrimitives` class serves both the live
+brain's action tools and `primitives.comms.*` inside Actor plans and
+offline task runs.
+
+Every send follows the same pipeline (using `send_sms` as the example):
+
+1. **`_check_outbound_allowed(contact)`** — the hard `should_respond`
+   gate. A contact with `should_respond=False` cannot be messaged, period;
+   the method returns an explanatory error string the brain must surface.
+2. **Detail resolution** — attach an inline phone/email to the contact if
+   one was provided.
+3. **HTTP to the gateway** — via
+   [`comms_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/comms_utils.py)
+   (e.g. `POST {COMMS_URL}/phone/send-text`).
+4. **Delivery proof** — on success, a `*Sent` event (`SMSSent`) is
+   published; its handler writes the transcript row. This is why the
+   prompt-level rule "an outbound message isn't real until its transcript
+   row appears" holds — the row *is* the proof.
+
+Outbound events published by the brain's own sends set
+`suppress_slow_brain_wake` so the assistant isn't re-woken by its own
+confirmations.
+
+## Transcripts
+
+[`unify/transcript_manager/transcript_manager.py`](https://github.com/unifyai/unify/blob/main/unify/transcript_manager/transcript_manager.py)
+owns the durable record: `Message` rows (medium, sender, receivers,
+content, attachments) grouped into `Exchange` threads
+([`types/message.py`](https://github.com/unifyai/unify/blob/main/unify/transcript_manager/types/message.py),
+[`types/exchange.py`](https://github.com/unifyai/unify/blob/main/unify/transcript_manager/types/exchange.py)).
+The runtime writes through `managers_utils.log_message()`, which infers
+medium and role from the event class, resolves the exchange (from call
+state for voice), and calls `TranscriptManager.log_messages()`. Voice
+utterances are stored with call-relative timestamps. These are the same
+rows the Console's
+[Transcripts pane](/communication/recordings-and-transcripts) renders.
+
+## Steering and interruptions
+
+Communication interacts with the [steering
+machinery](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/task_actions.py)
+in two directions. Downward: every in-flight `act(...)` is a steerable
+handle the brain can `ask`, `interject`, `pause`, `resume`, or `stop` via
+dynamically generated tools. Upward: when a user speaks while the slow
+brain is mid-turn, `SpeechUrgencyEvaluator`
+([`domains/speech_urgency.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/speech_urgency.py))
+classifies the utterance and may cancel the running turn so the new input
+takes priority — the runtime-level implementation of "you can always
+interrupt."

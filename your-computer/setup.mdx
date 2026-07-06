@@ -1,0 +1,95 @@
+---
+title: "Installing & linking"
+description: "The companion app, in a few minutes, on macOS, Windows, or Ubuntu"
+---
+
+Linking your computer takes two things: the **Unify desktop app** installed
+on your machine, and a **link** between that machine and your assistant in
+the Console.
+
+## Where it starts
+
+Open your assistant's profile and find the **Desktop** section (it reads
+*"No desktop connected yet"* until you link one). Clicking it opens the
+**Link User Desktop** dialog, which contains everything: setup
+instructions, your API key, the registered-machines list, and the link
+controls.
+
+## Step 1 — Install the app
+
+<Steps>
+  <Step title="Pick your platform">
+    In **Local Setup Instructions**, choose **macOS**, **Windows**, or
+    **Ubuntu**, then use **View setup instructions** and the download
+    button — a `.pkg` for Mac, an `.exe` installer for Windows, a `.deb`
+    for Ubuntu.
+  </Step>
+  <Step title="Run the installer">
+    Install like any app. During setup you'll be asked for your **Unify API
+    Key** — use **Copy API Key** in the Console dialog and paste it in.
+    (You can skip this and add the key later from the app's settings.)
+  </Step>
+  <Step title="Grant what your OS asks">
+    On **macOS**, approve the Screen Sharing permission prompt so the
+    desktop can be viewed remotely. First-time setup downloads its
+    dependencies, which can take several minutes.
+  </Step>
+  <Step title="Look for the tray icon">
+    Setup is complete when the Unify icon appears in your menu bar or
+    system tray and turns **green** — that means all services are running.
+    Yellow means partially running, red means stopped.
+  </Step>
+</Steps>
+
+The tray menu is your local control panel: **Start/Stop Services**,
+**Settings…**, **View Logs…**, and **Uninstall…** all live there.
+
+### macOS: the optional login password
+
+For Macs, the Console offers a **Save User Password** step. It's optional
+but useful — as the tooltip explains:
+
+> Used to grant accessibility permission and unlock your Mac when needed.
+> Stored as an encrypted secret, only used on the Mac you link.
+
+With it saved, your assistant can get past the lock screen when you've
+asked it to work while you're away. Without it, work pauses whenever the
+Mac locks.
+
+## Step 2 — Link the machine to your assistant
+
+Once the app is running, your machine registers itself and appears in the
+**Link User Desktop** dialog. Select it to link. That's it — your assistant
+now has a machine of yours it can work on.
+
+A few things you'll notice in the list:
+
+- **One machine, many assistants.** The same computer can be linked to
+  several of your assistants — the list shows *"Also linked to N other
+  assistants"* where that's the case.
+- **One link per assistant.** Each assistant gets at most one of your
+  machines; linking a different one replaces the previous link.
+- **Filesystem access** is a separate toggle on the linked machine — see
+  [Files & terminal](/your-computer/files-and-terminal).
+
+## Managing your machines
+
+From the same dialog you can:
+
+- **Rename** a desktop, so "Julia's MacBook" isn't "mac-host-2381".
+- **Unlink** — disconnects this assistant from the machine; the
+  registration and other assistants' links stay.
+- **Delete** — removes the machine entirely. The confirmation spells out
+  the consequences: *"This unregisters the desktop, removes it from every
+  assistant it's linked to, and tears down its secure tunnel. The desktop
+  app will need to be set up again to reconnect. This cannot be undone."*
+
+Uninstalling the app from the machine itself (tray → **Uninstall…**) does
+the same cleanup from that end: stops all services, unregisters the device,
+and removes the software.
+
+## Updating
+
+New versions ship as fresh installers — download and run the latest over
+your existing install. Your API key and connection settings are preserved
+across upgrades.

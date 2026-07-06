@@ -1,0 +1,74 @@
+---
+title: "Control & safety"
+description: "How your assistant behaves on your machine — and how you stay in charge"
+---
+
+Giving an assistant control of your own computer only works if its conduct
+is predictable. These are the rules it operates under — and the levers you
+hold.
+
+## When it acts on your machine
+
+- **Only when you ask.** A linked machine is not a playground. Your
+  assistant touches it only when you clearly ask for something on *your*
+  computer — "open the file on my laptop", "click submit on my screen".
+  For everything else it uses [its own machine](/their-computer/overview).
+- **Your live screen share comes first.** If you're on a
+  [Meet call](/communication/unify-meet) sharing your screen, that's where
+  it follows your machine — watching and guiding. Direct control of the
+  linked machine is for when there's no live share running.
+- **It asks when unsure.** Ambiguous request? It asks a brief clarifying
+  question rather than guessing on your hardware.
+
+## How it behaves while working
+
+- **Consequential actions get confirmed.** Before anything destructive,
+  irreversible, or that sends, deletes, or purchases on your behalf, it
+  states what it's about to do and waits for a clear go-ahead.
+- **It narrates at a sensible pace** — progress at the level of the job,
+  not a play-by-play of every click.
+- **It never modifies your machine to work around a problem.** If
+  something on your computer errors, it reports rather than "fixing" your
+  setup — installing or changing anything requires your explicit ask.
+- **It works around your lock screen honestly.** If your Mac is locked and
+  you've [saved your login password](/your-computer/setup) as an encrypted
+  secret, it unlocks and proceeds; otherwise it tells you it's blocked.
+
+## Your controls
+
+Everything is revocable, at several levels, and revocation is fast:
+
+| Lever | Effect |
+|---|---|
+| **Revoke control mid-session** | The assistant stops instantly — every action re-checks your consent, so a revocation takes effect immediately, not at the next task |
+| **Filesystem access toggle** | File access off within about a minute, keys cleared |
+| **Unlink** | This assistant loses the machine; other links unaffected |
+| **Stop Services** (tray) | The machine goes dark to the platform until you start it again |
+| **Delete desktop** | Unregistered everywhere, secure tunnel torn down |
+| **Uninstall** | Everything above, plus the software removed |
+
+## How the connection works (the short version)
+
+- Your machine makes an **outbound connection to Unify's secure relay** —
+  nothing on your computer is opened to inbound traffic from the internet.
+- Control and file access run through that tunnel, authenticated with your
+  account's credentials; file access additionally uses per-link keys that
+  exist only while the toggle is on.
+- Your saved macOS password (if any) is stored as an **encrypted secret**,
+  used only on the Mac you linked.
+- **Your machine is never shown in the Console live view** — the desktop
+  you can watch during Meet calls is always the
+  [assistant's own](/their-computer/watching-and-control), never yours.
+  For the full picture of how the app relates to screen sharing, see
+  [How it works](/your-computer/how-it-works).
+
+## Shared assistants, private machines
+
+Links are personal. If a shared team assistant works with several people,
+**each person links their own machine**, and the assistant acts on yours
+only for you. Nobody else's requests reach your computer, and your
+colleagues' machines are equally invisible to you.
+
+There's no extra charge for any of this — linked desktops carry no separate
+fee, and work your assistant does on your machine consumes normal usage
+credits like anything else.

@@ -1,0 +1,89 @@
+---
+title: "Watching it work"
+description: "The Actions pane — every request, every step, live"
+---
+
+The **Actions** pane on your assistant's page is the window into its
+thinking: every request it has worked on in a time window, expandable down
+to the individual steps it took. If you've ever wondered *"what is it
+actually doing right now?"* — this is the answer.
+
+## The feed
+
+Actions are listed oldest to newest, one card per request. Each card shows
+what was asked and how it went, with a status pill:
+
+| Status | Meaning |
+|---|---|
+| **Running** | Working on it right now |
+| **Waiting for input** | Paused, needs something from you |
+| **Done** | Finished |
+| **Failed** | Something went wrong |
+
+The footer keeps a running pulse: whether your assistant is **working** or
+**idle**, how many actions are running or waiting for input, and a **Live**
+indicator confirming you're seeing events as they happen, with an "Updated"
+timestamp alongside.
+
+### Finding what you're after
+
+- **The clock control** scopes the feed to a time window — presets run
+  from the last 30 minutes up to the last 7 days, plus Today and
+  Yesterday. Scroll up past the top of the window and earlier history
+  loads in.
+- **Search** filters the whole timeline by text — jump straight to a
+  specific request, or to any step inside one.
+- **Expand All / Collapse All** opens or folds every card at once — handy
+  when scanning a day's work versus dissecting one job.
+
+## Inside a request
+
+Expand a card and the whole story unfolds:
+
+- **The request** — what you (or a schedule, or a trigger) asked for.
+- **The step timeline** — each stage of the work, in plain labels:
+  "Checking Contact Book", "Searching for relevant guidance", steps for
+  code it ran, pages it read, messages it sent. Busy stretches fold into
+  collapsible sections ("12 steps · 40s") that expand when you want the
+  fine grain — down to individual thoughts, tool calls, and results.
+- **The final response** — the answer or result the work produced,
+  called out at the bottom of the card.
+
+You don't need to understand every step — the point is that you *can* look.
+Nothing your assistant does is hidden from you.
+
+### What to use it for
+
+- **Trust-building** — watch a few requests end-to-end early on, and the
+  assistant stops being a black box.
+- **Verification** — when a result looks off, the timeline shows exactly
+  where things went sideways: which page it read, what it computed, what
+  it sent.
+- **Live oversight** — during a [task run](/tasks/overview) or a job you
+  kicked off in chat, this is the play-by-play, streaming as it happens.
+- **Better corrections** — a correction that names the actual misstep
+  ("you used the current exchange rate at step three — use the
+  quarter-open rate") teaches far more precisely than "the number's
+  wrong."
+
+## Spotting the learning moments
+
+Two step labels in the timeline are the learning system at work:
+
+- **"Searching for relevant skills" / "Searching for relevant guidance"** —
+  at the very start of a piece of work, your assistant checks its
+  [libraries](/learning/guidance-and-functions) first. This is your past
+  teaching paying off.
+- **"Storing reusable skills"** — after the work finishes, a quiet review
+  pass decides whether anything from this job is worth keeping. When you see
+  this step, your assistant may be writing a new playbook or skill.
+
+Your assistant doesn't narrate this housekeeping in chat — it just happens.
+But if you're curious what came out of it, ask ("what did you learn from
+that?") or check the Guidance and Functions panes directly.
+
+<Tip>
+  The Actions pane is also the best seat in the house when a
+  [scheduled task](/tasks/overview) fires or you hit **Test it** on a
+  trigger — you watch the whole run unfold live.
+</Tip>
