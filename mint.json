@@ -108,6 +108,15 @@
                 "their-computer/watching-and-control",
                 "their-computer/the-machine"
             ]
+        },
+        {
+            "group": "Your Computer",
+            "pages": [
+                "your-computer/overview",
+                "your-computer/setup",
+                "your-computer/files-and-terminal",
+                "your-computer/control-and-safety"
+            ]
         }
     ],
     "footerSocials": {
