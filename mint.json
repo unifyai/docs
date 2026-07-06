@@ -126,6 +126,15 @@
                 "teams/shared-context",
                 "teams/managing"
             ]
+        },
+        {
+            "group": "Hiring",
+            "pages": [
+                "hiring/overview",
+                "hiring/twin-vs-teammates",
+                "hiring/onboarding",
+                "hiring/liaison"
+            ]
         }
     ],
     "footerSocials": {
