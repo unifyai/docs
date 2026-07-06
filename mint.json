@@ -110,7 +110,17 @@
                 "learning/watching-it-work",
                 "learning/guidance-and-functions",
                 "learning/knowledge",
-                "learning/teaching"
+                "learning/teaching",
+                {
+                    "group": "Developers",
+                    "pages": [
+                        "learning/developers/architecture",
+                        "learning/developers/function-manager",
+                        "learning/developers/guidance-manager",
+                        "learning/developers/storage-check",
+                        "learning/developers/knowledge-and-memory"
+                    ]
+                }
             ]
         },
         {
