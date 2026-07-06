@@ -1,0 +1,145 @@
+---
+title: "FunctionManager"
+description: "The executable library: primitives, compositional functions, venvs, and execution"
+---
+
+[`FunctionManager`](https://github.com/unifyai/unify/blob/main/unify/function_manager/function_manager.py)
+maintains the catalog of everything the actor can execute. Its abstract
+contract lives in
+[base.py](https://github.com/unifyai/unify/blob/main/unify/function_manager/base.py)
+(`BaseFunctionManager`), with a simulated in-memory twin in
+[simulated.py](https://github.com/unifyai/unify/blob/main/unify/function_manager/simulated.py)
+for tests.
+
+## The `Function` model
+
+Defined in
+[types/function.py](https://github.com/unifyai/unify/blob/main/unify/function_manager/types/function.py).
+There is no `function_type` enum — primitive vs. compositional is expressed
+by storage context plus the `is_primitive` flag. Fields worth knowing:
+
+| Field | Role |
+|---|---|
+| `name`, `argspec`, `docstring` | Identity and signature; primitives use qualified names like `primitives.contacts.ask` |
+| `implementation` | Source code; `None` for primitives (their code lives in the platform classes) |
+| `language` | `python`, `bash`, `zsh`, `sh`, or `powershell` |
+| `depends_on` | Dependency names — bare compositional names or dotted primitive names |
+| `embedding_text` | The synthesized text embedded for semantic search (`Function Name: … / Signature: … / Docstring: …`) |
+| `guidance_ids` | Inverse link to related `Guidance` rows |
+| `verify` | Consumed by verification flows (e.g. `SingleFunctionActor._verify_execution`) — a failed verification lets the actor reimplement and overwrite |
+| `venv_id` | FK to a `VirtualEnv` row for third-party dependencies |
+| `windows_os_required` | Routes execution to the Windows VM when the assistant's `desktop_mode` is `windows` |
+| `custom_hash` | Sync fingerprint for source-defined custom functions |
+
+## Storage contexts
+
+Four contexts, wired with foreign keys and auto-counting in
+`FunctionManager.Config.required_contexts`:
+
+- **`Functions/Compositional`** — user/agent-authored functions
+  (auto-increment `function_id`).
+- **`Functions/Primitives`** — per-assistant rows for *provider-backed
+  integration tools* only; static platform primitives live in the global
+  read-only builtins catalogue instead.
+- **`Functions/VirtualEnvs`** — `VirtualEnv` rows; many functions can share
+  one `venv_id`.
+- **`Functions/Meta`** — a singleton `FunctionsMeta` row holding sync
+  hashes (`custom_functions_hash`, `integration_tool_hash_by_app`, …).
+
+## Where primitives come from
+
+The single source of truth is
+[`ToolSurfaceRegistry`](https://github.com/unifyai/unify/blob/main/unify/function_manager/primitives/registry.py):
+a list of `ManagerSpec` entries describing each state manager's alias,
+class path, exclusions, and prompt metadata. Three sync paths keep the
+catalog current, each hash-guarded so unchanged rows are never rewritten:
+
+1. **Platform builtins** — `seed_builtin_primitives()` in
+   [builtins_catalog.py](https://github.com/unifyai/unify/blob/main/unify/function_manager/builtins_catalog.py)
+   introspects `ToolSurfaceRegistry.collect_primitives()` and seeds the
+   public builtins project, with per-manager hashes from
+   `stable_hash_for_rows(...)` and stable int IDs derived from
+   `(class_name, method_name)`.
+2. **Provider integration tools** —
+   `FunctionManager.sync_provider_integration_tools()` materializes a
+   connected app's tools into the assistant's `Functions/Primitives` with
+   per-app hashes.
+3. **Custom source functions** — the `@custom_function` decorator
+   ([custom/\_\_init\_\_.py](https://github.com/unifyai/unify/blob/main/unify/function_manager/custom/__init__.py))
+   plus `FunctionManager.sync_custom()`, which collects decorated
+   functions and venv manifests from the `custom/` tree and overwrites
+   same-named user rows.
+
+## Writing functions: `add_functions`
+
+The learned-skill write path, used by both the doing agent and the
+[storage pass](/learning/developers/storage-check):
+
+```python
+add_functions(
+    implementations=...,   # source with exactly one top-level def
+    language="python",
+    overwrite=False,       # True = in-place update, preserves function_id
+    venv_id=None,          # required when third-party imports are detected
+    destination=None,      # "personal" (default) or "team:<id>"
+)
+```
+
+The Python path AST-parses the source (`_parse_implementation`), builds
+`depends_on` via dependency analysis
+([dependency_analysis.py](https://github.com/unifyai/unify/blob/main/unify/function_manager/dependency_analysis.py)),
+rejects third-party imports without a `venv_id`, executes the source in a
+sandbox to extract the signature and docstring, and writes batched rows
+with `recompute_derived=True` so embeddings refresh. Shell functions carry
+their metadata as `# @name:` / `# @args:` / `# @description:` comments.
+
+Deletion is dependency-aware: `delete_function(function_id,
+delete_dependents=True)` walks the `depends_on` graph breadth-first and
+removes every compositional function that transitively calls the target.
+Primitives can't be deleted — they're system-owned.
+
+## Reading: `search_functions` vs `filter_functions`
+
+- **`search_functions(query, n=5)`** — semantic, via
+  `federated_ranked_search` against `embedding_text`, spanning personal +
+  team compositional contexts plus the primitive specs (builtins project +
+  provider-backed rows). Results are compacted for the LLM
+  (`_compact_function_search_rows`), and with `_return_callable=True` the
+  matching callables are injected into the sandbox.
+- **`filter_functions(filter=...)`** — exact, a boolean Python expression
+  over `Function` fields evaluated through `federated_filter`, composed
+  with any instance-level `filter_scope` and `exclude_compositional_ids`.
+
+## Executing: `execute_function`
+
+The preferred single-call execution path (the actor's `execute_function`
+tool synthesizes a call and delegates here). Routing inside
+`FunctionManager.execute_function`:
+
+1. Resolve the name — compositional row, then primitive registry, then
+   stored primitive rows.
+2. `is_primitive=True` → `_execute_primitive` →
+   `get_primitive_callable()`; returns raw results, which may themselves
+   be `SteerableToolHandle`s (steering composes through stored calls).
+3. Python compositional → `_execute_python_function`: in-process, inside a
+   pooled venv (`VenvPool`, keyed by `(venv_id, session_id)` with
+   `state_mode` of `stateless`/`stateful`/`read_only`), or on the Windows
+   VM when `windows_os_required`.
+4. Shell → `_execute_shell_function` via the `ShellPool`.
+
+Venvs materialize on disk under
+`{local_root}/.unity/venvs/{context}/{venv_id}/` and are managed through
+`add_venv` / `set_function_venv` / `delete_venv` (FK `SET NULL` on
+delete, so functions survive a deleted venv).
+
+## Actor-facing tool names
+
+Registered in
+[code_act_actor.py](https://github.com/unifyai/unify/blob/main/unify/actor/code_act_actor.py)
+with the class-name prefix: `FunctionManager_search_functions`,
+`FunctionManager_filter_functions`, `FunctionManager_list_functions`,
+`FunctionManager_add_functions`, `FunctionManager_delete_function`, and the
+venv suite (`FunctionManager_add_venv`, `FunctionManager_set_function_venv`,
+…). The read wrappers are what the
+[discovery-first gate](/learning/developers/architecture#the-discovery-first-gate)
+requires before the rest of the surface unlocks.

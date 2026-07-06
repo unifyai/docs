@@ -1,0 +1,102 @@
+---
+title: "GuidanceManager"
+description: "The procedural library: playbooks, previews, images, and builtins"
+---
+
+[`GuidanceManager`](https://github.com/unifyai/unify/blob/main/unify/guidance_manager/guidance_manager.py)
+stores procedural how-to text — in the words of its contract in
+[base.py](https://github.com/unifyai/unify/blob/main/unify/guidance_manager/base.py):
+
+> Stores procedural how-to information: step-by-step instructions, standard
+> operating procedures, software usage walkthroughs, and strategies for
+> composing functions together.
+
+It's deliberately minimal: pure CRUD plus federated search, orchestrated by
+the `CodeActActor` (the older ask/update LLM loops were removed —
+[prompt_builders.py](https://github.com/unifyai/unify/blob/main/unify/guidance_manager/prompt_builders.py)
+is now a stub, with all prompt content living in the actor).
+
+## The `Guidance` model
+
+Defined in
+[types/guidance.py](https://github.com/unifyai/unify/blob/main/unify/guidance_manager/types/guidance.py):
+
+| Field | Role |
+|---|---|
+| `guidance_id` | Auto-increment for tenant rows; stable hash IDs for builtins; `UNASSIGNED = -1` sentinel pre-persist |
+| `title` | Short title (1–200 chars) |
+| `content` | The full procedure text |
+| `images` | `AnnotatedImageRefs` — annotated screenshots, resolved through the `ImageManager` (`_resolve_image_refs`) |
+| `function_ids` | Links to `Functions/Compositional` rows (FK, cascade on delete) |
+| `is_builtin` | Marks read-only platform catalogue entries |
+
+Rows inherit `AuthoredRow`, so team-shared entries carry
+`authoring_assistant_id` — which assistant wrote a shared playbook is
+always attributable.
+
+## CRUD semantics
+
+| Method | Behavior |
+|---|---|
+| `search(references, k=10)` | `federated_ranked_search` across personal + team contexts + the builtins spec; returns **previews** |
+| `filter(filter=...)` | `federated_filter` boolean expressions; previews again |
+| `get_guidance(guidance_id)` | Federated fetch by id — the **full untruncated content** |
+| `add_guidance(title, content, images, function_ids, destination)` | Requires at least one of title/content/images; returns a `ToolOutcome` |
+| `update_guidance(...)` | Partial update; `_raise_if_builtin` blocks builtins |
+| `delete_guidance(guidance_id, destination)` | Same builtin guard |
+
+The preview mechanic matters for correctness: search and filter truncate
+`content` at `GUIDANCE_PREVIEW_CHARS = 2000` (via `_with_content_preview`),
+appending a hint to call `get_guidance` for the full text. The actor prompt
+(`_FUNCTION_AND_GUIDANCE_LIBRARY`) instructs the model to fetch the full
+entry before following a long procedure — acting on a truncated preview is
+the classic failure mode this design prevents.
+
+Writes take the standard `destination` parameter (`"personal"` default,
+`"team:<id>"` for shared SOPs), routed through `ContextRegistry.write_root`
+with membership validation — see
+[scopes](/learning/developers/architecture#scopes-personal-team-builtins).
+
+## Pinning: `prompt_guidance`
+
+Sub-actors can have guidance **pinned into their system prompt** rather
+than discovered. `_ActorRunner.act(..., prompt_guidance=[...])` in
+[environments/actor.py](https://github.com/unifyai/unify/blob/main/unify/actor/environments/actor.py):
+
+1. `_resolve_prompt_guidance` matches strings against `title` and ints
+   against `guidance_id`.
+2. Each match is re-fetched via `get_guidance` — full content, not a
+   preview — and merged into the inner actor's guidelines.
+3. The resolved ids are set as `exclude_ids` on the inner
+   `GuidanceManager`, so the pinned entries don't reappear as duplicate
+   discovery hits.
+
+## The builtins catalogue
+
+[builtins_catalog.py](https://github.com/unifyai/unify/blob/main/unify/guidance_manager/builtins_catalog.py)
+seeds a platform-wide, read-only set of guidance entries from the committed
+snapshot `builtins_guidance.json` (skills imported from the open Agent
+Skills ecosystem — spreadsheet handling, document work, and so on):
+
+- IDs come from `stable_guidance_id(title)`; content changes are detected
+  per-skill via `entry_hash(title, content)` against the
+  `guidance_hash_by_skill` map in `Guidance/Meta`, so reseeding is a diff,
+  not a rewrite.
+- Tenants read builtins through the federated search's builtins spec
+  (`_builtins_read_spec()`) but can never mutate them — the intended
+  pattern is copy-and-customize into a personal or team entry.
+- Builtins embed both a truncated `_content_head` (first 24,000 chars,
+  `CONTENT_EMBED_HEAD_CHARS`) into `_content_emb` and the `title` into
+  `_title_emb`; tenant entries embed `content` only, warmed by
+  `warm_embeddings()`.
+
+## Actor-facing tool names
+
+`GuidanceManager_search`, `GuidanceManager_filter`,
+`GuidanceManager_get_guidance`, `GuidanceManager_add_guidance`,
+`GuidanceManager_update_guidance`, `GuidanceManager_delete_guidance` — all
+registered in
+[code_act_actor.py](https://github.com/unifyai/unify/blob/main/unify/actor/code_act_actor.py),
+available in both the doing loop (for explicit user-requested writes) and
+the [storage loops](/learning/developers/storage-check) (for learned
+writes).

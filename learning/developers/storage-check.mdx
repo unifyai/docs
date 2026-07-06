@@ -1,0 +1,135 @@
+---
+title: "StorageCheck"
+description: "The post-run learning pass, proactive storage, and entrypoint certification"
+---
+
+Learning happens *after* doing. When a
+[`CodeActActor.act()`](https://github.com/unifyai/unify/blob/main/unify/actor/code_act_actor.py)
+run completes with storage enabled, a second, independent LLM loop — the
+**skill librarian** — reviews the full trajectory and decides what
+persists. This page covers that pass, its mid-run sibling `store_skills`,
+and the certification gate that turns stored functions into recurring-task
+executors.
+
+![StorageCheck flow: the trajectory snapshot feeds a skill librarian LLM loop that can add functions, add guidance, certify a task entrypoint, or store nothing; a mid-run store_skills loop feeds summaries into it](/images/developers/storage-check.png)
+
+## `_StorageCheckHandle`: the two-phase wrapper
+
+There is no class named `StorageCheck` — the name appears as the manager
+event label and loop id. The mechanism is `_StorageCheckHandle`, which
+wraps the doing loop's handle whenever `effective_can_store` is true or a
+`PostRunReviewContext` is present:
+
+- **`result()`** resolves as soon as **Phase 1** (the doing loop)
+  completes — callers never wait on storage.
+- `_run_lifecycle` then snapshots the trajectory
+  (`make_messages_safe_for_context_dump`) and calls
+  `_start_storage_check_loop`, publishing progress via
+  `publish_manager_method_event(..., "StorageCheck", ...)` with the
+  display label `_DEFAULT_STORAGE_REVIEW_LABEL = "Storing reusable
+  skills"` — which is exactly what users see in the Console's
+  [Actions pane](/learning/watching-it-work).
+- **`done()`** is true only once storage finishes. If either library is
+  missing, `_start_storage_check_loop` returns `None` and storage is
+  skipped silently.
+
+If the doing loop *failed*, storage still runs (failures can teach
+pitfalls) but any task-entrypoint review is cleared — certification only
+considers successful runs.
+
+## The librarian loop
+
+`_start_storage_check_loop` builds a fresh LLM client (loop id
+`StorageCheck(CodeActActor.act)`) — it does not reuse the doing agent's
+context beyond the injected trajectory. Its system prompt opens:
+
+> You are a skill librarian. A CodeActActor has just completed a task. Your
+> job is to review the execution trajectory and decide whether anything is
+> worth persisting for future reuse. **Often nothing is — that is perfectly
+> fine.**
+
+The prompt is assembled from shared sections in
+[code_act_actor.py](https://github.com/unifyai/unify/blob/main/unify/actor/code_act_actor.py):
+
+- **`_STORAGE_WHAT_CAN_BE_STORED`** — code that executed successfully in
+  `execute_code` is storable; configuration should be baked in; fuzzy
+  semantic steps stay as `query_llm(...)` calls inside the stored
+  function; third-party imports need a `venv_id`.
+- **`_STORAGE_TWO_STORES`** — FunctionManager holds the *what* (building
+  blocks), GuidanceManager the *how* (recipes/playbooks); store the
+  function first, then guidance referencing it via `function_ids`.
+- **`_STORAGE_BASE_INSTRUCTIONS`** — the four-step method: review →
+  **search existing stores** (dedup) → act → delete superseded entries.
+  A clean, non-redundant library beats a large one.
+
+Its tool surface (`_build_storage_tools`) is full CRUD on both libraries
+plus venv tools, and — when the doing loop's own tools are still winding
+down — coordination tools (`ask_about_completed_tool`,
+`stop_inner_storage`, `interject_inner_storage`, …).
+
+## `store_skills`: proactive mid-run storage
+
+The doing agent can also store without waiting for the end. The
+`store_skills(request)` tool:
+
+1. Snapshots the trajectory *so far* from the current `AgentContext`
+   handle.
+2. Spawns a separate loop (`ProactiveStorage(CodeActActor.act)`, display
+   label "Proactive skill storage") sharing the same storage tool surface
+   and prompt sections.
+3. Returns its handle for async adoption — the doing loop **keeps
+   working** while storage happens alongside.
+4. Appends its summary to `AgentContext.proactive_storage_summaries`,
+   which Phase 2 reads so the final pass doesn't duplicate what was
+   already stored.
+
+This is what powers "remember this" mid-action: the `ConversationManager`
+relays the request into the running action via `interject_*`, and the
+agent calls `store_skills` without breaking stride. The CM is also
+explicitly prompted *not* to narrate storage events to the user unless
+asked.
+
+## Task entrypoint certification
+
+Recurring [tasks](/tasks/overview) can graduate from LLM-planned runs to a
+**stored symbolic executor**. The plumbing spans both repos' worth of
+context but lives in
+[task_scheduler.py](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/task_scheduler.py)
+and the storage loop:
+
+1. When a task run starts,
+   [`ActiveTask.start`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/active_task.py)
+   sets a `PostRunReviewContext` (extension key `task_entrypoint_review`)
+   — but only when the task is recurring/triggered and has no `entrypoint`
+   yet (`TaskScheduler._build_task_entrypoint_review`).
+2. That context switches the storage pass into review mode (label
+   "Storing reusable workflow") and adds two tools:
+   - **`attach_entrypoint_to_recurring_task(function_id, rationale,
+     ...)`** — records a stored function as the entrypoint on *future*
+     task instances (`_attach_entrypoint_to_future_instances`). This alone
+     does not change delivery mode.
+   - **`submit_offline_certification_evidence(function_id,
+     certification_evidence, ...)`** — the promotion gate
+     (`_promote_symbolic_candidate_to_offline`). Evidence-only: the
+     librarian must document risk classification, input and equivalence
+     contracts, and managed-primitive usage; it does **not** execute the
+     function. Resubmission is capped
+     (`MAX_OFFLINE_CERTIFICATION_REVISION_ATTEMPTS = 2`).
+3. Once certified, future runs call `CodeActActor.act(entrypoint=...)` —
+   the stored function executes directly with **no LLM doing loop**, with
+   `_repair_symbolic_entrypoint` as the fallback when the symbolic path
+   breaks.
+
+This is the code path behind the user-facing promise that recurring work
+"locks in the proven approach": run one is planned, runs N are certified
+replay.
+
+## Storage permissions
+
+Which parts of this machinery are live is controlled per-call in `act()`:
+
+| Flag | Effect |
+|---|---|
+| `can_store=False` | Strips `store_skills` and the FM write tools from the doing loop; Phase 2 still runs if a `PostRunReviewContext` demands it |
+| `can_compose=False` | Strips `execute_code`, package installs, and store-only tools |
+| Sub-agents | `primitives.actor.act` spawns default to `can_store=False` — nested agents do, they don't learn |
