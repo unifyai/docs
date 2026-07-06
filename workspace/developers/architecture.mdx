@@ -1,0 +1,125 @@
+---
+title: "Architecture"
+description: "How the Google Workspace / Microsoft 365 integration actually works in the open-source unify repo"
+---
+
+Everything in the [Workspace section](/workspace/overview) is implemented in
+the open-source [`unifyai/unify`](https://github.com/unifyai/unify)
+repository. This developer sub-section explains how it *actually works* —
+the modules, classes, and contracts — for anyone reading, extending, or
+self-hosting the code.
+
+The workspace integration is built from four cooperating pieces:
+
+1. **Gateway OAuth adapters** —
+   [`unify/gateway/adapters/google.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/google.py)
+   and
+   [`unify/gateway/adapters/microsoft.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/microsoft.py)
+   — handle the OAuth callbacks when a user connects an account, exchange
+   the authorization code for tokens, and persist them as assistant
+   secrets.
+2. **Runtime token plumbing** —
+   [`unify/common/runtime_oauth.py`](https://github.com/unifyai/unify/blob/main/unify/common/runtime_oauth.py)
+   plus the OAuth-aware parts of
+   [`unify/secret_manager/secret_manager.py`](https://github.com/unifyai/unify/blob/main/unify/secret_manager/secret_manager.py)
+   — mirror tokens into the running assistant and keep raw credentials out
+   of everything the LLM can read.
+3. **The provider proxy** —
+   [`unify/provider_proxy/`](https://github.com/unifyai/unify/tree/main/unify/provider_proxy)
+   — a localhost proxy that gives sandboxed actor code the *full* Google /
+   Microsoft Graph REST surface without ever holding a real token, while
+   enforcing the per-assistant file-access allowlist.
+4. **Workspace surfaces** — the trusted
+   [`unify/workspace_email/`](https://github.com/unifyai/unify/tree/main/unify/workspace_email)
+   primitive for the connected mailbox, and the gateway channels
+   ([`gmail`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/gmail/views.py),
+   [`outlook`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/outlook/views.py),
+   [`drive`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/drive/views.py),
+   [`sharepoint`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/sharepoint/views.py))
+   that back sending, inbox watches, and the Console file picker.
+
+![Workspace OAuth plumbing: the Console approves scopes, gateway OAuth callbacks persist GOOGLE_*/MICROSOFT_* tokens to Orchestra secrets, SecretManager syncs them into the runtime keeping raw tokens in memory only, and the localhost provider proxy swaps sandbox nonces for real tokens before calling Google APIs and Microsoft Graph](/images/developers/workspace-oauth-plumbing.png)
+
+## The core design decision
+
+One idea organizes the whole subsystem: **the LLM-controlled sandbox never
+holds a real OAuth token**. Sandboxed `execute_code` calls
+`get_oauth_access_token("google")` and receives a **nonce** — a capability
+handle valid only against the localhost proxy. The proxy, running in the
+trusted parent process, swaps the nonce for the real bearer token on each
+upstream request. Two consequences fall out of this:
+
+- Actor code gets the *entire* provider REST API (Drive, Calendar, Gmail
+  API, Graph) with ordinary `httpx` calls — no bespoke per-endpoint tool
+  surface to maintain.
+- Every file-shaped request funnels through one choke point where the
+  [workspace file-access policy](/workspace/files) is enforced, uniformly,
+  regardless of what code the LLM wrote.
+
+Trusted, non-sandboxed code (like `WorkspaceEmailManager`) bypasses the
+proxy and uses `get_provider_access_token`, which returns the real token —
+the split between those two functions in `runtime_oauth.py` *is* the trust
+boundary.
+
+## End-to-end lifecycle
+
+1. **Connect** — the Console builds an OAuth URL (scope bundles are
+   assembled in the hosted control plane; see [the scopes
+   note](/workspace/developers/gateway-channels#oauth-scopes)) and the user
+   consents at Google/Microsoft. The provider redirects to
+   `GET /google/auth/callback` or `GET /microsoft/auth/callback` on the
+   gateway.
+2. **Persist** — the callback (`google_oauth_callback` /
+   `microsoft_oauth_callback`) validates the HMAC-signed `state` via
+   `verify_oauth_state` in
+   [`unify/gateway/adapters/oauth.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/oauth.py),
+   exchanges the code, and writes the token set to Orchestra with
+   `upsert_assistant_secrets`: `GOOGLE_ACCESS_TOKEN`,
+   `GOOGLE_REFRESH_TOKEN`, `GOOGLE_TOKEN_EXPIRES_AT`,
+   `GOOGLE_GRANTED_SCOPES`, `GOOGLE_ACCOUNT_EMAIL` (and the `MICROSOFT_*`
+   equivalents, plus `MICROSOFT_TOKEN_SOURCE`).
+3. **Mirror** — the running assistant pulls secrets back down through
+   `SecretManager._sync_assistant_secrets`, with a hard split: raw tokens
+   stay in an in-memory dict, while non-sensitive metadata (expiry,
+   granted scopes) is mirrored to the environment. Details in
+   [OAuth & secrets](/workspace/developers/oauth-and-secrets).
+4. **Use** — actor code hits the proxy
+   ([Provider proxy](/workspace/developers/provider-proxy)); trusted
+   surfaces like `primitives.workspace_email.*` call providers directly
+   ([Email & gateway channels](/workspace/developers/gateway-channels)).
+5. **Refresh** — the runtime never talks to Google/Microsoft token
+   endpoints itself. A platform refresh job keeps Orchestra's copies fresh;
+   the runtime re-syncs on demand (`refresh_provider_access_token`) — for
+   example after the proxy sees a 401.
+6. **Revoke** — disconnecting calls `POST /google/revoke` (Google tokens
+   are actively revoked upstream) and clears the Orchestra secrets; the
+   next sync drops them from the runtime.
+
+## What lives where
+
+| Concern | Open-source `unify` | Hosted control plane (closed) |
+|---|---|---|
+| OAuth callbacks, token exchange | `unify/gateway/adapters/{google,microsoft,oauth}.py` | — |
+| Scope bundles (feature → scopes) | consumed, not defined | `unify-deploy/common/scopes.py` + Orchestra mirror |
+| Token storage of record | — | Orchestra assistant secrets |
+| Token refresh cron, watch renewal | — | hosted scheduled jobs |
+| Runtime token access + sandbox isolation | `unify/common/runtime_oauth.py`, `unify/provider_proxy/` | — |
+| Connected-mailbox primitive | `unify/workspace_email/` | — |
+| Send / watch / picker endpoints | `unify/gateway/channels/{gmail,outlook,email,drive,sharepoint}/` | mounted by the hosted comms app |
+| File-access policy storage | mirrored into `PolicyStore` | Orchestra `workspace-file-access` config |
+
+The rest of this sub-section walks each layer in depth:
+
+<CardGroup cols={2}>
+  <Card title="OAuth & secrets" icon="key" color="#2f9d97" href="/workspace/developers/oauth-and-secrets">
+    Token plumbing, the split storage model, and sandbox isolation.
+  </Card>
+  <Card title="Provider proxy" icon="shield-halved" color="#c95f5a" href="/workspace/developers/provider-proxy">
+    Request classification, the file-access policy engine, and response
+    filtering.
+  </Card>
+  <Card title="Email & gateway channels" icon="envelope" color="#cf9a3e" href="/workspace/developers/gateway-channels">
+    WorkspaceEmailManager, the Gmail/Outlook channels, watches, and the
+    Drive/SharePoint pickers.
+  </Card>
+</CardGroup>

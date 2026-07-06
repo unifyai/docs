@@ -1,0 +1,140 @@
+---
+title: "Knowledge & Memory"
+description: "KnowledgeManager's NL tool loops and MemoryManager's background consolidation"
+---
+
+Facts flow into the assistant along two pipelines: a **live, actor-driven**
+path through
+[`KnowledgeManager`](https://github.com/unifyai/unify/blob/main/unify/knowledge_manager/knowledge_manager.py),
+and a **background consolidation** pass in
+[`MemoryManager`](https://github.com/unifyai/unify/blob/main/unify/memory_manager/memory_manager.py)
+that distills recent traffic into durable state.
+
+![Knowledge acquisition pipelines: the live path runs CodeActActor through primitives.knowledge into an inner LLM tool loop over Knowledge tables; the background path runs EventBus events through MemoryManager.process_chunk into ContactManager, KnowledgeManager, and TaskScheduler](/images/developers/knowledge-memory.png)
+
+## KnowledgeManager
+
+### Three steerable operations
+
+The contract
+([base.py](https://github.com/unifyai/unify/blob/main/unify/knowledge_manager/base.py))
+exposes exactly three natural-language operations, each returning a
+`SteerableToolHandle`:
+
+- **`ask`** — read-only interrogation. *"This call must never create,
+  modify or delete knowledge or schema."*
+- **`update`** — mutations described as desired end-state: *"Do not
+  request how the change should be implemented; describe the desired
+  end-state in natural language."*
+- **`refactor`** — schema restructuring across knowledge tables.
+
+Each spins up its own inner LLM tool loop (`start_async_tool_loop`) with a
+prompt from
+[prompt_builders.py](https://github.com/unifyai/unify/blob/main/unify/knowledge_manager/prompt_builders.py)
+(`build_ask_prompt` / `build_update_prompt` / `build_refactor_prompt`) and
+a registered tool group: the ask loop gets `_tables_overview`, `_filter`,
+`_search`, `_reduce` (plus join variants for multi-table stores); the
+update loop adds `_add_rows` and the full schema suite (`_create_table`,
+`_transform_column`, `_vectorize_column`, `_delete_rows`, …).
+
+### Storage is dynamic tables, not documents
+
+Knowledge is **not** a fixed title/content/tags store. It's a dynamic
+multi-table layout under the `Knowledge/` context root — personal at
+`{base}/Knowledge/{table}`, team-shared at `Teams/{team_id}/Knowledge/{table}`
+(the `destination` parameter, validated by `ContextRegistry.write_root`).
+Tables have typed snake_case columns (`ColumnType` in
+[types.py](https://github.com/unifyai/unify/blob/main/unify/knowledge_manager/types.py))
+and an auto-increment unique key; `_add_rows` auto-creates missing columns
+with inferred types.
+
+Under the hood, KnowledgeManager is a thin domain layer over
+[`DataManager`](https://github.com/unifyai/unify/blob/main/unify/data_manager/base.py)
+— every filter, search, join, and reduction delegates to it (see
+[storage.py](https://github.com/unifyai/unify/blob/main/unify/knowledge_manager/storage.py),
+[search.py](https://github.com/unifyai/unify/blob/main/unify/knowledge_manager/search.py),
+and [ops.py](https://github.com/unifyai/unify/blob/main/unify/knowledge_manager/ops.py)).
+Semantic search runs through the same
+[federated machinery](/learning/developers/architecture#scopes-personal-team-builtins)
+as the skill libraries, with multi-reference queries ranked by summed
+cosine distance and embedding columns created on demand
+(`_vectorize_column` → `ensure_vector_column`). The ask prompt is emphatic
+about routing: *"For ANY semantic question over free-form text, ALWAYS use
+search"* — never substring filters.
+
+### How it's reached at answer time
+
+There's no ConversationManager fast-path for knowledge. A question like
+"what's our refund policy?" routes CM → `act` → the actor calling
+`execute_function` on **`primitives.knowledge.ask`** (wired through the
+[primitives registry](https://github.com/unifyai/unify/blob/main/unify/function_manager/primitives/registry.py)).
+Document ingestion follows the same actor-orchestrated pattern: parse with
+`primitives.files.parse`, persist extracted facts with
+`primitives.knowledge.update`.
+
+## MemoryManager
+
+### The 50-event window
+
+[`MemoryManager`](https://github.com/unifyai/unify/blob/main/unify/memory_manager/memory_manager.py)
+is the offline consolidator — per its contract, *"invoked every 50
+messages (by default)"* (`_CHUNK_SIZE = 50`). It subscribes to the
+EventBus (`Message` events plus ConversationManager `ManagerMethod`
+events), buffers them in an in-memory window (`_recent_messages`), and on
+overflow runs `process_chunk` over the rendered transcript under a chunk
+lock. It doesn't query the transcript store — it rides the same event
+stream the `TranscriptManager` publishes while persisting.
+
+### Extraction categories
+
+`process_chunk` runs one unified pass (`build_unified_prompt` in
+[prompt_builders.py](https://github.com/unifyai/unify/blob/main/unify/memory_manager/prompt_builders.py)),
+with each category gated by a `MemoryConfig` flag (env-configurable via
+`UNITY_MEMORY_*` in
+[settings.py](https://github.com/unifyai/unify/blob/main/unify/memory_manager/settings.py)):
+
+| Category | Default | Lands in |
+|---|---|---|
+| Contact CRUD | off | `ContactManager` rows |
+| Bios | **on** | `Contact.bio` |
+| Rolling summaries | **on** | `Contact.rolling_summary` |
+| Response policies | **on** | `Contact.response_policy` |
+| Domain knowledge | off | `KnowledgeManager.update` |
+| Task commitments | off | `TaskScheduler.update` |
+
+The defaults explain observed behavior: contact character (bios, summaries,
+per-contact communication policies) accrues automatically from
+conversation, while knowledge and task extraction are opt-in — those flow
+mainly through the explicit actor paths.
+
+Two prompt disciplines are worth copying if you extend this: a hard
+anti-hallucination rule (*"Include only information explicitly stated in
+the provided transcript chunk"*) and an idempotency shield — if the chunk
+already contains a `manager_method` event showing the operation happened,
+treat it as handled. There is no persistent watermark; idempotency is
+in-process (buffer reset + chunk lock) plus prompt-level.
+
+### Extension points
+
+- **New extraction category** — add a `MemoryConfig` flag, gate a prompt
+  section in `build_unified_prompt`, expose the env var, and wire it in
+  the CM's manager setup. The standalone methods (`update_contacts`,
+  `update_knowledge`, `update_tasks`) show the per-category pattern.
+- **Custom knowledge schemas** — the update/refactor loops already create
+  tables and columns on demand; `case_specific_instructions` on
+  `ask`/`update` injects per-call system guidance without forking prompts.
+- **Simulated twins** — `SimulatedKnowledgeManager` and
+  `SimulatedMemoryManager` mirror the contracts for tests, with sandboxes
+  under `sandboxes/knowledge_manager/` and `sandboxes/memory_manager/`.
+
+## Where the boundaries sit
+
+A routing summary that keeps the four stores straight in code, mirroring
+the [user-facing distinction](/learning/knowledge#knowledge-guidance-or-functions):
+
+| Content | Store | Write path |
+|---|---|---|
+| Procedural how-to | `Guidance` | `GuidanceManager_add_guidance` (actor/storage loops) |
+| Executable workflow | `Functions/Compositional` | `FunctionManager_add_functions` |
+| Facts, reference data | `Knowledge/*` tables | `primitives.knowledge.update` |
+| People & preferences | `Contacts` | `ContactManager` (largely via MemoryManager) |

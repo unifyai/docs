@@ -1,0 +1,118 @@
+---
+title: "Provider proxy"
+description: "The localhost choke point: full REST surface in, policy-enforced requests out"
+---
+
+[`unify/provider_proxy/`](https://github.com/unifyai/unify/tree/main/unify/provider_proxy)
+is a small FastAPI app bound to loopback that sits between sandboxed actor
+code and the real Google / Microsoft APIs. It exists to solve two problems
+at once: give LLM-authored code the **complete** provider REST surface
+without a real token, and enforce the per-assistant **file-access
+allowlist** at a single choke point.
+
+![Provider proxy policy pipeline: a sandbox request is classified by classify.py into non_file (passthrough), file_read, file_write, or unknown_file (403 default-deny); file reads and writes go through policy evaluation in policy.py and ancestry.py, with allowed requests forwarded to the upstream API and masked items returned as 404/403](/images/developers/workspace-proxy-policy.png)
+
+## Module map
+
+| Module | Key symbols | Role |
+|---|---|---|
+| [`proxy.py`](https://github.com/unifyai/unify/blob/main/unify/provider_proxy/proxy.py) | `build_app`, `ensure_proxy_running`, `_dispatch`, `_forward`, `_handle_write`, `_handle_batch` | The FastAPI app and request pipeline; one catch-all route `/{provider}/{rest_path}` |
+| [`session.py`](https://github.com/unifyai/unify/blob/main/unify/provider_proxy/session.py) | `ProxySession`, `sandbox_env`, `build_sandbox_env`, `provider_token_env_keys` | The nonce, the sandbox env overlay, and the scrub list |
+| [`classify.py`](https://github.com/unifyai/unify/blob/main/unify/provider_proxy/classify.py) | `classify`, `Classification`, `Locator` | Path-template matching → request kind |
+| [`policy.py`](https://github.com/unifyai/unify/blob/main/unify/provider_proxy/policy.py) | `WorkspaceFilePolicy`, `PolicyStore`, `evaluate_access`, `decision_key`, `index_decisions` | The allowlist model, mirrored from Orchestra |
+| [`ancestry.py`](https://github.com/unifyai/unify/blob/main/unify/provider_proxy/ancestry.py) | `is_allowed`, `ancestry_chain`, `child_allowed`, `google_get`, `ms_get`, `ms_get_by_path` | Resolving an item's parent chain against the policy |
+| [`filter.py`](https://github.com/unifyai/unify/blob/main/unify/provider_proxy/filter.py) | `filter_listing`, `filter_changes`, `_rewrite_pagination_links` | Masking disallowed items out of listings, search, and delta responses |
+| [`ENDPOINTS.md`](https://github.com/unifyai/unify/blob/main/unify/provider_proxy/ENDPOINTS.md) | — | The supported path templates, the gating matrix, and how to add patterns |
+
+Upstreams are fixed: `microsoft` → `graph.microsoft.com`, `google` →
+`www.googleapis.com`.
+
+## The request pipeline
+
+1. **Authenticate** — `_dispatch` requires `Authorization: Bearer
+   {nonce}`, where the nonce belongs to the current `ProxySession`. The
+   sandbox got that nonce from `get_oauth_access_token`; nothing else is
+   accepted.
+2. **Classify** — `classify(provider, method, rest_path, query)` matches
+   the request against known path templates and returns one of:
+   `KIND_NON_FILE` (mail, calendar, contacts, any non-drive surface),
+   `KIND_FILE_READ`, `KIND_FILE_WRITE`, `KIND_BATCH` (Graph `$batch`,
+   handled per-subrequest by `_handle_batch`), or `KIND_UNKNOWN` — a
+   file-shaped path that matched nothing, which is **denied by default**
+   with a 403. Default-deny on unknowns is what makes the endpoint
+   catalogue in `ENDPOINTS.md` a real security boundary rather than
+   documentation.
+3. **Enforce** — file reads and writes are gated (next section);
+   `non_file` requests pass straight through.
+4. **Forward** — `_forward` injects the real token via
+   `get_provider_access_token_optimistic`, and on a 401 forces a secret
+   re-sync (`refresh_provider_access_token`) and retries once. Pagination
+   links in responses are rewritten to point back through the proxy so
+   follow-the-link code stays inside the policy boundary.
+
+## The policy model
+
+A `WorkspaceFilePolicy` (per provider) is `default_allow` plus a tuple of
+`decisions`, each `{drive_id, item_id, allow}` — exactly the shape the
+Console's file picker saves. Evaluation, in `evaluate_access` +
+`ancestry.is_allowed`, walks the item's **parent chain** (fetched live from
+the provider via `google_get` / `ms_get`, item first, then ancestors): the
+**nearest explicit decision wins**, and if no ancestor carries a decision
+the policy's `default_allow` applies. That's the code behind the Console's
+"Selecting a folder grants access to everything inside it" and the
+"New files accessible by default" toggle.
+
+Two subtleties worth knowing:
+
+- **Gating is opt-in.** `PolicyStore.get(provider)` returning `None` (no
+  Console policy saved) means unrestricted passthrough. The moment a
+  policy exists, `default_allow=False` semantics kick in for anything
+  unchecked.
+- **Masked means invisible, not forbidden.** Direct reads of a disallowed
+  item return **404** (not 403) so the item's existence isn't leaked, and
+  `filter_listing` / `filter_changes` silently drop masked items from
+  listings, search results, and delta feeds. Writes into disallowed
+  locations fail via `_handle_write` checking parents and destinations.
+
+The policy arrives via `SecretManager._sync_workspace_file_policy`, which
+mirrors Orchestra's per-assistant `workspace-file-access` config into the
+process-local `PolicyStore` on the same debounced cadence as secrets.
+
+## Actor integration
+
+The proxy starts lazily: `SessionExecutor.execute` in
+[`unify/actor/execution/session.py`](https://github.com/unifyai/unify/blob/main/unify/actor/execution/session.py)
+calls `ensure_proxy_running` before any code runs. Sandbox code then uses
+the drop-in base URLs from the environment:
+
+```python
+token = get_oauth_access_token("microsoft")   # proxy nonce, not a real token
+base = os.environ["MICROSOFT_GRAPH_BASE"]     # …/microsoft, via the proxy
+resp = httpx.get(
+    f"{base}/me/drive/root/children",
+    headers={"Authorization": f"Bearer {token}"},
+)
+```
+
+`MICROSOFT_GRAPH_BASE`, `GOOGLE_DRIVE_BASE`, and `GOOGLE_API_BASE` are
+documented to the model in the `execute_code` docstring
+([`unify/actor/code_act_actor.py`](https://github.com/unifyai/unify/blob/main/unify/actor/code_act_actor.py))
+and the `_EXTERNAL_APP_INTEGRATION` block in
+[`unify/actor/prompt_builders.py`](https://github.com/unifyai/unify/blob/main/unify/actor/prompt_builders.py).
+Calendar, Gmail-API, and People requests ride the same proxy but classify
+as `non_file`, so they pass through ungated — the file allowlist governs
+files only.
+
+Long-lived execution backends (venvs, shell sessions) get a fresh overlay
+per execution via `FunctionManager._get_runtime_oauth_env_overlay` →
+`get_refresh_token_oauth_env_overlay`, so a proxy restart or nonce
+rotation never strands them.
+
+## Extending the endpoint catalogue
+
+To support a new provider endpoint family, add its path template to
+`classify.py` (and the gating matrix in `ENDPOINTS.md`). Anything
+file-shaped you don't add stays default-denied — the safe failure mode.
+The classification and filtering behavior is pinned by
+`tests/provider_proxy/test_classify.py`, `test_proxy_enforcement.py`,
+`test_filter.py`, `test_forward_auth.py`, and `test_session_env.py`.

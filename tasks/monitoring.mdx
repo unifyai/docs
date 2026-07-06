@@ -1,0 +1,86 @@
+---
+title: "Monitoring tasks"
+description: "The Tasks tab — every definition and every run, in one place"
+---
+
+The **Tasks** tab lives in your assistant's workspace rail, and it exists to
+answer two questions at any moment: *what standing work does this teammate
+have*, and *how has it been going?* In the tab's own words, it holds
+"scheduled, recurring, triggered, and continuous workflows — definition and
+run history together."
+
+That "together" is the design: there's no separate activity page to
+cross-reference. Each task carries its own history, so the setup and the
+track record are always one click apart. (The ⓘ button in the tab header
+opens a quick "How to use this tab" guide if you ever want the refresher
+in-product.)
+
+## The task list
+
+Tasks appear as expandable cards. Collapsed, each shows the essentials on
+one line: the task's name, its cadence in plain words ("Every week on Mon
+at 08:00", "Every 30 minutes"), when it next runs, its priority, and a
+status badge. The footer keeps the running tally — how many tasks exist and
+how many runs have been logged.
+
+Use the **All / Active / Paused** filter and the search box to narrow
+things down, and the refresh button to pull the latest. When any task is
+mid-run, a pulsing **Working** indicator appears in the toolbar.
+
+Expand a card and it splits in two:
+
+- **The definition** (left) — the plain-language description your assistant
+  works from, plus the structured facts: **Type** (Scheduled, Triggered,
+  On demand, Offline), **Trigger** (which event arms it, for triggered
+  tasks), **Cadence**, **Start**, **Next run**, and **Priority**.
+- **Run history** (right) — every past run in a compact table: its state,
+  why it started ("On schedule", "Triggered by Email", "Started on
+  demand"), when it started and finished, and how long it took.
+
+Click any run to open the **Run Detail** view — "what happened, why it
+started, and when it ran": the task it belongs to, its status, the contact
+and channel that triggered it where relevant, and the precise timing from
+scheduled-for through completed-at.
+
+## What the statuses mean
+
+| Badge | Meaning |
+|---|---|
+| **Scheduled** | Will start automatically at its next scheduled time |
+| **Ready** | Armed and waiting for a matching event |
+| **Running** | Actively executing right now |
+| **Completed** | Finished successfully |
+| **Failed** | Stopped because something went wrong during execution |
+| **Cancelled** | Was stopped before it finished |
+| **Pending** | Created and waiting to start |
+
+## What to use the tab for
+
+In practice, the Tasks tab earns its place in a few recurring moments:
+
+- **Right after creating a task** — confirm it landed the way you meant:
+  the description reads right, the cadence parsed correctly, the next run
+  is when you expected.
+- **The "did it run?" check** — a glance at run history answers whether
+  last night's job fired, how long it took, and whether it succeeded.
+- **Triaging a failure** — a **Failed** badge plus the run's detail view
+  tells you when and how a run died, so you can ask your assistant a
+  precise question about it.
+- **Auditing the standing workload** — a periodic scroll through the list
+  keeps the set of recurring jobs intentional rather than accreted; anything
+  stale is one chat message away from being cancelled.
+
+## Watching a run live
+
+Run history tells you what happened; the
+[**Actions** tab](/learning/watching-it-work) shows what's happening. When a
+task fires, its work streams there in real time — handy the first time a new
+task runs, or when you've hit **Test it** on a trigger and want to watch the
+dominoes fall.
+
+## Making changes
+
+The Tasks tab is a window, not a control panel — creating, editing, pausing,
+and deleting all happen [by asking your assistant](/tasks/creating). If
+something in the list looks off, the fastest fix is to say so: *"the Friday
+recap ran twice last week — what happened?"*

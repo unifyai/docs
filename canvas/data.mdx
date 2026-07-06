@@ -1,0 +1,115 @@
+---
+title: "The data layer"
+description: "Structured tables your assistant builds and maintains"
+---
+
+Underneath every live view is a **table** — rows and typed columns, like a
+spreadsheet your assistant maintains for you. The data layer is where all of
+those tables live.
+
+## How data is organized
+
+Tables are arranged like folders. A trucking operation might have
+`Data/Samsara/daily_snapshots`; a housing team might keep
+`Data/Housing/arrears` and `Data/Housing/repairs`; an online shop might have
+`Data/ExternalAPI/Orders`. Your assistant names and organizes tables
+sensibly as it works — and you can always ask it to restructure.
+
+Each table has a defined shape: columns with real types (text, numbers,
+dates, true/false, lists), optional unique keys so duplicates can't sneak
+in, and a description of where the data came from.
+
+## Where data comes from
+
+Anything your assistant can reach can become a table:
+
+- **APIs and external systems** — pulled once, or repeatedly on a
+  [schedule](/tasks/overview): each run appends fresh rows, and a history
+  builds up over time. This is how you get time series — a table of
+  API response times, daily order counts, truck locations at 9am.
+- **Files you share** — spreadsheets, CSVs, exports. Send them over any
+  channel and your assistant can extract the contents into proper tables.
+- **Connected apps** — records from your [integrations](/integrations/overview)
+  (CRM contacts, tickets, invoices) ingested for analysis.
+- **Its own computations** — intermediate results worth keeping: a cleaned
+  dataset, a monthly aggregation, a scored list. Instead of redoing the work
+  each time, the result is stored and reused.
+
+## What your assistant does with it
+
+Once data is in tables, you can ask for anything you'd ask an analyst:
+
+- **Filter** — "show me the high-priority repairs."
+- **Aggregate** — "total spend by region", "average response time per day",
+  counts, sums, averages, medians and more, grouped however you like.
+- **Combine** — "join the arrears table with the payments table and show me
+  outstanding balances." Tables from completely different sources can be
+  combined into one answer.
+- **Derive** — "add a total column: unit price times quantity." New columns
+  computed from existing ones.
+- **Search by meaning** — for text-heavy tables, "find the complaints about
+  billing" works even when no row contains the word "billing".
+
+The answers come back in chat — or become permanent
+[dashboard tiles](/canvas/dashboards) if they're worth watching over time.
+
+## The Data pane
+
+The **Data** pane — in the **Brain** section of your assistant's page — is
+your window into the whole data layer. The Console describes it as
+*"everything your teammate has ingested — browse nested tables like a
+directory and open any to view rows"*, and that's exactly the job: it's
+where you verify, audit, and explore the raw material behind your
+assistant's answers and dashboards.
+
+**What it's for:**
+
+- **Checking what was collected.** After a [scheduled
+  task](/tasks/overview) pulls from an API, open its table and confirm
+  today's rows actually landed.
+- **Auditing an answer.** When your assistant reports a number, the table
+  it computed from is right here — open it and see the underlying rows for
+  yourself.
+- **Inspecting what feeds a dashboard.** Every live tile reads from tables
+  in this pane; if a chart looks off, the pane shows you exactly what the
+  data says.
+- **Seeing the whole estate.** Nothing is hidden: if your assistant
+  ingested it, it's browsable here — including team-shared tables, which
+  appear grouped under their team alongside the assistant's personal
+  folders.
+
+**How to use it:**
+
+1. The **Data layer** sidebar shows the folder tree. Click folders to
+   drill in, exactly like a file directory — `Samsara` → `daily_snapshots`.
+2. Open a table (the leaves of the tree) and its rows appear on the right,
+   with a header showing **Rows**, **Loaded**, and **Columns** counts.
+3. **Click a column header to sort.** Tables load 50 rows at a time — use
+   **Load more** to page through larger ones.
+4. Use the refresh button after a task run to pull the latest.
+
+The pane is deliberately **read-only** — a clean window, not an editor.
+Changing data (fixing a row, adding a column, deleting a table) happens the
+way everything does: ask your assistant.
+
+<Note>
+  The Data pane shows the *data layer* specifically. Your assistant's other
+  memory — contacts, transcripts, knowledge, guidance, functions — each
+  have their own dedicated panes in the same Brain section.
+</Note>
+
+## Good to know
+
+- **Honest data only.** If a source is down or a fetch fails, your assistant
+  reports the gap — it never fills tables with plausible-looking made-up
+  records.
+- **Safe by default.** Bulk updates and deletions require explicit,
+  precise instructions; your assistant won't mass-edit a table on a vague
+  ask. Deletions are permanent, so it confirms before destructive changes.
+- **Private by default.** Tables live with your assistant. Data that should
+  be shared across a team can be stored in a [team's shared
+  pool](/teams/shared-context) instead — say so and your assistant will put
+  it there.
+- **Data vs. Knowledge.** Structured rows-and-columns material lives here;
+  facts, documents, and policies live in **Knowledge**. Your assistant
+  routes things to the right place automatically.

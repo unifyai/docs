@@ -1,0 +1,348 @@
+---
+title: "Developers"
+description: "How integrations actually work inside the open-source unify runtime"
+---
+
+This page is for engineers reading, extending, or debugging the integrations
+machinery in the open-source
+[`unifyai/unify`](https://github.com/unifyai/unify) repo. Everything above
+this page describes what users experience; this page describes how the
+runtime makes it happen — module by module, with the real symbol names.
+
+The hosted control plane (connection storage, tool policies, audit, provider
+dispatch) lives in the closed-source Orchestra backend, reached over HTTPS.
+The `unify` runtime owns everything on the assistant's side of that line:
+discovery, tool materialization, execution wrappers, sync lifecycle, and the
+prompts that teach the actor when to use what.
+
+## The big picture: three lanes
+
+There is no single "integrations pathway". Three lanes coexist, each with
+its own discovery, activation, and execution story — but they all converge
+on one rule: **FunctionManager search is the single discovery surface for
+executable tools**. Whatever lane a capability arrives through, the actor
+finds it the same way it finds everything else.
+
+![Three integration lanes: provider-backed third-party apps discovered via the Builtins catalog and executed through Orchestra; native unity-deploy packages activated by secrets; and the SDK-plus-secrets pattern for apps with no gallery entry — all converging on FunctionManager search](/images/integrations-dev-lanes.png)
+
+| Lane | Discovery | Activation | Execution |
+|---|---|---|---|
+| **Provider-backed** | Builtins catalog | Console connect + tool sync | `primitives.integrations.<app>.<tool>` → Orchestra governed run |
+| **Native packages** | Disk manifest discovery | Required secrets present | Custom function rows in `Functions/Compositional` |
+| **SDK + secrets** | None (actor-authored) | User-provided credentials | `execute_code` calling the service's API directly |
+
+The rest of this page walks each lane, then the shared plumbing.
+
+## The `unify.integrations` package
+
+Everything provider-backed funnels through
+[`unify/integrations/`](https://github.com/unifyai/unify/tree/main/unify/integrations),
+a deliberately thin package with sharply separated responsibilities.
+
+### `primitives.py` — the actor-facing surface
+
+[`unify/integrations/primitives.py`](https://github.com/unifyai/unify/blob/main/unify/integrations/primitives.py)
+defines `IntegrationPrimitives`, mounted at `primitives.integrations` in the
+actor sandbox. Its design principle, from the class docstring:
+
+> Actor-facing discovery is intentionally app-only: native Unity-deploy
+> packages and third-party provider apps are searched through Orchestra's
+> global app catalog, then enriched with current-assistant state in Unity.
+> Executable functions/tools are still discovered through normal
+> FunctionManager search after an app is active and materialized.
+
+Four methods are indexed in FunctionManager as regular primitives:
+
+- **`search_integrations(query, ...)`** — app-level discovery across both
+  native and third-party sources. Each result carries the fields an agent
+  needs to reason about readiness: `canonical_app_slug`, `source_type`
+  (`native` | `third_party`), `connection_status`, `sync_status`
+  (`not_enabled` → `missing_required_secrets` → `not_connected` →
+  `not_yet_synced` → `materialized`), and a `next_action` hint like *"Ask
+  the user to connect this integration in Console Integrations."*
+- **`review_tool_permissions(connection_id)`** and
+  **`update_tool_permissions(...)`** — read and patch the per-connection
+  tool policy (allow / ask-every-time / block, plus bulk presets by action
+  class).
+- **`resolve_tool_execution(audit_id, decision, ...)`** — approve or deny a
+  pending sensitive-tool execution, optionally persisting the decision as
+  policy.
+
+A second set of methods (`execute_tool`, `list_connected`, `search_tools`,
+`get_tool_schema`, `manage_connection`, `callable_for_tool`, …) is
+deliberately **excluded from FunctionManager indexing** via the
+`ToolSurfaceRegistry` entry in
+[`unify/function_manager/primitives/registry.py`](https://github.com/unifyai/unify/blob/main/unify/function_manager/primitives/registry.py)
+— they're runtime plumbing, not tools the actor should discover.
+
+The magic dot-path — `primitives.integrations.hubspot.search_contacts(...)`
+— is implemented by `__getattr__` on `IntegrationPrimitives`: any unknown
+attribute returns an `_IntegrationAppNamespace`, whose own `__getattr__`
+resolves the tool name against the materialized FunctionManager row and
+returns an async closure over `execute_tool`.
+
+### `ops.py` — the transport seam
+
+[`unify/integrations/ops.py`](https://github.com/unifyai/unify/blob/main/unify/integrations/ops.py)
+is the only place the runtime touches the network for integrations, and it
+keeps itself honest:
+
+> This module is intentionally not a raw HTTP client and it intentionally
+> does not wrap the helpers in a stateful client object. Unity calls these
+> small functions, the functions call Unify, and Unify owns the Orchestra
+> route mapping, base URL normalization, auth headers, and payload shape.
+
+One flat function per operation — `list_connections`, `run_tool`,
+`get_tool_policy`, `patch_tool_policy`, `approve_tool_execution`,
+`deny_tool_execution`, `test_connection` — each delegating to the UniSDK
+HTTP helper of the same shape and normalizing failures into a uniform
+`{status: "error", error: {...}}` envelope. If you're tracing a request,
+this is the seam: above it is pure runtime logic, below it is UniSDK →
+Orchestra.
+
+### `builtins_catalog.py` — the shared app/tool catalog
+
+[`unify/integrations/builtins_catalog.py`](https://github.com/unifyai/unify/blob/main/unify/integrations/builtins_catalog.py)
+reads and writes the platform-wide **Builtins** catalog — three log contexts
+in the public-read Builtins project:
+
+| Context | Contents |
+|---|---|
+| `Integrations/Apps` | One row per app: slug, display name, description, auth modes, `source_type`, embedding text |
+| `Integrations/Tools` | One row per provider tool, pre-shaped as a FunctionManager row |
+| `Integrations/Meta` | Seed hashes (`integration_catalog_hash_by_unit`) for idempotent reseeding |
+
+`seed_builtin_integrations(...)` reconciles the catalog hash-by-hash (units
+keyed `app:{backend}:{slug}` / `tools:{backend}:{slug}`), so reseeding is
+cheap and prunable. `list_catalog_apps(query)` powers semantic app search
+(via the row's embedding text); `list_catalog_tools(canonical_app_slug)` is
+what materialization reads.
+
+The catalog is populated by
+[`scripts/seed_builtins_catalog.py`](https://github.com/unifyai/unify/blob/main/scripts/seed_builtins_catalog.py),
+which ships inside the unify application image. Given an
+integration-bootstrap manifest (TOML, `providers.*` sections with a `sync`
+block — `mode: partial|full`, `app_slugs`, `tool_limit_per_app`,
+`prune_unlisted_apps`, …), it registers provider backends with Orchestra,
+runs the catalog sync, and seeds the three contexts. Deployments differ only
+in their manifest: a partial three-app staging sync and a full production
+sync are the same code path.
+
+## Provider tools: materialization and sync
+
+Connecting an app in the Console doesn't directly give the actor anything.
+What it triggers is **materialization**: provider tools from the Builtins
+catalog are written into the assistant's own `Functions/Primitives` context
+as first-class FunctionManager rows, so ordinary FM search finds them.
+
+![Provider tool sync and materialization: a Console connect emits an integration_tools_sync_requested event, the IntegrationSyncCoordinator marks the app as syncing, FunctionManager.sync_provider_integration_tools reads the Builtins tools catalog, compares per-app hashes, upserts changed rows into Functions/Primitives, and the user is notified the tools are ready — with a cleanup path on disconnect and a startup pass over all connected apps](/images/integrations-dev-sync.png)
+
+### The materialized row
+
+`FunctionManager._integration_tool_to_function_row` in
+[`unify/function_manager/function_manager.py`](https://github.com/unifyai/unify/blob/main/unify/function_manager/function_manager.py)
+shapes each tool into a primitive row with a stable identity:
+
+- **Callable name**: `primitives.integrations.<app_slug>.<tool_name>`
+- **Stable `tool_id`**: `{backend_id}:{app_slug}:{tool_name}`
+- **`function_id`**: derived from a SHA-256 of the tool identity, so re-syncs
+  are idempotent
+- **`implementation: None`** — there is no stored Python source; execution
+  dispatches through `IntegrationPrimitives.callable_for_tool` at runtime
+- **`metadata.source: "provider_backed"`** and a `metadata.integration`
+  payload (tool id, backend, app slug, input schema, `action_class`,
+  `confirmation_required`) — accessors for all of this live in
+  [`unify/integrations/function_metadata.py`](https://github.com/unifyai/unify/blob/main/unify/integrations/function_metadata.py)
+- **`verify: True`** is set automatically for tools that are
+  confirmation-gated or whose action class is `write`, `destructive`, or
+  `bulk_export`
+
+### The sync algorithm
+
+`FunctionManager.sync_provider_integration_tools` is an explicit sync path,
+not query-time magic. Per its docstring:
+
+> Materialize active provider-backed tools into the Primitives context.
+> This is an explicit sync path, not a FunctionManager query-time search.
+> It builds expected rows, compares stable per-app hashes, and only
+> deletes/upserts the affected app rows when changed.
+
+It lists the assistant's connections, filters to `status == "connected"`,
+reads the expected tools from `Integrations/Tools`, groups them by
+`{backend_id}:{app_slug}`, and compares against per-app hashes stored in the
+assistant's `Functions/Meta` context (`integration_tool_hash_by_app`). Only
+changed apps get their rows deleted and re-inserted. A `cleanup` operation
+handles disconnects: when an app's last connection is gone, its rows are
+removed.
+
+### The lifecycle coordinator
+
+[`unify/integrations/sync_state.py`](https://github.com/unifyai/unify/blob/main/unify/integrations/sync_state.py)
+owns the in-memory lifecycle: `IntegrationSyncCoordinator` tracks per-app
+`IntegrationSyncState` (`pending` → `syncing` → `ready` | `failed` |
+`removed`), spawns the actual FM sync on a worker thread, and renders a
+`prompt_summary()` — the `<integration_tool_sync>` block injected into the
+ConversationManager's state message so the assistant *knows* which apps are
+mid-sync and can defer using them.
+
+Two things trigger it:
+
+1. **Startup** — `schedule_connected_apps()` runs when a session boots,
+   reconciling all connected apps (usually a no-op thanks to the hashes).
+2. **Live events** — the Console/Orchestra side emits an
+   `integration_tools_sync_requested` system event when a user connects or
+   disconnects an app. The ConversationManager maps this to an
+   `IntegrationToolsSyncRequested` event (see
+   [`unify/conversation_manager/events.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/events.py)),
+   and the handlers in
+   [`unify/conversation_manager/domains/integration_sync.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/integration_sync.py)
+   drive the coordinator and surface the user-facing notifications —
+   *"{App} tools are syncing and will be available shortly."* → *"{App}
+   tools are ready."*
+
+<Note>
+  One naming trap: the onboarding milestone event `integration_connected`
+  (fired when a user saves an integration during onboarding) is a
+  **conversational** event only — it does not trigger tool sync. The sync
+  trigger is always `integration_tools_sync_requested`.
+</Note>
+
+## Execution and governance
+
+At call time, the runtime is a thin, honest client — every policy decision
+happens server-side, and every non-`ok` outcome comes back as a typed status
+the actor is prompted to handle rather than swallow.
+
+![Execution and governance: actor sandbox code calls the dynamic integration namespace, which resolves execute_tool, flows through ops.run_tool and UniSDK to Orchestra's governed execution — policy check, audit record, provider dispatch — returning a result envelope whose statuses include ok, connect_required, missing_scope, blocked_by_policy, and confirmation_required, the last of which loops through a pending-approval payload and resolve_tool_execution retry](/images/integrations-dev-execution.png)
+
+The result envelope statuses form the contract:
+
+| Status | Meaning | Actor's obligation |
+|---|---|---|
+| `ok` | Tool ran; payload attached | Use the result |
+| `connect_required` | No live connection | Tell the user to connect the app in Console |
+| `missing_scope` | Connection lacks a permission | Ask the user to reconnect with expanded access |
+| `expired` / `error` | Auth or provider failure | Surface it; suggest reconnect/test |
+| `blocked_by_policy` | Tool set to Block for this account | Explain; point to tool permissions |
+| `confirmation_required` | Tool needs human sign-off | Enter the approval flow below |
+
+### The approval loop
+
+When Orchestra returns `confirmation_required`,
+[`unify/integrations/approval.py`](https://github.com/unifyai/unify/blob/main/unify/integrations/approval.py)'s
+`build_pending_approval_payload` reshapes the provider envelope into an
+`integration_tool_pending_approval` notification: an `approval` block
+(audit id, behavior hints, argument summary) for presenting the decision to
+the user, and a `resume` block carrying everything needed to retry. The user
+decides; `resolve_tool_execution(audit_id, decision)` records it (optionally
+persisting a standing policy), and the original call is retried with the
+confirmation token. The
+[`CodeActActor`](https://github.com/unifyai/unify/blob/main/unify/actor/code_act_actor.py)
+wires this into its notification queue so approvals ride the same channel as
+every other mid-action interaction.
+
+### Where execution is dispatched
+
+Two paths converge on the same closure:
+
+- **Dynamic namespace** — `primitives.integrations.<app>.<tool>(...)` in
+  sandbox code resolves through `callable_for_app_tool`.
+- **`execute_function`** — when the actor executes a discovered FM row,
+  `get_primitive_callable` in
+  [`unify/function_manager/primitives/runtime.py`](https://github.com/unifyai/unify/blob/main/unify/function_manager/primitives/runtime.py)
+  detects `is_provider_backed_function` and routes to
+  `IntegrationPrimitives.callable_for_tool` instead of a normal
+  `primitive_method` lookup (there is no stored implementation to run).
+
+## Native packages: `unify.integration_status`
+
+The second lane has nothing to do with providers. **Native integration
+packages** are code-and-guidance bundles (shipped in the private
+unity-deploy repo) that the open runtime discovers and activates locally.
+
+[`unify/integration_status/discovery.py`](https://github.com/unifyai/unify/blob/main/unify/integration_status/discovery.py)
+is the source of truth for what exists:
+
+> This module enumerates every manifest under unity_deploy's package roots
+> and projects each one into a lightweight metadata record. It is the
+> **single source of truth** for "what integration packages exist" at
+> runtime.
+
+`discover_available_packages()` returns one record per package: slug, label,
+`required_secrets` / `optional_secrets`, `function_names`, and
+`guidance_titles`.
+[`unify/integration_status/__init__.py`](https://github.com/unifyai/unify/blob/main/unify/integration_status/__init__.py)
+then runs two decoupled mechanisms:
+
+1. **Registration** (startup) — `register_available_integrations()` walks
+   discovered packages whose secrets are satisfied and registers their
+   custom functions into `Functions/Compositional` and their guidance into
+   the GuidanceManager.
+2. **Enablement** (query time) — `get_enabled_integrations()` computes
+   which packages are live (`required_secrets` all present, or at least one
+   `optional_secret`), and `build_function_filter_scope()` /
+   `build_guidance_filter_scope()` hide a *disabled* package's functions
+   and guidance from search entirely. An inactive integration doesn't
+   error — it simply doesn't exist from the actor's perspective, and
+   `search_integrations` reports it as `missing_required_secrets` with the
+   secrets to add.
+
+## The escape hatch: SDK + secrets
+
+The third lane has no catalog at all. For services outside the gallery, the
+actor is prompted (the `_EXTERNAL_APP_INTEGRATION` block in
+[`unify/actor/prompt_builders.py`](https://github.com/unifyai/unify/blob/main/unify/actor/prompt_builders.py))
+to follow a disciplined pattern:
+
+1. **Check credentials first** — `primitives.secrets.ask(...)` inspects the
+   secret vault by name and placeholder only; raw values never enter the
+   prompt. Missing credentials → direct the user to the Console
+   Integrations tab, never ask for keys in chat.
+2. **Install the official SDK** and integrate in `execute_code`, reading
+   credentials from the environment.
+3. **For Google/Microsoft OAuth**, use `get_oauth_access_token(provider)`
+   from
+   [`unify/common/runtime_oauth.py`](https://github.com/unifyai/unify/blob/main/unify/common/runtime_oauth.py)
+   — it returns a local capability handle, not a raw token; a local proxy
+   injects the real token and enforces the file-access allowlist, so
+   sandbox code can never exfiltrate credentials.
+4. **Persist what worked** — store the pattern as a reusable function and
+   guidance entry so the next similar job skips the exploration.
+
+## Extending the system
+
+**Adding a provider-backed app** is configuration, not code: ensure the app
+exists in the provider's catalog, add it to the bootstrap manifest, run
+`seed_builtins_catalog.py`, and the entire connect → sync → materialize →
+execute pipeline works with zero new runtime code. Optionally add prompt
+examples in
+[`unify/actor/prompt_examples.py`](https://github.com/unifyai/unify/blob/main/unify/actor/prompt_examples.py).
+
+**Shipping a native package** means writing a manifest (secrets +
+capabilities), functions, and guidance stems in a package directory —
+discovery, gating, and registration are automatic from there.
+
+**Debugging a failing tool call**, from the outside in:
+
+1. Is the app materialized? `search_integrations` → `sync_status`, or
+   filter `Functions/Primitives` for `metadata.source ==
+   "provider_backed"`.
+2. Is the connection healthy? `list_connected`, or **Test** in the Console.
+3. What did execution return? The envelope status names the failure mode
+   precisely — most "failures" are `connect_required` / `missing_scope` /
+   `blocked_by_policy` states with a user-facing remedy.
+4. Cross the seam: UniSDK request logs and Orchestra traces pick up where
+   the runtime hands off.
+
+## Test map
+
+The behaviors above are pinned by tests worth reading as executable
+documentation:
+
+| Area | Tests |
+|---|---|
+| `IntegrationPrimitives` surface & dynamic namespaces | [`tests/integrations/test_integration_primitives.py`](https://github.com/unifyai/unify/blob/main/tests/integrations/test_integration_primitives.py) |
+| Sync coordinator & CM handlers | [`tests/integrations/test_integration_sync_state.py`](https://github.com/unifyai/unify/blob/main/tests/integrations/test_integration_sync_state.py) |
+| Row shaping, hashing, materialization | [`tests/function_manager/test_provider_integration_materialization.py`](https://github.com/unifyai/unify/blob/main/tests/function_manager/test_provider_integration_materialization.py) |
+| Native package discovery & enablement | [`tests/test_integration_status/`](https://github.com/unifyai/unify/tree/main/tests/test_integration_status) |
+| OAuth proxy | [`tests/common/test_runtime_oauth.py`](https://github.com/unifyai/unify/blob/main/tests/common/test_runtime_oauth.py) |
