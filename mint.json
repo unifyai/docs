@@ -149,7 +149,13 @@
                 "your-computer/setup",
                 "your-computer/how-it-works",
                 "your-computer/files-and-terminal",
-                "your-computer/control-and-safety"
+                "your-computer/control-and-safety",
+                {
+                    "group": "Developers",
+                    "pages": [
+                        "your-computer/developers"
+                    ]
+                }
             ]
         },
         {
