@@ -53,17 +53,50 @@ Once data is in tables, you can ask for anything you'd ask an analyst:
 The answers come back in chat — or become permanent
 [dashboard tiles](/canvas/dashboards) if they're worth watching over time.
 
-## Browsing the data yourself
+## The Data pane
 
-The **Data** pane (in the Brain section of your assistant's page) is a
-read-only window into the whole data layer:
+The **Data** pane — in the **Brain** section of your assistant's page — is
+your window into the whole data layer. The Console describes it as
+*"everything your teammate has ingested — browse nested tables like a
+directory and open any to view rows"*, and that's exactly the job: it's
+where you verify, audit, and explore the raw material behind your
+assistant's answers and dashboards.
 
-- The sidebar shows the folder tree — drill into nested groups exactly like
-  a file directory.
-- Open any table to see its columns and rows, sort by clicking column
-  headers, and page through with **Load more**.
+**What it's for:**
 
-Nothing is hidden: if your assistant has ingested it, you can see it here.
+- **Checking what was collected.** After a [scheduled
+  task](/tasks/overview) pulls from an API, open its table and confirm
+  today's rows actually landed.
+- **Auditing an answer.** When your assistant reports a number, the table
+  it computed from is right here — open it and see the underlying rows for
+  yourself.
+- **Inspecting what feeds a dashboard.** Every live tile reads from tables
+  in this pane; if a chart looks off, the pane shows you exactly what the
+  data says.
+- **Seeing the whole estate.** Nothing is hidden: if your assistant
+  ingested it, it's browsable here — including team-shared tables, which
+  appear grouped under their team alongside the assistant's personal
+  folders.
+
+**How to use it:**
+
+1. The **Data layer** sidebar shows the folder tree. Click folders to
+   drill in, exactly like a file directory — `Samsara` → `daily_snapshots`.
+2. Open a table (the leaves of the tree) and its rows appear on the right,
+   with a header showing **Rows**, **Loaded**, and **Columns** counts.
+3. **Click a column header to sort.** Tables load 50 rows at a time — use
+   **Load more** to page through larger ones.
+4. Use the refresh button after a task run to pull the latest.
+
+The pane is deliberately **read-only** — a clean window, not an editor.
+Changing data (fixing a row, adding a column, deleting a table) happens the
+way everything does: ask your assistant.
+
+<Note>
+  The Data pane shows the *data layer* specifically. Your assistant's other
+  memory — contacts, transcripts, knowledge, guidance, functions — each
+  have their own dedicated panes in the same Brain section.
+</Note>
 
 ## Good to know
 
