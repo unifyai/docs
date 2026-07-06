@@ -1,0 +1,321 @@
+---
+title: "Task system internals"
+description: "How the task system actually works — a code-level tour of the open-source runtime"
+---
+
+Everything in this section so far describes tasks as a user experiences
+them. This page is for developers: how tasks are modeled, scheduled,
+activated, executed, and certified inside the open-source
+[`unifyai/unify`](https://github.com/unifyai/unify) runtime. The heart of it
+is the
+[`unify/task_scheduler`](https://github.com/unifyai/unify/tree/main/unify/task_scheduler)
+package — start with its
+[README](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/README.md),
+which this page expands on.
+
+Three design commitments shape everything below:
+
+1. **Tasks are rows, not processes.** A task is a durable record in a
+   storage context; execution is something that *happens to* the row, and
+   every lifecycle transition is a field update you can inspect.
+2. **Tasks are independent.** There is no queue and no chaining between
+   tasks — each fires on its own clock or trigger, and concurrent runs are
+   normal.
+3. **The description is the program** (by default). Unless a task has been
+   promoted to a certified symbolic entrypoint, execution means handing the
+   task's natural-language `description` to the actor.
+
+## The task model
+
+<img src="/images/developers/tasks-anatomy.png" alt="Anatomy of a Task: the task row with name/description, priority/deadline, destination, status; schedule XOR trigger with repeat patterns; entrypoint and offline flags; and the task_id/instance_id split" />
+
+The model lives in
+[`unify/task_scheduler/types/task.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/task.py).
+`TaskBase` is the writable payload; `Task` adds identity:
+
+| Field | Meaning |
+|---|---|
+| `name`, `description` | Title and the detailed instruction. For agentic tasks the description **is** what gets executed. |
+| `status` | Lifecycle state — see the state machine below. |
+| `schedule` | Optional [`Schedule`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/schedule.py) holding `start_at`. |
+| `trigger` | Optional [`Trigger`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/trigger.py) — an inbound communication event that starts the task. |
+| `repeat` | Optional list of [`RepeatPattern`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/repetition.py)s. |
+| `priority`, `deadline` | [`Priority`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/priority.py) (`low`→`urgent`) and an optional due-by datetime — distinct from `start_at`, which is when work *begins*. |
+| `destination` | Where the row lives: personal by default, or a shared team pool via `team:<id>` (see [storage](#storage-and-team-routing)). |
+| `response_policy` | Freeform contact-handling policy for the run; overrides contact-level policies where they conflict. |
+| `entrypoint` | `None` = **agentic** execution; a `function_id` = **symbolic** execution via a stored function (see [certification](#symbolic-entrypoints-and-offline-certification)). |
+| `offline` | Delivery lane only — `True` runs in the headless lane without waking a live session. Orthogonal to agentic/symbolic. |
+| `activated_by` | [`ActivatedBy`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/activated_by.py) (`schedule` / `trigger` / `explicit`) — set automatically at activation, never directly editable. |
+| `info` | Execution summary written on completion. |
+
+Two invariants matter constantly:
+
+- **Schedule XOR trigger.** A model validator rejects any row with both:
+  *"A task cannot have both schedule and trigger."* A task either fires on
+  the clock or fires on an event, never both.
+- **`task_id` vs `instance_id`.** One logical task can execute many times.
+  The `task_id` is stable; each re-arm clones a fresh row with the next
+  `instance_id`. "The weekly recap" is one `task_id` with a growing family
+  of instances, each with its own status and history.
+
+### Recurrence: a typed RRULE subset
+
+[`repetition.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/repetition.py)
+defines `RepeatPattern` as "a small subset of RFC-5545 RRULE expressed as
+first-class fields": `frequency` (`MINUTELY` through `YEARLY`), `interval`,
+`weekdays` (valid only with weekly frequency — a validator enforces it),
+`time_of_day`, and the two terminators `count` and `until`. Two functions do
+the real work:
+
+- `normalize_repeat_patterns` collapses evenly-spaced daily slot lists into
+  a single minutely rule.
+- `next_repeated_start_at(previous_start, patterns, current_occurrence_index, now)`
+  computes the earliest future occurrence, honoring `count`/`until` — this
+  is what re-arm cloning calls to schedule the next instance.
+
+## The lifecycle
+
+<img src="/images/developers/tasks-lifecycle.png" alt="Task lifecycle state machine: scheduled and triggerable states flow into active via execute(), which fans out to completed, failed, and cancelled; execute() also clones the next instance back into scheduled/triggerable" />
+
+[`Status`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/status.py)
+is a six-value enum: `scheduled`, `triggerable`, `active`, `completed`,
+`cancelled`, `failed`. There is no separate FSM module — transitions are
+enforced by the scheduler's validation funnel:
+
+- Creation lands in `scheduled` (has `schedule.start_at`) or `triggerable`
+  (has `trigger`); writing `active` directly on create or update is
+  forbidden.
+- Only `TaskScheduler.execute` moves a row to `active`, stamping
+  `activated_by` as it does.
+- Terminal states come from the run itself:
+  [`ActiveTask.result()`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/active_task.py)
+  writes `completed` (plus an LLM-generated `info` summary) or `failed`;
+  `stop()` and cancel-classified interjections write `cancelled`.
+
+**Re-arm happens at execute time, not completion time.** When `execute`
+starts a `triggerable` task, it first clones an identical new `triggerable`
+instance (so the trigger stays armed while the current instance runs), then
+marks the current one `active`. Recurring scheduled tasks clone the next
+instance with `schedule.start_at = next_repeated_start_at(...)` — and if
+there is no next occurrence (a `count`/`until` boundary), no clone is made
+and the series ends. See `_clone_task_instance` in
+[`task_scheduler.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/task_scheduler.py).
+
+## `TaskScheduler`: the manager
+
+[`TaskScheduler`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/task_scheduler.py)
+(extending the abstract contracts in
+[`base.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/base.py))
+is the manager the actor reaches through `primitives.tasks.*`. Its public
+surface is deliberately small:
+
+| Method | What it does |
+|---|---|
+| `ask(text)` | Read-only questions, answered by an LLM tool loop over the internal query tools. Returns a `SteerableToolHandle`. |
+| `update(text)` | Mutations via an LLM tool loop over the internal mutation tools. Returns a `SteerableToolHandle`. |
+| `execute(task_id, *, trigger_attempt_token=None)` | "Start one runnable task instance and return its live handle." Unlike `ask`/`update`, this is **not** a tool loop — it returns the `ActiveTask` handle directly. |
+| `create_task(name=..., description=..., destination=None)` | Thin non-LLM wrapper over row creation. |
+
+Inside the `ask`/`update` loops, the LLM composes internal tools:
+`_filter_tasks` (boolean expressions), `_search_tasks` (semantic vector
+search), `_reduce` (aggregates), `_create_task`/`_create_tasks`,
+`_update_task`, `_update_task_instance`, `_update_task_status`,
+`_delete_task`, `_cancel_tasks`, and `_get_task_or_raise`. The update loop
+also wires in `ContactManager.ask`, so "when Alice emails, text me" can
+resolve *Alice* to a contact id without leaving the loop. When the caller
+provides clarification queues, a `request_clarification` tool is injected
+too — this is how ambiguous edits ("move it to 8" — a.m.? which task?)
+bubble a question to the user instead of guessing.
+
+Every write funnels through the same validators regardless of entry point:
+schedule-XOR-trigger, `scheduled` requires `start_at`, `triggerable`
+requires `trigger`, no direct `active` writes, and active rows resist most
+mutation (`_ensure_not_active_task`). Prompts for the loops live in
+[`prompt_builders.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/prompt_builders.py).
+
+## Storage and team routing
+
+All I/O goes through
+[`TasksStore`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/storage.py),
+which "centralises reads, writes, field management, and metrics." Four
+contexts (all under the `Assistants` project) make up the task system's
+durable state:
+
+| Context | Role |
+|---|---|
+| `Tasks` | The user-authored task rows — the scheduler's primary read/write surface. |
+| `Tasks/Activations` | Machine-projected activation rows (when should what fire) — read-only inside the runtime. |
+| `Tasks/Runs` | Durable run records, one per execution. |
+| `Tasks/OutboundOperations` | Idempotency ledger for offline sends. |
+
+Team scoping rides the platform-wide destination system: a task created
+with `destination="team:<id>"` is written under `Teams/<id>/Tasks` via
+`ContextRegistry.write_root`, while reads federate across the personal root
+plus every team the assistant belongs to (`ContextRegistry.read_roots`).
+During a run, the task's destination is exported as the `TASK_DESTINATION`
+environment variable so writes made *by* the run (secrets lookups, new
+rows) inherit the task's scope.
+
+## Activation: three lanes
+
+<img src="/images/developers/tasks-activation-lanes.png" alt="Activation lanes: scheduled-live via activations, timers, and TaskDue into the ConversationManager; triggered-live via inbound messages, mechanical filter, semantic check, and primitives.tasks.execute; offline via dispatched jobs running offline_runner — all converging on TaskScheduler.execute returning an ActiveTask" />
+
+A task row does nothing by itself. Activation — deciding *now is the
+moment* — arrives through one of three lanes, all converging on
+`TaskScheduler.execute`.
+
+### Scheduled (live)
+
+Activations are projected into `Tasks/Activations`; a timer fires (Cloud
+Tasks in the hosted deployment, or the in-process
+[`LocalActivationScheduler`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/local_scheduler/scheduler.py)
+for self-host — "an asyncio-timer supervisor that fires scheduled tasks
+in-process", stateless across restarts, re-arming from wall-clock
+`next_due_at` on boot). The timer publishes a
+[`TaskDue`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/events.py)
+event carrying `task_id`, `scheduled_for`, an `activation_revision`, and a
+`visibility_policy` defaulting to `silent_by_default`.
+
+The handler in
+[`task_activation.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/task_activation.py)
+then: validates the delivery (`validate_task_due_activation` rejects stale
+revisions, mismatched `scheduled_for`, and revoked team memberships),
+records run provenance, and **auto-starts** the run via
+`scheduler.execute(..., _activated_by=ActivatedBy.schedule)` — registering
+the resulting handle in the ConversationManager's in-flight actions so the
+user (and the brain) can steer it. The `silent_by_default` policy is what
+produces the user-facing behavior documented in
+[How tasks run](/tasks/running): the run's notification tells the brain to
+"work silently unless you genuinely need the user." If the runtime was
+asleep, the wake reason is replayed on startup so a `TaskDue` never falls
+through the crack of a cold boot.
+
+### Triggered (live)
+
+Trigger matching is deliberately two-stage:
+
+1. **Mechanical** — when an inbound communication arrives, the event
+   handlers call `_surface_trigger_task_candidates`, which lists armed
+   trigger activations for that medium and filters by the trigger's
+   `from_contact_ids` / `omit_contact_ids`. Cheap, deterministic, no LLM.
+2. **Semantic** — surviving candidates are surfaced to the slow brain as a
+   notification: "Semantic judgement is still pending. Decide whether this
+   communication truly satisfies any candidate…" If the brain agrees, it
+   calls the exact `primitives.tasks.execute(task_id=...,
+   trigger_attempt_token="...")` line it was handed — the attempt token
+   keeps the triggering inbound attached to the run it caused.
+
+So "when I get an email marked urgent, text me" costs nothing until an
+email actually arrives, one cheap filter pass on arrival, and one semantic
+judgment only for plausible matches.
+
+### Offline (headless)
+
+Tasks with `offline=True` skip the live session entirely. The hosted path
+dispatches a job; self-host uses
+[`LocalOfflineDispatcher`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/local_scheduler/offline_dispatcher.py),
+which spawns `python -m unify.task_scheduler.offline_runner` as a
+subprocess. The
+[`offline_runner`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/offline_runner.py)
+is "intentionally small and procedural": it reads its contract from
+environment variables (built by
+[`offline_runner_contract.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/offline_runner_contract.py),
+shared with the hosted control plane), populates session details, runs
+`TaskScheduler.execute` against a fresh `CodeActActor`, and persists the
+terminal run state. Two behavioral differences from live runs: there is no
+ConversationManager to wake, and clarifications are disabled — the run's
+guidelines say plainly, "do not ask the user for live clarification."
+
+## Execution: `ActiveTask`
+
+Whichever lane fired, `execute` wraps the run in an
+[`ActiveTask`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/active_task.py)
+— "a thin wrapper around an actor-backed active plan handle, keeping the
+corresponding Tasks row in sync." Under the hood it resolves an execution
+delegate from
+[`task_execution_context.py`](https://github.com/unifyai/unify/blob/main/unify/common/task_execution_context.py)
+(the live ConversationManager's actor, or the offline runner's) and falls
+back to a plain `actor.act(...)`.
+
+`ActiveTask` is a full **steerable handle** — the same steering contract as
+every other long-running operation in the runtime:
+
+- `pause()` / `resume()` delegate straight to the actor.
+- `interject(message)` first routes through `classify_steering_intent`, a
+  small LLM router labeling the interjection `cancel` / `continue` / other
+  — so "actually stop that" cancels the task row while "also include
+  refunds" flows into the running plan.
+- `stop()` marks the row `cancelled`; `result()` marks it `completed`
+  (writing the `info` summary) or `failed`, and updates the `Tasks/Runs`
+  record either way.
+
+## Symbolic entrypoints and offline certification
+
+Agentic execution re-plans from the description every run. For recurring
+work that has proven itself, the system can lock in a **symbolic
+executor**: a stored function from the
+[FunctionManager](https://github.com/unifyai/unify/blob/main/unify/function_manager/README.md)
+whose `function_id` becomes the task's `entrypoint`.
+
+The hook is wired at execution time: when a repeating or triggered agentic
+task runs, `TaskScheduler._build_task_entrypoint_review` attaches a
+post-run review context, and the actor (in
+[`code_act_actor.py`](https://github.com/unifyai/unify/blob/main/unify/actor/code_act_actor.py))
+gains two extra tools:
+
+- `attach_entrypoint_to_recurring_task(function_id, rationale, equivalence_manifest, anti_oversimplification_checklist)`
+  — records the function as a **candidate** on future instances. It does
+  not change delivery; future runs still execute live, now via the stored
+  function.
+- `submit_offline_certification_evidence(function_id, certification_evidence, promotion_rationale)`
+  — the gate to the headless lane. Promotion to `offline=True` demands a
+  structured evidence dossier: a `risk_classification` (only `safe_noop`,
+  `read_only`, and `idempotent_effectful` are promotable), input and
+  equivalence contracts, a managed-primitive contract (no ad-hoc
+  replacements of platform primitives), side-effect, idempotency, bounded
+  cost, failure, and observability contracts, plus six explicit boolean
+  attestations. The scheduler's `_offline_promotion_rejection_reasons`
+  enforces the checklist, and there are at most two revision attempts.
+
+This is the machinery behind the user-facing claim that recurring work
+"gets sharper with repetition" — and the reason a 3am headless run can be
+trusted: nothing reaches the offline lane without a certified, bounded,
+idempotent executor.
+
+## Local vs hosted scheduling
+
+The package cleanly splits *what fires* from *what decides when*:
+
+- **Hosted:** the closed-source control plane owns timing (Cloud Tasks) and
+  job creation; the runtime uses a `NoopMaterializer` and just receives
+  `TaskDue` events.
+- **Self-host / local:** [`settings.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/settings.py)
+  auto-detects the environment (`LOCAL_SCHEDULER_ENABLED`), and
+  [`materializer.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/local_scheduler/materializer.py)
+  builds the `LocalActivationScheduler` (polling `Tasks/Activations` on a
+  configurable interval, default 60s) plus the subprocess-based offline
+  dispatcher. Same events, same semantics, single daemon.
+
+This is why the open-source install needs no Kubernetes and no cloud queue
+to run scheduled and triggered tasks.
+
+## Testing and extending
+
+For deterministic tests and demos there is a storage-free drop-in,
+[`SimulatedTaskScheduler`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/simulated.py),
+with the same surface as the real manager. The test suite under
+[`tests/task_scheduler/`](https://github.com/unifyai/unify/tree/main/tests/task_scheduler)
+doubles as behavioral documentation — good entry points:
+
+- [`test_trigger.py`](https://github.com/unifyai/unify/blob/main/tests/task_scheduler/test_trigger.py) — trigger creation, schedule×trigger exclusion, clone-on-execute re-arm.
+- [`test_repetition.py`](https://github.com/unifyai/unify/blob/main/tests/task_scheduler/test_repetition.py) — `next_repeated_start_at`, recurrence cloning, offline promotion.
+- [`test_execute.py`](https://github.com/unifyai/unify/blob/main/tests/task_scheduler/test_execute.py) — execution, provenance, trigger tokens, entrypoint review.
+- [`test_local_scheduler_integration.py`](https://github.com/unifyai/unify/blob/main/tests/task_scheduler/test_local_scheduler_integration.py) — end-to-end local timer → `TaskDue`.
+- [`test_offline_runner.py`](https://github.com/unifyai/unify/blob/main/tests/task_scheduler/test_offline_runner.py) — the headless lane's lifecycle.
+
+If you're extending the system, the grain to follow: new *query/mutation*
+capabilities belong as internal tools on the `ask`/`update` loops; new
+*activation sources* belong as events handled in `task_activation.py`; new
+*execution styles* belong behind the `entrypoint` field and the
+certification gate — and everything durable belongs in the four `Tasks*`
+contexts, never in process state.
