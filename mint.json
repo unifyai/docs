@@ -71,7 +71,16 @@
                 "workspace/calendar",
                 "workspace/files",
                 "workspace/contacts-and-tasks",
-                "workspace/security"
+                "workspace/security",
+                {
+                    "group": "Developers",
+                    "pages": [
+                        "workspace/developers/architecture",
+                        "workspace/developers/oauth-and-secrets",
+                        "workspace/developers/provider-proxy",
+                        "workspace/developers/gateway-channels"
+                    ]
+                }
             ]
         },
         {
