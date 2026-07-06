@@ -21,12 +21,20 @@ what was asked and how it went, with a status pill:
 | **Failed** | Something went wrong |
 
 The footer keeps a running pulse: whether your assistant is **working** or
-**idle**, how many actions are running or waiting, and a **Live** indicator
-confirming you're seeing events as they happen.
+**idle**, how many actions are running or waiting for input, and a **Live**
+indicator confirming you're seeing events as they happen, with an "Updated"
+timestamp alongside.
 
-Use the clock control to widen the time window (from the last 30 minutes up
-to the last 7 days), scroll up to load earlier history, and search to jump
-to a specific request or step.
+### Finding what you're after
+
+- **The clock control** scopes the feed to a time window — presets run
+  from the last 30 minutes up to the last 7 days, plus Today and
+  Yesterday. Scroll up past the top of the window and earlier history
+  loads in.
+- **Search** filters the whole timeline by text — jump straight to a
+  specific request, or to any step inside one.
+- **Expand All / Collapse All** opens or folds every card at once — handy
+  when scanning a day's work versus dissecting one job.
 
 ## Inside a request
 
@@ -35,12 +43,28 @@ Expand a card and the whole story unfolds:
 - **The request** — what you (or a schedule, or a trigger) asked for.
 - **The step timeline** — each stage of the work, in plain labels:
   "Checking Contact Book", "Searching for relevant guidance", steps for
-  code it ran, pages it read, messages it sent. Nested steps expand further
-  if you want the fine grain.
-- **The final response** — the answer or result the work produced.
+  code it ran, pages it read, messages it sent. Busy stretches fold into
+  collapsible sections ("12 steps · 40s") that expand when you want the
+  fine grain — down to individual thoughts, tool calls, and results.
+- **The final response** — the answer or result the work produced,
+  called out at the bottom of the card.
 
 You don't need to understand every step — the point is that you *can* look.
 Nothing your assistant does is hidden from you.
+
+### What to use it for
+
+- **Trust-building** — watch a few requests end-to-end early on, and the
+  assistant stops being a black box.
+- **Verification** — when a result looks off, the timeline shows exactly
+  where things went sideways: which page it read, what it computed, what
+  it sent.
+- **Live oversight** — during a [task run](/tasks/overview) or a job you
+  kicked off in chat, this is the play-by-play, streaming as it happens.
+- **Better corrections** — a correction that names the actual misstep
+  ("you used the current exchange rate at step three — use the
+  quarter-open rate") teaches far more precisely than "the number's
+  wrong."
 
 ## Spotting the learning moments
 
