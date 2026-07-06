@@ -1,0 +1,87 @@
+---
+title: "How it works"
+description: "What the app runs, and how it relates to screen sharing"
+---
+
+The companion app and Unify Meet's screen sharing both involve "the
+assistant and your screen", so it's worth being precise about what each
+one actually is — they're completely different mechanisms that complement
+each other.
+
+## What the app runs on your machine
+
+Once installed, the app is a tray icon plus a set of quiet background
+services:
+
+- **A control channel** — the surface your assistant drives when you ask
+  it to act on your machine: a live view of your desktop for its own
+  perception, mouse and keyboard input, browser automation, and command
+  execution.
+- **A file channel** — the separate, key-guarded service behind
+  [filesystem access](/your-computer/files-and-terminal); it only accepts
+  connections while the toggle is on.
+- **The tray app** — your local switchboard: status colors, Start/Stop
+  Services, settings, logs, uninstall.
+
+None of this listens for connections from the internet. On startup the app
+dials **outbound** to Unify's secure relay and holds that connection open;
+everything the assistant does on your machine travels back down the tunnel
+your machine initiated. Stop the services and the tunnel closes — your
+machine simply goes dark to the platform.
+
+One consequence worth knowing: the live view of your desktop exists **for
+the assistant's eyes only**. It is never displayed anywhere in the Console
+— not to you, not to anyone.
+
+## Screen sharing is a different thing entirely
+
+On a [Unify Meet](/communication/unify-meet) call, **Share your screen**
+is ordinary browser screen sharing — the same picker you'd get in any
+video call, showing whatever screen or window you choose on the computer
+you're calling from. That's usually your own machine, so yes: Meet screen
+share *does* show your computer to your assistant.
+
+But it's a fundamentally different capability from the local app:
+
+| | **Share your screen** (Meet) | **Linked desktop** (local app) |
+|---|---|---|
+| What it is | A live video feed of your screen | A control connection to your machine |
+| Needs the app installed? | No — works for everyone | Yes |
+| Assistant can see | What you're showing, while you show it | Your screen, on request |
+| Assistant can act | **Never** — watch and guide only | Yes — click, type, run, fetch files |
+| Who's shown what | Both of you see the shared screen | Nothing is displayed in the Console |
+
+And to complete the picture: the desktop viewer *inside* a Meet call —
+**Show assistant screen** — always shows the
+[assistant's own machine](/their-computer/watching-and-control), never
+yours. There is no Console window onto your linked desktop, by design.
+
+## How the assistant combines them
+
+When you ask about or point at *your* screen, the assistant resolves it in
+a strict order:
+
+1. **An active screen share wins.** If you're sharing on a live call,
+   that's how it sees your screen — and if you're collaborating live
+   without a share, it offers one: *"Want to share your screen? I'll see
+   it right away."*
+2. **No share running? The linked desktop.** With the app installed, it
+   can look at and act on your machine directly through the tunnel —
+   taking a screenshot to answer "what's on my screen?", or doing the
+   thing you asked.
+3. **Neither available?** It says so plainly and offers a screen share —
+   it never claims to see or control your machine when it can't.
+
+## Watching it work on your machine
+
+So how do you supervise the assistant when it's driving your linked
+desktop? Two ways, both natural:
+
+- **Just watch your monitor.** It's your machine — when the assistant
+  works on it, the cursor moves and windows open right in front of you,
+  TeamViewer-style. You're never watching through a viewer; you're
+  watching the real thing.
+- **Share your screen on a call.** If you want to narrate together, hop
+  on a Meet call and share the screen while the assistant works on the
+  linked machine — you both see the same thing and can talk through it
+  live.
