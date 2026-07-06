@@ -1,0 +1,85 @@
+---
+title: "Recipes"
+description: "Worked examples of the data + dashboard combination"
+---
+
+The building blocks — [tables](/canvas/data), [tiles](/canvas/dashboards),
+and [scheduled tasks](/tasks/overview) — are deliberately simple, and they
+compose. Here are patterns that come up again and again, each just a
+conversation away.
+
+## Monitor an external service
+
+**The ask:**
+
+> "Every 15 minutes, check our status API. Log the response time and
+> whether it was healthy. Give me a dashboard with uptime over the last
+> week and a chart of response times — and text me if it's down twice in a
+> row."
+
+**What your assistant sets up:** a recurring task that calls the API and
+appends a row per check to a table like `Data/StatusAPI/checks`; a live
+dashboard with an uptime KPI card and a response-time chart reading from
+that table; and an alert rule as part of the task. The table quietly
+accumulates history — a month later, "how did latency trend after the
+release?" is answerable from data you already have.
+
+## A morning KPI board
+
+**The ask:**
+
+> "Build me a board I can check with coffee: yesterday's orders and
+> revenue, the week-over-week trend, and the top five products. Refresh it
+> from the store API every morning at 6."
+
+**What it sets up:** a scheduled pull into `Data/Store/daily_sales`, plus a
+dashboard of KPI cards and a trend chart. Because tiles are live, the 6am
+task run is all it takes for the 8am glance to be current.
+
+## Combine sources into one view
+
+**The ask:**
+
+> "Pull outstanding invoices from the accounts spreadsheet I email you each
+> week, and payments from the CRM. Join them and show me who actually owes
+> what — table plus a chart of overdue balances by client."
+
+**What it sets up:** two tables fed from different sources — one extracted
+from your emailed spreadsheet, one ingested from a
+[connected app](/integrations/overview) — joined into a single live view.
+Neither source system ever needed to know about the other.
+
+## Keep intermediate work, don't redo it
+
+**The ask:**
+
+> "That customer-scoring analysis you just ran — keep the scored list
+> somewhere permanent and put the distribution on my dashboard. We'll want
+> to re-score monthly."
+
+**What it sets up:** the computation's result becomes a durable table
+rather than a throwaway answer, a tile visualizes it, and a monthly task
+re-runs the scoring. Combined with [learning](/learning/overview), the
+scoring method itself is saved too — so month two runs exactly like month
+one.
+
+## Derived and combined variables
+
+**The ask:**
+
+> "In the orders table, add a margin column — price minus cost — and show
+> me average margin by product category as a bar chart."
+
+**What it sets up:** a derived column computed from existing ones, and an
+aggregation tile grouped by category. New columns can build on other
+derived columns, so composite metrics ("margin per unit shipped, indexed
+to January") are described in sentences, not formulas.
+
+---
+
+<Tip>
+  The pattern behind every recipe is the same: **get the data flowing into
+  a table, then put views on top.** If you're not sure whether something is
+  possible, describe the outcome you want and let your assistant work out
+  the plumbing — proposing a plan first for anything involved.
+</Tip>
