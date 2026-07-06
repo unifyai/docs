@@ -72,6 +72,15 @@
                 "integrations/permissions",
                 "integrations/using"
             ]
+        },
+        {
+            "group": "Tasks",
+            "pages": [
+                "tasks/overview",
+                "tasks/creating",
+                "tasks/running",
+                "tasks/monitoring"
+            ]
         }
     ],
     "footerSocials": {
