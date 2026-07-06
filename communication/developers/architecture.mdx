@@ -1,0 +1,121 @@
+---
+title: "Architecture"
+description: "How communication actually works in the open-source unify repo"
+---
+
+Everything in the [Communication section](/communication/overview) is
+implemented in the open-source
+[`unifyai/unify`](https://github.com/unifyai/unify) repository. This
+developer sub-section explains how it *actually works* — the packages,
+classes, and contracts — for anyone reading, extending, or self-hosting the
+code.
+
+The communication stack is two cooperating pieces:
+
+1. **The gateway** —
+   [`unify/gateway/`](https://github.com/unifyai/unify/tree/main/unify/gateway)
+   — a FastAPI application that is the HTTP edge between external providers
+   (Twilio, Google, Microsoft, Slack, Discord, the Console) and the
+   assistant runtime. It owns webhook parsing, route resolution, OAuth
+   callbacks, and outbound provider calls.
+2. **The conversation runtime** —
+   [`unify/conversation_manager/`](https://github.com/unifyai/unify/tree/main/unify/conversation_manager)
+   — the `ConversationManager` process that consumes normalized events,
+   runs the reasoning loop (the "slow brain"), and sends outbound messages
+   back through the gateway via
+   [`unify/comms/primitives.py`](https://github.com/unifyai/unify/blob/main/unify/comms/primitives.py).
+
+![unify.gateway architecture: providers feed adapters, which normalize to envelopes delivered through an EnvelopeSink to the ConversationManager; the ConversationManager sends outbound via channels](/images/developers/gateway-architecture.png)
+
+## The wire contract: envelopes
+
+Every inbound event that crosses the gateway → runtime boundary is wrapped
+in a `{thread, publish_timestamp, event}` **envelope**, defined in
+[`unify/gateway/envelopes.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/envelopes.py)
+(the full catalogue of `thread` keys lives in `KNOWN_THREADS` there). The
+`thread` is a routing key like `msg`, `whatsapp`, `email`, `unify_meet`, or
+`call_answered`; the `event` is a channel-specific payload. This single
+contract is what lets the same runtime code serve every channel.
+
+## One codebase, two deployments
+
+A design goal stated in the
+[gateway README](https://github.com/unifyai/unify/blob/main/unify/gateway/README.md):
+local self-hosted and hosted SaaS deployments run **the same gateway
+code** — only the backend implementations differ. The seams are small
+protocol interfaces carried on a `GatewayContext`
+([`unify/gateway/context.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/context.py)):
+
+| Protocol | Local default | Hosted implementation |
+|---|---|---|
+| `EnvelopeSink` | `HttpEnvelopeSink` — POSTs envelopes to the runtime's local ingress | Pub/Sub publish to a per-assistant topic |
+| `RuntimeActivator` | `LocalRuntimeActivator` (no-op; the runtime is already running) | `HostedRuntimeActivator` — wakes an idle assistant job |
+| `Storage` | `LocalDiskStorage` for attachments | Cloud storage |
+| `CredentialStore` | `EnvCredentialStore` — reads environment variables | Cloud secret backend |
+
+The app factory is `create_app()` in
+[`unify/gateway/app.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/app.py).
+The OSS path runs the stock app (`python -m unify.gateway serve`); the
+hosted platform constructs its own app via
+`create_app(extra_routers=..., extra_setup_hooks=...)` and mounts private
+pieces on top of the same factory. Envelope sinks live in
+[`unify/gateway/envelope_sink.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/envelope_sink.py),
+and ingress transports (the runtime's receiving side) in
+[`unify/gateway/ingress.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/ingress.py)
+and siblings (`ingress_pubsub.py`, `ingress_inmemory.py`).
+
+## The full round trip
+
+Following one SMS end to end:
+
+1. **Twilio → adapter.** Twilio POSTs to `twilio_sms_webhook` in
+   [`unify/gateway/adapters/twilio.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/twilio.py).
+   The signature is validated, the target assistant is resolved (via
+   Orchestra's admin API), and the runtime is woken if idle.
+2. **Adapter → envelope.** `publish_runtime_event()` in
+   [`unify/gateway/adapters/common.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/common.py)
+   wraps the payload in an envelope with `thread="msg"` and hands it to the
+   `EnvelopeSink`.
+3. **Envelope → typed event.** In the runtime, `CommsManager`
+   ([`unify/conversation_manager/comms_manager.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/comms_manager.py))
+   maps the thread key through its `events_map` to a typed event —
+   `SMSReceived` from
+   [`unify/conversation_manager/events.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/events.py)
+   — resolving the sender to a contact along the way.
+4. **Event → handler → brain.** The event is published on the in-process
+   broker; `ConversationManager.wait_for_events()` picks it up, the
+   registered handler logs it to transcripts and updates live state, and a
+   slow-brain turn is scheduled. Details in
+   [The conversation runtime](/communication/developers/conversation-manager).
+5. **Brain → outbound.** If the brain decides to reply, its `send_sms` tool
+   delegates to `CommsPrimitives.send_sms`, which enforces the contact's
+   `should_respond` gate and POSTs to the gateway's `/phone/send-text`
+   channel endpoint — which calls Twilio. A matching `SMSSent` event is
+   published so the reply lands in transcripts too.
+
+## Package map
+
+| Package | Role | Key entry points |
+|---|---|---|
+| [`unify/gateway/adapters/`](https://github.com/unifyai/unify/tree/main/unify/gateway/adapters) | Inbound webhook normalization | `twilio.py`, `google.py`, `microsoft.py`, `slack.py`, `internal.py` |
+| [`unify/gateway/channels/`](https://github.com/unifyai/unify/tree/main/unify/gateway/channels) | Outbound + admin channel APIs | one sub-package per channel |
+| [`unify/gateway/credentials/`](https://github.com/unifyai/unify/tree/main/unify/gateway/credentials) | Operator infrastructure credentials | `CredentialStore`, `EnvCredentialStore` |
+| [`unify/conversation_manager/`](https://github.com/unifyai/unify/tree/main/unify/conversation_manager) | The live runtime | `ConversationManager`, `events.py`, `domains/` |
+| [`unify/comms/`](https://github.com/unifyai/unify/tree/main/unify/comms) | Outbound send implementation | `CommsPrimitives` |
+| [`unify/transcript_manager/`](https://github.com/unifyai/unify/tree/main/unify/transcript_manager) | Durable conversation record | `TranscriptManager` |
+
+## Reading order
+
+<CardGroup cols={2}>
+  <Card title="The gateway" icon="tower-broadcast" color="#2f9d97" href="/communication/developers/gateway">
+    Channels vs adapters, per-channel modules, credentials, and how to add
+    a channel.
+  </Card>
+  <Card title="The conversation runtime" icon="brain" color="#c95f5a" href="/communication/developers/conversation-manager">
+    Events, mediums, the slow-brain loop, outbound sends, and transcripts.
+  </Card>
+  <Card title="Voice calls" icon="phone-volume" color="#cf9a3e" href="/communication/developers/voice">
+    The dual-brain call architecture — LiveKit, fillers, barge-in, and
+    hang-up semantics.
+  </Card>
+</CardGroup>

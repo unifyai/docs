@@ -1,0 +1,107 @@
+---
+title: "The gateway"
+description: "Channels, adapters, credentials, and the provider edge"
+---
+
+The gateway
+([`unify/gateway/`](https://github.com/unifyai/unify/tree/main/unify/gateway))
+is a single FastAPI application assembled by `create_app()` in
+[`app.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/app.py)
+and launched with `python -m unify.gateway serve` (the CLI in
+[`__main__.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/__main__.py)
+also provides `doctor`, `urls`, `setup`, `smoke`, and `wizard`
+subcommands). It runs as a **separate process** from the
+`ConversationManager`.
+
+## Channels vs adapters
+
+The two sub-packages split along an ingress/egress line — but precisely:
+
+- **[`channels/`](https://github.com/unifyai/unify/tree/main/unify/gateway/channels)**
+  hosts the **outbound and admin APIs**: sending messages, placing calls,
+  provisioning numbers, managing watches and installs. Nearly all routes
+  require the admin bearer token (`admin_auth_dependency` in
+  [`common/auth.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/common/auth.py)).
+  A few unauthenticated routes live here too where the provider calls back
+  mid-flow (Twilio's TwiML and conference-status callbacks).
+- **[`adapters/`](https://github.com/unifyai/unify/tree/main/unify/gateway/adapters)**
+  hosts **inbound normalization**: provider webhooks and internal Console
+  routes, each validated (Twilio signatures, Slack signing secrets, OAuth
+  state), resolved to a target assistant, and reduced to a
+  `{thread, event}` envelope.
+
+Two deliberate exceptions: **Discord** inbound uses a persistent WebSocket
+(`GatewayConnection` in
+[`channels/discord/gateway.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/discord/gateway.py),
+supervised by `bot_manager.py`) rather than a webhook — DMs always route,
+guild messages only on @mention. And **social verification**
+([`channels/social/views.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/social/views.py))
+is a synchronous Twilio send that returns the code to the caller — it never
+publishes an envelope.
+
+## Channel modules
+
+Each channel is a sub-package under `channels/` with a `views.py` exposing
+its router(s):
+
+| Channel | Highlights | External SDKs |
+|---|---|---|
+| [`phone/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/phone/views.py) | `send_call`, `send_text`, `create_phone_number` (buys a Twilio number, wires webhooks, creates the matching LiveKit SIP trunk), `dispatch_livekit_agent`, hang-up and conference teardown | `twilio`, `livekit.api` |
+| [`whatsapp/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/whatsapp/views.py) | `send` (freeform vs template by 24-hour window), `send_call` with call-permission handling, sender provisioning and pool assignment | Twilio WA, LiveKit SIP |
+| [`gmail/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/gmail/views.py) | `send_email` (threading headers), `watch_email` (Pub/Sub push watch), attachment fetch | `googleapiclient`, `google.oauth2` |
+| [`outlook/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/outlook/views.py) | Same shape over Microsoft Graph subscriptions | `msgraph` via [`common/graph.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/common/graph.py) |
+| [`email/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/email/views.py) | Provider-agnostic dispatcher — routes `send_email` to Gmail or Outlook based on how the assistant's mailbox is connected | — |
+| [`teams/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/teams/views.py) | Chats, group chats, channels, watches, and meeting creation (`create_meeting.py`: instant links vs scheduled calendar events) | `msgraph` |
+| [`slack/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/slack/views.py) | Workspace install upsert, `send_slack_message`, user lookup by email | Slack Web API |
+| [`discord/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/discord/views.py) | `send_discord_message`, bot pool registration and status | Discord REST |
+| [`drive/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/drive/views.py) / [`sharepoint/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/sharepoint/views.py) | File browsing for the workspace file picker (not messaging) | Google Drive API, `msgraph` |
+| [`unillm/`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/unillm/views.py) | `chat_completions` proxy authenticated by *user* API key (the one channel not admin-authed) | `unillm` |
+
+## Adapter modules
+
+| Adapter | Webhooks handled | Envelope threads produced |
+|---|---|---|
+| [`twilio.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/twilio.py) | SMS, voice calls, call status, WhatsApp messages/reactions/calls/call status | `msg`, `call`, `call_answered`, `call_not_answered`, `whatsapp`, `whatsapp_reaction`, `whatsapp_call`, … |
+| [`google.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/google.py) | Gmail Pub/Sub push notifications, Google OAuth callback and revoke | `email` |
+| [`microsoft.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/microsoft.py) | Outlook and Teams Graph notifications, Microsoft OAuth callback, a shared `/microsoft/router` delegator | `email`, `teams_chat`, `teams_channel` |
+| [`slack.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/slack.py) | Slack Events API, with a two-pass sender-identity resolution for coordinator routing and message dedup | `slack` |
+| [`internal.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/internal.py) | Console/runtime routes: chat messages, reactions, attachments, Unify Meet rings, system events, pre-hire chat logging, wake-ups | `unify_message`, `unify_meet`, `api_message`, `unity_system_event`, … |
+
+The shared inbound pipeline lives in
+[`adapters/common.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/adapters/common.py):
+resolve the assistant (`get_assistant`), resolve the channel route where
+pools are involved (`resolve_phone_route`, `resolve_whatsapp_route` — this
+is how shared numbers map `(pool number, sender)` to the right assistant),
+activate the runtime, then `publish_runtime_event()`.
+
+## Credentials
+
+[`unify/gateway/credentials/`](https://github.com/unifyai/unify/tree/main/unify/gateway/credentials)
+holds **operator infrastructure credentials** — Twilio account, Slack
+signing secret, OAuth client IDs, LiveKit keys — behind the
+`CredentialStore` protocol (`base.py`), with `EnvCredentialStore` (`env.py`)
+as the OSS implementation reading environment variables. The package
+docstring draws the line explicitly: this is *distinct from*
+`unify.secret_manager`, which holds **assistant-owned user secrets**
+(per-assistant OAuth tokens like `GOOGLE_ACCESS_TOKEN` live in Orchestra
+assistant secrets, not here).
+
+## Adding a channel: the seams
+
+The gateway is designed so a new channel touches a predictable set of
+files:
+
+1. **Outbound** — a new sub-package under `channels/` with an
+   admin-authenticated router; mount it via the prefix table in
+   `create_app()`.
+2. **Inbound** — a webhook handler under `adapters/` that validates,
+   resolves the assistant, and publishes an envelope with a new `thread`
+   key (register it in `KNOWN_THREADS` in
+   [`envelopes.py`](https://github.com/unifyai/unify/blob/main/unify/gateway/envelopes.py)).
+3. **Runtime** — a typed event class in
+   [`events.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/events.py),
+   an entry in `CommsManager.events_map`, and an `@EventHandler.register`
+   handler — covered in
+   [the conversation runtime](/communication/developers/conversation-manager).
+4. **Send path** — a method on `CommsPrimitives` plus its brain-tool
+   wrapper.
