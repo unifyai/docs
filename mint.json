@@ -50,7 +50,16 @@
                 "communication/voice",
                 "communication/behavior",
                 "communication/contacts",
-                "communication/recordings-and-transcripts"
+                "communication/recordings-and-transcripts",
+                {
+                    "group": "Developers",
+                    "pages": [
+                        "communication/developers/architecture",
+                        "communication/developers/gateway",
+                        "communication/developers/conversation-manager",
+                        "communication/developers/voice"
+                    ]
+                }
             ]
         },
         {
@@ -71,7 +80,8 @@
                 "integrations/overview",
                 "integrations/connecting",
                 "integrations/permissions",
-                "integrations/using"
+                "integrations/using",
+                "integrations/developers"
             ]
         },
         {
