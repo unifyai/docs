@@ -1,18 +1,18 @@
 {
     "name": "Unify",
     "logo": {
-        "dark": "/images/unify_logo_only.png",
-        "light": "/images/unify_logo_only.png",
+        "dark": "/images/unify-wordmark-dark.svg",
+        "light": "/images/unify-wordmark-light.svg",
         "href": "https://unify.ai"
     },
-    "favicon": "/images/unify_logo_only.png",
+    "favicon": "/images/unify-mark.svg",
     "colors": {
-        "primary": "#009600",
-        "light": "#009600",
-        "dark": "#009600",
+        "primary": "#2f9d97",
+        "light": "#79efdd",
+        "dark": "#1c6460",
         "anchors": {
-            "from": "#009600",
-            "to": "#009600"
+            "from": "#2f9d97",
+            "to": "#6e4a86"
         }
     },
     "topbarLinks": [
