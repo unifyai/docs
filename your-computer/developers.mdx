@@ -25,7 +25,8 @@ Console live view, every call re-checks consent, file access is
 pull-on-request rather than continuously synced, and writebacks never touch
 originals.
 
-<img src="/images/developers/user-desktop-architecture.png" alt="Architecture of linked user-desktop control: ConversationManager dispatches act(...) to CodeActActor, which reaches primitives.computer.user_desktop; _UserDesktopFactory resolves a UserDesktopLink from SESSION_DETAILS and hands back a UserDesktopHandle whose calls travel over an outbound-only tunnel to the user's machine, where an agent-service, a live desktop view for assistant perception, and a key-gated SFTP file channel run" />
+<img className="block dark:hidden" src="/images/developers/user-desktop-architecture-light.svg" alt="Architecture of linked user-desktop control: ConversationManager dispatches act(...) to CodeActActor, which reaches primitives.computer.user_desktop; _UserDesktopFactory resolves a UserDesktopLink from SESSION_DETAILS and hands back a UserDesktopHandle whose calls travel over an outbound-only tunnel to the user's machine, where an agent-service, a live desktop view for assistant perception, and a key-gated SFTP file channel run" />
+<img className="hidden dark:block" src="/images/developers/user-desktop-architecture-dark.svg" alt="Architecture of linked user-desktop control: ConversationManager dispatches act(...) to CodeActActor, which reaches primitives.computer.user_desktop; _UserDesktopFactory resolves a UserDesktopLink from SESSION_DETAILS and hands back a UserDesktopHandle whose calls travel over an outbound-only tunnel to the user's machine, where an agent-service, a live desktop view for assistant perception, and a key-gated SFTP file channel run" />
 
 ## The link: session state
 
@@ -126,7 +127,8 @@ Three deliberate differences from the assistant-desktop path:
 
 ## The file channel: `user_desktop.files`
 
-<img src="/images/developers/user-desktop-files-flow.png" alt="File flow between the assistant runtime and the user's home directory: the files namespace calls UserHomeSFTP, list browses metadata only, pull and sync stage copies into the read-only mirror at ~/Unity/Remote/<user_id>/, and push writes a new timestamped copy into the remote /.unity-edits/ tree, never touching originals; noise and credential directories are excluded" />
+<img className="block dark:hidden" src="/images/developers/user-desktop-files-flow-light.svg" alt="File flow between the assistant runtime and the user's home directory: the files namespace calls UserHomeSFTP, list browses metadata only, pull and sync stage copies into the read-only mirror at ~/Unity/Remote/<user_id>/, and push writes a new timestamped copy into the remote /.unity-edits/ tree, never touching originals; noise and credential directories are excluded" />
+<img className="hidden dark:block" src="/images/developers/user-desktop-files-flow-dark.svg" alt="File flow between the assistant runtime and the user's home directory: the files namespace calls UserHomeSFTP, list browses metadata only, pull and sync stage copies into the read-only mirror at ~/Unity/Remote/<user_id>/, and push writes a new timestamped copy into the remote /.unity-edits/ tree, never touching originals; noise and credential directories are excluded" />
 
 File access is a **separate channel with separate consent**, implemented in
 [`unify/file_manager/sync/user_sftp.py`](https://github.com/unifyai/unify/blob/main/unify/file_manager/sync/user_sftp.py)
@@ -219,7 +221,8 @@ and the computer environment context
 
 ## Consent: three gates, checked at three times
 
-<img src="/images/developers/user-desktop-consent-gates.png" alt="Three consent layers for the linked desktop: standing config from the Console (UserDesktopLink.url for control, filesys_sync plus tunnel coordinates for files), live in-memory revoke sets (_user_desktop_revoked and _user_filesys_revoked, driven by UserFilesysAccessStarted/Stopped comms events), and per-call assertions in UserDesktopHandle and the files namespace that raise PermissionError on revoke" />
+<img className="block dark:hidden" src="/images/developers/user-desktop-consent-gates-light.svg" alt="Three consent layers for the linked desktop: standing config from the Console (UserDesktopLink.url for control, filesys_sync plus tunnel coordinates for files), live in-memory revoke sets (_user_desktop_revoked and _user_filesys_revoked, driven by UserFilesysAccessStarted/Stopped comms events), and per-call assertions in UserDesktopHandle and the files namespace that raise PermissionError on revoke" />
+<img className="hidden dark:block" src="/images/developers/user-desktop-consent-gates-dark.svg" alt="Three consent layers for the linked desktop: standing config from the Console (UserDesktopLink.url for control, filesys_sync plus tunnel coordinates for files), live in-memory revoke sets (_user_desktop_revoked and _user_filesys_revoked, driven by UserFilesysAccessStarted/Stopped comms events), and per-call assertions in UserDesktopHandle and the files namespace that raise PermissionError on revoke" />
 
 Access control is layered, and each layer answers a different question:
 

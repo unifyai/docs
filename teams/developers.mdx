@@ -24,7 +24,8 @@ namespaces addressed by path. Team sharing is implemented as a pure
 *namespace* concern: the same tables exist under multiple **roots**, and
 one class decides which root any given operation touches.
 
-![Two scopes, one registry: state managers pass a destination string to ContextRegistry, which resolves it to either the personal root or a membership-gated team root — with the same table names under every root](/images/developers/teams-scope-model.png)
+<img className="block dark:hidden" src="/images/developers/teams-scope-model-light.svg" alt="Two scopes, one registry: state managers pass a destination string to ContextRegistry, which resolves it to either the personal root or a membership-gated team root — with the same table names under every root" />
+<img className="hidden dark:block" src="/images/developers/teams-scope-model-dark.svg" alt="Two scopes, one registry: state managers pass a destination string to ContextRegistry, which resolves it to either the personal root or a membership-gated team root — with the same table names under every root" />
 
 There are exactly two kinds of root:
 
@@ -106,7 +107,8 @@ this:
 
 ## Writes and reads, end to end
 
-![Write path: a destination string is normalized, membership-gated, and resolved to exactly one root. Read path: read_roots fans out across the personal root and every member team, merged by federated search into one global window](/images/developers/teams-write-read-paths.png)
+<img className="block dark:hidden" src="/images/developers/teams-write-read-paths-light.svg" alt="Write path: a destination string is normalized, membership-gated, and resolved to exactly one root. Read path: read_roots fans out across the personal root and every member team, merged by federated search into one global window" />
+<img className="hidden dark:block" src="/images/developers/teams-write-read-paths-dark.svg" alt="Write path: a destination string is normalized, membership-gated, and resolved to exactly one root. Read path: read_roots fans out across the personal root and every member team, merged by federated search into one global window" />
 
 ### The write path
 
@@ -223,7 +225,8 @@ different semantics worth knowing:
 
 ## How membership reaches the runtime
 
-![Membership flow: Orchestra owns team membership and delivers team_ids and team_summaries in the startup payload to SESSION_DETAILS, which feeds the system prompt block and worker env vars; a mid-session AssistantUpdateEvent refreshes membership live and forget_departed_team_roots drops cached roots](/images/developers/teams-membership-runtime.png)
+<img className="block dark:hidden" src="/images/developers/teams-membership-runtime-light.svg" alt="Membership flow: Orchestra owns team membership and delivers team_ids and team_summaries in the startup payload to SESSION_DETAILS, which feeds the system prompt block and worker env vars; a mid-session AssistantUpdateEvent refreshes membership live and forget_departed_team_roots drops cached roots" />
+<img className="hidden dark:block" src="/images/developers/teams-membership-runtime-dark.svg" alt="Membership flow: Orchestra owns team membership and delivers team_ids and team_summaries in the startup payload to SESSION_DETAILS, which feeds the system prompt block and worker env vars; a mid-session AssistantUpdateEvent refreshes membership live and forget_departed_team_roots drops cached roots" />
 
 ### Session state
 

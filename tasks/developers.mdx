@@ -27,7 +27,8 @@ Three design commitments shape everything below:
 
 ## The task model
 
-<img src="/images/developers/tasks-anatomy.png" alt="Anatomy of a Task: the task row with name/description, priority/deadline, destination, status; schedule XOR trigger with repeat patterns; entrypoint and offline flags; and the task_id/instance_id split" />
+<img className="block dark:hidden" src="/images/developers/tasks-anatomy-light.svg" alt="Anatomy of a Task: the task row with name/description, priority/deadline, destination, status; schedule XOR trigger with repeat patterns; entrypoint and offline flags; and the task_id/instance_id split" />
+<img className="hidden dark:block" src="/images/developers/tasks-anatomy-dark.svg" alt="Anatomy of a Task: the task row with name/description, priority/deadline, destination, status; schedule XOR trigger with repeat patterns; entrypoint and offline flags; and the task_id/instance_id split" />
 
 The model lives in
 [`unify/task_scheduler/types/task.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/task.py).
@@ -75,7 +76,8 @@ the real work:
 
 ## The lifecycle
 
-<img src="/images/developers/tasks-lifecycle.png" alt="Task lifecycle state machine: scheduled and triggerable states flow into active via execute(), which fans out to completed, failed, and cancelled; execute() also clones the next instance back into scheduled/triggerable" />
+<img className="block dark:hidden" src="/images/developers/tasks-lifecycle-light.svg" alt="Task lifecycle state machine: scheduled and triggerable states flow into active via execute(), which fans out to completed, failed, and cancelled; execute() also clones the next instance back into scheduled/triggerable" />
+<img className="hidden dark:block" src="/images/developers/tasks-lifecycle-dark.svg" alt="Task lifecycle state machine: scheduled and triggerable states flow into active via execute(), which fans out to completed, failed, and cancelled; execute() also clones the next instance back into scheduled/triggerable" />
 
 [`Status`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/types/status.py)
 is a six-value enum: `scheduled`, `triggerable`, `active`, `completed`,
@@ -158,7 +160,8 @@ rows) inherit the task's scope.
 
 ## Activation: three lanes
 
-<img src="/images/developers/tasks-activation-lanes.png" alt="Activation lanes: scheduled-live via activations, timers, and TaskDue into the ConversationManager; triggered-live via inbound messages, mechanical filter, semantic check, and primitives.tasks.execute; offline via dispatched jobs running offline_runner — all converging on TaskScheduler.execute returning an ActiveTask" />
+<img className="block dark:hidden" src="/images/developers/tasks-activation-lanes-light.svg" alt="Activation lanes: scheduled-live via activations, timers, and TaskDue into the ConversationManager; triggered-live via inbound messages, mechanical filter, semantic check, and primitives.tasks.execute; offline via dispatched jobs running offline_runner — all converging on TaskScheduler.execute returning an ActiveTask" />
+<img className="hidden dark:block" src="/images/developers/tasks-activation-lanes-dark.svg" alt="Activation lanes: scheduled-live via activations, timers, and TaskDue into the ConversationManager; triggered-live via inbound messages, mechanical filter, semantic check, and primitives.tasks.execute; offline via dispatched jobs running offline_runner — all converging on TaskScheduler.execute returning an ActiveTask" />
 
 A task row does nothing by itself. Activation — deciding *now is the
 moment* — arrives through one of three lanes, all converging on
