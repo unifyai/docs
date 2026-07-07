@@ -10,7 +10,8 @@ and a **background consolidation** pass in
 [`MemoryManager`](https://github.com/unifyai/unify/blob/main/unify/memory_manager/memory_manager.py)
 that distills recent traffic into durable state.
 
-![Knowledge acquisition pipelines: the live path runs CodeActActor through primitives.knowledge into an inner LLM tool loop over Knowledge tables; the background path runs EventBus events through MemoryManager.process_chunk into ContactManager, KnowledgeManager, and TaskScheduler](/images/developers/knowledge-memory.png)
+<img className="block dark:hidden" src="/images/developers/knowledge-memory-light.svg" alt="Knowledge acquisition pipelines: the live path runs CodeActActor through primitives.knowledge into an inner LLM tool loop over Knowledge tables; the background path runs EventBus events through MemoryManager.process_chunk into ContactManager, KnowledgeManager, and TaskScheduler" />
+<img className="hidden dark:block" src="/images/developers/knowledge-memory-dark.svg" alt="Knowledge acquisition pipelines: the live path runs CodeActActor through primitives.knowledge into an inner LLM tool loop over Knowledge tables; the background path runs EventBus events through MemoryManager.process_chunk into ContactManager, KnowledgeManager, and TaskScheduler" />
 
 ## KnowledgeManager
 

@@ -10,7 +10,8 @@ state, consumes events, runs the reasoning loop, and delegates outbound
 I/O. Its package README describes it as the layer that interfaces with
 users while delegating complex reasoning to the `Actor`.
 
-![Inbound event lifecycle: envelope → CommsManager → EventBroker → ConversationManager.wait_for_events → side effects → slow brain turn → comms tools / act / wait](/images/developers/event-lifecycle.png)
+<img className="block dark:hidden" src="/images/developers/event-lifecycle-light.svg" alt="Inbound event lifecycle: envelope → CommsManager → EventBroker → ConversationManager.wait_for_events → side effects → slow brain turn → comms tools / act / wait" />
+<img className="hidden dark:block" src="/images/developers/event-lifecycle-dark.svg" alt="Inbound event lifecycle: envelope → CommsManager → EventBroker → ConversationManager.wait_for_events → side effects → slow brain turn → comms tools / act / wait" />
 
 ## The event model
 

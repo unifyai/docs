@@ -17,7 +17,8 @@ are separate closed-source components that speak to these interfaces.
 
 ## The control stack
 
-![The computer control stack](/images/developers/dev-computer-control-stack.png)
+<img className="block dark:hidden" src="/images/developers/dev-computer-control-stack-light.svg" alt="The computer control stack" />
+<img className="hidden dark:block" src="/images/developers/dev-computer-control-stack-dark.svg" alt="The computer control stack" />
 
 Computer control is layered, with a clean seam at each level:
 
@@ -168,7 +169,8 @@ automation API is `{base}/api`.
 
 ## Lifecycle: from cold start to ready
 
-![Managed desktop lifecycle](/images/developers/dev-desktop-lifecycle.png)
+<img className="block dark:hidden" src="/images/developers/dev-desktop-lifecycle-light.svg" alt="Managed desktop lifecycle" />
+<img className="hidden dark:block" src="/images/developers/dev-desktop-lifecycle-dark.svg" alt="Managed desktop lifecycle" />
 
 Desktop state lives on the global session singleton
 ([`session_details.py`](https://github.com/unifyai/unify/blob/main/unify/session_details.py)):
@@ -272,7 +274,8 @@ and `USER_DESKTOP` (a linked user machine). Each has a target class in
 
 ## Screen share & remote control
 
-![Screen share and remote control flow](/images/developers/dev-screen-share-flow.png)
+<img className="block dark:hidden" src="/images/developers/dev-screen-share-flow-light.svg" alt="Screen share and remote control flow" />
+<img className="hidden dark:block" src="/images/developers/dev-screen-share-flow-dark.svg" alt="Screen share and remote control flow" />
 
 The Console's Meet controls arrive as system events —
 `AssistantScreenShareStarted/Stopped`, `UserScreenShareStarted/Stopped`,
