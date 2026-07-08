@@ -26,7 +26,8 @@ one class decides which root any given operation touches.
 
 ![Two scopes, one registry: state managers pass a destination string to ContextRegistry, which resolves it to either the personal root or a membership-gated team root — with the same table names under every root](/images/developers/teams-scope-model.png)
 
-There are exactly two kinds of root:
+There are two kinds of root for a personally-supervised assistant, and a
+third shape for [team assistants](/teams/team-assistants):
 
 - **Personal root** — the assistant's own base context,
   `{user_id}/{assistant_id}/…`. This is the *privacy floor*: content here
@@ -34,6 +35,19 @@ There are exactly two kinds of root:
 - **Team roots** — `Teams/{team_id}/…`, one per team the assistant belongs
   to. Contexts under a team root are owned by the team, not by any
   assistant, and are visible to every current member.
+- **Team-owned home** — a team assistant
+  (`SESSION_DETAILS.owner_team_id is not None`, exposed as
+  `SESSION_DETAILS.team_owned`) has **no personal root at all**. Its
+  shared tables home at the owning team's flat root (`Teams/{owner}/…`,
+  the same surfaces every member reads), while per-assistant runtime
+  internals (events, caches, non-shared tables) live under a namespaced
+  subtree, `Teams/{owner}/Assistants/{agent_id}/…` — still team-owned,
+  just collision-free when a team owns several assistants. Task-machine
+  state (`unify/task_scheduler/machine_state.py`) routes to the team's
+  `Teams/{owner}/Tasks/…` tree for the same reason. The root itself is
+  resolved in
+  [`unify/common/runtime_context.py`](https://github.com/unifyai/unify/blob/main/unify/common/runtime_context.py)'s
+  `resolve_runtime_context_root()`.
 
 The arbiter is `ContextRegistry` in
 [`unify/common/context_registry.py`](https://github.com/unifyai/unify/blob/main/unify/common/context_registry.py).
@@ -49,6 +63,16 @@ the two resolution primitives everything else is built on:
   ordered list of roots a read should span: the personal root first, then
   every team in `SESSION_DETAILS.team_ids` (sorted), provisioning any that
   don't exist yet. Reads always fan out.
+
+For a **team-owned** session both primitives collapse onto the team shape:
+`destination=None` (and, forgivingly, `"personal"`) resolves shared tables
+to the owning team's root instead of a personal one, `read_roots` returns
+the owning team first followed by other member teams — with no personal
+root anywhere — and non-shared tables resolve to the
+`Teams/{owner}/Assistants/{agent}` subtree. The owning team also passes
+the membership gate unconditionally and is protected from
+`forget_departed_team_roots` eviction: it's the assistant's home, not a
+revocable membership.
 
 Destination parsing is centralized in
 `ContextRegistry.canonical_destination(...)`: `None` and `"personal"`
@@ -134,7 +158,9 @@ deletion semantics simple.
 **One exception, by design:** transcripts and images. Conversation history
 isn't authored *at* a destination — it happens — so
 `ContextRegistry.implicit_shared_destinations()` returns the full list of
-team destinations (or `[None]` when the assistant has no teams), and the
+team destinations (or `[None]` when the assistant has no teams; a
+team-owned assistant's owning team is always included, membership payload
+or not), and the
 transcript/screenshot publishing paths in
 [`unify/conversation_manager/domains/managers_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/managers_utils.py)
 and the screenshot capture path in
@@ -152,29 +178,43 @@ goes through it:
 
 - **`FederatedSearchContext`** — one participating context: the concrete
   path, a `source` label, an optional `row_filter`, optional
-  `allowed_fields` projection, and an optional foreign `project` (used for
-  the read-only platform builtins catalogue, which lives outside the
-  active project).
-- **`federated_ranked_search(contexts, references, ...)`** — exact
-  federated top-k semantic search. Each context is fetched with a local
-  window of `offset + limit` (which makes the global merge provably
-  exact — a row outside its local window can't be in the global one),
-  merged by ascending embedding distance via `merge_ranked_batches`, and
-  sliced once. Optional `backfill` tops up short results with
-  deterministic recent rows.
+  `allowed_fields` / `excluded_fields` projections, and an optional
+  foreign `project` (used for the read-only platform builtins catalogue,
+  which lives outside the active project).
 - **`federated_filter(contexts, filter=..., sorting=...)`** — exact
-  federated structured reads, with `SortSpec` handling the subtle
-  NULLs-ordering problem: the backend always sorts NULLs last, so a sort
-  key asking for `missing="first"` forces a full per-context fetch instead
-  of windowed fetching.
+  federated structured reads. These are **server-side**: one call to the
+  backend's federated logs endpoint (`unisdk.get_logs_federated`, i.e.
+  `POST /logs/federated`) runs every context through the ordinary
+  single-context query pipeline and performs the exact global merge on
+  the server — one round trip, globally-ordered window, exact totals —
+  instead of paging each context over HTTP and merging client-side.
+  `SortSpec` handles the subtle NULLs-ordering problem: the backend sorts
+  NULLs last, so a sort key asking for `missing="first"` forces full
+  branch fetches. A `fetcher` escape hatch retains the client-side merge
+  path for rows that don't come from the logs API (local stores,
+  impl-specific reads).
+- **`federated_count(contexts, key=...)`** — a count-only federated read
+  (one server call with `limit=0`).
+- **`federated_ranked_search(contexts, references, ...)`** — exact
+  federated top-k semantic search. This path stays client-orchestrated
+  (it depends on per-context embedding columns): each context is fetched
+  with a local window of `offset + limit` (which makes the global merge
+  provably exact — a row outside its local window can't be in the global
+  one), merged by ascending embedding distance via
+  `merge_ranked_batches`, and sliced once. Optional `backfill` tops up
+  short results with deterministic recent rows.
 - **`federated_reduce(contexts, metric=..., ...)`** — aggregations.
   Decomposable ungrouped metrics (`count`, `sum`, `min`, `max`, `mean`)
   are pushed down per context and combined exactly; grouped or
-  non-decomposable metrics (`median`, `mode`, `var`, `std`) fall back to
-  fetching merged rows and reducing client-side.
-- Missing contexts (404s — a table not yet provisioned under some root)
-  are tolerated everywhere via `is_missing_context_error`, so fan-out
-  reads don't require every root to be fully provisioned.
+  non-decomposable metrics (`median`, `mode`, `var`, `std`) fetch the
+  merged rows through the federated endpoint and reduce client-side.
+- Missing contexts (a table not yet provisioned under some root)
+  contribute nothing, so fan-out reads don't require every root to be
+  fully provisioned.
+
+The same server endpoint powers the Console's merged **All** scope views
+(Functions, Transcripts, and friends), so what the UI shows and what the
+runtime reads are the same exact merge.
 
 Merged rows are annotated with `_federated_source` and
 `_federated_context` (and `_federated_score` for ranked reads), so callers
@@ -228,7 +268,7 @@ different semantics worth knowing:
 ### Session state
 
 [`unify/session_details.py`](https://github.com/unifyai/unify/blob/main/unify/session_details.py)
-is the single source of runtime truth. `AssistantDetails` carries two
+is the single source of runtime truth. `AssistantDetails` carries three
 team fields, surfaced as convenience properties on the global
 `SESSION_DETAILS`:
 
@@ -237,13 +277,21 @@ team fields, surfaced as convenience properties on the global
 - `team_summaries: list[TeamSummary]` — display/routing metadata
   (`team_id`, `name`, `description`) used to *teach* the model where
   content belongs.
+- `owner_team_id: int | None` — the owning team for [team
+  assistants](/teams/team-assistants) (`None` = user-owned), with
+  `SESSION_DETAILS.team_owned` as the derived flag that switches the
+  registry, root resolution, task-machine routing, and prompt layer into
+  team-owned mode.
 
 Because actor plans and manager tool-loops can run in worker
-subprocesses, both fields round-trip through the environment:
-`export_team_ids_to_env` / `export_team_summaries_to_env` encode them into
-`TEAM_IDS` (CSV) and `TEAM_SUMMARIES` (JSON), and `SESSION_DETAILS`
-re-hydrates from those vars on the other side via
-`normalize_team_summaries`.
+subprocesses, all of it round-trips through the environment:
+`export_team_ids_to_env` / `export_team_summaries_to_env` encode
+memberships into `TEAM_IDS` (CSV) and `TEAM_SUMMARIES` (JSON),
+`OWNER_TEAM_ID` carries ownership, and `SESSION_DETAILS` re-hydrates from
+those vars on the other side via `normalize_team_summaries` /
+`populate_from_env`. All three arrive in the startup payload from
+Orchestra's assistant record (which carries `owner_team_id` for team-owned
+assistants).
 
 ### Live membership updates
 
@@ -279,6 +327,13 @@ followed by the routing rules: default to personal, use a team only when
 content clearly matches its described domain, ask a brief clarifying
 question when the audience is unclear, never invent a team id, and never
 pass a `team:<id>` token where a `contact_id` belongs.
+
+Team-owned sessions render a distinct variant: the identity line becomes
+*"You are a team-owned assistant: your owning team's shared root is your
+home memory… You have no private personal memory"*, the owning team's
+bullet is marked as the default destination, the `personal` bullet
+disappears, and the routing rules swap "default to personal" for "writes
+default to your owning team's shared root."
 
 Two design details matter here:
 
@@ -342,9 +397,12 @@ A few recipes that follow directly from the architecture:
 
 <Note>
   Everything on this page is the runtime's half of the story. The other
-  half — the `Team`/`TeamAssistantMembership` data model, membership
-  endpoints, coordinator auto-enrollment, org-wide sharing, and the purge
-  of `Teams/{id}/…` trees on team deletion — lives in the closed-source
-  Orchestra backend, which the runtime reaches through
+  half — the `Team`/`TeamAssistantMembership` data model, the
+  `owner_team_id` ownership column and its lifecycle guards (an owning
+  team refuses deletion while it owns assistants; a team assistant can't
+  be removed from its owning team), membership endpoints, coordinator
+  auto-enrollment, org-wide sharing, per-team spend attribution, and the
+  purge of `Teams/{id}/…` trees on team deletion — lives in the
+  closed-source Orchestra backend, which the runtime reaches through
   [UniSDK](https://github.com/unifyai/unisdk).
 </Note>
