@@ -1,0 +1,40 @@
+---
+title: "Voice"
+description: "Talk to your locally-running teammate in the browser"
+---
+
+Real voice calls run the production fast-brain — interruption-handling,
+telephony-aware — locally with sub-second latency. From the local chat
+REPL, type `meet` to open a LiveKit browser session and speak through your
+mic. Utterances follow the same Unify Meet path as production voice.
+
+## What you need
+
+Voice uses **LiveKit Cloud** for browser Meet sessions, plus one
+speech-to-text and one text-to-speech provider (both have free tiers; pick
+**one** TTS provider). The install wizard prompts for these; to add them
+later, edit `~/.unity/unity/.env` and run `unify setup`.
+
+| Variable | Purpose | Where to get it |
+|---|---|---|
+| `LIVEKIT_URL`, `LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET` | Browser voice media | [cloud.livekit.io](https://cloud.livekit.io) |
+| `DEEPGRAM_API_KEY` | Speech-to-text | [console.deepgram.com](https://console.deepgram.com) — free tier |
+| `CARTESIA_API_KEY` *or* `ELEVEN_API_KEY` | Text-to-speech (pick one) | [play.cartesia.ai](https://play.cartesia.ai) or [elevenlabs.io](https://elevenlabs.io) — free credits |
+
+## How local voice works
+
+Live calls run two coordinated brains:
+
+- **Slow brain** (`ConversationManager`) — sees everything, decides
+  deliberately, runs in the main process.
+- **Fast brain** — a real-time LiveKit voice agent in a subprocess,
+  sub-second latency, handles turn-taking autonomously.
+
+They communicate over IPC. The slow brain steers the fast brain with
+**SPEAK** (say exactly this), **NOTIFY** (here's context, decide what to
+do), or **BLOCK** (do nothing; carry on). This is the same dual-brain
+architecture the hosted product runs — locally you're just running both
+halves on your own machine.
+
+Phone calls over real telephony, video calls, and screen-share are part of
+the hosted product at [console.unify.ai](https://console.unify.ai).

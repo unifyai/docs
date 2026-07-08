@@ -1,0 +1,72 @@
+---
+title: "Overview"
+description: "Run the open-source unify runtime on your own machine"
+---
+
+Everything your assistant's brain does — the reasoning loop, memory,
+steerable tasks, voice — lives in the MIT-licensed
+[`unifyai/unify`](https://github.com/unifyai/unify) repository, and you can
+run it locally. A local deployment gives you **one teammate** running
+entirely on your laptop, talking to the hosted Orchestra backend for
+persistence, so you can trace exactly how it thinks while keeping the
+zero-maintenance storage layer.
+
+The shape is deliberately simple: install once, and the runtime lives on
+your machine, accumulating state across every session. No Docker, no
+Kubernetes, no local database.
+
+## What runs where
+
+The local runtime drives the assistant record whose `ASSISTANT_ID` you set,
+provisioned at [console.unify.ai](https://console.unify.ai). Locally you
+get:
+
+- **Chat** — an interactive REPL with the full ConversationManager + Actor
+  runtime behind it. An LLM key (OpenAI, Anthropic, or DeepSeek) is what
+  lets it think and reply.
+- **Browser voice calls** — the production fast-brain (interruption-handling,
+  telephony-aware) running locally with sub-second latency. See
+  [Voice](/local-deployment/voice).
+- **Web search** — a free [Tavily](https://tavily.com) key lets it look
+  things up while researching.
+- **Computer use** — it drives a real browser and desktop; an optional
+  [AntiCaptcha](https://anti-captcha.com) key lets it get past CAPTCHAs
+  instead of stalling.
+
+The onboarding flow, inbound messaging channels (SMS / WhatsApp / phone,
+Slack, Gmail, Outlook, Teams, Discord), Google / Microsoft workspace
+connect, third-party app integrations, screen-share, and the
+multi-teammate experience are part of the hosted product at
+[console.unify.ai](https://console.unify.ai).
+
+## The runtime stack
+
+The open one-teammate runtime is three MIT-licensed repos. They talk to the
+hosted Orchestra backend; you can also use any of them independently.
+
+| Repo | Role |
+|---|---|
+| [**unify**](https://github.com/unifyai/unify) | Agent runtime — managers, tool loops, CodeAct, voice, orchestration |
+| [**unisdk**](https://github.com/unifyai/unisdk) | Python SDK — how the runtime talks to Orchestra |
+| [**unillm**](https://github.com/unifyai/unillm) | LLM access layer — OpenAI, Anthropic, or any compatible endpoint |
+| **orchestra** | Persistence backend — hosted at [console.unify.ai](https://console.unify.ai) |
+
+## Start here
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="download" color="#2f9d97" href="/local-deployment/installation">
+    One command, a key wizard, and a `unify` CLI in your PATH — a few
+    minutes on macOS, Linux, or WSL2.
+  </Card>
+  <Card title="Voice" icon="microphone" color="#cf9a3e" href="/local-deployment/voice">
+    Real browser voice calls with sub-second latency — LiveKit Cloud plus
+    free-tier speech keys.
+  </Card>
+  <Card title="Day-to-day usage" icon="terminal" color="#6e4a86" href="/local-deployment/day-to-day">
+    The CLI commands, chatting, and steering work while it's mid-task.
+  </Card>
+  <Card title="Developers" icon="code" color="#4f7fa8" href="/local-deployment/developers">
+    How the runtime is put together, running the tests, and where to start
+    reading the code.
+  </Card>
+</CardGroup>
