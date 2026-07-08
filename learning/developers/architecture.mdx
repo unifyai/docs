@@ -9,7 +9,8 @@ reading, extending, or embedding the code. It covers the two skill
 libraries, the actor loop that reads and writes them, and the knowledge and
 memory subsystems — with symbol names and links into the source throughout.
 
-![The learning loop: ConversationManager dispatches act() to CodeActActor, whose Phase 1 doing loop is gated on FunctionManager and GuidanceManager discovery and whose Phase 2 StorageCheck writes back to both libraries](/images/developers/learning-loop.png)
+<img className="block dark:hidden" src="/images/developers/learning-loop-light.svg" alt="The learning loop: ConversationManager dispatches act() to CodeActActor, whose Phase 1 doing loop is gated on FunctionManager and GuidanceManager discovery and whose Phase 2 StorageCheck writes back to both libraries" />
+<img className="hidden dark:block" src="/images/developers/learning-loop-dark.svg" alt="The learning loop: ConversationManager dispatches act() to CodeActActor, whose Phase 1 doing loop is gated on FunctionManager and GuidanceManager discovery and whose Phase 2 StorageCheck writes back to both libraries" />
 
 ## The dual library
 
@@ -82,7 +83,8 @@ sandbox.
 Both libraries (and Knowledge) read across every scope the assistant can
 see and write to exactly one:
 
-![Federated scopes: federated_ranked_search fans out to the personal root, team roots, and the read-only builtins catalogue, with ContextRegistry resolving read and write roots](/images/developers/federated-scopes.png)
+<img className="block dark:hidden" src="/images/developers/federated-scopes-light.svg" alt="Federated scopes: federated_ranked_search fans out to the personal root, team roots, and the read-only builtins catalogue, with ContextRegistry resolving read and write roots" />
+<img className="hidden dark:block" src="/images/developers/federated-scopes-dark.svg" alt="Federated scopes: federated_ranked_search fans out to the personal root, team roots, and the read-only builtins catalogue, with ContextRegistry resolving read and write roots" />
 
 - [`ContextRegistry.read_roots`](https://github.com/unifyai/unify/blob/main/unify/common/context_registry.py)
   returns the personal root first, then `Teams/{team_id}/…` for each id in

@@ -25,7 +25,8 @@ The communication stack is two cooperating pieces:
    back through the gateway via
    [`unify/comms/primitives.py`](https://github.com/unifyai/unify/blob/main/unify/comms/primitives.py).
 
-![unify.gateway architecture: providers feed adapters, which normalize to envelopes delivered through an EnvelopeSink to the ConversationManager; the ConversationManager sends outbound via channels](/images/developers/gateway-architecture.png)
+<img className="block dark:hidden" src="/images/developers/gateway-architecture-light.svg" alt="unify.gateway architecture: providers feed adapters, which normalize to envelopes delivered through an EnvelopeSink to the ConversationManager; the ConversationManager sends outbound via channels" />
+<img className="hidden dark:block" src="/images/developers/gateway-architecture-dark.svg" alt="unify.gateway architecture: providers feed adapters, which normalize to envelopes delivered through an EnvelopeSink to the ConversationManager; the ConversationManager sends outbound via channels" />
 
 ## The wire contract: envelopes
 
