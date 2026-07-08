@@ -13,7 +13,8 @@ Email is the place where the twin-vs-teammate identity split
 ([user docs](/hiring/twin-vs-teammates)) becomes concrete in code — there
 are two entirely separate send paths:
 
-![Two email identities: primitives.workspace_email acts as the user through WorkspaceEmailManager calling Gmail API or Microsoft Graph directly with a trusted token; primitives.comms.send_email acts as the assistant through the gateway email channels to its managed mailbox; inbound email arrives via Gmail push to /email/gmail and Graph subscriptions to /microsoft/router, waking the assistant](/images/developers/workspace-email-identities.png)
+<img className="block dark:hidden" src="/images/developers/workspace-email-identities-light.svg" alt="Two email identities: primitives.workspace_email acts as the user through WorkspaceEmailManager calling Gmail API or Microsoft Graph directly with a trusted token; primitives.comms.send_email acts as the assistant through the gateway email channels to its managed mailbox; inbound email arrives via Gmail push to /email/gmail and Graph subscriptions to /microsoft/router, waking the assistant" />
+<img className="hidden dark:block" src="/images/developers/workspace-email-identities-dark.svg" alt="Two email identities: primitives.workspace_email acts as the user through WorkspaceEmailManager calling Gmail API or Microsoft Graph directly with a trusted token; primitives.comms.send_email acts as the assistant through the gateway email channels to its managed mailbox; inbound email arrives via Gmail push to /email/gmail and Graph subscriptions to /microsoft/router, waking the assistant" />
 
 ### `primitives.workspace_email` — acts as the user
 

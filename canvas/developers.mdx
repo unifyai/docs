@@ -19,7 +19,8 @@ Two packages own this territory:
 
 ## The big picture
 
-![DataManager architecture: the Actor calls primitives.data.*, which lands on DataManager (contract in base.py, implementations in ops/, schemas in types/); ContextRegistry supplies destinations; SimulatedDataManager mirrors the same contract in memory; persistence flows through unisdk HTTP to Orchestra, where contexts hold log events across personal Data/… and Teams/{id}/Data/… roots with federated reads between them.](/images/developers/datamanager-architecture.png)
+<img className="block dark:hidden" src="/images/developers/datamanager-architecture-light.svg" alt="DataManager architecture: the Actor calls primitives.data.*, which lands on DataManager (contract in base.py, implementations in ops/, schemas in types/); ContextRegistry supplies destinations; SimulatedDataManager mirrors the same contract in memory; persistence flows through unisdk HTTP to Orchestra, where contexts hold log events across personal Data/… and Teams/{id}/Data/… roots with federated reads between them." />
+<img className="hidden dark:block" src="/images/developers/datamanager-architecture-dark.svg" alt="DataManager architecture: the Actor calls primitives.data.*, which lands on DataManager (contract in base.py, implementations in ops/, schemas in types/); ContextRegistry supplies destinations; SimulatedDataManager mirrors the same contract in memory; persistence flows through unisdk HTTP to Orchestra, where contexts hold log events across personal Data/… and Teams/{id}/Data/… roots with federated reads between them." />
 
 Both packages follow the same layered pattern, shared with every state
 manager in the repo:
@@ -129,7 +130,8 @@ Context paths resolve through three private helpers in `DataManager`:
   `federated_ranked_search`, and `federated_reduce` from
   [`unify/common/federated_search.py`](https://github.com/unifyai/unify/blob/main/unify/common/federated_search.py).
 
-![Destination scopes: write_root routes each write to exactly one destination — the personal root or a team root, each holding Data and Dashboards contexts — while read_roots federates reads across personal plus all teams; data_scope additionally lets a personal tile read team data.](/images/developers/destination-scopes.png)
+<img className="block dark:hidden" src="/images/developers/destination-scopes-light.svg" alt="Destination scopes: write_root routes each write to exactly one destination — the personal root or a team root, each holding Data and Dashboards contexts — while read_roots federates reads across personal plus all teams; data_scope additionally lets a personal tile read team data." />
+<img className="hidden dark:block" src="/images/developers/destination-scopes-dark.svg" alt="Destination scopes: write_root routes each write to exactly one destination — the personal root or a team root, each holding Data and Dashboards contexts — while read_roots federates reads across personal plus all teams; data_scope additionally lets a personal tile read team data." />
 
 `ContextRegistry`
 ([`unify/common/context_registry.py`](https://github.com/unifyai/unify/blob/main/unify/common/context_registry.py))
@@ -315,7 +317,8 @@ bindings; *the Actor never writes bridge API calls*.
 
 ## Life of a live tile
 
-![Live tile lifecycle: the Actor calls create_tile with HTML, data bindings, and on_data; DashboardManager validates and dry-runs the bindings, stores the tile row and registers its token; the Console TileViewer renders the iframe and injects the UnifyData bridge, which runs live filter/reduce/join queries against the Orchestra bridge at render time; results are handed to on_data so the chart updates with fresh data.](/images/developers/live-tile-lifecycle.png)
+<img className="block dark:hidden" src="/images/developers/live-tile-lifecycle-light.svg" alt="Live tile lifecycle: the Actor calls create_tile with HTML, data bindings, and on_data; DashboardManager validates and dry-runs the bindings, stores the tile row and registers its token; the Console TileViewer renders the iframe and injects the UnifyData bridge, which runs live filter/reduce/join queries against the Orchestra bridge at render time; results are handed to on_data so the chart updates with fresh data." />
+<img className="hidden dark:block" src="/images/developers/live-tile-lifecycle-dark.svg" alt="Live tile lifecycle: the Actor calls create_tile with HTML, data bindings, and on_data; DashboardManager validates and dry-runs the bindings, stores the tile row and registers its token; the Console TileViewer renders the iframe and injects the UnifyData bridge, which runs live filter/reduce/join queries against the Orchestra bridge at render time; results are handed to on_data so the chart updates with fresh data." />
 
 The `create_tile` pipeline in `DashboardManager`, step by step:
 

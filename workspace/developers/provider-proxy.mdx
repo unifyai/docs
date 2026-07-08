@@ -10,7 +10,8 @@ at once: give LLM-authored code the **complete** provider REST surface
 without a real token, and enforce the per-assistant **file-access
 allowlist** at a single choke point.
 
-![Provider proxy policy pipeline: a sandbox request is classified by classify.py into non_file (passthrough), file_read, file_write, or unknown_file (403 default-deny); file reads and writes go through policy evaluation in policy.py and ancestry.py, with allowed requests forwarded to the upstream API and masked items returned as 404/403](/images/developers/workspace-proxy-policy.png)
+<img className="block dark:hidden" src="/images/developers/workspace-proxy-policy-light.svg" alt="Provider proxy policy pipeline: a sandbox request is classified by classify.py into non_file (passthrough), file_read, file_write, or unknown_file (403 default-deny); file reads and writes go through policy evaluation in policy.py and ancestry.py, with allowed requests forwarded to the upstream API and masked items returned as 404/403" />
+<img className="hidden dark:block" src="/images/developers/workspace-proxy-policy-dark.svg" alt="Provider proxy policy pipeline: a sandbox request is classified by classify.py into non_file (passthrough), file_read, file_write, or unknown_file (403 default-deny); file reads and writes go through policy evaluation in policy.py and ancestry.py, with allowed requests forwarded to the upstream API and masked items returned as 404/403" />
 
 ## Module map
 
