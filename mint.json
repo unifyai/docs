@@ -33,6 +33,16 @@
             ]
         },
         {
+            "group": "Local Deployment",
+            "pages": [
+                "local-deployment/overview",
+                "local-deployment/installation",
+                "local-deployment/voice",
+                "local-deployment/day-to-day",
+                "local-deployment/developers"
+            ]
+        },
+        {
             "group": "Communication",
             "pages": [
                 "communication/overview",

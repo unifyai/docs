@@ -1,0 +1,82 @@
+---
+title: "Day-to-day usage"
+description: "The CLI, chatting, and steering work while it's in flight"
+---
+
+## Commands
+
+```text
+unify                    Interactive local chat (alias: unify chat)
+unify serve              Run headless: ConversationManager + gateway
+unify stop               Stop the local runtime
+unify status             Show runtime status
+unify logs               Follow the runtime log
+unify doctor             Gateway/config checks
+unify setup              Re-run the key/credential wizard
+unify update             Update the checkout and re-sync deps
+```
+
+## Steering while work is in-flight
+
+When your teammate is mid-task in the local chat REPL, steer it the same
+way you would in the hosted Console: **send another message**. There are no
+special slash commands — steering is a first-class part of the runtime, not
+a REPL feature.
+
+**Text:** use `msg` at the `>` prompt:
+
+```text
+> msg Actually, narrow it to ones with Rust bindings.
+> msg What step are you on?
+```
+
+Each `msg` publishes a normal inbound chat message. The ConversationManager
+wakes the slow brain, which can answer you or redirect in-flight Actor work
+through its usual action-steering tools.
+
+**Voice:** type `meet` to open a LiveKit browser session, then speak
+through your mic — see [Voice](/local-deployment/voice).
+
+**Debugging:** use `trace`, `tree`, or `show_logs` to inspect what's
+happening while work is in-flight.
+
+## What this feels like
+
+```text
+You          ▸  "Find me high-throughput vector DBs under Apache 2."
+They         ▸  (start searching)
+You          ▸  "Actually, narrow it to ones with Rust bindings."
+They         ▸  (adjust the in-flight search — don't restart)
+You          ▸  "Pause that, something urgent."
+They         ▸  (freeze exactly where they are)
+... five minutes later ...
+You          ▸  "OK, resume. How's it going?"
+They         ▸  (pick up where they left off, give you a status update)
+```
+
+Every operation — at every level of the call stack — returns a live
+steerable handle, so corrections propagate down into whatever the runtime
+is currently doing without restarting it. The mechanics are covered in
+[Developers](/local-deployment/developers).
+
+## Importing skills from other assistants
+
+OpenClaw and Hermes Agent both represent skills as `SKILL.md` files (the
+[agentskills.io](https://agentskills.io) standard). That maps almost
+one-to-one onto a GuidanceManager entry, so either skill library can be
+imported off-the-shelf as guidance:
+
+```bash
+# Dry run (the default): print what would be imported, write nothing
+.venv/bin/python -m scripts.skill_migration.openclaw_to_guidance
+.venv/bin/python -m scripts.skill_migration.hermes_to_guidance
+
+# Import for real (titles are namespaced "[openclaw] …" / "[hermes] …")
+.venv/bin/python -m scripts.skill_migration.openclaw_to_guidance --execute
+.venv/bin/python -m scripts.skill_migration.hermes_to_guidance  --execute
+```
+
+Each script looks for a sibling checkout (`../openclaw`,
+`../hermes-agent`) by default; pass `--repo-root` to point elsewhere.
+Re-runs skip titles that already exist; pass `--conflict overwrite` to
+update them in place instead.
