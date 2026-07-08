@@ -39,6 +39,7 @@
                 "local-deployment/installation",
                 "local-deployment/voice",
                 "local-deployment/day-to-day",
+                "local-deployment/custom-overrides",
                 "local-deployment/developers"
             ]
         },

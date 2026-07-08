@@ -1,0 +1,243 @@
+---
+title: "Custom overrides"
+description: "Seed and manage state-manager content from version-controlled files"
+---
+
+Every state manager in the runtime can be seeded from **source files** —
+plain JSONL and JSON files (plus decorated Python for functions) that you
+keep in version control. At sync time the runtime reconciles each manager's
+backing store against these files: entries you declare are inserted,
+entries you edit are updated, and entries you delete are removed. Content
+the assistant created on its own is left alone.
+
+This turns a local deployment into something you can configure like code:
+check your assistant's starting contacts, guidance, secrets, tasks, and
+reference data into a repo, and every fresh deployment converges to the
+same state.
+
+## How syncing works
+
+Each manager exposes the same pair of building blocks (in
+`unify/<manager>/custom_*.py` in the
+[`unifyai/unify`](https://github.com/unifyai/unify) repo):
+
+- **Collectors** read the source files from one or more directories and
+  return the declared entries.
+- **`sync_custom()`** on the manager reconciles the store against those
+  entries.
+
+Reconciliation is **hash-based and idempotent**:
+
+1. Every source entry carries a stable `key` and gets a content hash. An
+   aggregate hash over all entries is compared against the last synced
+   value — if nothing changed, sync is a no-op, so it's cheap to run on
+   every startup.
+2. On a mismatch, entries are reconciled by `key`: new keys are inserted,
+   changed hashes are updated in place, and keys that disappeared from the
+   source are deleted from the store.
+3. Rows the assistant or user created through normal conversation are
+   untouched — sync only manages rows it created. The one exception: if a
+   manually-created row collides with a declared `key`, the source
+   definition adopts it.
+4. Runtime-owned state survives updates. A recurring task keeps its
+   execution history and status when you edit its definition, and a task
+   that is actively running is skipped and picked up on the next sync.
+5. Invalid lines are skipped with a logged warning — one bad row never
+   blocks the rest of the file.
+
+Two fields are understood by every entry type:
+
+| Field | Default | Meaning |
+|---|---|---|
+| `destination` | `"personal"` | Where the entry lives — `"personal"` for the assistant's own context, `"team:<id>"` for a shared team context |
+| `auto_sync` | `true` | Set `false` to stop managing this entry from source (it's skipped entirely) |
+
+Blank lines and `#`-prefixed comment lines are allowed in every `.jsonl`
+file.
+
+## The override cascade
+
+Collectors accept a **list of directories** and merge them in order — when
+the same `key` appears in more than one directory, **the later directory
+wins**. This gives you a layered override model:
+
+```text
+overrides/
+  org/          # baseline shared by everyone
+    guidance.jsonl
+    contacts.jsonl
+  me/           # your personal layer — overrides org on key collision
+    guidance.jsonl
+    tasks.jsonl
+```
+
+Pass `[org, me]` and an entry keyed `crm-runbook` in `me/guidance.jsonl`
+replaces the org-level definition of the same key. The hosted product uses
+this same mechanism to cascade org → user → assistant configuration; a
+local deployment can use as many or as few layers as it wants.
+
+## Source file formats
+
+### Guidance — `guidance.jsonl`
+
+One JSON object per line. `function_names` link the guidance to custom
+functions by name (resolved to ids at sync time):
+
+```json
+{"key": "crm-runbook", "title": "CRM escalation runbook", "content": "When a customer reports...", "function_names": ["create_crm_ticket"]}
+```
+
+### Contacts — `contacts.jsonl`
+
+```json
+{"key": "sarah-chen", "first_name": "Sarah", "surname": "Chen", "email_address": "sarah@example.com", "job_title": "CTO", "should_respond": true, "response_policy": "Always reply same-day."}
+```
+
+Other supported fields: `phone_number`, `whatsapp_number`, `discord_id`,
+`slack_user_id`, `bio`, `timezone`. `key` may be omitted — it defaults to
+the lowercased `first_name|surname` pair (secrets similarly default to
+their `name`).
+
+### Secrets — `secrets.jsonl`
+
+```json
+{"key": "crm-api", "name": "CRM_API_KEY", "value": "…", "description": "Read-write CRM access"}
+```
+
+<Warning>
+  Secret values live in the file, so keep secrets source files out of
+  shared version control (or template them in from your secret store at
+  deploy time).
+</Warning>
+
+### Tasks — `tasks.jsonl`
+
+Declare recurring or event-triggered work. `schedule` and `trigger` are
+mutually exclusive; runtime status and execution metadata stay owned by
+the scheduler:
+
+```json
+{"key": "monday-digest", "name": "Weekly GitHub digest", "description": "Digest this week's GitHub notifications.", "schedule": {"start_at": "2026-07-13T09:00:00Z"}, "repeat": [{"frequency": "weekly", "weekdays": ["MO"], "time_of_day": "09:00"}]}
+{"key": "vip-email-watch", "name": "VIP email watch", "description": "Summarize and flag anything urgent.", "trigger": {"medium": "email", "recurring": true}}
+```
+
+`schedule` holds an ISO-8601 `start_at`; `repeat` is a list of
+RFC-5545-style patterns (`frequency`, `interval`, `weekdays`, `count`,
+`until`, `time_of_day`); `trigger` names an inbound communication event
+(`medium` such as `email` or `sms_message`, optional
+`from_contact_ids`/`omit_contact_ids`, and `recurring` to re-arm after
+each run). Other supported fields: `deadline`, `priority`,
+`response_policy`, `entrypoint_function` (run a stored function instead of
+re-planning), `offline`.
+
+### Blacklist — `blacklist.jsonl`
+
+```json
+{"key": "spam-caller", "medium": "phone", "contact_detail": "+15551234567", "reason": "Repeated spam"}
+```
+
+### Knowledge tables — directory tree
+
+Each table is a subdirectory holding `meta.json` (description, column
+types, and the `seed_key` used as the per-row merge key) plus `rows.jsonl`.
+The relative path to `meta.json` becomes the table name, so nesting is
+allowed:
+
+```text
+knowledge/
+  Companies/
+    meta.json          # {"description": "...", "columns": {...}, "seed_key": "name"}
+    rows.jsonl
+  CRM/OperatingRules/
+    meta.json
+    rows.jsonl
+```
+
+### Reference data tables — directory tree
+
+Same `meta.json` + `rows.jsonl` shape as knowledge, for DataManager-owned
+reference tables. `meta.json` additionally supports `context` (target
+context path), `unique_keys`, and `auto_counting`.
+
+### Dashboards — directory tree
+
+Tiles and layouts live under `tiles/` and `layouts/` namespaces, each with
+the `meta.json` + `rows.jsonl` shape.
+
+### Functions and venvs — Python and TOML
+
+Custom functions are ordinary Python decorated with `@custom_function`;
+venvs are `pyproject.toml`-style files whose filename becomes the venv
+name:
+
+```python
+# functions/acme_workflows.py
+from unify.function_manager.custom import custom_function
+
+@custom_function(venv_name="acme_ml")
+def score_lead(company: str) -> float:
+    """Score a sales lead using the ACME model."""
+    ...
+```
+
+```toml
+# venvs/acme_ml.toml
+[project]
+dependencies = ["scikit-learn>=1.4"]
+```
+
+Files starting with `_` are ignored. See the
+[FunctionManager README](https://github.com/unifyai/unify/blob/main/unify/function_manager/README.md)
+for the full decorator reference.
+
+## Running a sync
+
+Syncing is **explicit** — nothing watches the files. Collect from your
+directory layers and call `sync_custom()` on each manager. Sync functions
+first, since guidance and tasks resolve function names to ids:
+
+```python
+from pathlib import Path
+
+from unify.manager_registry import ManagerRegistry
+from unify.function_manager.custom_functions import (
+    collect_functions_from_directories,
+    collect_venvs_from_directories,
+)
+from unify.guidance_manager.custom_guidance import collect_guidance_from_directories
+from unify.task_scheduler.custom_tasks import collect_tasks_from_directories
+
+layers = [Path("overrides/org"), Path("overrides/me")]
+
+fm = ManagerRegistry.get_function_manager()
+fm.sync_custom(
+    source_functions=collect_functions_from_directories(layers),
+    source_venvs=collect_venvs_from_directories(layers),
+)
+
+name_to_id = {
+    name: data["function_id"]
+    for name, data in fm.list_functions().items()
+    if data.get("function_id") is not None
+}
+
+ManagerRegistry.get_guidance_manager().sync_custom(
+    source_guidance=collect_guidance_from_directories(layers),
+    function_name_to_id=name_to_id,
+)
+ManagerRegistry.get_task_scheduler().sync_custom(
+    source_tasks=collect_tasks_from_directories(layers),
+    function_name_to_id=name_to_id,
+)
+```
+
+Contacts, secrets, blacklist, knowledge, data, and dashboards follow the
+same collect-then-sync shape with their own collectors
+(`collect_contacts_from_directories`, `collect_secrets_from_directories`,
+and so on). Because every sync is hash-guarded, running the whole pass on
+every startup costs almost nothing when the files haven't changed.
+
+In the hosted product this reconcile runs automatically when an assistant
+starts, cascading org, user, and assistant configuration layers. In a
+local deployment you decide when it runs — a startup script that calls the
+snippet above is the usual shape.
