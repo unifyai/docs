@@ -20,6 +20,10 @@ permissions (Owner or Admin role).
 - **Update or delete** from the team's row menu. Deleting a team is
   consequential: it permanently removes the team's entire shared pool —
   the knowledge, playbooks, tasks, and data accumulated in it.
+- **Teams that own assistants can't be deleted.** If the team has [team
+  assistants](/teams/team-assistants), its pool is their entire memory —
+  deletion is refused until those assistants are deleted first, so a
+  team's AI staff can never be wiped out as a side effect.
 
 ## Managing members
 
@@ -32,15 +36,29 @@ From each team's menu:
   their own right. The simplest way is to ask your org's T-W1N —
   org-shaped setup like team creation, membership, and shared credentials
   is exactly the work it's for.
+- **Hire directly into the team** — the team's **Members** panel has a
+  **Hire for this team** action that onboards a new [team
+  assistant](/teams/team-assistants) with this team preselected as its
+  owner. (A team assistant can't be removed from its owning team — that
+  membership is structural.)
 
 Access changes take effect immediately, including for assistants that are
 mid-session.
 
-## Org-wide sharing: the one-team shortcut
+## Team spend
 
-When you create an organization (and any time after, from the Teams tab),
-you choose a data-sharing posture. The Console explains the trade
-directly:
+Assistant spending is attributable per team: the organization's spending
+breakdown can be scoped to any team, aggregating across every [team
+assistant](/teams/team-assistants) that team owns. Their caps are managed
+by org admins, bounded by the organization's cap, and limit alerts go to
+the org's Owners and Admins — the full model is described in
+[Team assistants](/teams/team-assistants#spend-caps-and-attribution).
+
+## Org-wide sharing: on by default
+
+New organizations start with org-wide sharing **enabled** — choose
+**private** at creation (or toggle later from the Teams tab) to opt out.
+The Console explains the trade directly:
 
 > By default, all skills acquired and knowledge retained are personal to
 > each user's own private teammate… Each user's teammate learns in
@@ -53,7 +71,7 @@ directly:
 > controlled sharing within specific teams, rather than blanket org-wide
 > sharing.
 
-Enabling **org-wide sharing** creates a managed team named **Org** that
+Org-wide sharing runs through a managed team named **Org** that
 automatically includes every current and future member and assistant.
 A few things to know about it:
 
@@ -64,16 +82,21 @@ A few things to know about it:
   and files are never shared** through the org pool. Only knowledge,
   skills, and general know-how flow into it, creating what the Console
   calls "a faster hive-mind approach to learning across the team."
+- **It's the natural home for company-wide assistants.** Hiring a [team
+  assistant](/teams/team-assistants) into the Org team gives you an
+  assistant that belongs to — and is usable by — the entire organization,
+  present and future.
 - **Turning it off deletes the pool.** Disabling org-wide sharing removes
   the Org team *and all shared content in it* — the Console warns you, and
-  it cannot be undone.
+  it cannot be undone. (Like any team, it can't be disabled while it owns
+  team assistants.)
 
 ## Choosing your structure
 
 | Setup | Fits |
 |---|---|
-| **No teams** (all private) | Solo users; orgs where assistants genuinely shouldn't share |
-| **Org-wide sharing only** | Small orgs where everyone works on everything |
+| **Fully private** (opt out at creation) | Solo users; orgs where assistants genuinely shouldn't share |
+| **Org-wide sharing only** (the default) | Small orgs where everyone works on everything |
 | **Dedicated teams** | Any org with units, divisions, or sensitivity boundaries — the recommended shape as you grow |
 
 The options combine: you can run org-wide sharing for general know-how

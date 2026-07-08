@@ -164,6 +164,7 @@
             "pages": [
                 "teams/overview",
                 "teams/membership",
+                "teams/team-assistants",
                 "teams/shared-context",
                 "teams/managing",
                 "teams/developers"

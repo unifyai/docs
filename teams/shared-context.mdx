@@ -11,6 +11,13 @@ Teams exist so that pool doesn't have to be all-or-nothing: every piece of
 context is either **personal** (belonging to one assistant) or **shared in
 a team** (accessible to every current member).
 
+One deliberate exception up front: [team
+assistants](/teams/team-assistants) have no personal scope at all — their
+owning team's pool *is* their memory. Everything below about choosing
+between personal and team applies to T-W1Ns and personally-supervised
+assistants; a team assistant simply defaults to its owning team and can
+additionally write into other teams it belongs to.
+
 ## The two scopes
 
 <CardGroup cols={2}>
@@ -94,10 +101,20 @@ org":
 
 ## Seeing scopes in the Console
 
-Shared context is visible where you'd expect: **Guidance** and
-**Knowledge** entries carry scope badges showing whether they're personal
-or belong to a team, and the [Data pane](/canvas/data) groups team-owned
-tables under their team alongside the assistant's personal folders.
+Every brain pane on an assistant — Contacts, Transcripts, Knowledge,
+Functions, Guidance, Tasks, Data, Dashboards — carries **scope chips**:
+
+- **All** (the default) — the exact merged picture the assistant itself
+  works from: its personal pool plus every team it belongs to, combined
+  into one correctly-ordered view. Merged entries show which scope they
+  came from, and in Transcripts each thread is labeled with its team.
+- **Personal** — just its private memory.
+- **One chip per team** — just that team's shared pool.
+
+The complementary view is the team itself: **selecting a team in the
+sidebar** shows every one of those sections scoped to the team's pool —
+the same data any member's assistant sees when it reads that team, without
+going through any individual assistant.
 
 <Tip>
   A good habit when teaching an assistant something reusable: say who it's
