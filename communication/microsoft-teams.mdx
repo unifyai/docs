@@ -1,35 +1,61 @@
 ---
 title: "Microsoft Teams"
-description: "Chats, group chats, channels, and meetings with your assistant"
+description: "Bring your assistants into Teams with the org-installed Unify app"
 ---
 
-If your organization runs on Microsoft Teams, your assistant fits right in —
-one-on-one chats, group chats, channel threads, and even creating and joining
-Teams meetings.
+If your organization runs on Microsoft Teams, the **Unify Teams app** brings
+your assistants right into it — one-on-one chats, group chats, and channel
+threads. It's an org-wide app your admin installs once, so everyone can reach
+your assistants without any per-assistant setup. This is the Teams equivalent
+of the [Slack app](/communication/slack): the assistant shows up as the shared
+Unify bot, not as a person.
+
+<Note>
+  There's a second, separate way to use Teams: an assistant can act through
+  its **own connected Microsoft 365 account** (the same account as its
+  [mailbox](/workspace/email)) — appearing as that user rather than the shared
+  app. That path is part of the workspace connection and is documented under
+  [Workspace → Teams](/workspace/teams).
+</Note>
 
 ## Setup
 
-Teams comes with the **Microsoft 365 connection** — the same one used for
-[Outlook email](/communication/email). When you connect a Microsoft account
-for your assistant, grant the **Teams** feature and Teams chat is enabled.
+A Microsoft admin installs the **Unify Teams app** into your organization's
+Teams. Once it's installed, every assistant in the org — and your coordinator
+— is reachable through it; there's nothing to configure per assistant.
 
 ## Messaging
 
-- **1:1 chat** — message your assistant in Teams like any colleague.
-- **Group chats** — your assistant can take part in group conversations with
-  two or more people, and can start them too.
-- **Channels** — @mention your assistant in a channel and it replies in the
-  thread; it can also post to channels and even create new ones.
-- **Attachments** — your assistant can send files in Teams messages.
+- **1:1 chat** — message the Unify app in Teams and your coordinator picks up
+  the conversation.
+- **Group chats** — add the app to a group chat and @mention it to bring it
+  in; it replies in the same conversation.
+- **Channels** — @mention the app in a channel and it replies in the thread,
+  keeping channels tidy.
 
-## Meetings
+## Reaching a specific teammate
 
-Your assistant is unusually capable with Teams meetings:
+Because the app is shared, addressing works like Slack:
 
-- **Create instant meetings** — ask for a meeting link and it generates one
-  on the spot.
-- **Schedule meetings** — it can put a Teams meeting on the calendar with
-  invites sent to attendees.
-- **Join meetings** — send your assistant a Teams meeting link and it joins
-  the call and participates with its voice, like any remote attendee. See
-  [Meetings](/communication/meetings).
+- In a **channel or group chat**, @mention the app and include the teammate's
+  name to reach a specific assistant (for example, `@Unify Alex, can you…`).
+  @mention it with no name and the message goes to your **coordinator**, who
+  can hand off from there.
+- In a **1:1 chat**, messages go to your coordinator — there's no name to add,
+  so naming a teammate isn't used here.
+
+<Note>
+  Teams only delivers channel and group-chat messages to the app when it's
+  **@mentioned**, so remember the mention when you want the assistant to see a
+  message in a shared space. In a 1:1 chat every message is delivered.
+</Note>
+
+## Good to know
+
+- Your assistant only speaks in a channel when it's mentioned or directly
+  relevant — it won't spam your team's conversations.
+- It's the same assistant across every surface: a task you discussed in Teams
+  can be delivered over email, and vice versa.
+- **Meetings** are separate from the app. Your assistant can join and host
+  Teams meetings — see [Meetings](/workspace/meetings) for joining, and
+  [Workspace → Teams](/workspace/teams) for creating and scheduling them.

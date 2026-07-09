@@ -3,10 +3,10 @@ title: "People & assistants"
 description: "Who belongs to a team, and how assistant access follows"
 ---
 
-Teams contain **people** and **assistants**, and the platform treats the two
-kinds of assistants — your private T-W1N and publicly visible teammates —
-very differently. Getting this distinction right is most of understanding
-teams.
+Teams contain **people** and **assistants**, and the platform treats the
+kinds of assistants — your private T-W1N, personally-supervised hires, and
+[team assistants](/teams/team-assistants) — very differently. Getting
+these distinctions right is most of understanding teams.
 
 ## Your T-W1N: private, and it follows you
 
@@ -27,25 +27,36 @@ team *you're* on — the sales team's playbooks, the ops team's data — while
 remaining completely invisible to your colleagues. They benefit from what
 it shares into team pools without ever interacting with it directly.
 
-## Public assistants: visible, and members in their own right
+## Hired assistants: visible, and members in their own right
 
-Regular hired assistants are the opposite on both counts:
+Hired assistants are the opposite on both counts:
 
 1. **They're visible across the organization.** Colleagues (with the
    appropriate org permissions) can find them in the assistant list, open
    their profiles, and message them — they're shared team members in the
    fullest sense.
-2. **They're added to teams directly.** A public assistant's team
-   memberships are its own — granted explicitly, not inherited from
-   whoever hired it. The person who onboarded an assistant might not even
-   be on the teams it serves.
+2. **Their team memberships are their own** — granted explicitly, not
+   inherited from any person. One assistant can serve several teams at
+   once (the sidebar shows a badge listing all of them).
 
-This is what makes public assistants useful as **specialists**: a repairs
+Within that, two ownership models:
+
+- **Team assistants** — owned by a team rather than a person. Hiring
+  defaults to this: you pick an **owning team** during the hire, the team
+  becomes the assistant's home, and membership in that team is
+  *structural* — it can't be removed from its owning team, and the team
+  can't be deleted while it owns assistants. Everything about them is
+  covered in [Team assistants](/teams/team-assistants).
+- **Personally-supervised assistants** — owned by the person who hired
+  them (choose **Personal** during the hire). They keep a private memory
+  as their [privacy floor](/teams/shared-context) and join teams as an
+  add-on: each membership layers that team's shared pool on top.
+
+This is what makes hired assistants useful as **specialists**: a repairs
 coordinator serving the whole repairs team, a reporting assistant embedded
-in finance. They belong to the unit, not to a person, and one assistant can
-serve several teams at once (the sidebar shows a badge listing all of
-them). For how these teammates come to exist — and how their identity
-differs from a T-W1N's — see [Hiring](/hiring/overview).
+in finance. They belong to the unit, not to a person. For how these
+teammates come to exist — and how their identity differs from a T-W1N's —
+see [Hiring](/hiring/overview).
 
 ## Joining and leaving
 
@@ -53,11 +64,16 @@ Membership is live — access tracks it immediately:
 
 - **Joining** a team gives a member (human or assistant) access to the
   team's whole [shared pool](/teams/shared-context) — knowledge, guidance,
-  skills, tasks, data, credentials — from that moment.
+  skills, tasks, data, credentials — from that moment. It also puts them
+  in the team's group chat.
 - **Leaving** (or being removed) ends that access just as cleanly. The
   shared content itself **stays with the team** for the remaining members —
   people take their access away with them, not the team's accumulated
   know-how.
+- **The one structural exception:** a [team
+  assistant](/teams/team-assistants) cannot leave or be removed from its
+  *owning* team — that team's pool is its entire memory. It can join and
+  leave any *other* team freely, like any assistant.
 - **Leaving the organization** removes a person from all its teams — and
   their T-W1N from all of them too, automatically.
 
@@ -66,9 +82,10 @@ revocation doesn't wait for the next session.
 
 ## Who's who at a glance
 
-| | Your T-W1N | Public assistants |
-|---|---|---|
-| Visible to colleagues | Never | Yes — listed, searchable, messageable |
-| Team membership | Automatic — mirrors yours | Explicit — granted per team |
-| Access ceiling | Exactly your teams | Exactly its teams |
-| Serves | You | The team(s) it belongs to |
+| | Your T-W1N | Personally-supervised | Team assistant |
+|---|---|---|---|
+| Visible to colleagues | Never | Yes — listed, searchable, messageable | Yes — listed, searchable, messageable |
+| Owned by | You | The person who hired it | The owning team |
+| Team membership | Automatic — mirrors yours | Explicit — granted per team | Owning team is structural; other teams explicit |
+| Private memory | Yes — its privacy floor | Yes — its privacy floor | None — the team pool is its memory |
+| Answers to | You | Its supervisor (and teams it joins) | Anyone on the team |

@@ -33,6 +33,17 @@
             ]
         },
         {
+            "group": "Local Deployment",
+            "pages": [
+                "local-deployment/overview",
+                "local-deployment/installation",
+                "local-deployment/voice",
+                "local-deployment/day-to-day",
+                "local-deployment/custom-overrides",
+                "local-deployment/developers"
+            ]
+        },
+        {
             "group": "Communication",
             "pages": [
                 "communication/overview",
@@ -45,7 +56,6 @@
                 "communication/slack",
                 "communication/microsoft-teams",
                 "communication/discord",
-                "communication/meetings",
                 "communication/setup",
                 "communication/voice",
                 "communication/behavior",
@@ -68,6 +78,8 @@
                 "workspace/overview",
                 "workspace/connecting",
                 "workspace/email",
+                "workspace/teams",
+                "workspace/meetings",
                 "workspace/calendar",
                 "workspace/files",
                 "workspace/contacts-and-tasks",
@@ -164,6 +176,7 @@
             "pages": [
                 "teams/overview",
                 "teams/membership",
+                "teams/team-assistants",
                 "teams/shared-context",
                 "teams/managing",
                 "teams/developers"

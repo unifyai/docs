@@ -38,7 +38,8 @@ The workspace integration is built from four cooperating pieces:
    [`sharepoint`](https://github.com/unifyai/unify/blob/main/unify/gateway/channels/sharepoint/views.py))
    that back sending, inbox watches, and the Console file picker.
 
-![Workspace OAuth plumbing: the Console approves scopes, gateway OAuth callbacks persist GOOGLE_*/MICROSOFT_* tokens to Orchestra secrets, SecretManager syncs them into the runtime keeping raw tokens in memory only, and the localhost provider proxy swaps sandbox nonces for real tokens before calling Google APIs and Microsoft Graph](/images/developers/workspace-oauth-plumbing.png)
+<img className="block dark:hidden" src="/images/developers/workspace-oauth-plumbing-light.svg" alt="Workspace OAuth plumbing: the Console approves scopes, gateway OAuth callbacks persist GOOGLE_*/MICROSOFT_* tokens to Orchestra secrets, SecretManager syncs them into the runtime keeping raw tokens in memory only, and the localhost provider proxy swaps sandbox nonces for real tokens before calling Google APIs and Microsoft Graph" />
+<img className="hidden dark:block" src="/images/developers/workspace-oauth-plumbing-dark.svg" alt="Workspace OAuth plumbing: the Console approves scopes, gateway OAuth callbacks persist GOOGLE_*/MICROSOFT_* tokens to Orchestra secrets, SecretManager syncs them into the runtime keeping raw tokens in memory only, and the localhost provider proxy swaps sandbox nonces for real tokens before calling Google APIs and Microsoft Graph" />
 
 ## The core design decision
 
