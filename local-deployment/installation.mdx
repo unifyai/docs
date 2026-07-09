@@ -1,0 +1,89 @@
+---
+title: "Installation"
+description: "One command to a locally-running teammate"
+---
+
+## Prerequisites
+
+- **Python 3.12+**
+- **macOS, Linux, or WSL2**
+- An **LLM provider key** — OpenAI, Anthropic, or DeepSeek
+- A **Unify API key** and an assistant — create both at
+  [console.unify.ai](https://console.unify.ai)
+
+## Install
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/unifyai/unify/staging/scripts/install.sh | bash
+```
+
+The installer clones `unify`, syncs Python dependencies with `uv` (which
+resolves the sibling `unisdk` and `unillm` packages), runs a key wizard,
+and installs a `unify` CLI shim in `~/.local/bin/`. **Open a new
+terminal**, then start chatting:
+
+```bash
+unify
+```
+
+`unify` opens an interactive local chat with one teammate, powered by the
+full local runtime and the hosted Orchestra backend. Run headless
+(ConversationManager + gateway) with `unify serve`.
+
+```text
+> What did I leave half-finished on the indexer rewrite last week?
+> Watch my open PRs and ping me when one gets reviewed.
+> Remind me to send Sarah the benchmark numbers on Thursday.
+```
+
+<Accordion title="What the installer does">
+  Clones `unify` under `~/.unity/`, runs `uv sync --all-groups`, and writes
+  `~/.unity/unity/.env` with your `UNIFY_KEY`, `ASSISTANT_ID`,
+  `ORCHESTRA_URL` (the hosted backend), and an LLM provider key — plus
+  optional voice and research keys via the bring-your-own-keys wizard. It
+  installs a `unify` CLI shim in `~/.local/bin/` with a clearly-marked PATH
+  block appended to your shell rc.
+
+  Get your `UNIFY_KEY` and `ASSISTANT_ID` from
+  [console.unify.ai](https://console.unify.ai). If you skip a key at
+  install time (or pipe through a non-interactive shell), add it to
+  `~/.unity/unity/.env` and run `unify setup`.
+</Accordion>
+
+## Configuration
+
+All bring-your-own-keys (LLM, voice, research) live in
+`~/.unity/unity/.env`. Edit the file and run `unify setup` to apply
+changes. The keys the runtime understands:
+
+| Variable | Purpose | Required? |
+|---|---|---|
+| `UNIFY_KEY` | Authenticates against the hosted Orchestra backend | Yes |
+| `ASSISTANT_ID` | Which assistant record the runtime drives | Yes |
+| `ORCHESTRA_URL` | Backend URL (defaults to the hosted backend) | Set by installer |
+| `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` / `DEEPSEEK_API_KEY` | Lets the assistant think and reply | One of these |
+| `TAVILY_API_KEY` | Web search while researching (free tier) | Optional |
+| `ANTI_CAPTCHA_KEY` | CAPTCHA solving during computer use | Optional |
+| LiveKit + speech keys | Browser voice calls | See [Voice](/local-deployment/voice) |
+
+## Running from a checkout
+
+If you cloned the repo yourself rather than using the installer:
+
+```bash
+pip install uv && uv sync --all-groups
+```
+
+The interactive chat is `.venv/bin/python -m
+sandboxes.conversation_manager.sandbox`, and the headless runtime is `bash
+scripts/local.sh start --full`. Always use the project virtualenv at
+`.venv/` — the key wizard is available as `scripts/prompt_byok_keys.sh`.
+
+## Updating
+
+```bash
+unify update
+```
+
+This updates the checkout and re-syncs dependencies. Your `.env` is
+preserved.

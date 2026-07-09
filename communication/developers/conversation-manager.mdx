@@ -10,7 +10,8 @@ state, consumes events, runs the reasoning loop, and delegates outbound
 I/O. Its package README describes it as the layer that interfaces with
 users while delegating complex reasoning to the `Actor`.
 
-![Inbound event lifecycle: envelope → CommsManager → EventBroker → ConversationManager.wait_for_events → side effects → slow brain turn → comms tools / act / wait](/images/developers/event-lifecycle.png)
+<img className="block dark:hidden" src="/images/developers/event-lifecycle-light.svg" alt="Inbound event lifecycle: envelope → CommsManager → EventBroker → ConversationManager.wait_for_events → side effects → slow brain turn → comms tools / act / wait" />
+<img className="hidden dark:block" src="/images/developers/event-lifecycle-dark.svg" alt="Inbound event lifecycle: envelope → CommsManager → EventBroker → ConversationManager.wait_for_events → side effects → slow brain turn → comms tools / act / wait" />
 
 ## The event model
 
@@ -23,7 +24,10 @@ Subclasses auto-register via `__init_subclass__`, serialize with
 
 The catalogue is broad and symmetric: for most channels there's a
 `*Received` and a `*Sent` class (`SMSReceived`/`SMSSent`,
-`EmailReceived`/`EmailSent`, `UnifyMessageReceived`/`UnifyMessageSent`…),
+`EmailReceived`/`EmailSent`, `UnifyMessageReceived`/`UnifyMessageSent`, and —
+for the org-installed Teams app — separate DM and channel pairs
+`MsTeamsBotMessageReceived`/`MsTeamsBotMessageSent` and
+`MsTeamsBotChannelMessageReceived`/`MsTeamsBotChannelMessageSent`…),
 plus call-lifecycle events (`PhoneCallReceived`, `PhoneCallAnswered`,
 `PhoneCallEnded`, `UnifyMeetStarted`…), per-utterance voice events
 (`InboundPhoneUtterance`, `OutboundUnifyMeetUtterance`…), reactions,
@@ -52,7 +56,11 @@ Two mapping layers connect the world to handlers:
 defines the `Medium` enum — the single source of truth for channel types
 (`UNIFY_MESSAGE`, `EMAIL`, `SMS_MESSAGE`, `WHATSAPP_MESSAGE`,
 `WHATSAPP_CALL`, `PHONE_CALL`, `UNIFY_MEET`, `GOOGLE_MEET`, `TEAMS_MEET`,
-Slack/Discord/Teams variants…). Each medium registers a `MediumInfo` with a
+Slack/Discord variants, and both the delegated-Graph
+(`TEAMS_MESSAGE`, `TEAMS_CHANNEL_MESSAGE`) and org-installed bot
+(`MS_TEAMS_BOT_MESSAGE`, `MS_TEAMS_BOT_CHANNEL_MESSAGE`) Teams mediums…).
+The two org-installed bot send tools are gated behind the assistant's
+`has_ms_teams_bot` capability. Each medium registers a `MediumInfo` with a
 **mode**: `TEXT`, `CALL`, or `MEET`
 ([`cm_types/mode.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/cm_types/mode.py)).
 Mode is what gates behavior — voice tools like `guide_voice_agent` only

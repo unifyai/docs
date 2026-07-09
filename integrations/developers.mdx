@@ -23,7 +23,8 @@ on one rule: **FunctionManager search is the single discovery surface for
 executable tools**. Whatever lane a capability arrives through, the actor
 finds it the same way it finds everything else.
 
-![Three integration lanes: provider-backed third-party apps discovered via the Builtins catalog and executed through Orchestra; native unity-deploy packages activated by secrets; and the SDK-plus-secrets pattern for apps with no gallery entry — all converging on FunctionManager search](/images/integrations-dev-lanes.png)
+<img className="block dark:hidden" src="/images/integrations-dev-lanes-light.svg" alt="Three integration lanes: provider-backed third-party apps discovered via the Builtins catalog and executed through Orchestra; native unity-deploy packages activated by secrets; and the SDK-plus-secrets pattern for apps with no gallery entry — all converging on FunctionManager search" />
+<img className="hidden dark:block" src="/images/integrations-dev-lanes-dark.svg" alt="Three integration lanes: provider-backed third-party apps discovered via the Builtins catalog and executed through Orchestra; native unity-deploy packages activated by secrets; and the SDK-plus-secrets pattern for apps with no gallery entry — all converging on FunctionManager search" />
 
 | Lane | Discovery | Activation | Execution |
 |---|---|---|---|
@@ -135,7 +136,8 @@ What it triggers is **materialization**: provider tools from the Builtins
 catalog are written into the assistant's own `Functions/Primitives` context
 as first-class FunctionManager rows, so ordinary FM search finds them.
 
-![Provider tool sync and materialization: a Console connect emits an integration_tools_sync_requested event, the IntegrationSyncCoordinator marks the app as syncing, FunctionManager.sync_provider_integration_tools reads the Builtins tools catalog, compares per-app hashes, upserts changed rows into Functions/Primitives, and the user is notified the tools are ready — with a cleanup path on disconnect and a startup pass over all connected apps](/images/integrations-dev-sync.png)
+<img className="block dark:hidden" src="/images/integrations-dev-sync-light.svg" alt="Provider tool sync and materialization: a Console connect emits an integration_tools_sync_requested event, the IntegrationSyncCoordinator marks the app as syncing, FunctionManager.sync_provider_integration_tools reads the Builtins tools catalog, compares per-app hashes, upserts changed rows into Functions/Primitives, and the user is notified the tools are ready — with a cleanup path on disconnect and a startup pass over all connected apps" />
+<img className="hidden dark:block" src="/images/integrations-dev-sync-dark.svg" alt="Provider tool sync and materialization: a Console connect emits an integration_tools_sync_requested event, the IntegrationSyncCoordinator marks the app as syncing, FunctionManager.sync_provider_integration_tools reads the Builtins tools catalog, compares per-app hashes, upserts changed rows into Functions/Primitives, and the user is notified the tools are ready — with a cleanup path on disconnect and a startup pass over all connected apps" />
 
 ### The materialized row
 
@@ -213,7 +215,8 @@ At call time, the runtime is a thin, honest client — every policy decision
 happens server-side, and every non-`ok` outcome comes back as a typed status
 the actor is prompted to handle rather than swallow.
 
-![Execution and governance: actor sandbox code calls the dynamic integration namespace, which resolves execute_tool, flows through ops.run_tool and UniSDK to Orchestra's governed execution — policy check, audit record, provider dispatch — returning a result envelope whose statuses include ok, connect_required, missing_scope, blocked_by_policy, and confirmation_required, the last of which loops through a pending-approval payload and resolve_tool_execution retry](/images/integrations-dev-execution.png)
+<img className="block dark:hidden" src="/images/integrations-dev-execution-light.svg" alt="Execution and governance: actor sandbox code calls the dynamic integration namespace, which resolves execute_tool, flows through ops.run_tool and UniSDK to Orchestra's governed execution — policy check, audit record, provider dispatch — returning a result envelope whose statuses include ok, connect_required, missing_scope, blocked_by_policy, and confirmation_required, the last of which loops through a pending-approval payload and resolve_tool_execution retry" />
+<img className="hidden dark:block" src="/images/integrations-dev-execution-dark.svg" alt="Execution and governance: actor sandbox code calls the dynamic integration namespace, which resolves execute_tool, flows through ops.run_tool and UniSDK to Orchestra's governed execution — policy check, audit record, provider dispatch — returning a result envelope whose statuses include ok, connect_required, missing_scope, blocked_by_policy, and confirmation_required, the last of which loops through a pending-approval payload and resolve_tool_execution retry" />
 
 The result envelope statuses form the contract:
 

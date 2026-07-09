@@ -6,9 +6,11 @@ description: "Group people and their assistants — and give them a shared brain
 An organization rarely works as one undifferentiated blob. Sales runs
 differently from engineering; the finance team's data is not the marketing
 team's business. **Teams** bring that structure to your assistants: a team
-groups **people and assistants** within your organization, and gives them a
+groups **people and assistants** within your organization, gives them a
 **shared memory pool** — knowledge, playbooks, skills, tasks, data, and
-credentials that every member can use, and nobody outside can.
+credentials that every member can use, and nobody outside can — and a
+**group chat** where all of them, human and AI, work together in one
+thread.
 
 ## Why teams exist
 
@@ -25,61 +27,102 @@ Teams unlock the middle ground that real organizations need:
   *current members only*. Division-specific data, sensitive procedures, and
   elevated-access credentials stay inside the unit rather than spilling
   across the whole org.
-- **The default is still private.** Assistants keep personal memory as
-  their [privacy floor](/teams/shared-context) — they share into a team
-  pool only when content clearly belongs to that team, and ask when unsure.
+- **Privacy floors are respected.** Personally-supervised assistants keep
+  personal memory as their [privacy floor](/teams/shared-context) — they
+  share into a team pool only when content clearly belongs to that team,
+  and ask when unsure. ([Team assistants](/teams/team-assistants) are the
+  deliberate exception: they belong to the team, so the team pool *is*
+  their memory.)
+- **A team can hire its own assistants.** A [team
+  assistant](/teams/team-assistants) is owned by the team itself — no
+  single supervisor, everyone can work with it, and everything it learns
+  is shared with the team by construction.
 
 This shared-context machinery is the **most important thing teams do** —
 covered in depth in [Shared context](/teams/shared-context).
 
 ## Who's in a team
 
-Two kinds of members, with different rules:
+Three kinds of members, with different rules:
 
 - **People** — colleagues from your organization, added by an org admin.
-- **Assistants** — in two flavors:
-  - **Everyone's T-W1N follows its person.** Your digital twin is
-    [private to you](/teams/membership) — hidden from everyone else in the
-    org — and it automatically joins and leaves teams *with you*, so it
-    always has exactly your team access, never more.
-  - **Regular assistants join directly.** Publicly visible teammates
-    (the ones anyone in the org can find and message) are added to teams
-    in their own right — their access comes from their team memberships,
-    not from whoever hired them.
+  Humans appear in the workspace roster with live online indicators, and
+  you can message any of them directly.
+- **Everyone's T-W1N follows its person.** Your digital twin is
+  [private to you](/teams/membership) — hidden from everyone else in the
+  org — and it automatically joins and leaves teams *with you*, so it
+  always has exactly your team access, never more.
+- **Hired assistants join in their own right** — and come in two
+  ownership models:
+  - **Team assistants** (the default when hiring) are *owned by a team*:
+    the team's shared pool is their entire memory, anyone on the team can
+    work with them, and no individual holds a supervisor position. See
+    [Team assistants](/teams/team-assistants).
+  - **Personally-supervised assistants** are owned by one person but can
+    still be added to any number of teams, layering team pools on top of
+    their private memory.
 
 Details and edge cases in [People & assistants](/teams/membership).
 
 ## Where you see teams
 
-In the **Assistants** sidebar, colleagues are grouped under the teams they
-belong to — your T-W1N pinned at the top, team groups below, and
-independent colleagues listed outside any group. An assistant serving
-several teams shows a badge with all of them.
+The **Assistants** sidebar is a full org roster, grouped into three
+sections: **Teams** (each team with its members beneath it — an assistant
+serving several teams shows a badge listing them, and team-owned
+assistants carry a **Team-owned** badge under their owning team), **Real**
+(your human colleagues, with online indicators), and **Virtual**
+(assistants that aren't in any team). Your own T-W1N stays pinned at the
+top.
+
+**Selecting a team** opens the team's workspace:
+
+- **Chat** — the team's group chat, one thread shared by every member,
+  human and AI. Messages behave like a conversation in any group channel:
+  every member sees them, assistants read the room and reply when a
+  message is genuinely for them (an @mention helps), and their replies are
+  visible to — and can wake — their AI teammates.
+- **Members** — the roster with online status, and a **Hire for this
+  team** action to onboard a new [team assistant](/teams/team-assistants)
+  directly into it.
+- **Every brain section, team-scoped** — Tasks, Dashboards, Contacts,
+  Transcripts, Knowledge, Functions, Guidance, and Data all show the
+  *team's* shared pool rather than any single assistant's memory.
+
+**Selecting an assistant** gives the complementary view: each brain pane
+has scope chips — **All**, **Personal**, and one per team — so you can see
+its private memory, any single team pool, or the exact merged picture the
+assistant itself works from.
 
 Team administration lives under **Organizations → Teams** — see
 [Managing teams](/teams/managing).
 
-## One org-wide team, if you want it
+## One org-wide team, on by default
 
-For small organizations that just want everything shared, there's a
-shortcut: **org-wide sharing** creates a managed team called **Org** that
-automatically includes every current and future member and assistant. It's
-a blunt instrument by design — most organizations outgrow it and move to
-dedicated teams for the control they offer. Both are covered in
+New organizations start with **org-wide sharing enabled**: a managed team
+called **Org** that automatically includes every current and future member
+and assistant. It's the simplest useful structure — one shared pool for
+general know-how, and the natural home for company-wide [team
+assistants](/teams/team-assistants). Organizations that need boundaries
+add dedicated teams on top (the narrower pool always keeps its boundary),
+or opt out to fully private at creation. All covered in
 [Managing teams](/teams/managing).
 
 ## What's in this section
 
 <CardGroup cols={2}>
   <Card title="People & assistants" icon="users" color="#2f9d97" href="/teams/membership">
-    How membership works — T-W1N inheritance, public assistants, joining
+    How membership works — T-W1N inheritance, hired assistants, joining
     and leaving.
+  </Card>
+  <Card title="Team assistants" icon="user-group" color="#7a5fc9" href="/teams/team-assistants">
+    Assistants owned by the team itself — no single supervisor, shared
+    memory by construction.
   </Card>
   <Card title="Shared context" icon="brain" color="#c95f5a" href="/teams/shared-context">
     The heart of teams: personal vs. team memory across knowledge,
     guidance, skills, tasks, data, and credentials.
   </Card>
   <Card title="Managing teams" icon="sliders" color="#cf9a3e" href="/teams/managing">
-    Creating teams, membership admin, and org-wide sharing.
+    Creating teams, membership admin, org-wide sharing, and team spend.
   </Card>
 </CardGroup>
