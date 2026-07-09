@@ -24,7 +24,10 @@ Subclasses auto-register via `__init_subclass__`, serialize with
 
 The catalogue is broad and symmetric: for most channels there's a
 `*Received` and a `*Sent` class (`SMSReceived`/`SMSSent`,
-`EmailReceived`/`EmailSent`, `UnifyMessageReceived`/`UnifyMessageSent`…),
+`EmailReceived`/`EmailSent`, `UnifyMessageReceived`/`UnifyMessageSent`, and —
+for the org-installed Teams app — separate DM and channel pairs
+`MsTeamsBotMessageReceived`/`MsTeamsBotMessageSent` and
+`MsTeamsBotChannelMessageReceived`/`MsTeamsBotChannelMessageSent`…),
 plus call-lifecycle events (`PhoneCallReceived`, `PhoneCallAnswered`,
 `PhoneCallEnded`, `UnifyMeetStarted`…), per-utterance voice events
 (`InboundPhoneUtterance`, `OutboundUnifyMeetUtterance`…), reactions,
@@ -53,7 +56,11 @@ Two mapping layers connect the world to handlers:
 defines the `Medium` enum — the single source of truth for channel types
 (`UNIFY_MESSAGE`, `EMAIL`, `SMS_MESSAGE`, `WHATSAPP_MESSAGE`,
 `WHATSAPP_CALL`, `PHONE_CALL`, `UNIFY_MEET`, `GOOGLE_MEET`, `TEAMS_MEET`,
-Slack/Discord/Teams variants…). Each medium registers a `MediumInfo` with a
+Slack/Discord variants, and both the delegated-Graph
+(`TEAMS_MESSAGE`, `TEAMS_CHANNEL_MESSAGE`) and org-installed bot
+(`MS_TEAMS_BOT_MESSAGE`, `MS_TEAMS_BOT_CHANNEL_MESSAGE`) Teams mediums…).
+The two org-installed bot send tools are gated behind the assistant's
+`has_ms_teams_bot` capability. Each medium registers a `MediumInfo` with a
 **mode**: `TEXT`, `CALL`, or `MEET`
 ([`cm_types/mode.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/cm_types/mode.py)).
 Mode is what gates behavior — voice tools like `guide_voice_agent` only
