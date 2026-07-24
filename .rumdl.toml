@@ -1,0 +1,24 @@
+# rumdl configuration - https://github.com/rvben/rumdl
+# Markdown/MDX linting for the docs. Correctness rules stay on (broken links,
+# code-fence languages, list and heading structure); a few purely-stylistic or
+# doc-specific rules are turned off below.
+
+[global]
+disable = [
+  # Line length: docs contain long tables, URLs and code samples that are not
+  # hard-wrapped, so an 80-column limit is noise here.
+  "MD013",
+  # Multiple top-level headings: pages take their title from front matter and
+  # legitimately use several top-level sections in the body.
+  "MD025",
+  # Spaces inside emphasis markers: false-positives on adjacent emphasis spans
+  # such as *"a"*, *"b"*, where the closing and opening markers are misread.
+  "MD037",
+]
+
+# Validate Mintlify-style root-relative internal links (for example
+# /workspace/teams) against the docs tree, so a broken internal link is caught
+# rather than ignored. mint.json sits at the repo root, so the root is ".".
+[MD057]
+absolute-links = "relative_to_roots"
+roots = ["."]
