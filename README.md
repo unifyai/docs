@@ -4,13 +4,13 @@
 
 ### Build the docker image
 
-```
+```bash
 docker build -t docs:latest -f Dockerfile .
 ```
 
 ### Run the docker image
 
-```
+```bash
 docker run -v .:/docs -p 3000:3000 docs:latest
 ```
 
@@ -22,7 +22,7 @@ The `mintlify dev` command downloads the mintlify framework everytime we create 
 
 In order to save time, I'd suggest just restarting the previously existing container rather than creating a new one, the docker image only really contains the `node:bookworm` docker image and the installation of `mintlify`.
 
-```
+```bash
 docker restart <container-id>
 ```
 
