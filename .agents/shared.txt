@@ -1,0 +1,18 @@
+# Shared rules this repo includes, from the global-agent-rules submodule.
+# One filename per line; blank lines and #-comments ignored.
+# Order is set by the submodule's manifest.txt, not by this file.
+#
+# Content repo. Python tooling only for its test harness.
+
+# --- included by every repo ---
+aggressive-refactoring.md
+no-temporal-comments.md
+no-test-info-in-production-code.md
+git-commit-safety.md
+worktree-direct-commits.md
+pr-promotion-flow.md
+git-history-for-context.md
+shared-agent-context.md
+
+# --- specific to this repo ---
+python-formatting-and-pre-commit.md
