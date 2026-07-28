@@ -27,7 +27,7 @@ mypy = "^1.1.1"
 isort = "^5.11.4"
 pre-commit = "^3.0.1"
 wemake-python-styleguide = "^0.17.0"
-black = "^26.0.0"
+black = "26.5.1"
 autoflake = "^1.6.1"
 pytest = "^8.0.0"
 PyMuPDF = "^1.25.1"
@@ -54,3 +54,6 @@ namespace_packages = true
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+target-version = ["py312"]
