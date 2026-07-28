@@ -7,26 +7,26 @@ jobs:
   black:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.9'
-    - name: Install deps
-      uses: knowsuchagency/poetry-install@v1
-      env:
-        POETRY_VIRTUALENVS_CREATE: false
+        python-version: '3.12'
+    # poetry install pulls the path dep on ../unify, which is absent in CI.
+    # Install the same Black pin declared in pyproject.toml instead.
+    - name: Install black
+      run: pip install 'black==26.5.1'
     - name: Run black check
-      run: poetry run black --check .
+      run: black --check .
 
   pytest:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
-        python-version: "3.9"
+        python-version: "3.12"
 
     - name: Install Dependencies
       uses: knowsuchagency/poetry-install@v1
