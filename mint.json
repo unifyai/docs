@@ -56,6 +56,7 @@
                 "communication/slack",
                 "communication/microsoft-teams",
                 "communication/discord",
+                "communication/api",
                 "communication/setup",
                 "communication/voice",
                 "communication/behavior",

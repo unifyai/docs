@@ -1,0 +1,190 @@
+---
+title: "API messages"
+description: "Talk to your assistant from your own code"
+---
+
+Every other channel puts a person at one end — a phone, an inbox, a chat
+window. This one puts your code there instead. Send your assistant a message
+with an HTTP request, poll for its reply, and wire it into whatever you're
+building. No browser, no phone number, no connected account — just your API
+key.
+
+It's the same assistant either way. Something you ask for over the API is
+something you can follow up on in [Chat](/communication/console-chat) an hour
+later, and it'll know what you mean.
+
+## What you need
+
+- **Your API key** and **your assistant's ID**, both from the
+  [Console](https://console.unify.ai).
+- The base URL: `https://api.unify.ai/v0`
+- A Bearer token header on every request:
+
+```
+Authorization: Bearer YOUR_API_KEY
+```
+
+<Note>
+  Assistants running in a [local deployment](/local-deployment/overview) don't
+  receive API messages — this channel is for assistants hosted by Unify.
+</Note>
+
+## Sending a message
+
+`POST /messages` with the assistant's ID and your message:
+
+```bash
+curl -X POST https://api.unify.ai/v0/messages \
+  -H "Authorization: Bearer $UNIFY_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "assistant_id": <your-assistant-id>,
+    "message": "Add milk to my shopping list."
+  }'
+```
+
+You get back a `message_id` straight away, before your assistant has done
+anything with it:
+
+```json
+{
+  "info": {
+    "message_id": "msg_abc123",
+    "assistant_id": 42,
+    "message": "Add milk to my shopping list.",
+    "status": "processing",
+    "response": null,
+    "tags": [],
+    "attachments": [],
+    "response_tags": null,
+    "response_attachments": null,
+    "created_at": "2026-08-10T12:00:00Z",
+    "completed_at": null
+  }
+}
+```
+
+## Polling for the reply
+
+Your assistant works on the message in the background — it might answer in a
+second, or go off and actually do the thing first. Poll
+`GET /messages/{message_id}` until `status` flips from `processing` to
+`completed`:
+
+```bash
+curl https://api.unify.ai/v0/messages/msg_abc123 \
+  -H "Authorization: Bearer $UNIFY_KEY"
+```
+
+```json
+{
+  "info": {
+    "message_id": "msg_abc123",
+    "assistant_id": 42,
+    "message": "Add milk to my shopping list.",
+    "status": "completed",
+    "response": "Done! I've added milk to your shopping list.",
+    "tags": [],
+    "attachments": [],
+    "response_tags": [],
+    "response_attachments": null,
+    "created_at": "2026-08-10T12:00:00Z",
+    "completed_at": "2026-08-10T12:00:05Z"
+  }
+}
+```
+
+`response` can come back `null` on a completed message. That's not an error —
+your assistant decides whether a reply is warranted, the same way it does on
+any other channel, and sometimes doing the task quietly is the right answer.
+
+## From Python
+
+The SDK wraps both calls:
+
+```python
+import unisdk
+
+status = unisdk.agent.send_message(
+    assistant_id=<your-assistant-id>,
+    message="Add milk to my shopping list.",
+)
+
+status = unisdk.agent.get_message_status(status["message_id"])
+print(status["status"], status["response"])
+```
+
+## Sending files
+
+Upload each file first, then reference it in the message.
+
+<Steps>
+  <Step title="Upload the file">
+    ```bash
+    curl -X POST https://api.unify.ai/v0/messages/attachments \
+      -H "Authorization: Bearer $UNIFY_KEY" \
+      -F "file=@report.pdf" \
+      -F "assistant_id=<your-assistant-id>"
+    ```
+
+    You get back the file's metadata:
+
+    ```json
+    {
+      "id": "att_xyz789",
+      "filename": "report.pdf",
+      "gs_url": "gs://bucket/path/report.pdf",
+      "content_type": "application/pdf",
+      "size_bytes": 204800
+    }
+    ```
+  </Step>
+  <Step title="Send the message with the attachment">
+    ```bash
+    curl -X POST https://api.unify.ai/v0/messages \
+      -H "Authorization: Bearer $UNIFY_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "assistant_id": <your-assistant-id>,
+        "message": "Please summarise this report.",
+        "attachments": [
+          {
+            "id": "att_xyz789",
+            "filename": "report.pdf",
+            "gs_url": "gs://bucket/path/report.pdf"
+          }
+        ]
+      }'
+    ```
+  </Step>
+</Steps>
+
+Files are capped at **25 MB** each. Your assistant can send files back too —
+they arrive as `response_attachments` on the completed message, each with a
+download URL.
+
+## Tags
+
+Tags are arbitrary strings you can hang off a message. Your assistant treats
+them as opaque routing labels — it doesn't read anything into them — and
+echoes them back on its reply as `response_tags`.
+
+```bash
+curl -X POST https://api.unify.ai/v0/messages \
+  -H "Authorization: Bearer $UNIFY_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "assistant_id": <your-assistant-id>,
+    "message": "Summarise today'\''s sales figures.",
+    "tags": ["source:slack", "channel:#analytics"]
+  }'
+```
+
+That's what makes them useful for bridging: if you're relaying messages from
+somewhere else, tag the inbound message with wherever it came from and the
+reply tells you where to send it back.
+
+<Tip>
+  Tags are how you keep one assistant serving several surfaces at once without
+  losing track of which reply belongs to which request.
+</Tip>
