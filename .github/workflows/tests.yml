@@ -1,6 +1,13 @@
 name: Testing Code Examples
 
-on: push
+on:
+  push:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
 
@@ -19,21 +26,51 @@ jobs:
     - name: Run black check
       run: black --check .
 
+  # Executes every python and shell block in every .mdx against the live API,
+  # so it is metered work rather than a unit suite: it runs on the release pull
+  # request, where broken documentation is still worth catching before it
+  # reaches readers, and on demand. Not on every push — the examples do not
+  # change on most of them, and the bill would.
   pytest:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    # ``pyproject.toml`` depends on unify as a sibling path
+    # (``unifyai = {path = "../unify"}``), matching the local layout, so both
+    # repos are checked out side by side and the job runs from the docs one.
+    # Without this the install fails before a single example is read, which is
+    # how this job came to report failure on every run since it was written.
+    - name: Check out docs
+      uses: actions/checkout@v4
+      with:
+        path: docs
+
+    - name: Check out unify
+      uses: actions/checkout@v4
+      with:
+        repository: unifyai/unify
+        ref: main
+        path: unify
+
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
         python-version: "3.12"
 
+    # Installed directly rather than through knowsuchagency/poetry-install:
+    # that action takes no working-directory, which this two-checkout layout
+    # needs, and still runs on node12.
+    - name: Install Poetry
+      run: pipx install poetry
+
     - name: Install Dependencies
-      uses: knowsuchagency/poetry-install@v1
+      working-directory: docs
+      run: poetry install
       env:
         POETRY_VIRTUALENVS_CREATE: false
 
     - name: Run Tests
+      working-directory: docs
       run: poetry run pytest -vv --cov="docs" -n 4 .
       env:
         UNIFY_KEY: ${{ secrets.UNIFY_API_KEY }}
