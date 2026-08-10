@@ -1,30 +1,68 @@
 ---
 title: "Slack"
-description: "Bring your assistant into your Slack workspace"
+description: "Reach your assistants from your Slack workspace"
 ---
 
-Add your assistant to Slack and it becomes a member of your workspace you can
-DM, @mention, and collaborate with in channels.
+The **Unify Slack app** brings your assistants into Slack — DMs, channels,
+and threads. It's installed once for your account or organization, and every
+assistant becomes reachable through it. Like the [Teams
+app](/communication/microsoft-teams), your assistants speak as the shared
+Unify app rather than as separate Slack members, so addressing works by
+naming the teammate you want.
 
 ## Setup
 
-Connect Slack from the Console — your assistant can open the setup flow for
-you, or you'll find it under your assistant's **Contact Details → Slack**.
-A workspace admin approves the Unify Slack app, and your assistant appears in
-your workspace.
+Open your assistant's **Contact Details → Slack** and choose **Add to
+Slack**. You connect a workspace once — every assistant on the account (or
+in the organization) becomes reachable through it, with nothing to configure
+per assistant.
+
+<Note>
+  Only the account owner, or an organization owner or admin, can connect the
+  workspace. If you're not one of them, the Slack tab tells you who to ask.
+</Note>
+
+## Reaching a specific teammate
+
+Mention the app and include the teammate's name:
+
+```
+@Unify Alex, can you pull yesterday's numbers?
+```
+
+From there, the conversation sticks:
+
+- **In a channel**, naming a teammate hands them the thread. Replies in that
+  thread reach the same assistant without naming them again.
+- **In a DM** with the app, the first message goes to your **T-W1N**, the
+  coordinator that fields anything unaddressed. Name a teammate in the DM and
+  the conversation is pinned to them from then on.
+- **If the name doesn't match** anyone — or matches more than one teammate —
+  your T-W1N takes the thread and sorts it out in place rather than guessing.
+
+<Note>
+  In a channel, a message that names nobody and isn't part of an established
+  thread reaches **no one**. Name the teammate you want on the first message;
+  after that the thread carries the routing.
+</Note>
+
+A thread or DM that goes quiet for two weeks forgets which assistant it
+belonged to. Name the teammate again and it picks straight back up.
 
 ## What you can do
 
-- **Direct messages** — DM your assistant for the same one-on-one
-  conversation you'd have anywhere else.
-- **Channel mentions** — @mention your assistant in a channel and it joins
-  the discussion. It replies in-thread, keeping channels tidy.
+- **Direct messages** — the same one-on-one conversation you'd have anywhere
+  else, with your T-W1N or with any teammate you've named.
+- **Channel threads** — mention the app in a channel and it replies in
+  thread, keeping the channel tidy. Invite the app to the channel first.
 - **File attachments** — share files in Slack and your assistant picks them
   up and works with them.
 
 ## Good to know
 
-- Your assistant only speaks in a channel when it's mentioned or directly
-  relevant — it won't spam your team's conversations.
+- Your assistant only speaks when it's addressed — it won't spam your team's
+  conversations.
+- Coordinators are personal. In an organization, each member's unaddressed
+  messages go to *their own* T-W1N, not to a shared one.
 - It's the same assistant across every surface: a task you discussed in Slack
   can be delivered over email, and vice versa.

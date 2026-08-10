@@ -32,8 +32,7 @@ plus call-lifecycle events (`PhoneCallReceived`, `PhoneCallAnswered`,
 `PhoneCallEnded`, `UnifyMeetStarted`…), per-utterance voice events
 (`InboundPhoneUtterance`, `OutboundUnifyMeetUtterance`…), reactions,
 voice-control events (`FastBrainNotification`, `VoiceInterrupt`), and
-lifecycle events (`StartupEvent`, `TaskDue`, `InactivityFollowup`,
-`PreHireMessage`).
+lifecycle events (`StartupEvent`, `TaskDue`, `PreHireMessage`).
 
 Two mapping layers connect the world to handlers:
 
@@ -121,9 +120,8 @@ concern:
 | [`renderer.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/renderer.py) | State → prompt snapshots and diffs |
 | [`contact_index.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/contact_index.py) | Live per-medium message threads |
 | [`notifications.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/notifications.py) | The `NotificationBar` surfaced in prompts |
-| [`task_activation.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/task_activation.py) | `TaskDue` wake-ups and live task execution |
-| [`inactivity.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/inactivity.py) | Re-engagement follow-ups |
-| [`proactive_speech.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/proactive_speech.py) / [`speech_urgency.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/speech_urgency.py) | Breaking silence on calls / preempting the slow brain for urgent speech |
+| [`task_execution.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/task_execution.py) | `TaskDue` wake-ups and live task execution |
+| [`proactive_speech.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/proactive_speech.py) | Breaking silence on calls |
 | [`comms_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/comms_utils.py) | HTTP calls to the gateway's channel endpoints |
 | [`managers_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/managers_utils.py) | Manager init and `log_message()` → transcripts |
 
@@ -201,8 +199,13 @@ machinery](https://github.com/unifyai/unify/blob/main/unify/conversation_manager
 in two directions. Downward: every in-flight `act(...)` is a steerable
 handle the brain can `ask`, `interject`, `pause`, `resume`, or `stop` via
 dynamically generated tools. Upward: when a user speaks while the slow
-brain is mid-turn, `SpeechUrgencyEvaluator`
-([`domains/speech_urgency.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/speech_urgency.py))
-classifies the utterance and may cancel the running turn so the new input
-takes priority — the runtime-level implementation of "you can always
-interrupt."
+brain is mid-turn, the input does **not** cancel the running turn. The
+`Debouncer`
+([`domains/utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/utils.py))
+holds one running turn plus at most one pending turn — a new submission
+replaces whatever was pending and starts when the current turn finishes.
+Preemption used to exist (a `SpeechUrgencyEvaluator` that classified the
+utterance and cancelled the running turn) and was removed: the queue of two
+is the whole mechanism. What makes interruption feel immediate on a call is
+the fast brain — barge-in and the interim turn — not turn cancellation; see
+[Voice calls](/communication/developers/voice).

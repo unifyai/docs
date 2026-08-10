@@ -71,25 +71,44 @@ browser automation rather than SIP.
   records the `spoken_prefix` actually delivered and the
   `unheard_remainder`, so the slow brain knows exactly what the user did
   and didn't hear and can re-weave the rest.
-- **Urgency preemption.** If the user says something urgent while the slow
-  brain is mid-turn, `SpeechUrgencyEvaluator`
-  ([`domains/speech_urgency.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/speech_urgency.py))
-  can cancel the running turn in favor of the new input.
+- **No turn preemption.** Speaking mid-turn does not cancel the running
+  slow-brain turn. The new input queues as the single pending turn (see
+  [the conversation runtime](/communication/developers/conversation-manager)),
+  and the fast brain covers the gap. Urgency-based preemption was tried and
+  removed.
 - **Proactive speech.** During long silences while work runs,
   `ProactiveSpeech`
   ([`domains/proactive_speech.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/proactive_speech.py))
   decides whether the assistant should say something unprompted.
 
-## Speakers and enrollment
+## Who said what
 
-Diarized speakers who aren't engaged contacts are transcribed as context
-but don't get replies; the slow brain's `engage_speaker` /
-`disengage_speaker` tools flip that, mirrored in the call manager's
-engagement state. Voice profiles (`VoiceEnrollmentCaptured`,
-`VoiceEnrollmentSuggested`, and `speaker_id.SpeakerTracker` in
-[`medium_scripts/`](https://github.com/unifyai/unify/tree/main/unify/conversation_manager/medium_scripts))
-let known voices be pinned across calls — enrolled embeddings ride along
-in the dispatch metadata.
+Attribution comes from the meeting roster and the platform's own
+participant signals — never from matching voices.
+
+In a browser meeting the two halves arrive separately: the transcriber
+tags each finalised utterance with an anonymous diarization id (`S0`,
+`S1`), while the meeting platform reports spans of who was speaking over
+the Recall relay.
+[`meet_speaker_map.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/meet_speaker_map.py)
+pairs them by **overlap of time spans** rather than by sampling who is
+speaking when a final lands — by then the speaker has stopped and the
+platform has already sent `speech_off`, so instantaneous sampling fires
+only when someone talks over the previous speaker's tail, exactly when
+it's most likely to name the wrong person. Votes accumulate rather than
+binding on first sight, because diarization ids are per-call and drift.
+Elsewhere, an unresolved turn is attributed to the call contact and the
+slow brain infers the real speaker from the conversation.
+
+Enrolled voice embeddings are **not** compared against live audio to
+decide who is speaking. That path was removed after production audio
+showed the cosines conflated distinct speakers — including the
+assistant's own TTS voice — about as often as they separated them, so a
+matched label was as likely to be wrong as right. `SpeakerTracker`
+([`speaker_id.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/speaker_id.py))
+remains as capture-only machinery: clustering keeps auto-enrollment
+single-voice pure and counts distinct voices behind
+`VoiceEnrollmentCaptured` / `VoiceEnrollmentSuggested`.
 
 ## Hang-up semantics
 
