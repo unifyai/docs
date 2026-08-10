@@ -48,6 +48,7 @@
             "pages": [
                 "communication/overview",
                 "communication/console-chat",
+                "communication/group-chats",
                 "communication/unify-meet",
                 "communication/phone-calls",
                 "communication/sms",
@@ -56,6 +57,7 @@
                 "communication/slack",
                 "communication/microsoft-teams",
                 "communication/discord",
+                "communication/api",
                 "communication/setup",
                 "communication/voice",
                 "communication/behavior",

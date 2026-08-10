@@ -32,8 +32,7 @@ plus call-lifecycle events (`PhoneCallReceived`, `PhoneCallAnswered`,
 `PhoneCallEnded`, `UnifyMeetStarted`…), per-utterance voice events
 (`InboundPhoneUtterance`, `OutboundUnifyMeetUtterance`…), reactions,
 voice-control events (`FastBrainNotification`, `VoiceInterrupt`), and
-lifecycle events (`StartupEvent`, `TaskDue`, `InactivityFollowup`,
-`PreHireMessage`).
+lifecycle events (`StartupEvent`, `TaskDue`, `PreHireMessage`).
 
 Two mapping layers connect the world to handlers:
 
@@ -56,7 +55,7 @@ Two mapping layers connect the world to handlers:
 defines the `Medium` enum — the single source of truth for channel types
 (`UNIFY_MESSAGE`, `EMAIL`, `SMS_MESSAGE`, `WHATSAPP_MESSAGE`,
 `WHATSAPP_CALL`, `PHONE_CALL`, `UNIFY_MEET`, `GOOGLE_MEET`, `TEAMS_MEET`,
-Slack/Discord variants, and both the delegated-Graph
+`API_MESSAGE`, Slack/Discord variants, and both the delegated-Graph
 (`TEAMS_MESSAGE`, `TEAMS_CHANNEL_MESSAGE`) and org-installed bot
 (`MS_TEAMS_BOT_MESSAGE`, `MS_TEAMS_BOT_CHANNEL_MESSAGE`) Teams mediums…).
 The two org-installed bot send tools are gated behind the assistant's
@@ -121,9 +120,8 @@ concern:
 | [`renderer.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/renderer.py) | State → prompt snapshots and diffs |
 | [`contact_index.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/contact_index.py) | Live per-medium message threads |
 | [`notifications.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/notifications.py) | The `NotificationBar` surfaced in prompts |
-| [`task_activation.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/task_activation.py) | `TaskDue` wake-ups and live task execution |
-| [`inactivity.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/inactivity.py) | Re-engagement follow-ups |
-| [`proactive_speech.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/proactive_speech.py) / [`speech_urgency.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/speech_urgency.py) | Breaking silence on calls / preempting the slow brain for urgent speech |
+| [`task_execution.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/task_execution.py) | `TaskDue` wake-ups and live task execution |
+| [`proactive_speech.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/proactive_speech.py) | Breaking silence on calls |
 | [`comms_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/comms_utils.py) | HTTP calls to the gateway's channel endpoints |
 | [`managers_utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/managers_utils.py) | Manager init and `log_message()` → transcripts |
 
@@ -154,6 +152,32 @@ Outbound events published by the brain's own sends set
 `suppress_slow_brain_wake` so the assistant isn't re-woken by its own
 confirmations.
 
+### The API message round trip
+
+The [developer API channel](/communication/api) is the one send path that
+doesn't originate a conversation — it completes a caller that is already
+waiting, so it runs request/response rather than fire-and-forget:
+
+1. **Inbound.** Orchestra's `POST /v0/messages` persists an `ApiMessage`
+   row and dispatches it to the adapters, which publish an `api_message`
+   envelope. `CommsManager.events_map` maps that thread to
+   `ApiMessageReceived`, whose handler parks the `api_message_id` and the
+   caller's tags on the `ConversationManager` as
+   `_pending_api_message_id` / `_pending_api_message_tags`.
+2. **Outbound.** `send_api_response` reads that pending id, so it is only
+   meaningful while a call is in flight — with nothing pending it returns
+   `{"status": "ok", "note": "no pending api message"}` rather than opening
+   a new outbound conversation. It uploads any attachments, then
+   `comms_utils.complete_api_message()` issues
+   `PUT {ORCHESTRA_URL}/messages/{id}/complete`, which is what flips the
+   caller's poll from `processing` to `completed`.
+3. **Record.** An `api_message_sent` event writes the transcript row,
+   anchored to the boss contact — the API exchange lands in the same
+   durable history as every other medium (`Medium.API_MESSAGE`).
+
+Tags are opaque to the runtime; the prompt tells the brain to echo them
+back by default so the developer can route the reply on their own side.
+
 ## Transcripts
 
 [`unify/transcript_manager/transcript_manager.py`](https://github.com/unifyai/unify/blob/main/unify/transcript_manager/transcript_manager.py)
@@ -175,8 +199,13 @@ machinery](https://github.com/unifyai/unify/blob/main/unify/conversation_manager
 in two directions. Downward: every in-flight `act(...)` is a steerable
 handle the brain can `ask`, `interject`, `pause`, `resume`, or `stop` via
 dynamically generated tools. Upward: when a user speaks while the slow
-brain is mid-turn, `SpeechUrgencyEvaluator`
-([`domains/speech_urgency.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/speech_urgency.py))
-classifies the utterance and may cancel the running turn so the new input
-takes priority — the runtime-level implementation of "you can always
-interrupt."
+brain is mid-turn, the input does **not** cancel the running turn. The
+`Debouncer`
+([`domains/utils.py`](https://github.com/unifyai/unify/blob/main/unify/conversation_manager/domains/utils.py))
+holds one running turn plus at most one pending turn — a new submission
+replaces whatever was pending and starts when the current turn finishes.
+Preemption used to exist (a `SpeechUrgencyEvaluator` that classified the
+utterance and cancelled the running turn) and was removed: the queue of two
+is the whole mechanism. What makes interruption feel immediate on a call is
+the fast brain — barge-in and the interim turn — not turn cancellation; see
+[Voice calls](/communication/developers/voice).
