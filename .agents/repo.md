@@ -8,7 +8,7 @@ scripts under `tests/`.
 
 ## Layout
 
-Navigation and site config live in `mint.json`; every page must be registered there
+Navigation and site config live in `docs.json`; every page must be registered there
 to appear. Content is `.mdx` grouped by product area:
 
 | Path | Covers |
@@ -40,7 +40,7 @@ docker restart <container-id>
 
 ## Writing conventions
 
-- Register every new page in `mint.json`, or it will not be reachable.
+- Register every new page in `docs.json`, or it will not be reachable.
 - Keep code samples runnable against the hosted Orchestra backend
   (`ORCHESTRA_URL`, default `https://api.unify.ai/v0`). This is public-facing
   documentation for the open-source path — do not document the private
