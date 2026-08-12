@@ -1,9 +1,9 @@
 ---
 title: "Recipes"
-description: "Worked examples of the data + dashboard combination"
+description: "Worked examples of the data + canvas combination"
 ---
 
-The building blocks — [tables](/canvas/data), [tiles](/canvas/dashboards),
+The building blocks — [tables](/canvas/data), [views](/canvas/overview),
 and [scheduled tasks](/tasks/overview) — are deliberately simple, and they
 compose. Here are patterns that come up again and again, each just a
 conversation away.
@@ -19,7 +19,7 @@ conversation away.
 
 **What your assistant sets up:** a recurring task that calls the API and
 appends a row per check to a table like `Data/StatusAPI/checks`; a live
-dashboard with an uptime KPI card and a response-time chart reading from
+view with an uptime KPI card and a response-time chart reading from
 that table; and an alert rule as part of the task. The table quietly
 accumulates history — a month later, "how did latency trend after the
 release?" is answerable from data you already have.
@@ -33,7 +33,7 @@ release?" is answerable from data you already have.
 > from the store API every morning at 6."
 
 **What it sets up:** a scheduled pull into `Data/Store/daily_sales`, plus a
-dashboard of KPI cards and a trend chart. Because tiles are live, the 6am
+view of KPI cards and a trend chart. Because views are live, the 6am
 task run is all it takes for the 8am glance to be current.
 
 ## Combine sources into one view

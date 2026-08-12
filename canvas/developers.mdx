@@ -1,6 +1,6 @@
 ---
 title: "Developers"
-description: "How DataManager and DashboardManager actually work — a code-level tour of the open-source runtime"
+description: "How DataManager and CanvasManager actually work — a code-level tour of the open-source runtime"
 ---
 
 Everything else in this section describes the canvas as a user experiences
@@ -13,9 +13,8 @@ Two packages own this territory:
 
 - [`unify/data_manager/`](https://github.com/unifyai/unify/tree/main/unify/data_manager) —
   `DataManager`, the tabular data engine.
-- [`unify/dashboard_manager/`](https://github.com/unifyai/unify/tree/main/unify/dashboard_manager) —
-  `DashboardManager` (soon to be renamed **CanvasManager**), the
-  visualization layer built on top of it.
+- [`unify/canvas_manager/`](https://github.com/unifyai/unify/tree/main/unify/canvas_manager) —
+  `CanvasManager`, the generative-UI layer built on top of it.
 
 ## The big picture
 
@@ -27,9 +26,9 @@ manager in the repo:
 
 ```text
 BaseStateManager
-    └── BaseDataManager / BaseDashboardManager   (base.py — the contract)
-            ├── DataManager / DashboardManager    (real impl → Orchestra via unisdk)
-            └── SimulatedDataManager / SimulatedDashboardManager (in-memory, for tests)
+    └── BaseDataManager / BaseCanvasManager      (base.py — the contract)
+            ├── DataManager / CanvasManager       (real impl → Orchestra via unisdk)
+            └── SimulatedDataManager / SimulatedCanvasManager (in-memory, for tests)
 ```
 
 Three properties define the design:
@@ -48,7 +47,7 @@ Three properties define the design:
    ([`unify/function_manager/primitives/registry.py`](https://github.com/unifyai/unify/blob/main/unify/function_manager/primitives/registry.py))
    introspects `@abstractmethod` definitions on the base class to decide
    what the Actor sees as `primitives.data.*` and
-   `primitives.dashboards.*`. Add an abstract method with a docstring and
+   `primitives.canvas.*`. Add an abstract method with a docstring and
    it becomes an Actor-callable primitive with no registry edits.
 
 Both managers are synchronous internally, listed in `_SYNC_MANAGERS` in
@@ -58,8 +57,8 @@ the runtime wraps them in `_AsyncPrimitiveWrapper` (dispatching via
 primitives.data.filter(...)`.
 
 Implementation selection is env-driven: `UNITY_DATA_IMPL` and
-`UNITY_DASHBOARD_IMPL` (`"real"` | `"simulated"`), read by `DataSettings`
-and `DashboardSettings` and resolved through `ManagerRegistry` —
+`UNITY_CANVAS_IMPL` (`"real"` | `"simulated"`), read by `DataSettings`
+and `CanvasSettings` and resolved through `ManagerRegistry` —
 [`unify/manager_registry.py`](https://github.com/unifyai/unify/blob/main/unify/manager_registry.py).
 
 ---
@@ -118,7 +117,7 @@ Context paths resolve through three private helpers in `DataManager`:
 
 - `_resolve_context` (reads): strips a leading `/`, passes through any
   path starting with a known absolute prefix (`Data/`, `Files/`,
-  `Knowledge/`, `Teams/`, `Dashboards/`, …), and prepends the assistant's
+  `Knowledge/`, `Teams/`, …), and prepends the assistant's
   base context (`{org}/{assistant_id}/Data`) for relative names.
 - `_resolve_context_for_write(context, destination=)`: for Data-owned
   paths, routes through `ContextRegistry.write_root(self, "Data",
@@ -130,8 +129,8 @@ Context paths resolve through three private helpers in `DataManager`:
   `federated_ranked_search`, and `federated_reduce` from
   [`unify/common/federated_search.py`](https://github.com/unifyai/unify/blob/main/unify/common/federated_search.py).
 
-<img className="block dark:hidden" src="/images/developers/destination-scopes-light.svg" alt="Destination scopes: write_root routes each write to exactly one destination — the personal root or a team root, each holding Data and Dashboards contexts — while read_roots federates reads across personal plus all teams; data_scope additionally lets a personal tile read team data." />
-<img className="hidden dark:block" src="/images/developers/destination-scopes-dark.svg" alt="Destination scopes: write_root routes each write to exactly one destination — the personal root or a team root, each holding Data and Dashboards contexts — while read_roots federates reads across personal plus all teams; data_scope additionally lets a personal tile read team data." />
+<img className="block dark:hidden" src="/images/developers/destination-scopes-light.svg" alt="Destination scopes: write_root routes each write to exactly one destination — the personal root or a team root, each holding Data and Canvas contexts — while read_roots federates reads across personal plus all teams." />
+<img className="hidden dark:block" src="/images/developers/destination-scopes-dark.svg" alt="Destination scopes: write_root routes each write to exactly one destination — the personal root or a team root, each holding Data and Canvas contexts — while read_roots federates reads across personal plus all teams." />
 
 `ContextRegistry`
 ([`unify/common/context_registry.py`](https://github.com/unifyai/unify/blob/main/unify/common/context_registry.py))
@@ -247,165 +246,85 @@ routing, streaming ingest, type prescan, pipeline mechanics.
   Two orphaned modules — `ops/plot_ops.py` and `ops/table_view_ops.py` —
   remain from the era when DataManager rendered visuals. `plot()` and
   `table_view()` were **removed from the public contract**; all visual
-  output now goes through DashboardManager.
+  output now goes through CanvasManager.
 </Note>
 
 ---
 
-# DashboardManager (soon CanvasManager)
+# CanvasManager
 
 ## Design in one paragraph
 
-The Actor generates **arbitrary HTML** — Plotly, D3, Chart.js from a CDN,
-or hand-rolled markup — and hands it to `create_tile`. The manager stores
-the tile as a row in a `Dashboards/Tiles` context, mints a 12-character
-shareable token, and (for live tiles) stores **declarative data bindings**
-plus an `on_data` JavaScript callback. The Console renders the HTML in a
-sandboxed iframe and executes the bindings at render time, so tiles read
-fresh data on every view. From
-[`base.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/base.py):
-*"The actor should **always** use DashboardManager for visualizations"* —
-it replaced the old plotting paths entirely.
+The Actor writes a **real React module** — TSX importing only `react` and
+`@unity/canvas-kit` — and hands it to `create_view` together with declared
+**query bindings** and **actions**. The manager lints, typechecks and
+bundles the module, dry-runs every binding through the live `DataManager`,
+verifies every action target exists, renders the view headlessly and
+critiques the result before anything is published. The stored row carries
+the source, the compiled bundle and its sha256; a 12-character routing
+token is registered with the backend, and the Console serves the view in a
+genuinely isolated frame. There is no raw-HTML path and no unauthenticated
+token-is-access URL — both were properties of the dashboard tiles this
+layer replaced, and both were retired with them.
 
 ## Package anatomy
 
 | Path | Role |
 |---|---|
-| [`base.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/base.py) | `BaseDashboardManager` — 10-method contract (tile + dashboard CRUD), all docstrings |
-| [`dashboard_manager.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/dashboard_manager.py) | `DashboardManager` — destination routing, binding pipeline, token lifecycle |
-| [`simulated.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/simulated.py) | `SimulatedDashboardManager` — in-memory, sequential `sim_tile_0001` tokens |
-| [`types/tile.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/types/tile.py) | Binding classes, `TileRecordRow`/`TileRecord`/`TileResult`, `DASHBOARD_BRIDGE_MAX_ROW_LIMIT` |
-| [`types/dashboard.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/types/dashboard.py) | `TilePosition` (12-column grid), `DashboardRecordRow`/`DashboardRecord`/`DashboardResult` |
-| [`ops/tile_ops.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/ops/tile_ops.py) | Binding validation, alias assignment, context resolution, serialization |
-| [`ops/dashboard_ops.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/ops/dashboard_ops.py) | Layout serialize/deserialize |
-| [`ops/token_ops.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/ops/token_ops.py) | `generate_token`, `register_token`, `delete_token` |
+| [`base.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/base.py) | `BaseCanvasManager` — the contract (`create_view`, `update_view`, `refresh_props`, `preview`, invocations), all docstrings |
+| [`canvas_manager.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/canvas_manager.py) | `CanvasManager` — destination routing, build/review pipeline, token lifecycle |
+| [`simulated.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/simulated.py) | `SimulatedCanvasManager` — in-memory mirror of the contract |
+| [`types/view.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/types/view.py) | `CanvasViewRow` / `CanvasViewRecord` — source, bundle, bindings, visibility, status |
+| [`types/binding.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/types/binding.py) | `PrimitiveBinding` + the four query shapes (`filter`, `reduce`, `join`, `join_reduce`) |
+| [`types/action.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/types/action.py) | `CanvasAction` — declared viewer-triggered operations with bounded input schemas |
+| [`ops/build_ops.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/ops/build_ops.py) | Lint → typecheck → bundle against the vendored kit |
+| [`ops/review_ops.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/ops/review_ops.py) | Headless render + critique gate |
+| [`ops/binding_ops.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/ops/binding_ops.py) | Binding resolution and dry-runs through DataManager |
+| [`ops/token_ops.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/ops/token_ops.py) | Token registry: register, publish/quarantine state, delete |
 
-Persistence is notable: `DashboardManager` has **no storage code of its
-own** — tile and layout rows are written through
-`ManagerRegistry.get_data_manager()` (`insert_rows`, `filter`,
-`update_rows`, `delete_rows`) into two registered contexts,
-`Dashboards/Tiles` and `Dashboards/Layouts`. The dashboard layer is a
-client of the data layer.
+Rows live in three registered contexts — `Canvas/Views`, `Canvas/Actions`,
+`Canvas/Invocations` — written through the data layer like every other
+manager. There is no separate layout table: React composes, so a
+multi-tile board is simply one view, and the dangling-reference bug class
+of a layout pointing at a deleted tile cannot exist.
 
 ## The binding type system
 
-Live tiles declare their data needs as a discriminated union of four
-Pydantic models (discriminator: `operation`), mirroring the DataManager
-query families:
+A view declares its data as `PrimitiveBinding` entries — an `alias` the
+canvas reads via `canvas.data[alias]`, the owning manager and table, and
+one of four read-only query shapes mirroring the DataManager families
+(`filter`, `reduce`, `join`, `join_reduce`). Every binding is dry-run at
+author time, and at view time the server executes **only** the stored
+binding a client names by alias: no context path, filter expression or row
+limit is ever accepted from the viewer, which is the security inversion
+that retired the old tile bridge.
 
-| Binding | Mirrors | Returns to `on_data` |
-|---|---|---|
-| `FilterBinding` | `filter` | `Array<Object>` (rows) |
-| `ReduceBinding` | `reduce` | scalar or `{group: value}` |
-| `JoinBinding` | `filter_join` | `Array<Object>` (joined rows) |
-| `JoinReduceBinding` | `reduce_join` | scalar or `{group: value}` |
+## Actions and invocations
 
-Row-returning bindings are capped by `DASHBOARD_BRIDGE_MAX_ROW_LIMIT =
-1000` — beyond that, aggregate with a reduce binding instead. Each binding
-carries an `alias` (a valid JS identifier, auto-derived from the context
-path's last segment by `_alias_from_context` when omitted), and
-`serialize_bindings` stores the whole list as compact JSON in the tile
-row's `data_bindings_json` field.
+A view may declare `CanvasAction`s: named operations with JSON-Schema
+input (every string and array bounded), an execution lane (stored
+function, task trigger, or assistant request), optional confirmation text
+rendered by the Console *outside* the frame, and per-hour rate limits.
+A viewer's invocation is validated server-side, recorded as a
+`Canvas/Invocations` row, then executed by the assistant — the frame never
+learns which function or task sits behind an action.
 
-The **`on_data` contract**: the Actor supplies a plain JS body (no
-function wrapper, no return). The Console wraps and invokes it as
-`(function(data){ <on_data> })(results)`, where `results` is keyed by
-alias — `data.orders`, `data.revenue_by_region`. A guard in
-`validate_on_data` warns if the script contains `UnifyData.` calls: the
-bridge invocation is generated by the Console from the serialized
-bindings; *the Actor never writes bridge API calls*.
+## `destination` and `visibility`
 
-## Life of a live tile
-
-<img className="block dark:hidden" src="/images/developers/live-tile-lifecycle-light.svg" alt="Live tile lifecycle: the Actor calls create_tile with HTML, data bindings, and on_data; DashboardManager validates and dry-runs the bindings, stores the tile row and registers its token; the Console TileViewer renders the iframe and injects the UnifyData bridge, which runs live filter/reduce/join queries against the Orchestra bridge at render time; results are handed to on_data so the chart updates with fresh data." />
-<img className="hidden dark:block" src="/images/developers/live-tile-lifecycle-dark.svg" alt="Live tile lifecycle: the Actor calls create_tile with HTML, data bindings, and on_data; DashboardManager validates and dry-runs the bindings, stores the tile row and registers its token; the Console TileViewer renders the iframe and injects the UnifyData bridge, which runs live filter/reduce/join queries against the Orchestra bridge at render time; results are handed to on_data so the chart updates with fresh data." />
-
-The `create_tile` pipeline in `DashboardManager`, step by step:
-
-1. **Resolve the write root** — `ContextRegistry.write_root(self,
-   "Dashboards/Tiles", destination=...)`.
-2. **Mint the token** — `generate_token()` is
-   `secrets.token_urlsafe(9)[:12]`.
-3. **Validate bindings** — `validate_data_bindings` →
-   `validate_on_data` → `ensure_binding_aliases`.
-4. **Resolve the binding root** — `_data_binding_root()` honors
-   `data_scope`: `"dashboard"` (default) inherits the tile's own
-   destination root; `"team:<id>"` pins bindings to a team root, validated
-   against `SESSION_DETAILS.team_ids`.
-5. **Resolve binding contexts** — `resolve_binding_contexts` turns
-   Actor-relative paths into fully-qualified ones (and rewrites join
-   expressions accordingly) so the stored binding is unambiguous.
-6. **Dry-run every binding** — `verify_data_bindings` executes each
-   binding through the live `DataManager` (`filter` with `limit=5`,
-   `reduce`, `filter_join` with `result_limit=5`, `reduce_join`). A tile
-   with a broken query never gets stored; you get a `TileResult` carrying
-   the error.
-7. **Store + register** — `build_tile_record_row` →
-   `dm.insert_rows(...)`; then `register_token(token, "tile", context,
-   project)` posts to Orchestra's token registry, and the returned
-   `TileResult` carries the shareable `{CONSOLE_URL}/tile/view/{token}`
-   URL.
-
-**Render time** (outside this repo, but essential context): the Console
-resolves the token, fetches the tile row, and renders `html_content` in a
-sandboxed iframe. For live tiles it injects a `UnifyData` bridge and an
-auto-exec script generated from `data_bindings_json`; the bridge
-`postMessage`s each query to the parent page, which proxies to Orchestra's
-admin bridge endpoints (filter / reduce / join / join-reduce — the same
-semantics as the DataManager methods, executed server-side under the tile
-creator's identity). Results come back keyed by alias and your `on_data`
-body runs. The net effect: **the queries you validated at create time are
-exactly the queries that run at render time.**
-
-**Static (baked-in) tiles** skip all of this: self-contained HTML with
-data embedded (e.g. Plotly's `fig.to_html(include_plotlyjs='cdn')`), no
-bindings, no bridge. Appropriate only for small, genuinely static
-snapshots.
-
-## Dashboards and the grid
-
-A dashboard is a stored layout over tile tokens: `create_dashboard` takes
-`TilePosition` entries — `tile_token`, `x` (0–11), `y`, `w` (1–12), `h`,
-with `x + w ≤ 12` enforced — serialized to JSON in the
-`Dashboards/Layouts` row, plus its own token and share URL.
-
-Lifecycles are deliberately **independent**: deleting a dashboard leaves
-its tiles intact; deleting a tile doesn't rewrite layouts that reference
-it (they render a broken reference until updated). `update_tile` and
-`update_dashboard` preserve tokens — URLs never churn. Partial-update
-semantics: `None` preserves a field; `on_data=""` clears the script; a
-fresh empty `data_bindings=[]` drops live mode and resets `data_scope`;
-changing `data_scope` requires supplying fresh bindings in the same call.
-
-## `destination` vs `data_scope`
-
-These are orthogonal, and the distinction is the most common point of
-confusion:
-
-- **`destination`** — where the tile/dashboard **row lives** (`"personal"`
-  or `"team:<id>"`), which controls who sees it in listings.
-- **`data_scope`** — which root the tile's **bindings read from**
-  (`"dashboard"` = inherit the destination root, or an explicit
-  `"team:<id>"`).
-
-They can intentionally differ: a *personal* watch tile whose bindings read
-*team* operations data (`destination="personal"`,
-`data_scope="team:8"`) — covered by
-[`tests/dashboard_manager/test_tile_data_scope.py`](https://github.com/unifyai/unify/blob/main/tests/dashboard_manager/test_tile_data_scope.py).
-Reads across the board use `ContextRegistry.read_roots` fan-out, so
-`list_tiles` returns personal plus all accessible team tiles; updates and
-deletes must name the right `destination` or the row is simply not found.
+- **`destination`** — where the view's **row lives** (`"personal"` or
+  `"team:<id>"`), which controls who sees it in listings.
+- **`visibility`** — who may **read** it (`private`, `team`,
+  `public_link`), enforced server-side on every read path; publishing and
+  quarantining flip `status` without reissuing the URL.
 
 ## Extending
 
-**A new binding type** touches the full stack — in this repo: a new model
-with a unique `operation` literal added to the `DataBinding` union in
-`types/tile.py`; handling in `_contexts_for_binding`,
-`resolve_binding_contexts`, and `verify_data_bindings` (with a real
-DataManager dry-run) in `ops/tile_ops.py`; and documentation in the
-`create_tile` docstring (remember: docstrings are the Actor's API). The
-Console and Orchestra then need the matching bridge operation, proxy
-route, and admin endpoint.
+**A new binding shape** touches the full stack — in this repo: a new args
+model with a unique `operation` literal in `canvas_manager/types/binding.py`;
+resolution and a real DataManager dry-run in `ops/binding_ops.py`; and
+documentation in the `create_view` docstring (remember: docstrings are the
+Actor's API). Orchestra then needs the matching server-side execution in
+its canvas query route.
 
 **A new DataManager operation** is simpler: abstract method + docstring on
 `BaseDataManager`, an `*_impl` in the right `ops/` module, implementations
@@ -424,8 +343,8 @@ settings enum.
 | Scope & destinations | [`common/context_registry.py`](https://github.com/unifyai/unify/blob/main/unify/common/context_registry.py) + [`data_manager/data_manager.py`](https://github.com/unifyai/unify/blob/main/unify/data_manager/data_manager.py) resolution helpers |
 | Multi-root reads | [`common/federated_search.py`](https://github.com/unifyai/unify/blob/main/unify/common/federated_search.py) |
 | Bulk loading | [`data_manager/ops/ingest_ops.py`](https://github.com/unifyai/unify/blob/main/unify/data_manager/ops/ingest_ops.py) + [`utils/pipeline.py`](https://github.com/unifyai/unify/blob/main/unify/data_manager/utils/pipeline.py) |
-| The tile/binding model | [`dashboard_manager/types/tile.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/types/tile.py) |
-| Binding validation | [`dashboard_manager/ops/tile_ops.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/ops/tile_ops.py) |
+| The view/binding model | [`canvas_manager/types/view.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/types/view.py) + [`types/binding.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/types/binding.py) |
+| Binding validation | [`canvas_manager/ops/binding_ops.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/ops/binding_ops.py) |
 | Actor-facing exposure | [`function_manager/primitives/registry.py`](https://github.com/unifyai/unify/blob/main/unify/function_manager/primitives/registry.py) + [`runtime.py`](https://github.com/unifyai/unify/blob/main/unify/function_manager/primitives/runtime.py) |
 | Worked Actor examples | [`actor/prompt_examples.py`](https://github.com/unifyai/unify/blob/main/unify/actor/prompt_examples.py) |
-| Behavioral guarantees | [`tests/data_manager/`](https://github.com/unifyai/unify/tree/main/tests/data_manager) + [`tests/dashboard_manager/`](https://github.com/unifyai/unify/tree/main/tests/dashboard_manager) |
+| Behavioral guarantees | [`tests/data_manager/`](https://github.com/unifyai/unify/tree/main/tests/data_manager) + [`tests/canvas_manager/`](https://github.com/unifyai/unify/tree/main/tests/canvas_manager) |
