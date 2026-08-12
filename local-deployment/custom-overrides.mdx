@@ -159,11 +159,6 @@ Same `meta.json` + `rows.jsonl` shape as knowledge, for DataManager-owned
 reference tables. `meta.json` additionally supports `context` (target
 context path), `unique_keys`, and `auto_counting`.
 
-### Dashboards — directory tree
-
-Tiles and layouts live under `tiles/` and `layouts/` namespaces, each with
-the `meta.json` + `rows.jsonl` shape.
-
 ### Functions and venvs — Python and TOML
 
 Custom functions are ordinary Python decorated with `@custom_function`;
@@ -231,7 +226,7 @@ ManagerRegistry.get_task_scheduler().sync_custom(
 )
 ```
 
-Contacts, secrets, blacklist, knowledge, data, and dashboards follow the
+Contacts, secrets, blacklist, knowledge, and data follow the
 same collect-then-sync shape with their own collectors
 (`collect_contacts_from_directories`, `collect_secrets_from_directories`,
 and so on). Because every sync is hash-guarded, running the whole pass on
