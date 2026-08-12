@@ -116,19 +116,30 @@ def run_test(filepath: str) -> Tuple[Dict, Dict, bool]:
     return python_results, shell_results, all_python_passed and all_shell_passed
 
 
+def _flatten_pages(pages: List[Any]) -> List[str]:
+    """Flatten a docs.json pages list, expanding nested sub-groups."""
+    flat = list()
+    for page in pages:
+        if isinstance(page, dict):
+            flat.extend(_flatten_pages(page.get("pages", [])))
+        else:
+            flat.append(page)
+    return flat
+
+
 def group_and_order_results(
     results: Dict[str, Dict[str, Union[True, str]]],
 ) -> Dict[str, Dict[str, Dict[str, Union[True, str]]]]:
-    with open(os.path.join(this_dir, "../mint.json")) as file:
-        mint_contents = file.read()
-    mint_json = json.loads(mint_contents)
-    navigation = mint_json["navigation"]
+    with open(os.path.join(this_dir, "../docs.json")) as file:
+        docs_contents = file.read()
+    docs_json = json.loads(docs_contents)
+    navigation = docs_json["navigation"]["groups"]
     results_out = dict()
     for i, group in enumerate(navigation):
         if group["group"] in ("", "API Reference"):
             continue
         results_out[group["group"]] = dict()
-        for j, page in enumerate(group["pages"]):
+        for j, page in enumerate(_flatten_pages(group["pages"])):
             results_out[group["group"]][page] = results[page]
     return results_out
 
