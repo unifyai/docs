@@ -19,7 +19,7 @@ every reachable scope, and how the assistant is taught to route content.
 ## The core model: destinations, roots, and one registry
 
 Every state manager (guidance, knowledge, functions, tasks, data, secrets,
-dashboards…) stores rows in **contexts** — hierarchical, table-like
+canvases…) stores rows in **contexts** — hierarchical, table-like
 namespaces addressed by path. Team sharing is implemented as a pure
 *namespace* concern: the same tables exist under multiple **roots**, and
 one class decides which root any given operation touches.
@@ -101,8 +101,8 @@ The authoritative list is `SHARED_SCOPED_TABLES` in
 `Tasks`, `Contacts`, `Secrets`, `Knowledge`, `Guidance`, the four
 `Functions/*` tables (`Compositional`, `Meta`, `Primitives`,
 `VirtualEnvs`), `FileRecords`, `Files`, `Data`, `BlackList`,
-`Dashboards/Tiles`, `Dashboards/Layouts`, `Transcripts`, `Exchanges`, and
-`Images`.
+`Canvas/Views`, `Canvas/Actions`, `Canvas/Invocations`, `Transcripts`,
+`Exchanges`, and `Images`.
 
 Matching is prefix-aware: `ContextRegistry._is_shared_scoped` walks parent
 paths, so a dynamic table like `Data/Samsara/daily_snapshots` inherits
@@ -140,7 +140,7 @@ Every manager exposes the same public parameter — `destination: str | None`
 — on its write methods (`GuidanceManager.add_guidance`,
 `KnowledgeManager`'s table/row operations, `FunctionManager.add_functions`,
 `DataManager.create_table`, `SecretManager.add_secret`,
-`DashboardManager.create_tile`, task creation in `TaskScheduler`, …). The
+`CanvasManager.create_view`, task creation in `TaskScheduler`, …). The
 manager passes it straight through to `write_root`, which:
 
 1. normalizes via `canonical_destination`,
@@ -257,11 +257,11 @@ different semantics worth knowing:
   [`unify/task_scheduler/offline_runner.py`](https://github.com/unifyai/unify/blob/main/unify/task_scheduler/offline_runner.py).
   If the owning assistant has left the team by fire time, activation is
   refused (`destination_membership_revoked`).
-- **Dashboards** —
-  [`unify/dashboard_manager/base.py`](https://github.com/unifyai/unify/blob/main/unify/dashboard_manager/base.py)
-  adds a second axis: a tile's *row* has a `destination`, but its live
-  data bindings take an independent `data_scope`, so a personal watch
-  tile can legitimately read a team's data.
+- **Canvas** —
+  [`unify/canvas_manager/base.py`](https://github.com/unifyai/unify/blob/main/unify/canvas_manager/base.py)
+  adds a second axis: a view's *row* has a `destination`, while its
+  `visibility` (`private`, `team`, `public_link`) independently controls
+  who may read it — enforced server-side on every read path.
 
 ## How membership reaches the runtime
 
