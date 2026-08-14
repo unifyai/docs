@@ -10,9 +10,8 @@ assistant builds them.
 
 <Note>
   In the Console this lives in two dedicated panes on your assistant's
-  page: **Dashboards** (the views) and **Data** (the tables underneath),
-  each covered in depth in this section. The area is being renamed to
-  **Canvas** — these docs use the new name.
+  page: **Canvas** (the views) and **Data** (the tables underneath), each
+  covered in depth in this section.
 </Note>
 
 ## Two building blocks
@@ -25,36 +24,36 @@ Everything on the canvas is built from two simple, very flexible pieces:
     numbers pulled from an API, results of a computation, records extracted
     from files. Organized like folders, browsable any time.
   </Card>
-  <Card title="Dashboards — the views" icon="chart-line" color="#c95f5a" href="/canvas/dashboards">
-    Live visual tiles built on top of that data — charts, tables, KPI
-    cards, or any custom view — arranged into dashboards that refresh with
-    the data underneath.
+  <Card title="Canvas — the views" icon="chart-line" color="#c95f5a" href="/canvas/recipes">
+    Live views built on top of that data — charts, tables, KPI cards, or
+    any custom interactive layout — that refresh with the data underneath
+    and can carry controls that do real work.
   </Card>
 </CardGroup>
 
 The separation is the point: data collection and presentation are
-independent. The same table can feed three different views; a dashboard
-stays live as its tables grow; and either can change without rebuilding the
+independent. The same table can feed three different views; a view stays
+live as its tables grow; and either can change without rebuilding the
 other.
 
 ## You ask — it builds
 
-There is no dashboard editor to learn and no query language to write. You
+There is no editor to learn and no query language to write. You
 describe what you want to see, and your assistant builds it:
 
 - *"Plot repairs by category."*
-- *"Create a dashboard with our sales KPIs and a revenue trend chart."*
+- *"Create a view with our sales KPIs and a revenue trend chart."*
 - *"Track response times from our status API and chart the last 7 days."*
 - *"Show me open work orders per operative, updated live."*
 
-Your assistant creates or reuses the underlying tables, builds the tiles,
-arranges the dashboard, and drops a link in chat. From then on it's on your
-canvas, staying current.
+Your assistant creates or reuses the underlying tables, composes the
+view, and drops a link in chat. From then on it's on your canvas, staying
+current.
 
 ## Why this is more than charts
 
 Because your assistant controls both the data *and* the view, the canvas can
-do things a normal dashboard tool can't do without an engineering project:
+do things a normal reporting tool can't do without an engineering project:
 
 - **It can collect what doesn't exist yet.** No data feed? Your assistant
   can call an API [on a schedule](/tasks/overview), extract numbers from
@@ -65,9 +64,9 @@ do things a normal dashboard tool can't do without an engineering project:
   pipeline against calendar.
 - **It can derive new columns.** "Add a total column that's unit price
   times quantity" is a sentence, not a formula bar.
-- **Views are unlimited in form.** Tiles aren't limited to a preset chart
+- **Views are unlimited in form.** They aren't limited to a preset chart
   menu — bar, line, scatter, maps, KPI cards, styled tables, or fully
-  custom layouts, whatever presents the data best.
+  custom interactive layouts, whatever presents the data best.
 
 ## What's in this section
 
@@ -76,10 +75,7 @@ do things a normal dashboard tool can't do without an engineering project:
     What your assistant stores, how tables are organized, and browsing them
     in the Console.
   </Card>
-  <Card title="Live dashboards" icon="grid-2" color="#4f7fa8" href="/canvas/dashboards">
-    Tiles, layouts, live data, sharing, and the viewer in the Console.
-  </Card>
-  <Card title="Recipes" icon="lightbulb" color="#6e4a86" href="/canvas/recipes">
+  <Card title="Recipes" icon="grid-2" color="#4f7fa8" href="/canvas/recipes">
     Worked examples — API monitoring, KPI boards, combined sources.
   </Card>
 </CardGroup>
