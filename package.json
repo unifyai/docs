@@ -1,9 +1,13 @@
 {
   "dependencies": {
-    "mintlify": "^4.0.195"
+    "mintlify": "^4.2.805"
   },
   "overrides": {
     "ws": ">=8.21.0",
-    "form-data": ">=4.0.6"
+    "form-data": ">=4.0.6",
+    "sharp": "0.35.3",
+    "puppeteer": "25.8.0",
+    "puppeteer-core": "25.8.0",
+    "@puppeteer/browsers": "3.2.1"
   }
 }
