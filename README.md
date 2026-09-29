@@ -32,4 +32,4 @@ Of course, you can spin up a new container every once in a while if either of th
 
 The theme (`docs.json`) follows the Unify shared light system: paper/ink canvas, teal `#2f9d97` primary, Space Grotesk headings, and Inter body.
 
-The banner and OG image in `images/` (`unify-docs-banner-*.svg`, `unify-docs-og.png`) are rendered from the `branding` repo — do not hand-edit them. To regenerate, run `npm run render:docs-diagrams` in `branding/` and copy the refreshed files from `branding/assets/docs/` into `images/`.
+The logo files in `images/` carry the flat unify mark (29 September 2026) and come from the private `branding` repo — do not hand-edit them. `unify-mark.svg` and `unify-wordmark-*.svg` are its `mark-light.svg` and `lockup-*.svg`; the banners and `unify-docs-og.png` are `unify-readme-banner-*.svg` and `unify-docs-og.png` from `npm run render:readme-banners`. The diagrams keep the droid-era theme with the cube badge taken out.
